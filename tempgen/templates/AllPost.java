@@ -2,6 +2,7 @@ package templates;
 import java.util.*;
 import java.io.*;
 import tag.*;
+import bran.japid.tags.Each;
 import bran.Post;
 import layout.*;
 import static bran.WebUtils.*;
@@ -63,12 +64,12 @@ p(static_2);// line 8
 p(static_4);// line 10
 for (Post p: allPost) {// line 12
 p(static_5);// line 12
-_Display1.render(p, "home", _Display1DoBody);
+_Display2.render(p, "home", _Display2DoBody);
 // line 13
 p(static_9);// line 15
 }// line 16
 p(static_10);// line 16
-_Tag21.render(blogTitle);
+_Tag23.render(blogTitle);
 // line 18
 p(static_11);// line 18
 
@@ -78,8 +79,8 @@ p(static_11);// line 18
 p(static_3);// line 10
 ;
 	}
-	private Display _Display1 = new Display(getOut());
-class Display1DoBody implements Display.DoBody< String>{
+	private Display _Display2 = new Display(getOut());
+class Display2DoBody implements Display.DoBody< String>{
 	public void render(String title) {
 		// line 13
 p(static_6);// line 13
@@ -89,7 +90,7 @@ p(static_8);// line 14
 
 	}
 }
-	private Display1DoBody _Display1DoBody = new Display1DoBody();
+	private Display2DoBody _Display2DoBody = new Display2DoBody();
 
-	private Tag2 _Tag21 = new Tag2(getOut());
+	private Tag2 _Tag23 = new Tag2(getOut());
 }

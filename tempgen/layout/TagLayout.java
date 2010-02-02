@@ -2,6 +2,7 @@ package layout;
 import java.util.*;
 import java.io.*;
 import tag.*;
+import bran.japid.tags.Each;
 // This file was generated from: layout/TagLayout.html
 // Change to this file will be lost next time the template file is compiled.
 public abstract class TagLayout extends bran.japid.BranTemplateBase{

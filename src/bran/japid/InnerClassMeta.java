@@ -2,6 +2,8 @@ package bran.japid;
 
 import java.util.List;
 
+import bran.japid.tags.Each;
+
 /**
  * used to wrapped the body of an invocation of a user defined tag based on tag template file
  * 
@@ -46,7 +48,15 @@ public class InnerClassMeta {
 		for (int i = 0; i < argTypes.length; i++) {
 			classParams += ", " + argTokens.get(i * 2);
 		}
+		
+		if (Each.class.getSimpleName().equals(tagName)) {
+			// append extra argument to the render method
+			renderArgs += ", int _index, boolean _isOdd, boolean _first, boolean _last";
+		}
+		
 		// remove the leading ,
+		
+		
 		classParams = "<" + classParams.substring(1) + ">";
 
 		StringBuilder sb = new StringBuilder();

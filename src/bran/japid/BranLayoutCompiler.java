@@ -44,8 +44,9 @@ public class BranLayoutCompiler extends AbstractCompiler {
 			// if (!tagArgs.matches("^[a-zA-Z0-9]+\\s*:.*$")) {
 			// tagArgs = "arg:" + tagArgs;
 			// }
-			tagArgs = tagArgs.replaceAll("[:]\\s*[@]", ":actionBridge.");
-			tagArgs = tagArgs.replaceAll("(\\s)[@]", "$1actionBridge.");
+			// TODO
+//			tagArgs = tagArgs.replaceAll("[:]\\s*[@]", ":actionBridge.");
+//			tagArgs = tagArgs.replaceAll("(\\s)[@]", "$1actionBridge.");
 		} else {
 			tagName = tagText;
 			// tagArgs = ":";
@@ -54,8 +55,18 @@ public class BranLayoutCompiler extends AbstractCompiler {
 		tag.tagName = tagName;
 		tag.startLine = parser.getLine();
 		tag.hasBody = hasBody;
-		tag.args = tagArgs;
-
+//		#{tag tagArg | String closureArg...}
+		int vertiLine = tagArgs.lastIndexOf('|');
+		String closureParamList = "";
+		if (vertiLine > 0) {
+			tag.args = tagArgs.substring(0, vertiLine).trim();
+			closureParamList = tagArgs.substring(vertiLine + 1).trim();
+			tag.bodyArgsString  = closureParamList;
+		}
+		else {
+			tag.args = tagArgs;
+		}
+		
 		if ("get".equals(tagName)) {
 			if (hasBody) {
 				throw new RuntimeException("get tag cannot have a body. not closed?");
@@ -83,14 +94,13 @@ public class BranLayoutCompiler extends AbstractCompiler {
 			tag.tagName = tagName;
 			if (hasBody) {
 //				println("new " + tagClassName + "(getOut()).render(" + tagArgs + ", new " + tagName + tagIndex + "DoBody());");
-				println("_" + tagName + tagIndex + ".render(" + tagArgs + ", _" + tagName + tagIndex + "DoBody);");
+				println("_" + tagName + tagIndex + ".render(" + tag.args + ", _" + tagName + tagIndex + "DoBody);");
 			} else {
-				println("_" + tagName + tagIndex + ".render(" + tagArgs + ", null);");
+				println("_" + tagName + tagIndex + ".render(" + tag.args + ", null);");
 			}
 			
 		}
 		tagsStack.push(tag);
-		// XXX other tags
 		markLine(parser.getLine());
 		println();
 		skipLineBreak = true;
@@ -132,7 +142,7 @@ public class BranLayoutCompiler extends AbstractCompiler {
 		}
 		markLine(tag.startLine);
 		println();
-		tagIndex--;
+//		tagIndex--;
 		skipLineBreak = true;
 	} // Writer
 

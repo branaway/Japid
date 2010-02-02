@@ -1,12 +1,14 @@
 package bran.japid;
 
+import groovy.lang.Closure;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +54,7 @@ public abstract class BranTemplateBase {
 //	private BranTemplateBase() {
 //	}
 	
-
+	
 	// call this if run in PlayContainer
 	public void runtimeInit() {
 		// scope = Scope.
@@ -155,24 +157,47 @@ public abstract class BranTemplateBase {
 	}
 	protected abstract void doLayout();
 	
-//	final private boolean asBoolean(Object o) {
-//		boolean r = false;
-//
-//		if (o instanceof Boolean) {
-//			r = (Boolean) o;
-//		} else if (o instanceof Integer) {
-//			Integer n = (Integer) o;
-//			r = n != 0 ? true : false;
-//		}
-//		// etc...
-//		// should really consult DefaultGroovyMethods.java for all the coercion
-//		// methods
-//		else {
-//			r = o != null ? true : false;
-//		}
-//
-//		return r;
-//	}
+	protected boolean asBoolean(Object o) {
+		if (o == null)
+			return false;
+		
+		boolean r = false;
+
+		if (o instanceof Boolean) {
+			r = (Boolean) o;
+		} else if (o instanceof Integer) {
+			Integer n = (Integer) o;
+			r = n != 0 ? true : false;
+		}
+		else if (o instanceof Collection){
+			Collection col = ((Collection)o);
+			if (col.size() > 0)
+				return true;
+			else
+				return false;
+		}
+//		else if ()
+		else {
+			// TODO more
+			r = o != null ? true : false;
+		}
+
+		return r;
+	}
+
+	/**
+	 * get the last item from a list
+	 * 
+	 * @param list
+	 * @return
+	 */
+	protected Object lastOf(List<?> list) {
+		if (list.size() == 0)
+			return null;
+		return list.get(list.size() - 1);
+	}
+	
+
 
 //	protected abstract void doLayout();
 

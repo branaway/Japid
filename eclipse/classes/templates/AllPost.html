@@ -1,0 +1,20 @@
+~{
+import bran.Post;
+extends layout/Layout.html
+}~
+~(
+  String blogTitle, 
+  List <Post> allPost
+)
+
+#{set title}Home#{/}
+
+~{for (Post p: allPost) {}~ 
+	    #{Display p, "home" }
+			~(String title) The real title is: $title;
+	    #{/}
+~{}}~
+
+#{Tag2 blogTitle/}
+
+<p>cool</p>

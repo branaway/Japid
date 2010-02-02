@@ -1,0 +1,19 @@
+~{
+import static bran.WebUtils.*;
+import layout.*;
+extends  TagLayout
+}~
+
+~(
+	bran.Post post, 
+	String as
+)
+
+
+
+<div class="divvy">
+	<p>title: $post.getTitle()</p>
+	<p>at: $format(post.getPostedAt(), ("yy-MMM-dd"))</p>
+	<p>by: $post.getAuthor().name, $post.getAuthor().gender</p>
+	#{doBody post.getTitle() /}
+</div>

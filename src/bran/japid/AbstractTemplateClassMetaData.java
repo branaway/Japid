@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import bran.japid.tags.Each;
+
 public class AbstractTemplateClassMetaData {
 	private static final String SPACE = " ";
 	private static final String STATIC = "static";
@@ -66,6 +68,7 @@ public class AbstractTemplateClassMetaData {
 		pln("import java.util.*;");
 		pln("import java.io.*;");
 		pln("import tag.*;");
+		pln("import " + Each.class.getName() + ";");
 		// pln("import java.math.*;");
 		// pln("import static java.lang.Math.*;");
 		// // should decouple with JavaExtensions

@@ -271,6 +271,8 @@ public abstract class AbstractCompiler {
 	}
 
 	protected void expr() {
+		// TODO: make difference of safe expression and raw expression
+		// safe expressions are wrapped in
 		String expr = parser.getToken().trim();
 		print("p(" + expr + ");");
 		markLine(parser.getLine());

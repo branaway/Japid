@@ -40,12 +40,14 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		if (tagText.indexOf(SPACE) > 0) {
 			tagName = tagText.substring(0, tagText.indexOf(SPACE));
 			tagArgs = tagText.substring(tagText.indexOf(SPACE) + 1).trim();
-			// bran: no names argument
+			// bran: no named argument
 			// if (!tagArgs.matches("^[a-zA-Z0-9]+\\s*:.*$")) {
 			// tagArgs = "arg:" + tagArgs;
 			// }
-			tagArgs = tagArgs.replaceAll("[:]\\s*[@]", ":actionBridge.");
-			tagArgs = tagArgs.replaceAll("(\\s)[@]", "$1actionBridge.");
+			
+			// TODO handle the action reverse lookup 
+//			tagArgs = tagArgs.replaceAll("[:]\\s*[@]", ":actionBridge.");
+//			tagArgs = tagArgs.replaceAll("(\\s)[@]", "$1actionBridge.");
 		} else {
 			tagName = tagText;
 			// tagArgs = ":";
@@ -55,8 +57,19 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		tag.tagName = tagName;
 		tag.startLine = parser.getLine();
 		tag.hasBody = hasBody;
-		tag.args = tagArgs;
-
+		
+//		#{tag tagArg | String closureArg...}
+		int vertiLine = tagArgs.lastIndexOf('|');
+		String closureParamList = "";
+		if (vertiLine > 0) {
+			tag.args = tagArgs.substring(0, vertiLine).trim();
+			closureParamList = tagArgs.substring(vertiLine + 1).trim();
+			tag.bodyArgsString  = closureParamList;
+		}
+		else {
+			tag.args = tagArgs;
+		}
+		
 		if ("extends".equals(tagName)) {
 			String layoutName = tagArgs;
 			layoutName = layoutName.replace("'", "");
@@ -81,10 +94,6 @@ public class BranTemplateCompiler extends AbstractCompiler {
 			tagsStack.push(tag);
 		} else {
 			// invoke a tag
-			// String tagClassName = tagName;
-			// String bodyInnerClassName = tagClassName.replace('.', '_') +
-			// tagIndex + "_Body";
-			tag.tagName = tagName;
 			if (hasBody) {
 				// old way: create a new instance for each call
 				// println("new " + tagClassName + "(getOut()).render(" +
@@ -92,11 +101,11 @@ public class BranTemplateCompiler extends AbstractCompiler {
 				// use a field to call a tag for better performance in case of
 				// loop
 				// TODO: handle tags with prefix: #{my.tag}
-				println("_" + tagName + tagIndex + ".render(" + tagArgs + ", _" + tagName + tagIndex + "DoBody);");
+				println("_" + tagName + tagIndex + ".render(" + tag.args + ", _" + tagName + tagIndex + "DoBody);");
 			} else {
 				// println("new " + tagClassName + "(getOut()).render(" +
 				// tagArgs + ", null);");
-				println("_" + tagName + tagIndex + ".render(" + tagArgs + ");");
+				println("_" + tagName + tagIndex + ".render(" + tag.args + ");");
 			}
 			tagsStack.push(tag);
 		}
@@ -143,7 +152,7 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		}
 		markLine(tag.startLine);
 		println();
-		tagIndex--;
+//		tagIndex--;
 		skipLineBreak = true;
 	} // Writer
 

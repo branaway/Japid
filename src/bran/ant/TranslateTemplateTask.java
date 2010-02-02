@@ -3,6 +3,8 @@ package bran.ant;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Location;
@@ -12,8 +14,6 @@ import org.apache.tools.ant.util.FileNameMapper;
 import org.apache.tools.ant.util.SourceFileScanner;
 
 import bran.japid.BranTemplateTranslator;
-import bran.japid.MessageProvider;
-import bran.japid.UrlMapper;
 
 /**
  * modeled after the JamonTask in the <a url = "http://www.jamon.org/>Jamon project</a>
@@ -39,7 +39,8 @@ To generate the Java sources, include the following target:
  */
 public class TranslateTemplateTask extends MatchingTask{
 	
-    public void setDestdir(File p_destDir)	
+    private List<Class<?>> staticImports =  new ArrayList<Class<?>>();
+	public void setDestdir(File p_destDir)	
     {
         destDir = p_destDir;
     }
@@ -136,6 +137,9 @@ public class TranslateTemplateTask extends MatchingTask{
                 + " to " + destDir);
             
             BranTemplateTranslator tran = new BranTemplateTranslator(srcDir.getPath(), null);
+            for (Class<?> c : this.staticImports) {
+            	tran.addImportStatic(c);
+            }
             
             for (int i = 0; i < files.length; i++)
             {
@@ -161,6 +165,15 @@ public class TranslateTemplateTask extends MatchingTask{
         }
     }
 
+    /**
+     * add an import static entry to the template tranlator
+     * 
+     * @param clz
+     */
+    public void importStatic(Class<?> clz) {
+    	this.staticImports.add(clz);
+    }
+    
     private static class JapidFileNameMapper implements FileNameMapper
     {
         public void setFrom(String p_from) {}

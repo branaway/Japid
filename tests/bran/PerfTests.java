@@ -1,37 +1,23 @@
 package bran;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.junit.Test;
-import org.mvel2.templates.CompiledTemplate;
-import org.mvel2.templates.TemplateCompiler;
-import org.mvel2.templates.TemplateRuntime;
-
-import bran.japid.BranTemplateBase;
-import bran.japid.DummyUrlMapper;
-import bran.japid.SimpleMessageProvider;
 
 import templates.Actions;
 import templates.AllPost;
 import templates.Msg;
 import templates.Posts;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
+import bran.japid.BranTemplateBase;
+import bran.japid.DummyUrlMapper;
+import bran.japid.SimpleMessageProvider;
 
 public class PerfTests {
 	@Test
@@ -213,63 +199,38 @@ public class PerfTests {
 	//		
 	// }
 
-	@Test
-	public void testMvel() throws Exception {
-		// compile the template
-		String src = "@foreach{post : posts} \r\n" + " - title: @{post.title}\r\n" + " - date: @{post.postedAt}\r\n"
-				+ " - author @{post.author.name} @{post.author.gender}\r\n" + "@end{}\r\n" + "";
-		CompiledTemplate compiled = TemplateCompiler.compileTemplate(src);
-		final List<Post> posts = createPosts();
-		Map<String, Object> m = new HashMap<String, Object>() {
-			{
-				put("posts", posts);
-			}
-		};
-		// execute the template
-		long tt = System.currentTimeMillis();
-		for (int i = 0; i < 200; i++) {
-			long t = System.currentTimeMillis();
-			System.out.println("run templating: " + i);
-			String output = (String) TemplateRuntime.execute(compiled, m);
-			System.out.println(System.currentTimeMillis() - t);
-			// System.out.println(out.toString());
-//			Thread.sleep(5);
-		}
-		System.out.println("total time: " + (System.currentTimeMillis() - tt));
 
-	}
-
-	@Test
-	public void testVelocity() throws Exception {
-		final List<Post> posts = createPosts();
-		Velocity.init();
-
-		VelocityContext context = new VelocityContext();
-
-		context.put( "posts", posts);
-
-		org.apache.velocity.Template template = Velocity.getTemplate("tests/posts.vm");
-
-
-		// execute the template
-		long tt = System.currentTimeMillis();
-		for (int i = 0; i < 100; i++) {
-			long t = System.currentTimeMillis();
-//			System.out.println("run templating: " + i);
-			/* Merge data-model with template */
-			StringWriter sw = new StringWriter();
-			
-			template.merge( context, sw );
-
-			// System.out.println(out.toString());
-			// out.flush();
-			System.out.println(System.currentTimeMillis() - t);
-			// System.out.println(out.toString());
-//			Thread.sleep(5);
-		}
-		System.out.println("total time: " + (System.currentTimeMillis() - tt));
-
-	}	
+//	@Test
+//	public void testVelocity() throws Exception {
+//		final List<Post> posts = createPosts();
+//		Velocity.init();
+//
+//		VelocityContext context = new VelocityContext();
+//
+//		context.put( "posts", posts);
+//
+//		org.apache.velocity.Template template = Velocity.getTemplate("tests/posts.vm");
+//
+//
+//		// execute the template
+//		long tt = System.currentTimeMillis();
+//		for (int i = 0; i < 100; i++) {
+//			long t = System.currentTimeMillis();
+////			System.out.println("run templating: " + i);
+//			/* Merge data-model with template */
+//			StringWriter sw = new StringWriter();
+//			
+//			template.merge( context, sw );
+//
+//			// System.out.println(out.toString());
+//			// out.flush();
+//			System.out.println(System.currentTimeMillis() - t);
+//			// System.out.println(out.toString());
+////			Thread.sleep(5);
+//		}
+//		System.out.println("total time: " + (System.currentTimeMillis() - tt));
+//
+//	}	
 	
 	@Test
 	public void testSinglePageJapid() throws Exception {
@@ -298,46 +259,46 @@ public class PerfTests {
 		System.out.println("total time: " + (System.currentTimeMillis() - tt));
 
 	}
-		@Test
-	public void testFreeMarker() throws Exception {
-		final List<Post> posts = createPosts();
-		Map<String, Object> m = new HashMap<String, Object>() {
-			{
-				put("posts", posts);
-			}
-		};
-
-		/* ------------------------------------------------------------------- */
-		/* You should do this ONLY ONCE in the whole application life-cycle: */
-
-		/* Create and adjust the configuration */
-		Configuration cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(new File("D:\\eclipse-workspace\\Japid\\tests\\"));
-		cfg.setObjectWrapper(new DefaultObjectWrapper());
-
-		/* ------------------------------------------------------------------- */
-		/* You usually do these for many times in the application life-cycle: */
-
-		/* Get or create a template */
-		Template temp = cfg.getTemplate("posts.ftl");
-
-		// execute the template
-		long tt = System.currentTimeMillis();
-		for (int i = 0; i < 100; i++) {
-			long t = System.currentTimeMillis();
-//			System.out.println("run templating: " + i);
-			/* Merge data-model with template */
-			Writer out = new StringWriter();
-			temp.process(m, out);
-			// System.out.println(out.toString());
-			// out.flush();
-			System.out.println(System.currentTimeMillis() - t);
-			// System.out.println(out.toString());
-//			Thread.sleep(5);
-		}
-		System.out.println("total time: " + (System.currentTimeMillis() - tt));
-
-	}
+//		@Test
+//	public void testFreeMarker() throws Exception {
+//		final List<Post> posts = createPosts();
+//		Map<String, Object> m = new HashMap<String, Object>() {
+//			{
+//				put("posts", posts);
+//			}
+//		};
+//
+//		/* ------------------------------------------------------------------- */
+//		/* You should do this ONLY ONCE in the whole application life-cycle: */
+//
+//		/* Create and adjust the configuration */
+//		Configuration cfg = new Configuration();
+//		cfg.setDirectoryForTemplateLoading(new File("D:\\eclipse-workspace\\Japid\\tests\\"));
+//		cfg.setObjectWrapper(new DefaultObjectWrapper());
+//
+//		/* ------------------------------------------------------------------- */
+//		/* You usually do these for many times in the application life-cycle: */
+//
+//		/* Get or create a template */
+//		Template temp = cfg.getTemplate("posts.ftl");
+//
+//		// execute the template
+//		long tt = System.currentTimeMillis();
+//		for (int i = 0; i < 100; i++) {
+//			long t = System.currentTimeMillis();
+////			System.out.println("run templating: " + i);
+//			/* Merge data-model with template */
+//			Writer out = new StringWriter();
+//			temp.process(m, out);
+//			// System.out.println(out.toString());
+//			// out.flush();
+//			System.out.println(System.currentTimeMillis() - t);
+//			// System.out.println(out.toString());
+////			Thread.sleep(5);
+//		}
+//		System.out.println("total time: " + (System.currentTimeMillis() - tt));
+//
+//	}
 
 		/**
 		 * one od the idea to improve template performace is to compile the static content as UTF-8 encoded byte array 

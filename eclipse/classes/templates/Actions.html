@@ -1,0 +1,6 @@
+~(
+bran.Post post
+)
+
+<form url="@{Clients.showAccounts(post.title, post.title)}"></form>
+<form url="@@{Clients.showAccounts(post.title.substring(1, 2))}"></form>
