@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import play.templates.Template.ExecutableTemplate.RawData;
+
 /**
  * a java based template
  * 
@@ -272,5 +274,14 @@ public abstract class BranTemplateBase {
 	protected static String lookupAbs(String action, Object... args) {
 		return urlMapper.lookupAbs(action, args);
 	}
-	
+
+	/**
+	 * change new lines to <br>
+	 * @param data
+	 * @return
+	 */
+	public static String nl2br(Object data) {
+        return (data.toString().replace("\n", "<br/>"));
+    }
+
 }

@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="tests"/>
 	<classpathentry kind="src" path="tempgen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/play.jar" sourcepath="/home/bran/projects/play1.1/framework"/>
+	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/play.jar" sourcepath="/play! framework"/>
 	<classpathentry kind="lib" path="/home/bran/projects/japid/lib/ant-launcher.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/japid/lib/ant.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/activation.jar"/>

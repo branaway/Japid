@@ -293,12 +293,16 @@ public abstract class AbstractCompiler {
 	 */
 	protected void action(boolean absolute) {
 		String action = parser.getToken().trim();
-		if (action.matches("^'.*'$")) {
+		if (action.matches("^'.*'$") || action.matches("^\".*\"$")) {
 			// static content like @{'my.css'}
+			action = action.replace('\'', '"');
+			// remove Play dependecy
 			if (absolute) {
-				print("p(request.getBase() + play.mvc.Router.reverseWithCheck(" + action + ", play.Play.getVirtualFile(" + action + ")));");
+//				print("p(request.getBase() + play.mvc.Router.reverseWithCheck(" + action + ", play.Play.getVirtualFile(" + action + ")));");
+				print("p(lookupAbs(" + action + "));");
 			} else {
-				print("p(play.mvc.Router.reverseWithCheck(" + action + ", play.Play.getVirtualFile(" + action + ")));");
+//				print("p(play.mvc.Router.reverseWithCheck(" + action + ", play.Play.getVirtualFile(" + action + ")));");
+				print("p(lookup(" + action + "));");
 			}
 		} else {
 			if (!action.endsWith(")")) {
@@ -314,13 +318,14 @@ public abstract class AbstractCompiler {
 
 			// extract the param list part
 			String params = action.substring(indexOfParam + 1);
-			params.substring(0, params.length() - 1);
-			
+			params = params.substring(0, params.length() - 1).trim();
+			if (params.length() == 0)
+				params = "new Object[]{}";
 			
 			if (absolute) {
-				print("p(lookupAbs(\"" + actionPart + "\", "  + params + ");");
+				print("p(lookupAbs(\"" + actionPart + "\", "  + params + "));");
 			} else {
-				print("p(lookup(\"" + actionPart + "\", "  + params + ");");
+				print("p(lookup(\"" + actionPart + "\", "  + params + "));");
 			}
 		}
 		markLine(parser.getLine());

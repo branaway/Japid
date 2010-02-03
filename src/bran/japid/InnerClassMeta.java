@@ -11,6 +11,7 @@ import bran.japid.tags.Each;
  *
  */
 public class InnerClassMeta {
+	private static final String EXTRA_LOOP_ATTRS = ", int _index, boolean _isOdd, boolean _isFirst, boolean _isLast";
 	String tagName;
 	// the sequence of the same tag called in a single template
 	int counter;
@@ -51,7 +52,7 @@ public class InnerClassMeta {
 		
 		if (Each.class.getSimpleName().equals(tagName)) {
 			// append extra argument to the render method
-			renderArgs += ", int _index, boolean _isOdd, boolean _first, boolean _last";
+			renderArgs += EXTRA_LOOP_ATTRS;
 		}
 		
 		// remove the leading ,

@@ -11,12 +11,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import templates.Actions;
 import templates.AllPost;
 import templates.Msg;
 import templates.Posts;
 import bran.japid.BranTemplateBase;
-import bran.japid.DummyUrlMapper;
 import bran.japid.SimpleMessageProvider;
 
 public class PerfTests {
@@ -375,15 +373,15 @@ public class PerfTests {
 		return sb.toString();
 	}
 	
-	@Test public void testUrlMapper() {
-		BranTemplateBase.urlMapper =  new DummyUrlMapper();
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Actions ac = new Actions(baos);
-		Post p = new Post();
-		p.title = "hello";
-		ac.render(p);
-		System.out.println(baos.toString());
-	}
+//	@Test public void testUrlMapper() {
+//		BranTemplateBase.urlMapper =  new DummyUrlMapper();
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		Actions ac = new Actions(baos);
+//		Post p = new Post();
+//		p.title = "hello";
+//		ac.render(p);
+//		System.out.println(baos.toString());
+//	}
 	
 	@Test public void testMessage() {
 //		BranTemplateBase.urlMapper =  new DummyUrlMapper();
