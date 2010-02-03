@@ -3,6 +3,9 @@ import java.util.*;
 import java.io.*;
 import tag.*;
 import bran.japid.tags.Each;
+import bran.Post;
+import layout.*;
+import static bran.WebUtils.*;
 // This file was generated from: templates/Set.html
 // Change to this file will be lost next time the template file is compiled.
 public class Set extends layout.SetLayout{

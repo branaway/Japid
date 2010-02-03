@@ -183,5 +183,29 @@ public class ParserTests {
             }
 		}
 	}
+
+	/**
+	 * a period at the end is not part of expression
+	 */
+	@Test
+	public void periodAtExprEnd() {
+		String src = "$hello.";
+		List<String> tokens = new ArrayList<String>();
+		BranParser p = new BranParser(src);
+		loop: for (;;) {
+			BranParser.Token state = p.nextToken();
+			switch (state) {
+			case EOF:
+				break loop;
+			default:
+				String tokenstring = p.getToken();
+				tokens.add(tokenstring );
+				System.out.println(state.name() + ": [" + tokenstring + "]");
+			}
+		}
+		assertEquals(3, tokens.size());
+		assertEquals("hello", tokens.get(1));
+		
+	}
 }
 

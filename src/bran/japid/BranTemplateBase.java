@@ -187,19 +187,6 @@ public abstract class BranTemplateBase {
 		return r;
 	}
 
-	/**
-	 * get the last item from a list
-	 * 
-	 * @param list
-	 * @return
-	 */
-	protected Object lastOf(List<?> list) {
-		if (list.size() == 0)
-			return null;
-		return list.get(list.size() - 1);
-	}
-	
-
 
 //	protected abstract void doLayout();
 

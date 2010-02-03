@@ -7,7 +7,7 @@ extends layout/Layout.html
   List <Post> allPost
 )
 
-#{set title}Home#{/}
+#{set title:"Home"/}
 
 ~{for (Post p: allPost) {}~ 
 	    #{Display p, "home" }

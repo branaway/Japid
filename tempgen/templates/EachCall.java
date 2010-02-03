@@ -59,7 +59,7 @@ p(static_9);// line 13
 	}
 	private Each _Each1 = new Each(getOut());
 class Each1DoBody implements Each.DoBody< String>{
-	public void render(String p, int _index, boolean _isOdd, boolean _first, boolean _last) {
+	public void render(String p, int _index, boolean _isOdd, boolean _isFirst, boolean _isLast) {
 		// line 6
 p(static_2);// line 6
 p(static_3);// line 7
@@ -72,7 +72,7 @@ p(static_4);// line 7
 
 	private Each _Each2 = new Each(getOut());
 class Each2DoBody implements Each.DoBody< String>{
-	public void render(String p, int _index, boolean _isOdd, boolean _first, boolean _last) {
+	public void render(String p, int _index, boolean _isOdd, boolean _isFirst, boolean _isLast) {
 		// line 11
 p(static_6);// line 11
 p(_index);// line 12

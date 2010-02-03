@@ -17,28 +17,26 @@ static byte[] static_1 = getBytes("\n" +
 static byte[] static_2 = getBytes("\n" + 
 "\n" + 
 "");
-static byte[] static_3 = getBytes("Home"
-);
-static byte[] static_4 = getBytes("\n" + 
+static byte[] static_3 = getBytes("\n" + 
 "\n" + 
 "");
-static byte[] static_5 = getBytes(" \n" + 
+static byte[] static_4 = getBytes(" \n" + 
 "	    "
 );
-static byte[] static_6 = getBytes("\n" + 
+static byte[] static_5 = getBytes("\n" + 
 "			"
 );
-static byte[] static_7 = getBytes(" The real title is: "
+static byte[] static_6 = getBytes(" The real title is: "
 );
-static byte[] static_8 = getBytes(";\n" + 
+static byte[] static_7 = getBytes(";\n" + 
 "	    "
 );
-static byte[] static_9 = getBytes("\n" + 
+static byte[] static_8 = getBytes("\n" + 
 "");
-static byte[] static_10 = getBytes("\n" + 
+static byte[] static_9 = getBytes("\n" + 
 "\n" + 
 "");
-static byte[] static_11 = getBytes("\n" + 
+static byte[] static_10 = getBytes("\n" + 
 "\n" + 
 "<p>cool</p>"
 );
@@ -61,32 +59,30 @@ p(static_0);// line 1
 p(static_1);// line 4
 p(static_2);// line 8
 // line 10
-p(static_4);// line 10
+p(static_3);// line 10
 for (Post p: allPost) {// line 12
-p(static_5);// line 12
+p(static_4);// line 12
 _Display2.render(p, "home", _Display2DoBody);
 // line 13
-p(static_9);// line 15
+p(static_8);// line 15
 }// line 16
-p(static_10);// line 16
+p(static_9);// line 16
 _Tag23.render(blogTitle);
 // line 18
-p(static_11);// line 18
+p(static_10);// line 18
 
 	}
 	@Override protected void title() {
-		// line 10
-p(static_3);// line 10
-;
+		p("Home");;
 	}
 	private Display _Display2 = new Display(getOut());
 class Display2DoBody implements Display.DoBody< String>{
 	public void render(String title) {
 		// line 13
-p(static_6);// line 13
-p(static_7);// line 14
+p(static_5);// line 13
+p(static_6);// line 14
 p(title);// line 14
-p(static_8);// line 14
+p(static_7);// line 14
 
 	}
 }

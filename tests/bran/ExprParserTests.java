@@ -51,7 +51,7 @@ public class ExprParserTests {
 	
 	@Test
 	public void testParseGenricsInParamList() {
-		String src = "List<String> s, List < java.util.Date> d";
+		String src = "List<String> s, List < java.util.Date>d";
 		ExprParser p = new ExprParser(src);
 		List<String> argTokens = p.split();
 		assertEquals("List<String>", argTokens.get(0));
