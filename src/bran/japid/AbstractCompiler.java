@@ -272,7 +272,7 @@ public abstract class AbstractCompiler {
 
 	protected void expr() {
 		// TODO: make difference of safe expression and raw expression
-		// safe expressions are wrapped in
+		// safe expressions are wrapped in try/catch
 		String expr = parser.getToken().trim();
 		print("p(" + expr + ");");
 		markLine(parser.getLine());
@@ -356,6 +356,7 @@ public abstract class AbstractCompiler {
 		if (lastIndexOf > 0) {
 			String path = tempName.substring(0, lastIndexOf);
 			path = path.replace('/', '.');
+			path = path.replace('\\', '.');
 			getTemplateClassMetaData().packageName = path;
 			getTemplateClassMetaData().className = tempName.substring(lastIndexOf + 1);
 		} else {

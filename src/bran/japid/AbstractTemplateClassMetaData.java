@@ -13,6 +13,7 @@ public class AbstractTemplateClassMetaData {
 	private static final String IMPORT = "import";
 	private static Set<String> extraStaticImports = new HashSet<String>();
 	private String originalTemplate;
+
 	public String getOriginalTemplate() {
 		return originalTemplate;
 	}
@@ -26,11 +27,11 @@ public class AbstractTemplateClassMetaData {
 	protected static final String TAB = "\t";
 	public String packageName;
 	public String className;
-	
+
 	// each line: byte[] _lineXXX=new byte[]{12, 23, 45};
 	List<String> statics = new ArrayList<String>();
 	int staticCounter = 0;
-	
+
 	// List<String>importsLines = new ArrayList<String>();
 
 	/**
@@ -122,7 +123,8 @@ public class AbstractTemplateClassMetaData {
 	}
 
 	/**
-	 * add import lines to the to be generated imports lines
+	 * add import lines to the to be generated imports lines, import and the
+	 * ending ; are optional
 	 * 
 	 * @param imp
 	 */
@@ -140,6 +142,7 @@ public class AbstractTemplateClassMetaData {
 			pln("static byte[] static_" + i + " = getBytes(" + statics.get(i) + ");");
 		}
 	}
+
 	protected void addConstructors() {
 		// add one default and one to take a PrintWriter
 		// pln(TAB + "public " + className + "() {\r\n" +
@@ -156,8 +159,7 @@ public class AbstractTemplateClassMetaData {
 			if (this.getClass() == LayoutClassMetaData.class) {
 				// abstract
 				pln("public abstract class " + className + " extends " + BranTemplateBase.class.getName() + "{");
-			}
-			else {
+			} else {
 				pln("public class " + className + " extends " + BranTemplateBase.class.getName() + "{");
 			}
 		} else {
@@ -189,10 +191,11 @@ public class AbstractTemplateClassMetaData {
 	}
 
 	private static Set<String> extraImports = new HashSet<String>();
-	
+
 	/**
 	 * 
-	 * @param text something like \"hello\"
+	 * @param text
+	 *            something like \"hello\"
 	 * @return
 	 */
 	public String addStaticText(String text) {

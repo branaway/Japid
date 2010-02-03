@@ -44,10 +44,10 @@ public class BranTemplateCompiler extends AbstractCompiler {
 			// if (!tagArgs.matches("^[a-zA-Z0-9]+\\s*:.*$")) {
 			// tagArgs = "arg:" + tagArgs;
 			// }
-			
-			// TODO handle the action reverse lookup 
-//			tagArgs = tagArgs.replaceAll("[:]\\s*[@]", ":actionBridge.");
-//			tagArgs = tagArgs.replaceAll("(\\s)[@]", "$1actionBridge.");
+
+			// TODO handle the action reverse lookup
+			// tagArgs = tagArgs.replaceAll("[:]\\s*[@]", ":actionBridge.");
+			// tagArgs = tagArgs.replaceAll("(\\s)[@]", "$1actionBridge.");
 		} else {
 			tagName = tagText;
 			// tagArgs = ":";
@@ -57,19 +57,18 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		tag.tagName = tagName;
 		tag.startLine = parser.getLine();
 		tag.hasBody = hasBody;
-		
-//		#{tag tagArg | String closureArg...}
+
+		// #{tag tagArg | String closureArg...}
 		int vertiLine = tagArgs.lastIndexOf('|');
 		String closureParamList = "";
 		if (vertiLine > 0) {
 			tag.args = tagArgs.substring(0, vertiLine).trim();
 			closureParamList = tagArgs.substring(vertiLine + 1).trim();
-			tag.bodyArgsString  = closureParamList;
-		}
-		else {
+			tag.bodyArgsString = closureParamList;
+		} else {
 			tag.args = tagArgs;
 		}
-		
+
 		if ("extends".equals(tagName)) {
 			String layoutName = tagArgs;
 			layoutName = layoutName.replace("'", "");
@@ -90,6 +89,17 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		} else if ("set".equals(tagName)) {
 			// only support value as tag content as opposed to as attribut:
 			// #{set key}value#{/}
+			if (tagArgs.contains(":")) {
+				if (hasBody) {
+					throw new JapidCompilationException(template, currentLine, "set tag cannot have value in tag and in body");
+				} else {
+					int i = tagArgs.indexOf(":");
+
+					String key = tagArgs.substring(0, i).trim();
+					String value = tagArgs.substring(i + 1).replace('\'', '"');
+					this.cmd.addSetTag(key, "p(" + value + ");");
+				}
+			}
 			// wait until end of tag
 			tagsStack.push(tag);
 		} else {
@@ -132,10 +142,10 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		}
 
 		if ("set".equals(tagName)) {
-			// only support value as tag content as opposed to as attribut:
-			// #{set key}value#{/}
-			String key = tag.args;
-			this.cmd.addSetTag(key, tag.bodyBuffer.toString());
+			if (tag.hasBody) {
+				String key = tag.args;
+				this.cmd.addSetTag(key, tag.bodyBuffer.toString());
+			}
 		} else if (tagName.equals(DO_BODY)) {
 		} else if ("extends".equals(tagName)) {
 		} else {
@@ -152,7 +162,7 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		}
 		markLine(tag.startLine);
 		println();
-//		tagIndex--;
+		// tagIndex--;
 		skipLineBreak = true;
 	} // Writer
 
