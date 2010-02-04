@@ -21,26 +21,19 @@ public class BranLayoutCompiler extends AbstractCompiler {
 		if ("root".equals(currentTag.tagName)) {
 			throw new RuntimeException("Layouts don't take script level parameters!");
 		}
-		String args = parser.getToken();
-		currentTag.bodyArgsString = args;
-		// if (this.currentInnerClassName == null)
-		// // the args are for the whole template
-		// this.cmd.renderArgs = args;
-		// else
-		// this.currentInnerClassArgs = args;
+		super.templateArgs();
 	}
 
 	@Override
 	protected void startTag() {
-		tagIndex++;
 		String tagText = parser.getToken().trim().replaceAll(NEW_LINE, SPACE);
 		String tagName = "";
 		String tagArgs = "";
 		boolean hasBody = !parser.checkNext().endsWith("/");
 		if (tagText.indexOf(SPACE) > 0) {
 			tagName = tagText.substring(0, tagText.indexOf(SPACE));
-			tagArgs = tagText.substring(tagText.indexOf(SPACE) + 1).trim();
-			// bran: no names argument
+			tagArgs = tagText.substring(tagText.indexOf(SPACE) + 1).trim().replace('\'', '"');
+			// bran: no named argument
 			// if (!tagArgs.matches("^[a-zA-Z0-9]+\\s*:.*$")) {
 			// tagArgs = "arg:" + tagArgs;
 			// }
@@ -55,6 +48,8 @@ public class BranLayoutCompiler extends AbstractCompiler {
 		tag.tagName = tagName;
 		tag.startLine = parser.getLine();
 		tag.hasBody = hasBody;
+		tag.tagIndex = tagIndex++;
+		
 //		#{tag tagArg | String closureArg...}
 		int vertiLine = tagArgs.lastIndexOf('|');
 		String closureParamList = "";
@@ -94,9 +89,9 @@ public class BranLayoutCompiler extends AbstractCompiler {
 			tag.tagName = tagName;
 			if (hasBody) {
 //				println("new " + tagClassName + "(getOut()).render(" + tagArgs + ", new " + tagName + tagIndex + "DoBody());");
-				println("_" + tagName + tagIndex + ".render(" + tag.args + ", _" + tagName + tagIndex + "DoBody);");
+				println("_" + tagName + tag.tagIndex + ".render(" + tag.args + ", _" + tagName + tag.tagIndex + "DoBody);");
 			} else {
-				println("_" + tagName + tagIndex + ".render(" + tag.args + ", null);");
+				println("_" + tagName + tag.tagIndex + ".render(" + tag.args + ", null);");
 			}
 			
 		}
@@ -133,10 +128,10 @@ public class BranLayoutCompiler extends AbstractCompiler {
 			// TagName_html.DoBody
 
 			if (tag.hasBody) {
-				this.cmd.addCallTagBodyInnerClass(tag.tagName, tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
+				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
 			}
 			else if (!"doLayout".equals(tagName)){
-				this.cmd.addCallTagBodyInnerClass(tag.tagName, tagIndex, null, null);
+				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
 			}
 
 		}

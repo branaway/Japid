@@ -1,5 +1,6 @@
 package bran.japid;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -103,6 +104,11 @@ public class AbstractTemplateClassMetaData {
 		pln("\t" + "public static final String sourceTemplate = \"" + originalTemplate + "\";");
 	}
 
+	protected void embedContentType() {
+		String t = contentType == null? "text/html" : contentType;
+		pln("\t" + "public static final String contentType = \"" + t + "\";");
+	}
+	
 	/**
 	 * 
 	 */
@@ -122,6 +128,11 @@ public class AbstractTemplateClassMetaData {
 		}
 	}
 
+	protected void printAnnotations() {
+		for (Class<? extends Annotation> anno : typeAnnotations) {
+			pln("@" + anno.getName());
+		}
+	}
 	/**
 	 * add import lines to the to be generated imports lines, import and the
 	 * ending ; are optional
@@ -175,6 +186,7 @@ public class AbstractTemplateClassMetaData {
 		extraStaticImports.add(className);
 	}
 
+
 	public static void addImportStatic(String imp) {
 		if (imp.startsWith(IMPORT))
 			imp = imp.substring(IMPORT.length()).trim();
@@ -202,4 +214,19 @@ public class AbstractTemplateClassMetaData {
 		this.statics.add(text);
 		return "static_" + (statics.size() - 1);
 	}
+	
+	/**
+	 * add class level annotation
+	 * @param anno
+	 */
+	public static void addAnnotation(Class<? extends Annotation> anno) {
+		typeAnnotations.add(anno);
+	}
+
+	static Set<Class<? extends Annotation>> typeAnnotations =  new HashSet<Class<? extends Annotation>>();
+
+	public void setContentType(String contentType) {
+//		this.contentType = contentType;
+	}
+	String contentType;
 }

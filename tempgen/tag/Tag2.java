@@ -5,8 +5,10 @@ import tag.*;
 import bran.japid.tags.Each;
 import layout.*;
 import static bran.WebUtils.*;
+import static japidplay.PlayTemplateVarsAdapter.*;
 // This file was generated from: tag/Tag2.html
 // Change to this file will be lost next time the template file is compiled.
+@bran.NoEnhance
 public class Tag2 extends bran.japid.BranTemplateBase{
 	public static final String sourceTemplate = "tag/Tag2.html";
 static byte[] static_0 = getBytes(""

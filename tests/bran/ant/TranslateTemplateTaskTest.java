@@ -1,5 +1,7 @@
 package bran.ant;
 
+import japidplay.PlayTemplateVarsAdapter;
+
 import java.io.File;
 
 import org.apache.tools.ant.Project;
@@ -7,6 +9,9 @@ import org.apache.tools.ant.Target;
 import org.apache.tools.ant.taskdefs.Delete;
 import org.apache.tools.ant.types.FileSet;
 import org.junit.Test;
+
+import bran.NoEnhance;
+
 
 public class TranslateTemplateTaskTest {
 
@@ -21,8 +26,10 @@ public class TranslateTemplateTaskTest {
 		proj.init();
 		t.setTaskType("japid");
 		t.setTaskName("japid");
+		t.importStatic(PlayTemplateVarsAdapter.class);
 		t.setOwningTarget(new Target());
 		t.setSrcdir(new File(TEMP_ROOT));
+		t.addAnnotation(NoEnhance.class);
 //		t.add(new ModifiedSelector());
 		t.execute();
 //		System.out.println("1");

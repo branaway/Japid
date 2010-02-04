@@ -31,4 +31,14 @@ public interface UrlMapper {
 	 */
 	String lookupAbs(String action, Object[] args);
 
+	/**
+	 * lookup statics
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	String lookupStatic(String resource);
+	String lookupStaticAbs(String resource);
+	
+
 }

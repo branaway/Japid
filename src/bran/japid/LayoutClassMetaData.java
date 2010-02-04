@@ -11,9 +11,10 @@ public class LayoutClassMetaData  extends AbstractTemplateClassMetaData {
 	@Override
 	public String toString() {
 		printHeaders();
-
+		printAnnotations();
 		classDeclare();
 		embedSourceTemplateName();
+		embedContentType();
 		buildStatics();
 		addConstructors();
 		

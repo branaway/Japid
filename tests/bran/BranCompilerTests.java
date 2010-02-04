@@ -43,7 +43,7 @@ public class BranCompilerTests {
 		String src = readFile("tempgen/tag/AllPost.html");
 
 		BranTemplate bt = new BranTemplate("tag/AllPost.html", src);
-		BranTemplateCompiler cp = new BranTemplateCompiler();
+		AbstractCompiler cp = new BranTemplateCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 	}
@@ -53,7 +53,7 @@ public class BranCompilerTests {
 		String src = readFile("tempgen/tag/Display.html");
 
 		BranTemplate bt = new BranTemplate("tag/Display.html", src);
-		BranTemplateCompiler cp = new BranTemplateCompiler();
+		AbstractCompiler cp = new BranTemplateCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 	}
@@ -63,7 +63,7 @@ public class BranCompilerTests {
 		String src = readFile("tempgen/tag/Tag2.html");
 
 		BranTemplate bt = new BranTemplate("tag/Tag2.html", src);
-		BranTemplateCompiler cp = new BranTemplateCompiler ();
+		AbstractCompiler cp = new BranTemplateCompiler ();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 	}
@@ -73,7 +73,7 @@ public class BranCompilerTests {
 		String src = readFile("tempgen/templates/Actions.html");
 		
 		BranTemplate bt = new BranTemplate("templates/Actions.html", src);
-		BranTemplateCompiler cp = new BranTemplateCompiler ();
+		AbstractCompiler cp = new BranTemplateCompiler ();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 	}

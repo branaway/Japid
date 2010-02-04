@@ -6,8 +6,10 @@ import bran.japid.tags.Each;
 import bran.Post;
 import layout.*;
 import static bran.WebUtils.*;
+import static japidplay.PlayTemplateVarsAdapter.*;
 // This file was generated from: templates/AllPost.html
 // Change to this file will be lost next time the template file is compiled.
+@bran.NoEnhance
 public class AllPost extends layout.Layout{
 	public static final String sourceTemplate = "templates/AllPost.html";
 static byte[] static_0 = getBytes(""
@@ -62,12 +64,12 @@ p(static_2);// line 8
 p(static_3);// line 10
 for (Post p: allPost) {// line 12
 p(static_4);// line 12
-_Display2.render(p, "home", _Display2DoBody);
+_Display3.render(p, "home", _Display3DoBody);
 // line 13
 p(static_8);// line 15
 }// line 16
 p(static_9);// line 16
-_Tag23.render(blogTitle);
+_Tag25.render(blogTitle);
 // line 18
 p(static_10);// line 18
 
@@ -75,8 +77,8 @@ p(static_10);// line 18
 	@Override protected void title() {
 		p("Home");;
 	}
-	private Display _Display2 = new Display(getOut());
-class Display2DoBody implements Display.DoBody< String>{
+	private Display _Display3 = new Display(getOut());
+class Display3DoBody implements Display.DoBody< String>{
 	public void render(String title) {
 		// line 13
 p(static_5);// line 13
@@ -86,7 +88,7 @@ p(static_7);// line 14
 
 	}
 }
-	private Display2DoBody _Display2DoBody = new Display2DoBody();
+	private Display3DoBody _Display3DoBody = new Display3DoBody();
 
-	private Tag2 _Tag23 = new Tag2(getOut());
+	private Tag2 _Tag25 = new Tag2(getOut());
 }

@@ -3,8 +3,10 @@ import java.util.*;
 import java.io.*;
 import tag.*;
 import bran.japid.tags.Each;
+import static japidplay.PlayTemplateVarsAdapter.*;
 // This file was generated from: layout/SetLayout.html
 // Change to this file will be lost next time the template file is compiled.
+@bran.NoEnhance
 public abstract class SetLayout extends bran.japid.BranTemplateBase{
 	public static final String sourceTemplate = "layout/SetLayout.html";
 static byte[] static_0 = getBytes(""

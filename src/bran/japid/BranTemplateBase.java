@@ -22,35 +22,15 @@ import play.templates.Template.ExecutableTemplate.RawData;
  */
 public abstract class BranTemplateBase {
 	private static final String UTF_8 = "UTF-8";
-	protected Map<String, Object> flash;
-	protected String lang;
-//	public PrintWriter getOut() {
-//		return out;
-//	}
-//
-//	public void setOut(PrintWriter out) {
-//		this.out = out;
-//	}
 
 //	private PrintWriter out;
 	private OutputStream out;
 	protected OutputStream getOut() {
 		return out;
 	}
-//
-//
-//	public void setOut(OutputStream out) {
-//		this.out = out;
-//	}
-
-	// bran: another alternative is to use static import in generated java source
-	public static MessageProvider messageProvider;
-	public static UrlMapper urlMapper;
-
 	
 	public BranTemplateBase(OutputStream out2) {
 		this.out = out2;
-		flash = new HashMap<String, Object>();
 	}
 //
 //	private BranTemplateBase() {
@@ -101,7 +81,8 @@ public abstract class BranTemplateBase {
 //		ByteBuffer bb = StringUtils.encodeUTF8(s);
 //		out.write(bb.array(), 0, bb.position());
 		// ok my code is slower in large trunk of data
-		out.write(s.getBytes("UTF-8"));
+		if (s != null)
+			out.write(s.getBytes("UTF-8"));
 	}
 	
 	final protected void pln(byte[] ba) {
@@ -221,10 +202,6 @@ public abstract class BranTemplateBase {
 //		}
 //	}
 
-	protected static String getMessage(String msgName, Object... params) {
-		return messageProvider.getMessage(msgName, params);
-	}
-//	
 	static protected byte[] getBytes(String src) {
 		if (src == null || src.length() == 0)
 			return new byte[] {};
@@ -235,40 +212,5 @@ public abstract class BranTemplateBase {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	/**
-	 * map a action to a url
-	 * 
-	 * @param action the controller.action part of the whole string
-	 * @param args: the argument list, each thereof is a result of an expression evaluation
-	 * 		meaning the name of the param is not kept
-	 * @return
-	 */
-	protected static String lookup(String action, Object... args) {
-		return urlMapper.lookup(action, args);
-	}
-
-	/**
-	 * map an action to an absolute url
-	 * 
-	 * @param action the controller.action part of the whole string
-	 * @param args: the argument list, each thereof is a result of an expression evaluation
-	 * 		meaning the name of the param is not kept
-	 * 
-	 * @param action
-	 * @return
-	 */
-	protected static String lookupAbs(String action, Object... args) {
-		return urlMapper.lookupAbs(action, args);
-	}
-
-	/**
-	 * change new lines to <br>
-	 * @param data
-	 * @return
-	 */
-	public static String nl2br(Object data) {
-        return (data.toString().replace("\n", "<br/>"));
-    }
 
 }

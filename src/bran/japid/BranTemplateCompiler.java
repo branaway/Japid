@@ -19,18 +19,6 @@ public class BranTemplateCompiler extends AbstractCompiler {
 	TemplateClassMetaData cmd = new TemplateClassMetaData();
 
 	@Override
-	protected void templateArgs() {
-		Tag currentTag = this.tagsStack.peek();
-		String args = parser.getToken();
-		currentTag.bodyArgsString = args;
-		// if (this.currentInnerClassName == null)
-		// // the args are for the whole template
-		// this.cmd.renderArgs = args;
-		// else
-		// this.currentInnerClassArgs = args;
-	}
-
-	@Override
 	protected void startTag() {
 		tagIndex++;
 		String tagText = parser.getToken().trim().replaceAll(NEW_LINE, SPACE);
@@ -39,7 +27,7 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		boolean hasBody = !parser.checkNext().endsWith("/");
 		if (tagText.indexOf(SPACE) > 0) {
 			tagName = tagText.substring(0, tagText.indexOf(SPACE));
-			tagArgs = tagText.substring(tagText.indexOf(SPACE) + 1).trim();
+			tagArgs = tagText.substring(tagText.indexOf(SPACE) + 1).trim().replace('\'', '"');
 			// bran: no named argument
 			// if (!tagArgs.matches("^[a-zA-Z0-9]+\\s*:.*$")) {
 			// tagArgs = "arg:" + tagArgs;
@@ -57,6 +45,7 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		tag.tagName = tagName;
 		tag.startLine = parser.getLine();
 		tag.hasBody = hasBody;
+		tag.tagIndex = tagIndex++;
 
 		// #{tag tagArg | String closureArg...}
 		int vertiLine = tagArgs.lastIndexOf('|');
@@ -72,6 +61,7 @@ public class BranTemplateCompiler extends AbstractCompiler {
 		if ("extends".equals(tagName)) {
 			String layoutName = tagArgs;
 			layoutName = layoutName.replace("'", "");
+			layoutName = layoutName.replace("\"", "");
 			if (layoutName.endsWith(HTML)) {
 				layoutName = layoutName.substring(0, layoutName.indexOf(HTML));
 			}
@@ -96,7 +86,7 @@ public class BranTemplateCompiler extends AbstractCompiler {
 					int i = tagArgs.indexOf(":");
 
 					String key = tagArgs.substring(0, i).trim();
-					String value = tagArgs.substring(i + 1).replace('\'', '"');
+					String value = tagArgs.substring(i + 1);//.replace('\'', '"');
 					this.cmd.addSetTag(key, "p(" + value + ");");
 				}
 			}
@@ -111,11 +101,11 @@ public class BranTemplateCompiler extends AbstractCompiler {
 				// use a field to call a tag for better performance in case of
 				// loop
 				// TODO: handle tags with prefix: #{my.tag}
-				println("_" + tagName + tagIndex + ".render(" + tag.args + ", _" + tagName + tagIndex + "DoBody);");
+				println("_" + tagName + tag.tagIndex + ".render(" + tag.args + ", _" + tagName + tag.tagIndex + "DoBody);");
 			} else {
 				// println("new " + tagClassName + "(getOut()).render(" +
 				// tagArgs + ", null);");
-				println("_" + tagName + tagIndex + ".render(" + tag.args + ");");
+				println("_" + tagName + tag.tagIndex + ".render(" + tag.args + ");");
 			}
 			tagsStack.push(tag);
 		}
@@ -154,9 +144,9 @@ public class BranTemplateCompiler extends AbstractCompiler {
 			// TagName_html.DoBody
 
 			if (tag.hasBody) {
-				this.cmd.addCallTagBodyInnerClass(tag.tagName, tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
+				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
 			} else {
-				this.cmd.addCallTagBodyInnerClass(tag.tagName, tagIndex, null, null);
+				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
 			}
 
 		}

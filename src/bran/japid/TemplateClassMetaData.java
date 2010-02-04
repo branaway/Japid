@@ -52,9 +52,10 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		// call the super.layout(), which in turn call the doLayout of this
 		// class.
 		// otherwise the render method renders everything directly.
-
+		printAnnotations();
 		classDeclare();
 		embedSourceTemplateName();
+		embedContentType();
 		buildStatics();
 		addConstructors();
 // the render mthod

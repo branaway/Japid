@@ -5,8 +5,10 @@ import tag.*;
 import bran.japid.tags.Each;
 import layout.*;
 import static bran.WebUtils.*;
+import static japidplay.PlayTemplateVarsAdapter.*;
 // This file was generated from: templates/Actions.html
 // Change to this file will be lost next time the template file is compiled.
+@bran.NoEnhance
 public class Actions extends bran.japid.BranTemplateBase{
 	public static final String sourceTemplate = "templates/Actions.html";
 static byte[] static_0 = getBytes(""
@@ -45,7 +47,7 @@ p(lookup("Clients.showAccounts", post.title, post.title));// line 6
 p(static_3);// line 6
 p(lookupAbs("Clients.showAccounts", post.title.substring(1, 2)));// line 7
 p(static_4);// line 7
-p(lookup("/public/stylesheets/main.css"));// line 8
+p(lookupStatic("/public/stylesheets/main.css"));// line 8
 p(static_5);// line 8
 
 	}

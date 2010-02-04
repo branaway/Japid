@@ -383,14 +383,14 @@ public class PerfTests {
 //		System.out.println(baos.toString());
 //	}
 	
-	@Test public void testMessage() {
-//		BranTemplateBase.urlMapper =  new DummyUrlMapper();
-		BranTemplateBase.messageProvider =  new SimpleMessageProvider();
-		
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Msg ac = new Msg(baos);
-		ac.render();
-		System.out.println(baos.toString());
-	}
+//	@Test public void testMessage() {
+////		BranTemplateBase.urlMapper =  new DummyUrlMapper();
+//		BranTemplateBase.messageProvider =  new SimpleMessageProvider();
+//		
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		Msg ac = new Msg(baos);
+//		ac.render();
+//		System.out.println(baos.toString());
+//	}
 	
 }

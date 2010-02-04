@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import org.junit.Test;
 
+import bran.japid.AbstractCompiler;
 import bran.japid.BranTemplate;
 import bran.japid.BranTemplateCompiler;
 
@@ -27,7 +28,7 @@ public class BranTemplateCompilerTests {
 		}
 		
 		BranTemplate bt = new BranTemplate("tag/AllPost.html", src);
-		BranTemplateCompiler cp = new BranTemplateCompiler();
+		AbstractCompiler cp = new BranTemplateCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 	}

@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import play.Play;
 import play.classloading.enhancers.LocalvariablesNamesEnhancer.LocalVariablesNamesTracer;
 import play.exceptions.ActionNotFoundException;
 import play.exceptions.NoRouteFoundException;
@@ -23,16 +24,17 @@ import bran.japid.UrlMapper;
  * 
  */
 public class RouteAdapter implements UrlMapper {
-//	String controllerName;
+	// String controllerName;
 
 	/**
 	 * 
 	 * @param controllerName
-	 *            the current controller's name. If null is specified, the Request.current().controller will be used
+	 *            the current controller's name. If null is specified, the
+	 *            Request.current().controller will be used
 	 */
 	public RouteAdapter() {
 		super();
-//		this.controllerName = controllerName;
+		// this.controllerName = controllerName;
 	}
 
 	/**
@@ -45,7 +47,7 @@ public class RouteAdapter implements UrlMapper {
 	 * 
 	 * @{list( ).remove('page').add('search', params.search).add('order',
 	 *         (_caller.order == 'DESC' ? 'ASC' : 'DESC'))} in the table.html in
-	 *         
+	 * 
 	 *         the CRUD module
 	 * 
 	 *         this one has property access in the param list:
@@ -64,15 +66,14 @@ public class RouteAdapter implements UrlMapper {
 	public String lookup(String actionString, Object[] params) {
 		// lookup the target method param names to build a name value map to
 		// reverse-lookup in the router
-		String controllerName = Request.current().controller;
 
 		try {
+			String controllerName = Request.current().controller;
 			// forms: Controller.action, action, package.Controller.action
 			String action = actionString;
 			if (actionString.indexOf(".") > 0) {
 				// fell spec with controller name
-			}
-			else {
+			} else {
 				action = controllerName + "." + actionString;
 			}
 			if (action.endsWith(".call")) {
@@ -110,8 +111,17 @@ public class RouteAdapter implements UrlMapper {
 
 	@Override
 	public String lookupAbs(String action, Object[] args) {
-		// TODO Auto-generated method stub
-		return null;
+		return Request.current().getBase() + this.lookup(action, args);
+	}
+
+	@Override
+	public String lookupStatic(String resource) {
+		return Router.reverseWithCheck(resource, Play.getVirtualFile(resource));
+	}
+
+	@Override
+	public String lookupStaticAbs(String resource) {
+		return Request.current().getBase() + this.lookupStatic(resource);
 	}
 
 }

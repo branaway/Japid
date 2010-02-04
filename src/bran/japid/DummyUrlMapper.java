@@ -25,4 +25,16 @@ public class DummyUrlMapper implements UrlMapper{
 		return "http://dummp/action?id=1";
 	}
 
+	@Override
+	public String lookupStatic(String resource) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String lookupStaticAbs(String resource) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

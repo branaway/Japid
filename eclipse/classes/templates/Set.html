@@ -1,7 +1,11 @@
 ~{
 extends layout/SetLayout.html
+
 }~
+~(
+String a
+)
 
 
-#{set title:"Home"/}
+#{set title:'Home' + a /}
 #{set footer}great footer#{/}

@@ -36,6 +36,7 @@ public abstract class AbstractCompiler {
 		StringBuffer bodyBuffer = new StringBuffer(2000);
 		public String innerClassName;
 		public String args;
+		public int tagIndex;
 	}
 
 	public void compile(BranTemplate t) {
@@ -95,7 +96,9 @@ public abstract class AbstractCompiler {
 	}
 
 	protected void plain() {
-		String text = parser.getToken().replace("\\", "\\\\").replaceAll("\"", "\\\\\"").replace("$", "\\$");
+		String text = parser.getToken().
+			replace("\\", "\\\\").
+			replaceAll("\"", "\\\\\"");//.replace("$", "\\$"); // bran: why dollar escape? Groovy thing?
 		
 		if (skipLineBreak && text.startsWith(NEW_LINE)) {
 			text = text.substring(1);
@@ -197,8 +200,6 @@ public abstract class AbstractCompiler {
 
 	protected abstract void endTag();
 
-	protected abstract void templateArgs();
-
 	protected void println() {
 		print(NEW_LINE);
 
@@ -241,6 +242,7 @@ public abstract class AbstractCompiler {
 				} else if (temp.startsWith("extends ") || temp.startsWith("extends	")) {
 					String layoutName = temp.substring("extends".length()).trim();
 					layoutName = layoutName.replace("'", "");
+					layoutName = layoutName.replace("\"", "");
 					if (layoutName.endsWith(";")) { 
 						layoutName = layoutName.substring(0, layoutName.length() - 1);
 					}
@@ -251,6 +253,17 @@ public abstract class AbstractCompiler {
 						layoutName = layoutName.substring(1);
 					}
 					getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
+				} else if (temp.startsWith("contentType ") || temp.startsWith("contentType	")) {
+					String contentType = temp.substring("contentType".length())
+						.trim().replace("'", "").replace("\"", "");
+					if (contentType.endsWith(";"))
+						contentType = contentType.substring(0, contentType.length());
+					getTemplateClassMetaData().setContentType(contentType);
+				} else if (temp.startsWith("arguments ") || temp.startsWith("arguments	")) {
+					String contentType = temp.substring("arguments".length())
+					.trim().replace(";", "").replace("'", "").replace("\"", "");
+					Tag currentTag = this.tagsStack.peek();
+					currentTag.bodyArgsString = contentType;
 				} else {
 					print(line);
 					markLine(parser.getLine() + i);
@@ -299,10 +312,10 @@ public abstract class AbstractCompiler {
 			// remove Play dependecy
 			if (absolute) {
 //				print("p(request.getBase() + play.mvc.Router.reverseWithCheck(" + action + ", play.Play.getVirtualFile(" + action + ")));");
-				print("p(lookupAbs(" + action + "));");
+				print("p(lookupStaticAbs(" + action + "));");
 			} else {
 //				print("p(play.mvc.Router.reverseWithCheck(" + action + ", play.Play.getVirtualFile(" + action + ")));");
-				print("p(lookup(" + action + "));");
+				print("p(lookupStatic(" + action + "));");
 			}
 		} else {
 			if (!action.endsWith(")")) {
@@ -391,6 +404,12 @@ public abstract class AbstractCompiler {
 	abstract protected void postParsing(Tag tag);
 
 	abstract protected AbstractTemplateClassMetaData getTemplateClassMetaData();
+
+	protected void templateArgs() {
+		Tag currentTag = this.tagsStack.peek();
+		String args = parser.getToken();
+		currentTag.bodyArgsString = args;
+	}
 
 	protected int currentLine = 1;
 

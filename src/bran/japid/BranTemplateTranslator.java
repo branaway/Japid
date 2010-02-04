@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * compile html based template to java files
@@ -144,7 +147,7 @@ public class BranTemplateTranslator {
 		String childPath = child.getCanonicalPath();
 		assert (childPath.startsWith(curPath));
 		String srcRelative = childPath.substring(curPath.length());
-		if (srcRelative .startsWith(File.separator)) {
+		if (srcRelative.startsWith(File.separator)) {
 			srcRelative  = srcRelative.substring(File.separator.length());
 		}
 		return srcRelative;
@@ -153,5 +156,16 @@ public class BranTemplateTranslator {
 	public File generate(File file) throws Exception {
 		String rela = getRelativePath(file, new File("."));
 		return generate(rela);
-	}    
+	}
+
+	/**
+	 * add class level annotation
+	 * @param anno
+	 */
+	public void addAnnotation(Class<? extends Annotation> anno) {
+		AbstractTemplateClassMetaData.addAnnotation(anno);
+//		typeAnnotations.add(anno);
+	}
+
+//	List<Class<? extends Annotation>> typeAnnotations =  new ArrayList<Class<? extends Annotation>>();
 }

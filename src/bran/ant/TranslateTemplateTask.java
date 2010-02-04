@@ -2,6 +2,7 @@ package bran.ant;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,9 @@ public class TranslateTemplateTask extends MatchingTask {
 			for (String c : this.imports) {
 				tran.addImportLine(c);
 			}
+			for (Class<? extends Annotation>  a : this.typeAnnotations) {
+				tran.addAnnotation(a);
+			}
 
 			for (int i = 0; i < files.length; i++) {
 				File pFile = files[i];
@@ -208,5 +212,11 @@ public class TranslateTemplateTask extends MatchingTask {
 	private File srcDir = null;
 	private boolean listFiles = false;
 
+	public void addAnnotation(Class<? extends Annotation> anno) {
+		typeAnnotations.add(anno);
+	}
+	
+	List<Class<? extends Annotation>> typeAnnotations =  new ArrayList<Class<? extends Annotation>>();
+	
 	// private ClassLoader m_classLoader = JamonTask.class.getClassLoader();
 }
