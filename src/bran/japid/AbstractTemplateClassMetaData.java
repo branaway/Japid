@@ -23,7 +23,7 @@ public class AbstractTemplateClassMetaData {
 		this.originalTemplate = originalTemplate.replace('\\', '/');
 	}
 
-	protected StringBuilder sb = new StringBuilder();
+	public StringBuilder sb = new StringBuilder();
 	protected static final String SEMI = ";";
 	protected static final String TAB = "\t";
 	public String packageName;
@@ -63,7 +63,7 @@ public class AbstractTemplateClassMetaData {
 	/**
 	 * 
 	 */
-	protected void printHeaders() {
+	public void printHeaders() {
 		if (packageName != null) {
 			pln("package " + packageName + SEMI);
 		}

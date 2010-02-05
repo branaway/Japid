@@ -207,5 +207,28 @@ public class ParserTests {
 		assertEquals("hello", tokens.get(1));
 		
 	}
+
+	@Test
+	public void scriptTags() {
+		String src = "~[ my.java.method()]~ {% another one %}  ~{ and more}~";
+		List<String> tokens = new ArrayList<String>();
+		BranParser p = new BranParser(src);
+		loop: for (;;) {
+			BranParser.Token state = p.nextToken();
+			switch (state) {
+			case EOF:
+				break loop;
+			default:
+				String tokenstring = p.getToken();
+				tokens.add(tokenstring );
+				System.out.println(state.name() + ": [" + tokenstring + "]");
+			}
+		}
+		assertEquals(7, tokens.size());
+		assertEquals(" my.java.method()", tokens.get(1));
+		assertEquals(" another one ", tokens.get(3));
+		assertEquals(" and more", tokens.get(5));
+		
+	}
 }
 

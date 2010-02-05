@@ -14,6 +14,8 @@ import org.apache.commons.logging.LogFactory;
  * 
  */
 public abstract class AbstractCompiler {
+	private static final String ARGS = "args";
+
 	private static Log log = LogFactory.getLog(AbstractCompiler.class);
 
 	protected static final String HTML = ".html";
@@ -235,12 +237,11 @@ public abstract class AbstractCompiler {
 		if (text.indexOf(NEW_LINE) > -1) {
 			String[] lines = parser.getToken().split(NEW_LINE);
 			for (int i = 0; i < lines.length; i++) {
-				String line = lines[i];
-				String temp = line.trim();
-				if (temp.startsWith("import ") || temp.startsWith("import	")) {
-					getTemplateClassMetaData().addImportLine(temp);
-				} else if (temp.startsWith("extends ") || temp.startsWith("extends	")) {
-					String layoutName = temp.substring("extends".length()).trim();
+				String line = lines[i].trim();
+				if (line.startsWith("import ") || line.startsWith("import	")) {
+					getTemplateClassMetaData().addImportLine(line);
+				} else if (line.startsWith("extends ") || line.startsWith("extends	")) {
+					String layoutName = line.substring("extends".length()).trim();
 					layoutName = layoutName.replace("'", "");
 					layoutName = layoutName.replace("\"", "");
 					if (layoutName.endsWith(";")) { 
@@ -253,19 +254,19 @@ public abstract class AbstractCompiler {
 						layoutName = layoutName.substring(1);
 					}
 					getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
-				} else if (temp.startsWith("contentType ") || temp.startsWith("contentType	")) {
-					String contentType = temp.substring("contentType".length())
+				} else if (line.startsWith("contentType ") || line.startsWith("contentType	")) {
+					String contentType = line.substring("contentType".length())
 						.trim().replace("'", "").replace("\"", "");
 					if (contentType.endsWith(";"))
 						contentType = contentType.substring(0, contentType.length());
 					getTemplateClassMetaData().setContentType(contentType);
-				} else if (temp.startsWith("arguments ") || temp.startsWith("arguments	")) {
-					String contentType = temp.substring("arguments".length())
+				} else if (line.startsWith(ARGS + " ") || line.startsWith(ARGS + "\t")) {
+					String contentType = line.substring(ARGS.length())
 					.trim().replace(";", "").replace("'", "").replace("\"", "");
 					Tag currentTag = this.tagsStack.peek();
 					currentTag.bodyArgsString = contentType;
 				} else {
-					print(line);
+					print(lines[i]);
 					markLine(parser.getLine() + i);
 					println();
 				}

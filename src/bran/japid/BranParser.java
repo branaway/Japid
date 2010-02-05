@@ -24,7 +24,7 @@ public class BranParser {
 
 		EOF, //
 		PLAIN, //
-		SCRIPT, // %{...}% or {%...%} bran: or ~{}~, the open wings directives
+		SCRIPT, // %{...}% or {%...%} bran: or ~{}~,  ~[]~ the open wings directives
 		EXPR, // ${...}
 		START_TAG, // #{...}
 		END_TAG, // #{/...}
@@ -105,15 +105,20 @@ public class BranParser {
 				}
 				// bran open wings
 				if (c == '~' && c1 == '{') {
+					// deprecated use ~[
 					return found(Token.SCRIPT, 2);
 				}
+				
+				if (c == '~' && c1 == '[') {
+					return found(Token.SCRIPT, 2);
+				}
+				
 				if (c == '$' && c1 == '{') {
 					return found(Token.EXPR, 2);
 				}
-				if (c == '~' && c1 == '{') {
-					return found(Token.EXPR, 2);
-				}
+
 				if (c == '~' && c1 == '(') {
+					// deprecated in favor of args directive in a script
 					return found(Token.TEMPLATE_ARGS, 2);
 				}
 				// bran: shell like expression: ~_, ~user.name (this one is diff
@@ -153,6 +158,9 @@ public class BranParser {
 				}
 				// bran
 				if (c == '}' && c1 == '~') {
+					return found(Token.PLAIN, 2);
+				}
+				if (c == ']' && c1 == '~') {
 					return found(Token.PLAIN, 2);
 				}
 				break;

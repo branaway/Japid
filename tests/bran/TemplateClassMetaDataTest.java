@@ -2,6 +2,7 @@ package bran;
 
 import org.junit.Test;
 
+import bran.japid.AbstractTemplateClassMetaData;
 import bran.japid.TemplateClassMetaData;
 
 public class TemplateClassMetaDataTest {
@@ -18,6 +19,17 @@ public class TemplateClassMetaDataTest {
 		m.addCallTagBodyInnerClass("Display", 1, "String title, String hi", "p(\"The real title is: \"); p(title);");
 		m.body = "pln();\n\t if (frontPost != null) { new tag.Display().render(frontPost, \"home\", new Display1()); } \n pln(\"<p>cool</p>	  \");";
 		System.out.println(m.toString());
+	}
+	
+	@Test
+	public void testImports () {
+		AbstractTemplateClassMetaData meta = new AbstractTemplateClassMetaData() {{
+			addImportLine("models");
+		}};
+		
+		meta.printHeaders();
+		System.out.println(meta.sb.toString());
+		
 	}
 
 }
