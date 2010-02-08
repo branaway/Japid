@@ -1,29 +1,30 @@
 package templates;
 import java.util.*;
 import java.io.*;
-import tag.*;
-import bran.japid.tags.Each;
-import bran.Post;
-import layout.*;
-import static bran.WebUtils.*;
-import static japidplay.PlayTemplateVarsAdapter.*;
-// This file was generated from: templates/Msg.html
+import cn.bran.japid.tags.Each;
+import japidviews._layouts.*;
+import japidviews._tags.*;
+import static cn.bran.play.PlayTemplateVarsAdapter.*;
+// NOTE: This file was generated from: templates/Msg.html
 // Change to this file will be lost next time the template file is compiled.
-@bran.NoEnhance
-public class Msg extends bran.japid.BranTemplateBase{
+@cn.bran.play.NoEnhance
+public class Msg extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/Msg.html";
-static byte[] static_0 = getBytes("login: "
-);
-static byte[] static_1 = getBytes("\n" + 
+	public static final String contentType = "text/html";
+static String static_0 = "login: "
+;
+static String static_1 = "\n" + 
 "customer name: "
-);
-static byte[] static_2 = getBytes(""
-);
-	public Msg(OutputStream out) {
+;
+static String static_2 = ""
+;
+	public Msg(StringBuilder out) {
 		super(out);
 	}
-	public void render() {
+	public cn.bran.japid.template.RenderResult render() {
+		long t = -1;
 		super.layout();
+		return new cn.bran.japid.template.RenderResult(this.contentType, getOut(), t);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1

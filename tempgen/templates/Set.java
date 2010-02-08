@@ -1,40 +1,41 @@
 package templates;
 import java.util.*;
 import java.io.*;
-import tag.*;
-import bran.japid.tags.Each;
-import bran.Post;
-import layout.*;
-import static bran.WebUtils.*;
-import static japidplay.PlayTemplateVarsAdapter.*;
-// This file was generated from: templates/Set.html
+import cn.bran.japid.tags.Each;
+import japidviews._layouts.*;
+import japidviews._tags.*;
+import static cn.bran.play.PlayTemplateVarsAdapter.*;
+// NOTE: This file was generated from: templates/Set.html
 // Change to this file will be lost next time the template file is compiled.
-@bran.NoEnhance
-public class Set extends layout.SetLayout{
+@cn.bran.play.NoEnhance
+public class Set extends japidviews._layouts.SetLayout{
 	public static final String sourceTemplate = "templates/Set.html";
-static byte[] static_0 = getBytes(""
-);
-static byte[] static_1 = getBytes("\n" + 
-"");
-static byte[] static_2 = getBytes("\n" + 
+	public static final String contentType = "text/html";
+static String static_0 = ""
+;
+static String static_1 = "\n" + 
+"";
+static String static_2 = "\n" + 
 "\n" + 
 "\n" + 
-"");
-static byte[] static_3 = getBytes("\n" + 
-"");
-static byte[] static_4 = getBytes("great footer"
-);
-static byte[] static_5 = getBytes("\n" + 
-"");
-	public Set(OutputStream out) {
+"";
+static String static_3 = "\n" + 
+"";
+static String static_4 = "great footer"
+;
+static String static_5 = "\n" + 
+"";
+	public Set(StringBuilder out) {
 		super(out);
 	}
 	String a;
-	public void render(
+	public cn.bran.japid.template.RenderResult render(
 String a
 ) {
 		this.a = a;
+		long t = -1;
 		super.layout();
+		return new cn.bran.japid.template.RenderResult(this.contentType, getOut(), t);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1

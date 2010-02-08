@@ -1,0 +1,3653 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title> 家园 </title>		
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="/public/stylesheets/main.css" />
+        <link rel="shortcut icon" type="image/png" href="/public/images/favicon.png" />
+        <script src="/public/javascripts/jquery-1.3.2.min.js"></script>
+        <script src="/public/javascripts/jquery.tools.min.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                yabe.
+            </div>
+            <ul id="tools">
+                <li>
+                    <a href="/admin/">Log in to write something</a>
+                </li>
+            </ul>
+            <div id="title">
+                <span class="about">About this blog</span>
+                <h1><a href="/">Yet another blog with Japid</a></h1>
+                <h2>We will write about nothing</h2>
+            </div>
+        </div>
+        
+        <div id="main">
+            
+
+
+    
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/1">About the model layer</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">14 六月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 2 comments.
+                                    , latest by Mike                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            The model has a central position in a Play! application. It is the domain-specific  representation of the information on which the application operates.<br/> <br/>Martin fowler defines it as :<br/>    <br/>Responsible for representing concepts of the business, information about the  business situation, and business rules. State that reflects the business situation  is controlled and used here, even though the technical details of storing it are  delegated to the infrastructure. This layer is the heart of business software.<br/>        </div>
+    </div>
+ 
+            <div class="older-posts">    
+            <h3>Older posts <span class="from">from this blog</span></h3>
+							
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/89">The MVC application</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Jeff </span>,
+        <span class="post-date">06 六月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            A Play! application follows the MVC architectural pattern as applied to the  architecture of the Web.<br/> <br/>This pattern splits the application into separate layers: the Presentation  layer and the Model layer. The Presentation layer is further split into a  View and a Controller layer.<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/88">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/87">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/86">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/85">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/84">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/83">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/82">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/81">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/80">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/79">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/78">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/77">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/76">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/75">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/74">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/73">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/72">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/71">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/70">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/69">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/68">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/67">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/66">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/65">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/64">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/63">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/62">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/61">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/60">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/59">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/58">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/57">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/56">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/55">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/54">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/53">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/52">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/51">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/50">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/49">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/48">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/47">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/46">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/45">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/44">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/43">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/42">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/41">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/40">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/39">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/38">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/37">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/36">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/35">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/34">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/33">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/32">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/31">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/30">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/29">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/28">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/27">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/26">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/25">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/24">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/23">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/22">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/21">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/20">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/19">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/18">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/17">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/16">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/15">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/14">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/13">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/12">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/11">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/10">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/9">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/8">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/7">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/6">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/5">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/4">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/3">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/2">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 1 comment.
+                                    , latest by Tom                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test.<br/>        </div>
+    </div>
+ 
+                    </div>
+        
+     
+        </div>
+        
+        <p id="footer">
+            Yabe is a (not so) powserful blog engine built with the 
+            <a href="http://www.playframework.org">play framework</a>
+            as a tutorial application.
+        </p>
+        
+    </body>
+</html><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title> 家园 </title>		
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="/public/stylesheets/main.css" />
+        <link rel="shortcut icon" type="image/png" href="/public/images/favicon.png" />
+        <script src="/public/javascripts/jquery-1.3.2.min.js"></script>
+        <script src="/public/javascripts/jquery.tools.min.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                yabe.
+            </div>
+            <ul id="tools">
+                <li>
+                    <a href="/admin/">Log in to write something</a>
+                </li>
+            </ul>
+            <div id="title">
+                <span class="about">About this blog</span>
+                <h1><a href="/">Yet another blog with Japid</a></h1>
+                <h2>We will write about nothing</h2>
+            </div>
+        </div>
+        
+        <div id="main">
+            
+
+
+    
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/1">About the model layer</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">14 六月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 2 comments.
+                                    , latest by Mike                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            The model has a central position in a Play! application. It is the domain-specific  representation of the information on which the application operates.<br/> <br/>Martin fowler defines it as :<br/>    <br/>Responsible for representing concepts of the business, information about the  business situation, and business rules. State that reflects the business situation  is controlled and used here, even though the technical details of storing it are  delegated to the infrastructure. This layer is the heart of business software.<br/>        </div>
+    </div>
+ 
+            <div class="older-posts">    
+            <h3>Older posts <span class="from">from this blog</span></h3>
+							
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/89">The MVC application</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Jeff </span>,
+        <span class="post-date">06 六月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            A Play! application follows the MVC architectural pattern as applied to the  architecture of the Web.<br/> <br/>This pattern splits the application into separate layers: the Presentation  layer and the Model layer. The Presentation layer is further split into a  View and a Controller layer.<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/88">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/87">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/86">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/85">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/84">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/83">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/82">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/81">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/80">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/79">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/78">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/77">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/76">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/75">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/74">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/73">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/72">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/71">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/70">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/69">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/68">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/67">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/66">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/65">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/64">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/63">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/62">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/61">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/60">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/59">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/58">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/57">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/56">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/55">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/54">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/53">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/52">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/51">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/50">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/49">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/48">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/47">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/46">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/45">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/44">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/43">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/42">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/41">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/40">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/39">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/38">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/37">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/36">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/35">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/34">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/33">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试 Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/32">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/31">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/30">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/29">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/28">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/27">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/26">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/25">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/24">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/23">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/22">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/21">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/20">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/19">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/18">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/17">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/16">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/15">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/14">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/13">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/12">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/11">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/10">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/9">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/8">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/7">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/6">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/5">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/4">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/3">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 0 comments.
+                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test. 这是一个测试<br/>        </div>
+    </div>
+ 
+            				
+
+ 
+
+<div class='post '>
+    <h2 class="post-title">
+        <a href="/posts/2">Just a test of YABE</a>
+    </h2>
+    <div class="post-metadata">
+        <span class="post-author">by Bob </span>,
+        <span class="post-date">25 三月 09</span>
+                    <span class="post-comments">
+                &nbsp;|&nbsp; 1 comment.
+                                    , latest by Tom                            </span>
+		    </div> 
+            <div class="post-content">
+            <div class="about">Detail: </div>
+            Well, it's just a test.<br/>        </div>
+    </div>
+ 
+                    </div>
+        
+     
+        </div>
+        
+        <p id="footer">
+            Yabe is a (not so) powserful blog engine built with the 
+            <a href="http://www.playframework.org">play framework</a>
+            as a tutorial application.
+        </p>
+        
+    </body>
+</html>

@@ -1,11 +1,9 @@
 ~{
-import bran.Post;
-extends layout/Layout.html
+	import	 	cn.bran.Post
+	extends 	Layout.html
+	args		String blogTitle, List <Post> allPost
+	stopwatch	on
 }~
-~(
-  String blogTitle, 
-  List <Post> allPost
-)
 
 #{set title:"Home"/}
 

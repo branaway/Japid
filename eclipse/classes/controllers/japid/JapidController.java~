@@ -1,0 +1,30 @@
+package controllers.japid;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
+import play.mvc.Controller;
+import play.mvc.Http.Response;
+import bran.japid.temmplate.JapidTemplateBase;
+import bran.play.JapidResult;
+
+public class JapidController extends Controller {
+	public static <T extends JapidTemplateBase> void render(Class<T> c, Object... args) {
+		Class<?>[] paramTypes = new Class<?>[args.length];
+		for (int i=0; i < args.length; i++) {
+			paramTypes[i] = args[i].getClass();
+		}
+		try {
+			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
+			Method renderMeth = c.getMethod("render", paramTypes);
+			StringBuilder sb = new StringBuilder(8000);
+			T t = ctor.newInstance(sb);
+			Object contentType = renderMeth.invoke(t, args);
+			
+			throw new JapidResult((String) contentType, sb.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+}

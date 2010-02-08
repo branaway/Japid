@@ -1,20 +1,19 @@
 package templates;
 import java.util.*;
 import java.io.*;
-import tag.*;
-import bran.japid.tags.Each;
-import bran.Post;
-import layout.*;
-import static bran.WebUtils.*;
-import static japidplay.PlayTemplateVarsAdapter.*;
-// This file was generated from: templates/JavaScript.html
+import cn.bran.japid.tags.Each;
+import japidviews._layouts.*;
+import japidviews._tags.*;
+import static cn.bran.play.PlayTemplateVarsAdapter.*;
+// NOTE: This file was generated from: templates/JavaScript.html
 // Change to this file will be lost next time the template file is compiled.
-@bran.NoEnhance
-public class JavaScript extends bran.japid.BranTemplateBase{
+@cn.bran.play.NoEnhance
+public class JavaScript extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/JavaScript.html";
-static byte[] static_0 = getBytes(""
-);
-static byte[] static_1 = getBytes("\n" + 
+	public static final String contentType = "text/html";
+static String static_0 = ""
+;
+static String static_1 = "\n" + 
 "\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
@@ -37,18 +36,20 @@ static byte[] static_1 = getBytes("\n" +
 "        }\n" + 
 "    });\n" + 
 "</script>\n" + 
-"");
-static byte[] static_2 = getBytes("\n" + 
+"";
+static String static_2 = "\n" + 
 "</body>\n" + 
 "</html>"
-);
-	public JavaScript(OutputStream out) {
+;
+	public JavaScript(StringBuilder out) {
 		super(out);
 	}
 	String hello;
-	public void render(String hello) {
+	public cn.bran.japid.template.RenderResult render(String hello) {
 		this.hello = hello;
+		long t = -1;
 		super.layout();
+		return new cn.bran.japid.template.RenderResult(this.contentType, getOut(), t);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1

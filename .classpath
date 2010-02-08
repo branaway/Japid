@@ -22,7 +22,6 @@
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/commons-fileupload-1.2.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/commons-httpclient.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/commons-io.jar"/>
-	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/commons-lang.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/compiler-jdt.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/dom4j-1.6.1.jar"/>
@@ -62,5 +61,6 @@
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/wikitext.core_1.1.1.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/WikiText.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/ZDB.jar"/>
+	<classpathentry kind="lib" path="D:/home/bran/projects/play1.1/framework/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

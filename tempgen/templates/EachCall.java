@@ -1,52 +1,53 @@
 package templates;
 import java.util.*;
 import java.io.*;
-import tag.*;
-import bran.japid.tags.Each;
-import bran.Post;
-import layout.*;
-import static bran.WebUtils.*;
-import static japidplay.PlayTemplateVarsAdapter.*;
-// This file was generated from: templates/EachCall.html
+import cn.bran.japid.tags.Each;
+import japidviews._layouts.*;
+import japidviews._tags.*;
+import static cn.bran.play.PlayTemplateVarsAdapter.*;
+// NOTE: This file was generated from: templates/EachCall.html
 // Change to this file will be lost next time the template file is compiled.
-@bran.NoEnhance
-public class EachCall extends bran.japid.BranTemplateBase{
+@cn.bran.play.NoEnhance
+public class EachCall extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/EachCall.html";
-static byte[] static_0 = getBytes(""
-);
-static byte[] static_1 = getBytes("\n" + 
+	public static final String contentType = "text/html";
+static String static_0 = ""
+;
+static String static_1 = "\n" + 
 "\n" + 
 "the old bad way:\n" + 
-"");
-static byte[] static_2 = getBytes("\n" + 
+"";
+static String static_2 = "\n" + 
 "	"
-);
-static byte[] static_3 = getBytes("<p>"
-);
-static byte[] static_4 = getBytes("</p>\n" + 
-"");
-static byte[] static_5 = getBytes("\n" + 
+;
+static String static_3 = "<p>"
+;
+static String static_4 = "</p>\n" + 
+"";
+static String static_5 = "\n" + 
 "\n" + 
 "the closure form:\n" + 
-"");
-static byte[] static_6 = getBytes("\n" + 
+"";
+static String static_6 = "\n" + 
 "	<p>"
-);
-static byte[] static_7 = getBytes(" ) "
-);
-static byte[] static_8 = getBytes("</p>\n" + 
-"");
-static byte[] static_9 = getBytes("\n" + 
-"");
-	public EachCall(OutputStream out) {
+;
+static String static_7 = " ) "
+;
+static String static_8 = "</p>\n" + 
+"";
+static String static_9 = "\n" + 
+"";
+	public EachCall(StringBuilder out) {
 		super(out);
 	}
 	List<String> posts;
-	public void render(
+	public cn.bran.japid.template.RenderResult render(
 List<String> posts
 ) {
 		this.posts = posts;
+		long t = -1;
 		super.layout();
+		return new cn.bran.japid.template.RenderResult(this.contentType, getOut(), t);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1

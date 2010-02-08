@@ -1,52 +1,54 @@
 package templates;
 import java.util.*;
 import java.io.*;
-import tag.*;
-import bran.japid.tags.Each;
-import bran.Post;
-import layout.*;
-import static bran.WebUtils.*;
-import static japidplay.PlayTemplateVarsAdapter.*;
-// This file was generated from: templates/Posts.html
+import cn.bran.japid.tags.Each;
+import japidviews._layouts.*;
+import japidviews._tags.*;
+import cn.bran.Post;
+import static cn.bran.play.PlayTemplateVarsAdapter.*;
+// NOTE: This file was generated from: templates/Posts.html
 // Change to this file will be lost next time the template file is compiled.
-@bran.NoEnhance
-public class Posts extends bran.japid.BranTemplateBase{
+@cn.bran.play.NoEnhance
+public class Posts extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/Posts.html";
-static byte[] static_0 = getBytes(""
-);
-static byte[] static_1 = getBytes("\n" + 
-"");
-static byte[] static_2 = getBytes("\n" + 
+	public static final String contentType = "text/html";
+static String static_0 = ""
+;
+static String static_1 = "\n" + 
+"";
+static String static_2 = "\n" + 
 "\n" + 
-"");
-static byte[] static_3 = getBytes(" \n" + 
+"";
+static String static_3 = " \n" + 
 "	- title: "
-);
-static byte[] static_4 = getBytes("\n" + 
+;
+static String static_4 = "\n" + 
 "	- date: "
-);
-static byte[] static_5 = getBytes("\n" + 
+;
+static String static_5 = "\n" + 
 "	- author "
-);
-static byte[] static_6 = getBytes(" "
-);
-static byte[] static_7 = getBytes("\n" + 
+;
+static String static_6 = " "
+;
+static String static_7 = "\n" + 
 "	the real title: 你好\n" + 
-"");
-static byte[] static_8 = getBytes("\n" + 
-"");
-	public Posts(OutputStream out) {
+"";
+static String static_8 = "\n" + 
+"";
+	public Posts(StringBuilder out) {
 		super(out);
 	}
 	String blogTitle;
 	List <Post> allPost;
-	public void render(
+	public cn.bran.japid.template.RenderResult render(
   String blogTitle, 
   List <Post> allPost
 ) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
+		long t = -1;
 		super.layout();
+		return new cn.bran.japid.template.RenderResult(this.contentType, getOut(), t);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1
