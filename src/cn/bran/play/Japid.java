@@ -1,8 +1,11 @@
 package cn.bran.play;
 
-import cn.bran.japid.template.JapidTemplateBase;
 
-
+/**
+ * not used yet
+ * @author Bing Ran<bing_ran@hotmail.com>
+ *
+ */
 public class Japid {
 
 	public static void shutdown() {

@@ -10,7 +10,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
-import cn.bran.japid.compiler.JapidParser.Token;
 import cn.bran.japid.template.JapidTemplate;
 
 /**

@@ -3,11 +3,8 @@ package cn.bran.play;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.text.StrSubstitutor;
-
-import cn.bran.japid.util.UrlMapper;
 
 import play.Play;
 import play.classloading.enhancers.LocalvariablesNamesEnhancer.LocalVariablesNamesTracer;
@@ -20,6 +17,7 @@ import play.mvc.Router;
 import play.mvc.Http.Request;
 import play.mvc.Router.ActionDefinition;
 import play.mvc.Router.Route;
+import cn.bran.japid.util.UrlMapper;
 
 /**
  * the logic is modeled after the the Play!'s {@code Template.ActionBridge.}

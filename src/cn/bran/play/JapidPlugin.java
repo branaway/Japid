@@ -1,6 +1,5 @@
 package cn.bran.play;
 
-
 import java.io.File;
 
 import org.apache.tools.ant.Project;
@@ -15,8 +14,15 @@ import play.templates.JavaExtensions;
 import play.templates.Template;
 import cn.bran.japid.ant.TranslateTemplateTask;
 
+/**
+ * this plugin is not in effect until Play! provides a hook before its
+ * classloader detect file changes
+ * 
+ * @author Bing Ran<bing_ran@hotmail.com>
+ * 
+ */
 public class JapidPlugin extends PlayPlugin {
-//	VirtualFile appRoot = VirtualFile.open(Play.applicationPath);
+	// VirtualFile appRoot = VirtualFile.open(Play.applicationPath);
 	TranslateTemplateTask t = new TranslateTemplateTask();
 	{
 		Project proj = new Project();
@@ -38,7 +44,7 @@ public class JapidPlugin extends PlayPlugin {
 		t.setTaskName("foo");
 		t.setOwningTarget(new Target());
 	}
-	
+
 	public static final String JAPIDVIEWS_ROOT = "japidviews";
 
 	@Override
@@ -52,10 +58,11 @@ public class JapidPlugin extends PlayPlugin {
 
 	@Override
 	public void detectChange() {
-//		if (Play.mode == Mode.DEV) {
-//			System.out.println("detecting template change and compile changes to java in " + JAPIDVIEWS_ROOT);
-//			t.execute();
-//		}
+		// if (Play.mode == Mode.DEV) {
+		// System.out.println("detecting template change and compile changes to java in "
+		// + JAPIDVIEWS_ROOT);
+		// t.execute();
+		// }
 	}
 
 	@Override

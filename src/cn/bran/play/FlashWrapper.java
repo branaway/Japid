@@ -1,7 +1,7 @@
 package cn.bran.play;
 
-import cn.bran.japid.util.FlashScope;
 import play.mvc.Scope.Flash;
+import cn.bran.japid.util.FlashScope;
 
 /**
  * wrap the access to the Play! Flash scope

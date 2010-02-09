@@ -1,14 +1,9 @@
 package cn.bran.play;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
-import cn.bran.japid.template.RenderResult;
-
-
 import play.mvc.Http.Request;
 import play.mvc.Http.Response;
 import play.mvc.results.Result;
+import cn.bran.japid.template.RenderResult;
 
 /**
  * class for use to indicate that the result has been flushed to the response

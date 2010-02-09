@@ -4,11 +4,9 @@ package cn.bran.play;
 import java.util.Collection;
 import java.util.List;
 
-import cn.bran.japid.util.FlashScope;
-import cn.bran.japid.util.UrlMapper;
-
 import play.i18n.Messages;
 import play.mvc.Scope.Flash;
+import cn.bran.japid.util.FlashScope;
 
 /**
  * offer wrappers to the Play! built-in varaibles avaible for templates

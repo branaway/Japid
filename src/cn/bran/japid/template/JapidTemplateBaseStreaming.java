@@ -1,18 +1,10 @@
 package cn.bran.japid.template;
 
-import groovy.lang.Closure;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import play.templates.Template.ExecutableTemplate.RawData;
 
 /**
  * a java based template that dump content to a stream.
