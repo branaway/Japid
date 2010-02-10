@@ -20,7 +20,7 @@ dynamic content.
 - templates are strongly typed. A template must declare the arguments it takes. 
 - transformed to Java for best possible performance.
 - a clear Java object model for templates.
-- expression lanaguage is plain Java. 
+- expression language is plain Java. 
 - templates are precompiled to Java, with commandline tool integrated with play command
 
 3. The performance
@@ -43,7 +43,7 @@ Action URL reverse lookup is weak. The implementation can handle simple cases on
 
 No other EL can be used in expressions. Everything is in Java.
 
-5. Thanks go to the original Play authors for a well-thoughtout web framework for best 
+5. Thanks go to the original Play authors for a well thought-out web framework for best 
 development time productivity and run-time performance. Some of the code in this template
 engine is shamefully adapted from the Play code. The Jamon template engine proves 
 transforming templates to Java source code is possible and has inspired me to start this
