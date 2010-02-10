@@ -5,41 +5,44 @@ import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import japidviews._tags.*;
 import	 	cn.bran.Post;
-import static cn.bran.play.PlayTemplateVarsAdapter.*;
+import static cn.bran.play.JapidPlayAdapter.*;
 // NOTE: This file was generated from: templates/AllPost.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
 public class AllPost extends Layout{
 	public static final String sourceTemplate = "templates/AllPost.html";
 	public static final String contentType = "text/html";
-static String static_0 = ""
+static private final String static_0 = ""
 ;
-static String static_1 = "\n" + 
+static private final String static_1 = "\n" + 
 "\n" + 
 "";
-static String static_2 = "\n" + 
+static private final String static_2 = "\n" + 
 "\n" + 
 "";
-static String static_3 = " \n" + 
+static private final String static_3 = " \n" + 
 "	    "
 ;
-static String static_4 = "\n" + 
+static private final String static_4 = "\n" + 
 "			"
 ;
-static String static_5 = " The real title is: "
+static private final String static_5 = " The real title is: "
 ;
-static String static_6 = ";\n" + 
+static private final String static_6 = ";\n" + 
 "	    "
 ;
-static String static_7 = "\n" + 
+static private final String static_7 = "\n" + 
 "";
-static String static_8 = "\n" + 
+static private final String static_8 = "\n" + 
 "\n" + 
 "";
-static String static_9 = "\n" + 
+static private final String static_9 = "\n" + 
 "\n" + 
 "<p>cool</p>"
 ;
+	public AllPost() {
+		super(null);
+	}
 	public AllPost(StringBuilder out) {
 		super(out);
 	}

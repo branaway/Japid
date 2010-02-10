@@ -19,7 +19,7 @@ import play.templates.JavaExtensions;
 import cn.bran.japid.ant.TranslateTemplateTask;
 import cn.bran.play.JapidPlugin;
 import cn.bran.play.NoEnhance;
-import cn.bran.play.PlayTemplateVarsAdapter;
+import cn.bran.play.JapidPlayAdapter;
 
 /**
  * for some reason it's hard to delete an html template file. Seems the ant

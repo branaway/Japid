@@ -4,27 +4,30 @@ import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import japidviews._tags.*;
-import static cn.bran.play.PlayTemplateVarsAdapter.*;
+import static cn.bran.play.JapidPlayAdapter.*;
 // NOTE: This file was generated from: templates/Set.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
 public class Set extends japidviews._layouts.SetLayout{
 	public static final String sourceTemplate = "templates/Set.html";
 	public static final String contentType = "text/html";
-static String static_0 = ""
+static private final String static_0 = ""
 ;
-static String static_1 = "\n" + 
+static private final String static_1 = "\n" + 
 "";
-static String static_2 = "\n" + 
+static private final String static_2 = "\n" + 
 "\n" + 
 "\n" + 
 "";
-static String static_3 = "\n" + 
+static private final String static_3 = "\n" + 
 "";
-static String static_4 = "great footer"
+static private final String static_4 = "great footer"
 ;
-static String static_5 = "\n" + 
+static private final String static_5 = "\n" + 
 "";
+	public Set() {
+		super(null);
+	}
 	public Set(StringBuilder out) {
 		super(out);
 	}

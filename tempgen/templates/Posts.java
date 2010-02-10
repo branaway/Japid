@@ -5,36 +5,39 @@ import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import japidviews._tags.*;
 import cn.bran.Post;
-import static cn.bran.play.PlayTemplateVarsAdapter.*;
+import static cn.bran.play.JapidPlayAdapter.*;
 // NOTE: This file was generated from: templates/Posts.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
 public class Posts extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/Posts.html";
 	public static final String contentType = "text/html";
-static String static_0 = ""
+static private final String static_0 = ""
 ;
-static String static_1 = "\n" + 
+static private final String static_1 = "\n" + 
 "";
-static String static_2 = "\n" + 
+static private final String static_2 = "\n" + 
 "\n" + 
 "";
-static String static_3 = " \n" + 
+static private final String static_3 = " \n" + 
 "	- title: "
 ;
-static String static_4 = "\n" + 
+static private final String static_4 = "\n" + 
 "	- date: "
 ;
-static String static_5 = "\n" + 
+static private final String static_5 = "\n" + 
 "	- author "
 ;
-static String static_6 = " "
+static private final String static_6 = " "
 ;
-static String static_7 = "\n" + 
+static private final String static_7 = "\n" + 
 "	the real title: 你好\n" + 
 "";
-static String static_8 = "\n" + 
+static private final String static_8 = "\n" + 
 "";
+	public Posts() {
+		super(null);
+	}
 	public Posts(StringBuilder out) {
 		super(out);
 	}

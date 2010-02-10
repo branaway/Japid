@@ -6,6 +6,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -69,5 +72,19 @@ public class StringUtilsTest {
 		System.out.println("String.getBytes() took:: " + t2);
 	}
 	
+	@Test public void testStringWhiteSpace() {
+		String src = "\thello \r\n ";
+		String r = src.trim();
+		assertEquals("hello", r);
+	}
 	
+	@Test
+	public void testQueryBuilder() {
+		Map<String, Object> hash = new LinkedHashMap<String, Object>();
+		hash.put("name", "Bing Ran");
+		hash.put("phones", new ArrayList<String>() {{add("123"); add("456");}});
+		String q = StringUtils.buildQuery(hash);
+		assertEquals("name=Bing+Ran&phones=123&phones=456", q);
+//		System.out.println(q);
+	}
 }

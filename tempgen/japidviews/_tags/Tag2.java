@@ -4,21 +4,24 @@ import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import japidviews._tags.*;
-import static cn.bran.play.PlayTemplateVarsAdapter.*;
+import static cn.bran.play.JapidPlayAdapter.*;
 // NOTE: This file was generated from: japidviews/_tags/Tag2.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
 public class Tag2 extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_tags/Tag2.html";
 	public static final String contentType = "text/html";
-static String static_0 = ""
+static private final String static_0 = ""
 ;
-static String static_1 = "\n" + 
+static private final String static_1 = "\n" + 
 "\n" + 
 "<span>"
 ;
-static String static_2 = "</span>"
+static private final String static_2 = "</span>"
 ;
+	public Tag2() {
+		super(null);
+	}
 	public Tag2(StringBuilder out) {
 		super(out);
 	}

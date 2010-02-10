@@ -1,69 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="japid" default="build" basedir=".">
-	
-	<property name="classes.standalone" value="tmp/classes.standalone"/>
-    <path id="project.classpath">
-        <pathelement path="${play.path}/framework/classes"/>
-        <fileset dir="${play.path}/framework/lib">
-            <include name="*.jar"/>
-        </fileset>
-        <fileset dir="${play.path}/framework">
-            <include name="*.jar"/>
-        </fileset>
-        <fileset dir="lib">
-            <include name="*.jar"/>
-        </fileset>
-    </path>
+<project name="japid" default="build.japidplay" basedir=".">
+	<property name="classes.standalone" value="tmp/classes.standalone" />
+	<property name="classes.play" value="tmp/classes.play" />
+	<property name="src.japidplay" value="src.japidplay" />
+	<property name="src.japid" value="src.japid" />
+        <property name="version" value="0.1"/>
+
+	<path id="project.classpath">
+		<pathelement path="${play.path}/framework/classes" />
+		<fileset dir="${play.path}/framework/lib">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${play.path}/framework">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
 
 	<path id="project.classpath.standalone">
-        <fileset dir="lib">
-            <include name="*.jar"/>
-        </fileset>
-    </path>
+		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
 
-    <target name="build" depends="compile">
-        <copy todir="tmp/classes">
-            <fileset dir="src">
-                <include name="**/*.properties"/>
-                <include name="**/*.xml"/>
-                <include name="**/play.plugins"/>
-                <include name="**/play.static"/>
-            </fileset>
-        </copy>
-        <jar destfile="lib/play-japid.jar" basedir="tmp/classes">
-            <manifest>
-                <section name="Play-module">
-                    <attribute name="Specification-Title" value="japid"/>
-                </section>
-            </manifest>
-        </jar>
-        <delete dir="tmp" />
-    </target>
+	<target name="build.japidplay" depends="build.japid, compile.japidplay" 
+		description="build the whole thing, the standard Japis first, then the Play adapters">
+		
+		<copy todir="${classes.play}">
+			<fileset dir="${src.japidplay}">
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<include name="**/play.plugins" />
+				<include name="**/play.static" />
+			</fileset>
+		</copy>
+		<jar destfile="lib/play-japid-${version}.jar" basedir="${classes.play}">
+			<manifest>
+				<section name="Japid-Play-module">
+					<attribute name="Specification-Title" value="japidplay" />
+				</section>
+			</manifest>
+		</jar>
+		<delete dir="tmp" />
+	</target>
 
-    <target name="build.standalone" depends="compile.standalone">
-        <jar destfile="lib/japid.jar" basedir="${classes.standalone}">
-            <manifest>
-                <section name="Japid Standalone">
-                    <attribute name="Specification-Title" value="japid"/>
-                </section>
-            </manifest>
-        </jar>
-        <delete dir="tmp/classes.standalone" />
-    </target>
+	<target name="build.japid" depends="compile.japid" 
+		description="build the standard Japid jar without Play dependency.">
+		
+		<jar destfile="lib/japid-${version}.jar" basedir="${classes.standalone}">
+			<manifest>
+				<section name="Japid Standalone">
+					<attribute name="Specification-Title" value="japid" />
+				</section>
+			</manifest>
+		</jar>
+		<delete dir="${classes.standalone}" />
+	</target>
 
-    <target name="compile">
-        <mkdir dir="tmp/classes" />
-        <javac srcdir="src" destdir="tmp/classes" target="1.5" encoding="UTF-8" debug="true">
-            <classpath refid="project.classpath" />
-        </javac>
-    </target>
+	<target name="compile.japidplay" description="compile the Japid-Play adapters">
+		<mkdir dir="${classes.play}" />
+		<javac includeAntRuntime="false" srcdir="${src.japidplay}" destdir="${classes.play}" target="1.5" encoding="UTF-8" debug="true">
+			<classpath refid="project.classpath" />
+		</javac>
+	</target>
 
-    <target name="compile.standalone">
-        <mkdir dir="${classes.standalone}" />
-        <javac srcdir="src" destdir="${classes.standalone}" target="1.5" encoding="UTF-8" debug="true">
-            <classpath refid="project.classpath.standalone" />
-        </javac>
-    </target>
+	<target name="compile.japid">
+		<mkdir dir="${classes.standalone}" />
+		<javac includeAntRuntime="false" srcdir="${src.japid}" destdir="${classes.standalone}" target="1.5" encoding="UTF-8" debug="true">
+			<classpath refid="project.classpath.standalone" />
+		</javac>
+	</target>
 
 </project>

@@ -4,16 +4,16 @@ import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import japidviews._tags.*;
-import static cn.bran.play.PlayTemplateVarsAdapter.*;
+import static cn.bran.play.JapidPlayAdapter.*;
 // NOTE: This file was generated from: templates/JavaScript.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
 public class JavaScript extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/JavaScript.html";
 	public static final String contentType = "text/html";
-static String static_0 = ""
+static private final String static_0 = ""
 ;
-static String static_1 = "\n" + 
+static private final String static_1 = "\n" + 
 "\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
@@ -37,10 +37,13 @@ static String static_1 = "\n" +
 "    });\n" + 
 "</script>\n" + 
 "";
-static String static_2 = "\n" + 
+static private final String static_2 = "\n" + 
 "</body>\n" + 
 "</html>"
 ;
+	public JavaScript() {
+		super(null);
+	}
 	public JavaScript(StringBuilder out) {
 		super(out);
 	}

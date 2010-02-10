@@ -4,39 +4,42 @@ import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import japidviews._tags.*;
-import static cn.bran.play.PlayTemplateVarsAdapter.*;
+import static cn.bran.play.JapidPlayAdapter.*;
 // NOTE: This file was generated from: templates/EachCall.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
 public class EachCall extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/EachCall.html";
 	public static final String contentType = "text/html";
-static String static_0 = ""
+static private final String static_0 = ""
 ;
-static String static_1 = "\n" + 
+static private final String static_1 = "\n" + 
 "\n" + 
 "the old bad way:\n" + 
 "";
-static String static_2 = "\n" + 
+static private final String static_2 = "\n" + 
 "	"
 ;
-static String static_3 = "<p>"
+static private final String static_3 = "<p>"
 ;
-static String static_4 = "</p>\n" + 
+static private final String static_4 = "</p>\n" + 
 "";
-static String static_5 = "\n" + 
+static private final String static_5 = "\n" + 
 "\n" + 
 "the closure form:\n" + 
 "";
-static String static_6 = "\n" + 
+static private final String static_6 = "\n" + 
 "	<p>"
 ;
-static String static_7 = " ) "
+static private final String static_7 = " ) "
 ;
-static String static_8 = "</p>\n" + 
+static private final String static_8 = "</p>\n" + 
 "";
-static String static_9 = "\n" + 
+static private final String static_9 = "\n" + 
 "";
+	public EachCall() {
+		super(null);
+	}
 	public EachCall(StringBuilder out) {
 		super(out);
 	}

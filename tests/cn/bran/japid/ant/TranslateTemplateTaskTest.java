@@ -10,7 +10,7 @@ import org.apache.tools.ant.types.FileSet;
 import org.junit.Test;
 
 import cn.bran.play.NoEnhance;
-import cn.bran.play.PlayTemplateVarsAdapter;
+import cn.bran.play.JapidPlayAdapter;
 
 
 public class TranslateTemplateTaskTest {
@@ -25,7 +25,7 @@ public class TranslateTemplateTaskTest {
 		t.setProject(proj);
 		// use streaming API or stringbuffer API, 10% slower
 //		t.setUseStreaming(true);
-		t.importStatic(PlayTemplateVarsAdapter.class);
+		t.importStatic(JapidPlayAdapter.class);
 		t.setSrcdir(new File(TEMP_ROOT));
 		t.addAnnotation(NoEnhance.class);
 		
@@ -63,5 +63,5 @@ public class TranslateTemplateTaskTest {
 		delAllGeneratedJava();
 		updateJavaFilesFromTemps();
 	}
-	
 }
+	

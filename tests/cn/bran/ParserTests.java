@@ -231,5 +231,28 @@ public class ParserTests {
 		assertEquals(" and more", tokens.get(5));
 		
 	}
+	
+	@Test
+	public void testQuotationMarkSurrounding() {
+		String src = "$test";
+		List<String> tokens = new ArrayList<String>();
+		JapidParser p = new JapidParser(src);
+		loop: for (;;) {
+			JapidParser.Token state = p.nextToken();
+			switch (state) {
+			case EOF:
+				break loop;
+			default:
+				String tokenstring = p.getToken();
+				tokens.add(tokenstring );
+				System.out.println(state.name() + ": [" + tokenstring + "]");
+			}
+		}
+//		assertEquals(7, tokens.size());
+//		assertEquals(" my.java.method()", tokens.get(1));
+//		assertEquals(" another one ", tokens.get(3));
+//		assertEquals(" and more", tokens.get(5));
+		
+	}
 }
 
