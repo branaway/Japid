@@ -40,10 +40,10 @@ This file defines a template that take one object to render, a Java String in th
 this command tranforms the template to a Java file called hello.java in the same package
 
 now
+
 # cd app/controllers
 
 and modify your Application.java to something like this:
-
 
 --------------------------------------------------------
 package controllers;
@@ -117,9 +117,9 @@ in the lib directory. Both jars are required for use in Play!.
 The ant.jar and ant-laucher.jar are required if one is going to use the japid ant task to synchronize
 the html templates and generated Java source files.
 
-Issues, feature requests go to the gitbub. 
+Issues, feature requests please log to the gitbub. 
 
-Hacker are welcome to participate in the project.
+Hackers are welcome to participate in the project.
 
 Enjoy
 
@@ -140,13 +140,13 @@ dynamic content.
 
 2. Features
 
-- templates are strongly typed. Each template must declare the arguments it takes. 
-- transformed to Java for best possible performance
-- a clear Java object model for templates
+- templates are strongly typed. A template must declare the arguments it takes. 
+- transformed to Java for best possible performance.
+- a clear Java object model for templates.
 - expression lanaguage is plain Java. 
 - templates are precompiled to Java, with commandline tool integrated with play command
 
-3. The performace
+3. The performance
 
 Some rough numbers:
 
@@ -155,7 +155,7 @@ Velocity: 2X
 Freemarker: 3X
 Play! rendering layer in Groovy: 4-12X
 
-When integrated in Play, one can generally see 2X+ more total throughput under load. 
+When integrated in Play, Japid can help Japid deliver 2-3X more total throughput under load. 
 
 4. The limitations
 
