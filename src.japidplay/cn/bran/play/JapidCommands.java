@@ -37,6 +37,7 @@ public class JapidCommands {
 		FileSet fs = new FileSet();
 		fs.setDir(new File(APP));
 		fs.setIncludes(JapidPlugin.JAPIDVIEWS_ROOT + "/**/*.java");
+		fs.setExcludes(JapidPlugin.JAPIDVIEWS_ROOT + "/" + JapidPlugin.JAVATAGS + "/**");
 		t.addFileset(fs);
 		
 		Project proj = new Project();
@@ -53,6 +54,21 @@ public class JapidCommands {
 	 * update the java files from the html files, for the changed only
 	 */
 	private static void gen() {
+		File[] changedFiles = reloadChanged();
+		if (changedFiles.length > 0) {
+			for (File f : changedFiles) {
+				System.out.println("updated: " + f.getName().replace("html", "java"));
+			}
+		}
+		else {
+			System.out.println("No java files need to be updated.");
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public static File[] reloadChanged() {
 		TranslateTemplateTask t = new TranslateTemplateTask();
 		Project proj = new Project();
 		t.setProject(proj);
@@ -74,13 +90,6 @@ public class JapidCommands {
 		t.setOwningTarget(new Target());
 		t.execute();
 		File[] changedFiles = t.getChangedFiles();
-		if (changedFiles.length > 0) {
-			for (File f : changedFiles) {
-				System.out.println("updated: " + f.getName().replace("html", "java"));
-			}
-		}
-		else {
-			System.out.println("No java files need to be updated.");
-		}
+		return changedFiles;
 	}
 }

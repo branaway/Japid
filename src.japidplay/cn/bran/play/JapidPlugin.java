@@ -1,13 +1,14 @@
 package cn.bran.play;
 
 import java.io.File;
+import java.util.Set;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;
 
 import play.Play;
-import play.PlayPlugin;
-import play.Play.Mode;
+import play.PlayPlugin2;
+import play.classloading.ApplicationClasses;
 import play.data.validation.Validation;
 import play.exceptions.UnexpectedException;
 import play.templates.JavaExtensions;
@@ -21,31 +22,70 @@ import cn.bran.japid.ant.TranslateTemplateTask;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public class JapidPlugin extends PlayPlugin {
-	// VirtualFile appRoot = VirtualFile.open(Play.applicationPath);
-	TranslateTemplateTask t = new TranslateTemplateTask();
-	{
-		Project proj = new Project();
-		t.setProject(proj);
-		proj.init();
+public class JapidPlugin extends PlayPlugin2 {
+	@Override
+	public void preDetectChanges() {
+		File[] changed = JapidCommands.reloadChanged();
+		if (changed.length > 0) {
+			for (File f : changed) {
+				System.out.println("pre-detect changed: " + f.getName());
+			}
+		}
 
-		t.setSrcdir(new File("app"));
-		t.setIncludes(JAPIDVIEWS_ROOT + "/**/*.html");
-		t.importStatic(JapidPlayAdapter.class);
-		t.importStatic(Validation.class);
-		t.importStatic(JavaExtensions.class);
-		t.addAnnotation(NoEnhance.class);
-		t.addImport(JAPIDVIEWS_ROOT + "._layouts.*");
-		t.addImport(JAPIDVIEWS_ROOT + "._tags.*");
-		t.addImport("models.*");
+		boolean hasRealOrphan = false;
+		// delete orphan java
+		try {
+			String pathname = "app" + File.separator + JapidPlugin.JAPIDVIEWS_ROOT;
+			Set<File> oj = DirUtil.findOrphanJava(new File(pathname), null);
+			for (File j : oj) {
+				if (j.getName().contains(JAVATAGS)) {
+					// java tags, don't touch
+				} else {
+					hasRealOrphan = true;
+					String realfile = pathname + File.separator + j.getPath();
+					File file = new File(realfile);
+					System.out.println("JapidPlugin: deleting " + realfile);
+					boolean r = file.delete();
+					System.out.println("JapidPlugin: deleted ? " + r);
+				}
+			}
 
-		// t.add(new ModifiedSelector());
-		t.setTaskType("foo");
-		t.setTaskName("foo");
-		t.setOwningTarget(new Target());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (hasRealOrphan)
+		{
+			// a little messy here. clean the cache in case bad files are delete
+			Play.classes = new ApplicationClasses();
+			throw new RuntimeException("found orphan template Java artifacts. reload to be safe.");
+		}	
 	}
 
+	// // VirtualFile appRoot = VirtualFile.open(Play.applicationPath);
+	// TranslateTemplateTask t = new TranslateTemplateTask();
+	// {
+	// Project proj = new Project();
+	// t.setProject(proj);
+	// proj.init();
+	//
+	// t.setSrcdir(new File("app"));
+	// t.setIncludes(JAPIDVIEWS_ROOT + "/**/*.html");
+	// t.importStatic(JapidPlayAdapter.class);
+	// t.importStatic(Validation.class);
+	// t.importStatic(JavaExtensions.class);
+	// t.addAnnotation(NoEnhance.class);
+	// t.addImport(JAPIDVIEWS_ROOT + "._layouts.*");
+	// t.addImport(JAPIDVIEWS_ROOT + "._tags.*");
+	// t.addImport("models.*");
+	//
+	// // t.add(new ModifiedSelector());
+	// t.setTaskType("foo");
+	// t.setTaskName("foo");
+	// t.setOwningTarget(new Target());
+	// }
+
 	public static final String JAPIDVIEWS_ROOT = "japidviews";
+	public static final String JAVATAGS = "_javatags";
 
 	@Override
 	public void onApplicationStop() {
@@ -58,11 +98,6 @@ public class JapidPlugin extends PlayPlugin {
 
 	@Override
 	public void detectChange() {
-		// if (Play.mode == Mode.DEV) {
-		// System.out.println("detecting template change and compile changes to java in "
-		// + JAPIDVIEWS_ROOT);
-		// t.execute();
-		// }
 	}
 
 	@Override

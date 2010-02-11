@@ -8,7 +8,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/play.jar" sourcepath="/play! framework"/>
 	<classpathentry kind="lib" path="/home/bran/projects/japid/lib/ant-launcher.jar"/>
-	<classpathentry kind="lib" path="/home/bran/projects/japid/lib/ant.jar"/>
+	<classpathentry kind="lib" path="/home/bran/projects/japid/lib/ant.jar" sourcepath="/apache-ant"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/activation.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play1.1/framework/lib/asyncweb-common-0.9.0-SNAPSHOT.jar"/>

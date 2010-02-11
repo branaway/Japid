@@ -125,11 +125,15 @@ public class JapidTemplateTransformer {
 
 	}
 
-	// this method is entirely safe
+	// this method is entirely safe ???
 	private String readFileAsString(String filePath) throws Exception {
+		// let're remove dependency on commons IO
+//		return IOUtils.toString(new FileInputStream(filePath), "UTF-8");
 		byte[] buffer = new byte[(int) new File(filePath).length()];
 		BufferedInputStream f = new BufferedInputStream(new FileInputStream(filePath));
+		// not sure if this is always safe assume it'll read all bytes in
 		f.read(buffer);
+		f.close();
 		return new String(buffer, "UTF-8");
 
 	}
