@@ -4,7 +4,9 @@ import java.io.File;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;
+import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Delete;
+import org.apache.tools.ant.taskdefs.Mkdir;
 import org.apache.tools.ant.types.FileSet;
 
 import play.data.validation.Validation;
@@ -24,15 +26,51 @@ public class JapidCommands {
 		else if ("clean".equals(args[0])) {
 			delAllGeneratedJava();
 		}
+		else if ("mkdir".equals(args[0])) {
+			mkdir(".");
+		}
 	}
 
-	private static void regen() {
+	/**
+	 * create the basic layout:
+	 * app/japidviews/_javatags
+	 * app/japidviews/_layouts
+	 * app/japidviews/_tags
+	 * 
+	 * then create a dir for each controller. //TODO 
+	 * 
+	 */
+	public static File[] mkdir(String root) {
+		Mkdir t = new Mkdir();
+		Project proj = new Project();
+		t.setProject(proj);
+		proj.init();
+		
+		String sep = File.separator;
+		File javatags = new File(root + sep + APP + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep + JapidPlugin.JAVATAGS);
+		t.setDir(javatags);
+		t.execute();
+		System.out.println("created: " + javatags.getPath());
+		File layouts = new File(root + sep + APP + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep + JapidPlugin.LAYOUTDIR);
+		t.setDir(layouts);
+		t.execute();
+		System.out.println("created: " + layouts.getPath());
+		File tags = new File(root + sep + APP + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep + JapidPlugin.TAGSDIR);
+		t.setDir(tags);
+		t.execute();
+		System.out.println("created: " + tags.getPath());
+		File[] dirs = new File[] {javatags, layouts, tags};
+		return dirs;
+		
+	}
+
+	public static void regen() {
 		// TODO Auto-generated method stub
 		delAllGeneratedJava();
 		gen();
 	}
 	
-	private static void delAllGeneratedJava() {
+	public static void delAllGeneratedJava() {
 		Delete t = new Delete();
 		FileSet fs = new FileSet();
 		fs.setDir(new File(APP));
@@ -53,7 +91,7 @@ public class JapidCommands {
 	/**
 	 * update the java files from the html files, for the changed only
 	 */
-	private static void gen() {
+	public static void gen() {
 		File[] changedFiles = reloadChanged();
 		if (changedFiles.length > 0) {
 			for (File f : changedFiles) {

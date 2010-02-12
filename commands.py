@@ -35,3 +35,13 @@ if play_command == 'japid:clean':
         subprocess.call(java_cmd, env=os.environ)
         print
         sys.exit(0)
+# create the required package structure
+if play_command == 'japid:mkdir':
+        check_application()
+        do_classpath()
+        do_java('cn.bran.play.JapidCommands')
+        print "~ Ctrl+C to stop"
+        java_cmd.append('mkdir')
+        subprocess.call(java_cmd, env=os.environ)
+        print
+        sys.exit(0)

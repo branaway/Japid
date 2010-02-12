@@ -56,7 +56,10 @@ public class JapidPlugin extends PlayPlugin2 {
 		if (hasRealOrphan)
 		{
 			// a little messy here. clean the cache in case bad files are delete
-			Play.classes = new ApplicationClasses();
+			// remove all the existing ApplicationClass will reload verything. 
+			// ideally we just need to remove the orphan. But the internal cache
+			// is not visible. Need API change to do that.
+			Play.classes.clear();
 			throw new RuntimeException("found orphan template Java artifacts. reload to be safe.");
 		}	
 	}
@@ -86,6 +89,8 @@ public class JapidPlugin extends PlayPlugin2 {
 
 	public static final String JAPIDVIEWS_ROOT = "japidviews";
 	public static final String JAVATAGS = "_javatags";
+	public static final String LAYOUTDIR = "_layouts";
+	public static final String TAGSDIR = "_tags";
 
 	@Override
 	public void onApplicationStop() {

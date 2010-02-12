@@ -29,8 +29,6 @@ public class TranslateTemplateTaskTest {
 		t.setSrcdir(new File(TEMP_ROOT));
 		t.addAnnotation(NoEnhance.class);
 		
-		t.setTaskType("japid");
-		t.setTaskName("japid");
 		t.addImport(JAPIDVIEWS_ROOT + "._layouts.*");
 		t.addImport(JAPIDVIEWS_ROOT + "._tags.*");
 
