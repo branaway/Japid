@@ -152,7 +152,7 @@ public class TranslateTemplateTask extends MatchingTask {
 
 			for (int i = 0; i < changedFiles.length; i++) {
 				File pFile = changedFiles[i];
-				System.out.println("translate template: " + pFile.getPath());
+				System.out.println("transforming template: " + pFile.getPath() + " to: " + pFile.getName().replace("html", "java"));
 				if (listFiles) {
 					log(pFile.getAbsolutePath());
 				}

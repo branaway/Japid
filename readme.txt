@@ -56,8 +56,21 @@ project.
 
 # cd my-project
 # play install japid
-# mkdir -p japidviews/_layouts
-# mkdir -p japidviews/_tags
+
+Follow the prompt at the end of downloaing add a line in you conf/application.conf, somthing 
+like:
+
+module.japid=${play.path}/modules/japid-0.12
+
+Now create the required package structure for the japid views:
+
+# play japid:mkdir
+
+This command creates 
+
+ - app/japidviews/_javatags, for placing your java based tag definitions
+ - app/japidviews/_layouts, for placing layout templates
+ - app/japidviews/_tags, for placing tag templates.
 
 Now create a package for each of your controllers in the japidviews, for example for a 
 controller named Application,you create a package names japidviews.Application. This is 
@@ -86,7 +99,11 @@ This file defines a template that take one object to render, a Java String in th
 # cd back to your application root
 # play japid:gen
 
-this command tranforms the template to a Java file called hello.java in the same package
+this command tranforms the template to a Java file called hello.java in the same package. 
+
+NOTE: if you do your developing live with you application running in DEV mode, you don't
+need to run japid:gen command to synchronize the Java artifacts for the templates. It'll be
+handled automatically for you. japid:gen is for you to develop you app "off-line";
 
 now
 
@@ -128,18 +145,10 @@ Hello me!
 -----------------
 
 
-Now modify the hello.html and add one more ! to the end of the line. Before you reload your
-browser, you'll need to manually refresh the generated Java file:
-
-in the application root:
-
-# play japid:gen
-
-And reloading your browser you'll see the change.
+Now modify the hello.html and add one more ! to the end of the line. And reloading your browser 
+you'll see the change.
 
 Now you're in business!
-
-
 
 Read the introduction of Japid here: http://cloud.github.com/downloads/branaway/Japid/Japid.pdf
 

@@ -21,7 +21,7 @@ public class JapidPlugin extends PlayPlugin {
 		File[] changed = JapidCommands.reloadChanged();
 		if (changed.length > 0) {
 			for (File f : changed) {
-				System.out.println("pre-detect changed: " + f.getName());
+//				System.out.println("pre-detect changed: " + f.getName());
 			}
 		}
 
