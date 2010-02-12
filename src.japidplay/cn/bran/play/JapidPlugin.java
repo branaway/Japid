@@ -3,17 +3,10 @@ package cn.bran.play;
 import java.io.File;
 import java.util.Set;
 
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Target;
-
 import play.Play;
-import play.PlayPlugin2;
-import play.classloading.ApplicationClasses;
-import play.data.validation.Validation;
+import play.PlayPlugin;
 import play.exceptions.UnexpectedException;
-import play.templates.JavaExtensions;
 import play.templates.Template;
-import cn.bran.japid.ant.TranslateTemplateTask;
 
 /**
  * this plugin is not in effect until Play! provides a hook before its
@@ -22,9 +15,9 @@ import cn.bran.japid.ant.TranslateTemplateTask;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public class JapidPlugin extends PlayPlugin2 {
+public class JapidPlugin extends PlayPlugin {
 	@Override
-	public void preDetectChanges() {
+	public void beforeDetectingChanges() {
 		File[] changed = JapidCommands.reloadChanged();
 		if (changed.length > 0) {
 			for (File f : changed) {

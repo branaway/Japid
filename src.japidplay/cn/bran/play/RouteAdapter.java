@@ -167,17 +167,18 @@ public class RouteAdapter implements UrlMapper {
 					}
 				} else {
 					ActionDefinition actionDef = Router.reverse(action, paramMap);
-					Route route = actionDef.route;
-					// find is the route is cacheable. it's hard to cache path
-					// with constrained parameter
-					// 
-					String path = route.path;
-					if (!path.contains("<")) {
-						// cacheable
-						if (path.endsWith("?"))
-							path = path.substring(0, path.length() - 1);
-						getActionCache().put(k, path);
-					}
+					// was doing some hacking for caching. don't do it now for compatiblility with remote
+//					Route route = actionDef.route;
+//					// find is the route is cacheable. it's hard to cache path
+//					// with constrained parameter
+//					// 
+//					String path = route.path;
+//					if (!path.contains("<")) {
+//						// cacheable
+//						if (path.endsWith("?"))
+//							path = path.substring(0, path.length() - 1);
+//						getActionCache().put(k, path);
+//					}
 					return actionDef.toString();
 				}
 			} catch (ActionNotFoundException e) {
