@@ -1,10 +1,12 @@
 package cn.bran.play;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;
-import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Delete;
 import org.apache.tools.ant.taskdefs.Mkdir;
 import org.apache.tools.ant.types.FileSet;
@@ -40,27 +42,45 @@ public class JapidCommands {
 	 * then create a dir for each controller. //TODO 
 	 * 
 	 */
-	public static File[] mkdir(String root) {
+	public static List<File> mkdir(String root) {
 		Mkdir t = new Mkdir();
 		Project proj = new Project();
 		t.setProject(proj);
 		proj.init();
 		
 		String sep = File.separator;
-		File javatags = new File(root + sep + APP + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep + JapidPlugin.JAVATAGS);
+		String japidViews = root + sep + APP + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep;
+		File javatags = new File(japidViews + JapidPlugin.JAVATAGS);
 		t.setDir(javatags);
 		t.execute();
 		System.out.println("created: " + javatags.getPath());
-		File layouts = new File(root + sep + APP + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep + JapidPlugin.LAYOUTDIR);
+		File layouts = new File(japidViews + JapidPlugin.LAYOUTDIR);
 		t.setDir(layouts);
 		t.execute();
 		System.out.println("created: " + layouts.getPath());
-		File tags = new File(root + sep + APP + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep + JapidPlugin.TAGSDIR);
+		File tags = new File(japidViews + JapidPlugin.TAGSDIR);
 		t.setDir(tags);
 		t.execute();
 		System.out.println("created: " + tags.getPath());
 		File[] dirs = new File[] {javatags, layouts, tags};
-		return dirs;
+		List<File> res = new ArrayList<File>();
+		res.addAll(Arrays.asList(dirs));
+		
+		// create dirs for controllers
+
+		System.out.println("create default packages for controllers.");
+		File[] controllers = getAllControllers(root + sep + APP + sep  + "controllers");
+		for (File f : controllers) {
+			String cp = japidViews + f.getPath();
+			File ff = new File(cp);
+			t.setDir(ff);
+			t.execute();
+			res.add(ff);
+			System.out.println("created: " + cp);
+		}
+		
+		
+		return res;
 		
 	}
 
@@ -129,5 +149,21 @@ public class JapidCommands {
 		t.execute();
 		File[] changedFiles = t.getChangedFiles();
 		return changedFiles;
+	}
+	
+	/**
+	 * create package structures for all controllers
+	 * @return
+	 */
+	public static File[] getAllControllers(String root) {
+		// from source fils only
+		String[] allFiles = DirUtil.getAllFiles(new File(root), new String[] {"**/*.java"});
+		File[] fs = new File[allFiles.length];
+		int i = 0;
+		for (String f : allFiles) {
+			String path = f.replace(".java", "");
+			fs[i++] = new File(path);
+		}
+		return fs;
 	}
 }

@@ -5,9 +5,12 @@ import java.lang.reflect.Method;
 
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.play.JapidPlugin;
 import cn.bran.play.JapidResult;
 
+import play.Play;
 import play.mvc.Controller;
+import play.mvc.Http;
 
 /**
  * a helper class. for hiding the template API from user eyes. not really needed
@@ -44,9 +47,34 @@ public class JapidController extends Controller {
 
 	/**
 	 * just hide the result throwing
+	 * 
 	 * @param rr
 	 */
 	protected static void render(RenderResult rr) {
 		throw new JapidResult(rr);
+	}
+
+	/**
+	 * pickup the japid renderer in the preset location
+	 * 
+	 * @param objects
+	 */
+	protected static void renderJapid(Object... objects) {
+		// get full action: e.g., mypackage.Application.index
+		String action = Http.Request.current().action.replace(".", "/");
+		
+		// map to default japid view
+		String templateClassName = JapidPlugin.JAPIDVIEWS_ROOT + action;
+
+		Class tClass = Play.classloader.getClassIgnoreCase(templateClassName.replace('/', '.'));
+		if (tClass == null) {
+			throw new RuntimeException("There is no default Japid renderer by the name of: " + templateClassName);
+		}
+		else if (JapidTemplateBase.class.isAssignableFrom(tClass)){
+			render(tClass, objects);
+		}
+		else {
+			throw new RuntimeException("The found class is not a Japid template class: " + templateClassName);
+		}
 	}
 }

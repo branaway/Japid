@@ -27,7 +27,7 @@ import cn.bran.japid.tags.Each;
  *
  */
 public class InnerClassMeta {
-	private static final String EXTRA_LOOP_ATTRS = ", int _index, boolean _isOdd, boolean _isFirst, boolean _isLast";
+	private static final String EXTRA_LOOP_ATTRS = ", int _index, boolean _isOdd, String _parity, boolean _isFirst, boolean _isLast";
 	String tagName;
 	// the sequence of the same tag called in a single template
 	int counter;

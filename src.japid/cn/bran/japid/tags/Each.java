@@ -50,7 +50,8 @@ public class Each extends cn.bran.japid.template.JapidTemplateBase {
 		while (it.hasNext()) {
 			i++;
 			Object o = it.next();
-			body.render(o, i, i % 2 == 1, i == start + 1, !it.hasNext());
+			boolean isOdd = i % 2 == 1;
+			body.render(o, i, isOdd, isOdd?"odd":"even", i == start + 1, !it.hasNext());
 		}
 	}
 
@@ -60,7 +61,8 @@ public class Each extends cn.bran.japid.template.JapidTemplateBase {
 	}
 
 	public static interface DoBody<E> {
-		void render(E _, int _index, boolean _isOdd, boolean _first, boolean _last);
+		// the _parity is for quick use as a CSS class, or one can use "${_isOdd?"odd":"even"}"
+		void render(E e, int _index, boolean _isOdd, String _parity, boolean _isFirst, boolean _isLast);
 	}
 
 }
