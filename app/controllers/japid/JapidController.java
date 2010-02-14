@@ -1,5 +1,6 @@
 package controllers.japid;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
@@ -64,9 +65,9 @@ public class JapidController extends Controller {
 		String action = Http.Request.current().action.replace(".", "/");
 		
 		// map to default japid view
-		String templateClassName = JapidPlugin.JAPIDVIEWS_ROOT + action;
+		String templateClassName = JapidPlugin.JAPIDVIEWS_ROOT + File.separator + action;
 
-		Class tClass = Play.classloader.getClassIgnoreCase(templateClassName.replace('/', '.'));
+		Class tClass = Play.classloader.getClassIgnoreCase(templateClassName.replace('/', '.').replace('\\', '.'));
 		if (tClass == null) {
 			throw new RuntimeException("There is no default Japid renderer by the name of: " + templateClassName);
 		}

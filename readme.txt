@@ -1,8 +1,25 @@
                       About Japid-Play, Version 0.1
 
 
-                    Bing Ran<bing_ran@hotmail.com>, 2010.2
+                    Bing Ran<bing_ran@hotmail.com>
+                    
+                    
+Version History:
 
+2012/2/14:	v0.2
+			1. added support for back-quote as script line prefix
+			2. japid:mkdir now creates optional packages for controllers.
+			3. added code in JapidPlugin to remove Orphaned Java source file in the japidviews
+			directory.
+2012/2/12: 	v0.12 
+			1. added support for autoloading in DEV mode, with the latest head version
+			in 1.0 and 1.1 branches.
+			2. added play command "play japid:mkdir" to create the required package structure
+			in the app/japidviews directory.
+			3. removed some cache optimization in RouterAdapter to make it compatible with Play's 
+			code base.
+2010/2/10: 	v0.1 
+			the initial release
 
 
 0. License: Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0.
@@ -51,8 +68,9 @@ project.
 
  
 
-
+***********************************************
 - Quick start for using the Play-Japid module
+***********************************************
 
 # cd my-project
 # play install japid

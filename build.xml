@@ -5,7 +5,7 @@
 	<property name="classes.play" value="tmp/classes.play" />
 	<property name="src.japidplay" value="src.japidplay" />
 	<property name="src.japid" value="src.japid" />
-        <property name="version" value="0.12"/>
+        <property name="version" value="0.2"/>
 
 	<path id="project.classpath">
 		<pathelement path="${play.path}/framework/classes" />
@@ -37,6 +37,10 @@
 				<include name="**/play.static" />
 			</fileset>
 		</copy>
+
+		<delete>
+		  <fileset dir="lib" includes="play-japid-*.jar"/>
+		</delete>
 		<jar destfile="lib/play-japid-${version}.jar" basedir="${classes.play}">
 			<manifest>
 				<section name="Japid-Play-module">
@@ -49,9 +53,12 @@
 
 	<target name="build.japid" depends="compile.japid" 
 		description="build the standard Japid jar without Play dependency.">
-		
+		<delete>
+		  <fileset dir="lib" includes="japid-*.jar"/>
+		</delete>
+
 		<jar destfile="lib/japid-${version}.jar" basedir="${classes.standalone}">
-			<manifest>
+		  <manifest>
 				<section name="Japid Standalone">
 					<attribute name="Specification-Title" value="japid" />
 				</section>

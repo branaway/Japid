@@ -41,6 +41,7 @@ public class JapidParser {
 		EOF, //
 		PLAIN, //
 		SCRIPT, // %{...}% or {%...%} bran: or ~{}~,  ~[]~ the open wings directives
+		SCRIPT_LINE, // single back-quote ` will turn the rest if the line in to script. 
 		EXPR, // ${...}
 		START_TAG, // #{...}
 		END_TAG, // #{/...}
@@ -164,6 +165,13 @@ public class JapidParser {
 				if (c == '*' && c1 == '{') {
 					return found(Token.COMMENT, 2);
 				}
+				if (c == '`')
+					if (c1 == '`') {
+						begin++;
+						skip(2);
+					}
+					else 
+						return found(Token.SCRIPT_LINE, 1);
 				break;
 			case SCRIPT:
 				if (c == '}' && c1 == '%') {
@@ -178,6 +186,18 @@ public class JapidParser {
 				}
 				if (c == ']' && c1 == '~') {
 					return found(Token.PLAIN, 2);
+				}
+				break;
+			case SCRIPT_LINE:
+				if (c == '\r') {
+					if ( c1 == '\n') {
+						return found(Token.PLAIN, 2);
+					}
+					else 
+						return found(Token.PLAIN, 1);
+				}
+				else if ( c == '\n') {
+					return found(Token.PLAIN, 1);
 				}
 				break;
 			case COMMENT:

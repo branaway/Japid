@@ -254,5 +254,51 @@ public class ParserTests {
 //		assertEquals(" and more", tokens.get(5));
 		
 	}
+	
+	/**
+	 * test the use of single back-quote char, as escaping script line, similar to \\ in Java 
+	 */
+	@Test public void testLineScript() {
+		String src = "`code\n\t`code2 \r\nhtml`code3\n``html";
+		List<String> tokens = new ArrayList<String>();
+		JapidParser p = new JapidParser(src);
+		loop: for (;;) {
+			JapidParser.Token state = p.nextToken();
+			switch (state) {
+			case EOF:
+				break loop;
+			default:
+				String tokenstring = p.getToken();
+				tokens.add(tokenstring );
+				System.out.println(state.name() + ": [" + tokenstring + "]");
+			}
+		}
+		assertEquals(7, tokens.size());
+		assertEquals("code", tokens.get(1));
+		assertEquals("code2", tokens.get(3).trim());
+		assertEquals("code3", tokens.get(5).trim());
+		assertEquals("`html", tokens.get(6).trim());
+		
+	}
+
+	/**
+	 * test optional () in tag invocation
+	 */
+	@Test public void testPatenthesisInTagInocation() {
+		String src = "#{tag(a, b.goo()) | String c }";
+		List<String> tokens = new ArrayList<String>();
+		JapidParser p = new JapidParser(src);
+		loop: for (;;) {
+			JapidParser.Token state = p.nextToken();
+			switch (state) {
+			case EOF:
+				break loop;
+			default:
+				String tokenstring = p.getToken();
+				tokens.add(tokenstring );
+				System.out.println(state.name() + ": [" + tokenstring + "]");
+			}
+		}
+	}
 }
 

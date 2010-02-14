@@ -21,7 +21,7 @@ import cn.bran.japid.template.JapidTemplate;
 
 /**
  * based on the original code from the Play! Frameowrk
- *
+ * 
  * the parent class for all three type compilers: regular template conpiler, the
  * LayoutCompiler and the TagCompiler.
  * 
@@ -32,7 +32,7 @@ import cn.bran.japid.template.JapidTemplate;
 public abstract class JapidAbstractCompiler {
 	private static final String ARGS = "args";
 
-//	private static Log log = LogFactory.getLog(JapidAbstractCompiler.class);
+	// private static Log log = LogFactory.getLog(JapidAbstractCompiler.class);
 
 	protected static final String HTML = ".html";
 	// private static final String DO_BODY = "doBody";
@@ -85,6 +85,9 @@ public abstract class JapidAbstractCompiler {
 			case SCRIPT:
 				script();
 				break;
+			case SCRIPT_LINE:
+				script();
+				break;
 			case EXPR:
 				expr();
 				break;
@@ -115,7 +118,7 @@ public abstract class JapidAbstractCompiler {
 
 	protected void plain() {
 		String text = parser.getToken().replace("\\", "\\\\").replaceAll("\"", "\\\\\"");
-
+//		text = text.replace("``", "`"); // escaped `, already done by parser
 		if (skipLineBreak && text.startsWith(NEW_LINE)) {
 			text = text.substring(1);
 		}
@@ -220,61 +223,54 @@ public abstract class JapidAbstractCompiler {
 
 	protected void script() {
 		String text = parser.getToken();
+		String[] lines = new String[] { text };
 		if (text.indexOf(NEW_LINE) > -1) {
-			String[] lines = parser.getToken().split(NEW_LINE);
-			for (int i = 0; i < lines.length; i++) {
-				String line = lines[i].trim();
-				if (line.startsWith("import ") || line.startsWith("import\t")) {
-					getTemplateClassMetaData().addImportLine(line);
-				} else if (line.startsWith("//")) {
-					// ignore
-				} else if (line.startsWith("extends ") || line.startsWith("extends\t")) {
-					String layoutName = line.substring("extends".length()).trim();
-					layoutName = layoutName.replace("'", "");
-					layoutName = layoutName.replace("\"", "");
-					if (layoutName.endsWith(";")) {
-						layoutName = layoutName.substring(0, layoutName.length() - 1);
-					}
-					if (layoutName.endsWith(HTML)) {
-						layoutName = layoutName.substring(0, layoutName.indexOf(HTML));
-					}
-					if (layoutName.startsWith("/")) {
-						layoutName = layoutName.substring(1);
-					}
-					getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
-				} else if (line.startsWith("contentType ") || line.startsWith("contentType	")) {
-					String contentType = line.substring("contentType".length()).trim().replace("'", "").replace("\"", "");
-					if (contentType.endsWith(";"))
-						contentType = contentType.substring(0, contentType.length());
-					getTemplateClassMetaData().setContentType(contentType);
-				} else if (line.startsWith(ARGS + " ") || line.startsWith(ARGS + "\t")) {
-					String contentType = line.substring(ARGS.length()).trim().replace(";", "").replace("'", "").replace("\"", "");
-					Tag currentTag = this.tagsStack.peek();
-					currentTag.bodyArgsString = contentType;
-				} else if (line.startsWith("trim ") || line.startsWith("trim\t")) {
-					String sw = line.substring("trim".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
-					if ("on".equals(sw) || "true".equals(sw) ) {
-						getTemplateClassMetaData().trimStaticContent();
-					}
-				} else if (line.startsWith("stopwatch ") || line.startsWith("stopwatch\t")) {
-					String sw = line.substring("stopwatch".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
-					if ("on".equals(sw))
-						getTemplateClassMetaData().turnOnStopwatch();
-					// Tag currentTag = this.tagsStack.peek();
-					// currentTag.bodyArgsString = contentType;
-				} else {
-					print(lines[i]);
-					markLine(parser.getLine() + i);
-					println();
+			lines = parser.getToken().split(NEW_LINE);
+		}
+
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i].trim();
+			if (line.startsWith("import ") || line.startsWith("import\t")) {
+				getTemplateClassMetaData().addImportLine(line);
+			} else if (line.startsWith("//")) {
+				// ignore
+			} else if (line.startsWith("extends ") || line.startsWith("extends\t")) {
+				String layoutName = line.substring("extends".length()).trim();
+				layoutName = layoutName.replace("'", "");
+				layoutName = layoutName.replace("\"", "");
+				if (layoutName.endsWith(";")) {
+					layoutName = layoutName.substring(0, layoutName.length() - 1);
 				}
-			}
-		} else {
-			String temp = text.trim();
-			if (temp.startsWith("imports ")) {
-				getTemplateClassMetaData().addImportLine(temp);
+				if (layoutName.endsWith(HTML)) {
+					layoutName = layoutName.substring(0, layoutName.indexOf(HTML));
+				}
+				if (layoutName.startsWith("/")) {
+					layoutName = layoutName.substring(1);
+				}
+				getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
+			} else if (line.startsWith("contentType ") || line.startsWith("contentType	")) {
+				String contentType = line.substring("contentType".length()).trim().replace("'", "").replace("\"", "");
+				if (contentType.endsWith(";"))
+					contentType = contentType.substring(0, contentType.length());
+				getTemplateClassMetaData().setContentType(contentType);
+			} else if (line.startsWith(ARGS + " ") || line.startsWith(ARGS + "\t")) {
+				String contentType = line.substring(ARGS.length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+				Tag currentTag = this.tagsStack.peek();
+				currentTag.bodyArgsString = contentType;
+			} else if (line.startsWith("trim ") || line.startsWith("trim\t")) {
+				String sw = line.substring("trim".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+				if ("on".equals(sw) || "true".equals(sw)) {
+					getTemplateClassMetaData().trimStaticContent();
+				}
+			} else if (line.startsWith("stopwatch ") || line.startsWith("stopwatch\t")) {
+				String sw = line.substring("stopwatch".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+				if ("on".equals(sw))
+					getTemplateClassMetaData().turnOnStopwatch();
+				// Tag currentTag = this.tagsStack.peek();
+				// currentTag.bodyArgsString = contentType;
 			} else {
-				print(text);
-				markLine(parser.getLine());
+				print(lines[i]);
+				markLine(parser.getLine() + i);
 				println();
 			}
 		}
@@ -391,11 +387,12 @@ public abstract class JapidAbstractCompiler {
 		postParsing(tag);
 		template.javaSource = this.getTemplateClassMetaData().toString();
 
-//		try {
-//			log.trace(String.format("%s is compiled to %s", template.name, template.javaSource));
-//		} catch (Exception e) {
-//			//
-//		}
+		// try {
+		// log.trace(String.format("%s is compiled to %s", template.name,
+		// template.javaSource));
+		// } catch (Exception e) {
+		// //
+		// }
 
 	}
 
