@@ -64,12 +64,13 @@ public class JapidParser {
 	// start pos of next token
 	private int end, begin, end2, begin2, len;
 	private JapidParser.Token state = Token.PLAIN;
+	private JapidParser.Token lastState;
 
 	private JapidParser.Token found(JapidParser.Token newState, int skip) {
 		begin2 = begin;
 		end2 = --end;
 		begin = end += skip;
-		JapidParser.Token lastState = state == Token.EXPR_NATURAL ? Token.EXPR : state;
+		lastState = state == Token.EXPR_NATURAL ? Token.EXPR : state;
 		state = newState;
 		return lastState;
 	}
@@ -89,7 +90,12 @@ public class JapidParser {
 	}
 
 	public String getToken() {
-		return pageSource.substring(begin2, end2);
+		String tokenString = pageSource.substring(begin2, end2);
+		if (lastState == Token.PLAIN) {
+			// unescape special sequence
+			tokenString = tokenString.replace("``", "`");
+		}
+		return tokenString;
 	}
 
 	public String checkNext() {
@@ -167,7 +173,6 @@ public class JapidParser {
 				}
 				if (c == '`')
 					if (c1 == '`') {
-						begin++;
 						skip(2);
 					}
 					else 
