@@ -15,6 +15,7 @@ package cn.bran.japid.compiler;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.LayoutClassMetaData;
+import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 
 /**
  * Code partly from Play! Framework
@@ -42,54 +43,20 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 
 	@Override
 	protected void startTag() {
-		String tagText = parser.getToken().trim().replaceAll(NEW_LINE, SPACE);
-		String tagName = "";
-		String tagArgs = "";
-		boolean hasBody = !parser.checkNext().endsWith("/");
-		if (tagText.indexOf(SPACE) > 0) {
-			tagName = tagText.substring(0, tagText.indexOf(SPACE));
-			tagArgs = tagText.substring(tagText.indexOf(SPACE) + 1).trim().replace('\'', '"');
-			// bran: no named argument
-			// if (!tagArgs.matches("^[a-zA-Z0-9]+\\s*:.*$")) {
-			// tagArgs = "arg:" + tagArgs;
-			// }
-			// TODO
-//			tagArgs = tagArgs.replaceAll("[:]\\s*[@]", ":actionBridge.");
-//			tagArgs = tagArgs.replaceAll("(\\s)[@]", "$1actionBridge.");
-		} else {
-			tagName = tagText;
-			// tagArgs = ":";
-		}
-		Tag tag = new Tag();
-		tag.tagName = tagName;
-		tag.startLine = parser.getLine();
-		tag.hasBody = hasBody;
-		tag.tagIndex = tagIndex++;
+		Tag tag = buildTag();
 		
-//		#{tag tagArg | String closureArg...}
-		int vertiLine = tagArgs.lastIndexOf('|');
-		String closureParamList = "";
-		if (vertiLine > 0) {
-			tag.args = tagArgs.substring(0, vertiLine).trim();
-			closureParamList = tagArgs.substring(vertiLine + 1).trim();
-			tag.bodyArgsString  = closureParamList;
-		}
-		else {
-			tag.args = tagArgs;
-		}
-		
-		if ("get".equals(tagName)) {
-			if (hasBody) {
+		if ("get".equals(tag.tagName)) {
+			if (tag.hasBody) {
 				throw new RuntimeException("get tag cannot have a body. not closed?");
 			}
-			String var = tagArgs;
+			String var = tag.args;
 			var = var.replace("'","");
 			var = var.replace("\"","");
 			this.cmd.get(var);
 			print("\t" + var + "();");
-		} else if ("doLayout".equals(tagName)) {
+		} else if ("doLayout".equals(tag.tagName)) {
 			print("\tdoLayout();");
-		}else {
+		} else {
 			// String tagClassName = "tags." + tagName + "_html";
 
 			// // collect tab invocation body and embed an innner class
@@ -102,12 +69,12 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 //			String tagClassName = "tag." + tagName;
 			// String bodyInnerClassName = tagClassName.replace('.', '_') +
 			// tagIndex + "_Body";
-			tag.tagName = tagName;
-			if (hasBody) {
+			tag.tagName = tag.tagName;
+			if (tag.hasBody) {
 //				println("new " + tagClassName + "(getOut()).render(" + tagArgs + ", new " + tagName + tagIndex + "DoBody());");
-				println("_" + tagName + tag.tagIndex + ".render(" + tag.args + ", _" + tagName + tag.tagIndex + "DoBody);");
+				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ", _" + tag.tagName + tag.tagIndex + "DoBody);");
 			} else {
-				println("_" + tagName + tag.tagIndex + ".render(" + tag.args + ", null);");
+				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ", null);");
 			}
 			
 		}

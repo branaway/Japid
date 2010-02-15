@@ -161,6 +161,7 @@ public class TranslateTemplateTask extends MatchingTask {
 					String relativePath = JapidTemplateTransformer.getRelativePath(pFile, srcDir);
 					tran.generate(relativePath);
 				} catch (Exception e) {
+					e.printStackTrace();
 					throw new BuildException(e.getClass().getName() + ":" + e.getMessage(),
 							new Location(pFile.getAbsoluteFile().toString()));
 				}

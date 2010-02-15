@@ -35,46 +35,10 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 
 	@Override
 	protected void startTag() {
-		tagIndex++;
-		String tagText = parser.getToken().trim().replaceAll(NEW_LINE, SPACE);
-		String tagName = "";
-		String tagArgs = "";
-		boolean hasBody = !parser.checkNext().endsWith("/");
-		if (tagText.indexOf(SPACE) > 0) {
-			tagName = tagText.substring(0, tagText.indexOf(SPACE));
-			tagArgs = tagText.substring(tagText.indexOf(SPACE) + 1).trim().replace('\'', '"');
-			// bran: no named argument
-			// if (!tagArgs.matches("^[a-zA-Z0-9]+\\s*:.*$")) {
-			// tagArgs = "arg:" + tagArgs;
-			// }
+		Tag tag = buildTag();
 
-			// TODO handle the action reverse lookup
-			// tagArgs = tagArgs.replaceAll("[:]\\s*[@]", ":actionBridge.");
-			// tagArgs = tagArgs.replaceAll("(\\s)[@]", "$1actionBridge.");
-		} else {
-			tagName = tagText;
-			// tagArgs = ":";
-		}
-
-		Tag tag = new Tag();
-		tag.tagName = tagName;
-		tag.startLine = parser.getLine();
-		tag.hasBody = hasBody;
-		tag.tagIndex = tagIndex++;
-
-		// #{tag tagArg | String closureArg...}
-		int vertiLine = tagArgs.lastIndexOf('|');
-		String closureParamList = "";
-		if (vertiLine > 0) {
-			tag.args = tagArgs.substring(0, vertiLine).trim();
-			closureParamList = tagArgs.substring(vertiLine + 1).trim();
-			tag.bodyArgsString = closureParamList;
-		} else {
-			tag.args = tagArgs;
-		}
-
-		if ("extends".equals(tagName)) {
-			String layoutName = tagArgs;
+		if ("extends".equals(tag.tagName)) {
+			String layoutName = tag.args;
 			layoutName = layoutName.replace("'", "");
 			layoutName = layoutName.replace("\"", "");
 			if (layoutName.endsWith(HTML)) {
@@ -86,22 +50,22 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 			this.cmd.superClass = layoutName.replace('/', '.');
 			tagsStack.push(tag);
 		} else if (tag.tagName.equals(DO_BODY)) {
-			cmd.doBody(tagArgs);
+			cmd.doBody(tag.args);
 			println("if (body != null)");
-			println("\tbody.render(" + tagArgs + ");");
+			println("\tbody.render(" + tag.args + ");");
 			// print to the root space before move one stack up
 			tagsStack.push(tag);
-		} else if ("set".equals(tagName)) {
+		} else if ("set".equals(tag.tagName)) {
 			// only support value as tag content as opposed to as attribut:
 			// #{set key}value#{/}
-			if (tagArgs.contains(":")) {
-				if (hasBody) {
+			if (tag.args.contains(":")) {
+				if (tag.hasBody) {
 					throw new JapidCompilationException(template, currentLine, "set tag cannot have value in tag and in body");
 				} else {
-					int i = tagArgs.indexOf(":");
+					int i = tag.args.indexOf(":");
 
-					String key = tagArgs.substring(0, i).trim().replace("\"", "").replace("'", "");
-					String value = tagArgs.substring(i + 1);//.replace('\'', '"');
+					String key = tag.args.substring(0, i).trim().replace("\"", "").replace("'", "");
+					String value = tag.args.substring(i + 1);//.replace('\'', '"');
 					// cannot assume the data is string! 
 //					if (!value.startsWith("\""))
 //						value = "\"" + value;
@@ -114,18 +78,18 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 			tagsStack.push(tag);
 		} else {
 			// invoke a tag
-			if (hasBody) {
+			if (tag.hasBody) {
 				// old way: create a new instance for each call
 				// println("new " + tagClassName + "(getOut()).render(" +
 				// tagArgs + ", new " + tagName + tagIndex + "DoBody());");
 				// use a field to call a tag for better performance in case of
 				// loop
 				// TODO: handle tags with prefix: #{my.tag}
-				println("_" + tagName + tag.tagIndex + ".render(" + tag.args + ", _" + tagName + tag.tagIndex + "DoBody);");
+				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ", _" + tag.tagName + tag.tagIndex + "DoBody);");
 			} else {
 				// println("new " + tagClassName + "(getOut()).render(" +
 				// tagArgs + ", null);");
-				println("_" + tagName + tag.tagIndex + ".render(" + tag.args + ");");
+				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ");");
 			}
 			tagsStack.push(tag);
 		}

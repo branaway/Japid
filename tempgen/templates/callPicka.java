@@ -29,12 +29,12 @@ static private final String static_1 = "the tag chosed:"
 	@Override protected void doLayout() {
 p(static_0);// line 1
 // line 1
-_picka1.render("a", "b", _picka1DoBody);
+_picka0.render("a", "b", _picka0DoBody);
 
 
 	}
-	private picka _picka1 = new picka(getOut());
-class picka1DoBody implements picka.DoBody< String>{
+	private picka _picka0 = new picka(getOut());
+class picka0DoBody implements picka.DoBody< String>{
 	public void render(String r) {
 		
 p(static_1);
@@ -42,6 +42,6 @@ p(r);
 
 	}
 }
-	private picka1DoBody _picka1DoBody = new picka1DoBody();
+	private picka0DoBody _picka0DoBody = new picka0DoBody();
 
 }

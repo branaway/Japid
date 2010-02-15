@@ -55,16 +55,16 @@ List<String> posts
 	@Override protected void doLayout() {
 p(static_0);// line 1
 p(static_1);// line 3
-_Each1.render(posts, _Each1DoBody);
+_Each0.render(posts, _Each0DoBody);
 // line 6
 p(static_5);// line 8
-_Each3.render(posts, _Each3DoBody);
+_Each1.render(posts, _Each1DoBody);
 // line 11
 p(static_9);// line 13
 
 	}
-	private Each _Each1 = new Each(getOut());
-class Each1DoBody implements Each.DoBody< String>{
+	private Each _Each0 = new Each(getOut());
+class Each0DoBody implements Each.DoBody< String>{
 	public void render(String p, int _index, boolean _isOdd, String _parity, boolean _isFirst, boolean _isLast) {
 		// line 6
 p(static_2);// line 6
@@ -74,10 +74,10 @@ p(static_4);// line 7
 
 	}
 }
-	private Each1DoBody _Each1DoBody = new Each1DoBody();
+	private Each0DoBody _Each0DoBody = new Each0DoBody();
 
-	private Each _Each3 = new Each(getOut());
-class Each3DoBody implements Each.DoBody< String>{
+	private Each _Each1 = new Each(getOut());
+class Each1DoBody implements Each.DoBody< String>{
 	public void render(String p, int _index, boolean _isOdd, String _parity, boolean _isFirst, boolean _isLast) {
 		// line 11
 p(static_6);// line 11
@@ -88,6 +88,6 @@ p(static_8);// line 12
 
 	}
 }
-	private Each3DoBody _Each3DoBody = new Each3DoBody();
+	private Each1DoBody _Each1DoBody = new Each1DoBody();
 
 }

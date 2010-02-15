@@ -50,10 +50,10 @@ public abstract class JapidAbstractCompiler {
 		int startLine;
 		boolean hasBody;
 		// bran: put everything in the args tag in it
-		String bodyArgsString;
+		String bodyArgsString = "";
 		StringBuffer bodyBuffer = new StringBuffer(2000);
 		public String innerClassName;
-		public String args;
+		public String args = "";
 		public int tagIndex;
 	}
 
@@ -408,6 +408,23 @@ public abstract class JapidAbstractCompiler {
 		String args = parser.getToken();
 		currentTag.bodyArgsString = args;
 	}
+
+	/**
+	 * @return
+	 */
+	protected Tag buildTag() {
+			String tagText = parser.getToken().trim().replaceAll(NEW_LINE, SPACE);
+
+			boolean hasBody = !parser.checkNext().endsWith("/");
+	
+			Tag tag = new TagInvocationLineParser().parse(tagText);
+			if (tag.tagName== null || tag.tagName.length() == 0)
+				throw new RuntimeException("tag name was empty: " + tagText);
+			tag.startLine = parser.getLine();
+			tag.hasBody = hasBody;
+			tag.tagIndex = tagIndex++;
+			return tag;
+		}
 
 	protected int currentLine = 1;
 

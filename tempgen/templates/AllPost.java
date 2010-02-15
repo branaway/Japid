@@ -65,12 +65,12 @@ p(static_1);// line 6
 p(static_2);// line 8
 for (Post p: allPost) {// line 10
 p(static_3);// line 10
-_Display3.render(p, "home", _Display3DoBody);
+_Display1.render(p, "home", _Display1DoBody);
 // line 11
 p(static_7);// line 13
 }// line 14
 p(static_8);// line 14
-_Tag25.render(blogTitle);
+_Tag22.render(blogTitle);
 // line 16
 p(static_9);// line 16
 
@@ -78,8 +78,8 @@ p(static_9);// line 16
 	@Override protected void title() {
 		p("Home");;
 	}
-	private Display _Display3 = new Display(getOut());
-class Display3DoBody implements Display.DoBody< String>{
+	private Display _Display1 = new Display(getOut());
+class Display1DoBody implements Display.DoBody< String>{
 	public void render(String title) {
 		// line 11
 p(static_4);// line 11
@@ -89,7 +89,7 @@ p(static_6);// line 12
 
 	}
 }
-	private Display3DoBody _Display3DoBody = new Display3DoBody();
+	private Display1DoBody _Display1DoBody = new Display1DoBody();
 
-	private Tag2 _Tag25 = new Tag2(getOut());
+	private Tag2 _Tag22 = new Tag2(getOut());
 }
