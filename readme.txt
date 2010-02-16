@@ -182,7 +182,10 @@ import controllers.japid.JapidController;
 
 public class Application extends JapidController {
     public static void hello() {
-        throw new JapidResult(new hello().render("me"));
+    	String obj = "me";
+        throw new JapidResult(new hello().render(obj));
+        // or alternatively
+        // renderJapid(obj);
     }
 
 
@@ -198,6 +201,15 @@ The interesting line is:
 
 where we invoke the renderer *hello* class directly and throw a JapidResult for the Play! framework to do its work. 
 
+You can also invoke the renderer implicitly from the controller using a method from the JapidController super class:
+
+instead of the above line, we can also do:
+
+		renderJapid(param1, param2, etc);
+		
+For this to work we must make sure the hello.html is exactly in the app/japidviews/Application/ directory. This method
+is slightly slower than direct invocation since it uses reflection to find the renderer, and we lose strong parameter 
+type checking until runtime. 
 
 Now point your brower to http://127.0.0.1:9000/Application/hello and you'll see:
 
