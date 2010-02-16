@@ -53,12 +53,14 @@ When integrated in Play, Japid can help Japid deliver 2-3X more total throughput
 
 4. The limitations
 
-Not integrated in the Play code change detection yet. Play command is provided to manually 
-refresh the Java artifacts. 
+- It supports the to-be-released Play 1.1 and 1.02 only.
+- Development in "cold" mode (meaning developing without the application running) requires manually
+synchronizing the html templates and the Java artifacts, using play commands: japid:gen, japid:regen,
+japid:mkdir and japid:clean.
 
-Action URL reverse lookup is weak. The implementation can handle simple cases only.
+- Action URL reverse lookup is weak. The implementation can handle simple cases only.
 
-No other EL can be used in expressions. Everything is in Java.
+- No other EL than Java can be used in expressions.
 
 5. Thanks go to the original Play authors for a well thought-out web framework for best 
 development time productivity and run-time performance. Some of the code in this template
@@ -72,13 +74,35 @@ project.
 - Quick start for using the Play-Japid module
 ***********************************************
 
-# cd my-project
+*Install the module to your Pplay runtime*
+
+First of all, to get the latest japid module, issue the following command from a commandline. 
+
 # play install japid
 
-Follow the prompt at the end of downloaing add a line in you conf/application.conf, somthing 
-like:
+This download a zip file and extract the content to modules directory in your Play! installation, 
+such as:
 
-module.japid=${play.path}/modules/japid-0.12
+${play.path}/modules/japid-0.2
+
+Go to there and find the source and some sample scripts in the tempgen directory.
+
+*Include the module in your application*
+
+There are two ways to include the modele in your application:
+
+- For an existing application:
+  add an entry in your application.conf:
+
+module.japid=${play.path}/modules/japid-0.2
+
+- To create a new application with Japid support:
+
+# play new junkie --with japid
+
+Verify the existence of the above japid reference in the application.conf file.
+
+*Create the required directory structure for Japid*
 
 Now create the required package structure for the japid views:
 
@@ -90,13 +114,18 @@ This command creates
  - app/japidviews/_layouts, for placing layout templates
  - app/japidviews/_tags, for placing tag templates.
 
-Now create a package for each of your controllers in the japidviews, for example for a 
-controller named Application,you create a package names japidviews.Application. This is 
-not required, but a common way of organizing views with controller. Since controllers 
-actions will call the renders directly, the templates can be put anywhere under japidviews 
-root package.
+It also creates a package for each controllers in the app/controllers/ directory/subdirectory,
+such as:
 
-# mkdir -p japidviews/Application
+ - app/japidviews/Application
+
+And you *usually* create a template named after the controller's action name with ".html" extension. 
+This is optional however, since controller actions can explicitly call the renders directly using Java invocation syntax, 
+the templates can be put anywhere under japidviews root package. But it's mandetory if you use implicit
+template invocation, as explained later, in your controller.
+
+*Create the first template*
+
 # cd japidviews/Application
 # vi hello.html
 
@@ -111,19 +140,31 @@ Here is the content of hello.html:
 </html>
 --------------------------------------
 
+Or you can use the line oriented scrip prefix: the singel back-quote, which is the "tilde" key on a PC keyboard:
+--------------------------------------
+`args  String who
 
-This file defines a template that take one object to render, a Java String in this case.
+<html>
+        Hello ${who}!
+</html>
+--------------------------------------
 
-# cd back to your application root
+The "args" directive tells what arguments/objects the template actually renders. a Java String called "who" in this case.
+
+Now transform/pre-compile the template to Java source:
+
+If you develop in "cold" mode - not running your app in DEV mode while you develop:
+
+# cd {back to your application root}
 # play japid:gen
 
-this command tranforms the template to a Java file called hello.java in the same package. 
+This command tranforms the template to a Java file called hello.java in the same package. 
 
-NOTE: if you do your developing live with you application running in DEV mode, you don't
+*NOTE*: if you do your developing live with you application running in DEV mode, you don't
 need to run japid:gen command to synchronize the Java artifacts for the templates. It'll be
-handled automatically for you. japid:gen is for you to develop you app "off-line";
+handled automatically for you. japid:gen is for you to develop you app "off-line", or "cold".
 
-now
+*Invoke the renderer in controllers*
 
 # cd app/controllers
 
@@ -133,10 +174,7 @@ and modify your Application.java to something like this:
 package controllers;
 
 import play.mvc.*;
-
-
 import japidviews.Application.hello;
-
 
 import cn.bran.japid.template.RenderResult;
 import cn.bran.play.JapidResult;
@@ -151,9 +189,14 @@ public class Application extends JapidController {
     public static void index() {
         render();
     }
-
 }
 -----------------------------------------------------------
+
+The interesting line is:
+
+        throw new JapidResult(new hello().render("me"));
+
+where we invoke the renderer *hello* class directly and throw a JapidResult for the Play! framework to do its work. 
 
 
 Now point your brower to http://127.0.0.1:9000/Application/hello and you'll see:
@@ -162,15 +205,23 @@ Now point your brower to http://127.0.0.1:9000/Application/hello and you'll see:
 Hello me!
 -----------------
 
+In this sample action the dynamic content is actually a static "me" object, but you basically assemble your objects of any level
+of complexity in the controller and pass them to the renderer in a similar way. Of course you will need to decalre those parameters
+explicitly in your templates by way of using the args directive. 
 
-Now modify the hello.html and add one more ! to the end of the line. And reloading your browser 
+
+*Test the auto-reloading works*
+
+While you're running the app in DEV mode, modify the hello.html and add one more ! to the end of ${who}.Reloading your browser 
 you'll see the change.
 
 Now you're in business!
 
 Read the introduction of Japid here: http://cloud.github.com/downloads/branaway/Japid/Japid.pdf
 
-The play1.1/modules/japid-0.1/tempgen/ contains a few sample scripts showing the syntax. Take a
+Note the pdf is for version 0.1 and needs update for new features such as DEV mode auto-reloading, japid:mkdir command, etc. 
+
+The play1.1/modules/japid-0.2/tempgen/ contains a few sample scripts showing the syntax. Take a
 look at for example the AllPost.html for how to use layout and tags.
 
 
