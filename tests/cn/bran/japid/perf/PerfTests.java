@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import models.japidsample.Author;
+import models.japidsample.Post;
+
 import org.junit.Test;
 
-import cn.bran.Author;
-import cn.bran.Post;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.SimpleMessageProvider;

@@ -35,8 +35,8 @@ static private final String static_5 = "\"></form>\n" +
 	public Actions(StringBuilder out) {
 		super(out);
 	}
-	cn.bran.Post post;
-	public cn.bran.japid.template.RenderResult render(cn.bran.Post post) {
+	models.japidsample.Post post;
+	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
 		long t = -1;
 		super.layout();

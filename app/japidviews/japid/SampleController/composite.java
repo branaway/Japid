@@ -33,8 +33,8 @@ static private final String static_3 = "\n" +
 	public composite(StringBuilder out) {
 		super(out);
 	}
-	cn.bran.Post post;
-	public cn.bran.japid.template.RenderResult render(cn.bran.Post post) {
+	models.japidsample.Post post;
+	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
 		long t = -1;
 		super.layout();
@@ -48,6 +48,7 @@ p(static_2);// line 2
 			@Override
 			public cn.bran.japid.template.RenderResult run() {
 				try {
+					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
 					SampleController.authorPanel(post.getAuthor());
 				} catch (cn.bran.play.JapidResult jr) {
 					return jr.getRenderResult();

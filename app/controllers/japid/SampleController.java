@@ -5,8 +5,9 @@ import japidviews.japid.SampleController.composite;
 
 import java.util.Date;
 
-import cn.bran.Author;
-import cn.bran.Post;
+import models.japidsample.Author;
+import models.japidsample.Post;
+
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.play.JapidController;

@@ -433,16 +433,17 @@ public abstract class JapidAbstractCompiler {
 
 	static String createActionRunner(String action) {
 		String template = 
-				"		%s.put(getOut().length(), new %s() {\r\n" + 
-				"			@Override\r\n" + 
-				"			public %s run() {\r\n" + 
-				"				try {\r\n" + 
-				"					%s;\r\n" + 
-				"				} catch (%s jr) {\r\n" + 
-				"					return jr.getRenderResult();\r\n" + 
-				"				}\r\n" + 
-				"				throw new RuntimeException(\"No render result from running: %s\");\r\n" + 
-				"			}\r\n" + 
+				"		%s.put(getOut().length(), new %s() {\n" + 
+				"			@Override\n" + 
+				"			public %s run() {\n" + 
+				"				try {\n" + 
+				"					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();\n" +
+				"					%s;\n" + 
+				"				} catch (%s jr) {\n" + 
+				"					return jr.getRenderResult();\n" + 
+				"				}\n" + 
+				"				throw new RuntimeException(\"No render result from running: %s\");\n" + 
+				"			}\n" + 
 				"		});";
 		return String.format(template, 
 				AbstractTemplateClassMetaData.ACTION_RUNNERS , 

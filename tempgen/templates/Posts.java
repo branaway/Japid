@@ -1,10 +1,11 @@
 package templates;
 import java.util.*;
 import java.io.*;
+
+import models.japidsample.Post;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import japidviews._tags.*;
-import cn.bran.Post;
 import static cn.bran.play.JapidPlayAdapter.*;
 // NOTE: This file was generated from: templates/Posts.html
 // Change to this file will be lost next time the template file is compiled.

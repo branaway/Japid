@@ -24,34 +24,7 @@ public class JapidPlugin extends PlayPlugin {
 			}
 		}
 
-		boolean hasRealOrphan = false;
-		// delete orphan java
-		try {
-			String pathname = "app" + File.separator + JapidPlugin.JAPIDVIEWS_ROOT;
-			File src = new File(pathname);
-			if (!src.exists()) {
-				System.out.println("Could not find required Japid package structure: " + pathname);
-				System.out.println("Please use \"play japid:mkdir\" command to create the Japid view structure.");
-				return;
-			}
-			
-			Set<File> oj = DirUtil.findOrphanJava(src, null);
-			for (File j : oj) {
-				if (j.getName().contains(JAVATAGS)) {
-					// java tags, don't touch
-				} else {
-					hasRealOrphan = true;
-					String realfile = pathname + File.separator + j.getPath();
-					File file = new File(realfile);
-					System.out.println("JapidPlugin: deleting " + realfile);
-					boolean r = file.delete();
-					System.out.println("JapidPlugin: deleted ? " + r);
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		boolean hasRealOrphan = JapidCommands.rmOrphanJava();
 		if (hasRealOrphan)
 		{
 			// a little messy here. clean the cache in case bad files are delete
@@ -62,6 +35,7 @@ public class JapidPlugin extends PlayPlugin {
 			throw new RuntimeException("found orphan template Java artifacts. reload to be safe.");
 		}	
 	}
+
 
 	// // VirtualFile appRoot = VirtualFile.open(Play.applicationPath);
 	// TranslateTemplateTask t = new TranslateTemplateTask();

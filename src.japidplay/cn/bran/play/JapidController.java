@@ -170,14 +170,34 @@ public class JapidController extends Controller {
 		return caller;
 	}
 	
+	/**
+	 * run a piece of rendering code with cache check and refilling
+	 * 
+	 * @param runner
+	 * @param ttl
+	 * @param objects
+	 */
 	protected static void runWithCache(ActionRunner runner, String ttl, Object...objects ) {
+		if (ttl ==  null || ttl.trim().length() == 0)
+			throw new RuntimeException("Cache expiration time must be defined.");
+		
+		ttl = ttl.trim();
+		if (Character.isDigit(ttl.charAt(ttl.length() - 1))) {
+			// assuming second
+			ttl += "s";
+		}
+		
 		String base = StackTraceUtils.getCaller();
 		RenderResult rr = getFromCache(base, objects);
 		if (rr == null) {
-			RenderResult run = runner.run();
+			rr = runner.run();
 			cache(rr, ttl, base, objects);
 		}
 		// System.out.println("render show took ms: " + rr.getRenderTime());
 		throw new JapidResult(rr);
+	}
+	
+	protected static void runWithCache(ActionRunner runner, String ttl) {
+		runWithCache(runner, ttl, new Object[] {});
 	}
 }

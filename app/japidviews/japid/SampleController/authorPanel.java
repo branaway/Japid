@@ -30,8 +30,8 @@ static private final String static_4 = "'</p>\n" +
 	public authorPanel(StringBuilder out) {
 		super(out);
 	}
-	cn.bran.Author a;
-	public cn.bran.japid.template.RenderResult render(cn.bran.Author a) {
+	models.japidsample.Author a;
+	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
 		this.a = a;
 		long t = -1;
 		super.layout();

@@ -53,4 +53,13 @@ public class RenderResult implements Serializable {
 		return this.renderTime;
 	}
 
+	@Override
+	public String toString() {
+		if (content != null) {
+			return content.toString();
+		}
+		else {
+			return "RenderResult: null";
+		}
+	}
 }

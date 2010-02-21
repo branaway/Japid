@@ -39,13 +39,13 @@ static private final String static_6 = "\n" +
 	public Display(StringBuilder out) {
 		super(out);
 	}
-	cn.bran.Post post;
+	models.japidsample.Post post;
 	String as;
 	DoBody body;
 	public static interface DoBody<A> {
 		 void render(A a);
 	}
-	public cn.bran.japid.template.RenderResult render(cn.bran.Post post,	String as, DoBody body) {
+	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,	String as, DoBody body) {
 		this.body = body;
 		this.post = post;
 		this.as = as;
