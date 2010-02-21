@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
  * 
  */
 public abstract class JapidTemplateBase {
-	private static final String UTF_8 = "UTF-8";
+//	private static final String UTF_8 = "UTF-8";
 
 	StringBuilder out;
 
@@ -95,6 +95,11 @@ public abstract class JapidTemplateBase {
 		out.append('\n');
 	}
 
+	/**
+	 * The template pattern to implement the template/layout relationship. Clients call a template's 
+	 * render(), which store params in fields and calls in super class's layout, which does the whole page
+	 * layout and calls back child's doLayout to get the child content.
+	 */
 	protected void layout() {
 		doLayout();
 	}

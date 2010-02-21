@@ -1,4 +1,7 @@
 package cn.bran.strings;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -12,6 +15,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -252,4 +256,17 @@ public class Strings {
     	
     }
  
+    @Test public void testArrays() {
+    	Object[] oa = new String[] {"1", "2"};
+    	assertEquals(String[].class, oa.getClass());
+    	assertTrue(oa instanceof Object[]);
+    	mymethod(oa);
+    	oa = new Date[] {new Date()};
+    	assertTrue(oa instanceof Object[]);
+    	int[] ia = new int[] {};
+    	// ia instanceof Object[] is a syntax error
+//    	memethod(ia);
+    }
+    
+    private void mymethod(Object[] oa) {}
 }

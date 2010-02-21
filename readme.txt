@@ -1,11 +1,12 @@
-                      About Japid-Play, Version 0.1
-
+                Japid-Play, a template engine at raw Java speed
 
                     Bing Ran<bing_ran@hotmail.com>
                     
                     
 Version History:
 
+2012/2/20:	v0.3
+			1. added cache support in JapidController, which has been moved to the Play-Jpiad-{version}.jar
 2012/2/14:	v0.2
 			1. added support for back-quote as script line prefix
 			2. japid:mkdir now creates optional packages for controllers.

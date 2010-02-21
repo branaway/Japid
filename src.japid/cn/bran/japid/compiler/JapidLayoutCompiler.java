@@ -19,10 +19,10 @@ import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 
 /**
  * Code partly from Play! Framework
- *
+ * 
  * specifically for layouts
  * 
- * supprt #{get xxx}, #{doLayout /} will allow param for doLayout later. 
+ * supprt #{get xxx}, #{doLayout /} will allow param for doLayout later.
  * 
  * 
  */
@@ -31,7 +31,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 
 	// StringBuilder mainRenderBodySource = new StringBuilder();
 	LayoutClassMetaData cmd = new LayoutClassMetaData();
-	
+
 	@Override
 	protected void templateArgs() {
 		Tag currentTag = this.tagsStack.peek();
@@ -44,18 +44,29 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	@Override
 	protected void startTag() {
 		Tag tag = buildTag();
-		
+
 		if ("get".equals(tag.tagName)) {
 			if (tag.hasBody) {
 				throw new RuntimeException("get tag cannot have a body. not closed?");
 			}
 			String var = tag.args;
-			var = var.replace("'","");
-			var = var.replace("\"","");
+			var = var.replace("'", "");
+			var = var.replace("\"", "");
 			this.cmd.get(var);
 			print("\t" + var + "();");
 		} else if ("doLayout".equals(tag.tagName)) {
 			print("\tdoLayout();");
+		} else if (tag.tagName.equals("invoke")) {
+			// invoke an action #{invoke myPackage.MyController.runthis(param1,
+			// param2)/}
+			if (tag.hasBody) {
+				throw new JapidCompilationException(template, currentLine, "invoke tag cannot have a body. Must be ended with /}");
+			}
+
+			String action = tag.args;
+			this.cmd.setHasActionInvocation();
+			println(createActionRunner(action));
+			tagsStack.push(tag);
 		} else {
 			// String tagClassName = "tags." + tagName + "_html";
 
@@ -66,17 +77,18 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 
 			// build something like this: new Display_html().render(frontPost,
 			// "home", new Display1_Body());
-//			String tagClassName = "tag." + tagName;
+			// String tagClassName = "tag." + tagName;
 			// String bodyInnerClassName = tagClassName.replace('.', '_') +
 			// tagIndex + "_Body";
 			tag.tagName = tag.tagName;
 			if (tag.hasBody) {
-//				println("new " + tagClassName + "(getOut()).render(" + tagArgs + ", new " + tagName + tagIndex + "DoBody());");
+				// println("new " + tagClassName + "(getOut()).render(" +
+				// tagArgs + ", new " + tagName + tagIndex + "DoBody());");
 				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ", _" + tag.tagName + tag.tagIndex + "DoBody);");
 			} else {
 				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ", null);");
 			}
-			
+
 		}
 		tagsStack.push(tag);
 		markLine(parser.getLine());
@@ -91,7 +103,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 		if (tagsStack.isEmpty()) {
 			throw new JapidCompilationException(template, currentLine, "#{/" + tagName + "} is not opened.");
 		}
-		
+
 		Tag tag = tagsStack.pop();
 		String lastInStack = tag.tagName;
 		if (tagName.equals("")) {
@@ -102,10 +114,11 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 		}
 
 		if ("get".equals(tagName)) {
-//			// only support value as tag content as opposed to as attribut:
-//			// #{set key}value#{/}
-//			String key = tag.args;
-//			this.cmd.addSetTag(key, tag.bodyBuffer.toString());
+			// // only support value as tag content as opposed to as attribut:
+			// // #{set key}value#{/}
+			// String key = tag.args;
+			// this.cmd.addSetTag(key, tag.bodyBuffer.toString());
+		} else if (tagName.equals("invoke")) {
 		} else {
 			// // regular tag invocation
 			// // the inferface name to create an inner class:
@@ -113,15 +126,14 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 
 			if (tag.hasBody) {
 				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
-			}
-			else if (!"doLayout".equals(tagName)){
+			} else if (!"doLayout".equals(tagName)) {
 				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
 			}
 
 		}
 		markLine(tag.startLine);
 		println();
-//		tagIndex--;
+		// tagIndex--;
 		skipLineBreak = true;
 	} // Writer
 
@@ -133,7 +145,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	@Override
 	protected void postParsing(Tag tag) {
 		// nothing to add
-		
+
 	}
 
 }

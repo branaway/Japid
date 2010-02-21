@@ -13,13 +13,17 @@
  */
 package cn.bran.japid.template;
 
+import java.io.Serializable;
+
 /**
- * to wrap the result of Japid template rendering
+ * to wrap the result of Japid template rendering. 
+ * 
+ * Objects of this class can be cached.
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
- *
+ * 
  */
-public class RenderResult {
+public class RenderResult implements Serializable {
 	private String contentType;
 	private StringBuilder content;
 	long renderTime; // in ms, for recording the time to render.
@@ -35,13 +39,18 @@ public class RenderResult {
 		return contentType;
 	}
 
-	
+	/**
+	 * get the interpolated content in StringBuilder. In case of nested action
+	 * calls, all the content tiles are generated and interpolated
+	 * 
+	 * @return the fully interpolated content
+	 */
 	public StringBuilder getContent() {
 		return content;
 	}
-	
+
 	public long getRenderTime() {
 		return this.renderTime;
 	}
-	
+
 }

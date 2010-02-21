@@ -20,9 +20,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.JapidTemplateBaseStreaming;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.japid.template.RenderResultPartial;
 
 /**
  * lots of the code block generation is done here
@@ -31,6 +33,8 @@ import cn.bran.japid.template.RenderResult;
  * 
  */
 public class AbstractTemplateClassMetaData {
+	private static final String PUBLIC = "public ";
+	private static final String COMMA = ";";
 	private static final String SPACE = " ";
 	private static final String STATIC = "static";
 	private static final String IMPORT = "import";
@@ -52,9 +56,12 @@ public class AbstractTemplateClassMetaData {
 	}
 
 	public StringBuilder sb = new StringBuilder();
-	protected static final String SEMI = ";";
+	protected static final String SEMI = COMMA;
 	protected static final String TAB = "\t";
 	protected static final String RENDER_RESULT = RenderResult.class.getName();
+	protected static final String RENDER_RESULT_PARTIAL = RenderResultPartial.class.getName();
+	public static final String ACTION_RUNNERS = "actionRunners";
+	private static final String IMPORT_SPACE = IMPORT + SPACE;
 	public String packageName;
 	public String className;
 
@@ -104,35 +111,40 @@ public class AbstractTemplateClassMetaData {
 		// pln("import japidviews._layouts.*;");
 
 		if (streaming)
-			pln("import " + cn.bran.japid.tags.streaming.Each.class.getName() + ";");
+			pln(IMPORT_SPACE + cn.bran.japid.tags.streaming.Each.class.getName() + COMMA);
 		else
-			pln("import " + cn.bran.japid.tags.Each.class.getName() + ";");
+			pln(IMPORT_SPACE  + cn.bran.japid.tags.Each.class.getName() + COMMA);
+		
+		if (hasActionInvocation) {
+			pln(IMPORT_SPACE + ActionRunner.class.getName() + COMMA);
+		}
+		
 		// pln("import java.math.*;");
 		// pln("import static java.lang.Math.*;");
 		// // should decouple with JavaExtensions
 		// pln("import static play.templates.JavaExtensions.*;");
 		for (String l : globalImports) {
 			l = l.trim();
-			if (!l.endsWith(";"))
-				l = l + ";";
+			if (!l.endsWith(COMMA))
+				l = l + COMMA;
 			if (!l.startsWith(IMPORT))
-				l = IMPORT + SPACE + l;
+				l = IMPORT_SPACE + l;
 			pln(l);
 		}
 
 		for (String l : imports) {
 			l = l.trim();
-			if (!l.endsWith(";"))
-				l = l + ";";
+			if (!l.endsWith(COMMA))
+				l = l + COMMA;
 			if (!l.startsWith(IMPORT))
-				l = IMPORT + SPACE + l;
+				l = IMPORT_SPACE + l;
 			pln(l);
 		}
 
 		for (String l : globalStaticImports) {
 			l = l.trim();
 			if (!l.startsWith(IMPORT))
-				l = IMPORT + SPACE + STATIC + SPACE + l;
+				l = IMPORT_SPACE + STATIC + SPACE + l;
 
 			if (!l.endsWith(".*;")) {
 				l += ".*;";
@@ -143,7 +155,7 @@ public class AbstractTemplateClassMetaData {
 		for (String l : staticImports) {
 			l = l.trim();
 			if (!l.startsWith(IMPORT))
-				l = IMPORT + SPACE + STATIC + SPACE + l;
+				l = IMPORT_SPACE + STATIC + SPACE + l;
 
 			if (!l.endsWith(".*;")) {
 				l += ".*;";
@@ -217,21 +229,21 @@ public class AbstractTemplateClassMetaData {
 			if (streaming)
 				pln("static private final byte[] static_" + i + " = getBytes(" + statics.get(i) + ");");
 			else
-				pln("static private final String static_" + i + " = " + statics.get(i) + ";");
+				pln("static private final String static_" + i + " = " + statics.get(i) + COMMA);
 		}
 	}
 
 	protected void addConstructors() {
 		if (!streaming) {
 			// for StringBuilder data collection, create a default constructor
-			pln(TAB + "public " + className + "() {\r\n" + "		super(null);\r\n" + "	}");
+			pln(TAB + PUBLIC + className + "() {\r\n" + "		super(null);\r\n" + "	}");
 
 		}
 
 		if (streaming)
-			pln(TAB + "public " + className + "(OutputStream out) {");
+			pln(TAB + PUBLIC + className + "(OutputStream out) {");
 		else
-			pln(TAB + "public " + className + "(StringBuilder out) {");
+			pln(TAB + PUBLIC + className + "(StringBuilder out) {");
 		
 		pln(TAB + TAB + "super(out);");
 		pln(TAB + "}");
@@ -323,6 +335,7 @@ public class AbstractTemplateClassMetaData {
 
 	String contentType;
 	private boolean trimStaticContent = false;
+	protected boolean hasActionInvocation;
 
 	public void turnOnStopwatch() {
 		this.stopWatch = true;
@@ -346,5 +359,17 @@ public class AbstractTemplateClassMetaData {
 
 	public boolean getTrimStaticContent() {
 		return this.trimStaticContent;
+	}
+
+	protected void declareActionRunners() {
+		String actionRunner = ActionRunner.class.getName();
+		if (hasActionInvocation) {
+			pln(TAB + "LinkedHashMap<Integer, " + actionRunner + "> " + ACTION_RUNNERS + " = new LinkedHashMap<Integer, " + actionRunner + ">();");
+		}
+	}
+
+	public void setHasActionInvocation() {
+		this.hasActionInvocation = true;
+		
 	}
 }

@@ -9,8 +9,7 @@ import play.exceptions.UnexpectedException;
 import play.templates.Template;
 
 /**
- * this plugin is not in effect until Play! provides a hook before its
- * classloader detect file changes
+ *
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
@@ -29,7 +28,14 @@ public class JapidPlugin extends PlayPlugin {
 		// delete orphan java
 		try {
 			String pathname = "app" + File.separator + JapidPlugin.JAPIDVIEWS_ROOT;
-			Set<File> oj = DirUtil.findOrphanJava(new File(pathname), null);
+			File src = new File(pathname);
+			if (!src.exists()) {
+				System.out.println("Could not find required Japid package structure: " + pathname);
+				System.out.println("Please use \"play japid:mkdir\" command to create the Japid view structure.");
+				return;
+			}
+			
+			Set<File> oj = DirUtil.findOrphanJava(src, null);
 			for (File j : oj) {
 				if (j.getName().contains(JAVATAGS)) {
 					// java tags, don't touch

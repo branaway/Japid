@@ -17,7 +17,10 @@ import java.io.File;
 import java.util.Stack;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
+import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
+import cn.bran.japid.template.RenderResult;
+import cn.bran.play.JapidResult;
 
 /**
  * based on the original code from the Play! Frameowrk
@@ -249,6 +252,7 @@ public abstract class JapidAbstractCompiler {
 				}
 				getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
 			} else if (line.startsWith("contentType ") || line.startsWith("contentType	")) {
+				// TODO: should also take standard tag name: Content-Type
 				String contentType = line.substring("contentType".length()).trim().replace("'", "").replace("\"", "");
 				if (contentType.endsWith(";"))
 					contentType = contentType.substring(0, contentType.length());
@@ -269,6 +273,7 @@ public abstract class JapidAbstractCompiler {
 				// Tag currentTag = this.tagsStack.peek();
 				// currentTag.bodyArgsString = contentType;
 			} else {
+				// TODO: do more directives for response header control: Cache-Control, Expires
 				print(lines[i]);
 				markLine(parser.getLine() + i);
 				println();
@@ -425,6 +430,28 @@ public abstract class JapidAbstractCompiler {
 			tag.tagIndex = tagIndex++;
 			return tag;
 		}
+
+	static String createActionRunner(String action) {
+		String template = 
+				"		%s.put(getOut().length(), new %s() {\r\n" + 
+				"			@Override\r\n" + 
+				"			public %s run() {\r\n" + 
+				"				try {\r\n" + 
+				"					%s;\r\n" + 
+				"				} catch (%s jr) {\r\n" + 
+				"					return jr.getRenderResult();\r\n" + 
+				"				}\r\n" + 
+				"				throw new RuntimeException(\"No render result from running: %s\");\r\n" + 
+				"			}\r\n" + 
+				"		});";
+		return String.format(template, 
+				AbstractTemplateClassMetaData.ACTION_RUNNERS , 
+				ActionRunner.class.getName(),
+				RenderResult.class.getName(),
+				action,
+				JapidResult.class.getName(),
+				action);
+	}
 
 	protected int currentLine = 1;
 

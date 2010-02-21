@@ -1,4 +1,4 @@
-package cn.bran;
+package cn.bran.japid.compiler;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -8,21 +8,19 @@ import java.io.InputStreamReader;
 import org.junit.Test;
 
 import cn.bran.japid.compiler.JapidAbstractCompiler;
-import cn.bran.japid.compiler.JapidLayoutCompiler;
+import cn.bran.japid.compiler.JapidTemplateCompiler;
 import cn.bran.japid.template.JapidTemplate;
-
 
 
 /**
  * 
  * @author bran
- * @deprecated now is on the {@code BranCompilerTests}
+ * @deprecated test is in {@code BranCompilerTests}
  */
-public class BranLayoutCompilerTest {
-
+public class BranTemplateCompilerTests {
 	@Test
-	public void testHop() throws IOException {
-		FileInputStream fis = new FileInputStream("tempgen/tag/Layout.html");
+	public void testComp() throws IOException {
+		FileInputStream fis = new FileInputStream("tempgen/tag/AllPost.html");
 		InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
 		BufferedReader br = new BufferedReader(isr);
 		String src = "";
@@ -30,8 +28,8 @@ public class BranLayoutCompilerTest {
 			src += line + "\n";
 		}
 		
-		JapidTemplate bt = new JapidTemplate("tag/Layout.html", src);
-		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		JapidTemplate bt = new JapidTemplate("tag/AllPost.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 	}

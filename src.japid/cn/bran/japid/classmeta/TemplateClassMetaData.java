@@ -14,11 +14,13 @@
 package cn.bran.japid.classmeta;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import cn.bran.japid.compiler.ExprParser;
+import cn.bran.japid.template.ActionRunner;
 
 
 /**
@@ -52,7 +54,6 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	// null: no doBody, "": there is doBody but no parameters passed back
 	private String doBodyArgsString;
 	private char[] doBodyGenericTypeParams = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
-
 	//	
 	public void addSetTag(String setMethodName, String methodBody) {
 		setMethods.put(setMethodName, methodBody);
@@ -71,6 +72,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		classDeclare();
 		embedSourceTemplateName();
 		embedContentType();
+		declareActionRunners();
 		buildStatics();
 		addConstructors();
 // the render mthod
@@ -124,11 +126,19 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		if (stopWatch)
 			pln("\t\tt = System.currentTimeMillis() - t;");
 		
-		if (streaming)
-			pln("\t\treturn new " + RENDER_RESULT + "(this.contentType, null, t);");
-		else
-			pln("\t\treturn new " + RENDER_RESULT + "(this.contentType, getOut(), t);");
-			
+		if (streaming) {
+			if (hasActionInvocation) 
+				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.contentType, null, t, " + ACTION_RUNNERS + ");");
+			else 
+				pln("\t\treturn new " + RENDER_RESULT + "(this.contentType, null, t);");
+				
+		}
+		else {
+			if (hasActionInvocation) 
+				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.contentType, getOut(), t, " + ACTION_RUNNERS + ");");
+			else 
+				pln("\t\treturn new " + RENDER_RESULT + "(this.contentType, getOut(), t);");
+		}
 		pln("\t}");
 
 		

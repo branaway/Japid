@@ -11,6 +11,7 @@ public class TemplateClassMetaDataTest {
 	@Test
 	public void testToString() {
 		TemplateClassMetaData m = new TemplateClassMetaData();
+		m.setHasActionInvocation();
 		m.packageName = "tag";
 		m.className = "Child_html";
 		m.superClass = "Layout_html";

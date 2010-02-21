@@ -15,6 +15,9 @@ package cn.bran.japid.compiler;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.TemplateClassMetaData;
+import cn.bran.japid.template.ActionRunner;
+import cn.bran.japid.template.RenderResult;
+import cn.bran.play.JapidResult;
 
 /**
  * specifically for callable templates
@@ -30,6 +33,7 @@ import cn.bran.japid.classmeta.TemplateClassMetaData;
 
 public class JapidTemplateCompiler extends JapidAbstractCompiler {
 	private static final String DO_BODY = "doBody";
+	
 	// StringBuilder mainRenderBodySource = new StringBuilder();
 	TemplateClassMetaData cmd = new TemplateClassMetaData();
 
@@ -54,6 +58,16 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 			println("if (body != null)");
 			println("\tbody.render(" + tag.args + ");");
 			// print to the root space before move one stack up
+			tagsStack.push(tag);
+		} else if (tag.tagName.equals("invoke")) {
+			// invoke an action #{invoke myPackage.MyController.runthis(param1, param2)/}
+			if (tag.hasBody) {
+				throw new JapidCompilationException(template, currentLine, "invoke tag cannot have a body. Must be ended with /}");
+			}
+			
+			String action = tag.args;
+			this.cmd.setHasActionInvocation();
+			println(createActionRunner(action));
 			tagsStack.push(tag);
 		} else if ("set".equals(tag.tagName)) {
 			// only support value as tag content as opposed to as attribut:
@@ -121,7 +135,8 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 				this.cmd.addSetTag(key, tag.bodyBuffer.toString());
 			}
 		} else if (tagName.equals(DO_BODY)) {
-		} else if ("extends".equals(tagName)) {
+		} else if (tagName.equals("invoke")) {
+		} else if (tagName.equals("extends")) {
 		} else {
 			// // regular tag invocation
 			// // the inferface name to create an inner class:

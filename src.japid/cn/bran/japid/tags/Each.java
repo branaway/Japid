@@ -21,12 +21,13 @@ import java.util.Iterator;
 
 /**
  * a buit-in tag for looping, with helping attributes such as, index odd/even
- * line, isFirst, isLast, etc
+ * line, isFirst, isLast, etc. Since we know this tag does not have a layout,
+ * the super's layout->doLayout pathway is short-cutted in the render().
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public class Each extends cn.bran.japid.template.JapidTemplateBase {
+public class Each extends SimpleTag {
 	public static final String sourceTemplate = "tag/Each.html";
 
 	public Each(StringBuilder out) {
@@ -37,6 +38,81 @@ public class Each extends cn.bran.japid.template.JapidTemplateBase {
 		Iterator itor = it.iterator();
 		itBody(body, itor);
 	}
+
+	public void render(Iterator it, DoBody body) {
+		itBody(body, it);
+	}
+
+	public void render(Object[] it, DoBody body) {
+		int start = 0;
+		int i = 0;
+		for (Object o : it) {
+			i++;
+			boolean isOdd = i % 2 == 1;
+			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+		}
+	}
+
+	public void render(int[] it, DoBody body) {
+		int start = 0;
+		int i = 0;
+		for (int  o : it) {
+			i++;
+			boolean isOdd = i % 2 == 1;
+			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+		}
+	}
+	
+	public void render(float[] it, DoBody body) {
+		int start = 0;
+		int i = 0;
+		for (float o : it) {
+			i++;
+			boolean isOdd = i % 2 == 1;
+			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+		}
+	}
+	
+	public void render(long[] it, DoBody body) {
+		int start = 0;
+		int i = 0;
+		for (long o : it) {
+			i++;
+			boolean isOdd = i % 2 == 1;
+			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+		}
+	}
+	
+	public void render(double[] it, DoBody body) {
+		int start = 0;
+		int i = 0;
+		for (double o : it) {
+			i++;
+			boolean isOdd = i % 2 == 1;
+			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+		}
+	}
+	
+	public void render(char[] it, DoBody body) {
+		int start = 0;
+		int i = 0;
+		for (char o : it) {
+			i++;
+			boolean isOdd = i % 2 == 1;
+			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+		}
+	}
+	
+	public void render(boolean[] it, DoBody body) {
+		int start = 0;
+		int i = 0;
+		for (boolean o : it) {
+			i++;
+			boolean isOdd = i % 2 == 1;
+			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+		}
+	}
+	
 
 	// TODO: more polymorphic renders
 
@@ -51,17 +127,13 @@ public class Each extends cn.bran.japid.template.JapidTemplateBase {
 			i++;
 			Object o = it.next();
 			boolean isOdd = i % 2 == 1;
-			body.render(o, i, isOdd, isOdd?"odd":"even", i == start + 1, !it.hasNext());
+			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, !it.hasNext());
 		}
 	}
 
-	@Override
-	protected void doLayout() {
-		// dummy
-	}
-
 	public static interface DoBody<E> {
-		// the _parity is for quick use as a CSS class, or one can use "${_isOdd?"odd":"even"}"
+		// the _parity is for quick use as a CSS class, or one can use
+		// "${_isOdd?"odd":"even"}"
 		void render(E e, int _index, boolean _isOdd, String _parity, boolean _isFirst, boolean _isLast);
 	}
 

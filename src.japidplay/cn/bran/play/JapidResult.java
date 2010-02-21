@@ -13,9 +13,9 @@ import cn.bran.japid.template.RenderResult;
  * 
  */
 public class JapidResult extends Result {
-
-	String contentType;
-	String content;
+	public String contentType;
+	public String content;
+	private RenderResult renderResult;
 
 	public JapidResult(String contentType) {
 		super();
@@ -28,6 +28,7 @@ public class JapidResult extends Result {
 	}
 
 	public JapidResult(RenderResult r) {
+		this.renderResult = r;
 		this.contentType = r.getContentType();
 		StringBuilder sb = r.getContent();
 		if (sb != null)
@@ -43,6 +44,11 @@ public class JapidResult extends Result {
 				throw new RuntimeException(e);
 			}
 		setContentTypeIfNotSet(response, contentType);
+	}
+
+	public RenderResult getRenderResult() {
+		// TODO Auto-generated method stub
+		return renderResult;
 	}
 
 }

@@ -139,6 +139,7 @@ public class JapidCommands {
 		t.importStatic(JavaExtensions.class);
 		t.addAnnotation(NoEnhance.class);
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._layouts.*");
+		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._javatags.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._tags.*");
 		t.addImport("models.*");
 
