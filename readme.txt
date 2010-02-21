@@ -5,8 +5,10 @@
                     
 Version History:
 
-2012/2/20:	v0.3
+2012/2/22:	v0.3
 			1. added cache support in JapidController, which has been moved to the Play-Jpiad-{version}.jar
+			2. added special tag called invoke as in #{invoke MyApplication.action(param)/} that can be used in
+			templates to dynamically include render results from other action invocations. 
 2012/2/14:	v0.2
 			1. added support for back-quote as script line prefix
 			2. japid:mkdir now creates optional packages for controllers.
