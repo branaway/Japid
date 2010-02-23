@@ -67,7 +67,7 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 			
 			String action = tag.args;
 			this.cmd.setHasActionInvocation();
-			println(createActionRunner(action));
+			printActionInvocation(action);
 			tagsStack.push(tag);
 		} else if ("set".equals(tag.tagName)) {
 			// only support value as tag content as opposed to as attribut:

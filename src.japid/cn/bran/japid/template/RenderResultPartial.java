@@ -35,11 +35,11 @@ public class RenderResultPartial extends RenderResult {
 		if (actionRunners != null) {
 			StringBuilder sb = new StringBuilder();
 			int segStart = 0;
-			for (Map.Entry<Integer, ActionRunner> ar : actionRunners.entrySet()) {
-				int pos = ar.getKey();
+			for (Map.Entry<Integer, ActionRunner> arEntry : actionRunners.entrySet()) {
+				int pos = arEntry.getKey();
 				sb.append(superContent.substring(segStart, pos));
 				segStart = pos;
-				ActionRunner a = ar.getValue();
+				ActionRunner a = arEntry.getValue();
 				sb.append(a.run().getContent().toString());
 			}
 			sb.append(superContent.substring(segStart));

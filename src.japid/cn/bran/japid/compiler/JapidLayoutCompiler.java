@@ -13,9 +13,9 @@
  */
 package cn.bran.japid.compiler;
 
+
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.LayoutClassMetaData;
-import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 
 /**
  * Code partly from Play! Framework
@@ -63,9 +63,10 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 				throw new JapidCompilationException(template, currentLine, "invoke tag cannot have a body. Must be ended with /}");
 			}
 
-			String action = tag.args;
 			this.cmd.setHasActionInvocation();
-			println(createActionRunner(action));
+			String action = tag.args;
+			printActionInvocation(action);
+
 			tagsStack.push(tag);
 		} else {
 			// String tagClassName = "tags." + tagName + "_html";

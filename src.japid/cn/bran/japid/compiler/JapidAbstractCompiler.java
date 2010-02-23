@@ -14,6 +14,7 @@
 package cn.bran.japid.compiler;
 
 import java.io.File;
+import java.util.List;
 import java.util.Stack;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
@@ -33,6 +34,8 @@ import cn.bran.play.JapidResult;
  * 
  */
 public abstract class JapidAbstractCompiler {
+	private static final String JAPID_RESULT = "cn.bran.play.JapidResult";
+
 	private static final String ARGS = "args";
 
 	// private static Log log = LogFactory.getLog(JapidAbstractCompiler.class);
@@ -431,27 +434,84 @@ public abstract class JapidAbstractCompiler {
 			return tag;
 		}
 
-	static String createActionRunner(String action) {
-		String template = 
-				"		%s.put(getOut().length(), new %s() {\n" + 
-				"			@Override\n" + 
-				"			public %s run() {\n" + 
-				"				try {\n" + 
-				"					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();\n" +
-				"					%s;\n" + 
-				"				} catch (%s jr) {\n" + 
-				"					return jr.getRenderResult();\n" + 
-				"				}\n" + 
-				"				throw new RuntimeException(\"No render result from running: %s\");\n" + 
-				"			}\n" + 
-				"		});";
-		return String.format(template, 
-				AbstractTemplateClassMetaData.ACTION_RUNNERS , 
-				ActionRunner.class.getName(),
-				RenderResult.class.getName(),
-				action,
-				JapidResult.class.getName(),
-				action);
+	/**
+	 * @param actionInvocationWithCache
+	 */
+	protected static String createActionRunner(String actionInvocationWithCache) {
+		List<String> params = new TagArgsParser(actionInvocationWithCache).split();
+		if (params.size() == 1)
+			return(createActionRunner(actionInvocationWithCache, null, null, null));
+		else {
+			String action = params.get(0);
+			// remove the argument part to extract action string as key base
+			int left = action.indexOf('(');
+			if (left < 1) {
+				throw new RuntimeException("invoke: action needs pair of ()");
+			}
+			
+			String actionPath = "\"" + action.substring(0, left) + "\""; 
+			if (params.size() == 2) {
+				// no param, use the action string as the key
+				return (createActionRunner(action, params.get(1), actionPath, ""));
+			} else {
+				String args = "";
+				for (int i = 2; i < params.size(); i++) {
+					args += params.get(i) + ",";
+				}
+				args = args.substring(0, args.length() - 1);
+				return (createActionRunner(action, params.get(1), actionPath, args));
+			}
+		}
+	}
+
+	protected void printActionInvocation(String action) {
+		println(createActionRunner(action));
+	}
+
+	static String createActionRunner(String action, String ttl, String base, String keys) {
+		if (ttl == null) {
+			String template = 
+					"		%s.put(getOut().length(), new %s() {\n" + 
+					"			@Override\n" + 
+					"			public %s run() {\n" + 
+					"				try {\n" + 
+					"					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();\n" +
+					"					%s;\n" + 
+					"				} catch (%s jr) {\n" + 
+					"					return jr.getRenderResult();\n" + 
+					"				}\n" + 
+					"				throw new RuntimeException(\"No render result from running: %s\");\n" + 
+					"			}\n" + 
+					"		});";
+			return String.format(template, 
+					AbstractTemplateClassMetaData.ACTION_RUNNERS , 
+					ActionRunner.class.getName(),
+					RenderResult.class.getName(),
+					action,
+					JAPID_RESULT,
+					action);
+		}
+		else {
+			// hardcode the cache action runner name to avoid dependency on the Play jar
+			
+			String template = 
+					"		%s.put(getOut().length(), new %s(%s, %s, %s) {\r\n" + 
+					"			@Override\r\n" + 
+					"			public void runPlayAction() throws %s {\r\n" + 
+					"				%s; //\r\n" + 
+					"			}\r\n" + 
+					"		});\r\n";
+			return String.format(template, 
+					AbstractTemplateClassMetaData.ACTION_RUNNERS, 
+					"cn.bran.play.CacheablePlayActionRunner",
+					ttl,
+					base, 
+					"".equals(keys) ? "\"\"" : keys,
+					JAPID_RESULT,
+					action
+					);
+		}
+	
 	}
 
 	protected int currentLine = 1;

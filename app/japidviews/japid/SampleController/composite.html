@@ -5,4 +5,12 @@
 <div>
 	#{invoke SampleController.authorPanel(post.getAuthor())/}
 </div>
+<div>this one has full cache control</div>
+<div>
+	#{invoke SampleController.authorPanel(post.getAuthor()), "10s", post.getAuthor()/} 
+</div>
+<div>this one has cache control using the default signature. Note the key usually must present if the action takes params</div>
+<div>
+	#{invoke SampleController.authorPanel(post.getAuthor()), "10s"/} 
+</div>
 <p>This is the comosite content footer</p>

@@ -25,6 +25,18 @@ static private final String static_2 = "\n" +
 ;
 static private final String static_3 = "\n" + 
 "</div>\n" + 
+"<div>this one has full cache control</div>\n" + 
+"<div>\n" + 
+"	"
+;
+static private final String static_4 = " \n" + 
+"</div>\n" + 
+"<div>this one has cache control using the default signature. Note the key usually must present if the action takes params</div>\n" + 
+"<div>\n" + 
+"	"
+;
+static private final String static_5 = " \n" + 
+"</div>\n" + 
 "<p>This is the comosite content footer</p>"
 ;
 	public composite() {
@@ -58,6 +70,24 @@ p(static_2);// line 2
 		});
 // line 6
 p(static_3);// line 6
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", "SampleController.authorPanel", post.getAuthor()) {
+			@Override
+			public void runPlayAction() throws cn.bran.play.JapidResult {
+				SampleController.authorPanel(post.getAuthor()); //
+			}
+		});
+
+// line 10
+p(static_4);// line 10
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", "SampleController.authorPanel", "") {
+			@Override
+			public void runPlayAction() throws cn.bran.play.JapidResult {
+				SampleController.authorPanel(post.getAuthor()); //
+			}
+		});
+
+// line 14
+p(static_5);// line 14
 
 	}
 }
