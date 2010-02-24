@@ -1,18 +1,17 @@
 package templates;
 import java.util.*;
 import java.io.*;
-
-import models.japidsample.Post;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import japidviews._tags.*;
+import models.japidsample.Post;
 import static cn.bran.play.JapidPlayAdapter.*;
 // NOTE: This file was generated from: templates/Posts.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
 public class Posts extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/Posts.html";
-	public static final String contentType = "text/html";
+private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = ""
 ;
 static private final String static_1 = "\n" + 
@@ -52,7 +51,7 @@ static private final String static_8 = "\n" +
 		this.allPost = allPost;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.contentType, getOut(), t);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1

@@ -10,7 +10,7 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/TagLayout.html";
-	public static final String contentType = "text/html";
+private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = "标签布局\n" + 
 "<div>\n" + 
 "";

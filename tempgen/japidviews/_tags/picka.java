@@ -10,7 +10,7 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public class picka extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_tags/picka.html";
-	public static final String contentType = "text/html";
+private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = ""
 ;
 	public picka() {
@@ -31,7 +31,7 @@ static private final String static_0 = ""
 		this.b = b;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.contentType, getOut(), t);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1

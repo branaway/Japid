@@ -1,5 +1,9 @@
 package cn.bran.play;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import play.mvc.Http.Header;
 import play.mvc.Http.Request;
 import play.mvc.Http.Response;
 import play.mvc.results.Result;
@@ -13,26 +17,28 @@ import cn.bran.japid.template.RenderResult;
  * 
  */
 public class JapidResult extends Result {
-	public String contentType;
+	public static final String CONTENT_TYPE = "Content-Type";
+	public static final String CACHE_CONTROL = "Cache-Control";
 	public String content;
 	private RenderResult renderResult;
+	private Map<String, String> headers = new HashMap<String, String>();
 
-	public JapidResult(String contentType) {
-		super();
-		this.contentType = contentType;
-	}
-
-	public JapidResult(String contentType2, String string) {
-		this.contentType = contentType2;
-		this.content = string;
-	}
+	// public JapidResult(String contentType) {
+	// super();
+	// this.contentType = contentType;
+	// }
+	//
+	// public JapidResult(String contentType2, String string) {
+	// this.contentType = contentType2;
+	// this.content = string;
+	// }
 
 	public JapidResult(RenderResult r) {
 		this.renderResult = r;
-		this.contentType = r.getContentType();
 		StringBuilder sb = r.getContent();
 		if (sb != null)
 			this.content = sb.toString();
+		this.headers = r.getHeaders();
 	}
 
 	@Override
@@ -43,7 +49,24 @@ public class JapidResult extends Result {
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-		setContentTypeIfNotSet(response, contentType);
+
+		Map<String, Header> resHeaders = response.headers;
+
+		for (String h : headers.keySet()) {
+			String value = headers.get(h);
+			if (CONTENT_TYPE.equals(h)) {
+				setContentTypeIfNotSet(response, value);
+			} else {
+				if (resHeaders.containsKey(h)) {
+					// shall I override it?
+					// override it. Consider the value in templates are meant to override 
+					response.setHeader(h, value);
+				}
+				else {
+					response.setHeader(h, value);
+				}
+			}
+		}
 	}
 
 	public RenderResult getRenderResult() {

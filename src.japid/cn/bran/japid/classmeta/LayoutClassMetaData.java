@@ -28,7 +28,7 @@ public class LayoutClassMetaData  extends AbstractTemplateClassMetaData {
 		printAnnotations();
 		classDeclare();
 		embedSourceTemplateName();
-		embedContentType();
+		printHttpHeaderMap();
 		declareActionRunners();
 		buildStatics();
 		addConstructors();

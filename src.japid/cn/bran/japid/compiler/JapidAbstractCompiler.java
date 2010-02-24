@@ -260,6 +260,15 @@ public abstract class JapidAbstractCompiler {
 				if (contentType.endsWith(";"))
 					contentType = contentType.substring(0, contentType.length());
 				getTemplateClassMetaData().setContentType(contentType);
+			} else if (line.startsWith("setHeader ") || line.startsWith("setHeader\t")) {
+				String headerkv = line.substring("setHeader".length()).trim();
+				String[] split = headerkv.split("[ |\t]");
+				if (split.length < 2) {
+					throw new RuntimeException("setHeaader must take a key and a value string");
+				}
+				String name = split[0];
+				String value = headerkv.substring(name.length()).trim();
+				getTemplateClassMetaData().setHeader(name, value);
 			} else if (line.startsWith(ARGS + " ") || line.startsWith(ARGS + "\t")) {
 				String contentType = line.substring(ARGS.length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				Tag currentTag = this.tagsStack.peek();

@@ -14,6 +14,8 @@
 package cn.bran.japid.template;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * to wrap the result of Japid template rendering. 
@@ -24,19 +26,15 @@ import java.io.Serializable;
  * 
  */
 public class RenderResult implements Serializable {
-	private String contentType;
 	private StringBuilder content;
 	long renderTime; // in ms, for recording the time to render.
+	private Map<String, String> headers = new HashMap<String, String>();
 
-	public RenderResult(String contentType, StringBuilder content, long renderTime) {
+	public RenderResult(Map<String, String> headers , StringBuilder content, long renderTime) {
 		super();
-		this.contentType = contentType;
 		this.content = content;
 		this.renderTime = renderTime;
-	}
-
-	public String getContentType() {
-		return contentType;
+		this.headers = headers;
 	}
 
 	/**
@@ -53,6 +51,10 @@ public class RenderResult implements Serializable {
 		return this.renderTime;
 	}
 
+//	public void setHeaders(Map<String, String> headers) {
+//		this.headers = headers;
+//	}
+
 	@Override
 	public String toString() {
 		if (content != null) {
@@ -61,5 +63,9 @@ public class RenderResult implements Serializable {
 		else {
 			return "RenderResult: null";
 		}
+	}
+
+	public Map<String, String> getHeaders() {
+		return this.headers;
 	}
 }

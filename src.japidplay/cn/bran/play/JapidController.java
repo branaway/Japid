@@ -15,7 +15,7 @@ import cn.bran.japid.util.StackTraceUtils;
 
 /**
  * a helper class. for hiding the template API from user eyes. not really needed
- * since the template invocation API is simeple enough.
+ * since the template invocation API is simple enough.
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
  */

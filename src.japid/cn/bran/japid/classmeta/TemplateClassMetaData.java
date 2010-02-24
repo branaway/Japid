@@ -71,7 +71,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		printAnnotations();
 		classDeclare();
 		embedSourceTemplateName();
-		embedContentType();
+//		embedContentType();
+		printHttpHeaderMap();
 		declareActionRunners();
 		buildStatics();
 		addConstructors();
@@ -128,16 +129,16 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		
 		if (streaming) {
 			if (hasActionInvocation) 
-				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.contentType, null, t, " + ACTION_RUNNERS + ");");
+				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, null, t, " + ACTION_RUNNERS + ");");
 			else 
-				pln("\t\treturn new " + RENDER_RESULT + "(this.contentType, null, t);");
+				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, null, t);");
 				
 		}
 		else {
 			if (hasActionInvocation) 
-				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.contentType, getOut(), t, " + ACTION_RUNNERS + ");");
+				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, getOut(), t, " + ACTION_RUNNERS + ");");
 			else 
-				pln("\t\treturn new " + RENDER_RESULT + "(this.contentType, getOut(), t);");
+				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, getOut(), t);");
 		}
 		pln("\t}");
 

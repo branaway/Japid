@@ -21,8 +21,8 @@ import java.util.Map;
 public class RenderResultPartial extends RenderResult {
 	LinkedHashMap<Integer, ActionRunner> actionRunners;
 
-	public RenderResultPartial(String contentType, StringBuilder content, long renderTime, LinkedHashMap<Integer, ActionRunner> actions) {
-		super(contentType, content, renderTime);
+	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime, LinkedHashMap<Integer, ActionRunner> actions) {
+		super(headers, content, renderTime);
 		this.actionRunners = actions;
 		// TODO Auto-generated constructor stub
 	}

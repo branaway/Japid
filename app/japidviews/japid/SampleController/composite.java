@@ -12,7 +12,6 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public class composite extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/japid/SampleController/composite.html";
-	public static final String contentType = "text/html";
 	LinkedHashMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners = new LinkedHashMap<Integer, cn.bran.japid.template.ActionRunner>();
 static private final String static_0 = ""
 ;
@@ -20,23 +19,20 @@ static private final String static_1 = ""
 ;
 static private final String static_2 = "\n" + 
 "<p>This is the comosite content header</p>\n" + 
-"<div>\n" + 
-"	"
+"<div>"
 ;
-static private final String static_3 = "\n" + 
-"</div>\n" + 
+static private final String static_3 = "</div>\n" + 
+"\n" + 
 "<div>this one has full cache control</div>\n" + 
-"<div>\n" + 
-"	"
+"<div>"
 ;
-static private final String static_4 = " \n" + 
-"</div>\n" + 
+static private final String static_4 = "</div>\n" + 
+"\n" + 
 "<div>this one has cache control using the default signature. Note the key usually must present if the action takes params</div>\n" + 
-"<div>\n" + 
-"	"
+"<div>"
 ;
-static private final String static_5 = " \n" + 
-"</div>\n" + 
+static private final String static_5 = "</div>\n" + 
+"\n" + 
 "<p>This is the comosite content footer</p>"
 ;
 	public composite() {
@@ -50,7 +46,7 @@ static private final String static_5 = " \n" +
 		this.post = post;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.contentType, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1
@@ -68,8 +64,8 @@ p(static_2);// line 2
 				throw new RuntimeException("No render result from running: SampleController.authorPanel(post.getAuthor())");
 			}
 		});
-// line 6
-p(static_3);// line 6
+// line 5
+p(static_3);// line 5
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", "SampleController.authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -77,8 +73,8 @@ p(static_3);// line 6
 			}
 		});
 
-// line 10
-p(static_4);// line 10
+// line 8
+p(static_4);// line 8
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", "SampleController.authorPanel", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -86,8 +82,8 @@ p(static_4);// line 10
 			}
 		});
 
-// line 14
-p(static_5);// line 14
+// line 11
+p(static_5);// line 11
 
 	}
 }

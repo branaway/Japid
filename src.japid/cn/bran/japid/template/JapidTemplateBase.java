@@ -16,6 +16,8 @@ package cn.bran.japid.template;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * a java based template suing StringBuilder as the content buffer
@@ -27,6 +29,7 @@ public abstract class JapidTemplateBase {
 //	private static final String UTF_8 = "UTF-8";
 
 	StringBuilder out;
+	protected Map<String, String> headers = new LinkedHashMap<String, String>();
 
 	public void setOut(StringBuilder out) {
 		this.out = out;

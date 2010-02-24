@@ -16,8 +16,10 @@ package cn.bran.japid.classmeta;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import cn.bran.japid.template.ActionRunner;
@@ -25,6 +27,7 @@ import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.JapidTemplateBaseStreaming;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.template.RenderResultPartial;
+//import cn.bran.play.JapidResult;
 
 /**
  * lots of the code block generation is done here
@@ -62,6 +65,7 @@ public class AbstractTemplateClassMetaData {
 	protected static final String RENDER_RESULT_PARTIAL = RenderResultPartial.class.getName();
 	public static final String ACTION_RUNNERS = "actionRunners";
 	private static final String IMPORT_SPACE = IMPORT + SPACE;
+	private static final String CONTENT_TYPE = "Content-Type";
 	public String packageName;
 	public String className;
 
@@ -113,12 +117,12 @@ public class AbstractTemplateClassMetaData {
 		if (streaming)
 			pln(IMPORT_SPACE + cn.bran.japid.tags.streaming.Each.class.getName() + COMMA);
 		else
-			pln(IMPORT_SPACE  + cn.bran.japid.tags.Each.class.getName() + COMMA);
-		
+			pln(IMPORT_SPACE + cn.bran.japid.tags.Each.class.getName() + COMMA);
+
 		if (hasActionInvocation) {
 			pln(IMPORT_SPACE + ActionRunner.class.getName() + COMMA);
 		}
-		
+
 		// pln("import java.math.*;");
 		// pln("import static java.lang.Math.*;");
 		// // should decouple with JavaExtensions
@@ -172,10 +176,10 @@ public class AbstractTemplateClassMetaData {
 		pln("\t" + "public static final String sourceTemplate = \"" + originalTemplate + "\";");
 	}
 
-	protected void embedContentType() {
-		String t = contentType == null ? "text/html" : contentType;
-		pln("\t" + "public static final String contentType = \"" + t + "\";");
-	}
+	// protected void embedContentType() {
+	// String t = contentType == null ? "text/html" : contentType;
+	// pln("\t" + "public static final String contentType = \"" + t + "\";");
+	// }
 
 	/**
 	 * 
@@ -244,7 +248,7 @@ public class AbstractTemplateClassMetaData {
 			pln(TAB + PUBLIC + className + "(OutputStream out) {");
 		else
 			pln(TAB + PUBLIC + className + "(StringBuilder out) {");
-		
+
 		pln(TAB + TAB + "super(out);");
 		pln(TAB + "}");
 	}
@@ -330,12 +334,13 @@ public class AbstractTemplateClassMetaData {
 	static Set<Class<? extends Annotation>> typeAnnotations = new HashSet<Class<? extends Annotation>>();
 
 	public void setContentType(String contentType) {
-		// this.contentType = contentType;
+		this.headers.put(CONTENT_TYPE, contentType);
 	}
 
-	String contentType;
+	// String contentType;
 	private boolean trimStaticContent = false;
 	protected boolean hasActionInvocation;
+	private Map<String, String> headers = new HashMap<String, String>();
 
 	public void turnOnStopwatch() {
 		this.stopWatch = true;
@@ -364,12 +369,31 @@ public class AbstractTemplateClassMetaData {
 	protected void declareActionRunners() {
 		String actionRunner = ActionRunner.class.getName();
 		if (hasActionInvocation) {
-			pln(TAB + "LinkedHashMap<Integer, " + actionRunner + "> " + ACTION_RUNNERS + " = new LinkedHashMap<Integer, " + actionRunner + ">();");
+			pln(TAB + "LinkedHashMap<Integer, " + actionRunner + "> " + ACTION_RUNNERS + " = new LinkedHashMap<Integer, " + actionRunner
+					+ ">();");
 		}
 	}
 
 	public void setHasActionInvocation() {
 		this.hasActionInvocation = true;
-		
+
+	}
+
+	public void setHeader(String name, String value) {
+		this.headers.put(name, value);
+	}
+
+	public void printHttpHeaderMap() {
+// now we use the headers var the template base, for slighly perfromance penalty
+//		pln("	private static final Map<String, String> headers = new HashMap<String, String>();");
+		if (headers.size() > 0) {
+//			pln("	static {");
+			pln("{");
+			for (String k : headers.keySet()) {
+				String v = headers.get(k);
+				pln("	headers.put(\"" + k + "\", \"" + v + "\");");
+			}
+			pln("}");
+		}
 	}
 }

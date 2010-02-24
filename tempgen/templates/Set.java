@@ -10,7 +10,7 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public class Set extends japidviews._layouts.SetLayout{
 	public static final String sourceTemplate = "templates/Set.html";
-	public static final String contentType = "text/html";
+private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = ""
 ;
 static private final String static_1 = ""
@@ -35,7 +35,7 @@ static private final String static_5 = "\n" +
 		this.a = a;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.contentType, getOut(), t);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1
