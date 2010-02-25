@@ -30,6 +30,9 @@ public abstract class JapidTemplateBase {
 
 	StringBuilder out;
 	protected Map<String, String> headers = new LinkedHashMap<String, String>();
+	{
+		headers.put("Content-Type", "text/html; charset=utf-8");
+	}
 
 	public void setOut(StringBuilder out) {
 		this.out = out;
