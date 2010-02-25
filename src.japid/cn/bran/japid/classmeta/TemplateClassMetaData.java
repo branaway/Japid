@@ -127,14 +127,14 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t\tt = System.currentTimeMillis() - t;");
 		
 		if (streaming) {
-			if (hasActionInvocation) 
+			if (true || hasActionInvocation) 
 				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, null, t, " + ACTION_RUNNERS + ");");
 			else 
 				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, null, t);");
 				
 		}
 		else {
-			if (hasActionInvocation) 
+			if (true || hasActionInvocation) 
 				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, getOut(), t, " + ACTION_RUNNERS + ");");
 			else 
 				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, getOut(), t);");

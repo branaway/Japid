@@ -34,7 +34,7 @@ static private final String static_4 = "'</p>\n" +
 		this.a = a;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1

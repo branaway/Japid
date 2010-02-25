@@ -33,7 +33,7 @@ public class RenderResultPartial extends RenderResult {
 		// let's interpolate the static content with the result from the actions
 
 		StringBuilder superContent = super.getContent();
-		if (actionRunners != null) {
+		if (actionRunners != null && actionRunners.size() > 0) {
 			StringBuilder sb = new StringBuilder();
 			int segStart = 0;
 			for (Map.Entry<Integer, ActionRunner> arEntry : actionRunners.entrySet()) {
