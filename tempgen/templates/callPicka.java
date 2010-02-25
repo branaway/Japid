@@ -10,7 +10,6 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public class callPicka extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/callPicka.html";
-private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = ""
 ;
 static private final String static_1 = "the tag chosed:"
@@ -29,6 +28,7 @@ static private final String static_1 = "the tag chosed:"
 	@Override protected void doLayout() {
 p(static_0);// line 1
 // line 1
+_picka0.setActionRunners(getActionRunners());
 _picka0.render("a", "b", _picka0DoBody);
 
 

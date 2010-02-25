@@ -16,8 +16,9 @@ package cn.bran.japid.template;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.util.LinkedHashMap;
+import java.util.TreeMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * a java based template suing StringBuilder as the content buffer
@@ -29,9 +30,22 @@ public abstract class JapidTemplateBase {
 //	private static final String UTF_8 = "UTF-8";
 
 	StringBuilder out;
-	protected Map<String, String> headers = new LinkedHashMap<String, String>();
+	protected Map<String, String> headers = new TreeMap<String, String>();
 	{
 		headers.put("Content-Type", "text/html; charset=utf-8");
+	}
+
+	/**
+	 * to keep track of all the action invocations by #{invoke} tag
+	 */
+	protected TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
+
+	public TreeMap<Integer, cn.bran.japid.template.ActionRunner> getActionRunners() {
+		return actionRunners;
+	}
+
+	public void setActionRunners(TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners) {
+		this.actionRunners = actionRunners;
 	}
 
 	public void setOut(StringBuilder out) {

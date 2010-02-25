@@ -10,7 +10,6 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public class Set extends japidviews._layouts.SetLayout{
 	public static final String sourceTemplate = "templates/Set.html";
-private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = ""
 ;
 static private final String static_1 = ""

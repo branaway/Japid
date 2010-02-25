@@ -477,6 +477,53 @@ public abstract class JapidAbstractCompiler {
 		println(createActionRunner(action));
 	}
 
+	/**
+	 * @param tag
+	 */
+	protected void regularTagInvoke(Tag tag) {
+		String tagVar = "_" + tag.tagName + tag.tagIndex;
+		println(tagVar + ".setActionRunners(getActionRunners());");
+		if (tag.hasBody) {
+			// old way: create a new instance for each call
+			// println("new " + tagClassName + "(getOut()).render(" +
+			// tagArgs + ", new " + tagName + tagIndex + "DoBody());");
+			// use a field to call a tag for better performance in case of
+			// loop
+			// TODO: handle tags with prefix: #{my.tag}
+			println(tagVar + ".render(" + tag.args + ", _" + tag.tagName + tag.tagIndex + "DoBody);");
+			
+		} else {
+			// println("new " + tagClassName + "(getOut()).render(" +
+			// tagArgs + ", null);");
+			println(tagVar + ".render(" + tag.args + ");");
+		}
+//		println("actionRunners.putAll(" + tagVar + ".getActionRunners());");
+	}
+
+	/**
+	 * @param tag
+	 */
+	protected void invokeAction(Tag tag) {
+		if (tag.hasBody) {
+			throw new JapidCompilationException(template, currentLine, "invoke tag cannot have a body. Must be ended with /}");
+		}
+	
+		this.getTemplateClassMetaData().setHasActionInvocation();
+		String action = tag.args;
+		printActionInvocation(action);
+	}
+
+	/**
+	 * @param tag
+	 */
+	protected void endRegularTag(Tag tag) {
+		if (tag.hasBody) {
+			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
+		} else if (!"doLayout".equals(tag.tagName)) {
+			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
+		}
+	}
+
 	static String createActionRunner(String action, String ttl, String base, String keys) {
 		if (ttl == null) {
 			String template = 

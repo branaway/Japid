@@ -52,23 +52,11 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 				layoutName = layoutName.substring(1);
 			}
 			this.cmd.superClass = layoutName.replace('/', '.');
-			tagsStack.push(tag);
 		} else if (tag.tagName.equals(DO_BODY)) {
 			cmd.doBody(tag.args);
 			println("if (body != null)");
 			println("\tbody.render(" + tag.args + ");");
 			// print to the root space before move one stack up
-			tagsStack.push(tag);
-		} else if (tag.tagName.equals("invoke")) {
-			// invoke an action #{invoke myPackage.MyController.runthis(param1, param2)/}
-			if (tag.hasBody) {
-				throw new JapidCompilationException(template, currentLine, "invoke tag cannot have a body. Must be ended with /}");
-			}
-			
-			String action = tag.args;
-			this.cmd.setHasActionInvocation();
-			printActionInvocation(action);
-			tagsStack.push(tag);
 		} else if ("set".equals(tag.tagName)) {
 			// only support value as tag content as opposed to as attribut:
 			// #{set key}value#{/}
@@ -88,25 +76,13 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 					this.cmd.addSetTag(key, "p(" + value + ");");
 				}
 			}
-			// wait until end of tag
-			tagsStack.push(tag);
+		} else if (tag.tagName.equals("invoke")) {
+			invokeAction(tag);
 		} else {
-			// invoke a tag
-			if (tag.hasBody) {
-				// old way: create a new instance for each call
-				// println("new " + tagClassName + "(getOut()).render(" +
-				// tagArgs + ", new " + tagName + tagIndex + "DoBody());");
-				// use a field to call a tag for better performance in case of
-				// loop
-				// TODO: handle tags with prefix: #{my.tag}
-				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ", _" + tag.tagName + tag.tagIndex + "DoBody);");
-			} else {
-				// println("new " + tagClassName + "(getOut()).render(" +
-				// tagArgs + ", null);");
-				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ");");
-			}
-			tagsStack.push(tag);
+			regularTagInvoke(tag);
 		}
+		
+		tagsStack.push(tag);
 		// XXX other tags
 		markLine(parser.getLine());
 		println();
@@ -138,16 +114,7 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		} else if (tagName.equals("invoke")) {
 		} else if (tagName.equals("extends")) {
 		} else {
-			// // regular tag invocation
-			// // the inferface name to create an inner class:
-			// TagName_html.DoBody
-
-			if (tag.hasBody) {
-				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
-			} else {
-				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
-			}
-
+			endRegularTag(tag);
 		}
 		markLine(tag.startLine);
 		println();

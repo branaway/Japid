@@ -1,3 +1,4 @@
+`extends lcomposite.html
 `args models.japidsample.Post post 
 `import controllers.japid.SampleController
 
@@ -10,4 +11,5 @@
 <div>this one has cache control using the default signature. Note the key usually must present if the action takes params</div>
 <div>#{invoke SampleController.authorPanel(post.getAuthor()), "10s"/}</div>
 
-<p>This is the comosite content footer</p>
+<p>Let's invoke a tag which invokes an action</p>
+#{invokeInTag/}

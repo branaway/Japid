@@ -11,7 +11,6 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public class Display extends TagLayout{
 	public static final String sourceTemplate = "japidviews/_tags/Display.html";
-private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = ""
 ;
 static private final String static_1 = "\n" + 

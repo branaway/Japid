@@ -2,6 +2,7 @@ package cn.bran.japid.template;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 /**
@@ -19,9 +20,9 @@ import java.util.Map;
  * 
  */
 public class RenderResultPartial extends RenderResult {
-	LinkedHashMap<Integer, ActionRunner> actionRunners;
+	Map<Integer, ActionRunner> actionRunners;
 
-	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime, LinkedHashMap<Integer, ActionRunner> actions) {
+	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime, Map<Integer, ActionRunner> actions) {
 		super(headers, content, renderTime);
 		this.actionRunners = actions;
 		// TODO Auto-generated constructor stub

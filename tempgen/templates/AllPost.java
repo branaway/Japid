@@ -11,7 +11,6 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public class AllPost extends Layout{
 	public static final String sourceTemplate = "templates/AllPost.html";
-private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = ""
 ;
 static private final String static_1 = "\n" + 
@@ -65,11 +64,13 @@ p(static_1);// line 6
 p(static_2);// line 8
 for (Post p: allPost) {// line 10
 p(static_3);// line 10
+_Display1.setActionRunners(getActionRunners());
 _Display1.render(p, "home", _Display1DoBody);
 // line 11
 p(static_7);// line 13
 }// line 14
 p(static_8);// line 14
+_Tag22.setActionRunners(getActionRunners());
 _Tag22.render(blogTitle);
 // line 16
 p(static_9);// line 16

@@ -73,7 +73,6 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		embedSourceTemplateName();
 //		embedContentType();
 		printHttpHeaderMap();
-		declareActionRunners();
 		buildStatics();
 		addConstructors();
 // the render mthod

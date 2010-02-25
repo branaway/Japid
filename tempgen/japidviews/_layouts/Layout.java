@@ -10,7 +10,6 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public abstract class Layout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/Layout.html";
-private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = "I'm the layout.\n" + 
 "<p>\n" + 
 "";

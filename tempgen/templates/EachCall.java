@@ -10,7 +10,6 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public class EachCall extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "templates/EachCall.html";
-private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = ""
 ;
 static private final String static_1 = "\n" + 
@@ -55,9 +54,11 @@ List<String> posts
 	@Override protected void doLayout() {
 p(static_0);// line 1
 p(static_1);// line 3
+_Each0.setActionRunners(getActionRunners());
 _Each0.render(posts, _Each0DoBody);
 // line 6
 p(static_5);// line 8
+_Each1.setActionRunners(getActionRunners());
 _Each1.render(posts, _Each1DoBody);
 // line 11
 p(static_9);// line 13

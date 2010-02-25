@@ -11,7 +11,6 @@ import static cn.bran.play.JapidPlayAdapter.*;
 @cn.bran.play.NoEnhance
 public class AllPost2 extends Layout{
 	public static final String sourceTemplate = "templates/AllPost2.html";
-private static final Map<String, String> headers = new HashMap<String, String>();
 static private final String static_0 = ""
 ;
 static private final String static_1 = ""
@@ -74,6 +73,7 @@ if (allPost.size() > 0 ) {// line 8
 p(static_5);// line 8
 for (Post p: allPost) {// line 10
 p(static_6);// line 10
+_Display1.setActionRunners(getActionRunners());
 _Display1.render(p, "home", _Display1DoBody);
 // line 11
 p(static_9);// line 13
@@ -83,6 +83,7 @@ p(static_10);// line 14
 p(static_11);// line 15
 }// line 17
 p(static_12);// line 17
+_Tag22.setActionRunners(getActionRunners());
 _Tag22.render(blogTitle);
 // line 19
 p(static_13);// line 19

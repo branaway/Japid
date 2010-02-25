@@ -366,14 +366,6 @@ public class AbstractTemplateClassMetaData {
 		return this.trimStaticContent;
 	}
 
-	protected void declareActionRunners() {
-		String actionRunner = ActionRunner.class.getName();
-		if (hasActionInvocation) {
-			pln(TAB + "LinkedHashMap<Integer, " + actionRunner + "> " + ACTION_RUNNERS + " = new LinkedHashMap<Integer, " + actionRunner
-					+ ">();");
-		}
-	}
-
 	public void setHasActionInvocation() {
 		this.hasActionInvocation = true;
 

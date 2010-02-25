@@ -43,6 +43,8 @@ public class JapidController extends Controller {
 
 			throw new JapidResult(rr);
 		} catch (Exception e) {
+			if (e instanceof JapidResult)
+				throw (JapidResult)e;
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}

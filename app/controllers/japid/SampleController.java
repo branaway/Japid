@@ -25,6 +25,21 @@ public class SampleController extends JapidController {
 //		}, "10s", a);
 	}
 	
+	public static void foo() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("--------------foo() action invoked:Hello foo!");
+		RenderResult rr = new RenderResult(null, sb, 0);
+		
+		throw new JapidResult(rr);
+		
+//		runWithCache(new ActionRunner() {
+//			@Override
+//			public RenderResult run() {
+//				return new authorPanel().render(a);
+//			}
+//		}, "10s", a);
+	}
+	
 	public static void composite() {
 		Post post = new Post();
 		post.title = "test post";

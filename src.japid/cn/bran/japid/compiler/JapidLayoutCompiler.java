@@ -57,39 +57,9 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 		} else if ("doLayout".equals(tag.tagName)) {
 			print("\tdoLayout();");
 		} else if (tag.tagName.equals("invoke")) {
-			// invoke an action #{invoke myPackage.MyController.runthis(param1,
-			// param2)/}
-			if (tag.hasBody) {
-				throw new JapidCompilationException(template, currentLine, "invoke tag cannot have a body. Must be ended with /}");
-			}
-
-			this.cmd.setHasActionInvocation();
-			String action = tag.args;
-			printActionInvocation(action);
-
-			tagsStack.push(tag);
+			invokeAction(tag);
 		} else {
-			// String tagClassName = "tags." + tagName + "_html";
-
-			// // collect tab invocation body and embed an innner class
-			// tag.innerClassName = tagName + tagIndex + "_Body";
-			// print("new " + tagClassName + "().render(" + tagArgs + ", new " +
-			// tag.innerClassName + "());");
-
-			// build something like this: new Display_html().render(frontPost,
-			// "home", new Display1_Body());
-			// String tagClassName = "tag." + tagName;
-			// String bodyInnerClassName = tagClassName.replace('.', '_') +
-			// tagIndex + "_Body";
-			tag.tagName = tag.tagName;
-			if (tag.hasBody) {
-				// println("new " + tagClassName + "(getOut()).render(" +
-				// tagArgs + ", new " + tagName + tagIndex + "DoBody());");
-				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ", _" + tag.tagName + tag.tagIndex + "DoBody);");
-			} else {
-				println("_" + tag.tagName + tag.tagIndex + ".render(" + tag.args + ", null);");
-			}
-
+			regularTagInvoke(tag);
 		}
 		tagsStack.push(tag);
 		markLine(parser.getLine());
@@ -121,16 +91,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 			// this.cmd.addSetTag(key, tag.bodyBuffer.toString());
 		} else if (tagName.equals("invoke")) {
 		} else {
-			// // regular tag invocation
-			// // the inferface name to create an inner class:
-			// TagName_html.DoBody
-
-			if (tag.hasBody) {
-				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
-			} else if (!"doLayout".equals(tagName)) {
-				this.cmd.addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
-			}
-
+			endRegularTag(tag);
 		}
 		markLine(tag.startLine);
 		println();
