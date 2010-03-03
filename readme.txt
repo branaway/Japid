@@ -239,7 +239,7 @@ import japidviews.Application.hello;
 
 import cn.bran.japid.template.RenderResult;
 import cn.bran.play.JapidResult;
-import controllers.japid.JapidController;
+import cn.bran.play.JapidController;
 
 public class Application extends JapidController {
     public static void hello() {
