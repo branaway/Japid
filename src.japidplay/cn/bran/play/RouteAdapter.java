@@ -3,8 +3,8 @@ package cn.bran.play;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.lang.text.StrSubstitutor;
+// available only with newer commons-lang
+// import org.apache.commons.lang.text.StrSubstitutor;
 
 import play.Play;
 import play.classloading.enhancers.LocalvariablesNamesEnhancer.LocalVariablesNamesTracer;
@@ -148,10 +148,12 @@ public class RouteAdapter implements UrlMapper {
 				}
 
 				// check cache first before go the expensive result
-				String urlPattern = getActionCache().get(k); // format
-																		// /action/{id}/{tag}
-																		// etc
-				if (urlPattern != null) {
+				String urlPattern = getActionCache().get(k); 
+				// format /action/{id}/{tag} etc
+				// no cache for now to keep compatibility with Play code
+
+				if (false && urlPattern != null) {
+/*	
 					if ("/{controller}/{action}".equals(urlPattern)) {
 						// this is special
 						// code copied from Router to compose the query string
@@ -165,9 +167,12 @@ public class RouteAdapter implements UrlMapper {
 						String url = sub.replace(urlPattern);
 						return url;
 					}
+					
+*/
+					return null;
 				} else {
 					ActionDefinition actionDef = Router.reverse(action, paramMap);
-					// was doing some hacking for caching. don't do it now for compatiblility with remote
+// was doing some hacking for caching. don't do it now for compatiblility with remote
 //					Route route = actionDef.route;
 //					// find is the route is cacheable. it's hard to cache path
 //					// with constrained parameter

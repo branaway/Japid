@@ -99,12 +99,6 @@ public class JapidPlugin extends PlayPlugin {
 	}
 
 	@Override
-	public void onTemplateCompilation(Template template) {
-		// TODO Auto-generated method stub
-		super.onTemplateCompilation(template);
-	}
-
-	@Override
 	public void onEvent(String message, Object context) {
 
 	}
