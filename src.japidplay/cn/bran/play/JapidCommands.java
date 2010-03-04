@@ -137,6 +137,7 @@ public class JapidCommands {
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._layouts.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._javatags.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._tags.*");
+		t.addImport(play.mvc.Scope.class.getName() + ".*");
 		t.addImport("models.*");
 		t.addImport("controllers.*");
 
