@@ -28,6 +28,8 @@ Version History:
 			2. Added ignoreCache() and ignoreCacheNowAndNext()methods in JapidController.
 			The above two methods set a flag for cache to ignore get requests from the current session so 
 			clients will need to read from DB.
+			3. add JapidController.dontRedirect() which can be used before calling another action in an action.
+			This is like server-side forwarding. 
 			
 2012/2/24:	v0.31
 			1. added directive in script to add any http response headers. The usage example:
