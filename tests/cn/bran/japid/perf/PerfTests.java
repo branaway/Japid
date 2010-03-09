@@ -14,13 +14,10 @@ import models.japidsample.Post;
 
 import org.junit.Test;
 
-import cn.bran.japid.template.JapidTemplateBase;
-import cn.bran.japid.template.RenderResult;
-import cn.bran.japid.util.SimpleMessageProvider;
-
 import templates.AllPost;
-import templates.Msg;
 import templates.Posts;
+import cn.bran.japid.template.RenderResult;
+import cn.bran.japid.util.StringBundler;
 
 public class PerfTests {
 	/**
@@ -56,7 +53,9 @@ public class PerfTests {
 			// a simple loop without templating
 			baos.reset();
 			long t = System.currentTimeMillis();
-			StringBuffer sb = new StringBuffer(1000);
+//			StringBuffer sb = new StringBuffer(1000);
+			StringBuilder sb = new StringBuilder(1000);
+//			StringBundler sb = new StringBundler();
 			for (Post pp : posts) {
 				sb.append("你");
 				sb.append("Title: " + pp.getTitle());
@@ -142,120 +141,6 @@ public class PerfTests {
 		System.out.println(r.getContent().toString());
 	}
 
-	//
-	// @Test
-	// public void stringBufferVsPrintWriter() {
-	// Author a = new Author();
-	// a.name = "作者";
-	// a.birthDate = new Date();
-	// a.gender = 'm';
-	//
-	// Post p = new Post();
-	// p.setAuthor(a);
-	// p.setContent("这是一个很好的内容开始和结束都很好. ");
-	// p.setPostedAt(new Date());
-	// p.setTitle("测试");
-	//
-	// List<Post> posts = new ArrayList<Post>();
-	//
-	// for (int i = 0; i < 1000; i++) {
-	// posts.add(p);
-	// }
-	//
-	// {
-	// System.out.println("test PrintWriter");
-	// StringWriter sw = new StringWriter(1000);
-	// PrintWriter pw = new PrintWriter(sw);
-	// long t = System.currentTimeMillis();
-	// for (Post pp : posts) {
-	// pw.println("Title: " + pp.getTitle());
-	// pw.println("Author name: " + pp.getAuthor().name);
-	// pw.println("Author gender: " + pp.getAuthor().gender);
-	// pw.println(JavaExtensions.format(pp.getPostedAt(), ("yy-MMM-dd")));
-	// pw.println("the real Title: " + pp.getTitle());
-	// }
-	// System.out.println(System.currentTimeMillis() - t);
-	// }
-	//
-	// {
-	// System.out.println("test StringBuffer");
-	// StringBuffer sb = new StringBuffer(1000);
-	// long t = System.currentTimeMillis();
-	// for (Post pp : posts) {
-	// sb.append("Title: " + pp.getTitle());
-	// sb.append("Author name: " + pp.getAuthor().name);
-	// sb.append("Author gender: " + pp.getAuthor().gender);
-	// sb.append(JavaExtensions.format(pp.getPostedAt(), ("yy-MMM-dd")));
-	// sb.append("the real Title: " + pp.getTitle());
-	// }
-	// System.out.println(System.currentTimeMillis() - t);
-	// }
-	//		
-	// System.out.println("Second iteration ----");
-	//
-	// {
-	// System.out.println("test PrintWriter");
-	// StringWriter sw = new StringWriter(1000);
-	// PrintWriter pw = new PrintWriter(sw);
-	// long t = System.currentTimeMillis();
-	// for (Post pp : posts) {
-	// pw.println("Title: " + pp.getTitle());
-	// pw.println("Author name: " + pp.getAuthor().name);
-	// pw.println("Author gender: " + pp.getAuthor().gender);
-	// pw.println(JavaExtensions.format(pp.getPostedAt(), ("yy-MMM-dd")));
-	// pw.println("the real Title: " + pp.getTitle());
-	// }
-	// System.out.println(System.currentTimeMillis() - t);
-	// }
-	//
-	// {
-	// System.out.println("test StringBuffer");
-	// StringBuffer sb = new StringBuffer(1000);
-	// long t = System.currentTimeMillis();
-	// for (Post pp : posts) {
-	// sb.append("Title: " + pp.getTitle());
-	// sb.append("Author name: " + pp.getAuthor().name);
-	// sb.append("Author gender: " + pp.getAuthor().gender);
-	// sb.append(JavaExtensions.format(pp.getPostedAt(), ("yy-MMM-dd")));
-	// sb.append("the real Title: " + pp.getTitle());
-	// }
-	// System.out.println(System.currentTimeMillis() - t);
-	// }
-	//		
-	// }
-
-	// @Test
-	// public void testVelocity() throws Exception {
-	// final List<Post> posts = createPosts();
-	// Velocity.init();
-	//
-	// VelocityContext context = new VelocityContext();
-	//
-	// context.put( "posts", posts);
-	//
-	// org.apache.velocity.Template template =
-	// Velocity.getTemplate("tests/posts.vm");
-	//
-	//
-	// // execute the template
-	// long tt = System.currentTimeMillis();
-	// for (int i = 0; i < 100; i++) {
-	// long t = System.currentTimeMillis();
-	// // System.out.println("run templating: " + i);
-	// /* Merge data-model with template */
-	// StringWriter sw = new StringWriter();
-	//			
-	// template.merge( context, sw );
-	//
-	// // System.out.println(out.toString());
-	// // out.flush();
-	// System.out.println(System.currentTimeMillis() - t);
-	// // System.out.println(out.toString());
-	// // Thread.sleep(5);
-	// }
-	// System.out.println("total time: " + (System.currentTimeMillis() - tt));
-	//
-	// }
 
 	@Test
 	public void testSinglePageJapid() throws Exception {
@@ -263,14 +148,14 @@ public class PerfTests {
 		// execute the template
 		long tt = System.currentTimeMillis();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(10000);
-		Posts te = new Posts(new StringBuilder(8000));
+		Posts te = new Posts();
 		te.render("抬头", posts);
-		te = new Posts(new StringBuilder(8000));
+		te = new Posts();
 		te.render("抬头", posts);
-		te = new Posts(new StringBuilder(8000));
+		te = new Posts();
 		te.render("抬头", posts);
 		baos.write(te.toString().getBytes("UTF-8"));
-		te = new Posts(new StringBuilder(8000));
+		te = new Posts();
 		te.render("抬头", posts);
 		baos.write(te.toString().getBytes("UTF-8"));
 		baos.write(te.toString().getBytes("UTF-8"));
@@ -282,7 +167,7 @@ public class PerfTests {
 
 			// StringWriter out = new StringWriter(1000);
 			// PrintWriter printWriter = new PrintWriter(out);
-			te = new Posts(new StringBuilder(1000));
+			te = new Posts();
 			te.render("抬头", posts);
 			baos.write(te.toString().getBytes("UTF-8"));
 			// System.out.println(out.toString());

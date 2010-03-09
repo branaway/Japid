@@ -1,41 +1,45 @@
 package cn.bran.play;
 
 import java.io.File;
-import java.util.Set;
+import java.lang.reflect.Method;
+import java.util.List;
 
 import play.Play;
 import play.PlayPlugin;
 import play.exceptions.UnexpectedException;
-import play.templates.Template;
+import play.mvc.Http.Header;
+import play.mvc.Http.Request;
+import play.mvc.Scope.Flash;
+import play.mvc.results.Result;
 
 /**
- *
+ * 
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
 public class JapidPlugin extends PlayPlugin {
+	private static final String NO_CACHE = "no-cache";
+
 	@Override
 	public void beforeDetectingChanges() {
 		File[] changed = JapidCommands.reloadChanged();
 		if (changed.length > 0) {
 			for (File f : changed) {
-//				System.out.println("pre-detect changed: " + f.getName());
+				// System.out.println("pre-detect changed: " + f.getName());
 			}
 		}
 
 		boolean hasRealOrphan = JapidCommands.rmOrphanJava();
-		if (hasRealOrphan)
-		{
+		if (hasRealOrphan) {
 			// a little messy here. clean the cache in case bad files are delete
-			// remove all the existing ApplicationClass will reload verything. 
+			// remove all the existing ApplicationClass will reload verything.
 			// ideally we just need to remove the orphan. But the internal cache
 			// is not visible. Need API change to do that.
 			Play.classes.clear();
 			throw new RuntimeException("found orphan template Java artifacts. reload to be safe.");
-		}	
+		}
 	}
-
 
 	// // VirtualFile appRoot = VirtualFile.open(Play.applicationPath);
 	// TranslateTemplateTask t = new TranslateTemplateTask();
@@ -74,17 +78,76 @@ public class JapidPlugin extends PlayPlugin {
 		}
 	}
 
+	/**
+	 * just before an action is invoked. See {@code ActionInvoker}
+	 */
+	@Override
+	public void beforeActionInvocation(Method actionMethod) {
+		String string = Flash.current().get(RenderResultCache.READ_THRU_FLASH);
+		if (string != null) {
+			RenderResultCache.setIgnoreCache(true);
+		} else {
+			Header header = Request.current().headers.get("cache-control"); // lowercase
+																			// for
+																			// some
+																			// reason
+			if (header != null) {
+				List<String> list = header.values;
+				if (list.contains(NO_CACHE)) {
+					RenderResultCache.setIgnoreCache(true);
+				}
+			} else {
+				header = Request.current().headers.get("pragma");
+				if (header != null) {
+					List<String> list = header.values;
+					if (list.contains(NO_CACHE)) {
+						RenderResultCache.setIgnoreCache(true);
+					}
+				} else {
+					// just in case
+					RenderResultCache.setIgnoreCacheInCurrentAndNextReq(false);
+				}
+			}
+		}
+	}
+
+	/**
+	 * this takes place before the flash and session save in the ActionInvoker
+	 */
+	@Override
+	public void onActionInvocationResult(Result result) {
+		Flash fl = Flash.current();
+		if (RenderResultCache.shouldIgnoreCacheInCurrentAndNextReq()) {
+			fl.put(RenderResultCache.READ_THRU_FLASH, "yes");
+		} else {
+			fl.remove(RenderResultCache.READ_THRU_FLASH);
+			fl.discard(RenderResultCache.READ_THRU_FLASH);
+		}
+
+		// always reset the flag since the thread may be reused for another
+		// request processing
+		RenderResultCache.setIgnoreCacheInCurrentAndNextReq(false);
+	}
+
+	/**
+	 * right after an action is invoked. See {@code ActionInvoker} Currently
+	 * this code has no effect to the flash due to a bug in ActionInvoker where
+	 * Flash save its state to cookie.
+	 */
+	@Override
+	public void afterActionInvocation() {
+	}
+
 	@Override
 	public void detectChange() {
 	}
 
+	/**
+	 * this thing happens very early in the cycle. Neither Session nore Flash is
+	 * restored yet.
+	 */
 	@Override
 	public void beforeInvocation() {
-		// cannot do this. Rather I should get the controller name from the
-		// thread local
-		// the urlMapper is shared by threads!
-		// BranTemplateBase.urlMapper = new
-		// RouteAdapter(Request.current().controller);
 	}
 
 	@Override

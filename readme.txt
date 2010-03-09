@@ -6,6 +6,29 @@
                    
 Version History:
 
+2012/3/10:	v0.32
+			1. added RenderResultCache to fine control cache early reloading and cache read thru.
+			The new CacheableRunner makes it easy to do whole page cache in actions. 
+			
+			Sample: this code within an action will cache the result for 5 seconds under the name of "My Key" 
+			
+			-------------------------------------------------------------------------------------------------------
+			CacheableRunner cacheableRunner = new CacheableRunner("5s", "My Key") {
+				@Override
+				protected RenderResult render() {
+					Post frontPost = Post.find("order by postedAt desc").first();
+					List<Post> olderPosts = Post.find("order by postedAt desc").from(1).fetch(200);
+					RenderResult rr = new index().render(frontPost, olderPosts);
+					return rr;
+				}
+			};
+
+			render(cacheableRunner);// a JapidResult will be thrown out
+			-------------------------------------------------------------------------------------------------------
+			2. Added ignoreCache() and ignoreCacheNowAndNext()methods in JapidController.
+			The above two methods set a flag for cache to ignore get requests from the current session so 
+			clients will need to read from DB.
+			
 2012/2/24:	v0.31
 			1. added directive in script to add any http response headers. The usage example:
 			

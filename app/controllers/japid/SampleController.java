@@ -7,22 +7,26 @@ import java.util.Date;
 
 import models.japidsample.Author;
 import models.japidsample.Post;
-
-import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.play.CacheableRunner;
 import cn.bran.play.JapidController;
 import cn.bran.play.JapidResult;
 
 public class SampleController extends JapidController {
 	public static void authorPanel(final Author a) {
-		throw new JapidResult(new authorPanel().render(a));
+		//  the straight-thru way of rendering
+		//		throw new JapidResult(new authorPanel().render(a));
 		
-//		runWithCache(new ActionRunner() {
-//			@Override
-//			public RenderResult run() {
-//				return new authorPanel().render(a);
-//			}
-//		}, "10s", a);
+		String key = "authorpanel:" + a;
+		CacheableRunner r = new CacheableRunner("10s", key) {
+			@Override
+			protected RenderResult render() {
+				return new authorPanel().render(a);
+			}
+		};
+		
+		throw new JapidResult(r.run());
+//	or 		render(r);
 	}
 	
 	public static void foo() {

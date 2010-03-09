@@ -44,7 +44,7 @@ public class JapidController extends Controller {
 			throw new JapidResult(rr);
 		} catch (Exception e) {
 			if (e instanceof JapidResult)
-				throw (JapidResult)e;
+				throw (JapidResult) e;
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -105,7 +105,8 @@ public class JapidController extends Controller {
 	}
 
 	/**
-	 * use a defined keybase to build the key and cache the RenderResult by that key
+	 * use a defined keybase to build the key and cache the RenderResult by that
+	 * key
 	 * 
 	 * @param rr
 	 * @param ttl
@@ -127,6 +128,8 @@ public class JapidController extends Controller {
 
 	protected static RenderResult getFromCache(Object... objs) {
 		// the key building with caller info and the arguments
+		if (RenderResultCache.shouldIgnoreCache())
+			return null;
 		String caller = buildKey(null, objs);
 		Object object = Cache.get(caller);
 		if (object instanceof RenderResult) {
@@ -146,6 +149,8 @@ public class JapidController extends Controller {
 	 */
 	protected static RenderResult getFromCache(String keyBase, Object... objs) {
 		// the key building with caller info and the arguments
+		if (RenderResultCache.shouldIgnoreCache())
+			return null;
 		String caller = buildKey(keyBase, objs);
 		Object object = Cache.get(caller);
 		if (object instanceof RenderResult) {
@@ -165,30 +170,32 @@ public class JapidController extends Controller {
 
 		String caller = base;
 		if (base == null)
-			caller = StackTraceUtils.getCaller2();
+			caller = StackTraceUtils.getCaller2(); // tricky and expensive
 		for (Object o : objs) {
 			caller += "-" + String.valueOf(o);
 		}
 		return caller;
 	}
-	
+
 	/**
 	 * run a piece of rendering code with cache check and refilling
 	 * 
 	 * @param runner
 	 * @param ttl
 	 * @param objects
+	 * 
+	 * @deprecated use CacheableRunner directly in actions
 	 */
-	protected static void runWithCache(ActionRunner runner, String ttl, Object...objects ) {
-		if (ttl ==  null || ttl.trim().length() == 0)
+	protected static void runWithCache(ActionRunner runner, String ttl, Object... objects) {
+		if (ttl == null || ttl.trim().length() == 0)
 			throw new RuntimeException("Cache expiration time must be defined.");
-		
+
 		ttl = ttl.trim();
 		if (Character.isDigit(ttl.charAt(ttl.length() - 1))) {
 			// assuming second
 			ttl += "s";
 		}
-		
+
 		String base = StackTraceUtils.getCaller();
 		RenderResult rr = getFromCache(base, objects);
 		if (rr == null) {
@@ -198,8 +205,49 @@ public class JapidController extends Controller {
 		// System.out.println("render show took ms: " + rr.getRenderTime());
 		throw new JapidResult(rr);
 	}
-	
+
+	/**
+	 * 
+	 * @param runner
+	 * @param ttl
+	 * @deprecated use CacheableRunner directly in actions
+	 */
 	protected static void runWithCache(ActionRunner runner, String ttl) {
 		runWithCache(runner, ttl, new Object[] {});
+	}
+
+	/**
+	 * run action wrapped in a CacheableRunner and throws a JapidResult to the
+	 * downstream of the pipeline
+	 * 
+	 * @param r
+	 */
+	protected static void render(CacheableRunner r) {
+		RenderResult rr = r.run();
+		throw new JapidResult(rr);
+	}
+
+	/**
+	 * set a flag to instruct the cache runner to bypass cache checking for
+	 * reading but still cache the result
+	 */
+	public static void ignoreCache() {
+		RenderResultCache.setIgnoreCache(true);
+	}
+
+	/**
+	 * set a flag to instruct the cache runner to bypass cache checking for
+	 * reading but still cache the result, for the current response and next
+	 * request
+	 */
+	public static void ignoreCacheNowAndNext() {
+		RenderResultCache.setIgnoreCacheInCurrentAndNextReq(true);
+	}
+	
+	/**
+	 * this will set a flag so calling another action won't trigger a redirect
+	 */
+	protected static void dontRedirect() {
+		play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
 	}
 }
