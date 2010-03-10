@@ -1,5 +1,8 @@
 package cn.bran.japid.perf;
 
+import japidviews.templates.AllPost;
+import japidviews.templates.Posts;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -14,10 +17,7 @@ import models.japidsample.Post;
 
 import org.junit.Test;
 
-import templates.AllPost;
-import templates.Posts;
 import cn.bran.japid.template.RenderResult;
-import cn.bran.japid.util.StringBundler;
 
 public class PerfTests {
 	/**

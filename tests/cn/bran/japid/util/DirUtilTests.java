@@ -1,13 +1,17 @@
 package cn.bran.japid.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
-import cn.bran.play.DirUtil;
 
 public class DirUtilTests {
 	@Test
@@ -19,4 +23,45 @@ public class DirUtilTests {
 		System.out.println(next);
 		assertTrue(next.getName().endsWith("C.java"));
 	}
+
+	@Test
+	public void testScanning() {
+		String[] exts = new String[] { "java", "html" };
+		File src = new File("tests/testdir");
+		String[] fs = DirUtil.getAllFileNames(src, exts);
+		for (String s : fs) {
+			System.out.println(s);
+		}
+	}
+
+	@Test
+	public void testAllFiles() {
+		String[] exts = new String[] { ".java", ".html" };
+		File src = new File("tests/testdir");
+		Set<File> fs = new HashSet<File>();
+		fs = DirUtil.getAllFiles(src, exts, fs);
+		assertEquals(9, fs.size());
+		for (File f : fs) {
+			String name = f.getPath();
+			assertTrue(name.endsWith(".java") || name.endsWith(".html"));
+			System.out.println(name);
+		}
+	}
+	
+	@Test
+	public void testChangedHtml() throws IOException {
+		File src = new File("tests/testdir");
+		File newer = new File ("tests/testdir/A.html");
+		FileUtils.touch(newer);
+		List<File> fs = DirUtil.findChangedHtmlFiles(src);
+		assertEquals(3, fs.size());
+//		for (File f: fs) {
+//			System.out.println(f.getPath());
+//		}
+		FileUtils.touch(new File("tests/testdir/A.java"));
+		fs = DirUtil.findChangedHtmlFiles(src);
+		assertEquals(2, fs.size());
+		
+	}
+	
 }

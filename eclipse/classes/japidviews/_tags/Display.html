@@ -1,12 +1,12 @@
 ~[
-	import static cn.bran.WebUtils.*
+	import static cn.bran.play.WebUtils.*
 	extends  TagLayout
 	args models.japidsample.Post post,	String as
 ]~
 
 <div class="divvy">
 	<p>title: $post.getTitle()</p>
-	<p>at: $format(post.getPostedAt(), ("yy-MMM-dd"))</p>
+	<p>at: $fastformat(post.getPostedAt(), ("yy-MMM-dd"))</p>
 	<p>by: $post.getAuthor().name, $post.getAuthor().gender</p>
 	#{doBody post.getTitle() /}
 </div>

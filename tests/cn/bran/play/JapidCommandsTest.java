@@ -1,5 +1,6 @@
 package cn.bran.play;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -7,7 +8,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import cn.bran.japid.util.DirUtil;
+
 public class JapidCommandsTest {
+
+	private static final String ROOT = "tempgen";
 
 	@Test
 	public void testMkdir() {
@@ -22,11 +27,31 @@ public class JapidCommandsTest {
 	 * mk the dirs for sample app
 	 */
 	@Test
-	public void makeDampleDir() {
-		List<File> mkdir = JapidCommands.mkdir(".");
+	public void makeSampleDir() {
+		List<File> mkdir = JapidCommands.mkdir(ROOT);
 		for (File f : mkdir) {
 			System.out.println("verify existence: " + f.getPath());
 			assertTrue(f.exists());
 		}
 	}
+	
+	@Test
+	public void testDelete() {
+		String root = ROOT;
+		String pathname = root + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT;
+		JapidCommands.delAllGeneratedJava(pathname);
+		String[] fs = DirUtil.getAllFileNames(new File(pathname), new String[]{".java"});
+		for (String s : fs) {
+			if (!s.contains("_javatags"))
+				fail("java templates were not cleaned: " + s);
+		}
+	}
+	
+	@Test
+	public void testGen() {
+		String root = ROOT;
+		JapidCommands.gen(root);
+	}
+	
+	
 }

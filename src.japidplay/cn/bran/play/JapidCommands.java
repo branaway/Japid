@@ -6,28 +6,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Target;
-import org.apache.tools.ant.taskdefs.Delete;
-import org.apache.tools.ant.taskdefs.Mkdir;
-import org.apache.tools.ant.types.FileSet;
-
 import play.data.validation.Validation;
 import play.templates.JavaExtensions;
-import cn.bran.japid.ant.TranslateTemplateTask;
+import cn.bran.japid.compiler.TranslateTemplateTask;
+import cn.bran.japid.util.DirUtil;
 
 public class JapidCommands {
 	private static final String APP = "app";
 
 	public static void main(String[] args) {
 		if ("gen".equals(args[0])) {
-			gen();
+			gen(APP);
 		} else if ("regen".equals(args[0])) {
 			regen();
 		} else if ("clean".equals(args[0])) {
-			delAllGeneratedJava();
+			delAllGeneratedJava(APP + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT);
 		} else if ("mkdir".equals(args[0])) {
-			mkdir(".");
+			mkdir(APP);
 		}
 	}
 
@@ -39,25 +34,24 @@ public class JapidCommands {
 	 * 
 	 */
 	public static List<File> mkdir(String root) {
-		Mkdir t = new Mkdir();
-		Project proj = new Project();
-		t.setProject(proj);
-		proj.init();
 
 		String sep = File.separator;
-		String japidViews = root + sep + APP + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep;
+		String japidViews = root + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep;
 		File javatags = new File(japidViews + JapidPlugin.JAVATAGS);
-		t.setDir(javatags);
-		t.execute();
+		boolean mkdirs = javatags.mkdirs();
+		assert mkdirs == true;
 		System.out.println("created: " + javatags.getPath());
+		
 		File layouts = new File(japidViews + JapidPlugin.LAYOUTDIR);
-		t.setDir(layouts);
-		t.execute();
+		mkdirs = layouts.mkdirs();
+		assert mkdirs == true;
 		System.out.println("created: " + layouts.getPath());
+
 		File tags = new File(japidViews + JapidPlugin.TAGSDIR);
-		t.setDir(tags);
-		t.execute();
+		mkdirs = tags.mkdirs();
+		assert mkdirs == true;
 		System.out.println("created: " + tags.getPath());
+
 		File[] dirs = new File[] { javatags, layouts, tags };
 		List<File> res = new ArrayList<File>();
 		res.addAll(Arrays.asList(dirs));
@@ -65,50 +59,52 @@ public class JapidCommands {
 		// create dirs for controllers
 
 		System.out.println("create default packages for controllers.");
-		File[] controllers = getAllControllers(root + sep + APP + sep + "controllers");
-		for (File f : controllers) {
-			String cp = japidViews + f.getPath();
-			File ff = new File(cp);
-			t.setDir(ff);
-			t.execute();
-			res.add(ff);
-			System.out.println("created: " + cp);
-		}
+		try {
+			File[] controllers = getAllControllers(root + sep +  "controllers");
+			for (File f : controllers) {
+				String cp = japidViews + f.getPath();
+				File ff = new File(cp);
+				mkdirs = ff.mkdirs();
+				assert mkdirs == true;
 
+				res.add(ff);
+				System.out.println("created: " + cp);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		return res;
 
 	}
 
 	public static void regen() {
 		// TODO Auto-generated method stub
-		delAllGeneratedJava();
-		gen();
+		String pathname = APP + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT;
+		
+		delAllGeneratedJava(pathname);
+		gen(APP);
 	}
 
-	public static void delAllGeneratedJava() {
-		Delete t = new Delete();
-		FileSet fs = new FileSet();
-		fs.setDir(new File(APP));
-		fs.setIncludes(JapidPlugin.JAPIDVIEWS_ROOT + "/**/*.java");
-		fs.setExcludes(JapidPlugin.JAPIDVIEWS_ROOT + "/" + JapidPlugin.JAVATAGS + "/**");
-		t.addFileset(fs);
+	public static void delAllGeneratedJava(String pathname) {
+		String[] javas = DirUtil.getAllFileNames(new File(pathname), new String[] {"java"});
 
-		Project proj = new Project();
-		t.setProject(proj);
-		proj.init();
-		t.setTaskType("deljava");
-		t.setTaskName("deljava");
-		t.setOwningTarget(new Target());
-		t.execute();
-		System.out.println("removed: all java files in " + JapidPlugin.JAPIDVIEWS_ROOT);
+		for (String j : javas) {
+			if (!j.contains(JapidPlugin.JAVATAGS)) {
+				System.out.println("removed: " + j);
+				boolean delete = new File(pathname + File.separatorChar + j).delete();
+				if (!delete)
+					throw new RuntimeException("file was not deleted: "+ j);
+			}
+		}
+//		System.out.println("removed: all none java tag java files in " + JapidPlugin.JAPIDVIEWS_ROOT);
 	}
 
 	/**
 	 * update the java files from the html files, for the changed only
 	 */
-	public static void gen() {
-		File[] changedFiles = reloadChanged();
-		if (changedFiles.length > 0) {
+	public static void gen(String packageRoot) {
+		List<File> changedFiles = reloadChanged(packageRoot);
+		if (changedFiles.size() > 0) {
 			for (File f : changedFiles) {
 				System.out.println("updated: " + f.getName().replace("html", "java"));
 			}
@@ -120,19 +116,19 @@ public class JapidCommands {
 	}
 
 	/**
+	 * @param root the package root "/"
 	 * @return
 	 */
-	public static File[] reloadChanged() {
+	public static List<File> reloadChanged(String root) {
 		TranslateTemplateTask t = new TranslateTemplateTask();
-		Project proj = new Project();
-		t.setProject(proj);
-		proj.init();
 
-		t.setSrcdir(new File(APP));
-		t.setIncludes(JapidPlugin.JAPIDVIEWS_ROOT + "/**/*.html");
+		File rootDir = new File(root);
+		t.setPackageRoot(rootDir);
+		t.setInclude(new File(rootDir, JapidPlugin.JAPIDVIEWS_ROOT));
 		t.importStatic(JapidPlayAdapter.class);
 		t.importStatic(Validation.class);
 		t.importStatic(JavaExtensions.class);
+		t.importStatic(WebUtils.class);
 		t.addAnnotation(NoEnhance.class);
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._layouts.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._javatags.*");
@@ -140,13 +136,8 @@ public class JapidCommands {
 		t.addImport(play.mvc.Scope.class.getName() + ".*");
 		t.addImport("models.*");
 		t.addImport("controllers.*");
-
-		// t.add(new ModifiedSelector());
-		t.setTaskType("foo");
-		t.setTaskName("foo");
-		t.setOwningTarget(new Target());
 		t.execute();
-		File[] changedFiles = t.getChangedFiles();
+		List<File> changedFiles = t.getChangedFiles();
 		return changedFiles;
 	}
 
@@ -157,7 +148,7 @@ public class JapidCommands {
 	 */
 	public static File[] getAllControllers(String root) {
 		// from source fils only
-		String[] allFiles = DirUtil.getAllFiles(new File(root), new String[] { "**/*.java" });
+		String[] allFiles = DirUtil.getAllFileNames(new File(root), new String[] { ".java" });
 		File[] fs = new File[allFiles.length];
 		int i = 0;
 		for (String f : allFiles) {
@@ -204,5 +195,9 @@ public class JapidCommands {
 			e.printStackTrace();
 		}
 		return hasRealOrphan;
+	}
+
+	public static List<File> reloadChanged() {
+		return reloadChanged(APP);
 	}
 }

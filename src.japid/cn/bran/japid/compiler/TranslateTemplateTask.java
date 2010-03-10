@@ -11,24 +11,15 @@
  * See the License for the specific language governing permissions and 
  * limitations under the License. 
  */
-package cn.bran.japid.ant;
+package cn.bran.japid.compiler;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Location;
-import org.apache.tools.ant.taskdefs.MatchingTask;
-import org.apache.tools.ant.types.Path;
-import org.apache.tools.ant.util.FileNameMapper;
-import org.apache.tools.ant.util.SourceFileScanner;
-
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
-import cn.bran.japid.compiler.JapidTemplateTransformer;
+import cn.bran.japid.util.DirUtil;
 
 /**
  * modeled after the JamonTask in the <a url = "http://www.jamon.org/>Jamon
@@ -54,18 +45,18 @@ import cn.bran.japid.compiler.JapidTemplateTransformer;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public class TranslateTemplateTask extends MatchingTask {
+public class TranslateTemplateTask {
 
 	private List<Class<?>> staticImports = new ArrayList<Class<?>>();
 	private List<String> imports = new ArrayList<String>();
-	private File[] changedFiles;
+	private List<File> changedFiles;
 
 	/**
 	 * get a list of changed files in the last task execution
 	 * 
 	 * @return
 	 */
-	public File[] getChangedFiles() {
+	public List<File> getChangedFiles() {
 		return changedFiles;
 	}
 
@@ -73,73 +64,45 @@ public class TranslateTemplateTask extends MatchingTask {
 		destDir = p_destDir;
 	}
 
-	public void setSrcdir(File p_srcDir) {
-		srcDir = p_srcDir;
+	public void setPackageRoot(File p_srcDir) {
+		packageRoot = p_srcDir;
 	}
-
-	public void setClasspath(Path p_classpath) throws IOException {
-		String[] paths = p_classpath.list();
-		URL[] urls = new URL[paths.length];
-		for (int i = 0; i < urls.length; ++i) {
-			urls[i] = new URL("file", null, paths[i]);
-		}
-		// m_classLoader = AccessController.doPrivileged(new
-		// ClassLoaderCreator(urls));
-	}
-
-	//
-	// private static class ClassLoaderCreator implements
-	// PrivilegedAction<ClassLoader>
-	// {
-	// private final URL[] m_urls;
-	// ClassLoaderCreator(URL[] p_urls)
-	// {
-	// m_urls = p_urls;
-	// }
-	// public ClassLoader run()
-	// {
-	// return new URLClassLoader(m_urls,
-	// ClassLoader.getSystemClassLoader());
-	// }
-	// }
 
 	public void setListFiles(boolean p_listFiles) {
 		listFiles = p_listFiles;
 	}
 
-	@Override
-	public void execute() throws BuildException {
+	public void execute(){
 		// Copied from org.apache.tools.ant.taskdefs.Javac below
 
 		// first off, make sure that we've got a srcdir
 
-		if (srcDir == null) {
-			throw new BuildException("srcdir attribute must be set!", getLocation());
+		if (packageRoot == null) {
+			throw new RuntimeException("srcdir attribute must be set!");
 		}
 		if (destDir == null) {
-			destDir = srcDir;
+			destDir = packageRoot;
 		}
 
-		if (!srcDir.exists() && !srcDir.isDirectory()) {
-			throw new BuildException("source directory \"" + srcDir + "\" does not exist or is not a directory", getLocation());
+		if (!packageRoot.exists() && !packageRoot.isDirectory()) {
+			throw new RuntimeException("source directory \"" + packageRoot + "\" does not exist or is not a directory");
 		}
 
 		destDir.mkdirs();
 		if (!destDir.exists() || !destDir.isDirectory()) {
-			throw new BuildException("destination directory \"" + destDir + "\" does not exist or is not a directory", getLocation());
+			throw new RuntimeException("destination directory \"" + destDir + "\" does not exist or is not a directory");
 		}
 
-		if (!srcDir.exists()) {
-			throw new BuildException("srcdir \"" + srcDir + "\" does not exist!", getLocation());
+		if (!packageRoot.exists()) {
+			throw new RuntimeException("srcdir \"" + packageRoot + "\" does not exist!");
 		}
 
-		SourceFileScanner sfs = new SourceFileScanner(this);
-		changedFiles = sfs.restrictAsFiles(getDirectoryScanner(srcDir).getIncludedFiles(), srcDir, destDir, new JapidFileNameMapper());
+		changedFiles = DirUtil.findChangedHtmlFiles(include);
 
-		if (changedFiles.length > 0) {
-			log("Processing " + changedFiles.length + " template" + (changedFiles.length == 1 ? "" : "s") + " to " + destDir);
+		if (changedFiles.size() > 0) {
+			System.out.println("Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " to " + destDir);
 
-			JapidTemplateTransformer tran = new JapidTemplateTransformer(srcDir.getPath(), null);
+			JapidTemplateTransformer tran = new JapidTemplateTransformer(packageRoot.getPath(), null);
 			for (Class<?> c : this.staticImports) {
 				tran.addImportStatic(c);
 			}
@@ -150,20 +113,19 @@ public class TranslateTemplateTask extends MatchingTask {
 				tran.addAnnotation(a);
 			}
 
-			for (int i = 0; i < changedFiles.length; i++) {
-				File pFile = changedFiles[i];
+			for (int i = 0; i < changedFiles.size(); i++) {
+				File pFile = changedFiles.get(i);
 				System.out.println("transforming template: " + pFile.getPath() + " to: " + pFile.getName().replace("html", "java"));
 				if (listFiles) {
-					log(pFile.getAbsolutePath());
+					System.out.println(pFile.getAbsolutePath());
 				}
 
 				try {
-					String relativePath = JapidTemplateTransformer.getRelativePath(pFile, srcDir);
+					String relativePath = JapidTemplateTransformer.getRelativePath(pFile, packageRoot);
 					tran.generate(relativePath);
 				} catch (Exception e) {
 					e.printStackTrace();
-					throw new BuildException(e.getClass().getName() + ":" + e.getMessage(),
-							new Location(pFile.getAbsoluteFile().toString()));
+					throw new RuntimeException(e.getClass().getName() + ":" + e.getMessage());
 				}
 			}
 		}
@@ -192,19 +154,14 @@ public class TranslateTemplateTask extends MatchingTask {
 		this.imports.add(clz.getName());
 	}
 
-	private static class JapidFileNameMapper implements FileNameMapper {
-		public void setFrom(String p_from) {
-		}
+	private static class JapidFileNameMapper {
 
-		public void setTo(String p_to) {
-		}
-
-		public String[] mapFileName(String sourceName) {
+		static String mapFileName(String sourceName) {
 			String targetFileName = sourceName;
-			int i = targetFileName.lastIndexOf('.');
-			if (i > 0 && "html".equals(targetFileName.substring(i + 1))) {
-				targetFileName = targetFileName.substring(0, i);
-				return new String[] { targetFileName + ".java" };
+			String suffix = ".html";
+			if (targetFileName.endsWith(suffix)) {
+				targetFileName = targetFileName.substring(0, targetFileName.length() - suffix.length());
+				return targetFileName + ".java" ;
 			} else {
 				return null;
 			}
@@ -212,29 +169,8 @@ public class TranslateTemplateTask extends MatchingTask {
 		}
 	}
 
-	// private String relativize(File p_file)
-	// {
-	// if (!p_file.isAbsolute())
-	// {
-	// throw new IllegalArgumentException("Paths must be all absolute");
-	// }
-	// String filePath = p_file.getPath();
-	// String basePath = srcDir.getAbsoluteFile().toString(); // FIXME !?
-	//
-	// if (filePath.startsWith(basePath))
-	// {
-	// return filePath.substring(basePath.length() + 1);
-	// }
-	// else
-	// {
-	// throw new IllegalArgumentException(p_file
-	// + " is not based at "
-	// + basePath);
-	// }
-	// }
-
 	private File destDir = null;
-	private File srcDir = null;
+	private File packageRoot = null;
 	private boolean listFiles = false;
 
 	public void addAnnotation(Class<? extends Annotation> anno) {
@@ -242,9 +178,18 @@ public class TranslateTemplateTask extends MatchingTask {
 	}
 
 	List<Class<? extends Annotation>> typeAnnotations = new ArrayList<Class<? extends Annotation>>();
+	private File include;
 
 	// private ClassLoader m_classLoader = JamonTask.class.getClassLoader();
 	public void setUseStreaming(boolean streaming) {
 		AbstractTemplateClassMetaData.streaming = streaming;
+	}
+
+	/**
+	 * 
+	 * @param file the sub dir in the root that contains the template tree
+	 */
+	public void setInclude(File file) {
+		this.include = file;
 	}
 }

@@ -3,8 +3,15 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
+import play.mvc.Scope.*;
+import models.*;
 import japidviews._tags.*;
+import controllers.*;
+import japidviews._javatags.*;
+import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
+import static play.data.validation.Validation.*;
+import static cn.bran.play.WebUtils.*;
 // NOTE: This file was generated from: japidviews/_layouts/TagLayout.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance

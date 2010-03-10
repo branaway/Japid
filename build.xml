@@ -80,5 +80,4 @@
 			<classpath refid="project.classpath.standalone" />
 		</javac>
 	</target>
-
 </project>

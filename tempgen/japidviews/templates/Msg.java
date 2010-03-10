@@ -1,15 +1,22 @@
-package templates;
+package japidviews.templates;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
+import play.mvc.Scope.*;
+import models.*;
 import japidviews._tags.*;
+import controllers.*;
+import japidviews._javatags.*;
+import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
-// NOTE: This file was generated from: templates/Msg.html
+import static play.data.validation.Validation.*;
+import static cn.bran.play.WebUtils.*;
+// NOTE: This file was generated from: japidviews/templates/Msg.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
 public class Msg extends cn.bran.japid.template.JapidTemplateBase{
-	public static final String sourceTemplate = "templates/Msg.html";
+	public static final String sourceTemplate = "japidviews/templates/Msg.html";
 static private final String static_0 = "login: "
 ;
 static private final String static_1 = "\n" + 
@@ -26,7 +33,7 @@ static private final String static_2 = ""
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1

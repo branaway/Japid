@@ -16,15 +16,16 @@ Version History:
 			CacheableRunner cacheableRunner = new CacheableRunner("5s", "My Key") {
 				@Override
 				protected RenderResult render() {
-					Post frontPost = Post.find("order by postedAt desc").first();
-					List<Post> olderPosts = Post.find("order by postedAt desc").from(1).fetch(200);
-					RenderResult rr = new index().render(frontPost, olderPosts);
-					return rr;
+					// preparing data
+					// ...
+					return new MyTemplate().render(data);;
 				}
 			};
 
-			render(cacheableRunner);// a JapidResult will be thrown out
+			render(cacheableRunner);// the render(...) is defined in the JapidController 
 			-------------------------------------------------------------------------------------------------------
+			In the above code the index class is a Japid generated template.
+			
 			2. Added ignoreCache() and ignoreCacheNowAndNext()methods in JapidController.
 			The above two methods set a flag for cache to ignore get requests from the current session so 
 			clients will need to read from DB.

@@ -1,15 +1,22 @@
-package templates;
+package japidviews.templates;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
+import play.mvc.Scope.*;
+import models.*;
 import japidviews._tags.*;
+import controllers.*;
+import japidviews._javatags.*;
+import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
-// NOTE: This file was generated from: templates/JavaScript.html
+import static play.data.validation.Validation.*;
+import static cn.bran.play.WebUtils.*;
+// NOTE: This file was generated from: japidviews/templates/JavaScript.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
 public class JavaScript extends cn.bran.japid.template.JapidTemplateBase{
-	public static final String sourceTemplate = "templates/JavaScript.html";
+	public static final String sourceTemplate = "japidviews/templates/JavaScript.html";
 static private final String static_0 = ""
 ;
 static private final String static_1 = "\n" + 
@@ -51,7 +58,7 @@ static private final String static_2 = "\n" +
 		this.hello = hello;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1

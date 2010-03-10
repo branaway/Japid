@@ -3,6 +3,7 @@ package cn.bran.play;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import play.Play;
 import play.PlayPlugin;
@@ -20,17 +21,22 @@ import play.mvc.results.Result;
  */
 public class JapidPlugin extends PlayPlugin {
 	private static final String NO_CACHE = "no-cache";
-
+	private static AtomicLong lastTimeChecked = new AtomicLong(0);
 	@Override
 	public void beforeDetectingChanges() {
-		File[] changed = JapidCommands.reloadChanged();
-		if (changed.length > 0) {
+		// have a delay in change detection.
+		if (System.currentTimeMillis() - lastTimeChecked.get() < 1000 )
+			return;
+		List<File> changed = JapidCommands.reloadChanged();
+		if (changed.size() > 0) {
 			for (File f : changed) {
 				// System.out.println("pre-detect changed: " + f.getName());
 			}
 		}
 
 		boolean hasRealOrphan = JapidCommands.rmOrphanJava();
+		lastTimeChecked.set(System.currentTimeMillis());
+
 		if (hasRealOrphan) {
 			// a little messy here. clean the cache in case bad files are delete
 			// remove all the existing ApplicationClass will reload verything.
@@ -40,6 +46,8 @@ public class JapidPlugin extends PlayPlugin {
 			throw new RuntimeException("found orphan template Java artifacts. reload to be safe.");
 		}
 	}
+	
+
 
 	// // VirtualFile appRoot = VirtualFile.open(Play.applicationPath);
 	// TranslateTemplateTask t = new TranslateTemplateTask();
