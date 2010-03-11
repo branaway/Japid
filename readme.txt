@@ -6,6 +6,10 @@
                    
 Version History:
 
+2012/3/10:	v0.33
+			1. removed the dependency on Ant DirectoryScanner for change detection. Now the module archive is 1.5M 
+			less in size. Hopefully it's faster too.  
+
 2012/3/10:	v0.32
 			1. added RenderResultCache to fine control cache early reloading and cache read thru.
 			The new CacheableRunner makes it easy to do whole page cache in actions. 
