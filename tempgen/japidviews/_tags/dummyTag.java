@@ -1,4 +1,4 @@
-package japidviews.templates;
+package japidviews._tags;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
@@ -13,28 +13,23 @@ import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import static cn.bran.play.WebUtils.*;
-// NOTE: This file was generated from: japidviews/templates/Set.html
+// NOTE: This file was generated from: japidviews/_tags/dummyTag.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
-public class Set extends japidviews._layouts.SetLayout{
-	public static final String sourceTemplate = "japidviews/templates/Set.html";
+public class dummyTag extends cn.bran.japid.template.JapidTemplateBase{
+	public static final String sourceTemplate = "japidviews/_tags/dummyTag.html";
 static private final String static_0 = ""
 ;
-static private final String static_1 = ""
+static private final String static_1 = "\n" + 
+"Hi "
 ;
-static private final String static_2 = "\n" + 
+static private final String static_2 = "!\n" + 
 "\n" + 
 "";
-static private final String static_3 = "\n" + 
-"";
-static private final String static_4 = "great footer"
-;
-static private final String static_5 = "\n" + 
-"";
-	public Set() {
+	public dummyTag() {
 		super(null);
 	}
-	public Set(StringBuilder out) {
+	public dummyTag(StringBuilder out) {
 		super(out);
 	}
 	String a;
@@ -47,19 +42,8 @@ static private final String static_5 = "\n" +
 	@Override protected void doLayout() {
 p(static_0);// line 1
 p(static_1);// line 1
-p(static_2);// line 2
-// line 5
-p(static_3);// line 5
-// line 6
-p(static_5);// line 6
+p(a);// line 3
+p(static_2);// line 3
 
-	}
-	@Override protected void footer() {
-		// line 6
-p(static_4);// line 6
-;
-	}
-	@Override protected void title() {
-		p("Home" + a);;
 	}
 }

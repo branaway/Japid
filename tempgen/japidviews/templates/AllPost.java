@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
+import static  japidviews._javatags.JapidWebUtil.*;
 import play.mvc.Scope.*;
 import models.*;
 import japidviews._tags.*;

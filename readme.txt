@@ -6,6 +6,12 @@
                    
 Version History:
 
+2012/3/11:	v0.34
+			1. the japid:mkdir command will create a file named JapidWebUtil.java in the japidviews._javatags package.
+			All the public static methods are statically imported to generated Java source files. This file is 
+			supposed to be added with more user defined static methods for use in Japid templates. 
+			2. now the japid:regen command includes the japid:mkdir command.
+			After upgrading to the the latest Japid, please run play japid:regen to refresh the templates structure.
 2012/3/10:	v0.33
 			1. removed the dependency on Ant DirectoryScanner for change detection. Now the module archive is 1.5M 
 			less in size. Hopefully it's faster too.  

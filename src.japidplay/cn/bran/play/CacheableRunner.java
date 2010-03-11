@@ -23,7 +23,7 @@ public abstract class CacheableRunner extends ActionRunner {
 	 * 
 	 * @param ttl
 	 *            time to live for the cached item, format in "1s", "2mn", "3h",
-	 *            "4d" for example
+	 *            "4d" for example, "29d" max
 	 * @param args
 	 *            objects to make a key from their string values
 	 */

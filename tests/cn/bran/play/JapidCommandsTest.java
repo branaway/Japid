@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
@@ -15,7 +16,7 @@ public class JapidCommandsTest {
 	private static final String ROOT = "tempgen";
 
 	@Test
-	public void testMkdir() {
+	public void testMkdir() throws IOException {
 		List<File> mkdir = JapidCommands.mkdir("tests/testmkdir");
 		for (File f : mkdir) {
 			System.out.println("verify existence: " + f.getPath());
@@ -25,10 +26,11 @@ public class JapidCommandsTest {
 
 	/**
 	 * mk the dirs for sample app
+	 * @throws IOException 
 	 */
 	@Test
-	public void makeSampleDir() {
-		List<File> mkdir = JapidCommands.mkdir(ROOT);
+	public void makeSampleDir() throws IOException {
+		List<File> mkdir = JapidCommands.mkdir("app");
 		for (File f : mkdir) {
 			System.out.println("verify existence: " + f.getPath());
 			assertTrue(f.exists());
@@ -51,6 +53,12 @@ public class JapidCommandsTest {
 	public void testGen() {
 		String root = ROOT;
 		JapidCommands.gen(root);
+	}
+	
+	@Test
+	public void testregen() throws IOException {
+		String root = ROOT;
+		JapidCommands.regen(root);
 	}
 	
 	

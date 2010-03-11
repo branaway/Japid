@@ -271,6 +271,9 @@ public class RouteAdapter implements UrlMapper {
 	// synched with route table reloading.
 
 	// store quick reverse lookup
+	// TODO should consider concurrent hashmap, mm but it's only thread local!
+	// should this be shared among all thread(in the case concurrentThreadLocal is required
+	// 
 	static ThreadLocal<HashMap<String, String>> staticCache = new ThreadLocal<HashMap<String, String>>();
 	// <action & param hash, url pattern>
 	static ThreadLocal<HashMap<String, String>> actionReverseCache = new ThreadLocal<HashMap<String, String>>();

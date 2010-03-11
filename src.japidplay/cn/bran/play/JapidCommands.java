@@ -1,10 +1,13 @@
 package cn.bran.play;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.io.FileUtils;
 
 import play.data.validation.Validation;
 import play.templates.JavaExtensions;
@@ -14,11 +17,30 @@ import cn.bran.japid.util.DirUtil;
 public class JapidCommands {
 	private static final String APP = "app";
 
-	public static void main(String[] args) {
+	private static final String JapidWebUtil = 
+			"package japidviews._javatags;\n" + 
+			"\n" + 
+			"/**\n" + 
+			" * a well-know place to add all the static method you want to use in your\n" + 
+			" * templates.\n" + 
+			" * \n" + 
+			" * All the public static methods will be automatically \"import static \" to the\n" + 
+			" * generated Java classes by the Japid compiler.\n" + 
+			" * \n" + 
+			" */\n" + 
+			"public class JapidWebUtil {\n" + 
+			"	public static String hi() {\n" + 
+			"		return \"Hi\";\n" + 
+			"	}\n" + 
+			"	// your utility methods...\n" + 
+			"	\n" + 
+			"}\n" + 
+			"";
+	public static void main(String[] args) throws IOException {
 		if ("gen".equals(args[0])) {
 			gen(APP);
 		} else if ("regen".equals(args[0])) {
-			regen();
+			regen(APP);
 		} else if ("clean".equals(args[0])) {
 			delAllGeneratedJava(APP + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT);
 		} else if ("mkdir".equals(args[0])) {
@@ -31,9 +53,10 @@ public class JapidCommands {
 	 * app/japidviews/_tags
 	 * 
 	 * then create a dir for each controller. //TODO
+	 * @throws IOException 
 	 * 
 	 */
-	public static List<File> mkdir(String root) {
+	public static List<File> mkdir(String root) throws IOException {
 
 		String sep = File.separator;
 		String japidViews = root + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep;
@@ -41,6 +64,13 @@ public class JapidCommands {
 		boolean mkdirs = javatags.mkdirs();
 		assert mkdirs == true;
 		System.out.println("created: " + javatags.getPath());
+		File webutil = new File(javatags, "JapidWebUtil.java");
+		if (!webutil.exists()) {
+			FileUtils.writeStringToFile(webutil, JapidWebUtil, "UTF-8");
+			System.out.println("created JapidWebUtil.java.");
+		}
+		// add the placeholder for utility class for use in templates
+		
 		
 		File layouts = new File(japidViews + JapidPlugin.LAYOUTDIR);
 		mkdirs = layouts.mkdirs();
@@ -77,12 +107,12 @@ public class JapidCommands {
 
 	}
 
-	public static void regen() {
+	public static void regen(String root) throws IOException {
 		// TODO Auto-generated method stub
-		String pathname = APP + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT;
-		
+		String pathname = root + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT;
+		mkdir(root);
 		delAllGeneratedJava(pathname);
-		gen(APP);
+		gen(root);
 	}
 
 	public static void delAllGeneratedJava(String pathname) {
@@ -136,6 +166,7 @@ public class JapidCommands {
 		t.addImport(play.mvc.Scope.class.getName() + ".*");
 		t.addImport("models.*");
 		t.addImport("controllers.*");
+		t.addImport("static  japidviews._javatags.JapidWebUtil.*");
 		t.execute();
 		List<File> changedFiles = t.getChangedFiles();
 		return changedFiles;
@@ -177,11 +208,14 @@ public class JapidCommands {
 
 			Set<File> oj = DirUtil.findOrphanJava(src, null);
 			for (File j : oj) {
-				if (j.getName().contains(JapidPlugin.JAVATAGS)) {
+				String path = j.getPath();
+				System.out.println("found: " + path);
+				if (path.contains(JapidPlugin.JAVATAGS)) {
+					
 					// java tags, don't touch
 				} else {
 					hasRealOrphan = true;
-					String realfile = pathname + File.separator + j.getPath();
+					String realfile = pathname + File.separator + path;
 					File file = new File(realfile);
 					boolean r = file.delete();
 					if (r)

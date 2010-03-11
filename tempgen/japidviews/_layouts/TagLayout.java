@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
+import static  japidviews._javatags.JapidWebUtil.*;
 import play.mvc.Scope.*;
 import models.*;
 import japidviews._tags.*;
@@ -18,9 +19,13 @@ import static cn.bran.play.WebUtils.*;
 public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/TagLayout.html";
 static private final String static_0 = "标签布局\n" + 
-"<div>\n" + 
 "";
 static private final String static_1 = "\n" + 
+"";
+static private final String static_2 = "\n" + 
+"<div>\n" + 
+"";
+static private final String static_3 = "\n" + 
 "</div>\n" + 
 "\n" + 
 "\n" + 
@@ -32,7 +37,13 @@ static private final String static_1 = "\n" +
 		super(out);
 	}
 	@Override public void layout() {		p(static_0);// line 1
-	doLayout();// line 3
-p(static_1);// line 3
+p(static_1);// line 2
+_dummyTag0.setActionRunners(getActionRunners());
+_dummyTag0.render("me");
+// line 3
+p(static_2);// line 3
+	doLayout();// line 5
+p(static_3);// line 5
 	}	protected abstract void doLayout();
+	private dummyTag _dummyTag0 = new dummyTag(getOut());
 }

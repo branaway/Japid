@@ -19,11 +19,7 @@ public class RenderResultCacheTest {
 		RenderResult rrr;
 		rrr = RenderResultCache.get(KEY1);
 		assertNotNull(rrr);
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		waitfor(3000);
 		rrr = RenderResultCache.get(KEY1);
 		assertNull(rrr);
 	}
@@ -91,16 +87,29 @@ public class RenderResultCacheTest {
 			throw new RuntimeException(e1);
 		}
 
-		try {
-			Thread.sleep(1500); // 
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		waitfor(1500);
 		try {
 			rrr = RenderResultCache.get(KEY1);
 		} catch (ShouldRefreshException e) {
 			assertNotNull(e.renderResult);
 		}
+
+		final AtomicBoolean b = new AtomicBoolean(false);
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					RenderResult rrr = RenderResultCache.get(KEY1);
+					b.set(rrr != null);
+				} catch (ShouldRefreshException e) {
+					fail();
+				}
+				
+			}
+		});
+		t.start();
+		waitfor(100);
+		assertTrue(b.get());
 
 		// the second time in refreshing zone should get the item
 		try {
