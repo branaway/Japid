@@ -157,7 +157,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		}
 
 		callTags();
-
+		super.processDefTags();
+		
 		pln("}");
 
 		return sb.toString();
@@ -198,6 +199,11 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
 		tagArgs = tagArgs == null ? "" : tagArgs;
 		this.addDoBodyInterface(tagArgs);
+	}
+
+	public void addDefTag(String key, String string) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

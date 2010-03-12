@@ -62,4 +62,13 @@ p(static_4);// line 6
 	@Override protected void title() {
 		p("Home" + a);;
 	}
+	
+	public String foo() {
+		StringBuilder sb = new StringBuilder();
+		StringBuilder ori = getOut();
+		this.setOut(sb);
+		///
+		this.setOut(ori);
+		return sb.toString();
+	}
 }

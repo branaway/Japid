@@ -1,13 +1,6 @@
-~(
-List<String> posts
-)
-
-the old bad way:
-#{Each posts}
-	~(String p)<p>$p</p>
-#{/}
+`args List<String> posts
 
 the closure form:
 #{Each posts | String p}
-	<p>$_index ) $p</p>
+	<p>$_index :: $p</p>
 #{/}

@@ -15,6 +15,7 @@ package cn.bran.japid.template;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.TreeMap;
 import java.util.Map;
@@ -81,7 +82,7 @@ public abstract class JapidTemplateBase {
 	 * @throws IOException
 	 * @throws UnsupportedEncodingException
 	 */
-	private void writeString(String s) {
+	final private void writeString(String s) {
 		// ByteBuffer bb = StringUtils.encodeUTF8(s);
 		// out.write(bb.array(), 0, bb.position());
 		// ok my code is slower in large trunk of data
@@ -178,5 +179,35 @@ public abstract class JapidTemplateBase {
 	@Override
 	public String toString() {
 		return this.out.toString();
+	}
+	
+	/**
+	 * reflect this object for a method of the name
+	 * @param methodName
+	 * @return
+	 */
+	protected String get(String methodName, String defaultVal)  {
+		try {
+			Method method = this.getClass().getMethod(methodName, (Class[])null);
+			String invoke = (String)method.invoke(this, (Object[])null);
+			return invoke;
+		} catch (Exception e) {
+			return defaultVal;
+		}
+	}
+
+	/**
+	 * reflect this object for a method of the name
+	 * @param methodName
+	 * @return
+	 */
+	protected String run(String methodName)  {
+		try {
+			Method method = this.getClass().getMethod(methodName, (Class[])null);
+			String invoke = (String)method.invoke(this, (Object[])null);
+			return invoke;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

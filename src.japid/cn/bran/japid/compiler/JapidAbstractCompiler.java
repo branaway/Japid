@@ -51,13 +51,13 @@ public abstract class JapidAbstractCompiler {
 	protected int tagIndex;
 	protected boolean skipLineBreak;
 
-	protected static class Tag {
-		String tagName;
-		int startLine;
-		boolean hasBody;
+	public static class Tag {
+		public String tagName;
+		public int startLine;
+		public boolean hasBody;
 		// bran: put everything in the args tag in it
-		String bodyArgsString = "";
-		StringBuffer bodyBuffer = new StringBuffer(2000);
+		public String bodyArgsString = "";
+		public StringBuffer bodyBuffer = new StringBuffer(2000);
 		public String innerClassName;
 		public String args = "";
 		public int tagIndex;
@@ -521,6 +521,19 @@ public abstract class JapidAbstractCompiler {
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
 		} else if (!"doLayout".equals(tag.tagName)) {
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
+		}
+	}
+
+	/**
+	 * def a string returning method from a block
+	 * @param tag
+	 */
+	protected void def(Tag tag) {
+	}
+
+	protected void endDef(Tag tag) {
+		if (tag.hasBody) {
+			this.getTemplateClassMetaData().addDefTag(tag);
 		}
 	}
 

@@ -1,0 +1,16 @@
+`extends defLayout
+`args  String s
+
+*{ define a method that return a String }*
+
+#{def foo}
+	hello $s!
+#{/}
+
+#{def bar}
+	hi $s!
+#{/}
+
+#{dummyTag run("bar")/}
+
+$run("foo")

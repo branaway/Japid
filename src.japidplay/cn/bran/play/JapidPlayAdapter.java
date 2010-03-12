@@ -24,48 +24,6 @@ public class JapidPlayAdapter {
 	private static RouteAdapter urlMapper = new RouteAdapter();
 	private static Messages messages = new Messages();
 
-	// Note, the {@code JavaExtensions} class in Play! has lots of formatting methods
-	public static String numOf(Collection c) {
-		if (c == null)
-			return "no";
-		else
-			return String.valueOf(c.size());
-	}
-	
-	/**
-	 * TODO: move out
-	 * @param o
-	 * @return
-	 */
-	public static boolean asBoolean(Object o) {
-		if (o == null)
-			return false;
-		
-		boolean r = false;
-
-		if (o instanceof Boolean) {
-			r = (Boolean) o;
-		} else if (o instanceof Integer) {
-			Integer n = (Integer) o;
-			r = n != 0 ? true : false;
-		}
-		else if (o instanceof Collection){
-			Collection col = ((Collection)o);
-			if (col.size() > 0)
-				return true;
-			else
-				return false;
-		}
-//		else if ()
-		else {
-			// TODO more
-			r = o != null ? true : false;
-		}
-
-		return r;
-	}
-
-
 	/**
 	 * this one is more generic and connected to Play!
 	 * 

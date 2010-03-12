@@ -26,13 +26,24 @@ public class TagInvocationLineParserTest {
 	}
 
 	@Test
+	public void testClosureParamError() {
+		String src = "tag a, b | c";
+		try {
+			Tag t = p.parse(src);
+		} catch (Exception e) {
+			return;
+		}
+		fail("shoudl have reported syntax error");
+	}
+
+	@Test
 	public void testParseSimple2() {
 		String src = "tag(a, b)";
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
 		assertEquals("a, b", t.args);
 	}
-	
+
 	@Test
 	public void testParseWithClosure() {
 		String src = "tag(a, b) | String c";
@@ -41,7 +52,7 @@ public class TagInvocationLineParserTest {
 		assertEquals("a, b", t.args);
 		assertEquals("String c", t.bodyArgsString);
 	}
-	
+
 	@Test
 	public void testNoArgWithClosure() {
 		String src = "tag | String c";
@@ -50,7 +61,7 @@ public class TagInvocationLineParserTest {
 		assertEquals("", t.args);
 		assertEquals("String c", t.bodyArgsString);
 	}
-	
+
 	@Test
 	public void testNoArgWithClosure2() {
 		String src = "tag()| String c";
@@ -59,7 +70,7 @@ public class TagInvocationLineParserTest {
 		assertEquals("", t.args);
 		assertEquals("String c", t.bodyArgsString);
 	}
-	
+
 	@Test
 	public void testWithNoClosure2() {
 		String src = "tag(a, b)";
@@ -68,7 +79,7 @@ public class TagInvocationLineParserTest {
 		assertEquals("a, b", t.args);
 		assertEquals("", t.bodyArgsString);
 	}
-	
+
 	@Test
 	public void testStringLiteral() {
 		String src = "get 'title'";
@@ -77,5 +88,5 @@ public class TagInvocationLineParserTest {
 		assertEquals("'title'", t.args);
 		assertEquals("", t.bodyArgsString);
 	}
-	
+
 }

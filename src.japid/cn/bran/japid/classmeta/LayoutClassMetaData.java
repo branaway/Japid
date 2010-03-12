@@ -43,6 +43,7 @@ public class LayoutClassMetaData  extends AbstractTemplateClassMetaData {
 		p("\tprotected abstract void doLayout();\n");
 
 		callTags();
+		super.processDefTags();
 		
 		p("}");
 

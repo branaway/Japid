@@ -15,6 +15,7 @@ package cn.bran.japid.compiler;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.TemplateClassMetaData;
+import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.play.JapidResult;
@@ -78,6 +79,8 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 			}
 		} else if (tag.tagName.equals("invoke")) {
 			invokeAction(tag);
+		} else if (tag.tagName.equals("def")) {
+			def(tag);
 		} else {
 			regularTagInvoke(tag);
 		}
@@ -110,6 +113,8 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 				String key = tag.args;
 				this.cmd.addSetTag(key, tag.bodyBuffer.toString());
 			}
+		} else	if ("def".equals(tagName)) {
+			endDef(tag);
 		} else if (tagName.equals(DO_BODY)) {
 		} else if (tagName.equals("invoke")) {
 		} else if (tagName.equals("extends")) {

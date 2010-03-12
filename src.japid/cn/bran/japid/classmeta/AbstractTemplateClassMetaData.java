@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.JapidTemplateBaseStreaming;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.template.RenderResultPartial;
-//import cn.bran.play.JapidResult;
 
 /**
  * lots of the code block generation is done here
@@ -341,6 +341,7 @@ public class AbstractTemplateClassMetaData {
 	private boolean trimStaticContent = false;
 	protected boolean hasActionInvocation;
 	private Map<String, String> headers = new HashMap<String, String>();
+	private List<Tag> defTags = new ArrayList<Tag>();
 
 	public void turnOnStopwatch() {
 		this.stopWatch = true;
@@ -376,15 +377,33 @@ public class AbstractTemplateClassMetaData {
 	}
 
 	public void printHttpHeaderMap() {
-// now we use the headers var the template base, for slighly perfromance penalty
-//		pln("	private static final Map<String, String> headers = new HashMap<String, String>();");
+		// now we use the headers var the template base, for slighly perfromance
+		// penalty
+		// pln("	private static final Map<String, String> headers = new HashMap<String, String>();");
 		if (headers.size() > 0) {
-//			pln("	static {");
+			// pln("	static {");
 			pln("{");
 			for (String k : headers.keySet()) {
 				String v = headers.get(k);
 				pln("	headers.put(\"" + k + "\", \"" + v + "\");");
 			}
+			pln("}");
+		}
+	}
+
+	public void addDefTag(Tag tag) {
+		this.defTags.add(tag);
+	}
+
+	protected void processDefTags() {
+		for (Tag tag : this.defTags) {
+			pln("public String " + tag.args + "() {");
+			pln("StringBuilder sb = new StringBuilder();");
+			pln("StringBuilder ori = getOut();");
+			pln("this.setOut(sb);");
+			pln(tag.bodyBuffer.toString());
+			pln("this.setOut(ori);");
+			pln("return sb.toString();");
 			pln("}");
 		}
 	}

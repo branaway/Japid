@@ -74,7 +74,8 @@ public class InnerClassMeta {
 		// remove the leading ,
 		
 		
-		classParams = "<" + classParams.substring(1) + ">";
+		if (classParams.startsWith(","))
+				classParams = "<" + classParams.substring(1) + ">";
 
 		StringBuilder sb = new StringBuilder();
 		line(sb, "class " + tagName + counter + "DoBody implements " + tagName + ".DoBody" +  classParams + "{");
