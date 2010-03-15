@@ -43,7 +43,9 @@ public class WebUtils {
 			else
 				return false;
 		}
-//		else if ()
+		else if (o instanceof String) {
+			return ((String)o).trim().length() > 0;
+		}
 		else {
 			// TODO more
 			r = o != null ? true : false;

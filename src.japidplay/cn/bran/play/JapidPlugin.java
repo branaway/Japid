@@ -91,14 +91,22 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void beforeActionInvocation(Method actionMethod) {
+		String property = Play.configuration.getProperty("japid.dump.request");
+		Request current = Request.current();
+		if ("yes".equals(property) || "true".equals(property)) {
+			System.out.println("-------------------");
+			System.out.println("request.method:" + current.method);
+			System.out.println("request.url: " + current.url);
+			System.out.println("request.action:" + current.action);
+//			System.out.println("request.controller:" + current.controller);
+		}
+		
 		String string = Flash.current().get(RenderResultCache.READ_THRU_FLASH);
 		if (string != null) {
 			RenderResultCache.setIgnoreCache(true);
 		} else {
-			Header header = Request.current().headers.get("cache-control"); // lowercase
-																			// for
-																			// some
-																			// reason
+			// cache-control in lower case, lowercase for some reason
+			Header header = Request.current().headers.get("cache-control"); 
 			if (header != null) {
 				List<String> list = header.values;
 				if (list.contains(NO_CACHE)) {

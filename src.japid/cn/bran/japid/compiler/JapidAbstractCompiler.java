@@ -538,6 +538,7 @@ public abstract class JapidAbstractCompiler {
 	}
 
 	static String createActionRunner(String action, String ttl, String base, String keys) {
+		String actionEscaped = action.replace("\"", "\\\"");
 		if (ttl == null) {
 			String template = 
 					"		%s.put(getOut().length(), new %s() {\n" + 
@@ -558,7 +559,7 @@ public abstract class JapidAbstractCompiler {
 					RenderResult.class.getName(),
 					action,
 					JAPID_RESULT,
-					action);
+					actionEscaped);
 		}
 		else {
 			// hardcode the cache action runner name to avoid dependency on the Play jar

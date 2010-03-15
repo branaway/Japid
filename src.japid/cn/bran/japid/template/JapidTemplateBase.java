@@ -201,7 +201,7 @@ public abstract class JapidTemplateBase {
 	 * @param methodName
 	 * @return
 	 */
-	protected String run(String methodName)  {
+	protected String get(String methodName)  {
 		try {
 			Method method = this.getClass().getMethod(methodName, (Class[])null);
 			String invoke = (String)method.invoke(this, (Object[])null);

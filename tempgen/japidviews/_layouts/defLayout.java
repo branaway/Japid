@@ -32,7 +32,7 @@ static private final String static_2 = ""
 		super(out);
 	}
 	@Override public void layout() {		p(static_0);// line 1
-p(run("foo"));// line 2
+p(get("foo"));// line 2
 p(static_1);// line 2
 	doLayout();// line 4
 p(static_2);// line 4

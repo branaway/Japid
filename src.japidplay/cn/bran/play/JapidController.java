@@ -66,8 +66,14 @@ public class JapidController extends Controller {
 	 */
 	protected static void renderJapid(Object... objects) {
 		// get full action: e.g., mypackage.Application.index
-		String action = Http.Request.current().action.replace(".", "/");
+		// this is flawed since it may be called from SSI 
+//		String action = Http.Request.current().action.replace(".", "/");
 
+		String action = StackTraceUtils.getCaller();
+		// something like controllers.japid.SampleController.testFindAction
+		if (action.startsWith("controllers.")) {
+			action = action.substring(action.indexOf('.') + 1);
+		}
 		// map to default japid view
 		String templateClassName = JapidPlugin.JAPIDVIEWS_ROOT + File.separator + action;
 
@@ -81,6 +87,10 @@ public class JapidController extends Controller {
 		}
 	}
 
+	protected static String caller() {
+		String action = StackTraceUtils.getCaller();
+		return action;
+	}
 	/**
 	 * cache a Japid RenderResult associated with an action call with specific
 	 * arguments
@@ -250,4 +260,13 @@ public class JapidController extends Controller {
 	protected static void dontRedirect() {
 		play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
 	}
+	
+	/**
+	 * render a text in a RenderResult so it can work with invoke tag in templates.
+	 * @param s
+	 */
+	protected static void renderText(String s){
+		render(new RenderResult(null, new StringBuilder(s), -1L));
+	}
+	
 }

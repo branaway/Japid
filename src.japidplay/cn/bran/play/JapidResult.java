@@ -52,18 +52,20 @@ public class JapidResult extends Result {
 
 		Map<String, Header> resHeaders = response.headers;
 
-		for (String h : headers.keySet()) {
-			String value = headers.get(h);
-			if (CONTENT_TYPE.equals(h)) {
-				setContentTypeIfNotSet(response, value);
-			} else {
-				if (resHeaders.containsKey(h)) {
-					// shall I override it?
-					// override it. Consider the value in templates are meant to override 
-					response.setHeader(h, value);
-				}
-				else {
-					response.setHeader(h, value);
+		if (headers != null) {
+			for (String h : headers.keySet()) {
+				String value = headers.get(h);
+				if (CONTENT_TYPE.equals(h)) {
+					setContentTypeIfNotSet(response, value);
+				} else {
+					if (resHeaders.containsKey(h)) {
+						// shall I override it?
+						// override it. Consider the value in templates are
+						// meant to override
+						response.setHeader(h, value);
+					} else {
+						response.setHeader(h, value);
+					}
 				}
 			}
 		}

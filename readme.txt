@@ -13,8 +13,10 @@ Version History:
 			2. now the japid:regen command includes the japid:mkdir command.
 			After upgrading to the the latest Japid, please run play japid:regen to refresh the templates structure.
 			3. added #{def foo}xxx#{/} special tag that defines a method to build a string from the tag body. The method can
-			be called from the current class or any of its parent classes by using run("foo"), as in $run("foo") or
-			for example use in a tag invocation: #{myTag run("foo")/}
+			be called from the current class or any of its parent classes by using get("foo"), as in ${get("foo")} or
+			for example use in a tag invocation: #{myTag get("foo")/}
+			4. fixed a bug for creating invoke code in JapidAbstractCompiler that used to generated invalid code when action
+			take parameters with " mark. It's now escaped
 2012/3/10:	v0.33
 			1. removed the dependency on Ant DirectoryScanner for change detection. Now the module archive is 1.5M 
 			less in size. Hopefully it's faster too.  

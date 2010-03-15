@@ -63,10 +63,16 @@ public class SampleController extends JapidController {
 	}
 	
 	public static void main(String[] args) {
-		try {
-			composite();
-		} catch (JapidResult e) {
-			System.out.println(e.content);
-		}
+//		try {
+//			composite();
+//		} catch (JapidResult e) {
+//			System.out.println(e.content);
+//		}
+		testFindAction();
+	}
+	
+	public static void testFindAction() {
+		String ret = caller();
+		System.out.println(ret);
 	}
 }
