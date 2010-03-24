@@ -44,7 +44,7 @@ public abstract class CacheableRunner extends ActionRunner {
 			}
 		}
 
-		this.keyString = buildKey();
+		this.keyString = buildKey(key);
 
 	}
 
@@ -84,11 +84,16 @@ public abstract class CacheableRunner extends ActionRunner {
 	/**
 	 * @return
 	 */
-	private String buildKey() {
+	private static String buildKey(Object[] keys) {
 		String keyString = "";
-		for (Object k : key) {
+		for (Object k : keys) {
 			keyString += ":" + String.valueOf(k);
 		}
+		if (keyString.startsWith(":"))
+			if ( keyString.length() > 1)
+				keyString = keyString.substring(1);
+			else
+				keyString = "";
 		return keyString;
 	}
 
@@ -99,4 +104,7 @@ public abstract class CacheableRunner extends ActionRunner {
 	 */
 	protected abstract RenderResult render();
 
+	public static void deleteCache(Object...objects) {
+		RenderResultCache.delete(buildKey(objects));
+	}
 }

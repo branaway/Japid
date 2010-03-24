@@ -8,6 +8,7 @@ import play.Play;
 import play.cache.Cache;
 import play.mvc.Controller;
 import play.mvc.Http;
+import play.mvc.results.RenderTemplate;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
@@ -269,4 +270,43 @@ public class JapidController extends Controller {
 		render(new RenderResult(null, new StringBuilder(s), -1L));
 	}
 	
+	/**
+	 *  run another action wrapped in a runnable run() and intercept the Result
+	 * 
+	 *  one should wrap the call to another action like this:
+	 *  new Runnable () {
+	 *    public void run() { AnotherController.action();}
+	 *  }
+	 * @param runnable
+	 */
+	protected static String getResultFromAction(Runnable runnable ) {
+		dontRedirect();
+		try {
+			runnable.run();
+			System.out.println("JapidController.getResultFromAction() warning: the runnable did not generate a result.");
+			return "";
+		} catch (JapidResult e) {
+			return e.content;
+			// TODO: handle exception
+		} catch (RenderTemplate rt) {
+			return rt.getContent();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "";
+		}
+	}
+
+	/**
+	 *  run another action wrapped in a runnable run() and intercept the Result, ignoring the cache
+	 * 
+	 *  one should wrap the call to another action like this:
+	 *  new Runnable () {
+	 *    public void run() { AnotherController.action();}
+	 *  }
+	 * @param runnable
+	 */
+	protected static String getFreshResultFromAction(Runnable runnable ) {
+		ignoreCache();
+		return getResultFromAction(runnable);
+	}
 }

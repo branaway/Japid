@@ -15,7 +15,7 @@ This document focuses on using the Japid module for the Play! Framework.
 h2. Features
 
 - templates are *strongly typed*. A template must declare the arguments it takes. 
-- templates are transformed to Java for best possible performance. This step takes place automatically in Play!'s DEV mode. Command line tools are provided for manual transformation.   
+- templates are transformed to Java for best possible performance. This step takes place automatically in Play!'s DEV mode. Command line tools are provided for manual transformation.  This also means the templates are debug-able like regularJava code if you're so inclined.  
 - a clear Java object model for templates.
 - expression language is plain Java. 
 

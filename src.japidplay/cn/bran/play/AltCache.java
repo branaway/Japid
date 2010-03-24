@@ -8,4 +8,5 @@ public interface AltCache {
 
 	CachedRenderResult get(String key);
 
+	void delete(String key);
 }

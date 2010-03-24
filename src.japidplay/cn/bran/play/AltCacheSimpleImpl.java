@@ -30,4 +30,9 @@ public class AltCacheSimpleImpl implements AltCache {
 		cache.put(key, rr);
 	}
 
+	@Override
+	public void delete(String key) {
+		cache.remove(key);
+	}
+
 }

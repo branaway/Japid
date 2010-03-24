@@ -155,6 +155,14 @@ public class RenderResultCache {
 		return ignoreCacheFlash.get();
 	}
 
+	public static void delete(String key) {
+		if (altCache != null) {
+			altCache.delete(key);
+		} else {
+			Cache.delete(key);
+		}
+	}
+
 	// public static boolean isRefreshing(String key1) {
 	// return cacheTacker.get(key1).isRefreshing();
 	// }
