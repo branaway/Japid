@@ -22,6 +22,16 @@ import play.mvc.results.Result;
 public class JapidPlugin extends PlayPlugin {
 	private static final String NO_CACHE = "no-cache";
 	private static AtomicLong lastTimeChecked = new AtomicLong(0);
+	
+	
+	/**
+	 * pre-compile the templates so PROD mode would work
+	 */
+	@Override
+	public void onLoad() {
+		beforeDetectingChanges();
+	}
+
 	@Override
 	public void beforeDetectingChanges() {
 		// have a delay in change detection.

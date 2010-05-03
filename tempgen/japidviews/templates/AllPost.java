@@ -4,8 +4,10 @@ import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import static  japidviews._javatags.JapidWebUtil.*;
+import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
+import play.data.validation.Error;
 import japidviews._tags.*;
 import controllers.*;
 import japidviews._javatags.*;
@@ -62,6 +64,7 @@ static private final String static_9 = "\n" +
 		t = System.currentTimeMillis();
 		super.layout();
 		t = System.currentTimeMillis() - t;
+		System.out.println("[AllPost] rendering time: " + t);
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {

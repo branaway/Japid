@@ -284,9 +284,14 @@ public abstract class JapidAbstractCompiler {
 					getTemplateClassMetaData().turnOnStopwatch();
 				// Tag currentTag = this.tagsStack.peek();
 				// currentTag.bodyArgsString = contentType;
+			} else if (line.startsWith("log") || line.startsWith("log\t")) {
+				String args = line.substring("log".length()).trim().replace(";", "");
+				if (args.trim().length() == 0)
+					args = "\"\"";
+				String logLine = "System.out.println(\"" + this.template.name.replace('\\', '/') + "(line " + (parser.getLine() + i) + "): \" + " + args + ");";
+				println(logLine);
 			} else {
-				// TODO: do more directives for response header control: Cache-Control, Expires
-				print(lines[i]);
+				print(line);
 				markLine(parser.getLine() + i);
 				println();
 			}

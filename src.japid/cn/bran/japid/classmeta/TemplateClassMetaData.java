@@ -123,8 +123,11 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		if (stopWatch)
 			pln("\t\tt = System.currentTimeMillis();");
 		pln("\t\tsuper.layout();");
-		if (stopWatch)
+		if (stopWatch) {
 			pln("\t\tt = System.currentTimeMillis() - t;");
+			pln("\t\tSystem.out.println(\"[" + super.className + "] rendering time: \" + t);");
+		}
+
 		
 		if (streaming) {
 			if (true || hasActionInvocation) 

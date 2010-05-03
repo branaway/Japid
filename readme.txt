@@ -6,7 +6,11 @@
                    
 Version History:
 
-2012/3/25:	v0.34
+2012/5/3:	v0.35
+			1. now the JapidPlugin pre-compiles newer html templates at onLoad() event. Previously one must use "play japid:gen"
+			to compile the templates in PROD mode or Japid pre-processing won't happen.
+			2. added log directive to print log info in console for use in ` line. see log.html sample in the tempgen tree. 
+2012/3/28:	v0.34
 			1. the japid:mkdir command will create a file named JapidWebUtil.java in the japidviews._javatags package.
 			All the public static methods are statically imported to generated Java source files. This file is 
 			supposed to be added with more user defined static methods for use in Japid templates. 
@@ -20,7 +24,18 @@ Version History:
 			5. [feature] added deleteCache in CacheableRunner so controller action can discretely choose to delete a Japid render 
 			result cache if determined invalid.
 			6. [feature] added getFreshActionResult to JapidController so one can make a call to another action and take the result
-			for whatever purpose.   
+			for whatever purpose.
+			7. [enhancement] the stopwatch on directive now generated a duration log to the console for each invocation
+			of a template. This is useful for debugging performance issues with templates.  
+			--------------------------
+			` stopwatch on
+			--------------------------
+			8. [feature] added directive "log" to log information to console with template name, line number and optional an argument. 
+			--------------------------
+			` log
+			` log "msg"
+			` log var1 + var2
+			--------------------------
 2012/3/10:	v0.33
 			1. removed the dependency on Ant DirectoryScanner for change detection. Now the module archive is 1.5M 
 			less in size. Hopefully it's faster too.  

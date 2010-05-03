@@ -4,8 +4,10 @@ import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
 import static  japidviews._javatags.JapidWebUtil.*;
+import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
+import play.data.validation.Error;
 import japidviews._tags.*;
 import controllers.*;
 import japidviews._javatags.*;
@@ -61,14 +63,5 @@ p(static_4);// line 6
 	}
 	@Override protected void title() {
 		p("Home" + a);;
-	}
-	
-	public String foo() {
-		StringBuilder sb = new StringBuilder();
-		StringBuilder ori = getOut();
-		this.setOut(sb);
-		///
-		this.setOut(ori);
-		return sb.toString();
 	}
 }
