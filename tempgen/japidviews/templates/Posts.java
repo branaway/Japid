@@ -64,7 +64,7 @@ static private final String static_8 = "\n" +
 	}
 	@Override protected void doLayout() {
 p(static_0);// line 1
-// line 1
+// line 1
 p(static_1);// line 3
 p(static_2);// line 7
 for (Post post: allPost) {// line 9

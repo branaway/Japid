@@ -8,57 +8,52 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/play.jar" sourcepath="/play! framework"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/antlr-2.7.6.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/asyncweb-common-0.9.0-SNAPSHOT.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/backport-util-concurrent-3.0.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/bcprov-jdk15-142.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/c3p0-0.9.1.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/cglib-nodep-2.2.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-beanutils.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-codec.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-email-1.2.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-fileupload-1.2.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-httpclient.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-io.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/compiler-jdt.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/ehcache-1.5.0.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/ejb3-persistence.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/ezmorph-1.0.3.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/gson-1.3.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-entitymanager.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate3-ast.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate3.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hsqldb.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jamon-2.7.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/javassist.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jaxen-1.1.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jregex1.2_01.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jsr107cache-1.0.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jta.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/junit-4.4.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/lambdaj-2.0-with-dependencies.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/lucene-analyzers-2.3.1.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/lucene-core-2.3.1.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/mail.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/memcached-2.4.2.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/mina-core-2.0.0-M2-SNAPSHOT.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/mysql-connector-java-5.1.8-bin.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/oval-1.31.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/play-imaging.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/play-SimpleCaptcha.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/provided-geronimo-servlet_2.5_spec-1.2.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/slf4j-api-1.5.0.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/slf4j-log4j12-1.5.0.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/SnakeYAML-1.2.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/wikitext.core_1.1.1.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/WikiText.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/ZDB.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-lang.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/groovy-all-1.7.1.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/activation-1.1.1.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/cglib-2.2.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-codec-1.4.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-io-1.4.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-lang-2.5.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/ehcache-core-2.0.0.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/gson-1.4.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-annotations-3.5.0-Final.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-commons-annotations-3.2.0.Final.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-core-3.5.0-Final-patched.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-entitymanager-3.5.0-Final.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hsqldb-1.8.1.2.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/javassist-3.9.0.GA.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jj-imaging.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jj-simplecaptcha.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jj-textile.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jj-wikitext.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jodatime-1.6.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jregex-1.2_01.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jta-1.1.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/junit-4.8.1.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/mailapi-1.4.3.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/mysql-connector-java-5.1.8.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/netty-3.1.5.GA.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/org.eclipse.jdt.core_3.5.1.v_972_R35x.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/oval-1.50.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/provided-servlet-2.5.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/snakeyaml-1.6.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

@@ -10,6 +10,7 @@ Version History:
 			1. now the JapidPlugin pre-compiles newer html templates at onLoad() event. Previously one must use "play japid:gen"
 			to compile the templates in PROD mode or Japid pre-processing won't happen.
 			2. added log directive to print log info in console for use in ` line. see log.html sample in the tempgen tree. 
+			3. modified the commands.py to make it compatible with the Play 1.1 main branch.
 2012/3/28:	v0.34
 			1. the japid:mkdir command will create a file named JapidWebUtil.java in the japidviews._javatags package.
 			All the public static methods are statically imported to generated Java source files. This file is 
