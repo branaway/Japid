@@ -6,6 +6,8 @@
                    
 Version History:
 
+2012/6/3:	v0.4
+			1. fixed the command.py to work with the latest main 1.1 branch
 2012/5/3:	v0.35
 			1. now the JapidPlugin pre-compiles newer html templates at onLoad() event. Previously one must use "play japid:gen"
 			to compile the templates in PROD mode or Japid pre-processing won't happen.

@@ -49,11 +49,11 @@
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/junit-4.8.1.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/mailapi-1.4.3.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/mysql-connector-java-5.1.8.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/netty-3.1.5.GA.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/org.eclipse.jdt.core_3.5.1.v_972_R35x.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/oval-1.50.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/provided-servlet-2.5.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/slf4j-api-1.5.8.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/snakeyaml-1.6.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/netty-3.2.0.CR1.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

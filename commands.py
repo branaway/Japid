@@ -19,6 +19,7 @@ def execute(**kargs):
     args = kargs.get("args")
     env = kargs.get("env")
 
+#    print "japid command: " + command
     if command == 'japid:gen':
         run(app, 'gen')
 
@@ -33,8 +34,7 @@ def execute(**kargs):
 
 def run(app, cmd):
     app.check()
-    java_cmd = app.java_cmd(['-Xmx64m'], className='cn.bran.play.JapidCommands')
-    java_cmd.append(cmd)
+    java_cmd = app.java_cmd(['-Xmx64m'], className='cn.bran.play.JapidCommands', args=[cmd])
 #    print java_cmd                                                                                              
     subprocess.call(java_cmd, env=os.environ)
     print

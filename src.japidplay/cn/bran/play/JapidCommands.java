@@ -37,14 +37,21 @@ public class JapidCommands {
 			"}\n" + 
 			"";
 	public static void main(String[] args) throws IOException {
-		if ("gen".equals(args[0])) {
+		String arg0 = args[0];
+//		if (arg0.length() == 0)
+//			arg0 = args[1];
+			
+		if ("gen".equals(arg0)) {
 			gen(APP);
-		} else if ("regen".equals(args[0])) {
+		} else if ("regen".equals(arg0)) {
 			regen(APP);
-		} else if ("clean".equals(args[0])) {
+		} else if ("clean".equals(arg0)) {
 			delAllGeneratedJava(APP + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT);
-		} else if ("mkdir".equals(args[0])) {
+		} else if ("mkdir".equals(arg0)) {
 			mkdir(APP);
+		}
+		else {
+			System.out.println("not known: "  + arg0);
 		}
 	}
 
@@ -57,7 +64,6 @@ public class JapidCommands {
 	 * 
 	 */
 	public static List<File> mkdir(String root) throws IOException {
-
 		String sep = File.separator;
 		String japidViews = root + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep;
 		File javatags = new File(japidViews + JapidPlugin.JAVATAGS);
