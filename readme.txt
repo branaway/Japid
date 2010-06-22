@@ -6,14 +6,14 @@
                    
 Version History:
 
-2012/6/3:	v0.4
+2010/6/3:	v0.4
 			1. fixed the command.py to work with the latest main 1.1 branch
-2012/5/3:	v0.35
+2010/5/3:	v0.35
 			1. now the JapidPlugin pre-compiles newer html templates at onLoad() event. Previously one must use "play japid:gen"
 			to compile the templates in PROD mode or Japid pre-processing won't happen.
 			2. added log directive to print log info in console for use in ` line. see log.html sample in the tempgen tree. 
 			3. modified the commands.py to make it compatible with the Play 1.1 main branch.
-2012/3/28:	v0.34
+2010/3/28:	v0.34
 			1. the japid:mkdir command will create a file named JapidWebUtil.java in the japidviews._javatags package.
 			All the public static methods are statically imported to generated Java source files. This file is 
 			supposed to be added with more user defined static methods for use in Japid templates. 
@@ -39,11 +39,11 @@ Version History:
 			` log "msg"
 			` log var1 + var2
 			--------------------------
-2012/3/10:	v0.33
+2010/3/10:	v0.33
 			1. removed the dependency on Ant DirectoryScanner for change detection. Now the module archive is 1.5M 
 			less in size. Hopefully it's faster too.  
 
-2012/3/10:	v0.32
+2010/3/10:	v0.32
 			1. added RenderResultCache to fine control cache early reloading and cache read thru.
 			The new CacheableRunner makes it easy to do whole page cache in actions. 
 			
@@ -69,7 +69,7 @@ Version History:
 			3. add JapidController.dontRedirect() which can be used before calling another action in an action.
 			This is like server-side forwarding. 
 			
-2012/2/24:	v0.31
+2010/2/24:	v0.31
 			1. added directive in script to add any http response headers. The usage example:
 			
 			-------------------------------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ Version History:
 			
 			see headers.html for more examples. HTTP header settings can be inherited by children templates.
 			
-2012/2/22:	v0.3
+2010/2/22:	v0.3
 			1. added cache support in JapidController, which has been moved to the Play-Jpiad-{version}.jar. The 
 			helper method in the JapidController is:
 				
@@ -117,7 +117,7 @@ Version History:
 			<div>#{invoke SampleController.authorPanel(post.getAuthor()), "10s"/}</div>
 			------------------------------------------------------------------------------------------------------
 			
-2012/2/14:	v0.2
+2010/2/14:	v0.2
 			1. added support for back-quote as line oriented script block prefix, for example:
 			
 			------------------------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ Version History:
 			
 			2. "play japid:mkdir" now creates optional packages for controllers.
 			3. added code in JapidPlugin to remove Orphaned Java source file in the japidviews directory.
-2012/2/12: 	v0.12 
+2010/2/12: 	v0.12 
 			1. added support for auto-loading in DEV mode, with the latest head version
 			in 1.0 and 1.1 branches.
 			2. added play command "play japid:mkdir" to create the required package structure
