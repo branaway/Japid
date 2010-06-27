@@ -5,4 +5,7 @@
 #
 # ~~~~
 
-GET     /?                      Module.index
+#GET     /?                      Module.index
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

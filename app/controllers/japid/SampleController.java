@@ -6,6 +6,7 @@ import japidviews.japid.SampleController.composite;
 import java.util.Date;
 
 import models.japidsample.Author;
+import models.japidsample.Author2;
 import models.japidsample.Post;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.play.CacheableRunner;
@@ -43,6 +44,32 @@ public class SampleController extends JapidController {
 //			}
 //		}, "10s", a);
 	}
+	
+	public static void hello() {
+		renderText("hello，你好！");
+	}
+	
+	/**
+	 * this method shows how to render arguments to a japid template by naming and positional convention with the 
+	 * renderJapid().
+	 * 
+	 */
+	public static void renderByPosition() {
+		String s = "hello，renderByPosition！";
+		int i = 100;
+		Author a = new Author();
+		a.name = "author1";
+
+		Author2 a2 = new Author2();
+		a2.name = "author2";
+		
+		renderJapid(s, i, a, a2, a2);
+	}
+	
+	public static void renderByPositionEmpty() {
+		renderJapid();
+	}
+	
 	
 	public static void composite() {
 		Post post = new Post();

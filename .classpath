@@ -27,15 +27,11 @@
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/cglib-2.2.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-beanutils-1.8.3.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-codec-1.4.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-httpclient-3.1.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-io-1.4.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-lang-2.5.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/ehcache-core-2.0.0.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/gson-1.4.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-annotations-3.5.0-Final.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-commons-annotations-3.2.0.Final.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-core-3.5.0-Final-patched.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-entitymanager-3.5.0-Final.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hsqldb-1.8.1.2.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/javassist-3.9.0.GA.jar"/>
@@ -47,13 +43,17 @@
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jregex-1.2_01.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/jta-1.1.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/junit-4.8.1.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/mailapi-1.4.3.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/mysql-connector-java-5.1.8.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/org.eclipse.jdt.core_3.5.1.v_972_R35x.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/oval-1.50.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/provided-servlet-2.5.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/slf4j-api-1.5.8.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/snakeyaml-1.6.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/netty-3.2.0.CR1.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/async-http-client-1.0.0-SNAPSHOT-shaded.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-annotations-3.5.3-Final.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-core-3.5.3-Final-patched.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-entitymanager-3.5.3-Final-patched.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/javamail-1.4.3.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/netty-3.2.1.Final.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/org.eclipse.jdt.core_3.6.0.v_A56.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

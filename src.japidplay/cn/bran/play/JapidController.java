@@ -4,6 +4,8 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
+import org.apache.commons.beanutils.MethodUtils;
+
 import play.Play;
 import play.cache.Cache;
 import play.mvc.Controller;
@@ -21,32 +23,28 @@ import cn.bran.japid.util.StackTraceUtils;
  * @author Bing Ran<bing_ran@hotmail.com>
  */
 public class JapidController extends Controller {
+	private static final char DOT = '.';
+	private static final String HTML = ".html";
+
 	/**
-	 * use reflection to do the rendering
+	 * render an array of objects to a template defined by a Template class.
 	 * 
-	 * @param <T>
-	 * @param c
-	 * @param args
+	 * @param <T> a sub-class type of JapidTemplateBase
+	 * @param c a sub-class of JapidTemplateBase
+	 * @param args arguments
 	 */
 	protected static <T extends JapidTemplateBase> void render(Class<T> c, Object... args) {
-		Class<?>[] paramTypes = new Class<?>[args.length];
-		for (int i = 0; i < args.length; i++) {
-			paramTypes[i] = args[i].getClass();
-		}
 		try {
+			String methodName = "render";
 			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
-			Method renderMeth = c.getMethod("render", paramTypes);
-			// TODO: consider caching the method so reflection cost is
-			// eliminated
 			StringBuilder sb = new StringBuilder(8000);
 			T t = ctor.newInstance(sb);
-			RenderResult rr = (RenderResult) renderMeth.invoke(t, args);
-
+			RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t, methodName, args);
 			throw new JapidResult(rr);
 		} catch (Exception e) {
 			if (e instanceof JapidResult)
 				throw (JapidResult) e;
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}
@@ -61,7 +59,8 @@ public class JapidController extends Controller {
 	}
 
 	/**
-	 * pickup the japid renderer in the conventional location render it
+	 * pickup the Japid renderer in the conventional location render it. 
+	 * Positional match is used to assign values to parameters
 	 * 
 	 * @param objects
 	 */
@@ -69,18 +68,26 @@ public class JapidController extends Controller {
 		// get full action: e.g., mypackage.Application.index
 		// this is flawed since it may be called from SSI 
 //		String action = Http.Request.current().action.replace(".", "/");
-
-		String action = StackTraceUtils.getCaller();
+		
+		String action = template();
+		if (action.endsWith(HTML)) {
+			action = action.substring(0, action.length() - HTML.length());
+		}
+		
+//		String action = StackTraceUtils.getCaller(); // too tricky to use stacktrace to track the caller action name
 		// something like controllers.japid.SampleController.testFindAction
+		
 		if (action.startsWith("controllers.")) {
-			action = action.substring(action.indexOf('.') + 1);
+			action = action.substring(action.indexOf(DOT) + 1);
 		}
 		// map to default japid view
 		String templateClassName = JapidPlugin.JAPIDVIEWS_ROOT + File.separator + action;
 
-		Class tClass = Play.classloader.getClassIgnoreCase(templateClassName.replace('/', '.').replace('\\', '.'));
+		templateClassName = templateClassName.replace('/', DOT).replace('\\', DOT);
+		Class tClass = Play.classloader.getClassIgnoreCase(templateClassName);
 		if (tClass == null) {
-			throw new RuntimeException("There is no default Japid renderer by the name of: " + templateClassName);
+			String templateFileName = templateClassName.replace(DOT, '/') + HTML;
+			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
 		} else if (JapidTemplateBase.class.isAssignableFrom(tClass)) {
 			render(tClass, objects);
 		} else {
