@@ -196,7 +196,11 @@ engine is shamefully adapted from the Play code. The Jamon template engine prove
 transforming templates to Java source code is possible and has inspired me to start this
 project.
 
+6. Quick build
 
+To build this module from source:
+
+# play build-module
 
  
 
