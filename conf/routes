@@ -5,7 +5,7 @@
 #
 # ~~~~
 
-#GET     /?                      Module.index
+GET     /japid                      japid.SampleController.index
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

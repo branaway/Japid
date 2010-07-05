@@ -6,8 +6,10 @@
                    
 Version History:
 
-2010/6/23:	v0.4.1
+2010/7/5:	v0.4.1
 			1. enhanced the JapidController.renderJapid() so it can find compatible template args list. It used to do exact match only.
+			2. included the japid view directory scanning in the gen() method.
+			3. added authenticityToken.html in the _tags directory of app/japidviews. Now one can add #{authenticityToken.html /} in a form to embed a hidden field to prevent CSRF attack. See: http://www.playframework.org/documentation/1.0.2/releasenotes-1.0.2 . 
 2010/6/3:	v0.4
 			1. fixed the command.py to work with the latest main 1.1 branch
 2010/5/3:	v0.35

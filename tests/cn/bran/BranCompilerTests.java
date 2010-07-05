@@ -15,7 +15,10 @@ import cn.bran.japid.compiler.JapidTemplateCompiler;
 import cn.bran.japid.template.JapidTemplate;
 
 /**
- * have tests for all three type compilers
+ * have tests for all three type compilers.
+ * 
+ * How do I verify the integrity the generated source files?
+ * 
  * @author bran
  *
  */
@@ -23,7 +26,7 @@ public class BranCompilerTests {
 
 	@Test
 	public void testCompileLayout() throws IOException {
-		String src = readFile("tempgen/tag/Layout.html");
+		String src = readFile("tempgen/japidviews/_layouts/Layout.html");
 		JapidTemplate bt = new JapidTemplate("tag/Layout.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
 		cp.compile(bt);
@@ -32,7 +35,7 @@ public class BranCompilerTests {
 
 	@Test
 	public void testAnotherLayout() throws IOException {
-		String src = readFile("tempgen/tag/TagLayout.html");
+		String src = readFile("tempgen/japidviews/_layouts/TagLayout.html");
 		JapidTemplate bt = new JapidTemplate("tag/TagLayout.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
 		cp.compile(bt);
@@ -71,7 +74,7 @@ public class BranCompilerTests {
 
 	@Test
 	public void testActionNotation() throws IOException {
-		String src = readFile("tempgen/templates/Actions.html");
+		String src = readFile("tempgen/japidviews/templates/Actions.html");
 		
 		JapidTemplate bt = new JapidTemplate("templates/Actions.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler ();

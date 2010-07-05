@@ -12,8 +12,16 @@ import cn.bran.japid.template.RenderResult;
 import cn.bran.play.CacheableRunner;
 import cn.bran.play.JapidController;
 import cn.bran.play.JapidResult;
-
+/**
+ *  a sample controller that demos Japid
+ *  
+ * @author Bing Ran<bing_ran@hotmail.com>
+ *
+ */
 public class SampleController extends JapidController {
+	public static void index() {
+		renderJapid(); // use the default index.html in the japidviews/japid/SampleController directory
+	}
 	public static void authorPanel(final Author a) {
 		//  the straight-thru way of rendering
 		//		throw new JapidResult(new authorPanel().render(a));
@@ -46,7 +54,7 @@ public class SampleController extends JapidController {
 	}
 	
 	public static void hello() {
-		renderText("hello，你好！");
+		renderText("hello，Japid!");
 	}
 	
 	/**
@@ -101,5 +109,13 @@ public class SampleController extends JapidController {
 	public static void testFindAction() {
 		String ret = caller();
 		System.out.println(ret);
+	}
+	
+	public static void reverseLookup0() {
+		renderJapid();
+	}
+
+	public static void reverseLookup1(String[] args) {
+		renderText("OK");
 	}
 }

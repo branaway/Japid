@@ -100,7 +100,7 @@ public class TranslateTemplateTask {
 		changedFiles = DirUtil.findChangedHtmlFiles(include);
 
 		if (changedFiles.size() > 0) {
-			System.out.println("Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " to " + destDir);
+			System.out.println("[Japid]Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " to directory: " + destDir);
 
 			JapidTemplateTransformer tran = new JapidTemplateTransformer(packageRoot.getPath(), null);
 			for (Class<?> c : this.staticImports) {
@@ -115,7 +115,7 @@ public class TranslateTemplateTask {
 
 			for (int i = 0; i < changedFiles.size(); i++) {
 				File pFile = changedFiles.get(i);
-				System.out.println("transforming template: " + pFile.getPath() + " to: " + pFile.getName().replace("html", "java"));
+				System.out.println("[Japid]Transforming template: " + pFile.getPath() + " to: " + pFile.getName().replace("html", "java"));
 				if (listFiles) {
 					System.out.println(pFile.getAbsolutePath());
 				}

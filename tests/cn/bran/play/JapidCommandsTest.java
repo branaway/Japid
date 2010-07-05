@@ -50,7 +50,7 @@ public class JapidCommandsTest {
 	}
 	
 	@Test
-	public void testGen() {
+	public void testGen() throws IOException {
 		String root = ROOT;
 		JapidCommands.gen(root);
 	}

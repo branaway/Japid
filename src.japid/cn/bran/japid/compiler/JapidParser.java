@@ -48,6 +48,8 @@ public class JapidParser {
 		MESSAGE, // &{...}
 		ACTION, // @{...}
 		ABS_ACTION, // @@{...}
+// bran: to indicate { in action arguments
+		ACTION_CURLY, // @@{...}
 		COMMENT, // *{...}*
 		// bran expression without using {}, such as ~_;
 		EXPR_WING, // ~{...}
@@ -238,14 +240,14 @@ public class JapidParser {
 			// break characters: space, other punctuations, new lines, returns
 			case EXPR_NATURAL:
 				if ('(' == c) {
-					skipAhread(Token.EXPR_NATURAL_METHOD_CALL, 1);
+					skipAhead(Token.EXPR_NATURAL_METHOD_CALL, 1);
 				} else if ('[' == c) {
-					skipAhread(Token.EXPR_NATURAL_ARRAY_OP, 1);
+					skipAhead(Token.EXPR_NATURAL_ARRAY_OP, 1);
 				} else if ('\'' == c) {
 					// \' is valid only at the beginning
 					// FIXME
 					// start of literal
-					skipAhread(Token.EXPR_NATURAL_STRING_LITERAL, 1);
+					skipAhead(Token.EXPR_NATURAL_STRING_LITERAL, 1);
 				} else if (Character.isWhitespace(c)) {
 					state = Token.EXPR;
 					return found(Token.PLAIN, 0); // it ea
@@ -272,7 +274,7 @@ public class JapidParser {
 			case EXPR_NATURAL_METHOD_CALL:
 				if ('(' == c) {
 					// nested call
-					skipAhread(Token.EXPR_NATURAL_METHOD_CALL, 1);
+					skipAhead(Token.EXPR_NATURAL_METHOD_CALL, 1);
 				} else if (')' == c) {
 					state = this.emthodCallStackInExpr.pop();
 					skip(1);
@@ -281,7 +283,7 @@ public class JapidParser {
 			case EXPR_NATURAL_ARRAY_OP:
 				if ('[' == c) {
 					// nested call
-					skipAhread(Token.EXPR_NATURAL_ARRAY_OP, 1);
+					skipAhead(Token.EXPR_NATURAL_ARRAY_OP, 1);
 				} else if (']' == c) {
 					state = this.emthodCallStackInExpr.pop();
 					skip(1);
@@ -302,10 +304,25 @@ public class JapidParser {
 				if (c == '}') {
 					return found(Token.PLAIN, 1);
 				}
+				else if (c == '{') { // bran: weak logic: assuming no "{" in string literals
+					skipAhead(Token.ACTION_CURLY, 1);
+				}
 				break;
 			case ABS_ACTION:
 				if (c == '}') {
 					return found(Token.PLAIN, 1);
+				}
+				else if (c == '{') {
+					skipAhead(Token.ACTION_CURLY, 1);
+				}
+				break;
+			case ACTION_CURLY:
+				if (c == '}') {
+					state = this.emthodCallStackInExpr.pop();
+					skip(1);
+				}
+				else if (c == '{') {
+					skipAhead(Token.ACTION_CURLY, 1);
 				}
 				break;
 			case MESSAGE:
@@ -317,9 +334,14 @@ public class JapidParser {
 		}
 	}
 
-	private void skipAhread(JapidParser.Token exprNatural, int i) {
+	/**
+	 * push a nested token to the stack
+	 * @param token
+	 * @param i number of chars to skip
+	 */
+	private void skipAhead(JapidParser.Token token, int i) {
 		this.emthodCallStackInExpr.push(state);
-		state = exprNatural;
+		state = token;
 		skip(i);
 	}
 

@@ -17,30 +17,17 @@ import cn.bran.japid.util.DirUtil;
 public class JapidCommands {
 	private static final String APP = "app";
 
-	private static final String JapidWebUtil = 
-			"package japidviews._javatags;\n" + 
-			"\n" + 
-			"/**\n" + 
-			" * a well-know place to add all the static method you want to use in your\n" + 
-			" * templates.\n" + 
-			" * \n" + 
-			" * All the public static methods will be automatically \"import static \" to the\n" + 
-			" * generated Java classes by the Japid compiler.\n" + 
-			" * \n" + 
-			" */\n" + 
-			"public class JapidWebUtil {\n" + 
-			"	public static String hi() {\n" + 
-			"		return \"Hi\";\n" + 
-			"	}\n" + 
-			"	// your utility methods...\n" + 
-			"	\n" + 
-			"}\n" + 
-			"";
+	private static final String JapidWebUtil = "package japidviews._javatags;\n" + "\n" + "/**\n"
+			+ " * a well-know place to add all the static method you want to use in your\n" + " * templates.\n" + " * \n"
+			+ " * All the public static methods will be automatically \"import static \" to the\n"
+			+ " * generated Java classes by the Japid compiler.\n" + " * \n" + " */\n" + "public class JapidWebUtil {\n"
+			+ "	public static String hi() {\n" + "		return \"Hi\";\n" + "	}\n" + "	// your utility methods...\n" + "	\n" + "}\n" + "";
+
 	public static void main(String[] args) throws IOException {
 		String arg0 = args[0];
-//		if (arg0.length() == 0)
-//			arg0 = args[1];
-			
+		// if (arg0.length() == 0)
+		// arg0 = args[1];
+
 		if ("gen".equals(arg0)) {
 			gen(APP);
 		} else if ("regen".equals(arg0)) {
@@ -49,9 +36,8 @@ public class JapidCommands {
 			delAllGeneratedJava(APP + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT);
 		} else if ("mkdir".equals(arg0)) {
 			mkdir(APP);
-		}
-		else {
-			System.out.println("not known: "  + arg0);
+		} else {
+			System.out.println("not known: " + arg0);
 		}
 	}
 
@@ -60,51 +46,59 @@ public class JapidCommands {
 	 * app/japidviews/_tags
 	 * 
 	 * then create a dir for each controller. //TODO
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 * 
 	 */
 	public static List<File> mkdir(String root) throws IOException {
 		String sep = File.separator;
 		String japidViews = root + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep;
 		File javatags = new File(japidViews + JapidPlugin.JAVATAGS);
-		boolean mkdirs = javatags.mkdirs();
-		assert mkdirs == true;
-		System.out.println("created: " + javatags.getPath());
+		if (!javatags.exists()) {
+			boolean mkdirs = javatags.mkdirs();
+			assert mkdirs == true;
+			System.out.println("created: " + javatags.getPath());
+		}
+
 		File webutil = new File(javatags, "JapidWebUtil.java");
 		if (!webutil.exists()) {
 			FileUtils.writeStringToFile(webutil, JapidWebUtil, "UTF-8");
 			System.out.println("created JapidWebUtil.java.");
 		}
-		// add the placeholder for utility class for use in templates
-		
-		
+		// add the place-holder for utility class for use in templates
+
 		File layouts = new File(japidViews + JapidPlugin.LAYOUTDIR);
-		mkdirs = layouts.mkdirs();
-		assert mkdirs == true;
-		System.out.println("created: " + layouts.getPath());
+		if (!layouts.exists()) {
+			boolean mkdirs = layouts.mkdirs();
+			assert mkdirs == true;
+			System.out.println("created: " + layouts.getPath());
+		}
 
 		File tags = new File(japidViews + JapidPlugin.TAGSDIR);
-		mkdirs = tags.mkdirs();
-		assert mkdirs == true;
-		System.out.println("created: " + tags.getPath());
-
+		if (!tags.exists()) {
+			boolean mkdirs = tags.mkdirs();
+			assert mkdirs == true;
+			System.out.println("created: " + tags.getPath());
+		}
+		
 		File[] dirs = new File[] { javatags, layouts, tags };
 		List<File> res = new ArrayList<File>();
 		res.addAll(Arrays.asList(dirs));
 
 		// create dirs for controllers
 
-		System.out.println("create default packages for controllers.");
+		System.out.println("check default template packages for controllers.");
 		try {
-			File[] controllers = getAllControllers(root + sep +  "controllers");
+			File[] controllers = getAllControllers(root + sep + "controllers");
 			for (File f : controllers) {
 				String cp = japidViews + f.getPath();
 				File ff = new File(cp);
-				mkdirs = ff.mkdirs();
-				assert mkdirs == true;
-
-				res.add(ff);
-				System.out.println("created: " + cp);
+				if (!ff.exists()) {
+					boolean mkdirs = ff.mkdirs();
+					assert mkdirs == true;
+					res.add(ff);
+					System.out.println("created: " + cp);
+				}
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -116,29 +110,31 @@ public class JapidCommands {
 	public static void regen(String root) throws IOException {
 		// TODO Auto-generated method stub
 		String pathname = root + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT;
-		mkdir(root);
 		delAllGeneratedJava(pathname);
 		gen(root);
 	}
 
 	public static void delAllGeneratedJava(String pathname) {
-		String[] javas = DirUtil.getAllFileNames(new File(pathname), new String[] {"java"});
+		String[] javas = DirUtil.getAllFileNames(new File(pathname), new String[] { "java" });
 
 		for (String j : javas) {
 			if (!j.contains(JapidPlugin.JAVATAGS)) {
 				System.out.println("removed: " + j);
 				boolean delete = new File(pathname + File.separatorChar + j).delete();
 				if (!delete)
-					throw new RuntimeException("file was not deleted: "+ j);
+					throw new RuntimeException("file was not deleted: " + j);
 			}
 		}
-//		System.out.println("removed: all none java tag java files in " + JapidPlugin.JAPIDVIEWS_ROOT);
+		// System.out.println("removed: all none java tag java files in " +
+		// JapidPlugin.JAPIDVIEWS_ROOT);
 	}
 
 	/**
 	 * update the java files from the html files, for the changed only
+	 * @throws IOException 
 	 */
-	public static void gen(String packageRoot) {
+	public static void gen(String packageRoot) throws IOException {
+		mkdir(packageRoot);
 		List<File> changedFiles = reloadChanged(packageRoot);
 		if (changedFiles.size() > 0) {
 			for (File f : changedFiles) {
@@ -147,12 +143,13 @@ public class JapidCommands {
 		} else {
 			System.out.println("No java files need to be updated.");
 		}
-		
+
 		rmOrphanJava();
 	}
 
 	/**
-	 * @param root the package root "/"
+	 * @param root
+	 *            the package root "/"
 	 * @return
 	 */
 	public static List<File> reloadChanged(String root) {
@@ -217,9 +214,9 @@ public class JapidCommands {
 			Set<File> oj = DirUtil.findOrphanJava(src, null);
 			for (File j : oj) {
 				String path = j.getPath();
-//				System.out.println("found: " + path);
+				// System.out.println("found: " + path);
 				if (path.contains(JapidPlugin.JAVATAGS)) {
-					
+
 					// java tags, don't touch
 				} else {
 					hasRealOrphan = true;

@@ -48,12 +48,12 @@
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/provided-servlet-2.5.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/slf4j-api-1.5.8.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/snakeyaml-1.6.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/async-http-client-1.0.0-SNAPSHOT-shaded.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-annotations-3.5.3-Final.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-core-3.5.3-Final-patched.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/hibernate-entitymanager-3.5.3-Final-patched.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/javamail-1.4.3.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/netty-3.2.1.Final.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/org.eclipse.jdt.core_3.6.0.v_A56.jar"/>
+	<classpathentry kind="var" path="PLAY_HOME/framework/lib/async-http-client-1.0.0-SNAPSHOT-shaded.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>
