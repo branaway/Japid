@@ -2,19 +2,21 @@ package cn.bran.play;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.beanutils.MethodUtils;
 
 import play.Play;
 import play.cache.Cache;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.results.RenderTemplate;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.StackTraceUtils;
+
+import com.google.gson.Gson;
 
 /**
  * a helper class. for hiding the template API from user eyes. not really needed
@@ -107,7 +109,7 @@ public class JapidController extends Controller {
 	 * of the argument has a toString() that uniquely identify itself. Otherwise
 	 * the user needs to provider its own kek building routine
 	 * 
-	 * mind the cost asscoiated with this
+	 * mind the cost associated with this
 	 * 
 	 * @param rr
 	 *            the render result to cache
@@ -137,7 +139,7 @@ public class JapidController extends Controller {
 	}
 
 	/**
-	 * mind the cost asscoiated with this and the key building issues, as stated
+	 * mind the cost associated with this and the key building issues, as stated
 	 * in the cache() method
 	 * 
 	 * @param objs
@@ -274,7 +276,16 @@ public class JapidController extends Controller {
 	 * @param s
 	 */
 	protected static void renderText(String s){
-		render(new RenderResult(null, new StringBuilder(s), -1L));
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Content-Type", "text/plain; charset=utf-8");
+		render(new RenderResult(headers, new StringBuilder(s), -1L));
+	}
+	
+	protected static void renderJson(Object o){
+		 String json = new Gson().toJson(o);
+		 Map<String, String> headers = new HashMap<String, String>();
+		 headers.put("Content-Type", "application/json; charset=utf-8");
+		 render(new RenderResult(headers, new StringBuilder(json), -1L));
 	}
 	
 	/**
@@ -316,4 +327,6 @@ public class JapidController extends Controller {
 		ignoreCache();
 		return getResultFromAction(runnable);
 	}
+	
+	
 }
