@@ -21,7 +21,6 @@
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/memcached-2.4.2.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/slf4j-log4j12-1.5.0.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/groovy-all-1.7.1.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/c3p0-0.9.1.2.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/cglib-2.2.jar"/>

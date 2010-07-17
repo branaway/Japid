@@ -7,7 +7,7 @@
 Version History:
 
 2010/7/7:	v0.4.1
-			1. enhanced the JapidController.renderJapid() so it can find compatible template args list. It used to do exact match only.
+			1. Manual transforming no more! Enhanced the JapidController.renderJapid() so it can find compatible template args list. It used to do exact match only. "play japid:gen" is not mandatory any more in dev mode.
 			2. included the japid view directory scanning in the gen() method.
 			3. added authenticityToken.html in the _tags directory of app/japidviews. Now one can add #{authenticityToken.html /} in a form to embed a hidden field to prevent CSRF attack. See: http://www.playframework.org/documentation/1.0.2/releasenotes-1.0.2 . 
 			4. override renderJson(Object o) in the JapidController to use JapidResult so it would play well with Japid cache mechanism in templates - aka the invoke tag. 
