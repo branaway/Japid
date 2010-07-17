@@ -105,10 +105,10 @@ public class RouteAdapter implements UrlMapper {
 			String controllerName = Request.current().controller;
 			// forms: Controller.action, action, package.Controller.action
 			String action = actionString;
-			String methodName = actionString;
+//			String methodName = actionString;
 			if (actionString.indexOf(".") > 0) {
 				int lastIndexOf = actionString.lastIndexOf('.');
-				methodName = actionString.substring(lastIndexOf + 1);
+//				methodName = actionString.substring(lastIndexOf + 1);
 				controllerName = actionString.substring(0, lastIndexOf);
 				// fell spec with controller name
 			} else {
@@ -148,46 +148,46 @@ public class RouteAdapter implements UrlMapper {
 				}
 
 				// check cache first before go the expensive result
-				String urlPattern = getActionCache().get(k); 
+				String urlPattern = getActionCache().get(k);
 				// format /action/{id}/{tag} etc
 				// no cache for now to keep compatibility with Play code
 
 				if (false && urlPattern != null) {
-/*	
-					if ("/{controller}/{action}".equals(urlPattern)) {
-						// this is special
-						// code copied from Router to compose the query string
-						String qs = StringUtils.buildQuery(paramMap);
-						return "/" + controllerName + "/" + methodName + "?" + qs;
-					}
-					else {
-						StrSubstitutor sub = new StrSubstitutor(paramMap);
-						sub.setVariablePrefix("{");
-						sub.setVariableSuffix("}");
-						String url = sub.replace(urlPattern);
-						return url;
-					}
-					
-*/
+					/*
+					 * if ("/{controller}/{action}".equals(urlPattern)) { //
+					 * this is special // code copied from Router to compose the
+					 * query string String qs =
+					 * StringUtils.buildQuery(paramMap); return "/" +
+					 * controllerName + "/" + methodName + "?" + qs; } else {
+					 * StrSubstitutor sub = new StrSubstitutor(paramMap);
+					 * sub.setVariablePrefix("{"); sub.setVariableSuffix("}");
+					 * String url = sub.replace(urlPattern); return url; }
+					 */
 					return null;
 				} else {
 					ActionDefinition actionDef = Router.reverse(action, paramMap);
-// was doing some hacking for caching. don't do it now for compatiblility with remote
-//					Route route = actionDef.route;
-//					// find is the route is cacheable. it's hard to cache path
-//					// with constrained parameter
-//					// 
-//					String path = route.path;
-//					if (!path.contains("<")) {
-//						// cacheable
-//						if (path.endsWith("?"))
-//							path = path.substring(0, path.length() - 1);
-//						getActionCache().put(k, path);
-//					}
+					// was doing some hacking for caching. don't do it now for
+					// Compatibility with remote
+					// Route route = actionDef.route;
+					// // find is the route is cacheable. it's hard to cache
+					// path
+					// // with constrained parameter
+					// //
+					// String path = route.path;
+					// if (!path.contains("<")) {
+					// // cacheable
+					// if (path.endsWith("?"))
+					// path = path.substring(0, path.length() - 1);
+					// getActionCache().put(k, path);
+					// }
 					return actionDef.toString();
 				}
 			} catch (ActionNotFoundException e) {
-				throw new NoRouteFoundException(action, null);
+				throw new RuntimeException(e + ". No matching route in reverse lookup: " + actionString);
+//				throw new NoRouteFoundException(action, null);
+			}
+			catch(NoRouteFoundException e) {
+				throw new RuntimeException(e + ". No matching route in reverse lookup: " + actionString);
 			}
 		} catch (Exception e) {
 			if (e instanceof PlayException) {
@@ -206,13 +206,14 @@ public class RouteAdapter implements UrlMapper {
 			hash = new HashMap<String, String>();
 			Request.current().args.put("actionReverseCache", hash);
 		}
-		
-// put in the threadlocal is a problem because threads are reused in the pool
-//      HashMap<String, String> hash = actionReverseCache.get();
-//		if (hash == null) {
-//			hash = new HashMap<String, String>();
-//			actionReverseCache.set(hash);
-//		}
+
+		// put in the threadlocal is a problem because threads are reused in the
+		// pool
+		// HashMap<String, String> hash = actionReverseCache.get();
+		// if (hash == null) {
+		// hash = new HashMap<String, String>();
+		// actionReverseCache.set(hash);
+		// }
 		return hash;
 	}
 
@@ -220,18 +221,18 @@ public class RouteAdapter implements UrlMapper {
 	 * @return
 	 */
 	private static HashMap<String, String[]> getActionParamCache() {
-// the cache is bound to a request
+		// the cache is bound to a request
 		HashMap<String, String[]> hash = (HashMap<String, String[]>) Request.current().args.get("actionParamNamesCache");
 		if (hash == null) {
 			hash = new HashMap<String, String[]>();
 			Request.current().args.put("actionParamNamesCache", hash);
 		}
 
-//		HashMap<String, String[]> hash = actionParamNamesCache.get();
-//		if (hash == null) {
-//			hash = new HashMap<String, String[]>();
-//			actionParamNamesCache.set(hash);
-//		}
+		// HashMap<String, String[]> hash = actionParamNamesCache.get();
+		// if (hash == null) {
+		// hash = new HashMap<String, String[]>();
+		// actionParamNamesCache.set(hash);
+		// }
 		return hash;
 	}
 
@@ -245,13 +246,17 @@ public class RouteAdapter implements UrlMapper {
 	 * @return
 	 */
 	public static String reverseStaticLookup(String resource) {
-		HashMap<String, String> hash = getStaticCache();
-		String url = hash.get(resource);
-		if (url == null) {
-			url = Router.reverseWithCheck(resource, Play.getVirtualFile(resource));
-			hash.put(resource, url);
+		try {
+			HashMap<String, String> hash = getStaticCache();
+			String url = hash.get(resource);
+			if (url == null) {
+				url = Router.reverseWithCheck(resource, Play.getVirtualFile(resource));
+				hash.put(resource, url);
+			}
+			return url;
+		} catch (RuntimeException e) {
+			throw new RuntimeException(e + ". No matching route in reverse lookup: " + resource);
 		}
-		return url;
 	}
 
 	/**
@@ -272,8 +277,9 @@ public class RouteAdapter implements UrlMapper {
 
 	// store quick reverse lookup
 	// TODO should consider concurrent hashmap, mm but it's only thread local!
-	// should this be shared among all thread(in the case concurrentThreadLocal is required
-	// 
+	// should this be shared among all thread(in the case concurrentThreadLocal
+	// is required
+	//
 	static ThreadLocal<HashMap<String, String>> staticCache = new ThreadLocal<HashMap<String, String>>();
 	// <action & param hash, url pattern>
 	static ThreadLocal<HashMap<String, String>> actionReverseCache = new ThreadLocal<HashMap<String, String>>();
