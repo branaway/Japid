@@ -26,7 +26,6 @@ public class RenderResultCache {
 	private static ThreadLocal<Boolean> ignoreCacheFlash = new ThreadLocal<Boolean>() {
 		@Override
 		protected Boolean initialValue() {
-			 System.out.println("init ignoreCacheFlash");
 			return false;
 		}
 	};
