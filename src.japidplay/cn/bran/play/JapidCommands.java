@@ -87,11 +87,31 @@ public class JapidCommands {
 
 		// create dirs for controllers
 
-		System.out.println("check default template packages for controllers.");
+//		System.out.println("JapidCommands: check default template packages for controllers.");
 		try {
-			File[] controllers = getAllControllers(root + sep + "controllers");
+			File[] controllers = getAllJavaFilesInDir(root + sep + "controllers");
 			for (File f : controllers) {
 				String cp = japidViews + f.getPath();
+				File ff = new File(cp);
+				if (!ff.exists()) {
+					boolean mkdirs = ff.mkdirs();
+					assert mkdirs == true;
+					res.add(ff);
+					System.out.println("created: " + cp);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+//		System.out.println("JapidCommands:  check default template packages for email notifiers.");
+		try {
+			File[] controllers = getAllJavaFilesInDir(root + sep + "notifiers");
+			for (File f : controllers) {
+				// note: we keep the notifiers dir to differentiate those from the controller
+				// however this means we cannot have a controller with package like "controllers.notifiers"
+				// so we now use "_notifiers"
+				String cp = japidViews + "_notifiers" + sep + f.getPath();
 				File ff = new File(cp);
 				if (!ff.exists()) {
 					boolean mkdirs = ff.mkdirs();
@@ -134,7 +154,8 @@ public class JapidCommands {
 	 * @throws IOException 
 	 */
 	public static void gen(String packageRoot) throws IOException {
-		mkdir(packageRoot);
+//		mkdir(packageRoot);
+		// moved to reloadChanged
 		List<File> changedFiles = reloadChanged(packageRoot);
 		if (changedFiles.size() > 0) {
 			for (File f : changedFiles) {
@@ -153,6 +174,12 @@ public class JapidCommands {
 	 * @return
 	 */
 	public static List<File> reloadChanged(String root) {
+		try {
+			mkdir(root);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
 		TranslateTemplateTask t = new TranslateTemplateTask();
 
 		File rootDir = new File(root);
@@ -178,12 +205,12 @@ public class JapidCommands {
 	}
 
 	/**
-	 * create package structures for all controllers
+	 * get all the java files in a dir with the "java" removed
 	 * 
 	 * @return
 	 */
-	public static File[] getAllControllers(String root) {
-		// from source fils only
+	public static File[] getAllJavaFilesInDir(String root) {
+		// from source files only
 		String[] allFiles = DirUtil.getAllFileNames(new File(root), new String[] { ".java" });
 		File[] fs = new File[allFiles.length];
 		int i = 0;

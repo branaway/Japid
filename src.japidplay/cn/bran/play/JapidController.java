@@ -35,7 +35,7 @@ public class JapidController extends Controller {
 	 * @param c a sub-class of JapidTemplateBase
 	 * @param args arguments
 	 */
-	protected static <T extends JapidTemplateBase> void render(Class<T> c, Object... args) {
+	public static <T extends JapidTemplateBase> void render(Class<T> c, Object... args) {
 		try {
 			String methodName = "render";
 			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
@@ -97,10 +97,10 @@ public class JapidController extends Controller {
 		}
 	}
 
-	protected static String caller() {
-		String action = StackTraceUtils.getCaller();
-		return action;
-	}
+//	protected static String caller() {
+//		String action = StackTraceUtils.getCaller();
+//		return action;
+//	}
 	/**
 	 * cache a Japid RenderResult associated with an action call with specific
 	 * arguments

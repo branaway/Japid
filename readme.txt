@@ -6,6 +6,8 @@
                    
 Version History:
 
+2010/7/20:	v0.4.2
+			1. Now e-mails can be sent with JapidMailer. The use of JapidMailer is very similar to the Play's Emailer class, except that the default template path is in the japidview._notifiers sub packages. See the SampleController.email for an example.
 2010/7/7:	v0.4.1
 			1. Manual transforming no more! Enhanced the JapidController.renderJapid() so it can find compatible template args list. It used to do exact match only. "play japid:gen" is not mandatory any more in dev mode.
 			2. included the japid view directory scanning in the gen() method.

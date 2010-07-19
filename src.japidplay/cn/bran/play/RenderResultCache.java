@@ -33,7 +33,7 @@ public class RenderResultCache {
 	private static ThreadLocal<Boolean> ignoreCache = new ThreadLocal<Boolean>() {
 		@Override
 		protected Boolean initialValue() {
-			 System.out.println("init ignoreCache");
+//			 System.out.println("init ignoreCache");
 			return false;
 		}
 	};

@@ -5,6 +5,8 @@ import japidviews.japid.SampleController.composite;
 
 import java.util.Date;
 
+import notifiers.TestEmailer;
+
 import models.japidsample.Author;
 import models.japidsample.Author2;
 import models.japidsample.Post;
@@ -97,25 +99,22 @@ public class SampleController extends JapidController {
 		throw new JapidResult(render);
 	}
 	
-	public static void main(String[] args) {
-//		try {
-//			composite();
-//		} catch (JapidResult e) {
-//			System.out.println(e.content);
-//		}
-		testFindAction();
-	}
-	
-	public static void testFindAction() {
-		String ret = caller();
-		System.out.println(ret);
-	}
-	
 	public static void reverseLookup0() {
 		renderJapid();
 	}
 
 	public static void reverseLookup1(String[] args) {
 		renderText("OK");
+	}
+	
+	/**
+	 * test the japid emailer
+	 */
+	
+	public static void email() {
+		Post p = new Post();
+		p.title = "我自己";
+		TestEmailer.emailme(p);
+		renderText("mail sent");
 	}
 }
