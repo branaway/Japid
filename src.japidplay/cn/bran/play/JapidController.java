@@ -67,36 +67,42 @@ public class JapidController extends Controller {
 	 * @param objects
 	 */
 	protected static void renderJapid(Object... objects) {
-		// get full action: e.g., mypackage.Application.index
-		// this is flawed since it may be called from SSI 
-//		String action = Http.Request.current().action.replace(".", "/");
-		
 		String action = template();
-		if (action.endsWith(HTML)) {
-			action = action.substring(0, action.length() - HTML.length());
+		renderJapidWith(action, objects);
+	}
+
+	/**
+	 * render parameters to the prescribed template
+	 * 
+	 * @param template
+	 * @param args
+	 */
+	public static void renderJapidWith(String template, Object... args) {
+		if (template.endsWith(HTML)) {
+			template = template.substring(0, template.length() - HTML.length());
 		}
 		
 //		String action = StackTraceUtils.getCaller(); // too tricky to use stacktrace to track the caller action name
 		// something like controllers.japid.SampleController.testFindAction
 		
-		if (action.startsWith("controllers.")) {
-			action = action.substring(action.indexOf(DOT) + 1);
+		if (template.startsWith("controllers.")) {
+			template = template.substring(template.indexOf(DOT) + 1);
 		}
 		// map to default japid view
-		String templateClassName = JapidPlugin.JAPIDVIEWS_ROOT + File.separator + action;
-
+		String templateClassName = JapidPlugin.JAPIDVIEWS_ROOT + File.separator + template;
+		
 		templateClassName = templateClassName.replace('/', DOT).replace('\\', DOT);
 		Class tClass = Play.classloader.getClassIgnoreCase(templateClassName);
 		if (tClass == null) {
 			String templateFileName = templateClassName.replace(DOT, '/') + HTML;
 			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
 		} else if (JapidTemplateBase.class.isAssignableFrom(tClass)) {
-			render(tClass, objects);
+			render(tClass, args);
 		} else {
 			throw new RuntimeException("The found class is not a Japid template class: " + templateClassName);
 		}
 	}
-
+	
 //	protected static String caller() {
 //		String action = StackTraceUtils.getCaller();
 //		return action;

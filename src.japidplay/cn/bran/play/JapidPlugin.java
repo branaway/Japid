@@ -4,6 +4,8 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import play.Play;
 import play.PlayPlugin;
@@ -20,6 +22,7 @@ import play.mvc.results.Result;
  * 
  */
 public class JapidPlugin extends PlayPlugin {
+	private static final String RENDER_JAPID_WITH = "/renderJapidWith";
 	private static final String NO_CACHE = "no-cache";
 	private static AtomicLong lastTimeChecked = new AtomicLong(0);
 	
@@ -188,4 +191,30 @@ public class JapidPlugin extends PlayPlugin {
 	public void onEvent(String message, Object context) {
 
 	}
+
+	/**
+	 * intercept a special url that renders a Japid template without going thru a controller.
+	 * 
+	 * The url format: (anything)/renderJapidWith/(template path from japidview, not included)
+	 * e.g.
+	 * 
+	 * http://localhost:9000/renderJapidWith/templates/callPicka
+	 * 
+	 * will render the template "templates/callPicka.html" in the japidview package in the app dir.
+	 * 
+	 * TODO: add parameter support.
+	 */
+	@Override
+	public void routeRequest(Request request) {
+		String path = request.path;
+//		System.out.println("request path:" + path);
+		Matcher matcher = renderJapidWithPattern.matcher(path);
+		if (matcher.matches()) {
+			String template = matcher.group(1);
+			JapidController.renderJapidWith(template);
+		}
+	}
+	
+	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");
+	
 }

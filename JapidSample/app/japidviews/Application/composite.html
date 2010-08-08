@@ -1,0 +1,15 @@
+`extends lcomposite2.html
+`args models.japidsample.Post post 
+`import controllers.Application
+
+<p>This is the comosite content header</p>
+<div>#{invoke Application.authorPanel(post.getAuthor())/}</div>
+
+<div>this one has full cache control</div>
+<div>#{invoke Application.authorPanel(post.getAuthor()), "10s", post.getAuthor()/}</div>
+
+<div>this one has cache control using the default signature. Note the key usually must present if the action takes params</div>
+<div>#{invoke Application.authorPanel(post.getAuthor()), "10s"/}</div>
+
+<p>Let's invoke a tag which invokes an action</p>
+#{invokeInTag/}

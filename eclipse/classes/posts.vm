@@ -1,8 +1,0 @@
-
-#foreach( $post in $posts)
-	- title: ${post.title}
-	- date: ${post.postedAt}
-	- author ${post.author.name} ${post.author.gender}
-#end
-
-the real title: 你好

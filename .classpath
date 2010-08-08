@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="views/**" kind="src" path="app"/>
 	<classpathentry kind="src" path="src.japid"/>
 	<classpathentry kind="src" path="tests"/>
-	<classpathentry kind="src" path="tempgen"/>
 	<classpathentry kind="src" path="src.japidplay"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/play.jar" sourcepath="/play! framework"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/antlr-2.7.6.jar"/>
-	<classpathentry kind="var" path="PLAY_HOME/framework/lib/bcprov-jdk15-142.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-email-1.2.jar"/>
 	<classpathentry kind="var" path="PLAY_HOME/framework/lib/commons-fileupload-1.2.jar"/>

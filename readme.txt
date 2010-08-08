@@ -6,6 +6,15 @@
                    
 Version History:
 
+2010/8/8:	V0.5
+			1. moved all samples to the JapidSample sub directory, which was a sample Play application to demo Japid features.
+			2. added renderJapidWith() in the JapidController which can be used to render a designated template with parameters.
+			3. added an interceptor in the JapidPlugin that intercepts a special url and renders a Japid template without going thru a controller.
+			The url format: {anything}/renderJapidWith/{template path from the japidview directory (not included)}
+			e.g.
+			http://localhost:9000/renderJapidWith/templates/callPicka
+			will render the template "templates/callPicka.html" in the japidview package in the app dir.
+	 			 
 2010/7/20:	v0.4.2
 			1. Now e-mails can be sent with JapidMailer. The use of JapidMailer is very similar to the Play's Emailer class, except that the default template path is in the japidview._notifiers sub packages. See the SampleController.email for an example.
 2010/7/7:	v0.4.1
