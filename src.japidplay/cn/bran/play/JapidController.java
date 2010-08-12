@@ -287,6 +287,35 @@ public class JapidController extends Controller {
 		render(new RenderResult(headers, new StringBuilder(s), -1L));
 	}
 	
+	protected static void renderText(Object o){
+		String str = o == null? "" : o.toString();
+		renderText(str);
+	}
+	
+	protected static void renderText(int o){
+		renderText(new Integer(o));
+	}
+
+	protected static void renderText(long o){
+		renderText(new Long(o));
+	}
+
+	protected static void renderText(float o){
+		renderText(new Float(o));
+	}
+	
+	protected static void renderText(double o){
+		renderText(new Double(o));
+	}
+
+	protected static void renderText(boolean o){
+		renderText(new Boolean(o));
+	}
+
+	protected static void renderText(char o){
+		renderText(new String(new char[] {o}));
+	}
+	
 	protected static void renderJson(Object o){
 		 String json = new Gson().toJson(o);
 		 Map<String, String> headers = new HashMap<String, String>();

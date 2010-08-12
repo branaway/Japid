@@ -30,9 +30,17 @@ static private final String static_2 = "\n" +
 ;
 static private final String static_3 = " :: "
 ;
-static private final String static_4 = "</p>\n" + 
+static private final String static_4 = " || "
+;
+static private final String static_5 = ", ^ "
+;
+static private final String static_6 = ", @ "
+;
+static private final String static_7 = ", # "
+;
+static private final String static_8 = "</p>\n" + 
 "";
-static private final String static_5 = "\n" + 
+static private final String static_9 = "\n" + 
 "";
 	public EachCall() {
 		super(null);
@@ -53,7 +61,7 @@ p(static_1);// line 1
 _Each0.setActionRunners(getActionRunners());
 _Each0.render(posts, _Each0DoBody);
 // line 4
-p(static_5);// line 6
+p(static_9);// line 6
 
 	}
 	private Each _Each0 = new Each(getOut());
@@ -65,6 +73,14 @@ p(_index);// line 5
 p(static_3);// line 5
 p(p);// line 5
 p(static_4);// line 5
+p(_parity);// line 5
+p(static_5);// line 5
+p(_isOdd);// line 5
+p(static_6);// line 5
+p(_isFirst);// line 5
+p(static_7);// line 5
+p(_isLast);// line 5
+p(static_8);// line 5
 
 	}
 }

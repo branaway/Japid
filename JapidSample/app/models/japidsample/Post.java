@@ -13,12 +13,7 @@ public class Post {
     
     public String content;
     
-    
-    public String toString() {
-        return title;
-    }
-
-	public String getTitle() {
+    public String getTitle() {
 		return title;
 	}
 
@@ -48,6 +43,13 @@ public class Post {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("title: " + title + "; author: " + author.name + "; postAt: " + postedAt + "; content: " + content);
+		return sb.toString();
 	}
  
 }

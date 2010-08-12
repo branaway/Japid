@@ -14,9 +14,10 @@ Version History:
 			e.g.
 			http://localhost:9000/renderJapidWith/templates/callPicka
 			will render the template "templates/callPicka.html" in the japidview package in the app dir.
-	 			 
+			4. would create app/notifiers if the directory did not exist. 
+	 		5. added support of using primitives in JapidController.renderText(...); 
 2010/7/20:	v0.4.2
-			1. Now e-mails can be sent with JapidMailer. The use of JapidMailer is very similar to the Play's Emailer class, except that the default template path is in the japidview._notifiers sub packages. See the SampleController.email for an example.
+			1. Now e-mails can be sent with JapidMailer. The use of JapidMailer is very similar to the Play's Emailer class, except that the default template path is in the japidview._notifiers sub packages. The email controllers (a.k.a. notifiers) are still in the app/notifiers package. See the Application.email() for an example.
 2010/7/7:	v0.4.1
 			1. Manual transforming no more! Enhanced the JapidController.renderJapid() so it can find compatible template args list. It used to do exact match only. "play japid:gen" is not mandatory any more in dev mode.
 			2. included the japid view directory scanning in the gen() method.

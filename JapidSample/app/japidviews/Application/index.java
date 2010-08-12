@@ -31,8 +31,10 @@ static private final String static_1 = "\">Hello Japid, using an overridden vers
 "	<li><a href=\"application/composite\">demo how to composite a page with independent segments with the <b>invoke</b> tag</a></li>\n" + 
 "	<li><a href=\"application/renderByPosition\">implicit template binding with <b>JapidController.renderJapid()</b> </a></li>\n" + 
 "	<li><a href=\"application/postList\">a template with template and tags etc...</a></li>\n" + 
-"	<li><a href=\"renderJapidWith/templates/log.html\">use the log macro in a template. watch the output in the console</li>\n" + 
-"	<li><a href=\"renderJapidWith/templates/Msg.html\">use predefined messages</li>\n" + 
+"	<li><a href=\"renderJapidWith/templates/log.html\">use the log macro in a template. watch the output in the console</a></li>\n" + 
+"	<li><a href=\"renderJapidWith/templates/Msg.html\">use predefined messages</a></li>\n" + 
+"	<li><a href=\"application/each\">the *Each* tag</a></li>\n" + 
+"	<li><a href=\"application/invokeInLoop\">using invoke tag with local variables requires final attribute</a></li>\n" + 
 "</ul>\n" + 
 "";
 	public index() {

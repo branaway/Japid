@@ -25,8 +25,6 @@ public class JapidCommands {
 
 	public static void main(String[] args) throws IOException {
 		String arg0 = args[0];
-		// if (arg0.length() == 0)
-		// arg0 = args[1];
 
 		if ("gen".equals(arg0)) {
 			gen(APP);
@@ -37,7 +35,7 @@ public class JapidCommands {
 		} else if ("mkdir".equals(arg0)) {
 			mkdir(APP);
 		} else {
-			System.out.println("not known: " + arg0);
+			log("not known: " + arg0);
 		}
 	}
 
@@ -57,13 +55,13 @@ public class JapidCommands {
 		if (!javatags.exists()) {
 			boolean mkdirs = javatags.mkdirs();
 			assert mkdirs == true;
-			System.out.println("created: " + javatags.getPath());
+			log("created: " + javatags.getPath());
 		}
 
 		File webutil = new File(javatags, "JapidWebUtil.java");
 		if (!webutil.exists()) {
 			FileUtils.writeStringToFile(webutil, JapidWebUtil, "UTF-8");
-			System.out.println("created JapidWebUtil.java.");
+			log("created JapidWebUtil.java.");
 		}
 		// add the place-holder for utility class for use in templates
 
@@ -71,15 +69,24 @@ public class JapidCommands {
 		if (!layouts.exists()) {
 			boolean mkdirs = layouts.mkdirs();
 			assert mkdirs == true;
-			System.out.println("created: " + layouts.getPath());
+			log("created: " + layouts.getPath());
 		}
 
 		File tags = new File(japidViews + JapidPlugin.TAGSDIR);
 		if (!tags.exists()) {
 			boolean mkdirs = tags.mkdirs();
 			assert mkdirs == true;
-			System.out.println("created: " + tags.getPath());
+			log("created: " + tags.getPath());
 		}
+		
+		// email notifiers
+		File notifiers = new File(japidViews + "_notifiers");
+		if (!notifiers.exists()) {
+			boolean mkdirs = notifiers.mkdirs();
+			assert mkdirs == true;
+			log("created: " + notifiers.getPath());
+		}
+		
 		
 		File[] dirs = new File[] { javatags, layouts, tags };
 		List<File> res = new ArrayList<File>();
@@ -87,7 +94,7 @@ public class JapidCommands {
 
 		// create dirs for controllers
 
-//		System.out.println("JapidCommands: check default template packages for controllers.");
+//		log("JapidCommands: check default template packages for controllers.");
 		try {
 			File[] controllers = getAllJavaFilesInDir(root + sep + "controllers");
 			for (File f : controllers) {
@@ -97,16 +104,27 @@ public class JapidCommands {
 					boolean mkdirs = ff.mkdirs();
 					assert mkdirs == true;
 					res.add(ff);
-					System.out.println("created: " + cp);
+					log("created: " + cp);
 				}
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			log(e.toString());
 		}
 
-//		System.out.println("JapidCommands:  check default template packages for email notifiers.");
+//		log("JapidCommands:  check default template packages for email notifiers.");
 		try {
-			File[] controllers = getAllJavaFilesInDir(root + sep + "notifiers");
+			String notifiersDir = root + sep + "notifiers";
+			File notifiersDirFile = new File(notifiersDir);
+			if (!notifiersDirFile.exists()) {
+				if (notifiersDirFile.mkdir()) {
+					log("created the email notifiers directory. ");
+				}
+				else {
+					log("email notifiers directory did not exist and could not be created for unknow reason. ");
+				}
+			}
+			
+			File[] controllers = getAllJavaFilesInDir(notifiersDir);
 			for (File f : controllers) {
 				// note: we keep the notifiers dir to differentiate those from the controller
 				// however this means we cannot have a controller with package like "controllers.notifiers"
@@ -117,11 +135,11 @@ public class JapidCommands {
 					boolean mkdirs = ff.mkdirs();
 					assert mkdirs == true;
 					res.add(ff);
-					System.out.println("created: " + cp);
+					log("created: " + cp);
 				}
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			log(e.toString());
 		}
 		return res;
 
@@ -139,13 +157,13 @@ public class JapidCommands {
 
 		for (String j : javas) {
 			if (!j.contains(JapidPlugin.JAVATAGS)) {
-				System.out.println("removed: " + j);
+				log("removed: " + j);
 				boolean delete = new File(pathname + File.separatorChar + j).delete();
 				if (!delete)
 					throw new RuntimeException("file was not deleted: " + j);
 			}
 		}
-		// System.out.println("removed: all none java tag java files in " +
+		// log("removed: all none java tag java files in " +
 		// JapidPlugin.JAPIDVIEWS_ROOT);
 	}
 
@@ -159,10 +177,10 @@ public class JapidCommands {
 		List<File> changedFiles = reloadChanged(packageRoot);
 		if (changedFiles.size() > 0) {
 			for (File f : changedFiles) {
-				System.out.println("updated: " + f.getName().replace("html", "java"));
+				log("updated: " + f.getName().replace("html", "java"));
 			}
 		} else {
-			System.out.println("No java files need to be updated.");
+			log("No java files need to be updated.");
 		}
 
 		rmOrphanJava();
@@ -233,15 +251,15 @@ public class JapidCommands {
 			String pathname = "app" + File.separator + JapidPlugin.JAPIDVIEWS_ROOT;
 			File src = new File(pathname);
 			if (!src.exists()) {
-				System.out.println("Could not find required Japid package structure: " + pathname);
-				System.out.println("Please use \"play japid:mkdir\" command to create the Japid view structure.");
+				log("Could not find required Japid package structure: " + pathname);
+				log("Please use \"play japid:mkdir\" command to create the Japid view structure.");
 				return hasRealOrphan;
 			}
 
 			Set<File> oj = DirUtil.findOrphanJava(src, null);
 			for (File j : oj) {
 				String path = j.getPath();
-				// System.out.println("found: " + path);
+				// log("found: " + path);
 				if (path.contains(JapidPlugin.JAVATAGS)) {
 
 					// java tags, don't touch
@@ -251,9 +269,9 @@ public class JapidCommands {
 					File file = new File(realfile);
 					boolean r = file.delete();
 					if (r)
-						System.out.println("JapidPlugin: deleted orphan " + realfile);
+						log("deleted orphan " + realfile);
 					else
-						System.out.println("JapidPlugin: failed to delete: " + realfile);
+						log("failed to delete: " + realfile);
 				}
 			}
 
@@ -265,5 +283,9 @@ public class JapidCommands {
 
 	public static List<File> reloadChanged() {
 		return reloadChanged(APP);
+	}
+	
+	private static void log(String m) {
+		System.out.println("[JapidCommands]: " + m);
 	}
 }

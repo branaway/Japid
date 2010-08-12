@@ -5,6 +5,8 @@ import japidviews.Application.authorPanel;
 import japidviews.Application.composite;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -128,6 +130,13 @@ public class Application extends JapidController {
 	
 	public static void postList() {
 		String title = "my Blog";
+		List<Post> posts = createPosts();
+		renderJapidWith("templates/AllPost", title, posts);
+	}
+	/**
+	 * @return
+	 */
+	private static List<Post> createPosts() {
 		List<Post> posts = new ArrayList<Post>();
 		Author a = new Author();
 		a.name = "冉兵";
@@ -145,6 +154,27 @@ public class Application extends JapidController {
 		p.postedAt = new Date();
 		p.title = "post 2";
 		posts.add(p);
-		renderJapidWith("templates/AllPost", title, posts);
+		return posts;
+	}
+	
+	public static void each() {
+		List<String> list = Arrays.asList("as1", "as2", "as3", "as4", "as5", "as6");
+		renderJapidWith("templates/EachCall", list);
+	}
+	
+	/**
+	 * test using primitive with renderText
+	 * @param i
+	 */
+	public static void echo(int i) {
+		renderText(i * 2);
+	}
+	
+	public static void invokeInLoop() {
+		renderJapidWith("templates/invokeInLoop", createPosts());
+	}
+	
+	public static void echoPost(Post p) {
+		renderText(p);
 	}
 }

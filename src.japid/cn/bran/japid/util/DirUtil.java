@@ -101,7 +101,7 @@ public class DirUtil {
 	private static void getAllFileNames(String leadingPath, File dir, List<String> files, String[] exts) {
 		File[] flist = dir.listFiles();
 		if (flist == null)
-			throw new RuntimeException("not a directory? " +  dir.getPath());
+			throw new RuntimeException("directory exists? " +  dir.getPath());
 		for (File f : flist) {
 			if (f.isDirectory())
 				getAllFileNames(leadingPath + f.getName() + File.separatorChar, f, files, exts);
