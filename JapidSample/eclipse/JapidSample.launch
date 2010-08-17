@@ -15,6 +15,6 @@
     <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="play.server.Server"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JapidSample"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Dplay.debug=yes -Dplay.id= -Dapplication.path=&quot;${project_loc:JapidSample}&quot; -Djava.endorsed.dirs=&quot;/home/bran/projects/pureplay1.1/framework/endorsed&quot; -javaagent:&quot;/home/bran/projects/pureplay1.1/framework/play.jar&quot;"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Dplay.debug=yes -Dplay.id= -Dapplication.path=&quot;${project_loc:JapidSample}&quot; -Djava.endorsed.dirs=&quot;D:\home\bran\projects\play/framework/endorsed&quot; -javaagent:&quot;D:\home\bran\projects\play/framework/play.jar&quot;"/>
 </launchConfiguration>
 

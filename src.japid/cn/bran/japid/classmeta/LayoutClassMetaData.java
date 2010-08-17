@@ -16,7 +16,6 @@ package cn.bran.japid.classmeta;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class LayoutClassMetaData  extends AbstractTemplateClassMetaData {
 
 	List<String> getterMethods = new ArrayList<String>();
@@ -33,6 +32,7 @@ public class LayoutClassMetaData  extends AbstractTemplateClassMetaData {
 		addConstructors();
 		
 		p("\t@Override public void layout() {");
+		addImplicitVariables();
 		p("\t\t" + body);
 		p("\t}");
 		

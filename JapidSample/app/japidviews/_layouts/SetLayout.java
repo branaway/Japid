@@ -10,6 +10,7 @@ import models.*;
 import play.data.validation.Error;
 import japidviews._tags.*;
 import controllers.*;
+import play.mvc.Http.*;
 import japidviews._javatags.*;
 import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
@@ -32,7 +33,15 @@ static private final String static_2 = "\n" +
 	public SetLayout(StringBuilder out) {
 		super(out);
 	}
-	@Override public void layout() {		p(static_0);// line 1
+	@Override public void layout() {		play.mvc.Http.Request request = play.mvc.Http.Request.current();
+		play.mvc.Http.Response response = play.mvc.Http.Response.current();
+		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();
+		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
+		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
+		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
+		play.data.validation.Validation validation = play.data.validation.Validation.current();
+		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());
+		p(static_0);// line 1
 	title();// line 1
 p(static_1);// line 1
 	footer();// line 2

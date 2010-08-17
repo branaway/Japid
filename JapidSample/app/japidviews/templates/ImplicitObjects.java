@@ -1,4 +1,4 @@
-package japidviews.Application;
+package japidviews.templates;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
@@ -12,56 +12,49 @@ import japidviews._tags.*;
 import controllers.*;
 import play.mvc.Http.*;
 import japidviews._javatags.*;
-import models.japidsample.Author2;
-import models.japidsample.Author;
 import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import static cn.bran.play.WebUtils.*;
-// NOTE: This file was generated from: japidviews/Application/renderByPosition.html
+// NOTE: This file was generated from: japidviews/templates/ImplicitObjects.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
-public class renderByPosition extends cn.bran.japid.template.JapidTemplateBase{
-	public static final String sourceTemplate = "japidviews/Application/renderByPosition.html";
-static private final String static_0 = ""
-;
-static private final String static_1 = ""
-;
-static private final String static_2 = ""
-;
-static private final String static_3 = "\n" + 
-"got: "
-;
-static private final String static_4 = "\n" + 
-"got: "
-;
-static private final String static_5 = "\n" + 
-"got: "
-;
-static private final String static_6 = ", "
-;
-static private final String static_7 = ", "
-;
-static private final String static_8 = "\n" + 
+public class ImplicitObjects extends cn.bran.japid.template.JapidTemplateBase{
+	public static final String sourceTemplate = "japidviews/templates/ImplicitObjects.html";
+static private final String static_0 = "\n" + 
 "\n" + 
-"";
-	public renderByPosition() {
+"<p>request: "
+;
+static private final String static_1 = "</p>\n" + 
+"<p>response: "
+;
+static private final String static_2 = "</p>\n" + 
+"<p>flash: "
+;
+static private final String static_3 = "</p>\n" + 
+"<p>errors: "
+;
+static private final String static_4 = "</p>\n" + 
+"<p>session: "
+;
+static private final String static_5 = "</p>\n" + 
+"<p>renderArgs: "
+;
+static private final String static_6 = "</p>\n" + 
+"<p>params: "
+;
+static private final String static_7 = "</p>\n" + 
+"<p>validation: "
+;
+static private final String static_8 = "</p>"
+;
+	public ImplicitObjects() {
 		super(null);
 	}
-	public renderByPosition(StringBuilder out) {
+	public ImplicitObjects(StringBuilder out) {
 		super(out);
 	}
-	String ss;
-	int ii;
-	Author au1;
-	Author au2;
-	Author2 au22;
-	public cn.bran.japid.template.RenderResult render(String ss, int ii, Author au1, Author au2, Author2 au22) {
-		this.ss = ss;
-		this.ii = ii;
-		this.au1 = au1;
-		this.au2 = au2;
-		this.au22 = au22;
+	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
@@ -76,19 +69,22 @@ static private final String static_8 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());
 p(static_0);// line 1
-p(static_1);// line 1
-p(static_2);// line 2
-p(static_3);// line 3
-p(ss);// line 5
-p(static_4);// line 5
-p(ii);// line 6
-p(static_5);// line 6
-p(au1.name);// line 7
-p(static_6);// line 7
-p(au2.name);// line 7
-p(static_7);// line 7
-p(au22.who);// line 7
-p(static_8);// line 7
+p(request);// line 3
+p(static_1);// line 3
+p(response);// line 4
+p(static_2);// line 4
+p(flash);// line 5
+p(static_3);// line 5
+p(errors);// line 6
+p(static_4);// line 6
+p(session);// line 7
+p(static_5);// line 7
+p(renderArgs);// line 8
+p(static_6);// line 8
+p(params);// line 9
+p(static_7);// line 9
+p(validation);// line 10
+p(static_8);// line 10
 
 	}
 }

@@ -212,6 +212,7 @@ public class JapidCommands {
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._javatags.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._tags.*");
 		t.addImport(play.mvc.Scope.class.getName() + ".*");
+		t.addImport(play.mvc.Http.class.getName() + ".*");
 		t.addImport(Validation.class.getName());
 		t.addImport(play.data.validation.Error.class.getName());
 		t.addImport("models.*");
