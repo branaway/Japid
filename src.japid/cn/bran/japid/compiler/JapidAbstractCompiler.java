@@ -14,6 +14,7 @@
 package cn.bran.japid.compiler;
 
 import java.io.File;
+
 import java.util.List;
 import java.util.Stack;
 
@@ -21,7 +22,6 @@ import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
 import cn.bran.japid.template.RenderResult;
-import cn.bran.play.JapidResult;
 
 /**
  * based on the original code from the Play! Frameowrk

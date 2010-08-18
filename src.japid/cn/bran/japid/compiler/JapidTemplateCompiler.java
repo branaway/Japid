@@ -18,7 +18,6 @@ import cn.bran.japid.classmeta.TemplateClassMetaData;
 import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.RenderResult;
-import cn.bran.play.JapidResult;
 
 /**
  * specifically for callable templates

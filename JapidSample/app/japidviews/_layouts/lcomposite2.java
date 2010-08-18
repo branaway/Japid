@@ -42,7 +42,8 @@ static private final String static_3 = "\n" +
 	public lcomposite2(StringBuilder out) {
 		super(out);
 	}
-	@Override public void layout() {		play.mvc.Http.Request request = play.mvc.Http.Request.current();
+	@Override public void layout() {
+		play.mvc.Http.Request request = play.mvc.Http.Request.current();
 		play.mvc.Http.Response response = play.mvc.Http.Response.current();
 		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();
 		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
@@ -50,6 +51,8 @@ static private final String static_3 = "\n" +
 		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
 		play.data.validation.Validation validation = play.data.validation.Validation.current();
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());
+		play.Play _play = new play.Play();
+
 		p(static_0);// line 1
 		actionRunners.put(getOut().length(), new cn.bran.japid.template.ActionRunner() {
 			@Override

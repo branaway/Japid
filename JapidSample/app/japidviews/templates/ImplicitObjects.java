@@ -46,7 +46,10 @@ static private final String static_6 = "</p>\n" +
 static private final String static_7 = "</p>\n" + 
 "<p>validation: "
 ;
-static private final String static_8 = "</p>"
+static private final String static_8 = "</p>\n" + 
+"<p>play: "
+;
+static private final String static_9 = "</p>"
 ;
 	public ImplicitObjects() {
 		super(null);
@@ -60,6 +63,7 @@ static private final String static_8 = "</p>"
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
 		play.mvc.Http.Request request = play.mvc.Http.Request.current();
 		play.mvc.Http.Response response = play.mvc.Http.Response.current();
 		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();
@@ -68,6 +72,8 @@ static private final String static_8 = "</p>"
 		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
 		play.data.validation.Validation validation = play.data.validation.Validation.current();
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());
+		play.Play _play = new play.Play();
+
 p(static_0);// line 1
 p(request);// line 3
 p(static_1);// line 3
@@ -85,6 +91,8 @@ p(params);// line 9
 p(static_7);// line 9
 p(validation);// line 10
 p(static_8);// line 10
+p(_play);// line 11
+p(static_9);// line 11
 
 	}
 }

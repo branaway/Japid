@@ -9,6 +9,7 @@ Version History:
 2010/8/8:	V0.5.1
 			1. imported play.mvc.Http.* in generated java files from templates, which means one can reference Request, Response etc. 
 			2. added some implicit objects such as "request", "flash", "session". See the ImplicitObjects.html for examples.  
+			3. added "_play" implicit object, so named to avoid conflict with play package name.
 2010/8/8:	V0.5
 			1. moved all samples to the JapidSample sub directory, which was a sample Play application to demo Japid features.
 			2. added renderJapidWith() in the JapidController which can be used to render a designated template with parameters.

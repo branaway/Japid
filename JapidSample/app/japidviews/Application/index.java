@@ -50,6 +50,7 @@ static private final String static_1 = "\">Hello Japid, using an overridden vers
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
 		play.mvc.Http.Request request = play.mvc.Http.Request.current();
 		play.mvc.Http.Response response = play.mvc.Http.Response.current();
 		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();
@@ -58,6 +59,8 @@ static private final String static_1 = "\">Hello Japid, using an overridden vers
 		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
 		play.data.validation.Validation validation = play.data.validation.Validation.current();
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());
+		play.Play _play = new play.Play();
+
 p(static_0);// line 1
 p(lookup("hello", new Object[]{}));// line 4
 p(static_1);// line 4

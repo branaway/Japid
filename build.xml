@@ -70,6 +70,7 @@
 	</target>
 
 	<target name="compile.japidplay" description="compile the Japid-Play adapters">
+		<echo>compile japid.play </echo>
 		<mkdir dir="${classes.play}" />
 		<javac includeAntRuntime="false" srcdir="${src.japidplay}" destdir="${classes.play}" target="1.5" encoding="UTF-8" debug="true">
 			<classpath refid="project.classpath" />
@@ -77,6 +78,7 @@
 	</target>
 
 	<target name="compile.japid">
+		<echo>compile japid standalone</echo>
 		<mkdir dir="${classes.standalone}" />
 		<javac includeAntRuntime="false" srcdir="${src.japid}" destdir="${classes.standalone}" target="1.5" encoding="UTF-8" debug="true">
 			<classpath refid="project.classpath.standalone" />
