@@ -290,6 +290,10 @@ public abstract class JapidAbstractCompiler {
 					args = "\"\"";
 				String logLine = "System.out.println(\"" + this.template.name.replace('\\', '/') + "(line " + (parser.getLine() + i) + "): \" + " + args + ");";
 				println(logLine);
+			} else if (line.startsWith("suppressNull ") || line.startsWith("suppressNull\t")) {
+				String npe = line.substring("suppressNull".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+				if ("on".equals(npe))
+					getTemplateClassMetaData().suppressNull();
 			} else {
 				print(line);
 				markLine(parser.getLine() + i);
@@ -300,10 +304,11 @@ public abstract class JapidAbstractCompiler {
 	}
 
 	protected void expr() {
-		// TODO: make difference of safe expression and raw expression
-		// safe expressions are wrapped in try/catch
 		String expr = parser.getToken().trim();
-		print("p(" + expr + ");");
+		if (getTemplateClassMetaData().suppressNull)
+			print("try { p(" + expr + "); } catch (NullPointerException npe) {}");
+		else
+			print("p(" + expr + ");");
 		markLine(parser.getLine());
 		println();
 	}

@@ -49,6 +49,8 @@ public class AbstractTemplateClassMetaData {
 	public static boolean streaming = false;
 	// if we need to track the time to render
 	boolean stopWatch = false;
+	// control whether to allow safe expression navigation
+	public boolean suppressNull = false;
 
 	public String getOriginalTemplate() {
 		return originalTemplate;
@@ -347,6 +349,14 @@ public class AbstractTemplateClassMetaData {
 		this.stopWatch = true;
 	}
 
+	/**
+	 * suppress all NPE in expression ${} and display empty string 
+	 */
+	public void suppressNull() {
+		this.suppressNull = true;
+	}
+	
+	
 	public void addStaticImports(String im) {
 		staticImports.add(im);
 	}

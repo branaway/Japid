@@ -15,7 +15,16 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	<linkedResources><link><name>japid-head</name><type>2</type><location>D:/home/bran/projects/play/modules/japid-head/app</location></link>
-<link><name>conf/japid-head</name><type>2</type><location>D:/home/bran/projects/play/modules/japid-head/conf</location></link>
-</linkedResources>
+	<linkedResources>
+		<link>
+			<name>japid-head</name>
+			<type>2</type>
+			<location>D:/home/bran/projects/play/modules/japid-head/app</location>
+		</link>
+		<link>
+			<name>conf/japid-head</name>
+			<type>2</type>
+			<location>D:/home/bran/projects/play/modules/japid-head/conf</location>
+		</link>
+	</linkedResources>
 </projectDescription>

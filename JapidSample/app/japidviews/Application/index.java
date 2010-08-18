@@ -36,6 +36,7 @@ static private final String static_1 = "\">Hello Japid, using an overridden vers
 "	<li><a href=\"renderJapidWith/templates/Msg.html\">use predefined messages</a></li>\n" + 
 "	<li><a href=\"application/each\">the *Each* tag</a></li>\n" + 
 "	<li><a href=\"application/invokeInLoop\">using invoke tag with local variables requires final attribute</a></li>\n" + 
+"	<li><a href=\"renderJapidWith/templates/suppressNull.html\">suppressNull, a diretive to allow safe navigation in expression, default off</a></li>\n" + 
 "</ul>\n" + 
 "";
 	public index() {
