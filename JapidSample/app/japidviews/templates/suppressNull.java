@@ -49,15 +49,15 @@ static private final String static_6 = "\n" +
 	}
 	@Override protected void doLayout() {
 
-		play.mvc.Http.Request request = play.mvc.Http.Request.current();
-		play.mvc.Http.Response response = play.mvc.Http.Response.current();
-		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();
-		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
-		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
-		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
-		play.data.validation.Validation validation = play.data.validation.Validation.current();
-		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());
-		play.Play _play = new play.Play();
+		play.mvc.Http.Request request = play.mvc.Http.Request.current(); if (request != null) {};
+		play.mvc.Http.Response response = play.mvc.Http.Response.current(); if(response != null) {};
+		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();if(flash != null) {};
+		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();if(session != null) {};
+		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); if(renderArgs != null) {};
+		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();if(params != null) {};
+		play.data.validation.Validation validation = play.data.validation.Validation.current();if(validation!= null) {};
+		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());if(errors != null) {};
+		play.Play _play = new play.Play(); if(_play != null) {};
 
 p(static_0);// line 1
 p(static_1);// line 1
