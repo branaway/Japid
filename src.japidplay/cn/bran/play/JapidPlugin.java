@@ -1,8 +1,15 @@
 package cn.bran.play;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,8 +17,10 @@ import java.util.regex.Pattern;
 import play.Play;
 import play.PlayPlugin;
 import play.exceptions.UnexpectedException;
+import play.mvc.Http.Cookie;
 import play.mvc.Http.Header;
 import play.mvc.Http.Request;
+import play.mvc.Http.Response;
 import play.mvc.Scope.Flash;
 import play.mvc.results.Result;
 
@@ -25,8 +34,7 @@ public class JapidPlugin extends PlayPlugin {
 	private static final String RENDER_JAPID_WITH = "/renderJapidWith";
 	private static final String NO_CACHE = "no-cache";
 	private static AtomicLong lastTimeChecked = new AtomicLong(0);
-	
-	
+
 	/**
 	 * pre-compile the templates so PROD mode would work
 	 */
@@ -38,7 +46,7 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void beforeDetectingChanges() {
 		// have a delay in change detection.
-		if (System.currentTimeMillis() - lastTimeChecked.get() < 1000 )
+		if (System.currentTimeMillis() - lastTimeChecked.get() < 1000)
 			return;
 		List<File> changed = JapidCommands.reloadChanged();
 		if (changed.size() > 0) {
@@ -59,8 +67,6 @@ public class JapidPlugin extends PlayPlugin {
 			throw new RuntimeException("found orphan template Java artifacts. reload to be safe.");
 		}
 	}
-	
-
 
 	// // VirtualFile appRoot = VirtualFile.open(Play.applicationPath);
 	// TranslateTemplateTask t = new TranslateTemplateTask();
@@ -105,18 +111,22 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void beforeActionInvocation(Method actionMethod) {
 		String property = Play.configuration.getProperty("japid.dump.request");
-		Request current = Request.current();
-		if ("yes".equals(property) || "true".equals(property)) {
-			System.out.println("---->>" + current.method + " : " + current.url + " ["+ current.action + "]");
-//			System.out.println("request.controller:" + current.controller);
+		if (property != null && property.length() > 0) {
+			if (!"false".equals(property) && !"no".equals(property)) {
+				if ("yes".equals(property) || "true".equals(property)) {
+					System.out.println("--- action ->: " + Request.current().action);
+				} else if (Request.current().url.matches(property)) {
+					System.out.println("--- action ->: " + Request.current().action);
+				}
+			}
 		}
-		
+
 		String string = Flash.current().get(RenderResultCache.READ_THRU_FLASH);
 		if (string != null) {
 			RenderResultCache.setIgnoreCache(true);
 		} else {
 			// cache-control in lower case, lowercase for some reason
-			Header header = Request.current().headers.get("cache-control"); 
+			Header header = Request.current().headers.get("cache-control");
 			if (header != null) {
 				List<String> list = header.values;
 				if (list.contains(NO_CACHE)) {
@@ -135,6 +145,82 @@ public class JapidPlugin extends PlayPlugin {
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean rawInvocation(Request req, Response response) throws Exception {
+		String property = Play.configuration.getProperty("japid.dump.request");
+		if (property != null && property.length() > 0) {
+			if ("yes".equals(property) || "true".equals(property)) {
+				System.out.println("---->>" + req.method + " : " + req.url + " [" + req.action + "]");
+				// System.out.println("request.controller:" +
+				// current.controller);
+			} else if ("false".equals(property) || "no".equals(property)) {
+				// do nothing
+			} else if (req.url.matches(property)) {
+				String querystring = req.querystring;
+				if (querystring != null && querystring.length() > 0)
+					querystring = "?" + querystring;
+				else
+					querystring = "";
+				System.out.println("---->>" + req.method + " : " + req.url + querystring);
+				String contentType = req.contentType;
+				if (contentType == null || contentType.length() == 0) {
+					contentType = "";
+				}
+
+				for (String k : req.headers.keySet()) {
+					Header h = req.headers.get(k);
+					System.out.println("... " + h.name + ":" + URLDecoder.decode(h.value(), "utf-8"));
+				}
+				// cookie is already in the headers
+				// for (String ck : req.cookies.keySet()) {
+				// Cookie c = req.cookies.get(ck);
+				// System.out.println("... cookie --> " + c.name + ":" +
+				// c.value);
+				// }
+				if ("POST".equals(req.method)) {
+					if ("application/x-www-form-urlencoded".equals(contentType)) {
+						dumpReqBody(req, true);
+					} else if (contentType.startsWith("text")) {
+						dumpReqBody(req, false);
+					} else if ("multipart/form-data".equals(contentType)) {
+						// cannot dump it, since it may contain binaray
+					} else if (contentType.contains("xml")) {
+						dumpReqBody(req, false);
+					} else if (contentType.contains("javascript")) {
+						dumpReqBody(req, false);
+					}
+				}
+			}
+
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * @param req
+	 * @throws IOException
+	 * @throws UnsupportedEncodingException
+	 */
+	private void dumpReqBody(Request req, boolean urlDecode) throws IOException, UnsupportedEncodingException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		InputStream bodystream = req.body;
+		int r = bodystream.read();
+		while (r > -1) {
+			bos.write(r);
+			r = bodystream.read();
+		}
+
+		bodystream.close();
+
+		String body = bos.toString("UTF-8");
+		if (urlDecode)
+			body = URLDecoder.decode(body, "UTF-8");
+		System.out.println("... body -> " + body);
+		req.body = new ByteArrayInputStream(bos.toByteArray());
 	}
 
 	/**
@@ -193,28 +279,30 @@ public class JapidPlugin extends PlayPlugin {
 	}
 
 	/**
-	 * intercept a special url that renders a Japid template without going thru a controller.
+	 * intercept a special url that renders a Japid template without going thru
+	 * a controller.
 	 * 
-	 * The url format: (anything)/renderJapidWith/(template path from japidview, not included)
-	 * e.g.
+	 * The url format: (anything)/renderJapidWith/(template path from japidview,
+	 * not included) e.g.
 	 * 
 	 * http://localhost:9000/renderJapidWith/templates/callPicka
 	 * 
-	 * will render the template "templates/callPicka.html" in the japidview package in the app dir.
+	 * will render the template "templates/callPicka.html" in the japidview
+	 * package in the app dir.
 	 * 
 	 * TODO: add parameter support.
 	 */
 	@Override
 	public void routeRequest(Request request) {
 		String path = request.path;
-//		System.out.println("request path:" + path);
+		// System.out.println("request path:" + path);
 		Matcher matcher = renderJapidWithPattern.matcher(path);
 		if (matcher.matches()) {
 			String template = matcher.group(1);
 			JapidController.renderJapidWith(template);
 		}
 	}
-	
+
 	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");
-	
+
 }

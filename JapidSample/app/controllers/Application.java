@@ -177,4 +177,14 @@ public class Application extends JapidController {
 	public static void echoPost(Post p) {
 		renderText(p);
 	}
+	
+	public static void dumpPost(String f1, String f2) {
+		if (f1 == null)
+			f1 = "";
+		
+		if (f2 == null)
+			f2 = "";
+		
+		renderJapidWith("templates/dumpPost.html", f1, f2);
+	}
 }
