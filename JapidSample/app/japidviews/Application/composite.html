@@ -2,14 +2,16 @@
 `args models.japidsample.Post post 
 `import controllers.Application
 
-<p>This is the comosite content header</p>
+
+
+<p>This action won't be cached, unless the action has CacheFor annotation.</p>
 <div>#{invoke Application.authorPanel(post.getAuthor())/}</div>
 
 <div>this one has full cache control</div>
-<div>#{invoke Application.authorPanel(post.getAuthor()), "10s", post.getAuthor()/}</div>
-
-<div>this one has cache control using the default signature. Note the key usually must present if the action takes params</div>
 <div>#{invoke Application.authorPanel(post.getAuthor()), "10s"/}</div>
+
+<div>This one invokes an action with two params. Note the twoPrams() result is cached since the action carries CacheFor annotation.</div>
+<div>#{invoke Application.twoParams("hello", 10)/}</div>
 
 <p>Let's invoke a tag which invokes an action</p>
 #{invokeInTag/}

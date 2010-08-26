@@ -2,6 +2,8 @@ package cn.bran.play;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,8 +11,11 @@ import org.apache.commons.beanutils.MethodUtils;
 
 import play.Play;
 import play.cache.Cache;
+import play.exceptions.ActionNotFoundException;
 import play.mvc.Controller;
+import play.mvc.Http.Request;
 import play.mvc.results.RenderTemplate;
+import play.utils.Java;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
@@ -31,22 +36,44 @@ public class JapidController extends Controller {
 	/**
 	 * render an array of objects to a template defined by a Template class.
 	 * 
-	 * @param <T> a sub-class type of JapidTemplateBase
-	 * @param c a sub-class of JapidTemplateBase
-	 * @param args arguments
+	 * @param <T>
+	 *            a sub-class type of JapidTemplateBase
+	 * @param c
+	 *            a sub-class of JapidTemplateBase
+	 * @param args
+	 *            arguments
 	 */
 	public static <T extends JapidTemplateBase> void render(Class<T> c, Object... args) {
+		try {
+			RenderResult rr = invokeRender(c, args);
+			throw new JapidResult(rr);
+		} catch (Exception e) {
+			if (e instanceof JapidResult)
+				throw (JapidResult) e;
+			// e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * @param <T>
+	 * @param c
+	 * @param args
+	 * @return
+	 * @throws NoSuchMethodException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	private static <T extends JapidTemplateBase> RenderResult invokeRender(Class<T> c, Object... args) {
 		try {
 			String methodName = "render";
 			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
 			StringBuilder sb = new StringBuilder(8000);
 			T t = ctor.newInstance(sb);
 			RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t, methodName, args);
-			throw new JapidResult(rr);
+			return rr;
 		} catch (Exception e) {
-			if (e instanceof JapidResult)
-				throw (JapidResult) e;
-//			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}
@@ -61,7 +88,7 @@ public class JapidController extends Controller {
 	}
 
 	/**
-	 * pickup the Japid renderer in the conventional location render it. 
+	 * pickup the Japid renderer in the conventional location render it.
 	 * Positional match is used to assign values to parameters
 	 * 
 	 * @param objects
@@ -71,42 +98,91 @@ public class JapidController extends Controller {
 		renderJapidWith(action, objects);
 	}
 
+	protected static void renderJapidEager(Object... objects) {
+		String action = template();
+		renderJapidWithEager(action, objects);
+	}
+
+	public static void renderJapidWith(String template, Object... args) {
+		throw new JapidResult(getRenderResultWith(template, args));
+	}
+
+	public static void renderJapidWithEager(String template, Object... args) {
+		throw new JapidResult(getRenderResultWith(template, args)).eval();
+	}
+
+	protected static String template() {
+		// the super.template() class uses current request object to determine
+		// the caller and method to find the matching template
+		// this won't work if the current method is called from another action.
+		// let's fall back to use the strack trace to deduce the template.
+		// String caller2 = StackTraceUtils.getCaller2();
+
+		final StackTraceElement[] stes = new Throwable().getStackTrace();
+		// let's iterate back in the stacktrace to find the recent action calls.
+		for (StackTraceElement st : stes) {
+			String controller = st.getClassName();
+			Class controllerClass = Play.classloader.getClassIgnoreCase(controller);
+			String action = st.getMethodName();
+			if (controllerClass != null) {
+				Method actionMethod = Java.findActionMethod(action, controllerClass);
+				if (actionMethod != null) {
+					String expr = controller + "." + action;
+//					System.out.println("calle r: " + expr);
+					return expr;
+				}
+			}
+		}
+		throw new RuntimeException("The calling stack does not contain a valid controller. Should not have happended...");
+	}
+
 	/**
-	 * render parameters to the prescribed template
+	 * render parameters to the prescribed template and return the RenderResult
 	 * 
 	 * @param template
+	 *            , relative path from japidview folder. if empty, use implicit
+	 *            naming pattern to match the template
 	 * @param args
 	 */
-	public static void renderJapidWith(String template, Object... args) {
+	public static RenderResult getRenderResultWith(String template, Object... args) {
+		//
+		if (template == null || template.length() == 0) {
+			template = template();
+		}
+
 		if (template.endsWith(HTML)) {
 			template = template.substring(0, template.length() - HTML.length());
 		}
-		
-//		String action = StackTraceUtils.getCaller(); // too tricky to use stacktrace to track the caller action name
+
+		// String action = StackTraceUtils.getCaller(); // too tricky to use
+		// stacktrace to track the caller action name
 		// something like controllers.japid.SampleController.testFindAction
-		
+
 		if (template.startsWith("controllers.")) {
 			template = template.substring(template.indexOf(DOT) + 1);
 		}
 		// map to default japid view
 		String templateClassName = JapidPlugin.JAPIDVIEWS_ROOT + File.separator + template;
-		
+
 		templateClassName = templateClassName.replace('/', DOT).replace('\\', DOT);
 		Class tClass = Play.classloader.getClassIgnoreCase(templateClassName);
+		RenderResult rr;
 		if (tClass == null) {
 			String templateFileName = templateClassName.replace(DOT, '/') + HTML;
 			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
 		} else if (JapidTemplateBase.class.isAssignableFrom(tClass)) {
-			render(tClass, args);
+			// render(tClass, args);
+			rr = invokeRender(tClass, args);
 		} else {
 			throw new RuntimeException("The found class is not a Japid template class: " + templateClassName);
 		}
+		return (rr);
 	}
-	
-//	protected static String caller() {
-//		String action = StackTraceUtils.getCaller();
-//		return action;
-//	}
+
+	// protected static String caller() {
+	// String action = StackTraceUtils.getCaller();
+	// return action;
+	// }
 	/**
 	 * cache a Japid RenderResult associated with an action call with specific
 	 * arguments
@@ -269,77 +345,78 @@ public class JapidController extends Controller {
 	public static void ignoreCacheNowAndNext() {
 		RenderResultCache.setIgnoreCacheInCurrentAndNextReq(true);
 	}
-	
+
 	/**
 	 * this will set a flag so calling another action won't trigger a redirect
 	 */
 	protected static void dontRedirect() {
 		play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
 	}
-	
+
 	/**
-	 * render a text in a RenderResult so it can work with invoke tag in templates.
+	 * render a text in a RenderResult so it can work with invoke tag in
+	 * templates.
+	 * 
 	 * @param s
 	 */
-	protected static void renderText(String s){
+	protected static void renderText(String s) {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Content-Type", "text/plain; charset=utf-8");
 		render(new RenderResult(headers, new StringBuilder(s), -1L));
 	}
-	
-	protected static void renderText(Object o){
-		String str = o == null? "" : o.toString();
+
+	protected static void renderText(Object o) {
+		String str = o == null ? "" : o.toString();
 		renderText(str);
 	}
-	
-	protected static void renderText(int o){
+
+	protected static void renderText(int o) {
 		renderText(new Integer(o));
 	}
 
-	protected static void renderText(long o){
+	protected static void renderText(long o) {
 		renderText(new Long(o));
 	}
 
-	protected static void renderText(float o){
+	protected static void renderText(float o) {
 		renderText(new Float(o));
 	}
-	
-	protected static void renderText(double o){
+
+	protected static void renderText(double o) {
 		renderText(new Double(o));
 	}
 
-	protected static void renderText(boolean o){
+	protected static void renderText(boolean o) {
 		renderText(new Boolean(o));
 	}
 
-	protected static void renderText(char o){
-		renderText(new String(new char[] {o}));
+	protected static void renderText(char o) {
+		renderText(new String(new char[] { o }));
 	}
-	
-	protected static void renderJson(Object o){
-		 String json = new Gson().toJson(o);
-		 Map<String, String> headers = new HashMap<String, String>();
-		 headers.put("Content-Type", "application/json; charset=utf-8");
-		 render(new RenderResult(headers, new StringBuilder(json), -1L));
+
+	protected static void renderJson(Object o) {
+		String json = new Gson().toJson(o);
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Content-Type", "application/json; charset=utf-8");
+		render(new RenderResult(headers, new StringBuilder(json), -1L));
 	}
-	
+
 	/**
-	 *  run another action wrapped in a runnable run() and intercept the Result
+	 * run another action wrapped in a runnable run() and intercept the Result
 	 * 
-	 *  one should wrap the call to another action like this:
-	 *  new Runnable () {
-	 *    public void run() { AnotherController.action();}
-	 *  }
+	 * one should wrap the call to another action like this: new Runnable () {
+	 * public void run() { AnotherController.action();} }
+	 * 
 	 * @param runnable
 	 */
-	protected static String getResultFromAction(Runnable runnable ) {
+	protected static String getResultFromAction(Runnable runnable) {
 		dontRedirect();
 		try {
 			runnable.run();
 			System.out.println("JapidController.getResultFromAction() warning: the runnable did not generate a result.");
 			return "";
 		} catch (JapidResult e) {
-			return e.content;
+			return e.extractContent();
 			// TODO: handle exception
 		} catch (RenderTemplate rt) {
 			return rt.getContent();
@@ -350,18 +427,25 @@ public class JapidController extends Controller {
 	}
 
 	/**
-	 *  run another action wrapped in a runnable run() and intercept the Result, ignoring the cache
+	 * run another action wrapped in a runnable run() and intercept the Result,
+	 * ignoring the cache
 	 * 
-	 *  one should wrap the call to another action like this:
-	 *  new Runnable () {
-	 *    public void run() { AnotherController.action();}
-	 *  }
+	 * one should wrap the call to another action like this: new Runnable () {
+	 * public void run() { AnotherController.action();} }
+	 * 
 	 * @param runnable
 	 */
-	protected static String getFreshResultFromAction(Runnable runnable ) {
+	protected static String getFreshResultFromAction(Runnable runnable) {
 		ignoreCache();
 		return getResultFromAction(runnable);
 	}
-	
-	
+
+	/**
+	 * can be used to generate a key based on the query
+	 * 
+	 * @return
+	 */
+	public static String genCacheKey() {
+		return "japidcache:" + Request.current().action + ":" + Request.current().querystring;
+	}
 }

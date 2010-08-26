@@ -11,6 +11,8 @@ import cn.bran.japid.template.RenderResult;
  * 
  * It also define a time-zone that caller should use to refresh the cached item.
  * 
+ * XXX: review the thread safety of the flags!!!
+ * 
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */

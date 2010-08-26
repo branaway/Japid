@@ -40,7 +40,7 @@ static private final String static_4 = "</div>\n" +
 ;
 static private final String static_5 = "</div>\n" + 
 "\n" + 
-"<div>this one has cache control using the default signature. Note the key usually must present if the action takes params</div>\n" + 
+"<div>This one invokes an action with two params</div>\n" + 
 "<div>"
 ;
 static private final String static_6 = "</div>\n" + 
@@ -64,32 +64,26 @@ static private final String static_7 = ""
 	}
 	@Override protected void doLayout() {
 
-		play.mvc.Http.Request request = play.mvc.Http.Request.current();
-		play.mvc.Http.Response response = play.mvc.Http.Response.current();
-		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();
-		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
-		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
-		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
-		play.data.validation.Validation validation = play.data.validation.Validation.current();
-		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());
-		play.Play _play = new play.Play();
-
+		play.mvc.Http.Request request = play.mvc.Http.Request.current(); assert request != null;
+		play.mvc.Http.Response response = play.mvc.Http.Response.current(); assert response != null;
+		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();assert flash != null;
+		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();assert session != null;
+		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); assert renderArgs != null;
+		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();assert params != null;
+		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
+		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());assert errors != null;
+		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
 p(static_1);// line 1
 p(static_2);// line 2
 p(static_3);// line 3
-		actionRunners.put(getOut().length(), new cn.bran.japid.template.ActionRunner() {
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.authorPanel", post.getAuthor()) {
 			@Override
-			public cn.bran.japid.template.RenderResult run() {
-				try {
-					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
-					Application.authorPanel(post.getAuthor());
-				} catch (cn.bran.play.JapidResult jr) {
-					return jr.getRenderResult();
-				}
-				throw new RuntimeException("No render result from running: Application.authorPanel(post.getAuthor())");
+			public void runPlayAction() throws cn.bran.play.JapidResult {
+				Application.authorPanel(post.getAuthor()); //
 			}
 		});
+
 // line 6
 p(static_4);// line 6
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", "Application.authorPanel", post.getAuthor()) {
@@ -101,10 +95,10 @@ p(static_4);// line 6
 
 // line 9
 p(static_5);// line 9
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", "Application.authorPanel", "") {
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.twoParams", "hello:", 10) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.authorPanel(post.getAuthor()); //
+				Application.twoParams("hello:", 10); //
 			}
 		});
 

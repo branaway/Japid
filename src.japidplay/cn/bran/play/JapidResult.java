@@ -13,16 +13,24 @@ import cn.bran.japid.template.RenderResult;
  * class for use to indicate that the result has been flushed to the response
  * result
  * 
+ * The content extraction from the RenderResult is postponed until the apply() if eval() is not called before apply. 
+ * The eval() will make the JapidResult render the content eagerly and once, therefore any nested cache will effect once.
+ * stage so that JapidResult can be cached and still retain dynamic feature of a
+ * RenderResultPartial
+ * 
  * @author bran
  * 
  */
 public class JapidResult extends Result {
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String CACHE_CONTROL = "Cache-Control";
-	public String content;
+
 	private RenderResult renderResult;
 	private Map<String, String> headers = new HashMap<String, String>();
+	private boolean eager = false;
 
+	String resultContent;
+	
 	// public JapidResult(String contentType) {
 	// super();
 	// this.contentType = contentType;
@@ -35,15 +43,38 @@ public class JapidResult extends Result {
 
 	public JapidResult(RenderResult r) {
 		this.renderResult = r;
-		StringBuilder sb = r.getContent();
-		if (sb != null)
-			this.content = sb.toString();
 		this.headers = r.getHeaders();
+	}
+
+	/**
+	 * extract content now and once. Eager evaluation of RenderResult
+	 */
+	public JapidResult eval() {
+		this.eager = true;
+		this.resultContent = extractContent();
+		return this;
+	}
+	
+	/**
+	 * @param r
+	 */
+	public String extractContent() {
+		String content = "";
+		StringBuilder sb = renderResult.getContent();
+		if (sb != null)
+			content = sb.toString();
+		return content;
 	}
 
 	@Override
 	public void apply(Request request, Response response) {
-		if (this.content != null)
+		String content = resultContent;
+		
+		if (!eager) 
+			// late evaluation
+			content = extractContent();
+		
+		if (content != null)
 			try {
 				Response.current().out.write(content.getBytes("UTF-8"));
 			} catch (Exception e) {
@@ -72,7 +103,6 @@ public class JapidResult extends Result {
 	}
 
 	public RenderResult getRenderResult() {
-		// TODO Auto-generated method stub
 		return renderResult;
 	}
 

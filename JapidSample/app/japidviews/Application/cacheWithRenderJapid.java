@@ -16,32 +16,35 @@ import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import static cn.bran.play.WebUtils.*;
-// NOTE: This file was generated from: japidviews/Application/authorPanel.html
+// NOTE: This file was generated from: japidviews/Application/cacheWithRenderJapid.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
-public class authorPanel extends cn.bran.japid.template.JapidTemplateBase{
-	public static final String sourceTemplate = "japidviews/Application/authorPanel.html";
+public class cacheWithRenderJapid extends cn.bran.japid.template.JapidTemplateBase{
+	public static final String sourceTemplate = "japidviews/Application/cacheWithRenderJapid.html";
 static private final String static_0 = ""
 ;
 static private final String static_1 = "\n" + 
-"<p>author name: "
+"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
+"<html>\n" + 
+"<head>\n" + 
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" + 
+"<title>Insert title here</title>\n" + 
+"</head>\n" + 
+"<body>\n" + 
+"hello "
 ;
-static private final String static_2 = "</p>\n" + 
-"<p>his birthdate: "
+static private final String static_2 = "\n" + 
+"</body>\n" + 
+"</html>"
 ;
-static private final String static_3 = "</p>\n" + 
-"<p>and his is a '"
-;
-static private final String static_4 = "'</p>\n" + 
-"";
-	public authorPanel() {
+	public cacheWithRenderJapid() {
 		super(null);
 	}
-	public authorPanel(StringBuilder out) {
+	public cacheWithRenderJapid(StringBuilder out) {
 		super(out);
 	}
-	models.japidsample.Author a;
-	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
+	String a;
+	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long t = -1;
 		super.layout();
@@ -60,12 +63,8 @@ static private final String static_4 = "'</p>\n" +
 		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
 p(static_1);// line 1
-p(a.name);// line 3
-p(static_2);// line 3
-p(a.birthDate);// line 4
-p(static_3);// line 4
-p(a.getGender());// line 5
-p(static_4);// line 5
+p(a);// line 10
+p(static_2);// line 10
 
 	}
 }

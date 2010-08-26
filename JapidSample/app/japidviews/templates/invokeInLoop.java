@@ -62,16 +62,15 @@ static private final String static_10 = "\n" +
 	}
 	@Override protected void doLayout() {
 
-		play.mvc.Http.Request request = play.mvc.Http.Request.current();
-		play.mvc.Http.Response response = play.mvc.Http.Response.current();
-		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();
-		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
-		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
-		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
-		play.data.validation.Validation validation = play.data.validation.Validation.current();
-		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());
-		play.Play _play = new play.Play();
-
+		play.mvc.Http.Request request = play.mvc.Http.Request.current(); assert request != null;
+		play.mvc.Http.Response response = play.mvc.Http.Response.current(); assert response != null;
+		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();assert flash != null;
+		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();assert session != null;
+		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); assert renderArgs != null;
+		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();assert params != null;
+		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
+		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());assert errors != null;
+		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
 p(static_1);// line 1
 p(static_2);// line 2
@@ -80,18 +79,13 @@ for (int i = 0; i < 3;i++) {// line 9
 p(static_4);// line 9
 final int j = i;// line 10
 p(static_5);// line 10
-		actionRunners.put(getOut().length(), new cn.bran.japid.template.ActionRunner() {
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echo", "") {
 			@Override
-			public cn.bran.japid.template.RenderResult run() {
-				try {
-					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
-					Application.echo(j);
-				} catch (cn.bran.play.JapidResult jr) {
-					return jr.getRenderResult();
-				}
-				throw new RuntimeException("No render result from running: Application.echo(j)");
+			public void runPlayAction() throws cn.bran.play.JapidResult {
+				Application.echo(j); //
 			}
 		});
+
 // line 11
 p(static_6);// line 11
 }// line 12
@@ -99,18 +93,13 @@ p(static_7);// line 12
 p(static_8);// line 14
 for (final Post p : posts) {// line 16
 p(static_9);// line 16
-		actionRunners.put(getOut().length(), new cn.bran.japid.template.ActionRunner() {
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echoPost", "") {
 			@Override
-			public cn.bran.japid.template.RenderResult run() {
-				try {
-					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
-					Application.echoPost(p);
-				} catch (cn.bran.play.JapidResult jr) {
-					return jr.getRenderResult();
-				}
-				throw new RuntimeException("No render result from running: Application.echoPost(p)");
+			public void runPlayAction() throws cn.bran.play.JapidResult {
+				Application.echoPost(p); //
 			}
 		});
+
 // line 17
 p(static_10);// line 17
 }// line 18

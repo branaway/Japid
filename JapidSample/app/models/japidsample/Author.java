@@ -24,4 +24,11 @@ public class Author {
 	public void setGender(char gender) {
 		this.gender = gender;
 	}
+	
+	@Override
+	public String toString() {
+		return name + birthDate;
+	}
+	
+	 
 }

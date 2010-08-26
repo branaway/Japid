@@ -458,29 +458,32 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected static String createActionRunner(String actionInvocationWithCache) {
 		List<String> params = new TagArgsParser(actionInvocationWithCache).split();
-		if (params.size() == 1)
-			return(createActionRunner(actionInvocationWithCache, null, null, null));
-		else {
-			String action = params.get(0);
-			// remove the argument part to extract action string as key base
-			int left = action.indexOf('(');
-			if (left < 1) {
-				throw new RuntimeException("invoke: action needs pair of ()");
-			}
-			
-			String actionPath = "\"" + action.substring(0, left) + "\""; 
-			if (params.size() == 2) {
-				// no param, use the action string as the key
-				return (createActionRunner(action, params.get(1), actionPath, ""));
-			} else {
-				String args = "";
+		String action = params.get(0);
+		// remove the argument part to extract action string as key base
+		int left = action.indexOf('(');
+		if (left < 1) {
+			throw new RuntimeException("invoke: action needs pair of ()");
+		}
+		int right = action.lastIndexOf(')');
+		String actionPath = "\"" + action.substring(0, left) + "\""; 
+		String args = action.substring(left + 1, right).trim();
+		String ttl = "\"\"";
+
+		if (params.size() >= 2) {
+			ttl = params.get(1);
+			if (params.size() > 2) {
 				for (int i = 2; i < params.size(); i++) {
-					args += params.get(i) + ",";
+					args += ","  + params.get(i);
 				}
-				args = args.substring(0, args.length() - 1);
-				return (createActionRunner(action, params.get(1), actionPath, args));
+
+				if (args.startsWith(",")) 
+					args = args.substring(1);
+				
+				if (args.endsWith(","))
+					args = args.substring(0, args.length() - 1);
 			}
 		}
+		return (createActionRunner(action, ttl, actionPath, args));
 	}
 
 	protected void printActionInvocation(String action) {

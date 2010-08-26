@@ -180,12 +180,12 @@ public class JapidPlugin extends PlayPlugin {
 				// c.value);
 				// }
 				if ("POST".equals(req.method)) {
-					if ("application/x-www-form-urlencoded".equals(contentType)) {
+					if (contentType.contains("application/x-www-form-urlencoded")) {
 						dumpReqBody(req, true);
 					} else if (contentType.startsWith("text")) {
 						dumpReqBody(req, false);
-					} else if ("multipart/form-data".equals(contentType)) {
-						// cannot dump it, since it may contain binaray
+					} else if (contentType.contains("multipart/form-data")) {
+						// cannot dump it, since it may contain binary
 					} else if (contentType.contains("xml")) {
 						dumpReqBody(req, false);
 					} else if (contentType.contains("javascript")) {

@@ -2,13 +2,13 @@ package controllers;
 
 
 import japidviews.Application.authorPanel;
-import japidviews.Application.composite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import play.cache.CacheFor;
 
 import models.japidsample.Author;
 import models.japidsample.Author2;
@@ -29,11 +29,7 @@ public class Application extends JapidController {
 		renderJapid(); // use the default index.html in the japidviews/SampleController directory
 	}
 	public static void authorPanel(final Author a) {
-		//  the straight-thru way of rendering
-		//		throw new JapidResult(new authorPanel().render(a));
-		
-		String key = "authorpanel:" + a;
-		CacheableRunner r = new CacheableRunner("10s", key) {
+		CacheableRunner r = new CacheableRunner("10s", genCacheKey()) {
 			@Override
 			protected RenderResult render() {
 				return new authorPanel().render(a);
@@ -43,6 +39,55 @@ public class Application extends JapidController {
 		throw new JapidResult(r.run());
 //	or 		render(r);
 	}
+	
+	public static void cacheWithRenderJapid(final String a) {
+//			CacheableRunner r = new CacheableRunner("5s", genCacheKey()) {
+		CacheableRunner r = new CacheableRunner("5s") {
+			@Override
+			protected RenderResult render() {
+				System.out.println("rerender...");
+				String b = a + new Date().getSeconds();
+				return getRenderResultWith("", b);
+			}
+		};
+		
+//		throw new JapidResult(r.run()).eval(); // eval effectively cancel nested finer cache control
+		render(r);
+	}
+	
+	@CacheFor("6s")
+	public static void testCacheFor(String p) {
+		System.out.println("rerender...");
+		String b = "" + new Date().getSeconds();
+
+		renderJapid(b); // nested cache control still in effect
+//		renderJapidEager(b); // nested cache control not in effect
+	}
+	
+	@CacheFor("3s")
+	public static void every3() {
+		String b = "" + new Date().getSeconds();
+		renderJapid(b); // nested cache control still in effect
+	}
+	
+	@CacheFor("5s")
+	public static void testCacheForEager(String p) {
+		System.out.println("rerender...");
+		String b = "" + new Date().getSeconds();
+		
+		renderJapidEager(b); // no nested cache control. the outer cache control overrides all
+	}
+	
+	public static void seconds() {
+		String b = "" + new Date().getSeconds();
+		renderText(b);
+	}
+	
+	@CacheFor("4s")
+	public static void twoParams(String a, int b) {
+		renderText(a + "=" +  b + ":" + new Date().getSeconds());
+	}
+	
 	
 	public static void foo() {
 		StringBuilder sb = new StringBuilder();
@@ -100,9 +145,7 @@ public class Application extends JapidController {
 		
 		post.setAuthor(a);
 		
-		RenderResult render = new composite().render(post);
-		// the render can be cached
-		throw new JapidResult(render);
+		renderJapid(post);
 	}
 	
 	public static void reverseLookup0() {
@@ -178,13 +221,26 @@ public class Application extends JapidController {
 		renderText(p);
 	}
 	
-	public static void dumpPost(String f1, String f2) {
+	/**
+	 * "official" Play treats body as a special param name to store all POST body if the content type is 
+	 * application/x-www-form-urlencoded. bran's fork has changed the reserved param name to _body. 
+	 * 
+	 * @param f1
+	 * @param f2
+	 * @param body
+	 */
+	public static void dumpPost(String f1, String f2, String body) {
 		if (f1 == null)
 			f1 = "";
 		
 		if (f2 == null)
 			f2 = "";
 		
-		renderJapidWith("templates/dumpPost.html", f1, f2);
+		if (body == null)
+			body = "";
+		else
+			System.out.println("body: " + body);
+		
+		renderJapidWith("templates/dumpPost.html", f1, f2, body);
 	}
 }

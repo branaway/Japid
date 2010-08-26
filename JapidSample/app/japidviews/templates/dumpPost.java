@@ -40,6 +40,9 @@ static private final String static_3 = "\"/>\n" +
 "	<input type=\"text\" width=\"30\" name=\"f2\" value=\""
 ;
 static private final String static_4 = "\"/>\n" + 
+"	<input type=\"text\" width=\"50\" name=\"body\" value=\""
+;
+static private final String static_5 = "\"/>\n" + 
 "	<input type=\"submit\"/>\n" + 
 "</form>\n" + 
 "\n" + 
@@ -54,9 +57,11 @@ static private final String static_4 = "\"/>\n" +
 	}
 	String f1;
 	String f2;
-	public cn.bran.japid.template.RenderResult render(String f1, String f2) {
+	String body;
+	public cn.bran.japid.template.RenderResult render(String f1, String f2, String body) {
 		this.f1 = f1;
 		this.f2 = f2;
+		this.body = body;
 		long t = -1;
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
@@ -79,6 +84,8 @@ try { p(f1); } catch (NullPointerException npe) {}// line 13
 p(static_3);// line 13
 try { p(f2); } catch (NullPointerException npe) {}// line 14
 p(static_4);// line 14
+try { p(body); } catch (NullPointerException npe) {}// line 15
+p(static_5);// line 15
 
 	}
 }

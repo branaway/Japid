@@ -15,7 +15,7 @@ import cn.bran.japid.template.RenderResult;
 public abstract class CacheableRunner extends ActionRunner {
 	private Object[] key = null;
 	private String ttlAbs = null;
-	private String keyString;
+	public String keyString;
 	private boolean noCache;
 	private boolean readThru;
 
@@ -47,7 +47,15 @@ public abstract class CacheableRunner extends ActionRunner {
 		this.keyString = buildKey(key);
 
 	}
-
+	
+	/**
+	 * a constructor that use a key generated from the current query string to store the render result
+	 * @param ttl
+	 */
+	public CacheableRunner(String ttl) {
+		this(ttl, JapidController.genCacheKey());
+	}
+	
 	/**
 	 * I'm throwing a JapidResult rather than return a RenderResult. so users in
 	 * action don't need to. Convenience.
@@ -84,7 +92,7 @@ public abstract class CacheableRunner extends ActionRunner {
 	/**
 	 * @return
 	 */
-	private static String buildKey(Object[] keys) {
+	public static String buildKey(Object[] keys) {
 		String keyString = "";
 		for (Object k : keys) {
 			keyString += ":" + String.valueOf(k);

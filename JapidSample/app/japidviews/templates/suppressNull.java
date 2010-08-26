@@ -49,16 +49,15 @@ static private final String static_6 = "\n" +
 	}
 	@Override protected void doLayout() {
 
-		play.mvc.Http.Request request = play.mvc.Http.Request.current(); if (request != null) {};
-		play.mvc.Http.Response response = play.mvc.Http.Response.current(); if(response != null) {};
-		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();if(flash != null) {};
-		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();if(session != null) {};
-		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); if(renderArgs != null) {};
-		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();if(params != null) {};
-		play.data.validation.Validation validation = play.data.validation.Validation.current();if(validation!= null) {};
-		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());if(errors != null) {};
-		play.Play _play = new play.Play(); if(_play != null) {};
-
+		play.mvc.Http.Request request = play.mvc.Http.Request.current(); assert request != null;
+		play.mvc.Http.Response response = play.mvc.Http.Response.current(); assert response != null;
+		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();assert flash != null;
+		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();assert session != null;
+		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); assert renderArgs != null;
+		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();assert params != null;
+		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
+		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());assert errors != null;
+		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
 p(static_1);// line 1
 p(static_2);// line 2
