@@ -14,10 +14,10 @@
 package cn.bran.japid.template;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
-import java.util.TreeMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -26,8 +26,8 @@ import java.util.TreeMap;
  * 
  * @author bran
  * 
- */
-public abstract class JapidTemplateBase {
+ */ 
+public abstract class JapidTemplateBase implements Serializable {
 //	private static final String UTF_8 = "UTF-8";
 
 	StringBuilder out;
@@ -66,7 +66,7 @@ public abstract class JapidTemplateBase {
 	}
 
 	// don't use it since it will lead to new instance of stringencoder
-	Charset UTF8 = Charset.forName("UTF-8");
+//	Charset UTF8 = Charset.forName("UTF-8");
 
 	final protected void p(String s) {
 		writeString(s);

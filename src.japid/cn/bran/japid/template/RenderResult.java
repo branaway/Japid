@@ -13,6 +13,10 @@
  */
 package cn.bran.japid.template;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,18 +29,21 @@ import java.util.Map;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public class RenderResult implements Serializable {
-	private StringBuilder content;
+public class RenderResult implements Externalizable {
+	private static final String _NULL = "_null_";
+	private StringBuilder content; // bran can this
 	long renderTime; // in ms, for recording the time to render.
 	private Map<String, String> headers = new HashMap<String, String>();
 
 	public RenderResult(Map<String, String> headers , StringBuilder content, long renderTime) {
-		super();
 		this.content = content;
 		this.renderTime = renderTime;
 		this.headers = headers;
 	}
 
+	public RenderResult() {
+	}
+	
 	/**
 	 * get the interpolated content in StringBuilder. In case of nested action
 	 * calls, all the content tiles are generated and interpolated
@@ -67,5 +74,27 @@ public class RenderResult implements Serializable {
 
 	public Map<String, String> getHeaders() {
 		return this.headers;
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		// TODO Auto-generated method stub
+		String contentString = content == null? _NULL : content.toString();
+		out.writeUTF(contentString);
+		out.writeLong(renderTime);
+		out.writeObject(headers);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		String contentString = in.readUTF();
+		if (_NULL.equals(contentString)) {
+			this.content = null;
+		}
+		else {
+			this.content = new StringBuilder(contentString);
+		}
+		renderTime = in.readLong();
+		headers = (Map<String, String>) in.readObject();
 	}
 }

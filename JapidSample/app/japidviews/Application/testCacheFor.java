@@ -28,6 +28,8 @@ static private final String static_1 = "\n" +
 "<html>\n" + 
 "\n" + 
 "<body>\n" + 
+"<p>heheh</p>\n" + 
+"\n" + 
 "	<p>hello "
 ;
 static private final String static_2 = ", "
@@ -36,6 +38,7 @@ static private final String static_3 = ",</p> \n" +
 "	<p>directly, now seconds is "
 ;
 static private final String static_4 = "</p>\n" + 
+"\n" + 
 "</body>\n" + 
 "</html>"
 ;
@@ -65,8 +68,8 @@ static private final String static_4 = "</p>\n" +
 		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
 p(static_1);// line 1
-p(a);// line 6
-p(static_2);// line 6
+p(a);// line 8
+p(static_2);// line 8
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.every3", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -74,8 +77,8 @@ p(static_2);// line 6
 			}
 		});
 
-// line 6
-p(static_3);// line 6
+// line 8
+p(static_3);// line 8
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.seconds", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -83,8 +86,8 @@ p(static_3);// line 6
 			}
 		});
 
-// line 7
-p(static_4);// line 7
+// line 9
+p(static_4);// line 9
 
 	}
 }

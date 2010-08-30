@@ -30,7 +30,9 @@ static private final String static_1 = ""
 static private final String static_2 = ""
 ;
 static private final String static_3 = "\n" + 
-"<p>This is the comosite content header</p>\n" + 
+"\n" + 
+"\n" + 
+"<p>This action won't be cached, unless the action has CacheFor annotation.</p>\n" + 
 "<div>"
 ;
 static private final String static_4 = "</div>\n" + 
@@ -40,7 +42,7 @@ static private final String static_4 = "</div>\n" +
 ;
 static private final String static_5 = "</div>\n" + 
 "\n" + 
-"<div>This one invokes an action with two params</div>\n" + 
+"<div>This one invokes an action with two params. Note the twoPrams() result is cached since the action carries CacheFor annotation.</div>\n" + 
 "<div>"
 ;
 static private final String static_6 = "</div>\n" + 
@@ -84,8 +86,8 @@ p(static_3);// line 3
 			}
 		});
 
-// line 6
-p(static_4);// line 6
+// line 8
+p(static_4);// line 8
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", "Application.authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -93,21 +95,21 @@ p(static_4);// line 6
 			}
 		});
 
-// line 9
-p(static_5);// line 9
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.twoParams", "hello:", 10) {
+// line 11
+p(static_5);// line 11
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.twoParams", "hello", 10) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.twoParams("hello:", 10); //
+				Application.twoParams("hello", 10); //
 			}
 		});
 
-// line 12
-p(static_6);// line 12
+// line 14
+p(static_6);// line 14
 _invokeInTag3.setActionRunners(getActionRunners());
 _invokeInTag3.render();
-// line 15
-p(static_7);// line 15
+// line 17
+p(static_7);// line 17
 
 	}
 	private invokeInTag _invokeInTag3 = new invokeInTag(getOut());

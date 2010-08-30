@@ -1,5 +1,7 @@
 package cn.bran.japid.template;
 
+import java.io.Serializable;
+
 
 /**
  * wrap the full body of a action controller
@@ -7,7 +9,7 @@ package cn.bran.japid.template;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public abstract class ActionRunner {
+public abstract class ActionRunner implements Serializable{
 	// public abstract void setArgs(Object... objects);
 
 	// cannot set the args from run, because there is no way to know the types

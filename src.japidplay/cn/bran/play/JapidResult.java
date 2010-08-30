@@ -1,5 +1,9 @@
 package cn.bran.play;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +25,7 @@ import cn.bran.japid.template.RenderResult;
  * @author bran
  * 
  */
-public class JapidResult extends Result {
+public class JapidResult extends Result implements Externalizable{
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String CACHE_CONTROL = "Cache-Control";
 
@@ -29,7 +33,7 @@ public class JapidResult extends Result {
 	private Map<String, String> headers = new HashMap<String, String>();
 	private boolean eager = false;
 
-	String resultContent;
+	String resultContent = "";
 	
 	// public JapidResult(String contentType) {
 	// super();
@@ -45,6 +49,17 @@ public class JapidResult extends Result {
 		this.renderResult = r;
 		this.headers = r.getHeaders();
 	}
+
+	
+	public JapidResult() {
+	}
+
+
+	public JapidResult(String description) {
+		super(description);
+		// TODO Auto-generated constructor stub
+	}
+
 
 	/**
 	 * extract content now and once. Eager evaluation of RenderResult
@@ -104,6 +119,22 @@ public class JapidResult extends Result {
 
 	public RenderResult getRenderResult() {
 		return renderResult;
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(renderResult);
+		out.writeObject(headers);
+		out.writeBoolean(eager);
+		out.writeUTF(resultContent);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		renderResult = (RenderResult) in.readObject();
+		headers = (Map<String, String>)in.readObject();
+		eager = in.readBoolean();
+		resultContent =  in.readUTF();
 	}
 
 }

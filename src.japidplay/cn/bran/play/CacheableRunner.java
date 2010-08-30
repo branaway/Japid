@@ -1,5 +1,11 @@
 package cn.bran.play;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.Serializable;
+
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.RenderResult;
 
@@ -12,8 +18,8 @@ import cn.bran.japid.template.RenderResult;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public abstract class CacheableRunner extends ActionRunner {
-	private Object[] key = null;
+public abstract class CacheableRunner extends ActionRunner implements Serializable{
+//	private Object[] key = null;
 	private String ttlAbs = null;
 	public String keyString;
 	private boolean noCache;
@@ -29,8 +35,7 @@ public abstract class CacheableRunner extends ActionRunner {
 	 */
 	public CacheableRunner(String ttl, Object... args) {
 		super();
-		this.key = args;
-		if (key == null || key.length == 0)
+		if (args == null || args.length == 0)
 			this.noCache = true;
 
 		if (ttl == null || ttl.trim().length() == 0) {
@@ -44,7 +49,7 @@ public abstract class CacheableRunner extends ActionRunner {
 			}
 		}
 
-		this.keyString = buildKey(key);
+		this.keyString = buildKey(args);
 
 	}
 	
@@ -111,8 +116,25 @@ public abstract class CacheableRunner extends ActionRunner {
 	 * @return
 	 */
 	protected abstract RenderResult render();
-
 	public static void deleteCache(Object...objects) {
 		RenderResultCache.delete(buildKey(objects));
 	}
+	
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeUTF(ttlAbs);
+		out.writeUTF(keyString);
+		out.writeBoolean(noCache);
+		out.writeBoolean(readThru);
+	}
+
+
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		ttlAbs = in.readUTF();
+		keyString = in.readUTF();
+		noCache = in.readBoolean();
+		readThru = in.readBoolean();
+		
+	}
+	
+	
 }

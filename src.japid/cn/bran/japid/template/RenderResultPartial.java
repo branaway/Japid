@@ -1,5 +1,8 @@
 package cn.bran.japid.template;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -25,7 +28,9 @@ public class RenderResultPartial extends RenderResult {
 	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime, Map<Integer, ActionRunner> actions) {
 		super(headers, content, renderTime);
 		this.actionRunners = actions;
-		// TODO Auto-generated constructor stub
+	}
+	
+	public RenderResultPartial() {
 	}
 
 	@Override
@@ -50,4 +55,17 @@ public class RenderResultPartial extends RenderResult {
 		}
 	}
 
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		super.writeExternal(out);
+		out.writeObject(actionRunners);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		super.readExternal(in);
+		actionRunners = (Map<Integer, ActionRunner>) in.readObject();
+	}
+
+	
 }

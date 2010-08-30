@@ -8,7 +8,8 @@ Version History:
 
 2010/8/28:	V0.5.2
 			1. made Play's CacheFor annotation on outer action works with JapidResult, including #{invoke } tag in the templates. The content extraction in JapidResult is postponed until the apply() stage. The invoke tag can invoke actions with CacheFor as well and the cache TTL is respected. 
-			The CacheFor will replace the old verbose way of setting up cache control in controller and TTL spec in the invoke tag.  
+			The CacheFor will replace the old verbose way of setting up cache control in controller and TTL spec in the invoke tag.
+			2. let all template relates class to implement Serializable so the templates and render results can be cached to memcached  
 2010/8/8:	V0.5.1
 			1. imported play.mvc.Http.* in generated java files from templates, which means one can reference Request, Response etc. 
 			2. added some implicit objects such as "request", "flash", "session". See the ImplicitObjects.html for examples.  

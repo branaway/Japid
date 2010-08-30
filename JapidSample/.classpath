@@ -44,7 +44,7 @@
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/junit-4.8.1.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/memcached-2.4.2.jar"/>
+	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/memcached-2.5.jar" sourcepath="C:/Users/bran/Downloads/memcached-2.5-sources.zip"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/mysql-connector-java-5.1.8.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/netty-3.2.1.Final.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/org.eclipse.jdt.core_3.6.0.v_A56.jar"/>
