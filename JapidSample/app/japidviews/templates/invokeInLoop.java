@@ -79,7 +79,7 @@ for (int i = 0; i < 3;i++) {// line 9
 p(static_4);// line 9
 final int j = i;// line 10
 p(static_5);// line 10
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echo", "") {
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echo", j) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.echo(j); //
@@ -93,7 +93,7 @@ p(static_7);// line 12
 p(static_8);// line 14
 for (final Post p : posts) {// line 16
 p(static_9);// line 16
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echoPost", "") {
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echoPost", p) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.echoPost(p); //

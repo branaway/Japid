@@ -17,15 +17,16 @@ import cn.bran.japid.template.RenderResult;
  * class for use to indicate that the result has been flushed to the response
  * result
  * 
- * The content extraction from the RenderResult is postponed until the apply() if eval() is not called before apply. 
- * The eval() will make the JapidResult render the content eagerly and once, therefore any nested cache will effect once.
- * stage so that JapidResult can be cached and still retain dynamic feature of a
- * RenderResultPartial
+ * The content extraction from the RenderResult is postponed until the apply()
+ * if eval() is not called before apply. The eval() will make the JapidResult
+ * render the content eagerly and once, therefore any nested cache will effect
+ * once. stage so that JapidResult can be cached and still retain dynamic
+ * feature of a RenderResultPartial
  * 
  * @author bran
  * 
  */
-public class JapidResult extends Result implements Externalizable{
+public class JapidResult extends Result implements Externalizable {
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String CACHE_CONTROL = "Cache-Control";
 
@@ -34,7 +35,7 @@ public class JapidResult extends Result implements Externalizable{
 	private boolean eager = false;
 
 	String resultContent = "";
-	
+
 	// public JapidResult(String contentType) {
 	// super();
 	// this.contentType = contentType;
@@ -50,16 +51,13 @@ public class JapidResult extends Result implements Externalizable{
 		this.headers = r.getHeaders();
 	}
 
-	
 	public JapidResult() {
 	}
-
 
 	public JapidResult(String description) {
 		super(description);
 		// TODO Auto-generated constructor stub
 	}
-
 
 	/**
 	 * extract content now and once. Eager evaluation of RenderResult
@@ -69,7 +67,7 @@ public class JapidResult extends Result implements Externalizable{
 		this.resultContent = extractContent();
 		return this;
 	}
-	
+
 	/**
 	 * @param r
 	 */
@@ -84,11 +82,11 @@ public class JapidResult extends Result implements Externalizable{
 	@Override
 	public void apply(Request request, Response response) {
 		String content = resultContent;
-		
-		if (!eager) 
+
+		if (!eager)
 			// late evaluation
 			content = extractContent();
-		
+
 		if (content != null)
 			try {
 				Response.current().out.write(content.getBytes("UTF-8"));
@@ -132,9 +130,17 @@ public class JapidResult extends Result implements Externalizable{
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 		renderResult = (RenderResult) in.readObject();
-		headers = (Map<String, String>)in.readObject();
+		headers = (Map<String, String>) in.readObject();
 		eager = in.readBoolean();
-		resultContent =  in.readUTF();
+		resultContent = in.readUTF();
+	}
+
+	/**
+	 * override to save a native call for better performance (5%)?
+	 */
+	@Override
+	public synchronized Throwable fillInStackTrace() {
+		return this;
 	}
 
 }

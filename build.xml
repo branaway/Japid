@@ -7,7 +7,7 @@
 	<property name="classes.play" value="tmp/classes.play" />
 	<property name="src.japidplay" value="src.japidplay" />
 	<property name="src.japid" value="src.japid" />
-    <property name="version" value="0.5.2"/>
+    <property name="version" value="0.5.3"/>
 
 	<path id="project.classpath">
 		<pathelement path="${play.path}/framework/classes" />

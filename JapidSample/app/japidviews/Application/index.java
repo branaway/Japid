@@ -40,6 +40,7 @@ static private final String static_1 = "\">Hello Japid, using an overridden vers
 "	<li><a href=\"application/dumpPost\">show how to dump a post detail with japid.dump.request spec in the application.conf. see console for output.</a></li>\n" + 
 "	<li><a href=\"application/cacheWithRenderJapid?a=hi\">cache with renderJapid</a></li>\n" + 
 "	<li><a href=\"application/testCacheFor\">using the CacheFor annotation</a></li>\n" + 
+"	<li><a href=\"application/in\">action forwarding with dontRedirect() from JapidController</a></li>\n" + 
 "</ul>\n" + 
 "";
 	public index() {

@@ -243,4 +243,14 @@ public class Application extends JapidController {
 		
 		renderJapidWith("templates/dumpPost.html", f1, f2, body);
 	}
+	
+	public static void in() {
+		dontRedirect();
+		out();
+	}
+	
+	public static void out() {
+		renderText("Hi out!");
+	}
+	
 }

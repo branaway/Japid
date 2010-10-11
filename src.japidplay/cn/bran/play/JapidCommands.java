@@ -144,6 +144,10 @@ public class JapidCommands {
 		return res;
 
 	}
+	
+	public static void regen() throws IOException {
+		regen(APP);
+	}
 
 	public static void regen(String root) throws IOException {
 		// TODO Auto-generated method stub

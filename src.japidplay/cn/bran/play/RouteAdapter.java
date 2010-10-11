@@ -77,16 +77,16 @@ public class RouteAdapter implements UrlMapper {
 		return Request.current().getBase() + this.lookup(action, args);
 	}
 
-	@Override
-	public String lookupStatic(String resource) {
-		return reverseStaticLookup(resource);
+	public String lookupStatic(String resource, boolean isAbs) {
+		return reverseStaticLookup(resource, isAbs);
 		// return Router.reverseWithCheck(resource,
 		// Play.getVirtualFile(resource));
 	}
 
 	@Override
 	public String lookupStaticAbs(String resource) {
-		return Request.current().getBase() + this.lookupStatic(resource);
+//		return Request.current().getBase() + this.lookupStatic(resource);
+		return this.lookupStatic(resource, true);
 	}
 
 	/**
@@ -245,12 +245,12 @@ public class RouteAdapter implements UrlMapper {
 	 * @param resource
 	 * @return
 	 */
-	public static String reverseStaticLookup(String resource) {
+	public static String reverseStaticLookup(String resource, boolean isAbs) {
 		try {
 			HashMap<String, String> hash = getStaticCache();
 			String url = hash.get(resource);
 			if (url == null) {
-				url = Router.reverseWithCheck(resource, Play.getVirtualFile(resource));
+				url = Router.reverseWithCheck(resource, Play.getVirtualFile(resource), isAbs);
 				hash.put(resource, url);
 			}
 			return url;
@@ -285,5 +285,10 @@ public class RouteAdapter implements UrlMapper {
 	static ThreadLocal<HashMap<String, String>> actionReverseCache = new ThreadLocal<HashMap<String, String>>();
 	// <action, paramNames>
 	static ThreadLocal<HashMap<String, String[]>> actionParamNamesCache = new ThreadLocal<HashMap<String, String[]>>();
+
+	@Override
+	public String lookupStatic(String resource) {
+		return lookupStatic(resource, false);
+	}
 
 }

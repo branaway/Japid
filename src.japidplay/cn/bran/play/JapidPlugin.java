@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import play.Play;
+import play.Play.Mode;
 import play.PlayPlugin;
 import play.exceptions.UnexpectedException;
 import play.mvc.Http.Cookie;
@@ -41,6 +42,15 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void onLoad() {
 		beforeDetectingChanges();
+		getDumpRequest();
+	}
+
+	/**
+	 * 
+	 */
+	private void getDumpRequest() {
+		String property = Play.configuration.getProperty("japid.dump.request");
+		this.dumpRequest = property;
 	}
 
 	@Override
@@ -60,7 +70,7 @@ public class JapidPlugin extends PlayPlugin {
 
 		if (hasRealOrphan) {
 			// a little messy here. clean the cache in case bad files are delete
-			// remove all the existing ApplicationClass will reload verything.
+			// remove all the existing ApplicationClass will reload everything.
 			// ideally we just need to remove the orphan. But the internal cache
 			// is not visible. Need API change to do that.
 			Play.classes.clear();
@@ -147,17 +157,38 @@ public class JapidPlugin extends PlayPlugin {
 		}
 	}
 
+	String dumpRequest = null;
+
 	@Override
 	public boolean rawInvocation(Request req, Response response) throws Exception {
-		String property = Play.configuration.getProperty("japid.dump.request");
-		if (property != null && property.length() > 0) {
-			if ("yes".equals(property) || "true".equals(property)) {
+		Mode mode = Play.mode;
+		if (mode == Mode.DEV) {
+			String path = req.path;
+			if (path.endsWith("_japidgen")) {
+				try {
+					beforeDetectingChanges();
+				} catch (Exception e) {
+				}
+				response.out.write("OK".getBytes());
+				return true;
+			} else if (path.endsWith("_japidregen")) {
+				try {
+					JapidCommands.regen();
+				} catch (Exception e) {
+				}
+				response.out.write("OK".getBytes());
+				return true;
+			}
+		}
+
+		if (dumpRequest != null && dumpRequest.length() > 0) {
+			if ("yes".equals(dumpRequest) || "true".equals(dumpRequest)) {
 				System.out.println("---->>" + req.method + " : " + req.url + " [" + req.action + "]");
 				// System.out.println("request.controller:" +
 				// current.controller);
-			} else if ("false".equals(property) || "no".equals(property)) {
+			} else if ("false".equals(dumpRequest) || "no".equals(dumpRequest)) {
 				// do nothing
-			} else if (req.url.matches(property)) {
+			} else if (req.url.matches(dumpRequest)) {
 				String querystring = req.querystring;
 				if (querystring != null && querystring.length() > 0)
 					querystring = "?" + querystring;
@@ -265,6 +296,7 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void afterApplicationStart() {
 		Japid.startup();
+		getDumpRequest();
 	}
 
 	@Override

@@ -6,6 +6,16 @@
                    
 Version History:
 
+2010/10/11:	V0.5.3
+			1. tested to work with latest 1.1 master branch on github.
+			2. added special URLs to invoke the japid commands:
+				e.g. 
+					http://localhost:9000/_japidgen to invoke the command to transform updated Japid templates;
+					This is equivalent to "play japid:gen" command.
+					
+				 	http://localhost:9000/_japidregen to invoke the command to transform all Japid templates;
+					This is equivalent to "play japid:regen" command.
+					
 2010/8/28:	V0.5.2
 			1. made Play's CacheFor annotation on outer action works with JapidResult, including #{invoke } tag in the templates. The content extraction in JapidResult is postponed until the apply() stage. The invoke tag can invoke actions with CacheFor as well and the cache TTL is respected. 
 			The CacheFor will replace the old verbose way of setting up cache control in controller and TTL spec in the invoke tag.
