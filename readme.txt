@@ -247,8 +247,7 @@ To build this module from source:
 
 Japid works with both the 1.1 and 1.0 nightly builds. Please read the quick start tutorial here:
 
-http://wiki.github.com/branaway/Japid/quick-start-with-japid-module-for-play
-
+http://github.com/branaway/Japid/wiki/Quick-start-with-Japid-module-for-Play
 
 Play and enjoy!
 
