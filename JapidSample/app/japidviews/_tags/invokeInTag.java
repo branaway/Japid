@@ -58,6 +58,7 @@ p(static_1);// line 1
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "controllers.Application.foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(controllers.Application.class, "foo");
 				controllers.Application.foo(); //
 			}
 		});

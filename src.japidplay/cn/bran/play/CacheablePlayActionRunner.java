@@ -1,9 +1,13 @@
 package cn.bran.play;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import play.cache.CacheFor;
 import play.mvc.ActionInvoker;
+import play.mvc.After;
+import play.mvc.Before;
+import play.mvc.Finally;
 import cn.bran.japid.template.RenderResult;
 
 /**
@@ -16,11 +20,13 @@ import cn.bran.japid.template.RenderResult;
  */
 public abstract class CacheablePlayActionRunner extends CacheableRunner {
 	String controllerActionString;
+	private CacheFor cacheFor;
+	private boolean gotFromCacheForCache;
 	
 	public CacheablePlayActionRunner(String ttl, Object... args) {
 		super(ttl, args);
 		if (args != null && args.length > 0) {
-			// the frist arg is the methodInvocation string, like myController.myMethod
+			// the first argument is the methodInvocation string, like myController.myMethod
 			controllerActionString = (String) args[0];
 		}
 	}
@@ -39,37 +45,51 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 
 	@Override
 	protected RenderResult render() {
-		// XXX can cache the actionMethod lookup, using Cache will probably work, since it's cleared up every time system detects changes
-		Object[] actionMethod = ActionInvoker.getActionMethod(controllerActionString);
-//		Class<?> controllerClass = (Class<?>) actionMethod[0];
-		Method meth = (Method) actionMethod[1];
-		CacheFor cacheFor = meth.getAnnotation(CacheFor.class);
-		String key = super.keyString;
-		if (cacheFor != null) {
-			Object v = play.cache.Cache.get(key);
-			if (v != null) {
-				if (v instanceof JapidResult) {
-					return ((JapidResult)v).getRenderResult();
-				}
-				else if (v instanceof CachedRenderResult) {
-					return ((CachedRenderResult)v).rr;
-				}
-				else {
-					System.out.println("got something from the cache but not sure what it is: " + v.getClass().getName());
-				}
-			}
-		}
-		
 		try {
 			play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
 			runPlayAction();
 			throw new RuntimeException("No render result from running play action. Probably the action was not using Japid templates.");
 		} catch (JapidResult jr) {
-			if (cacheFor != null) {
-				play.cache.Cache.set(key, jr, cacheFor.value());
+			if (cacheFor != null && !gotFromCacheForCache) {
+				play.cache.Cache.set(keyString, jr, cacheFor.value());
 			}
 			return jr.getRenderResult();
 		}
+	}
+
+	/**
+	 * check the cache for the action. The cache should have been caused by the CacheFor annotation
+	 * 
+	 * @param class1
+	 * @param actionName
+	 */
+	protected void checkActionCacheFor(Class<? extends JapidController> class1, String actionName) {
+		// TODO: should cache the CacheFor object
+		Method[] mths = class1.getDeclaredMethods();
+		for (Method m : mths) {
+			if (m.getName().equalsIgnoreCase(actionName) && Modifier.isPublic(m.getModifiers())) {
+				if (!m.isAnnotationPresent(Before.class) && !m.isAnnotationPresent(After.class) && !m.isAnnotationPresent(Finally.class)) {
+					cacheFor = m.getAnnotation(CacheFor.class);
+					if (cacheFor != null) {
+						String key = super.keyString;
+						Object v = play.cache.Cache.get(key);
+						if (v != null) {
+							if (v instanceof JapidResult) {
+								this.gotFromCacheForCache = true;
+								throw ((JapidResult) v);
+							} else if (v instanceof CachedRenderResult) {
+								this.gotFromCacheForCache = true;
+								throw new JapidResult(((CachedRenderResult) v).rr);
+							} else {
+//								throw new RuntimeException("got something from the cache but not sure what it is: "
+//										+ v.getClass().getName());
+							}
+						}
+					}
+					return;
+				}
+			}
+		}				
 	}
 
 }

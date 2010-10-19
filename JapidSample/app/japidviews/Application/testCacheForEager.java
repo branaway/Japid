@@ -67,6 +67,7 @@ p(static_2);// line 6
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.seconds", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(Application.class, "seconds");
 				Application.seconds(); //
 			}
 		});

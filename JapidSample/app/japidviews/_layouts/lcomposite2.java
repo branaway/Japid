@@ -56,6 +56,7 @@ static private final String static_3 = "\n" +
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "controllers.Application.foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(controllers.Application.class, "foo");
 				controllers.Application.foo(); //
 			}
 		});
@@ -67,6 +68,7 @@ p(static_2);// line 4
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "controllers.Application.foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(controllers.Application.class, "foo");
 				controllers.Application.foo(); //
 			}
 		});

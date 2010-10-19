@@ -82,6 +82,7 @@ p(static_5);// line 10
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echo", j) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(Application.class, "echo");
 				Application.echo(j); //
 			}
 		});
@@ -96,6 +97,7 @@ p(static_9);// line 16
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echoPost", p) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(Application.class, "echoPost");
 				Application.echoPost(p); //
 			}
 		});

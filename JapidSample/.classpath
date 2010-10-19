@@ -2,7 +2,11 @@
 <classpath>
 	<classpathentry excluding="views/**" kind="src" path="app"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="japid-head"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/play.jar" sourcepath="/home/bran/projects/play-git/framework"/>
+	<classpathentry kind="lib" path="/home/bran/projects/play-git/modules/japid-head/lib/japid-0.5.4.jar"/>
+	<classpathentry kind="lib" path="/home/bran/projects/play-git/modules/japid-head/lib/play-japid-0.5.4.jar" sourcepath="/Japid Module"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/async-http-client-1.2.0.jar"/>
@@ -47,12 +51,12 @@
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/netty-3.2.2.Final.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/org.eclipse.jdt.core_3.6.0.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/oval-1.50.jar"/>
+	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/PlayAgent.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/provided-servlet-2.5.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/signpost-core-1.2.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/snakeyaml-1.6.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Japid Module"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/play-git"/>
+	<classpathentry kind="lib" path="/home/bran/projects/play-git/framework/lib/xstream-1.3.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

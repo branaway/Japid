@@ -14,7 +14,6 @@
 package cn.bran.japid.compiler;
 
 import java.io.File;
-
 import java.util.List;
 import java.util.Stack;
 
@@ -552,6 +551,11 @@ public abstract class JapidAbstractCompiler {
 
 	static String createActionRunner(String action, String ttl, String base, String keys) {
 		String actionEscaped = action.replace("\"", "\\\"");
+		String controllerActionPart = action.substring(0, action.indexOf('('));
+		int lastDot = controllerActionPart.lastIndexOf('.');
+		String controllerName = controllerActionPart.substring(0, lastDot);
+		String actionName = controllerActionPart.substring(lastDot + 1);
+		
 		if (ttl == null) {
 			String template = 
 					"		%s.put(getOut().length(), new %s() {\n" + 
@@ -581,6 +585,7 @@ public abstract class JapidAbstractCompiler {
 					"		%s.put(getOut().length(), new %s(%s, %s, %s) {\r\n" + 
 					"			@Override\r\n" + 
 					"			public void runPlayAction() throws %s {\r\n" + 
+					"				super.checkActionCacheFor(%s.class, \"%s\");\n" + 
 					"				%s; //\r\n" + 
 					"			}\r\n" + 
 					"		});\r\n";
@@ -591,6 +596,8 @@ public abstract class JapidAbstractCompiler {
 					base, 
 					"".equals(keys) ? "\"\"" : keys,
 					JAPID_RESULT,
+					controllerName,
+					actionName,
 					action
 					);
 		}

@@ -21,7 +21,7 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class renderByPositionEmpty extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/renderByPositionEmpty.html";
-static private final String static_0 = "got it!\n" + 
+static private final String static_0 = "got it 2!\n" + 
 "\n" + 
 "";
 	public renderByPositionEmpty() {

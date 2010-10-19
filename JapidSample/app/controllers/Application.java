@@ -66,6 +66,7 @@ public class Application extends JapidController {
 	
 	@CacheFor("3s")
 	public static void every3() {
+		System.out.println("every3 called");
 		String b = "" + new Date().getSeconds();
 		renderJapid(b); // nested cache control still in effect
 	}
@@ -105,7 +106,7 @@ public class Application extends JapidController {
 	}
 	
 	public static void hello() {
-		renderText("hello，Japid!");
+		renderText("hello，Japid Play!");
 	}
 	
 	/**

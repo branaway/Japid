@@ -73,6 +73,7 @@ p(static_2);// line 8
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.every3", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(Application.class, "every3");
 				Application.every3(); //
 			}
 		});
@@ -82,6 +83,7 @@ p(static_3);// line 8
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.seconds", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(Application.class, "seconds");
 				Application.seconds(); //
 			}
 		});

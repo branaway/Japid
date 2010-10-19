@@ -13,7 +13,7 @@ import japidviews._tags.*;
 import controllers.*;
 import play.mvc.Http.*;
 import japidviews._javatags.*;
-import controllers.Application;
+import controllers.more.*;
 import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
@@ -36,20 +36,23 @@ static private final String static_3 = "\n" +
 "<div>"
 ;
 static private final String static_4 = "</div>\n" + 
+"<div>Another one in sub package: "
+;
+static private final String static_5 = "</div>\n" + 
 "\n" + 
 "<div>this one has full cache control</div>\n" + 
 "<div>"
 ;
-static private final String static_5 = "</div>\n" + 
+static private final String static_6 = "</div>\n" + 
 "\n" + 
 "<div>This one invokes an action with two params. Note the twoPrams() result is cached since the action carries CacheFor annotation.</div>\n" + 
 "<div>"
 ;
-static private final String static_6 = "</div>\n" + 
+static private final String static_7 = "</div>\n" + 
 "\n" + 
 "<p>Let's invoke a tag which invokes an action</p>\n" + 
 "";
-static private final String static_7 = ""
+static private final String static_8 = ""
 ;
 	public composite() {
 		super(null);
@@ -82,35 +85,48 @@ p(static_3);// line 3
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(Application.class, "authorPanel");
 				Application.authorPanel(post.getAuthor()); //
 			}
 		});
 
 // line 8
 p(static_4);// line 8
+		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "SubController.foo", post.getAuthor().name) {
+			@Override
+			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(SubController.class, "foo");
+				SubController.foo(post.getAuthor().name); //
+			}
+		});
+
+// line 9
+p(static_5);// line 9
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", "Application.authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(Application.class, "authorPanel");
 				Application.authorPanel(post.getAuthor()); //
 			}
 		});
 
-// line 11
-p(static_5);// line 11
+// line 12
+p(static_6);// line 12
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.twoParams", "hello", 10) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
+				super.checkActionCacheFor(Application.class, "twoParams");
 				Application.twoParams("hello", 10); //
 			}
 		});
 
-// line 14
-p(static_6);// line 14
-_invokeInTag3.setActionRunners(getActionRunners());
-_invokeInTag3.render();
-// line 17
-p(static_7);// line 17
+// line 15
+p(static_7);// line 15
+_invokeInTag4.setActionRunners(getActionRunners());
+_invokeInTag4.render();
+// line 18
+p(static_8);// line 18
 
 	}
-	private invokeInTag _invokeInTag3 = new invokeInTag(getOut());
+	private invokeInTag _invokeInTag4 = new invokeInTag(getOut());
 }
