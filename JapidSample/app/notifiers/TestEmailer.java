@@ -16,6 +16,9 @@ public class TestEmailer extends JapidMailer {
 		// attachment.setDescription("A pdf document");
 		// attachment.setPath(Play.getFile("rules.pdf").getPath());
 		// addAttachment(attachment);
-		send(post);
+		
+		// NOTE: this command will look for 
+		// app/japidviews/_notifiers/TestEmailer/emailme.html to render the content. 
+		send(post); 
 	}
 }

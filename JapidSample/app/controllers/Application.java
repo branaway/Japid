@@ -253,5 +253,8 @@ public class Application extends JapidController {
 	public static void out() {
 		renderText("Hi out!");
 	}
-	
+
+	public static void renderJapidWith(String template) {
+		JapidController.renderJapidWith(template);
+	}
 }

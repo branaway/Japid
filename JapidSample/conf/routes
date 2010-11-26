@@ -7,6 +7,6 @@ GET     /                                       Application.index
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
-
+GET /renderJapidWith/{<.+>template}             Application.renderJapidWith
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

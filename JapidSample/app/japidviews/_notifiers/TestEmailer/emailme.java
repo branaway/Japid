@@ -50,7 +50,7 @@ static private final String static_2 = "!"
 		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); assert renderArgs != null;
 		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();assert params != null;
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
-		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());assert errors != null;
+		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
 p(static_1);// line 1

@@ -6,6 +6,9 @@
                    
 Version History:
 
+2010/10/11: V0.5.5
+    1. Fixed a bug that caused NPE in generated template classes involving the Validation.current().errors().
+    2. removed the renderJapidWith special route, which is not compatible with the current Play 1.1.x brunch.              
 2010/10/11: V0.5.4
     1. Fixed a bug that prevented using a controller name in a sub-package in the invoke tag, even if the controller was imported via the `import directive.              
 2010/10/11: V0.5.3

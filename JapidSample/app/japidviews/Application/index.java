@@ -21,7 +21,7 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class index extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/index.html";
-static private final String static_0 = "<h3>There are a few samples in the japid.Application that demonstrate Japid features. More will be added.</h3>\n" + 
+static private final String static_0 = "<h2>There are a few samples in the japid.Application that demonstrate Japid features. More will be added.</h2>\n" + 
 "\n" + 
 "<ul>\n" + 
 "	<li><a href=\""
@@ -63,7 +63,7 @@ static private final String static_1 = "\">Hello Japid, using an overridden vers
 		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); assert renderArgs != null;
 		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();assert params != null;
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
-		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());assert errors != null;
+		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
 p(lookup("hello", new Object[]{}));// line 4

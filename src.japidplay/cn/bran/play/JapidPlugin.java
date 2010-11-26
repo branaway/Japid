@@ -155,6 +155,15 @@ public class JapidPlugin extends PlayPlugin {
 				}
 			}
 		}
+		
+//		// shortcut 
+//		String path = Request.current().path;
+//		// System.out.println("request path:" + path);
+//		Matcher matcher = renderJapidWithPattern.matcher(path);
+//		if (matcher.matches()) {
+//			String template = matcher.group(1);
+//			JapidController.renderJapidWith(template);
+//		}
 	}
 
 	String dumpRequest = null;
@@ -326,13 +335,7 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void routeRequest(Request request) {
-		String path = request.path;
-		// System.out.println("request path:" + path);
-		Matcher matcher = renderJapidWithPattern.matcher(path);
-		if (matcher.matches()) {
-			String template = matcher.group(1);
-			JapidController.renderJapidWith(template);
-		}
+
 	}
 
 	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");

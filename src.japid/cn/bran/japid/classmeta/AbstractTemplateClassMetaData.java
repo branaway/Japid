@@ -430,7 +430,7 @@ public class AbstractTemplateClassMetaData {
 				"		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); assert renderArgs != null;\r\n" + 
 				"		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();assert params != null;\r\n" + 
 				"		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;\r\n" + 
-				"		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation.errors());assert errors != null;\r\n" + 
+				"		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;\r\n" + 
 				"		play.Play _play = new play.Play(); assert _play != null;" + 
 				"");
 	}

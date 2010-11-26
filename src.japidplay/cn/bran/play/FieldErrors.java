@@ -13,6 +13,12 @@ public class FieldErrors extends ArrayList<Error> {
 		super(c);
 	}
 
+	public FieldErrors(Validation val) {
+		if (val != null) {
+			this.addAll(val.errors());
+		}
+	}
+	
 	public Error forKey(String key) {
         return Validation.error(key);
     }
