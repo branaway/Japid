@@ -22,42 +22,25 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class AllPost2 extends Layout{
 	public static final String sourceTemplate = "japidviews/templates/AllPost2.html";
-static private final String static_0 = ""
-;
-static private final String static_1 = ""
-;
-static private final String static_2 = ""
-;
-static private final String static_3 = "\n" + 
-"";
-static private final String static_4 = "\n" + 
+static private final String static_0 = "";
+static private final String static_1 = "\n";
+static private final String static_2 = "\n" + 
 "\n" + 
-"\n" + 
-"";
-static private final String static_5 = "	<p></p>\n" + 
-"	"
-;
-static private final String static_6 = "	    "
-;
+"\n";
+static private final String static_3 = "	<p></p>\n" + 
+"	";
+static private final String static_4 = "	    ";
+static private final String static_5 = "\n" + 
+"			<p>The real title is: ";
+static private final String static_6 = ";</p>\n" + 
+"	    ";
 static private final String static_7 = "\n" + 
-"			<p>The real title is: "
-;
-static private final String static_8 = ";</p>\n" + 
-"	    "
-;
-static private final String static_9 = "\n" + 
-"	"
-;
-static private final String static_10 = ""
-;
-static private final String static_11 = "	<p>There is no post at this moment</p>\n" + 
-"";
-static private final String static_12 = "\n" + 
-"";
-static private final String static_13 = "\n" + 
+"	";
+static private final String static_8 = "	<p>There is no post at this moment</p>\n";
+static private final String static_9 = "\n";
+static private final String static_10 = "\n" + 
 "\n" + 
-"<p>end of it</p>"
-;
+"<p>end of it</p>";
 	public AllPost2() {
 		super(null);
 	}
@@ -85,29 +68,26 @@ static private final String static_13 = "\n" +
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
-p(static_1);// line 1
-p(static_2);// line 2
-p(static_3);// line 3
+p(static_1);// line 3
 // line 5
-p(static_4);// line 5
+p(static_2);// line 5
 if (allPost.size() > 0 ) {// line 8
-p(static_5);// line 8
+p(static_3);// line 8
 for (Post p: allPost) {// line 10
-p(static_6);// line 10
+p(static_4);// line 10
 _Display1.setActionRunners(getActionRunners());
 _Display1.render(p, "home", _Display1DoBody);
 // line 11
-p(static_9);// line 13
+p(static_7);// line 13
 }// line 14
-p(static_10);// line 14
 } else {// line 15
-p(static_11);// line 15
+p(static_8);// line 15
 }// line 17
-p(static_12);// line 17
+p(static_9);// line 17
 _Tag22.setActionRunners(getActionRunners());
 _Tag22.render(blogTitle);
 // line 19
-p(static_13);// line 19
+p(static_10);// line 19
 
 	}
 	@Override protected void title() {
@@ -117,9 +97,9 @@ p(static_13);// line 19
 class Display1DoBody implements Display.DoBody< String>{
 	public void render(String title) {
 		// line 11
-p(static_7);// line 11
+p(static_5);// line 11
 p(title);// line 12
-p(static_8);// line 12
+p(static_6);// line 12
 
 	}
 }

@@ -22,34 +22,24 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class AllPost extends Layout{
 	public static final String sourceTemplate = "japidviews/templates/AllPost.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
-"\n" + 
-"";
+"\n";
 static private final String static_2 = "\n" + 
-"\n" + 
-"";
+"\n";
 static private final String static_3 = " \n" + 
-"	    "
-;
+"	    ";
 static private final String static_4 = "\n" + 
-"			"
-;
-static private final String static_5 = " The real title is: "
-;
+"			";
+static private final String static_5 = " The real title is: ";
 static private final String static_6 = ";\n" + 
-"	    "
-;
-static private final String static_7 = "\n" + 
-"";
+"	    ";
+static private final String static_7 = "\n";
 static private final String static_8 = "\n" + 
-"\n" + 
-"";
+"\n";
 static private final String static_9 = "\n" + 
 "\n" + 
-"<p>cool</p>"
-;
+"<p>cool</p>";
 	public AllPost() {
 		super(null);
 	}

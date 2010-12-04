@@ -21,39 +21,26 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class def extends defLayout{
 	public static final String sourceTemplate = "japidviews/templates/def.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
-"\n" + 
-"";
+"\n";
 static private final String static_2 = "\n" + 
-"\n" + 
-"";
+"\n";
 static private final String static_3 = "\n" + 
-"	"
-;
-static private final String static_4 = "	hello "
-;
-static private final String static_5 = "!\n" + 
-"";
+"	";
+static private final String static_4 = "	hello ";
+static private final String static_5 = "!\n";
 static private final String static_6 = "\n" + 
-"\n" + 
-"";
+"\n";
 static private final String static_7 = "\n" + 
-"	"
-;
-static private final String static_8 = "	hi "
-;
-static private final String static_9 = "!\n" + 
-"";
+"	";
+static private final String static_8 = "	hi ";
+static private final String static_9 = "!\n";
 static private final String static_10 = "\n" + 
-"\n" + 
-"";
+"\n";
 static private final String static_11 = "\n" + 
-"\n" + 
-"";
-static private final String static_12 = "\n" + 
-"";
+"\n";
+static private final String static_12 = "\n";
 	public def() {
 		super(null);
 	}

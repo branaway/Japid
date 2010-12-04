@@ -21,18 +21,14 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/TagLayout.html";
-static private final String static_0 = "标签布局\n" + 
-"";
-static private final String static_1 = "\n" + 
-"";
+static private final String static_0 = "标签布局\n";
+static private final String static_1 = "\n";
 static private final String static_2 = "\n" + 
-"<div>\n" + 
-"";
+"<div>\n";
 static private final String static_3 = "\n" + 
 "</div>\n" + 
 "\n" + 
-"\n" + 
-"";
+"\n";
 	public TagLayout() {
 		super(null);
 	}

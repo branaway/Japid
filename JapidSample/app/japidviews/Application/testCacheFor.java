@@ -22,26 +22,21 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class testCacheFor extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/testCacheFor.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
 "<html>\n" + 
 "\n" + 
 "<body>\n" + 
 "<p>heheh</p>\n" + 
 "\n" + 
-"	<p>hello "
-;
-static private final String static_2 = ", "
-;
+"	<p>hello ";
+static private final String static_2 = ", ";
 static private final String static_3 = ",</p> \n" + 
-"	<p>directly, now seconds is "
-;
+"	<p>directly, now seconds is ";
 static private final String static_4 = "</p>\n" + 
 "\n" + 
 "</body>\n" + 
-"</html>"
-;
+"</html>";
 	public testCacheFor() {
 		super(null);
 	}

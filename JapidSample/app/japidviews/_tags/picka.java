@@ -21,20 +21,17 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class picka extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_tags/picka.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "<p>\n" + 
 "some text \n" + 
 "</p>\n" + 
-"<p>\n" + 
-"";
+"<p>\n";
 static private final String static_2 = " \n" + 
 "</p>\n" + 
 "<p>\n" + 
 "more text \n" + 
 "</p>\n" + 
-" "
-;
+" ";
 	public picka() {
 		super(null);
 	}

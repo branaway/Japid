@@ -21,8 +21,7 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class cacheWithRenderJapid extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/cacheWithRenderJapid.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
@@ -31,12 +30,10 @@ static private final String static_1 = "\n" +
 "<title>Insert title here</title>\n" + 
 "</head>\n" + 
 "<body>\n" + 
-"hello "
-;
+"hello ";
 static private final String static_2 = "\n" + 
 "</body>\n" + 
-"</html>"
-;
+"</html>";
 	public cacheWithRenderJapid() {
 		super(null);
 	}

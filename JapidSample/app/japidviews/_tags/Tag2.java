@@ -21,14 +21,11 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class Tag2 extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_tags/Tag2.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
 "\n" + 
-"<span>"
-;
-static private final String static_2 = "</span>"
-;
+"<span>";
+static private final String static_2 = "</span>";
 	public Tag2() {
 		super(null);
 	}

@@ -21,13 +21,10 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class Msg extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/Msg.html";
-static private final String static_0 = "login: "
-;
+static private final String static_0 = "login: ";
 static private final String static_1 = "\n" + 
-"customer name: "
-;
-static private final String static_2 = ""
-;
+"customer name: ";
+static private final String static_2 = "";
 	public Msg() {
 		super(null);
 	}

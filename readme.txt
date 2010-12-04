@@ -6,6 +6,8 @@
                    
 Version History:
 
+2010/12/4: V0.5.6
+    1. Fixed a bug that caused `{ to detached from the previous if/while statement thus changed the semantics of the resultant Java code. 
 2010/10/11: V0.5.5
     1. Fixed a bug that caused NPE in generated template classes involving the Validation.current().errors().
     2. removed the renderJapidWith special route, which is not compatible with the current Play 1.1.x brunch.              

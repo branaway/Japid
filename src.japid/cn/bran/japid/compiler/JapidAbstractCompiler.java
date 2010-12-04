@@ -14,10 +14,12 @@
 package cn.bran.japid.compiler;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
+import cn.bran.japid.compiler.JapidParser.Token;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
 import cn.bran.japid.template.RenderResult;
@@ -56,10 +58,22 @@ public abstract class JapidAbstractCompiler {
 		public boolean hasBody;
 		// bran: put everything in the args tag in it
 		public String bodyArgsString = "";
-		public StringBuffer bodyBuffer = new StringBuffer(2000);
+//		public StringBuffer bodyBuffer = new StringBuffer(2000);
+		private List<String> bodyTextList = new ArrayList<String>();
+		{
+			bodyTextList.add("");
+		}
 		public String innerClassName;
 		public String args = "";
 		public int tagIndex;
+		public String getBodyText() {
+			StringBuffer sb = new StringBuffer(2000);
+			for (String s: bodyTextList) {
+				sb.append(s).append('\n');
+			}
+			String string = sb.toString();
+			return string.substring(0, string.length() - 1);
+		}
 	}
 
 	public void compile(JapidTemplate t) {
@@ -76,6 +90,8 @@ public abstract class JapidAbstractCompiler {
 		loop: for (;;) {
 
 			if (doNextScan) {
+				stateBeforePreviousState = previousState;
+				previousState = state;
 				state = parser.nextToken();
 			} else {
 				doNextScan = true;
@@ -91,6 +107,16 @@ public abstract class JapidAbstractCompiler {
 				script();
 				break;
 			case SCRIPT_LINE:
+				if (previousState == Token.PLAIN && stateBeforePreviousState == Token.SCRIPT_LINE) {
+					String spacer = this.getTemplateClassMetaData().removeLastSingleEmptyLine();
+					if (spacer != null) {
+						Tag currentScope = this.tagsStack.peek();
+						// currentScope.bodyBuffer.append(text);
+						int lastIndex = currentScope.bodyTextList.size() - 1;
+						currentScope.bodyTextList.remove(lastIndex);
+						currentScope.bodyTextList.set(lastIndex - 1, spacer);
+					}
+				}
 				script();
 				break;
 			case EXPR:
@@ -139,12 +165,10 @@ public abstract class JapidAbstractCompiler {
 			}
 		}
 		String lines = composeValidMultiLines(text);
-		String ref = this.getTemplateClassMetaData().addStaticText(lines);
+		String ref = this.getTemplateClassMetaData().addStaticText(lines, text);
 		if (ref != null) {
-			print("p(");
-			print(ref);
-			print(");");
-			markLine(parser.getLine());
+			print("p(" + ref + ");");
+			markLine(parser.getLineNumber());
 			println();
 		}
 	}
@@ -177,7 +201,7 @@ public abstract class JapidAbstractCompiler {
 
 			if (i == lines.length - 1 && !text.endsWith(NEW_LINE)) {
 				// last line
-				result += "\"\n";
+				result += "\"";
 			} else if (i == lines.length - 1 && line.equals("")) {
 				result += "\"";
 			} else {
@@ -187,6 +211,10 @@ public abstract class JapidAbstractCompiler {
 
 			// markLine(parser.getLine() + i);
 		}
+		String emptySuffix = " + \n\"\"";
+		if(result.endsWith(emptySuffix)) {
+			result = result.substring(0, result.length() - emptySuffix.length());
+		}
 		return result;
 	}
 
@@ -195,14 +223,25 @@ public abstract class JapidAbstractCompiler {
 	protected abstract void endTag();
 
 	protected void println() {
-		print(NEW_LINE);
-
+//		print(NEW_LINE);
+		Tag currentScope = this.tagsStack.peek();
+		currentScope.bodyTextList.add("");
 		currentLine++;
 	}
 
+
+	/**
+	 * always append to the last line
+	 * 
+	 * @param text
+	 */
 	protected void print(String text) {
 		Tag currentScope = this.tagsStack.peek();
-		currentScope.bodyBuffer.append(text);
+//		currentScope.bodyBuffer.append(text);
+		int lastIndex = currentScope.bodyTextList.size() - 1;
+		String lastLine = currentScope.bodyTextList.get(lastIndex);
+		lastLine += text;
+		currentScope.bodyTextList.set(lastIndex, lastLine);
 		// else if (this.currentInnerClassName != null)
 		// this.currentInnerClassRenderBody.append(text);
 		// else
@@ -287,7 +326,7 @@ public abstract class JapidAbstractCompiler {
 				String args = line.substring("log".length()).trim().replace(";", "");
 				if (args.trim().length() == 0)
 					args = "\"\"";
-				String logLine = "System.out.println(\"" + this.template.name.replace('\\', '/') + "(line " + (parser.getLine() + i) + "): \" + " + args + ");";
+				String logLine = "System.out.println(\"" + this.template.name.replace('\\', '/') + "(line " + (parser.getLineNumber() + i) + "): \" + " + args + ");";
 				println(logLine);
 			} else if (line.startsWith("suppressNull ") || line.startsWith("suppressNull\t")) {
 				String npe = line.substring("suppressNull".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
@@ -295,7 +334,7 @@ public abstract class JapidAbstractCompiler {
 					getTemplateClassMetaData().suppressNull();
 			} else {
 				print(line);
-				markLine(parser.getLine() + i);
+				markLine(parser.getLineNumber() + i);
 				println();
 			}
 		}
@@ -305,17 +344,21 @@ public abstract class JapidAbstractCompiler {
 	protected void expr() {
 		String expr = parser.getToken().trim();
 		if (getTemplateClassMetaData().suppressNull)
-			print("try { p(" + expr + "); } catch (NullPointerException npe) {}");
+			printLine("try { p(" + expr + "); } catch (NullPointerException npe) {}");
 		else
-			print("p(" + expr + ");");
-		markLine(parser.getLine());
+			printLine("p(" + expr + ");");
+	}
+
+	private void printLine(String string) {
+		print(string);
+		markLine(parser.getLineNumber());
 		println();
 	}
 
 	protected void message() {
 		String expr = parser.getToken().trim().replace('\'', '"');
 		print(";p(getMessage(" + expr + "));");
-		markLine(parser.getLine());
+		markLine(parser.getLineNumber());
 		println();
 	}
 
@@ -363,7 +406,7 @@ public abstract class JapidAbstractCompiler {
 				print("p(lookup(\"" + actionPart + "\", " + params + "));");
 			}
 		}
-		markLine(parser.getLine());
+		markLine(parser.getLineNumber());
 		println();
 	}
 
@@ -409,7 +452,7 @@ public abstract class JapidAbstractCompiler {
 		assert (tagsStack.empty());
 
 		// remove print nothing statement to save a few CPU cycles
-		this.getTemplateClassMetaData().body = tag.bodyBuffer.toString().replace("p(\"\")", "").replace("pln(\"\")", "pln()");
+		this.getTemplateClassMetaData().body = tag.getBodyText().replace("p(\"\")", "").replace("pln(\"\")", "pln()");
 		postParsing(tag);
 		template.javaSource = this.getTemplateClassMetaData().toString();
 
@@ -446,7 +489,7 @@ public abstract class JapidAbstractCompiler {
 			Tag tag = new TagInvocationLineParser().parse(tagText);
 			if (tag.tagName== null || tag.tagName.length() == 0)
 				throw new RuntimeException("tag name was empty: " + tagText);
-			tag.startLine = parser.getLine();
+			tag.startLine = parser.getLineNumber();
 			tag.hasBody = hasBody;
 			tag.tagIndex = tagIndex++;
 			return tag;
@@ -530,7 +573,7 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void endRegularTag(Tag tag) {
 		if (tag.hasBody) {
-			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.bodyBuffer.toString());
+			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.getBodyText());
 		} else if (!"doLayout".equals(tag.tagName)) {
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
 		}
@@ -608,6 +651,8 @@ public abstract class JapidAbstractCompiler {
 
 	protected int indentLevel = 0;
 	JapidParser.Token state;
+	JapidParser.Token previousState;
+	JapidParser.Token stateBeforePreviousState;
 
 	public JapidAbstractCompiler() {
 		super();

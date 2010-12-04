@@ -21,11 +21,8 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class dumpPost extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/dumpPost.html";
-static private final String static_0 = "\n" + 
-"";
-static private final String static_1 = ""
-;
-static private final String static_2 = "\n" + 
+static private final String static_0 = "\n";
+static private final String static_1 = "\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
 "<head>\n" + 
@@ -34,21 +31,17 @@ static private final String static_2 = "\n" +
 "</head>\n" + 
 "<body>\n" + 
 "<form method=\"POST\" action=\"/Application/dumpPost\">\n" + 
-"	<input type=\"text\" width=\"30\" name=\"f1\" value=\""
-;
+"	<input type=\"text\" width=\"30\" name=\"f1\" value=\"";
+static private final String static_2 = "\"/>\n" + 
+"	<input type=\"text\" width=\"30\" name=\"f2\" value=\"";
 static private final String static_3 = "\"/>\n" + 
-"	<input type=\"text\" width=\"30\" name=\"f2\" value=\""
-;
+"	<input type=\"text\" width=\"50\" name=\"body\" value=\"";
 static private final String static_4 = "\"/>\n" + 
-"	<input type=\"text\" width=\"50\" name=\"body\" value=\""
-;
-static private final String static_5 = "\"/>\n" + 
 "	<input type=\"submit\"/>\n" + 
 "</form>\n" + 
 "\n" + 
 "</body>\n" + 
-"</html>"
-;
+"</html>";
 	public dumpPost() {
 		super(null);
 	}
@@ -78,14 +71,13 @@ static private final String static_5 = "\"/>\n" +
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
-p(static_1);// line 2
-p(static_2);// line 3
+p(static_1);// line 3
 try { p(f1); } catch (NullPointerException npe) {}// line 13
-p(static_3);// line 13
+p(static_2);// line 13
 try { p(f2); } catch (NullPointerException npe) {}// line 14
-p(static_4);// line 14
+p(static_3);// line 14
 try { p(body); } catch (NullPointerException npe) {}// line 15
-p(static_5);// line 15
+p(static_4);// line 15
 
 	}
 }

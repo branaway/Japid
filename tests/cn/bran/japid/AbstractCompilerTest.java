@@ -18,7 +18,24 @@ public class AbstractCompilerTest {
 		"\n";
 		
 		String result = JapidAbstractCompiler.composeValidMultiLines(src);
-		System.out.println(result);
+		System.out.println("|" + result + "|");
 	}
 
+	@Test
+	public void testComposeValidMultiLinesSingleLine() {
+		String src = " ";
+		
+		String result = JapidAbstractCompiler.composeValidMultiLines(src);
+		assertEquals("\" \"", result);
+	}
+
+	@Test
+	public void testComposeValidMultiLines2lines() {
+		String src = " \n ";
+		
+		String result = JapidAbstractCompiler.composeValidMultiLines(src);
+		System.out.println("|" + result + "|");
+		assertEquals("\" \\n\" + \n\" \"", result);
+	}
+	
 }

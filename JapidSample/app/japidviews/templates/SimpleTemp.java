@@ -21,14 +21,11 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class SimpleTemp extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/SimpleTemp.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
 "\n" + 
-"<p>cool "
-;
-static private final String static_2 = "</p>"
-;
+"<p>cool ";
+static private final String static_2 = "</p>";
 	public SimpleTemp() {
 		super(null);
 	}

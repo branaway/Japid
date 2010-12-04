@@ -21,13 +21,10 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class authenticityToken extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_tags/authenticityToken.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
-"<input type=\"hidden\" name=\"authenticityToken\" value=\""
-;
-static private final String static_2 = "\"/ >"
-;
+"<input type=\"hidden\" name=\"authenticityToken\" value=\"";
+static private final String static_2 = "\"/ >";
 	public authenticityToken() {
 		super(null);
 	}

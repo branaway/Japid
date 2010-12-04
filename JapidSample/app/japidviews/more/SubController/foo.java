@@ -21,13 +21,10 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class foo extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/more/SubController/foo.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
-"foo "
-;
-static private final String static_2 = "?\n" + 
-"";
+"foo ";
+static private final String static_2 = "?\n";
 	public foo() {
 		super(null);
 	}

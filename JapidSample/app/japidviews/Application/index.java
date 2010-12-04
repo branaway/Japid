@@ -24,8 +24,7 @@ public class index extends cn.bran.japid.template.JapidTemplateBase{
 static private final String static_0 = "<h2>There are a few samples in the japid.Application that demonstrate Japid features. More will be added.</h2>\n" + 
 "\n" + 
 "<ul>\n" + 
-"	<li><a href=\""
-;
+"	<li><a href=\"";
 static private final String static_1 = "\">Hello Japid, using an overridden version of renderText()</a></li>\n" + 
 "	<li><a href=\"application/callTag\">using tags in a template</a></li>\n" + 
 "	<li><a href=\"renderJapidWith/templates/def.html\"><em>def</em> tag: define a method that return a string that can be invoked from super template. Compare this to the <b>set</b> tag</a></li>\n" + 
@@ -41,8 +40,9 @@ static private final String static_1 = "\">Hello Japid, using an overridden vers
 "	<li><a href=\"application/cacheWithRenderJapid?a=hi\">cache with renderJapid</a></li>\n" + 
 "	<li><a href=\"application/testCacheFor\">using the CacheFor annotation</a></li>\n" + 
 "	<li><a href=\"application/in\">action forwarding with dontRedirect() from JapidController</a></li>\n" + 
-"</ul>\n" + 
-"";
+"	<li><a href=\"renderJapidWith/templates/openBrace.html\"> use `{ in if and while </a></li>\n" + 
+"	\n" + 
+"</ul>\n";
 	public index() {
 		super(null);
 	}

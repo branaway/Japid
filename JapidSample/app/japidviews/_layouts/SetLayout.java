@@ -21,12 +21,9 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public abstract class SetLayout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/SetLayout.html";
-static private final String static_0 = ""
-;
-static private final String static_1 = "\n" + 
-"";
-static private final String static_2 = "\n" + 
-"";
+static private final String static_0 = "";
+static private final String static_1 = "\n";
+static private final String static_2 = "\n";
 	public SetLayout() {
 		super(null);
 	}

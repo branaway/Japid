@@ -40,6 +40,10 @@ public class Application extends JapidController {
 //	or 		render(r);
 	}
 	
+	public static void authorPanel2(final Author a) {
+		renderJapid(a);
+	}
+	
 	public static void cacheWithRenderJapid(final String a) {
 //			CacheableRunner r = new CacheableRunner("5s", genCacheKey()) {
 		CacheableRunner r = new CacheableRunner("5s") {
@@ -256,5 +260,9 @@ public class Application extends JapidController {
 
 	public static void renderJapidWith(String template) {
 		JapidController.renderJapidWith(template);
+	}
+	
+	public static void decorateName(String name) {
+		renderJapid(name);
 	}
 }

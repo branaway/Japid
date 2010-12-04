@@ -22,29 +22,20 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class Posts extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/Posts.html";
-static private final String static_0 = ""
-;
-static private final String static_1 = "\n" + 
-"";
+static private final String static_0 = "";
+static private final String static_1 = "\n";
 static private final String static_2 = "\n" + 
-"\n" + 
-"";
+"\n";
 static private final String static_3 = " \n" + 
-"	- title: "
-;
+"	- title: ";
 static private final String static_4 = "\n" + 
-"	- date: "
-;
+"	- date: ";
 static private final String static_5 = "\n" + 
-"	- author "
-;
-static private final String static_6 = " "
-;
+"	- author ";
+static private final String static_6 = " ";
 static private final String static_7 = "\n" + 
-"	the real title: 你好\n" + 
-"";
-static private final String static_8 = "\n" + 
-"";
+"	the real title: 你好\n";
+static private final String static_8 = "\n";
 	public Posts() {
 		super(null);
 	}

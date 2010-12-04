@@ -22,20 +22,16 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class testCacheForEager extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/testCacheForEager.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
 "<html>\n" + 
 "\n" + 
 "<body>\n" + 
-"	hello "
-;
-static private final String static_2 = ", now seconds is "
-;
+"	hello ";
+static private final String static_2 = ", now seconds is ";
 static private final String static_3 = "\n" + 
 "</body>\n" + 
-"</html>"
-;
+"</html>";
 	public testCacheForEager() {
 		super(null);
 	}

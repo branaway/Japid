@@ -28,19 +28,8 @@ public class headers extends superheaders{
 	headers.put("Server", "nginx/0.8.26");
 	headers.put("Cache-Control", "max-age=600");
 }
-static private final String static_0 = ""
-;
-static private final String static_1 = ""
-;
-static private final String static_2 = ""
-;
-static private final String static_3 = ""
-;
-static private final String static_4 = ""
-;
-static private final String static_5 = ""
-;
-static private final String static_6 = "\n" + 
+static private final String static_0 = "";
+static private final String static_1 = "\n" + 
 "<p>\n" + 
 "\"setHeader\" is for adding a http response header to the response. One cannot use \"\" to surround the value part\n" + 
 "</p>\n" + 
@@ -53,8 +42,7 @@ static private final String static_6 = "\n" +
 "Notes: If a response includes both an Expires header and a max-age directive, the max-age directive overrides the Expires header, even if the Expires header is more restrictive.\n" + 
 "</p>\n" + 
 "\n" + 
-"\n" + 
-"";
+"\n";
 	public headers() {
 		super(null);
 	}
@@ -78,12 +66,7 @@ static private final String static_6 = "\n" +
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
-p(static_1);// line 1
-p(static_2);// line 2
-p(static_3);// line 3
-p(static_4);// line 4
-p(static_5);// line 5
-p(static_6);// line 6
+p(static_1);// line 6
 
 	}
 }

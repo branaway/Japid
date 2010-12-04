@@ -21,19 +21,14 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class authorPanel extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/authorPanel.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
-"<p>author name: "
-;
+"<p>author name: ";
 static private final String static_2 = "</p>\n" + 
-"<p>his birthdate: "
-;
+"<p>his birthdate: ";
 static private final String static_3 = "</p>\n" + 
-"<p>and his is a '"
-;
-static private final String static_4 = "'</p>\n" + 
-"";
+"<p>and his is a '";
+static private final String static_4 = "'</p>\n";
 	public authorPanel() {
 		super(null);
 	}

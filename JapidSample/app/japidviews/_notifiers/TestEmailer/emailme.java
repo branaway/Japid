@@ -21,13 +21,10 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class emailme extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_notifiers/TestEmailer/emailme.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
-"Hello "
-;
-static private final String static_2 = "!"
-;
+"Hello ";
+static private final String static_2 = "!";
 	public emailme() {
 		super(null);
 	}

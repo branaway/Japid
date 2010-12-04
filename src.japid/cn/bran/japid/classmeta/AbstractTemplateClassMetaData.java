@@ -73,6 +73,8 @@ public class AbstractTemplateClassMetaData {
 
 	// each line: byte[] _lineXXX=new byte[]{12, 23, 45};
 	List<String> statics = new ArrayList<String>();
+	// the source of the plain text line
+	List<String> staticsSrc = new ArrayList<String>();
 	int staticCounter = 0;
 
 	// List<String>importsLines = new ArrayList<String>();
@@ -310,9 +312,10 @@ public class AbstractTemplateClassMetaData {
 	 * 
 	 * @param text
 	 *            something like \"hello\"
+	 * @param src 
 	 * @return
 	 */
-	public String addStaticText(String text) {
+	public String addStaticText(String text, String src) {
 		if (text != null && !text.isEmpty()) {
 			if (trimStaticContent) {
 				if (text.trim().length() == 0) {
@@ -320,6 +323,7 @@ public class AbstractTemplateClassMetaData {
 				}
 			}
 			this.statics.add(text);
+			this.staticsSrc.add(src);
 			return "static_" + (statics.size() - 1);
 		} else
 			return null;
@@ -412,7 +416,7 @@ public class AbstractTemplateClassMetaData {
 			pln("StringBuilder sb = new StringBuilder();");
 			pln("StringBuilder ori = getOut();");
 			pln("this.setOut(sb);");
-			pln(tag.bodyBuffer.toString());
+			pln(tag.getBodyText());
 			pln("this.setOut(ori);");
 			pln("return sb.toString();");
 			pln("}");
@@ -433,5 +437,37 @@ public class AbstractTemplateClassMetaData {
 				"		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;\r\n" + 
 				"		play.Play _play = new play.Play(); assert _play != null;" + 
 				"");
+	}
+
+	/**
+	 * remove the plain text line between two consecutive script line, if the plain text is made of space chars only .
+	 * 
+	 * return true if that's the case
+	 */
+	public String removeLastSingleEmptyLine() {
+		int last = staticsSrc.size()  - 1;
+		String s = this.staticsSrc.get(last);
+		char[] charArray = s.toCharArray();
+		for (char c : charArray) {
+			if (!Character.isSpaceChar(c))
+				return null;
+		}
+		
+		if (s.contains("\n")) {
+			if (s.indexOf('\n') == s.lastIndexOf('\n')) {
+				// it contains only one newline
+				this.statics.remove(last);
+				this.staticsSrc.remove(last);
+				return s;
+			}
+			else 
+				return null;
+		}
+		else {
+			this.statics.remove(last);
+			this.staticsSrc.remove(last);
+			return s;
+		}
+		
 	}
 }

@@ -21,17 +21,12 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class dummyTag extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_tags/dummyTag.html";
-static private final String static_0 = ""
-;
-static private final String static_1 = ""
-;
-static private final String static_2 = "\n" + 
-"";
-static private final String static_3 = "Hi "
-;
+static private final String static_0 = "";
+static private final String static_1 = "";
+static private final String static_2 = "\n";
+static private final String static_3 = "Hi ";
 static private final String static_4 = "!\n" + 
-"\n" + 
-"";
+"\n";
 	public dummyTag() {
 		super(null);
 	}

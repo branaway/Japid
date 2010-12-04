@@ -21,28 +21,18 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class EachCall extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/EachCall.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
-"the closure form:\n" + 
-"";
+"the closure form:\n";
 static private final String static_2 = "\n" + 
-"	<p>"
-;
-static private final String static_3 = " :: "
-;
-static private final String static_4 = " || "
-;
-static private final String static_5 = ", ^ "
-;
-static private final String static_6 = ", @ "
-;
-static private final String static_7 = ", # "
-;
-static private final String static_8 = "</p>\n" + 
-"";
-static private final String static_9 = "\n" + 
-"";
+"	<p>";
+static private final String static_3 = " :: ";
+static private final String static_4 = " || ";
+static private final String static_5 = ", ^ ";
+static private final String static_6 = ", @ ";
+static private final String static_7 = ", # ";
+static private final String static_8 = "</p>\n";
+static private final String static_9 = "\n";
 	public EachCall() {
 		super(null);
 	}

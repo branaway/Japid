@@ -62,7 +62,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 			regularTagInvoke(tag);
 		}
 		tagsStack.push(tag);
-		markLine(parser.getLine());
+		markLine(parser.getLineNumber());
 		println();
 		skipLineBreak = true;
 

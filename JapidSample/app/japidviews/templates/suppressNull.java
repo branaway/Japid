@@ -21,21 +21,14 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class suppressNull extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/suppressNull.html";
-static private final String static_0 = ""
-;
-static private final String static_1 = "\n" + 
-"";
-static private final String static_2 = "\n" + 
-"";
-static private final String static_3 = "safe to do a.something: "
-;
+static private final String static_0 = "";
+static private final String static_1 = "\n";
+static private final String static_2 = "\n";
+static private final String static_3 = "safe to do a.something: ";
 static private final String static_4 = "\n" + 
-"\n" + 
-"";
-static private final String static_5 = "safe to do a.something too: "
-;
-static private final String static_6 = "\n" + 
-"";
+"\n";
+static private final String static_5 = "safe to do a.something too: ";
+static private final String static_6 = "\n";
 	public suppressNull() {
 		super(null);
 	}

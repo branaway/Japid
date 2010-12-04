@@ -82,6 +82,17 @@ public class BranCompilerTests {
 		System.out.println(bt.javaSource);
 	}
 	
+	@Test
+	public void testOpenBrace() throws IOException {
+		String srcFile = "tests/openBrace.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate(srcFile, src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+	}
+	
 	private static String readFile(String path) throws IOException {
 		FileInputStream stream = new FileInputStream(new File(path));
 		try {

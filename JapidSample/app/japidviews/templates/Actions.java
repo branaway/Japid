@@ -21,26 +21,19 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class Actions extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/Actions.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
 "\n" + 
-"<form url=\""
-;
+"<form url=\"";
 static private final String static_2 = "\"></form>\n" + 
-"<form url=\""
-;
+"<form url=\"";
 static private final String static_3 = "\"></form>\n" + 
-"<form url=\""
-;
+"<form url=\"";
 static private final String static_4 = "\"></form>\n" + 
-"<form url='"
-;
+"<form url='";
 static private final String static_5 = "'></form>\n" + 
-"<form url=\""
-;
-static private final String static_6 = "\"></form>\n" + 
-"";
+"<form url=\"";
+static private final String static_6 = "\"></form>\n";
 	public Actions() {
 		super(null);
 	}

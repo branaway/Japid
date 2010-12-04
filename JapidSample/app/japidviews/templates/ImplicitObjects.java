@@ -23,34 +23,24 @@ public class ImplicitObjects extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/ImplicitObjects.html";
 static private final String static_0 = "\n" + 
 "\n" + 
-"<p>request: "
-;
+"<p>request: ";
 static private final String static_1 = "</p>\n" + 
-"<p>response: "
-;
+"<p>response: ";
 static private final String static_2 = "</p>\n" + 
-"<p>flash: "
-;
+"<p>flash: ";
 static private final String static_3 = "</p>\n" + 
-"<p>errors: "
-;
+"<p>errors: ";
 static private final String static_4 = "</p>\n" + 
-"<p>session: "
-;
+"<p>session: ";
 static private final String static_5 = "</p>\n" + 
-"<p>renderArgs: "
-;
+"<p>renderArgs: ";
 static private final String static_6 = "</p>\n" + 
-"<p>params: "
-;
+"<p>params: ";
 static private final String static_7 = "</p>\n" + 
-"<p>validation: "
-;
+"<p>validation: ";
 static private final String static_8 = "</p>\n" + 
-"<p>play: "
-;
-static private final String static_9 = "</p>"
-;
+"<p>play: ";
+static private final String static_9 = "</p>";
 	public ImplicitObjects() {
 		super(null);
 	}

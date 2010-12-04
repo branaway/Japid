@@ -29,13 +29,11 @@ static private final String static_0 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML
 "</head>\n" + 
 "<body>\n" + 
 "<h1>actions</h1>\n" + 
-"<p><a href='"
-;
+"<p><a href='";
 static private final String static_1 = "'>Action notation </a></p>\n" + 
 "<p><a href='/japid.SampleController/reverseLookup1?agrs=order0&args=order2'>action reverse lookup cannot handle arrays or collections...</a></p>\n" + 
 "</body>\n" + 
-"</html>"
-;
+"</html>";
 	public reverseLookup0() {
 		super(null);
 	}

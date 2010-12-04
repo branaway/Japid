@@ -21,16 +21,12 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class callPicka extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/callPicka.html";
-static private final String static_0 = "before...\n" + 
-"";
+static private final String static_0 = "before...\n";
 static private final String static_1 = "\n" + 
-"    the tag chosed: "
-;
-static private final String static_2 = "\n" + 
-"";
+"    the tag chosed: ";
+static private final String static_2 = "\n";
 static private final String static_3 = "\n" + 
-"after...\n" + 
-"";
+"after...\n";
 	public callPicka() {
 		super(null);
 	}

@@ -86,7 +86,7 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		
 		tagsStack.push(tag);
 		// XXX other tags
-		markLine(parser.getLine());
+		markLine(parser.getLineNumber());
 		println();
 		skipLineBreak = true;
 
@@ -110,7 +110,7 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		if ("set".equals(tagName)) {
 			if (tag.hasBody) {
 				String key = tag.args;
-				this.cmd.addSetTag(key, tag.bodyBuffer.toString());
+				this.cmd.addSetTag(key, tag.getBodyText());
 			}
 		} else	if ("def".equals(tagName)) {
 			endDef(tag);

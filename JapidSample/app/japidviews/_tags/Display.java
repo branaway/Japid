@@ -22,27 +22,20 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class Display extends TagLayout{
 	public static final String sourceTemplate = "japidviews/_tags/Display.html";
-static private final String static_0 = ""
-;
+static private final String static_0 = "";
 static private final String static_1 = "\n" + 
 "\n" + 
 "<div class=\"divvy\">\n" + 
-"	<p>title: "
-;
+"	<p>title: ";
 static private final String static_2 = "</p>\n" + 
-"	<p>at: "
-;
+"	<p>at: ";
 static private final String static_3 = "</p>\n" + 
-"	<p>by: "
-;
-static private final String static_4 = ", "
-;
+"	<p>by: ";
+static private final String static_4 = ", ";
 static private final String static_5 = "</p>\n" + 
-"	"
-;
+"	";
 static private final String static_6 = "\n" + 
-"</div>"
-;
+"</div>";
 	public Display() {
 		super(null);
 	}

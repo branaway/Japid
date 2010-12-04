@@ -22,17 +22,14 @@ import static cn.bran.play.WebUtils.*;
 public abstract class Layout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/Layout.html";
 static private final String static_0 = "I'm the layout.\n" + 
-"<p>\n" + 
-"";
+"<p>\n";
 static private final String static_1 = ";\n" + 
 "</p>\n" + 
-"<div>\n" + 
-"";
+"<div>\n";
 static private final String static_2 = "\n" + 
 "</div>\n" + 
 "\n" + 
-"\n" + 
-"";
+"\n";
 	public Layout() {
 		super(null);
 	}
