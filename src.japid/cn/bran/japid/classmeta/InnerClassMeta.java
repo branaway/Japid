@@ -37,7 +37,7 @@ public class InnerClassMeta {
 //	private String interfaceName;
 	public InnerClassMeta(String tagName, int counter, String renderArgs, String renderBody) {
 		super();
-		this.tagName = tagName;
+		this.tagName = tagName.replace('/', '.');
 		this.counter = counter;
 		this.renderArgs = renderArgs;
 		this.renderBody = renderBody;
@@ -78,14 +78,14 @@ public class InnerClassMeta {
 				classParams = "<" + classParams.substring(1) + ">";
 
 		StringBuilder sb = new StringBuilder();
-		line(sb, "class " + tagName + counter + "DoBody implements " + tagName + ".DoBody" +  classParams + "{");
+		line(sb, "class " + getInnerClassName() + counter + "DoBody implements " + tagName + ".DoBody" +  classParams + "{");
 		line(sb, "\tpublic void render(" + renderArgs  + ") {");
 		line(sb, "\t\t" + renderBody);
 		line(sb, "\t}");
 		line(sb, "}");
 		
 		// bodyclass instance
-		String bodyClassName = tagName + counter +  "DoBody"; 
+		String bodyClassName = getInnerClassName() + counter +  "DoBody"; 
 		String bodyField = "private " + bodyClassName +" _" + bodyClassName + 
 			" = new " + bodyClassName + "();";
 		line(sb, "\t" + bodyField);
@@ -95,5 +95,9 @@ public class InnerClassMeta {
 	
 	private void line (StringBuilder sb, String line) {
 		sb.append(line + "\n");
+	}
+	
+	public String getInnerClassName() {
+		return tagName.replace('.', '_').replace('/', '_');
 	}
 }

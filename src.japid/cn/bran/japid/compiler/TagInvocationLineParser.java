@@ -5,7 +5,7 @@ import java.util.List;
 import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 
 /**
- * parse #{tag (T t, V v) | U u }
+ * parse #{tag (t, v) | U u }
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
@@ -17,11 +17,11 @@ public class TagInvocationLineParser {
 		Tag tag = new Tag();
 		for (int i = 0; i < line.length(); i++) {
 			char c = line.charAt(i);
-			if (Character.isJavaIdentifierPart(c)) {
+			if (Character.isJavaIdentifierPart(c) || c == '.' || c == '/') {
 				continue;
 			} else {
 				if (Character.isWhitespace(c) || c == '(' || c == '|') {
-					tag.tagName = line.substring(0, i);
+					tag.tagName = line.substring(0, i).replace('/', '.');
 					line = line.substring(i).trim();
 					break;
 				} else {
@@ -32,7 +32,7 @@ public class TagInvocationLineParser {
 		if (tag.tagName == null) {
 			// there was no end char in the line. so the whole line is the tag
 			// name
-			tag.tagName = line;
+			tag.tagName = line.replace('/', '.');
 			return tag;
 		}
 

@@ -113,6 +113,7 @@ public class Caches extends JapidController {
 		else {
 			renderText("bad to know 2...");
 		}
+		
 	}
 	
 	public static void testStringBuilderWithMyMem() {

@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +36,8 @@ public class JapidPlugin extends PlayPlugin {
 	private static final String RENDER_JAPID_WITH = "/renderJapidWith";
 	private static final String NO_CACHE = "no-cache";
 	private static AtomicLong lastTimeChecked = new AtomicLong(0);
-
+	// can be used to cache a plugin scoped valules
+	private static Map<String, Object> japidCache = new ConcurrentHashMap<String, Object>();
 	/**
 	 * pre-compile the templates so PROD mode would work
 	 */
@@ -43,6 +45,11 @@ public class JapidPlugin extends PlayPlugin {
 	public void onLoad() {
 		beforeDetectingChanges();
 		getDumpRequest();
+		japidCache.clear();
+	}
+	
+	public static Map<String, Object> getCache() {
+		return japidCache;
 	}
 
 	/**

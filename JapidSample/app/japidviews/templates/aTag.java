@@ -1,4 +1,4 @@
-package japidviews.Application;
+package japidviews.templates;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
@@ -16,24 +16,27 @@ import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import static cn.bran.play.WebUtils.*;
-// NOTE: This file was generated from: japidviews/Application/decorateName.html
+// NOTE: This file was generated from: japidviews/templates/aTag.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
-public class decorateName extends cn.bran.japid.template.JapidTemplateBase{
-	public static final String sourceTemplate = "japidviews/Application/decorateName.html";
+public class aTag extends cn.bran.japid.template.JapidTemplateBase{
+	public static final String sourceTemplate = "japidviews/templates/aTag.html";
 static private final String static_0 = "";
 static private final String static_1 = "\n" + 
-"^^^_ ";
-static private final String static_2 = " _^^^\n";
-	public decorateName() {
+"<p>\n";
+static private final String static_2 = "\n" + 
+"</p>\n" + 
+"\n" + 
+"Note: the join() is defined in the JavaExtensions class in the Play! framework, which is automatically imported. ";
+	public aTag() {
 		super(null);
 	}
-	public decorateName(StringBuilder out) {
+	public aTag(StringBuilder out) {
 		super(out);
 	}
-	String s;
-	public cn.bran.japid.template.RenderResult render(String s) {
-		this.s = s;
+	List<String> strings;
+	public cn.bran.japid.template.RenderResult render(List<String> strings) {
+		this.strings = strings;
 		long t = -1;
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
@@ -51,8 +54,8 @@ static private final String static_2 = " _^^^\n";
 		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
 p(static_1);// line 1
-p(s);// line 3
-p(static_2);// line 3
+p("hi:" + join(strings, "|"));// line 4
+p(static_2);// line 4
 
 	}
 }

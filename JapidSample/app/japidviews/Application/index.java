@@ -21,7 +21,7 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class index extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/index.html";
-static private final String static_0 = "<h2>There are a few samples in the japid.Application that demonstrate Japid features. More will be added.</h2>\n" + 
+static private final String static_0 = "<h2>Some Samples that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<ul>\n" + 
 "	<li><a href=\"";
@@ -41,7 +41,6 @@ static private final String static_1 = "\">Hello Japid, using an overridden vers
 "	<li><a href=\"application/testCacheFor\">using the CacheFor annotation</a></li>\n" + 
 "	<li><a href=\"application/in\">action forwarding with dontRedirect() from JapidController</a></li>\n" + 
 "	<li><a href=\"renderJapidWith/templates/openBrace.html\"> use `{ in if and while </a></li>\n" + 
-"	\n" + 
 "</ul>\n";
 	public index() {
 		super(null);

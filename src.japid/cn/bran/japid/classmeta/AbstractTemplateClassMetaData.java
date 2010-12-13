@@ -192,10 +192,10 @@ public class AbstractTemplateClassMetaData {
 	protected void callTags() {
 		// inners
 		for (InnerClassMeta inner : this.innersforTagCalls) {
-			// create a resuable instance _tagName_indexand a instance
+			// create a reusable instance _tagName_indexand a instance
 			// initializer
 			String tagClassName = inner.tagName;
-			String field = "private " + tagClassName + " _" + inner.tagName + inner.counter + " = new " + tagClassName + "(getOut());";
+			String field = "private " + tagClassName + " _" + inner.getInnerClassName() + inner.counter + " = new " + tagClassName + "(getOut());";
 			pln("\t" + field);
 
 			if (inner.renderBody != null) {

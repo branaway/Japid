@@ -89,4 +89,13 @@ public class TagInvocationLineParserTest {
 		assertEquals("", t.bodyArgsString);
 	}
 
+	@Test
+	public void testTagWithPath() {
+		String src = "my.tag a, b";
+		Tag t = p.parse(src);
+		assertEquals("my.tag", t.tagName);
+		assertEquals("a, b", t.args);
+		assertEquals("", t.bodyArgsString);
+	}
+	
 }

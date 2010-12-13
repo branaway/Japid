@@ -12,8 +12,7 @@ import japidviews._tags.*;
 import controllers.*;
 import play.mvc.Http.*;
 import japidviews._javatags.*;
-import models.japidsample.Author2;
-import models.japidsample.Author;
+import models.japidsample.*;
 import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
@@ -67,17 +66,17 @@ static private final String static_6 = "\n" +
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
 p(static_0);// line 1
-p(static_1);// line 3
-p(ss);// line 5
-p(static_2);// line 5
-p(ii);// line 6
-p(static_3);// line 6
-p(au1.name);// line 7
-p(static_4);// line 7
-p(au2.name);// line 7
-p(static_5);// line 7
-p(au22.who);// line 7
-p(static_6);// line 7
+p(static_1);// line 2
+p(ss);// line 4
+p(static_2);// line 4
+p(ii);// line 5
+p(static_3);// line 5
+p(au1.name);// line 6
+p(static_4);// line 6
+p(au2.name);// line 6
+p(static_5);// line 6
+p(au22.who);// line 6
+p(static_6);// line 6
 
 	}
 }

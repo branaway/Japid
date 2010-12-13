@@ -1,6 +1,5 @@
 package controllers;
 
-
 import japidviews.Application.authorPanel;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import cn.bran.play.CacheableRunner;
 import cn.bran.play.JapidController;
 import cn.bran.play.JapidResult;
 /**
- *  a sample controller that demos Japid features
+ *  A sample controller that demos Japid features
  *  
  * @author Bing Ran<bing_ran@hotmail.com>
  *
@@ -37,7 +36,7 @@ public class Application extends JapidController {
 		};
 		
 		throw new JapidResult(r.run());
-//	or 		render(r);
+		//	or 		render(r);
 	}
 	
 	public static void authorPanel2(final Author a) {

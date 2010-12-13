@@ -21,12 +21,32 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class callPicka extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/callPicka.html";
-static private final String static_0 = "before...\n";
+static private final String static_0 = "before...\n" + 
+"\n" + 
+"note: the picka tag is defined in the japidviews/_tags directory\n" + 
+"\n";
 static private final String static_1 = "\n" + 
 "    the tag chosed: ";
 static private final String static_2 = "\n";
 static private final String static_3 = "\n" + 
-"after...\n";
+"after...\n" + 
+"\n" + 
+"Another simple tag aTag, which locates in the same directory as this template:\n" + 
+"\n" + 
+"first define something in a Java code block. \n" + 
+"\n";
+static private final String static_4 = "\n" + 
+"<p>now call a simple tag</p>\n" + 
+"\n";
+static private final String static_5 = "\n" + 
+"\n" + 
+"<p>Or using the full path of the tag</p>\n" + 
+"\n";
+static private final String static_6 = "\n" + 
+"\n" + 
+"<p>You can use \".\" instead of \"/\" in the path:</p>\n" + 
+"\n";
+static private final String static_7 = "";
 	public callPicka() {
 		super(null);
 	}
@@ -52,20 +72,37 @@ static private final String static_3 = "\n" +
 p(static_0);// line 1
 _picka0.setActionRunners(getActionRunners());
 _picka0.render("a", "b" + "c", _picka0DoBody);
-// line 2
-p(static_3);// line 4
+// line 5
+p(static_3);// line 7
+List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};// line 15
+p(static_4);// line 15
+_aTag1.setActionRunners(getActionRunners());
+_aTag1.render(strings);
+// line 19
+p(static_5);// line 19
+_japidviews_templates_aTag2.setActionRunners(getActionRunners());
+_japidviews_templates_aTag2.render(strings);
+// line 23
+p(static_6);// line 23
+_japidviews_templates_aTag3.setActionRunners(getActionRunners());
+_japidviews_templates_aTag3.render(strings);
+// line 27
+p(static_7);// line 27
 
 	}
 	private picka _picka0 = new picka(getOut());
 class picka0DoBody implements picka.DoBody< String>{
 	public void render(String r) {
-		// line 2
-p(static_1);// line 2
-p(r);// line 3
-p(static_2);// line 3
+		// line 5
+p(static_1);// line 5
+p(r);// line 6
+p(static_2);// line 6
 
 	}
 }
 	private picka0DoBody _picka0DoBody = new picka0DoBody();
 
+	private aTag _aTag1 = new aTag(getOut());
+	private japidviews.templates.aTag _japidviews_templates_aTag2 = new japidviews.templates.aTag(getOut());
+	private japidviews.templates.aTag _japidviews_templates_aTag3 = new japidviews.templates.aTag(getOut());
 }

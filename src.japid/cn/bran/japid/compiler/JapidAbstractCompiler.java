@@ -74,6 +74,12 @@ public abstract class JapidAbstractCompiler {
 			String string = sb.toString();
 			return string.substring(0, string.length() - 1);
 		}
+		public String getTagVarName() {
+			return tagName.replace('.', '_').replace('/', '_');
+		}
+		public String getBodyVar() {
+			 return "_" + getTagVarName() + tagIndex + "DoBody";
+		}
 	}
 
 	public void compile(JapidTemplate t) {
@@ -536,7 +542,7 @@ public abstract class JapidAbstractCompiler {
 	 * @param tag
 	 */
 	protected void regularTagInvoke(Tag tag) {
-		String tagVar = "_" + tag.tagName + tag.tagIndex;
+		String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
 		println(tagVar + ".setActionRunners(getActionRunners());");
 		if (tag.hasBody) {
 			// old way: create a new instance for each call
@@ -545,7 +551,7 @@ public abstract class JapidAbstractCompiler {
 			// use a field to call a tag for better performance in case of
 			// loop
 			// TODO: handle tags with prefix: #{my.tag}
-			println(tagVar + ".render(" + tag.args + ", _" + tag.tagName + tag.tagIndex + "DoBody);");
+			println(tagVar + ".render(" + tag.args + ", " + tag.getBodyVar() + ");");
 			
 		} else {
 			// println("new " + tagClassName + "(getOut()).render(" +

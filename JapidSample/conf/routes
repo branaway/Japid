@@ -8,5 +8,8 @@ GET     /                                       Application.index
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 GET /renderJapidWith/{<.+>template}             Application.renderJapidWith
+
+# the staticFile is only available from 1.1.x trunk. Not in the 1.1 release.
+GET /favicon.ico                                staticFile:/public/images/favicon.png
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

@@ -1,5 +1,7 @@
 package cn.bran;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -91,6 +93,29 @@ public class BranCompilerTests {
 		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
+	}
+	
+	@Test
+	public void testTagCalls() throws IOException {
+		String srcFile = "tests/tagCalls.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("tagCalls.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		String code = bt.javaSource;
+		System.out.println(code);
+		assertTrue(code.contains("_tag0.setActionRunners(getActionRunners());"));
+		assertTrue(code.contains("_tag0.render(a);"));
+		assertTrue(code.contains("_my_tag1.setActionRunners(getActionRunners());"));
+		assertTrue(code.contains("_my_tag1.render(a);"));
+		assertTrue(code.contains("_my_tag2.setActionRunners(getActionRunners());"));
+		assertTrue(code.contains("_my_tag2.render(a, _my_tag2DoBody);"));
+		assertTrue(code.contains("private tag _tag0 = new tag(getOut());"));
+		assertTrue(code.contains("private my.tag _my_tag1 = new my.tag(getOut());"));
+		assertTrue(code.contains("private my.tag _my_tag2 = new my.tag(getOut());"));
+		assertTrue(code.contains("class my_tag2DoBody implements my.tag.DoBody< String>{"));
+		assertTrue(code.contains("private my_tag2DoBody _my_tag2DoBody = new my_tag2DoBody();"));
 	}
 	
 	private static String readFile(String path) throws IOException {

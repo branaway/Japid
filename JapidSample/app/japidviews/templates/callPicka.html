@@ -1,5 +1,27 @@
 before...
+
+note: the picka tag is defined in the japidviews/_tags directory
+
 #{picka "a", "b" + "c" | String r}
     the tag chosed: $r
 #{/}
 after...
+
+Another simple tag aTag, which locates in the same directory as this template:
+
+first define something in a Java code block. 
+
+`// java.util.* is automatically imported
+` List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};
+
+<p>now call a simple tag</p>
+
+#{aTag strings /}
+
+<p>Or using the full path of the tag</p>
+
+#{japidviews/templates/aTag strings /}
+
+<p>You can use "." instead of "/" in the path:</p>
+
+#{japidviews.templates.aTag strings /}
