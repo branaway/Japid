@@ -1,4 +1,4 @@
-package japidviews.Application;
+package japidviews._layouts;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
@@ -16,24 +16,18 @@ import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import static cn.bran.play.WebUtils.*;
-// NOTE: This file was generated from: japidviews/Application/renderByPositionEmpty.html
+// NOTE: This file was generated from: japidviews/_layouts/SampleLayout.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
-public class renderByPositionEmpty extends cn.bran.japid.template.JapidTemplateBase{
-	public static final String sourceTemplate = "japidviews/Application/renderByPositionEmpty.html";
-	public renderByPositionEmpty() {
+public abstract class SampleLayout extends cn.bran.japid.template.JapidTemplateBase{
+	public static final String sourceTemplate = "japidviews/_layouts/SampleLayout.html";
+	public SampleLayout() {
 		super(null);
 	}
-	public renderByPositionEmpty(StringBuilder out) {
+	public SampleLayout(StringBuilder out) {
 		super(out);
 	}
-	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
-	}
-	@Override protected void doLayout() {
-
+	@Override public void layout() {
 		play.mvc.Http.Request request = play.mvc.Http.Request.current(); assert request != null;
 		play.mvc.Http.Response response = play.mvc.Http.Response.current(); assert response != null;
 		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();assert flash != null;
@@ -43,8 +37,14 @@ public class renderByPositionEmpty extends cn.bran.japid.template.JapidTemplateB
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p("got it 2!\n" + 
-"\n");// line 1
-
-	}
+		p("A sample layout.\n" + 
+"<p>\n");// line 1
+	title();// line 3
+p(";\n" + 
+"</p>\n" + 
+"<div>\n");// line 3
+	doLayout();// line 6
+p("</div>\n");// line 6
+	}	protected abstract void title();
+	protected abstract void doLayout();
 }

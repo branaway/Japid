@@ -21,10 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class foo extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/more/SubController/foo.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"foo ";
-static private final String static_2 = "?\n";
 	public foo() {
 		super(null);
 	}
@@ -49,10 +45,17 @@ static private final String static_2 = "?\n";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
+;// line 1
+p("what foo ");// line 1
 p(s);// line 3
-p(static_2);// line 3
+p("? \n" + 
+"\n");// line 3
+p("\n");// line 5
+_bar0.setActionRunners(getActionRunners());
+_bar0.render();
+// line 7
+;// line 7
 
 	}
+	private bar _bar0 = new bar(getOut());
 }

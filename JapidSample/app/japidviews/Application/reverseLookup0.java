@@ -21,19 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class reverseLookup0 extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/reverseLookup0.html";
-static private final String static_0 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
-"<html>\n" + 
-"<head>\n" + 
-"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" + 
-"<title>Insert title here</title>\n" + 
-"</head>\n" + 
-"<body>\n" + 
-"<h1>actions</h1>\n" + 
-"<p><a href='";
-static private final String static_1 = "'>Action notation </a></p>\n" + 
-"<p><a href='/japid.SampleController/reverseLookup1?agrs=order0&args=order2'>action reverse lookup cannot handle arrays or collections...</a></p>\n" + 
-"</body>\n" + 
-"</html>";
 	public reverseLookup0() {
 		super(null);
 	}
@@ -56,9 +43,20 @@ static private final String static_1 = "'>Action notation </a></p>\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
+p("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
+"<html>\n" + 
+"<head>\n" + 
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" + 
+"<title>Insert title here</title>\n" + 
+"</head>\n" + 
+"<body>\n" + 
+"<h1>actions</h1>\n" + 
+"<p><a href='");// line 1
 p(lookup("japid.SampleController.reverseLookup0", new Object[]{}));// line 9
-p(static_1);// line 9
+p("'>Action notation </a></p>\n" + 
+"<p><a href='/japid.SampleController/reverseLookup1?agrs=order0&args=order2'>action reverse lookup cannot handle arrays or collections...</a></p>\n" + 
+"</body>\n" + 
+"</html>\n");// line 9
 
 	}
 }

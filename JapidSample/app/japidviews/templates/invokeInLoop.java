@@ -23,18 +23,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class invokeInLoop extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/invokeInLoop.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n";
-static private final String static_2 = "\n" + 
-"\n";
-static private final String static_3 = "	";
-static private final String static_4 = "	";
-static private final String static_5 = "\n";
-static private final String static_6 = "<p/>\n";
-static private final String static_7 = "\n" + 
-"\n";
-static private final String static_8 = "	";
-static private final String static_9 = "\n";
 	public invokeInLoop() {
 		super(null);
 	}
@@ -59,13 +47,13 @@ static private final String static_9 = "\n";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 2
-p(static_2);// line 7
+;// line 1
+;// line 2
+p("\n");// line 7
 for (int i = 0; i < 3;i++) {// line 9
-p(static_3);// line 9
+p("	");// line 9
 final int j = i;// line 10
-p(static_4);// line 10
+p("	");// line 10
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echo", j) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -75,12 +63,13 @@ p(static_4);// line 10
 		});
 
 // line 11
-p(static_5);// line 11
+;// line 11
 }// line 12
-p(static_6);// line 12
-p(static_7);// line 14
+p("<p/>\n");// line 12
+p("\n");// line 14
 for (final Post p : posts) {// line 16
-p(static_8);// line 16
+p("    another notation for invoking actions:  \n" + 
+"    ");// line 16
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.echoPost", p) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -89,9 +78,8 @@ p(static_8);// line 16
 			}
 		});
 
-// line 17
-p(static_9);// line 17
-}// line 18
+}// line 19
+;// line 19
 
 	}
 }

@@ -21,9 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public abstract class SetLayout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/SetLayout.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n";
-static private final String static_2 = "\n";
 	public SetLayout() {
 		super(null);
 	}
@@ -40,11 +37,11 @@ static private final String static_2 = "\n";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-		p(static_0);// line 1
+		;// line 1
 	title();// line 1
-p(static_1);// line 1
+;// line 1
 	footer();// line 2
-p(static_2);// line 2
+;// line 2
 	}	protected abstract void title();
 	protected abstract void footer();
 	protected abstract void doLayout();

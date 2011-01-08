@@ -22,20 +22,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class Display extends TagLayout{
 	public static final String sourceTemplate = "japidviews/_tags/Display.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"\n" + 
-"<div class=\"divvy\">\n" + 
-"	<p>title: ";
-static private final String static_2 = "</p>\n" + 
-"	<p>at: ";
-static private final String static_3 = "</p>\n" + 
-"	<p>by: ";
-static private final String static_4 = ", ";
-static private final String static_5 = "</p>\n" + 
-"	";
-static private final String static_6 = "\n" + 
-"</div>";
 	public Display() {
 		super(null);
 	}
@@ -67,21 +53,26 @@ static private final String static_6 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
+;// line 1
 // line 1
-p(static_1);// line 5
+p("\n" + 
+"<div class=\"divvy\">\n" + 
+"	<p>title: ");// line 5
 p(post.getTitle());// line 8
-p(static_2);// line 8
+p("</p>\n" + 
+"	<p>at: ");// line 8
 p(fastformat(post.getPostedAt(), ("yy-MMM-dd")));// line 9
-p(static_3);// line 9
+p("</p>\n" + 
+"	<p>by: ");// line 9
 p(post.getAuthor().name);// line 10
-p(static_4);// line 10
+p(", ");// line 10
 p(post.getAuthor().gender);// line 10
-p(static_5);// line 10
+p("</p>\n" + 
+"	");// line 10
 if (body != null)
 	body.render(post.getTitle());
 // line 11
-p(static_6);// line 11
+p("</div>\n");// line 11
 
 	}
 }

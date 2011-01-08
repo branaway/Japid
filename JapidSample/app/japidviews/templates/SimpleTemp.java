@@ -21,11 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class SimpleTemp extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/SimpleTemp.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"\n" + 
-"<p>cool ";
-static private final String static_2 = "</p>";
 	public SimpleTemp() {
 		super(null);
 	}
@@ -52,10 +47,12 @@ static private final String static_2 = "</p>";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 3
+;// line 1
+p("\n" + 
+"\n" + 
+"<p>cool ");// line 3
 p(blogTitle);// line 5
-p(static_2);// line 5
+p("</p>\n");// line 5
 
 	}
 }

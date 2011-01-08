@@ -21,13 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class aTag extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/aTag.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"<p>\n";
-static private final String static_2 = "\n" + 
-"</p>\n" + 
-"\n" + 
-"Note: the join() is defined in the JavaExtensions class in the Play! framework, which is automatically imported. ";
 	public aTag() {
 		super(null);
 	}
@@ -52,10 +45,12 @@ static private final String static_2 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
+;// line 1
+p("<p>\n");// line 1
 p("hi:" + join(strings, "|"));// line 4
-p(static_2);// line 4
+p("</p>\n" + 
+"\n" + 
+"Note: the join() is defined in the JavaExtensions class in the Play! framework, which is automatically imported. \n");// line 4
 
 	}
 }

@@ -21,12 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class dummyTag extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_tags/dummyTag.html";
-static private final String static_0 = "";
-static private final String static_1 = "";
-static private final String static_2 = "\n";
-static private final String static_3 = "Hi ";
-static private final String static_4 = "!\n" + 
-"\n";
 	public dummyTag() {
 		super(null);
 	}
@@ -54,12 +48,13 @@ static private final String static_4 = "!\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
-p(static_2);// line 2
-p(static_3);// line 3
+;// line 1
+;// line 1
+;// line 2
+p("Hi ");// line 3
 p(a);// line 4
-p(static_4);// line 4
+p("!\n" + 
+"\n");// line 4
 
 	}
 }

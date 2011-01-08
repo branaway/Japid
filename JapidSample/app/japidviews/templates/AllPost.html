@@ -1,17 +1,17 @@
-~[
-	import	 	models.japidsample.Post
-	extends 	Layout.html
-	args		String blogTitle, List <Post> allPost
-	stopwatch	on
-]~
+`	import	 	models.japidsample.Post
+`	extends 	Layout.html
+`	args		String blogTitle, List <Post> allPost
+`	stopwatch	on
+
 
 #{set title:"Home"/}
 
-~{for (Post p: allPost) {}~ 
-	    #{Display p, "home" }
-			~(String title) The real title is: $title;
+`for (Post p: allPost) { 
+        *{ now we call a tag, with a body content that take a parameter title of String type }*
+	    #{Display p, "home"  | String title}
+		   The real title is: $title;
 	    #{/}
-~{}}~
+`}
 
 #{Tag2 blogTitle/}
 

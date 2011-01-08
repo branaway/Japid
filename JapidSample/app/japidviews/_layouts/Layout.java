@@ -21,15 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public abstract class Layout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/Layout.html";
-static private final String static_0 = "I'm the layout.\n" + 
-"<p>\n";
-static private final String static_1 = ";\n" + 
-"</p>\n" + 
-"<div>\n";
-static private final String static_2 = "\n" + 
-"</div>\n" + 
-"\n" + 
-"\n";
 	public Layout() {
 		super(null);
 	}
@@ -46,11 +37,16 @@ static private final String static_2 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-		p(static_0);// line 1
+		p("I'm the layout.\n" + 
+"<p>\n");// line 1
 	title();// line 3
-p(static_1);// line 3
+p(";\n" + 
+"</p>\n" + 
+"<div>\n");// line 3
 	doLayout();// line 6
-p(static_2);// line 6
+p("</div>\n" + 
+"\n" + 
+"\n");// line 6
 	}	protected abstract void title();
 	protected abstract void doLayout();
 }

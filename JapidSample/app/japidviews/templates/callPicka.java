@@ -21,32 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class callPicka extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/callPicka.html";
-static private final String static_0 = "before...\n" + 
-"\n" + 
-"note: the picka tag is defined in the japidviews/_tags directory\n" + 
-"\n";
-static private final String static_1 = "\n" + 
-"    the tag chosed: ";
-static private final String static_2 = "\n";
-static private final String static_3 = "\n" + 
-"after...\n" + 
-"\n" + 
-"Another simple tag aTag, which locates in the same directory as this template:\n" + 
-"\n" + 
-"first define something in a Java code block. \n" + 
-"\n";
-static private final String static_4 = "\n" + 
-"<p>now call a simple tag</p>\n" + 
-"\n";
-static private final String static_5 = "\n" + 
-"\n" + 
-"<p>Or using the full path of the tag</p>\n" + 
-"\n";
-static private final String static_6 = "\n" + 
-"\n" + 
-"<p>You can use \".\" instead of \"/\" in the path:</p>\n" + 
-"\n";
-static private final String static_7 = "";
 	public callPicka() {
 		super(null);
 	}
@@ -69,34 +43,48 @@ static private final String static_7 = "";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
+p("<p>before...<p>\n" + 
+"<p>\n" + 
+"note: the picka tag is defined in the japidviews/_tags directory\n" + 
+"\n");// line 1
 _picka0.setActionRunners(getActionRunners());
 _picka0.render("a", "b" + "c", _picka0DoBody);
 // line 5
-p(static_3);// line 7
-List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};// line 15
-p(static_4);// line 15
+p("</p>\n" + 
+"after...\n" + 
+"\n" + 
+"Another simple tag aTag, which locates in the same directory as this template:\n" + 
+"\n" + 
+"first define something in a Java code block. \n" + 
+"\n");// line 7
+List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};// line 16
+p("<p>now call a simple tag</p>\n" + 
+"\n");// line 16
 _aTag1.setActionRunners(getActionRunners());
 _aTag1.render(strings);
-// line 19
-p(static_5);// line 19
+// line 20
+p("\n" + 
+"<p>Or using the full path of the tag</p>\n" + 
+"\n");// line 20
 _japidviews_templates_aTag2.setActionRunners(getActionRunners());
 _japidviews_templates_aTag2.render(strings);
-// line 23
-p(static_6);// line 23
+// line 24
+p("\n" + 
+"<p>You can use \".\" instead of \"/\" in the path:</p>\n" + 
+"\n");// line 24
 _japidviews_templates_aTag3.setActionRunners(getActionRunners());
 _japidviews_templates_aTag3.render(strings);
-// line 27
-p(static_7);// line 27
+// line 28
+;// line 28
 
 	}
 	private picka _picka0 = new picka(getOut());
 class picka0DoBody implements picka.DoBody< String>{
 	public void render(String r) {
 		// line 5
-p(static_1);// line 5
+p("    the tag chosed: ");// line 5
 p(r);// line 6
-p(static_2);// line 6
+p("");// line 6
 
 	}
 }

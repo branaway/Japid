@@ -21,14 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class suppressNull extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/suppressNull.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n";
-static private final String static_2 = "\n";
-static private final String static_3 = "safe to do a.something: ";
-static private final String static_4 = "\n" + 
-"\n";
-static private final String static_5 = "safe to do a.something too: ";
-static private final String static_6 = "\n";
 	public suppressNull() {
 		super(null);
 	}
@@ -51,17 +43,16 @@ static private final String static_6 = "\n";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
-p(static_2);// line 2
+;// line 1
+;// line 1
 String a = "a";// line 4
-p(static_3);// line 4
+p("safe to do a.something: ");// line 4
 try { p(a.length()); } catch (NullPointerException npe) {}// line 5
-p(static_4);// line 5
+p("\n");// line 5
 a = null;// line 7
-p(static_5);// line 7
+p("safe to do a.something too: ");// line 7
 try { p(a.length()); } catch (NullPointerException npe) {}// line 8
-p(static_6);// line 8
+;// line 8
 
 	}
 }

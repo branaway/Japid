@@ -21,19 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class cacheWithRenderJapid extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/cacheWithRenderJapid.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
-"<html>\n" + 
-"<head>\n" + 
-"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" + 
-"<title>Insert title here</title>\n" + 
-"</head>\n" + 
-"<body>\n" + 
-"hello ";
-static private final String static_2 = "\n" + 
-"</body>\n" + 
-"</html>";
 	public cacheWithRenderJapid() {
 		super(null);
 	}
@@ -58,10 +45,18 @@ static private final String static_2 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
+;// line 1
+p("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
+"<html>\n" + 
+"<head>\n" + 
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" + 
+"<title>Insert title here</title>\n" + 
+"</head>\n" + 
+"<body>\n" + 
+"hello ");// line 1
 p(a);// line 10
-p(static_2);// line 10
+p("</body>\n" + 
+"</html>\n");// line 10
 
 	}
 }

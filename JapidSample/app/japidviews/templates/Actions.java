@@ -21,19 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class Actions extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/Actions.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"\n" + 
-"<form url=\"";
-static private final String static_2 = "\"></form>\n" + 
-"<form url=\"";
-static private final String static_3 = "\"></form>\n" + 
-"<form url=\"";
-static private final String static_4 = "\"></form>\n" + 
-"<form url='";
-static private final String static_5 = "'></form>\n" + 
-"<form url=\"";
-static private final String static_6 = "\"></form>\n";
 	public Actions() {
 		super(null);
 	}
@@ -58,18 +45,23 @@ static private final String static_6 = "\"></form>\n";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
+;// line 1
+p("\n" + 
+"<form url=\"");// line 1
 p(lookup("showAll", new Object[]{}));// line 4
-p(static_2);// line 4
+p("\"></form>\n" + 
+"<form url=\"");// line 4
 p(lookup("Clients.showAccounts", post.title, post.title));// line 5
-p(static_3);// line 5
+p("\"></form>\n" + 
+"<form url=\"");// line 5
 p(lookupAbs("Clients.showAccounts", post.title.substring(1, 2)));// line 6
-p(static_4);// line 6
+p("\"></form>\n" + 
+"<form url='");// line 6
 p(lookupAbs("Clients.showAccounts", new String[]{"aa", "bb"}));// line 7
-p(static_5);// line 7
+p("'></form>\n" + 
+"<form url=\"");// line 7
 p(lookupStatic("/public/stylesheets/main.css"));// line 8
-p(static_6);// line 8
+p("\"></form>\n");// line 8
 
 	}
 }

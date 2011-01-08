@@ -21,17 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class picka extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_tags/picka.html";
-static private final String static_0 = "";
-static private final String static_1 = "<p>\n" + 
-"some text \n" + 
-"</p>\n" + 
-"<p>\n";
-static private final String static_2 = " \n" + 
-"</p>\n" + 
-"<p>\n" + 
-"more text \n" + 
-"</p>\n" + 
-" ";
 	public picka() {
 		super(null);
 	}
@@ -63,12 +52,20 @@ static private final String static_2 = " \n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
+;// line 1
+p("<p>\n" + 
+"some text \n" + 
+"</p>\n" + 
+"<p>\n");// line 1
 if (body != null)
 	body.render(b);
 // line 6
-p(static_2);// line 6
+p(" \n" + 
+"</p>\n" + 
+"<p>\n" + 
+"more text \n" + 
+"</p>\n" + 
+" \n");// line 6
 
 	}
 }

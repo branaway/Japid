@@ -21,16 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class log extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/log.html";
-static private final String static_0 = "\n" + 
-"log directives are used to print a line of information to the console. \n" + 
-"It can take an argument of String\n" + 
-"\n";
-static private final String static_1 = "\n" + 
-"hello world!\n" + 
-"\n";
-static private final String static_2 = "now with argument\n";
-static private final String static_3 = "\n" + 
-"now with a message literal\n";
 	public log() {
 		super(null);
 	}
@@ -53,15 +43,20 @@ static private final String static_3 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
+p("\n" + 
+"log directives are used to print a line of information to the console. \n" + 
+"It can take an argument of String\n" + 
+"\n");// line 1
 System.out.println("japidviews/templates/log.html(line 5): " + "");
-p(static_1);// line 5
+p("hello world!\n" + 
+"\n");// line 5
 String a = "a";// line 9
 int i = 10;// line 10
-p(static_2);// line 10
+p("now with argument\n");// line 10
 System.out.println("japidviews/templates/log.html(line 12): " + a + i);
-p(static_3);// line 12
+p("now with a message literal\n");// line 12
 System.out.println("japidviews/templates/log.html(line 15): " + "a message ");
+;// line 15
 
 	}
 }

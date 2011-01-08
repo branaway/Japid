@@ -21,25 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class openBrace extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/openBrace.html";
-static private final String static_0 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
-"<html>\n" + 
-"<head>\n" + 
-"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" + 
-"<title>Insert title here</title>\n" + 
-"</head>\n" + 
-"<body>\n" + 
-"<p>hello</p>\n";
-static private final String static_1 = "        <p>in while ";
-static private final String static_2 = "</p>\n" + 
-"    ";
-static private final String static_3 = "    <p>good2</p>\n";
-static private final String static_4 = "\n" + 
-"  ";
-static private final String static_5 = "    <p>good 3</p>\n" + 
-"  ";
-static private final String static_6 = "\n" + 
-"</body>\n" + 
-"</html>";
 	public openBrace() {
 		super(null);
 	}
@@ -62,23 +43,32 @@ static private final String static_6 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
+p("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
+"<html>\n" + 
+"<head>\n" + 
+"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" + 
+"<title>Insert title here</title>\n" + 
+"</head>\n" + 
+"<body>\n" + 
+"<p>hello</p>\n");// line 1
 int i = 3;// line 9
 if(true)// line 10
 {// line 11
     while (i-- > 0)// line 12
     {// line 13
-p(static_1);// line 13
+p("        <p>in while ");// line 13
 p(i);// line 14
-p(static_2);// line 14
+p("</p>\n" + 
+"    ");// line 14
 }// line 15
-p(static_3);// line 15
+p("    <p>good2</p>\n");// line 15
 }// line 17
-p(static_4);// line 17
-if (true) {// line 19
-p(static_5);// line 19
+  if (true) {// line 19
+p("    <p>good 3</p>\n" + 
+"  ");// line 19
 }// line 21
-p(static_6);// line 21
+p("</body>\n" + 
+"</html>\n");// line 21
 
 	}
 }

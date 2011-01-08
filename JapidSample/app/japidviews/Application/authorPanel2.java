@@ -22,10 +22,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class authorPanel2 extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/authorPanel2.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"<p>decorated name: ";
-static private final String static_2 = "</p>\n";
 	public authorPanel2() {
 		super(null);
 	}
@@ -50,8 +46,8 @@ static private final String static_2 = "</p>\n";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
+;// line 1
+p("<p>decorated name: ");// line 1
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "Application.decorateName", a.name) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -61,7 +57,7 @@ p(static_1);// line 1
 		});
 
 // line 3
-p(static_2);// line 3
+p("</p>\n");// line 3
 
 	}
 }

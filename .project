@@ -13,7 +13,5 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	
 </projectDescription>

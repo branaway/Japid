@@ -1,4 +1,4 @@
-package japidviews.Application;
+package japidviews.more.SubController;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
@@ -16,15 +16,15 @@ import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import static cn.bran.play.WebUtils.*;
-// NOTE: This file was generated from: japidviews/Application/renderByPositionEmpty.html
+// NOTE: This file was generated from: japidviews/more/SubController/bar.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
-public class renderByPositionEmpty extends cn.bran.japid.template.JapidTemplateBase{
-	public static final String sourceTemplate = "japidviews/Application/renderByPositionEmpty.html";
-	public renderByPositionEmpty() {
+public class bar extends cn.bran.japid.template.JapidTemplateBase{
+	public static final String sourceTemplate = "japidviews/more/SubController/bar.html";
+	public bar() {
 		super(null);
 	}
-	public renderByPositionEmpty(StringBuilder out) {
+	public bar(StringBuilder out) {
 		super(out);
 	}
 	public cn.bran.japid.template.RenderResult render() {
@@ -43,8 +43,8 @@ public class renderByPositionEmpty extends cn.bran.japid.template.JapidTemplateB
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p("got it 2!\n" + 
-"\n");// line 1
+p("\n" + 
+"hi....\n");// line 1
 
 	}
 }

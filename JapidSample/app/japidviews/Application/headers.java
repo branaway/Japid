@@ -28,21 +28,6 @@ public class headers extends superheaders{
 	headers.put("Server", "nginx/0.8.26");
 	headers.put("Cache-Control", "max-age=600");
 }
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"<p>\n" + 
-"\"setHeader\" is for adding a http response header to the response. One cannot use \"\" to surround the value part\n" + 
-"</p>\n" + 
-"\n" + 
-"<p>\n" + 
-"The header name and the value are separated by white spaces (space or tab)\n" + 
-"</p>\n" + 
-"\n" + 
-"<p>\n" + 
-"Notes: If a response includes both an Expires header and a max-age directive, the max-age directive overrides the Expires header, even if the Expires header is more restrictive.\n" + 
-"</p>\n" + 
-"\n" + 
-"\n";
 	public headers() {
 		super(null);
 	}
@@ -65,8 +50,20 @@ static private final String static_1 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 6
+;// line 1
+p("<p>\n" + 
+"\"setHeader\" is for adding a http response header to the response. One cannot use \"\" to surround the value part\n" + 
+"</p>\n" + 
+"\n" + 
+"<p>\n" + 
+"The header name and the value are separated by white spaces (space or tab)\n" + 
+"</p>\n" + 
+"\n" + 
+"<p>\n" + 
+"Notes: If a response includes both an Expires header and a max-age directive, the max-age directive overrides the Expires header, even if the Expires header is more restrictive.\n" + 
+"</p>\n" + 
+"\n" + 
+"\n");// line 6
 
 	}
 }

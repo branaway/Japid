@@ -1,4 +1,4 @@
-package japidviews.Application;
+package japidviews._tags;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
@@ -16,18 +16,20 @@ import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import static cn.bran.play.WebUtils.*;
-// NOTE: This file was generated from: japidviews/Application/renderByPositionEmpty.html
+// NOTE: This file was generated from: japidviews/_tags/SampleTag.html
 // Change to this file will be lost next time the template file is compiled.
 @cn.bran.play.NoEnhance
-public class renderByPositionEmpty extends cn.bran.japid.template.JapidTemplateBase{
-	public static final String sourceTemplate = "japidviews/Application/renderByPositionEmpty.html";
-	public renderByPositionEmpty() {
+public class SampleTag extends cn.bran.japid.template.JapidTemplateBase{
+	public static final String sourceTemplate = "japidviews/_tags/SampleTag.html";
+	public SampleTag() {
 		super(null);
 	}
-	public renderByPositionEmpty(StringBuilder out) {
+	public SampleTag(StringBuilder out) {
 		super(out);
 	}
-	public cn.bran.japid.template.RenderResult render() {
+	String a;
+	public cn.bran.japid.template.RenderResult render(String a) {
+		this.a = a;
 		long t = -1;
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
@@ -43,8 +45,10 @@ public class renderByPositionEmpty extends cn.bran.japid.template.JapidTemplateB
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p("got it 2!\n" + 
-"\n");// line 1
+;// line 1
+p("Hi ");// line 1
+p(a);// line 2
+p("!\n");// line 2
 
 	}
 }

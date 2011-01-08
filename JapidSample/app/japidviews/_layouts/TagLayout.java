@@ -21,14 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/TagLayout.html";
-static private final String static_0 = "标签布局\n";
-static private final String static_1 = "\n";
-static private final String static_2 = "\n" + 
-"<div>\n";
-static private final String static_3 = "\n" + 
-"</div>\n" + 
-"\n" + 
-"\n";
 	public TagLayout() {
 		super(null);
 	}
@@ -45,14 +37,16 @@ static private final String static_3 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-		p(static_0);// line 1
-p(static_1);// line 2
+		p("标签布局\n");// line 1
+;// line 2
 _dummyTag0.setActionRunners(getActionRunners());
 _dummyTag0.render("me");
 // line 3
-p(static_2);// line 3
+p("<div>\n");// line 3
 	doLayout();// line 5
-p(static_3);// line 5
+p("</div>\n" + 
+"\n" + 
+"\n");// line 5
 	}	protected abstract void doLayout();
 	private dummyTag _dummyTag0 = new dummyTag(getOut());
 }

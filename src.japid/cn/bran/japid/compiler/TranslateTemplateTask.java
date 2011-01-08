@@ -73,8 +73,6 @@ public class TranslateTemplateTask {
 	}
 
 	public void execute(){
-		// Copied from org.apache.tools.ant.taskdefs.Javac below
-
 		// first off, make sure that we've got a srcdir
 
 		if (packageRoot == null) {

@@ -21,26 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class ImplicitObjects extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/ImplicitObjects.html";
-static private final String static_0 = "\n" + 
-"\n" + 
-"<p>request: ";
-static private final String static_1 = "</p>\n" + 
-"<p>response: ";
-static private final String static_2 = "</p>\n" + 
-"<p>flash: ";
-static private final String static_3 = "</p>\n" + 
-"<p>errors: ";
-static private final String static_4 = "</p>\n" + 
-"<p>session: ";
-static private final String static_5 = "</p>\n" + 
-"<p>renderArgs: ";
-static private final String static_6 = "</p>\n" + 
-"<p>params: ";
-static private final String static_7 = "</p>\n" + 
-"<p>validation: ";
-static private final String static_8 = "</p>\n" + 
-"<p>play: ";
-static private final String static_9 = "</p>";
 	public ImplicitObjects() {
 		super(null);
 	}
@@ -63,25 +43,35 @@ static private final String static_9 = "</p>";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
+p("\n" + 
+"\n" + 
+"<p>request: ");// line 1
 p(request);// line 3
-p(static_1);// line 3
+p("</p>\n" + 
+"<p>response: ");// line 3
 p(response);// line 4
-p(static_2);// line 4
+p("</p>\n" + 
+"<p>flash: ");// line 4
 p(flash);// line 5
-p(static_3);// line 5
+p("</p>\n" + 
+"<p>errors: ");// line 5
 p(errors);// line 6
-p(static_4);// line 6
+p("</p>\n" + 
+"<p>session: ");// line 6
 p(session);// line 7
-p(static_5);// line 7
+p("</p>\n" + 
+"<p>renderArgs: ");// line 7
 p(renderArgs);// line 8
-p(static_6);// line 8
+p("</p>\n" + 
+"<p>params: ");// line 8
 p(params);// line 9
-p(static_7);// line 9
+p("</p>\n" + 
+"<p>validation: ");// line 9
 p(validation);// line 10
-p(static_8);// line 10
+p("</p>\n" + 
+"<p>play: ");// line 10
 p(_play);// line 11
-p(static_9);// line 11
+p("</p>\n");// line 11
 
 	}
 }

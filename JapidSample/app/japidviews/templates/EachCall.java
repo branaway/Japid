@@ -21,18 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class EachCall extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/EachCall.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"the closure form:\n";
-static private final String static_2 = "\n" + 
-"	<p>";
-static private final String static_3 = " :: ";
-static private final String static_4 = " || ";
-static private final String static_5 = ", ^ ";
-static private final String static_6 = ", @ ";
-static private final String static_7 = ", # ";
-static private final String static_8 = "</p>\n";
-static private final String static_9 = "\n";
 	public EachCall() {
 		super(null);
 	}
@@ -57,31 +45,31 @@ static private final String static_9 = "\n";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
+;// line 1
+p("the closure form:\n");// line 1
 _Each0.setActionRunners(getActionRunners());
 _Each0.render(posts, _Each0DoBody);
 // line 4
-p(static_9);// line 6
+;// line 6
 
 	}
 	private Each _Each0 = new Each(getOut());
 class Each0DoBody implements Each.DoBody< String>{
 	public void render(String p, int _index, boolean _isOdd, String _parity, boolean _isFirst, boolean _isLast) {
 		// line 4
-p(static_2);// line 4
+p("	<p>");// line 4
 p(_index);// line 5
-p(static_3);// line 5
+p(" :: ");// line 5
 p(p);// line 5
-p(static_4);// line 5
+p(" || ");// line 5
 p(_parity);// line 5
-p(static_5);// line 5
+p(", ^ ");// line 5
 p(_isOdd);// line 5
-p(static_6);// line 5
+p(", @ ");// line 5
 p(_isFirst);// line 5
-p(static_7);// line 5
+p(", # ");// line 5
 p(_isLast);// line 5
-p(static_8);// line 5
+p("</p>\n");// line 5
 
 	}
 }

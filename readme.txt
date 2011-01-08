@@ -6,11 +6,20 @@
                    
 Version History:
 
+2011/1/8: V0.6.0
+    1. bundled a Japid development plugin for Eclipse in the eclipse-plugin directory. Read the readme.txt in the directory for instructions.  
+
+2011/1/5: V0.5.7
+    1. added a simpler way to invoke an action: `invoke. e.g.
+        `invoke MyController.action(xxx)
+        It used to be a tag.  
+    2. static content is now printed in-line.  
 2010/12/12: V0.5.6
     1. Fixed a bug that caused `{ to detached from the previous if/while statement thus changed the semantics of the resultant Java code. 
     2. Improved the performance of CacheablePlayActinoRunner.checkActionCacheFor(). 
     3. New feature: one can specify the full path of the tag in tag invocations. e.g.:
         #{japidviews/templates/aTag strings /}
+        #{japidviews.templates.aTag strings /}
         Search callPicka.html in the Japid distribution for examples.
 2010/10/11: V0.5.5
     1. Fixed a bug that caused NPE in generated template classes involving the Validation.current().errors().

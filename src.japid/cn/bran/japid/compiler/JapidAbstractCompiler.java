@@ -173,7 +173,11 @@ public abstract class JapidAbstractCompiler {
 		String lines = composeValidMultiLines(text);
 		String ref = this.getTemplateClassMetaData().addStaticText(lines, text);
 		if (ref != null) {
-			print("p(" + ref + ");");
+			// print the static content via the varaible
+//			print("p(" + ref + ");");
+			// print the static content directly
+			print("p(" + lines + ");");
+			
 			markLine(parser.getLineNumber());
 			println();
 		}
@@ -334,6 +338,11 @@ public abstract class JapidAbstractCompiler {
 					args = "\"\"";
 				String logLine = "System.out.println(\"" + this.template.name.replace('\\', '/') + "(line " + (parser.getLineNumber() + i) + "): \" + " + args + ");";
 				println(logLine);
+			} else if (line.startsWith("invoke ") || line.startsWith("invoke\t")) {
+				String args = line.substring("invoke".length()).trim().replace(";", "");
+				if (args.trim().length() == 0)
+					args = "whatyouwantoinvoke()";
+				printActionInvocation(args);
 			} else if (line.startsWith("suppressNull ") || line.startsWith("suppressNull\t")) {
 				String npe = line.substring("suppressNull".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(npe))

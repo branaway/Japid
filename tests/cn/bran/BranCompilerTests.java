@@ -28,7 +28,7 @@ public class BranCompilerTests {
 
 	@Test
 	public void testCompileLayout() throws IOException {
-		String src = readFile("tempgen/japidviews/_layouts/Layout.html");
+		String src = readFile("JapidSample/app/japidviews/_layouts/Layout.html");
 		JapidTemplate bt = new JapidTemplate("tag/Layout.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
 		cp.compile(bt);
@@ -118,6 +118,35 @@ public class BranCompilerTests {
 		assertTrue(code.contains("private my_tag2DoBody _my_tag2DoBody = new my_tag2DoBody();"));
 	}
 	
+	@Test
+	public void testSimpleInvoke() throws IOException {
+		String srcFile = "tests/simpleInvoke.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("simpleInvoke.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		String code = bt.javaSource;
+		System.out.println(code);
+		assertTrue(code.contains("actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner(\"\", \"MyController.action\", s)"));
+		assertTrue(code.contains("MyController.action(s);"));
+		assertTrue(code.contains("actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner(\"\", \"MyController.action\", s + \"2\""));
+		assertTrue(code.contains("MyController.action(s + \"2\");"));
+		
+	}
+
+	@Test
+	public void testOldInvoke() throws IOException {
+		String srcFile = "JapidSample/app/japidviews/Application/authorPanel2.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("simpleInvoke.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		String code = bt.javaSource;
+		System.out.println(code);
+	}
+	
 	private static String readFile(String path) throws IOException {
 		FileInputStream stream = new FileInputStream(new File(path));
 		try {
@@ -129,5 +158,6 @@ public class BranCompilerTests {
 			stream.close();
 		}
 	}
+	
 
 }

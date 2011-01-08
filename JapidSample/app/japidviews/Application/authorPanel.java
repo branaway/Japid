@@ -21,14 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class authorPanel extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/authorPanel.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"<p>author name: ";
-static private final String static_2 = "</p>\n" + 
-"<p>his birthdate: ";
-static private final String static_3 = "</p>\n" + 
-"<p>and his is a '";
-static private final String static_4 = "'</p>\n";
 	public authorPanel() {
 		super(null);
 	}
@@ -53,14 +45,16 @@ static private final String static_4 = "'</p>\n";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 1
+;// line 1
+p("<p>author name: ");// line 1
 p(a.name);// line 3
-p(static_2);// line 3
+p("</p>\n" + 
+"<p>his birthdate: ");// line 3
 p(a.birthDate);// line 4
-p(static_3);// line 4
+p("</p>\n" + 
+"<p>and his is a '");// line 4
 p(a.getGender());// line 5
-p(static_4);// line 5
+p("'</p>\n");// line 5
 
 	}
 }

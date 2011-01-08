@@ -21,10 +21,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public abstract class defLayout extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/_layouts/defLayout.html";
-static private final String static_0 = "----\n";
-static private final String static_1 = "\n" + 
-"----\n";
-static private final String static_2 = "";
 	public defLayout() {
 		super(null);
 	}
@@ -41,10 +37,11 @@ static private final String static_2 = "";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-		p(static_0);// line 1
+		p("----\n");// line 1
 p(get("foo"));// line 2
-p(static_1);// line 2
+p("\n" + 
+"----\n");// line 2
 	doLayout();// line 4
-p(static_2);// line 4
+;// line 4
 	}	protected abstract void doLayout();
 }

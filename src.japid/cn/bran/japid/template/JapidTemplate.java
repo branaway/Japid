@@ -17,6 +17,11 @@ public class JapidTemplate {
     public String compiledTemplateName;
     public Long timestamp = System.currentTimeMillis();
 
+    /**
+     * 
+     * @param name the source file name. Used in the generated code as comment reference. 
+     * @param source the source of the html template
+     */
     public JapidTemplate(String name, String source) {
         this.name = name;
         this.source = source;

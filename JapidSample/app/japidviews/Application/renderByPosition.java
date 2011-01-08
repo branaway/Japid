@@ -22,17 +22,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class renderByPosition extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/Application/renderByPosition.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n" + 
-"got: ";
-static private final String static_2 = "\n" + 
-"got: ";
-static private final String static_3 = "\n" + 
-"got: ";
-static private final String static_4 = ", ";
-static private final String static_5 = ", ";
-static private final String static_6 = "\n" + 
-"\n";
 	public renderByPosition() {
 		super(null);
 	}
@@ -65,18 +54,18 @@ static private final String static_6 = "\n" +
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-p(static_1);// line 2
+;// line 1
+p("got: ");// line 2
 p(ss);// line 4
-p(static_2);// line 4
+p("got: ");// line 4
 p(ii);// line 5
-p(static_3);// line 5
+p("got: ");// line 5
 p(au1.name);// line 6
-p(static_4);// line 6
+p(", ");// line 6
 p(au2.name);// line 6
-p(static_5);// line 6
+p(", ");// line 6
 p(au22.who);// line 6
-p(static_6);// line 6
+p("\n");// line 6
 
 	}
 }

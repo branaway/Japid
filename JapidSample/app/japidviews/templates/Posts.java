@@ -22,20 +22,6 @@ import static cn.bran.play.WebUtils.*;
 @cn.bran.play.NoEnhance
 public class Posts extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/Posts.html";
-static private final String static_0 = "";
-static private final String static_1 = "\n";
-static private final String static_2 = "\n" + 
-"\n";
-static private final String static_3 = " \n" + 
-"	- title: ";
-static private final String static_4 = "\n" + 
-"	- date: ";
-static private final String static_5 = "\n" + 
-"	- author ";
-static private final String static_6 = " ";
-static private final String static_7 = "\n" + 
-"	the real title: 你好\n";
-static private final String static_8 = "\n";
 	public Posts() {
 		super(null);
 	}
@@ -44,10 +30,7 @@ static private final String static_8 = "\n";
 	}
 	String blogTitle;
 	List <Post> allPost;
-	public cn.bran.japid.template.RenderResult render(
-  String blogTitle, 
-  List <Post> allPost
-) {
+	public cn.bran.japid.template.RenderResult render(String blogTitle,  List <Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long t = -1;
@@ -65,22 +48,19 @@ static private final String static_8 = "\n";
 		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
 		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
 		play.Play _play = new play.Play(); assert _play != null;
-p(static_0);// line 1
-// line 1
-p(static_1);// line 3
-p(static_2);// line 7
-for (Post post: allPost) {// line 9
-p(static_3);// line 9
-p(post.title);// line 10
-p(static_4);// line 10
-p(post.postedAt);// line 11
-p(static_5);// line 11
-p(post.author.name);// line 12
-p(static_6);// line 12
-p(post.author.gender);// line 12
-p(static_7);// line 12
-}// line 14
-p(static_8);// line 14
+;// line 1
+for (Post post: allPost) {// line 4
+p("	- title: ");// line 4
+p(post.title);// line 5
+p("	- date: ");// line 5
+p(post.postedAt);// line 6
+p("	- author ");// line 6
+p(post.author.name);// line 7
+p(" ");// line 7
+p(post.author.gender);// line 7
+p("	the real title: 你好\n");// line 7
+}// line 9
+;// line 9
 
 	}
 }
