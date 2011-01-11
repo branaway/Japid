@@ -31,7 +31,7 @@ public class InnerClassMeta {
 	String tagName;
 	// the sequence of the same tag called in a single template
 	int counter;
-	// like in a fcuntioan call
+	// like in a function call
 	String renderArgs;
 	String renderBody;
 //	private String interfaceName;
@@ -45,12 +45,15 @@ public class InnerClassMeta {
 	}
 
 	/**
-	 * somthing like this: 	
+	 * something like this: 	
+	 * <pre>
 	 * class Display1_Body implements DoBodyInterface{
-		void render(String title) {
-			pln ("The real title is: ", title);
-		}
-	}
+			void render(String title) {
+				pln ("The real title is: ", title);
+			}
+	 *	}
+	</pre>
+	 * @deprecated this method is the old way of declaring inner class. Now use the getAnonymous() in inline fashion. 
 	 */
 	@Override
 	public String toString() {
@@ -78,14 +81,14 @@ public class InnerClassMeta {
 				classParams = "<" + classParams.substring(1) + ">";
 
 		StringBuilder sb = new StringBuilder();
-		line(sb, "class " + getInnerClassName() + counter + "DoBody implements " + tagName + ".DoBody" +  classParams + "{");
+		line(sb, "class " + getVarRoot() + counter + "DoBody implements " + tagName + ".DoBody" +  classParams + "{");
 		line(sb, "\tpublic void render(" + renderArgs  + ") {");
 		line(sb, "\t\t" + renderBody);
 		line(sb, "\t}");
 		line(sb, "}");
 		
 		// bodyclass instance
-		String bodyClassName = getInnerClassName() + counter +  "DoBody"; 
+		String bodyClassName = getVarRoot() + counter +  "DoBody"; 
 		String bodyField = "private " + bodyClassName +" _" + bodyClassName + 
 			" = new " + bodyClassName + "();";
 		line(sb, "\t" + bodyField);
@@ -97,7 +100,49 @@ public class InnerClassMeta {
 		sb.append(line + "\n");
 	}
 	
-	public String getInnerClassName() {
+	public String getVarRoot() {
 		return tagName.replace('.', '_').replace('/', '_');
+	}
+
+	/**
+	 * get something like this 
+	 * <pre>
+	 * 		new Display.DoBody<String>() {
+	 *			public void render(String title) {
+	 *				p(" The real title is: ");
+	 *				p(title);
+	 *			}
+	 *		});
+	 * </pre>
+	 * @return
+	 */
+	public String getAnonymous() {
+		ExprParser ep = new ExprParser(this.renderArgs);
+		List<String> argTokens = ep.split();
+		// something String a Date b
+		assert(argTokens.size() % 2 == 0);
+		
+		String[] argTypes = new String[argTokens.size() /2];
+		
+		String classParams = "";
+		for (int i = 0; i < argTypes.length; i++) {
+			classParams += ", " + argTokens.get(i * 2);
+		}
+		if (classParams.startsWith(","))
+			classParams = "<" + classParams.substring(1) + ">";
+		
+		if (Each.class.getSimpleName().equals(tagName)) {
+			// append extra argument to the render method
+			renderArgs += EXTRA_LOOP_ATTRS;
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		line(sb, "new " + tagName + ".DoBody" +  classParams + "(){");
+		line(sb, "public void render(" + renderArgs  + ") {");
+		line(sb, renderBody);
+		line(sb, "}");
+		line(sb, "}");
+		
+		return sb.toString();
 	}
 }

@@ -46,4 +46,7 @@ History:
 
 2011/1/5, version 0.8.2
 	1. support ctrl-click on #{invoke package.controller.action /} in views.
+2011/1/11, version 0.8.3.4
+	1. code format the derived java files.
+	2. Bundled a new Japid jars that create cleaner code for tag invocation.
 

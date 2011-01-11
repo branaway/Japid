@@ -128,4 +128,8 @@ public class Caches extends JapidController {
 		else
 			renderText("StringBuilder with MyMem does not works...");
 	}
+	
+	public void testAction() {
+		renderJapid();
+	}
 }

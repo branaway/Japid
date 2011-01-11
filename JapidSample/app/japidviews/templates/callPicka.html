@@ -1,12 +1,6 @@
 <p>before...<p>
 <p>
-note: the picka tag is defined in the japidviews/_tags directory
-
-#{picka "a", "b" + "c" | String r}
-    the tag chosed: $r
-#{/}
-</p>
-after...
+<p>call a simple tag</p>
 
 Another simple tag aTag, which locates in the same directory as this template:
 
@@ -15,9 +9,20 @@ first define something in a Java code block.
 `// java.util.* is automatically imported
 ` List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};
 
-<p>now call a simple tag</p>
-
 #{aTag strings /}
+
+note: the picka tag is defined in the japidviews/_tags directory
+
+#{picka "a", "b" + "c" | String r}
+    the tag chosed: $r
+    <p>and we can can call a tag recurive?</p>
+    #{SampleTag r/}
+#{/}
+</p>
+after...
+
+
+
 
 <p>Or using the full path of the tag</p>
 

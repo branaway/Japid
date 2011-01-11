@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Stack;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
+import cn.bran.japid.classmeta.InnerClassMeta;
 import cn.bran.japid.compiler.JapidParser.Token;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
@@ -57,7 +58,7 @@ public abstract class JapidAbstractCompiler {
 		public int startLine;
 		public boolean hasBody;
 		// bran: put everything in the args tag in it
-		public String bodyArgsString = "";
+		public String bodyArgsString = null;
 //		public StringBuffer bodyBuffer = new StringBuffer(2000);
 		private List<String> bodyTextList = new ArrayList<String>();
 		{
@@ -67,6 +68,8 @@ public abstract class JapidAbstractCompiler {
 		public String args = "";
 		public int tagIndex;
 		public String getBodyText() {
+			if (!hasBody)
+				return null;
 			StringBuffer sb = new StringBuffer(2000);
 			for (String s: bodyTextList) {
 				sb.append(s).append('\n');
@@ -552,15 +555,16 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void regularTagInvoke(Tag tag) {
 		String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
-		println(tagVar + ".setActionRunners(getActionRunners());");
+//		println(tagVar + ".setActionRunners(getActionRunners());");
 		if (tag.hasBody) {
 			// old way: create a new instance for each call
 			// println("new " + tagClassName + "(getOut()).render(" +
 			// tagArgs + ", new " + tagName + tagIndex + "DoBody());");
 			// use a field to call a tag for better performance in case of
 			// loop
-			// TODO: handle tags with prefix: #{my.tag}
-			println(tagVar + ".render(" + tag.args + ", " + tag.getBodyVar() + ");");
+
+			// let's postpone until we get the body
+			//println(tagVar + ".render(" + tag.args + ", " + tag.getBodyVar() + ");");
 			
 		} else {
 			// println("new " + tagClassName + "(getOut()).render(" +
@@ -588,8 +592,12 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void endRegularTag(Tag tag) {
 		if (tag.hasBody) {
-			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.getBodyText());
+			InnerClassMeta inner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.getBodyText());
+			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
+			String tagLine = tagVar + ".render(" + tag.args + ", " + inner.getAnonymous() + ");";
+			println(tagLine);
 		} else if (!"doLayout".equals(tag.tagName)) {
+			// for simple tag call without call back:
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
 		}
 	}

@@ -6,6 +6,9 @@
                    
 Version History:
 
+2011/1/11: V0.6.1
+    1. internal change: all tag invocations are now local in the layout method. The idea was to reduce using fields and favor local variables;  
+    2. fix: all implicit variables are labeled as final for use in inner classes.
 2011/1/8: V0.6.0
     1. bundled a Japid development plugin for Eclipse in the eclipse-plugin directory. Read the readme.txt in the directory for instructions.  
 

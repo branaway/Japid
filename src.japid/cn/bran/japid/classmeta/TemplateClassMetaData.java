@@ -91,7 +91,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
 			// set the render(xxx)
 			if (doBodyArgsString != null) {
-				// the template can be called with a callbacl body
+				// the template can be called with a callback body
 				// the field
 				pln (TAB + "DoBody body;" );
 				doBodyInterface();
@@ -146,7 +146,9 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
 		// doLayout body
 		pln(TAB + "@Override protected void doLayout() {");
-		addImplicitVariables();
+		super.setupTagObjects();
+		super.addImplicitVariables();
+		pln("//------");
 		pln(super.body);
 		pln("\t}");
 		// #{set } tags
@@ -159,7 +161,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t}");
 		}
 
-		callTags();
+//		callTags();
 		super.processDefTags();
 		
 		pln("}");

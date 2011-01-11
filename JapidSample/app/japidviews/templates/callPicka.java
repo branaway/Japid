@@ -1,9 +1,10 @@
 package japidviews.templates;
+
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
-import static  japidviews._javatags.JapidWebUtil.*;
+import static japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
@@ -16,81 +17,133 @@ import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import static cn.bran.play.WebUtils.*;
+//
 // NOTE: This file was generated from: japidviews/templates/callPicka.html
 // Change to this file will be lost next time the template file is compiled.
+
 @cn.bran.play.NoEnhance
-public class callPicka extends cn.bran.japid.template.JapidTemplateBase{
+public class callPicka extends cn.bran.japid.template.JapidTemplateBase {
 	public static final String sourceTemplate = "japidviews/templates/callPicka.html";
+
 	public callPicka() {
 		super(null);
 	}
+
 	public callPicka(StringBuilder out) {
 		super(out);
 	}
+
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers,
+				getOut(), t, actionRunners);
 	}
-	@Override protected void doLayout() {
 
-		play.mvc.Http.Request request = play.mvc.Http.Request.current(); assert request != null;
-		play.mvc.Http.Response response = play.mvc.Http.Response.current(); assert response != null;
-		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();assert flash != null;
-		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();assert session != null;
-		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); assert renderArgs != null;
-		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();assert params != null;
-		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;
-		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
-		play.Play _play = new play.Play(); assert _play != null;
-p("<p>before...<p>\n" + 
-"<p>\n" + 
-"note: the picka tag is defined in the japidviews/_tags directory\n" + 
-"\n");// line 1
-_picka0.setActionRunners(getActionRunners());
-_picka0.render("a", "b" + "c", _picka0DoBody);
-// line 5
-p("</p>\n" + 
-"after...\n" + 
-"\n" + 
-"Another simple tag aTag, which locates in the same directory as this template:\n" + 
-"\n" + 
-"first define something in a Java code block. \n" + 
-"\n");// line 7
-List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};// line 16
-p("<p>now call a simple tag</p>\n" + 
-"\n");// line 16
-_aTag1.setActionRunners(getActionRunners());
-_aTag1.render(strings);
-// line 20
-p("\n" + 
-"<p>Or using the full path of the tag</p>\n" + 
-"\n");// line 20
-_japidviews_templates_aTag2.setActionRunners(getActionRunners());
-_japidviews_templates_aTag2.render(strings);
-// line 24
-p("\n" + 
-"<p>You can use \".\" instead of \"/\" in the path:</p>\n" + 
-"\n");// line 24
-_japidviews_templates_aTag3.setActionRunners(getActionRunners());
-_japidviews_templates_aTag3.render(strings);
-// line 28
-;// line 28
+	@Override
+	protected void doLayout() {
+		//// -- set up the tag objects
+		final aTag _aTag0 = new aTag(getOut());
+		_aTag0.setActionRunners(getActionRunners());
+
+		final SampleTag _SampleTag2 = new SampleTag(getOut());
+		_SampleTag2.setActionRunners(getActionRunners());
+
+		final picka _picka1 = new picka(getOut());
+		_picka1.setActionRunners(getActionRunners());
+
+		final japidviews.templates.aTag _japidviews_templates_aTag3 = new japidviews.templates.aTag(
+				getOut());
+		_japidviews_templates_aTag3.setActionRunners(getActionRunners());
+
+		final japidviews.templates.aTag _japidviews_templates_aTag4 = new japidviews.templates.aTag(
+				getOut());
+		_japidviews_templates_aTag4.setActionRunners(getActionRunners());
+
+		//// -- end of the tag objects
+
+		////// - add implicit variables 
+
+		final Request request = Request.current();
+		assert request != null;
+		final Response response = Response.current();
+		assert response != null;
+
+		final Flash flash = Flash.current();
+		assert flash != null;
+
+		final Session session = Session.current();
+		assert session != null;
+
+		final RenderArgs renderArgs = RenderArgs.current();
+		assert renderArgs != null;
+
+		final Params params = Params.current();
+		assert params != null;
+
+		final Validation validation = Validation.current();
+		assert validation != null;
+
+		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(
+				validation);
+		assert errors != null;
+
+		final play.Play _play = new play.Play();
+		assert _play != null;
+
+		////// - end of implicit variables 
+
+		//------
+		p("<p>before...<p>\n"
+				+
+				"<p>\n"
+				+
+				"<p>call a simple tag</p>\n"
+				+
+				"\n"
+				+
+				"Another simple tag aTag, which locates in the same directory as this template:\n"
+				+
+				"\n" +
+				"first define something in a Java code block. \n" +
+				"\n");// line 1
+		List<String> strings = new ArrayList<String>() {
+			{
+				add("you");
+				add("me");
+				add("them");
+			}
+		};// line 10
+		_aTag0.render(strings);
+		p("\n"
+				+
+				"note: the picka tag is defined in the japidviews/_tags directory\n"
+				+
+				"\n");// line 12
+		_picka1.render("a", "b" + "c", new picka.DoBody<String>() {
+			public void render(String r) {
+				p("    the tag chosed: ");// line 16
+				p(r);// line 17
+				p("    <p>and we can can call a tag recurive?</p>\n" +
+						"    ");// line 17
+				_SampleTag2.render(r);
+
+			}
+		}
+				);
+		p("</p>\n" +
+				"after...\n" +
+				"\n" +
+				"\n" +
+				"\n" +
+				"\n" +
+				"<p>Or using the full path of the tag</p>\n" +
+				"\n");// line 20
+		_japidviews_templates_aTag3.render(strings);
+		p("\n" +
+				"<p>You can use \".\" instead of \"/\" in the path:</p>\n" +
+				"\n");// line 29
+		_japidviews_templates_aTag4.render(strings);
 
 	}
-	private picka _picka0 = new picka(getOut());
-class picka0DoBody implements picka.DoBody< String>{
-	public void render(String r) {
-		// line 5
-p("    the tag chosed: ");// line 5
-p(r);// line 6
-p("");// line 6
-
-	}
-}
-	private picka0DoBody _picka0DoBody = new picka0DoBody();
-
-	private aTag _aTag1 = new aTag(getOut());
-	private japidviews.templates.aTag _japidviews_templates_aTag2 = new japidviews.templates.aTag(getOut());
-	private japidviews.templates.aTag _japidviews_templates_aTag3 = new japidviews.templates.aTag(getOut());
 }

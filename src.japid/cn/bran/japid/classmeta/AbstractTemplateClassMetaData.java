@@ -101,8 +101,10 @@ public class AbstractTemplateClassMetaData {
 		sb.append(s);
 	}
 
-	public void addCallTagBodyInnerClass(String className, int count, String classArgs, String body) {
-		this.innersforTagCalls.add(new InnerClassMeta(className, count, classArgs, body));
+	public InnerClassMeta addCallTagBodyInnerClass(String className, int count, String classArgs, String body) {
+		InnerClassMeta inner = new InnerClassMeta(className, count, classArgs, body);
+		this.innersforTagCalls.add(inner);
+		return inner;
 	}
 
 	/**
@@ -171,7 +173,8 @@ public class AbstractTemplateClassMetaData {
 			}
 			pln(l);
 		}
-
+		
+		pln("//");
 		pln("// NOTE: This file was generated from: " + originalTemplate);
 		pln("// Change to this file will be lost next time the template file is compiled.");
 
@@ -189,22 +192,42 @@ public class AbstractTemplateClassMetaData {
 	/**
 	 * 
 	 */
-	protected void callTags() {
-		// inners
+//	protected void callTags() {
+//		// inners
+//		for (InnerClassMeta inner : this.innersforTagCalls) {
+//			// create a reusable instance _tagName_indexand a instance
+//			// initializer
+//			String tagClassName = inner.tagName;
+//			String field = "private " + tagClassName + " _" + inner.getInnerClassName() + inner.counter + " = new " + tagClassName + "(getOut());";
+//			pln("\t" + field);
+//
+//			if (inner.renderBody != null) {
+//				// body class
+//				pln(inner.toString());
+//			}
+//		}
+//	}
+
+	protected void setupTagObjects() {
+		pln("//// -- set up the tag objects");
 		for (InnerClassMeta inner : this.innersforTagCalls) {
 			// create a reusable instance _tagName_indexand a instance
 			// initializer
 			String tagClassName = inner.tagName;
-			String field = "private " + tagClassName + " _" + inner.getInnerClassName() + inner.counter + " = new " + tagClassName + "(getOut());";
-			pln("\t" + field);
-
-			if (inner.renderBody != null) {
-				// body class
-				pln(inner.toString());
-			}
+			String var = "_" + inner.getVarRoot() + inner.counter;
+			String decl = "final " + tagClassName  + " " + var + " = new " + tagClassName + "(getOut());";
+			pln(decl);
+			String addRunner = var + ".setActionRunners(getActionRunners());";
+			pln(addRunner);
+			pln();
+//			if (inner.renderBody != null) {
+//				// body class
+//				pln(inner.toString());
+//			}
 		}
+		pln("//// -- end of the tag objects\n");
 	}
-
+	
 	protected void printAnnotations() {
 		for (Class<? extends Annotation> anno : typeAnnotations) {
 			pln("@" + anno.getName());
@@ -245,7 +268,7 @@ public class AbstractTemplateClassMetaData {
 	protected void addConstructors() {
 		if (!streaming) {
 			// for StringBuilder data collection, create a default constructor
-			pln(TAB + PUBLIC + className + "() {\r\n" + "		super(null);\r\n" + "	}");
+			pln(TAB + PUBLIC + className + "() {\n" + "		super(null);\n" + "	}");
 
 		}
 
@@ -372,7 +395,7 @@ public class AbstractTemplateClassMetaData {
 
 	/**
 	 * ignore static content that contains whitespace chars only, including
-	 * space, tab, \r\n etc.
+	 * space, tab, \n etc.
 	 */
 	public void trimStaticContent() {
 		this.trimStaticContent = true;
@@ -427,16 +450,17 @@ public class AbstractTemplateClassMetaData {
 	 * added variable declarations such as request, response, errors, flash, etc.
 	 */
 	protected void addImplicitVariables() {
-		pln("\r\n		play.mvc.Http.Request request = play.mvc.Http.Request.current(); assert request != null;\r\n" + 
-				"		play.mvc.Http.Response response = play.mvc.Http.Response.current(); assert response != null;\r\n" + 
-				"		play.mvc.Scope.Flash flash = play.mvc.Scope.Flash.current();assert flash != null;\r\n" + 
-				"		play.mvc.Scope.Session session = play.mvc.Scope.Session.current();assert session != null;\r\n" + 
-				"		play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current(); assert renderArgs != null;\r\n" + 
-				"		play.mvc.Scope.Params params = play.mvc.Scope.Params.current();assert params != null;\r\n" + 
-				"		play.data.validation.Validation validation = play.data.validation.Validation.current();assert validation!= null;\r\n" + 
-				"		cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;\r\n" + 
-				"		play.Play _play = new play.Play(); assert _play != null;" + 
-				"");
+		pln("////// - add implicit variables \n");
+		pln("		final Request request = Request.current(); assert request != null;\n\n" + 
+				"		final Response response = Response.current(); assert response != null;\n\n" + 
+				"		final Flash flash = Flash.current();assert flash != null;\n\n" + 
+				"		final Session session = Session.current();assert session != null;\n\n" + 
+				"		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;\n\n" + 
+				"		final Params params = Params.current();assert params != null;\n\n" + 
+				"		final Validation validation = Validation.current();assert validation!= null;\n\n" + 
+				"		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;\n\n" + 
+				"		final play.Play _play = new play.Play(); assert _play != null;\n");
+		pln("////// - end of implicit variables \n\n");
 	}
 
 	/**

@@ -20,9 +20,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
 /**
- * a buit-in tag for looping, with helping attributes such as, index odd/even
+ * a built-in tag for looping, with helping attributes such as, index odd/even
  * line, isFirst, isLast, etc. Since we know this tag does not have a layout,
- * the super's layout->doLayout pathway is short-cutted in the render().
+ * the super's layout->doLayout pathway is short-cut in the render().
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
  * 

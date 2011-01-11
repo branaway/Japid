@@ -32,7 +32,9 @@ public class LayoutClassMetaData  extends AbstractTemplateClassMetaData {
 		addConstructors();
 		
 		p("\t@Override public void layout() {");
-		addImplicitVariables();
+		super.setupTagObjects();
+		super.addImplicitVariables();
+		// the code to render things.
 		p("\t\t" + body);
 		p("\t}");
 		
@@ -42,7 +44,7 @@ public class LayoutClassMetaData  extends AbstractTemplateClassMetaData {
 		
 		p("\tprotected abstract void doLayout();\n");
 
-		callTags();
+//		callTags();
 		super.processDefTags();
 		
 		p("}");

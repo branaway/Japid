@@ -37,7 +37,7 @@ public class BranCompilerTests {
 
 	@Test
 	public void testAnotherLayout() throws IOException {
-		String src = readFile("tempgen/japidviews/_layouts/TagLayout.html");
+		String src = readFile("JapidSample/app/japidviews/_layouts/TagLayout.html");
 		JapidTemplate bt = new JapidTemplate("tag/TagLayout.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
 		cp.compile(bt);
@@ -46,9 +46,9 @@ public class BranCompilerTests {
 	
 	@Test
 	public void testCompileTemplate() throws IOException {
-		String src = readFile("tempgen/tag/AllPost.html");
+		String src = readFile("JapidSample/app/japidviews/templates/AllPost.html");
 
-		JapidTemplate bt = new JapidTemplate("tag/AllPost.html", src);
+		JapidTemplate bt = new JapidTemplate("AllPost.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
@@ -66,7 +66,7 @@ public class BranCompilerTests {
 
 	@Test
 	public void testCompileTag2() throws IOException {
-		String src = readFile("tempgen/tag/Tag2.html");
+		String src = readFile("JapidSample/app/japidviews/_tags/Tag2.html");
 
 		JapidTemplate bt = new JapidTemplate("tag/Tag2.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
