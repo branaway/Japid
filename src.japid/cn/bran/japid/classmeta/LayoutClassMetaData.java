@@ -16,46 +16,59 @@ package cn.bran.japid.classmeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LayoutClassMetaData  extends AbstractTemplateClassMetaData {
+import cn.bran.japid.template.JapidTemplateBase;
+import cn.bran.japid.template.JapidTemplateBaseStreaming;
 
+public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
+
+	{
+		setAbstract(true);
+	}
+	
 	List<String> getterMethods = new ArrayList<String>();
-//	public String renderBody;
 
-	@Override
-	public String toString() {
-		printHeaders();
-		printAnnotations();
-		classDeclare();
-		embedSourceTemplateName();
-		printHttpHeaderMap();
-//		buildStatics();
-		addConstructors();
-		
+	/**
+	 * map the #{get} tag
+	 * 
+	 * @param string
+	 */
+	public void get(String string) {
+		this.getterMethods.add(string);
+
+	}
+
+	/**
+	 * 
+	 */
+	protected void childLayout() {
+		p("\n\tprotected abstract void doLayout();\n");
+	}
+
+	/**
+	 * #{get "block name" /}
+	 */
+	protected void getterSetter() {
+		pln();
+		for (String key : getterMethods) {
+			p("\tprotected abstract void " + key + "();\n");
+		}
+	}
+
+	/**
+	 * 
+	 */
+	protected void layoutMethod() {
 		p("\t@Override public void layout() {");
 		super.setupTagObjects();
 		super.addImplicitVariables();
 		// the code to render things.
 		p("\t\t" + body);
 		p("\t}");
-		
-		for (String key : getterMethods) {
-			p("\tprotected abstract void " + key + "();\n");
-		}
-		
-		p("\tprotected abstract void doLayout();\n");
-
-//		callTags();
-		super.processDefTags();
-		
-		p("}");
-
-		return sb.toString();
 	}
 
-	// map the #{get} tag
-	public void get(String string) {
-		this.getterMethods.add(string);
-		
+	@Override
+	void renderMethod() {
+		// no such method in layout
 	}
-	
+
 }

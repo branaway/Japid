@@ -12,50 +12,25 @@ public class DirUtil {
 	public static Set<File> findOrphanJava(File src, File target) {
 		if (target == null)
 			target = src;
-		String[] allSrc = getAllFileNames(src, new String[] { ".java", ".html" });
+		String[] allSrc = getAllFileNames(src, new String[] { ".java", ".html", ".txt", ".json", ".xml" });
 		Set<String> javas = new HashSet<String>();
-		Set<String> htmls = new HashSet<String>();
+		Set<String> srcFiles = new HashSet<String>();
 
 		for (String s : allSrc) {
 			if (s.endsWith(".java")) {
 				javas.add(s);
-			} else if (s.endsWith(".html")) {
-				htmls.add(s.substring(0, s.lastIndexOf('.')) + ".java");
+			} else /*if (s.endsWith(".html"))*/ {
+				srcFiles.add(mapSrcToJava(s));
 			}
 		}
 
-		javas.removeAll(htmls);
+		javas.removeAll(srcFiles);
 		Set<File> re = new HashSet<File>();
 		for (String j : javas) {
 			re.add(new File(j));
 		}
 		return re;
 	}
-
-	// public static Set<String> mapFileSet(String[] fnames, String extension) {
-	// Set<String> fset = new HashSet<String>();
-	// for (String f : fnames) {
-	// int dot = f.lastIndexOf(".");
-	// if (dot > 0) {
-	// String root = f.substring(0, dot);
-	// fset.add(root + "." + extension);
-	// }
-	// }
-	// return fset;
-	// }
-
-//	public static String[] getAllFilesAnt(File dir, String[] patterns) {
-//		DirectoryScanner ds = new DirectoryScanner();
-//		ds.setBasedir(dir);
-//		// ds.setExcludes(new String[] {JapidPlugin.JAVATAGS + "/**"});
-//		if (patterns == null)
-//			ds.setIncludes(null); // all
-//		else
-//			ds.setIncludes(patterns); // all
-//		ds.scan();
-//		String[] includeFiles = ds.getIncludedFiles();
-//		return includeFiles;
-//	}
 
 	/**
 	 * 
@@ -120,40 +95,66 @@ public class DirUtil {
 		return false;
 	}
 
-	public static List<File> findChangedHtmlFiles(File src) {
+	public static List<File> findChangedSrcFiles(File srcDir) {
 //		if (target == null)
 //			target = src;
 //		String srcPath = src.getPath();
 		Set<File> allSrc  = new HashSet<File>();
-		allSrc = getAllFiles(src, new String[] { ".java", ".html" }, allSrc);
+		allSrc = getAllFiles(srcDir, new String[] { ".java", ".html", ".txt", ".json", ".xml" }, allSrc);
 		Map<String, Long> javas = new HashMap<String, Long>();
-		Map<String, Long> htmls = new HashMap<String, Long>();
+		Map<String, Long> srcFiles = new HashMap<String, Long>();
 		
 
 		for (File s : allSrc) {
 			String path = s.getPath();
 			if (path.endsWith(".java")) {
-				// keep the root only
-				javas.put(path.substring(0, path.length() - 5), s.lastModified());
-			} else if (path.endsWith(".html")) {
-				// keep the root only
-				htmls.put(path.substring(0, path.length() - 5), s.lastModified());
+				javas.put(path, s.lastModified());
+			} else /*if (path.endsWith(".html"))*/ {
+				srcFiles.put(path, s.lastModified());
 			}
 		}
 
 		List<File> rs = new ArrayList<File>();
 		
-		for (String k : htmls.keySet()) {
-			Long t = javas.get(k);
+		for (String src : srcFiles.keySet()) {
+			Long t = javas.get(mapSrcToJava(src));
 			if (t == null) {
-				rs.add(new File(k + ".html"));
+				rs.add(new File(src));
 			}
 			else {
-				if (htmls.get(k).compareTo(t) > 0) {
-					rs.add(new File(k + ".html"));
+				if (srcFiles.get(src).compareTo(t) > 0) {
+					rs.add(new File(src));
 				}
 			}
 		}
 		return rs;
+	}
+
+	public static String mapSrcToJava(String k) {
+		if (k.endsWith(".txt")) {
+			return getRoot(k) + "_txt" + ".java";
+		}
+		else if (k.endsWith(".xml")) {
+			return getRoot(k) + "_xml" + ".java";
+		}
+		else if (k.endsWith(".json")) {
+			return getRoot(k) + "_json" + ".java";
+		}
+		else if (k.endsWith(".css")) {
+			return getRoot(k) + "_css" + ".java";
+		}
+		else if (k.endsWith(".js")) {
+			return getRoot(k) + "_js" + ".java";
+		}
+		else { // including html
+			return getRoot(k) + ".java";
+		}
+	}
+
+	private static String getRoot(String k) {
+		if (k.indexOf('.')> 0) {
+			return k.substring(0, k.lastIndexOf('.'));
+		}
+		return k;
 	}
 }

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 
 /**
- * A template in Java. Code partly from Play! framwork
+ * A template in Java. Code partly from Play! framework
  */
 public class JapidTemplate {
     public String name;
@@ -17,11 +17,16 @@ public class JapidTemplate {
     public String compiledTemplateName;
     public Long timestamp = System.currentTimeMillis();
 
-    /**
-     * 
-     * @param name the source file name. Used in the generated code as comment reference. 
-     * @param source the source of the html template
-     */
+	/**
+	 * 
+	 * @param name
+	 *            the source file name. Used in the generated code as comment
+	 *            reference. The name should start from the package root and the
+	 *            path to the file will be used as the package name and the file
+	 *            name as the class name.
+	 * @param source
+	 *            the source of the html template
+	 */
     public JapidTemplate(String name, String source) {
         this.name = name;
         this.source = source;

@@ -1,13 +1,17 @@
 package controllers;
 
 import japidviews.Application.authorPanel;
+import japidviews._javatags.JapidWebUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import controllers.more.BaseController;
+
 import play.cache.CacheFor;
+import play.mvc.Before;
 
 import models.japidsample.Author;
 import models.japidsample.Author2;
@@ -109,7 +113,10 @@ public class Application extends JapidController {
 	}
 	
 	public static void hello() {
-		renderText("hello，Japid Play!");
+		String m = "hi there and..";
+		String am = m + "!!";
+//		renderText("hello，Japid Play!");
+		renderText(am);
 	}
 	
 	/**

@@ -1,10 +1,6 @@
 package notifiers;
 
 import models.japidsample.Post;
-
-import org.apache.commons.mail.EmailAttachment;
-
-import play.Play;
 import cn.bran.play.JapidMailer;
 
 public class TestEmailer2 extends JapidMailer {

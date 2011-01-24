@@ -6,9 +6,24 @@
                    
 Version History:
 
-2011/1/11: V0.6.1
+2011/1/20: V0.6.1
     1. internal change: all tag invocations are now local in the layout method. The idea was to reduce using fields and favor local variables;  
     2. fix: all implicit variables are labeled as final for use in inner classes.
+    3. the compiler now recognizes .xml, .json, .txt as the template extensions and set the content type accordingly. The renderJapid() method will select the proper template based on content negotiation as per: http://www.playframework.org/documentation/1.1/routes#content-negotiation
+    4. new feature: added a new directive to label a generated template class as abstract for subclassing only: `abstract
+    5. new feature: tag qualifiers, layout names and import clauses can start with a "." which means the tag path starts from the current package. e.g.
+        #{.my.tag /} will be translated to #{the.current.package.my.tag /}.
+        
+        `extends .my.layout  
+            will be translated to 
+        `extends the.current.package.my.layout
+        
+        and 
+        
+        `import .my.tags.*
+            will be translated to 
+        `import the.current.package.my.tags.*
+        
 2011/1/8: V0.6.0
     1. bundled a Japid development plugin for Eclipse in the eclipse-plugin directory. Read the readme.txt in the directory for instructions.  
 

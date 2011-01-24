@@ -13,7 +13,7 @@ public class TemplateClassMetaDataTest {
 		TemplateClassMetaData m = new TemplateClassMetaData();
 		m.setHasActionInvocation();
 		m.packageName = "tag";
-		m.className = "Child_html";
+		m.setClassName("Child_html");
 		m.superClass = "Layout_html";
 		m.renderArgs = "String blogTitle, Post frontPost";
 		m.addSetTag("title", "pln(\"the title  is \"); p(blogTitle);");
@@ -23,14 +23,6 @@ public class TemplateClassMetaDataTest {
 		System.out.println(m.toString());
 	}
 	
-	@Test
-	public void testImports () {
-		AbstractTemplateClassMetaData meta = new AbstractTemplateClassMetaData();
-		meta.addImportLine("models");
-		
-		meta.printHeaders();
-		System.out.println(meta.sb.toString());
-		
-	}
+
 
 }

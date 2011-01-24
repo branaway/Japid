@@ -21,6 +21,8 @@ import java.util.Map.Entry;
 
 import cn.bran.japid.compiler.ExprParser;
 import cn.bran.japid.template.ActionRunner;
+import cn.bran.japid.template.JapidTemplateBase;
+import cn.bran.japid.template.JapidTemplateBaseStreaming;
 
 
 /**
@@ -59,23 +61,58 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		setMethods.put(setMethodName, methodBody);
 	}
 
+
+	// for the doBody in the tag template
+	public void addDoBodyInterface(String bodyArgsString) {
+		this.doBodyArgsString = bodyArgsString;
+	}
+
+	public void doBody(String tagArgs) {
+
+		tagArgs = tagArgs == null ? "" : tagArgs;
+		this.addDoBodyInterface(tagArgs);
+	}
+
+//	public void addDefTag(String key, String string) {
+//		// TODO Auto-generated method stub
+//	}
+
+
+	/**
+	 * 
+	 */
 	@Override
-	public String toString() {
-		printHeaders();
-		// the class layout diffs depending on the extends
-		// if there is layout, the render method set up the fields to take the
-		// parameters and
-		// call the super.layout(), which in turn call the doLayout of this
-		// class.
-		// otherwise the render method renders everything directly.
-		printAnnotations();
-		classDeclare();
-		embedSourceTemplateName();
-//		embedContentType();
-		printHttpHeaderMap();
-//		buildStatics();
-		addConstructors();
-// the render mthod
+	protected void getterSetter() {
+		// #{set "block name"} tags
+		pln();
+		for (Entry<String, String> en : setMethods.entrySet()) {
+			String meth = en.getKey();
+			String setBody = en.getValue();
+			pln("\t@Override protected void " + meth + "() {");
+			pln("\t\t" + setBody + ";");
+			pln("\t}");
+		}
+	}
+
+
+	/**
+	 * the main part of the render logic
+	 */
+	protected void layoutMethod() {
+		// doLayout body
+		pln(TAB + "@Override protected void doLayout() {");
+		super.setupTagObjects();
+		super.addImplicitVariables();
+		pln("//------");
+		pln(super.body);
+		pln("\t}");
+	}
+
+
+	/**
+	 * the entry point of the template: render(...). Concrete views have this method while the layouts do not. 
+	 */
+	protected void renderMethod() {
 		if (renderArgs != null) {
 			// create fields for the render args and create a render method to
 			ExprParser ep = new ExprParser(this.renderArgs);
@@ -143,31 +180,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, getOut(), t);");
 		}
 		pln("\t}");
-
-		// doLayout body
-		pln(TAB + "@Override protected void doLayout() {");
-		super.setupTagObjects();
-		super.addImplicitVariables();
-		pln("//------");
-		pln(super.body);
-		pln("\t}");
-		// #{set } tags
-		//
-		for (Entry<String, String> en : setMethods.entrySet()) {
-			String meth = en.getKey();
-			String setBody = en.getValue();
-			pln("\t@Override protected void " + meth + "() {");
-			pln("\t\t" + setBody + ";");
-			pln("\t}");
-		}
-
-//		callTags();
-		super.processDefTags();
-		
-		pln("}");
-
-		return sb.toString();
 	}
+
 
 	// code copied from the TagClassMetaData
 	private void doBodyInterface() {
@@ -195,20 +209,9 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		} 
 	}
 
-	// for the doBody in the tag template
-	public void addDoBodyInterface(String bodyArgsString) {
-		this.doBodyArgsString = bodyArgsString;
-	}
-
-	public void doBody(String tagArgs) {
-
-		tagArgs = tagArgs == null ? "" : tagArgs;
-		this.addDoBodyInterface(tagArgs);
-	}
-
-	public void addDefTag(String key, String string) {
-		// TODO Auto-generated method stub
-		
+	@Override
+	void childLayout() {
+		// concrete views do not have this
 	}
 
 }

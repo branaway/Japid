@@ -3,7 +3,6 @@ package controllers;
 import java.util.HashMap;
 
 import play.cache.Cache;
-import utils.MyMemClient;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.play.CachedItemStatus;
 import cn.bran.play.CachedRenderResult;
@@ -114,19 +113,6 @@ public class Caches extends JapidController {
 			renderText("bad to know 2...");
 		}
 		
-	}
-	
-	public static void testStringBuilderWithMyMem() {
-		String str = "hello";
-		StringBuilder sb = new StringBuilder(str);
-		String key2 = "sb";
-		MyMemClient.safeAdd(key2, sb, 100);
-		sb = (StringBuilder) MyMemClient.get(key2);
-		
-		if (str.equals(sb.toString()))
-			renderText("StringBuilder with MyMem works...");
-		else
-			renderText("StringBuilder with MyMem does not works...");
 	}
 	
 	public void testAction() {

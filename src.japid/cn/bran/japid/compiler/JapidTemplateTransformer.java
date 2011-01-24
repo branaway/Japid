@@ -23,6 +23,7 @@ import java.lang.annotation.Annotation;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.template.JapidTemplate;
+import cn.bran.japid.util.DirUtil;
 
 /**
  * compile html based template to java files
@@ -106,13 +107,15 @@ public class JapidTemplateTransformer {
 		c.compile(temp);
 		String jsrc = temp.javaSource;
 
-		String fileNameRoot = fileName;
-		if (fileName.endsWith(HTML)) {
-			fileNameRoot = fileName.substring(0, fileName.indexOf(HTML));
-		}
+//		String fileNameRoot = fileName;
+//		if (fileName.endsWith(HTML)) {
+//			fileNameRoot = fileName.substring(0, fileName.indexOf(HTML));
+//		}
+
+		String fileNameRoot = DirUtil.mapSrcToJava(fileName);
 
 		String target = targetFolder == null ? sourceFolder : targetFolder;
-		String realTargetFile = target == null ? fileNameRoot + ".java" : target + "/" + fileNameRoot + ".java";
+		String realTargetFile = target == null ? fileNameRoot : target + "/" + fileNameRoot;
 		File f = new File(realTargetFile);
 		if (!f.exists()) {
 			String parent = f.getParent();

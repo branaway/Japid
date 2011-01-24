@@ -22,6 +22,8 @@ public class TagInvocationLineParser {
 			} else {
 				if (Character.isWhitespace(c) || c == '(' || c == '|') {
 					tag.tagName = line.substring(0, i).replace('/', '.');
+					if (tag.tagName.startsWith(".."))
+						tag.tagName = tag.tagName.substring(1);
 					line = line.substring(i).trim();
 					break;
 				} else {

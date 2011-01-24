@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 import cn.bran.japid.template.ActionRunner;
@@ -35,7 +37,7 @@ import cn.bran.japid.template.RenderResultPartial;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public class AbstractTemplateClassMetaData {
+public abstract class AbstractTemplateClassMetaData {
 	private static final String PUBLIC = "public ";
 	private static final String COMMA = ";";
 	private static final String SPACE = " ";
@@ -44,7 +46,8 @@ public class AbstractTemplateClassMetaData {
 	private static Set<String> globalStaticImports = new HashSet<String>();
 	private Set<String> staticImports = new HashSet<String>();
 	private String originalTemplate;
-
+	private static Pattern partialImport = Pattern.compile("import\\s+\\.(.+)");
+	
 	// control if we use a streaming based API or StringBuilder based API
 	public static boolean streaming = false;
 	// if we need to track the time to render
@@ -69,7 +72,15 @@ public class AbstractTemplateClassMetaData {
 	private static final String IMPORT_SPACE = IMPORT + SPACE;
 	private static final String CONTENT_TYPE = "Content-Type";
 	public String packageName;
-	public String className;
+	protected String className;
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
 
 	// each line: byte[] _lineXXX=new byte[]{12, 23, 45};
 	List<String> statics = new ArrayList<String>();
@@ -85,6 +96,7 @@ public class AbstractTemplateClassMetaData {
 	public String body;
 	protected List<InnerClassMeta> innersforTagCalls = new ArrayList<InnerClassMeta>();
 	protected List<InnerClassMeta> innersInvokeCalls = new ArrayList<InnerClassMeta>();
+	private boolean isAbstract;
 
 	public AbstractTemplateClassMetaData() {
 		super();
@@ -130,25 +142,15 @@ public class AbstractTemplateClassMetaData {
 			pln(IMPORT_SPACE + ActionRunner.class.getName() + COMMA);
 		}
 
-		// pln("import java.math.*;");
-		// pln("import static java.lang.Math.*;");
-		// // should decouple with JavaExtensions
-		// pln("import static play.templates.JavaExtensions.*;");
-		for (String l : globalImports) {
-			l = l.trim();
-			if (!l.endsWith(COMMA))
-				l = l + COMMA;
-			if (!l.startsWith(IMPORT))
-				l = IMPORT_SPACE + l;
-			pln(l);
-		}
-
 		for (String l : imports) {
 			l = l.trim();
 			if (!l.endsWith(COMMA))
 				l = l + COMMA;
 			if (!l.startsWith(IMPORT))
 				l = IMPORT_SPACE + l;
+			// extension: allow partial imports. e.g.: import .sub.*
+			// which requires the current package name to prefix it.
+			l = expandPartialImport(l);
 			pln(l);
 		}
 
@@ -160,6 +162,7 @@ public class AbstractTemplateClassMetaData {
 			if (!l.endsWith(".*;")) {
 				l += ".*;";
 			}
+			l = expandPartialImport(l);
 			pln(l);
 		}
 
@@ -171,13 +174,42 @@ public class AbstractTemplateClassMetaData {
 			if (!l.endsWith(".*;")) {
 				l += ".*;";
 			}
+			l = expandPartialImport(l);
 			pln(l);
 		}
-		
+
+		// pln("import java.math.*;");
+		// pln("import static java.lang.Math.*;");
+		// // should decouple with JavaExtensions
+		// pln("import static play.templates.JavaExtensions.*;");
+		for (String l : globalImports) {
+			l = l.trim();
+			if (!l.endsWith(COMMA))
+				l = l + COMMA;
+			if (!l.startsWith(IMPORT))
+				l = IMPORT_SPACE + l;
+			l = expandPartialImport(l);
+			pln(l);
+		}
+
 		pln("//");
 		pln("// NOTE: This file was generated from: " + originalTemplate);
 		pln("// Change to this file will be lost next time the template file is compiled.");
+		pln("//");
 
+	}
+
+	/**
+	 * @param l 
+	 * 		a partially specified import line such as: import .tags.*;
+	 * @return
+	 */
+	public String expandPartialImport(String l) {
+		Matcher matcher = partialImport.matcher(l);
+		if (matcher.matches()) {
+			l = "import " + packageName + "." + matcher.group(1);
+		}
+		return l;
 	}
 
 	protected void embedSourceTemplateName() {
@@ -209,7 +241,9 @@ public class AbstractTemplateClassMetaData {
 //	}
 
 	protected void setupTagObjects() {
-		pln("//// -- set up the tag objects");
+		boolean hasTags = this.innersforTagCalls.size() > 0;
+		if (hasTags) 
+			pln("\n// -- set up the tag objects");
 		for (InnerClassMeta inner : this.innersforTagCalls) {
 			// create a reusable instance _tagName_indexand a instance
 			// initializer
@@ -225,7 +259,8 @@ public class AbstractTemplateClassMetaData {
 //				pln(inner.toString());
 //			}
 		}
-		pln("//// -- end of the tag objects\n");
+		if (hasTags) 
+			pln("// -- end of the tag objects\n");
 	}
 	
 	protected void printAnnotations() {
@@ -248,13 +283,6 @@ public class AbstractTemplateClassMetaData {
 
 		globalImports.add(imp);
 	}
-
-	// protected void buildStatics() {
-	// for (int i = 0; i < statics.size(); i++) {
-	// pln("static byte[] static_" + i + " = getBytes(" + statics.get(i) +
-	// ");");
-	// }
-	// }
 
 	protected void buildStatics() {
 		for (int i = 0; i < statics.size(); i++) {
@@ -284,21 +312,26 @@ public class AbstractTemplateClassMetaData {
 	/**
 	 * 
 	 */
-	protected void classDeclare() {
+	private void classDeclare(){
 		if (superClass == null) {
-			String superName = JapidTemplateBase.class.getName();
+			superClass = JapidTemplateBase.class.getName();
 			if (streaming)
-				superName = JapidTemplateBaseStreaming.class.getName();
-			if (this.getClass() == LayoutClassMetaData.class) {
-				// abstract
-				pln("public abstract class " + className + " extends " + superName + "{");
-			} else {
-				pln("public class " + className + " extends " + superName + "{");
-			}
-		} else {
-			pln("public class " + className + " extends " + superClass + "{");
+				superClass  = JapidTemplateBaseStreaming.class.getName();
 		}
 
+		String abs = isAbstract? "abstract " : "";
+		
+		pln("public " + abs +  "class " + className + " extends " + superClass + "{");
+
+	}
+
+	/**
+	 * set the generated class to be abstract
+	 * 
+	 * @param isAbstract
+	 */
+	public void setAbstract(boolean isAbstract) {
+		this.isAbstract = isAbstract;
 	}
 
 	public String superClass;
@@ -364,7 +397,8 @@ public class AbstractTemplateClassMetaData {
 	static Set<Class<? extends Annotation>> typeAnnotations = new HashSet<Class<? extends Annotation>>();
 
 	public void setContentType(String contentType) {
-		this.headers.put(CONTENT_TYPE, contentType);
+		if (contentType != null)
+			this.headers.put(CONTENT_TYPE, contentType);
 	}
 
 	// String contentType;
@@ -415,8 +449,7 @@ public class AbstractTemplateClassMetaData {
 	}
 
 	public void printHttpHeaderMap() {
-		// now we use the headers var the template base, for slighly perfromance
-		// penalty
+		// now we use the headers var the template base, for slightly performance penalty
 		// pln("	private static final Map<String, String> headers = new HashMap<String, String>();");
 		if (headers.size() > 0) {
 			// pln("	static {");
@@ -450,7 +483,7 @@ public class AbstractTemplateClassMetaData {
 	 * added variable declarations such as request, response, errors, flash, etc.
 	 */
 	protected void addImplicitVariables() {
-		pln("////// - add implicit variables \n");
+		pln("\n// - add implicit variables \n");
 		pln("		final Request request = Request.current(); assert request != null;\n\n" + 
 				"		final Response response = Response.current(); assert response != null;\n\n" + 
 				"		final Flash flash = Flash.current();assert flash != null;\n\n" + 
@@ -460,7 +493,7 @@ public class AbstractTemplateClassMetaData {
 				"		final Validation validation = Validation.current();assert validation!= null;\n\n" + 
 				"		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;\n\n" + 
 				"		final play.Play _play = new play.Play(); assert _play != null;\n");
-		pln("////// - end of implicit variables \n\n");
+		pln("// - end of implicit variables \n\n");
 	}
 
 	/**
@@ -494,4 +527,45 @@ public class AbstractTemplateClassMetaData {
 		}
 		
 	}
+
+	/**
+	 * output the java code
+	 * @return
+	 */
+	public String generateCode() {
+		printHeaders();
+		printAnnotations();
+		classDeclare();
+		embedSourceTemplateName();
+		printHttpHeaderMap();
+//		buildStatics();
+		addConstructors();
+		
+		renderMethod();
+		
+		layoutMethod();
+		
+		getterSetter();
+		
+		childLayout();
+
+		processDefTags();
+		
+		p("}");
+
+		return sb.toString();
+
+	}
+
+	abstract  void renderMethod();
+	abstract  void layoutMethod();
+	abstract  void getterSetter();
+	abstract  void childLayout();
+	
+	@Override
+	public String toString() {
+		return generateCode();
+	}
+	
+	
 }

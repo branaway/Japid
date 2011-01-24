@@ -77,7 +77,7 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
 		assertEquals("a, b", t.args);
-		assertEquals("", t.bodyArgsString);
+		assertNull(t.bodyArgsString);
 	}
 
 	@Test
@@ -86,7 +86,7 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("get", t.tagName);
 		assertEquals("'title'", t.args);
-		assertEquals("", t.bodyArgsString);
+		assertNull(t.bodyArgsString);
 	}
 
 	@Test
@@ -95,7 +95,34 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("my.tag", t.tagName);
 		assertEquals("a, b", t.args);
-		assertEquals("", t.bodyArgsString);
+		assertNull(t.bodyArgsString);
+	}
+	
+	@Test
+	public void testTagWithPathSep() {
+		String src = "my/tag a, b";
+		Tag t = p.parse(src);
+		assertEquals("my.tag", t.tagName);
+		assertEquals("a, b", t.args);
+		assertNull(t.bodyArgsString);
+	}
+
+	@Test
+	public void testTagWithRelativeDot() {
+		String src = ".my.tag a, b";
+		Tag t = p.parse(src);
+		assertEquals(".my.tag", t.tagName);
+		assertEquals("a, b", t.args);
+		assertNull(t.bodyArgsString);
+	}
+
+	@Test
+	public void testTagWithRelativeSep() {
+		String src = "./my/tag a, b";
+		Tag t = p.parse(src);
+		assertEquals(".my.tag", t.tagName);
+		assertEquals("a, b", t.args);
+		assertNull(t.bodyArgsString);
 	}
 	
 }

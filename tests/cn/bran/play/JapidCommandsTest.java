@@ -13,7 +13,7 @@ import cn.bran.japid.util.DirUtil;
 
 public class JapidCommandsTest {
 
-	private static final String ROOT = "tempgen";
+	private static final String ROOT = "JapidSample/app";
 
 	@Test
 	public void testMkdir() throws IOException {

@@ -1,10 +1,9 @@
 package japidviews.templates;
-
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews._layouts.*;
-import static japidviews._javatags.JapidWebUtil.*;
+import static  japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
@@ -20,76 +19,62 @@ import static cn.bran.play.WebUtils.*;
 //
 // NOTE: This file was generated from: japidviews/templates/suppressNull.html
 // Change to this file will be lost next time the template file is compiled.
-
 @cn.bran.play.NoEnhance
-public class suppressNull extends cn.bran.japid.template.JapidTemplateBase {
+public class suppressNull extends cn.bran.japid.template.JapidTemplateBase{
 	public static final String sourceTemplate = "japidviews/templates/suppressNull.html";
-
+{
+	headers.put("Content-Type", "text/html; charset=utf-8");
+}
 	public suppressNull() {
 		super(null);
 	}
-
 	public suppressNull(StringBuilder out) {
 		super(out);
 	}
-
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers,
-				getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+	}
+	@Override protected void doLayout() {
+
+// - add implicit variables 
+
+		final Request request = Request.current(); assert request != null;
+
+		final Response response = Response.current(); assert response != null;
+
+		final Flash flash = Flash.current();assert flash != null;
+
+		final Session session = Session.current();assert session != null;
+
+		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;
+
+		final Params params = Params.current();assert params != null;
+
+		final Validation validation = Validation.current();assert validation!= null;
+
+		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
+
+		final play.Play _play = new play.Play(); assert _play != null;
+
+// - end of implicit variables 
+
+
+//------
+;// line 1
+p("\n");// line 1
+p("\n");// line 2
+String a = "a";// line 4
+p("safe to do a.something: ");// line 4
+try { p(a.length()); } catch (NullPointerException npe) {}// line 5
+p("\n" + 
+"\n");// line 5
+a = null;// line 7
+p("safe to do a.something too: ");// line 7
+try { p(a.length()); } catch (NullPointerException npe) {}// line 8
+p("\n");// line 8
+
 	}
 
-	@Override
-	protected void doLayout() {
-		//// -- set up the tag objects
-		//// -- end of the tag objects
-
-		////// - add implicit variables 
-
-		final Request request = Request.current();
-		assert request != null;
-		final Response response = Response.current();
-		assert response != null;
-
-		final Flash flash = Flash.current();
-		assert flash != null;
-
-		final Session session = Session.current();
-		assert session != null;
-
-		final RenderArgs renderArgs = RenderArgs.current();
-		assert renderArgs != null;
-
-		final Params params = Params.current();
-		assert params != null;
-
-		final Validation validation = Validation.current();
-		assert validation != null;
-
-		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(
-				validation);
-		assert errors != null;
-
-		final play.Play _play = new play.Play();
-		assert _play != null;
-
-		////// - end of implicit variables 
-
-		//------
-		String a = "a";// line 4
-		p("safe to do a.something: ");// line 4
-		try {
-			p(a.length());
-		} catch (NullPointerException npe) {
-		}// line 5
-		p("\n");// line 5
-		a = null;// line 7
-		p("safe to do a.something too: ");// line 7
-		try {
-			p(a.length());
-		} catch (NullPointerException npe) {
-		}// line 8
-
-	}
 }

@@ -85,7 +85,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 		}
 
 		if ("get".equals(tagName)) {
-			// // only support value as tag content as opposed to as attribut:
+			// // only support value as tag content as opposed to as attribute:
 			// // #{set key}value#{/}
 			// String key = tag.args;
 			// this.cmd.addSetTag(key, tag.bodyBuffer.toString());

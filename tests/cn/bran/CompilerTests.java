@@ -24,7 +24,7 @@ import cn.bran.japid.template.JapidTemplate;
  * @author bran
  *
  */
-public class BranCompilerTests {
+public class CompilerTests {
 
 	@Test
 	public void testCompileLayout() throws IOException {
@@ -38,17 +38,38 @@ public class BranCompilerTests {
 	@Test
 	public void testAnotherLayout() throws IOException {
 		String src = readFile("JapidSample/app/japidviews/_layouts/TagLayout.html");
-		JapidTemplate bt = new JapidTemplate("tag/TagLayout.html", src);
+		JapidTemplate bt = new JapidTemplate("japidviews/_layouts/TagLayout.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
 		cp.compile(bt);
-		System.out.println(bt.javaSource);
+		String srccode = bt.javaSource;
+		System.out.println(srccode);
+		assertTrue(srccode.contains("package japidviews._layouts;"));
+		assertTrue(srccode.contains("public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase{"));
+		assertTrue(srccode.contains("protected abstract void doLayout();"));
+		assertTrue(srccode.contains("@Override public void layout()"));
+		
+	}
+
+	@Test
+	public void testSubLayout() throws IOException {
+		String src = readFile("JapidSample/app/japidviews/_layouts/SubLayout.html");
+		JapidTemplate bt = new JapidTemplate("japidviews/_layouts/SubLayout.html", src);
+		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		cp.compile(bt);
+		String srccode = bt.javaSource;
+		System.out.println(srccode);
+		assertTrue(srccode.contains("package japidviews._layouts;"));
+		assertTrue(srccode.contains("public abstract class SubLayout extends Layout{"));
+		assertTrue(srccode.contains("protected abstract void doLayout();"));
+		assertTrue(srccode.contains("@Override public void layout()"));
+		
 	}
 	
 	@Test
 	public void testCompileTemplate() throws IOException {
 		String src = readFile("JapidSample/app/japidviews/templates/AllPost.html");
 
-		JapidTemplate bt = new JapidTemplate("AllPost.html", src);
+		JapidTemplate bt = new JapidTemplate("japidviews/templates/AllPost.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
@@ -56,12 +77,17 @@ public class BranCompilerTests {
 
 	@Test
 	public void testCompileDisplay() throws IOException {
-		String src = readFile("tempgen/tag/Display.html");
+		String src = readFile("japidSample/app/japidviews/_tags/Display.html");
 
-		JapidTemplate bt = new JapidTemplate("tag/Display.html", src);
+		JapidTemplate bt = new JapidTemplate("tags/Display.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
-		System.out.println(bt.javaSource);
+		String srcCode = bt.javaSource;
+		System.out.println(srcCode);
+		assertTrue(srcCode.contains("package tags;"));
+		assertTrue(srcCode.contains("public class Display extends TagLayout"));
+		assertTrue(srcCode.contains("public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,	String as, DoBody body) {"));
+		assertTrue(srcCode.contains("@Override protected void doLayout() {"));
 	}
 
 	@Test

@@ -53,13 +53,13 @@ public class DirUtilTests {
 		File src = new File("tests/testdir");
 		File newer = new File ("tests/testdir/A.html");
 		FileUtils.touch(newer);
-		List<File> fs = DirUtil.findChangedHtmlFiles(src);
+		List<File> fs = DirUtil.findChangedSrcFiles(src);
 		assertEquals(3, fs.size());
 //		for (File f: fs) {
 //			System.out.println(f.getPath());
 //		}
 		FileUtils.touch(new File("tests/testdir/A.java"));
-		fs = DirUtil.findChangedHtmlFiles(src);
+		fs = DirUtil.findChangedSrcFiles(src);
 		assertEquals(2, fs.size());
 		
 	}

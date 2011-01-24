@@ -12,7 +12,7 @@ import cn.bran.japid.compiler.JapidTemplateTransformer;
 
 
 
-public class BranTemplateTranslatorTest {
+public class TemplateTranslatorTest {
 	@Test
 	public void testGen() throws Exception {
 		JapidTemplateTransformer gen = new JapidTemplateTransformer("tempgen", null);

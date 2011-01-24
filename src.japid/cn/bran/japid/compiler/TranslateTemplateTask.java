@@ -95,7 +95,7 @@ public class TranslateTemplateTask {
 			throw new RuntimeException("srcdir \"" + packageRoot + "\" does not exist!");
 		}
 
-		changedFiles = DirUtil.findChangedHtmlFiles(include);
+		changedFiles = DirUtil.findChangedSrcFiles(include);
 
 		if (changedFiles.size() > 0) {
 			System.out.println("[Japid]Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " to directory: " + destDir);
@@ -113,7 +113,7 @@ public class TranslateTemplateTask {
 
 			for (int i = 0; i < changedFiles.size(); i++) {
 				File pFile = changedFiles.get(i);
-				System.out.println("[Japid]Transforming template: " + pFile.getPath() + " to: " + pFile.getName().replace("html", "java"));
+				System.out.println("[Japid]Transforming template: " + pFile.getPath() + " to: " + DirUtil.mapSrcToJava(pFile.getName()));
 				if (listFiles) {
 					System.out.println(pFile.getAbsolutePath());
 				}
@@ -152,20 +152,20 @@ public class TranslateTemplateTask {
 		this.imports.add(clz.getName());
 	}
 
-	private static class JapidFileNameMapper {
-
-		static String mapFileName(String sourceName) {
-			String targetFileName = sourceName;
-			String suffix = ".html";
-			if (targetFileName.endsWith(suffix)) {
-				targetFileName = targetFileName.substring(0, targetFileName.length() - suffix.length());
-				return targetFileName + ".java" ;
-			} else {
-				return null;
-			}
-			// return new String[0];
-		}
-	}
+//	private static class JapidFileNameMapper {
+//
+//		static String mapFileName(String sourceName) {
+//			String targetFileName = sourceName;
+//			String suffix = ".html";
+//			if (targetFileName.endsWith(suffix)) {
+//				targetFileName = targetFileName.substring(0, targetFileName.length() - suffix.length());
+//				return targetFileName + ".java" ;
+//			} else {
+//				return null;
+//			}
+//			// return new String[0];
+//		}
+//	}
 
 	private File destDir = null;
 	private File packageRoot = null;

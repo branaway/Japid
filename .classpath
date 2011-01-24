@@ -24,23 +24,23 @@
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/hsqldb-1.8.1.2.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jamon-2.7.jar"/>
-	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/javamail-1.4.3.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/javassist-3.9.0.GA.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jaxen-1.1.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jj-imaging.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jj-simplecaptcha.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jj-textile.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jj-wikitext.jar"/>
-	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jodatime-1.6.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jregex-1.2_01.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jsr107cache-1.0.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/junit-4.8.1.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/oval-1.50.jar"/>
-	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/provided-servlet-2.5.jar"/>
-	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/snakeyaml-1.6.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/netty-3.2.2.Final.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/play-git"/>
+	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/geronimo-servlet_2.5_spec-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/joda-time-1.6.jar"/>
+	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/mail-1.4.3.jar"/>
+	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/snakeyaml-1.7.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

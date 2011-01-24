@@ -20,10 +20,12 @@ import java.util.Stack;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.InnerClassMeta;
+import cn.bran.japid.classmeta.MimeTypeEnum;
 import cn.bran.japid.compiler.JapidParser.Token;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.japid.util.DirUtil;
 
 /**
  * based on the original code from the Play! Frameowrk
@@ -293,8 +295,10 @@ public abstract class JapidAbstractCompiler {
 				// ignore
 			} else if (line.startsWith("extends ") || line.startsWith("extends\t")) {
 				String layoutName = line.substring("extends".length()).trim();
+				//remove quotes if they present
 				layoutName = layoutName.replace("'", "");
 				layoutName = layoutName.replace("\"", "");
+				
 				if (layoutName.endsWith(";")) {
 					layoutName = layoutName.substring(0, layoutName.length() - 1);
 				}
@@ -303,6 +307,15 @@ public abstract class JapidAbstractCompiler {
 				}
 				if (layoutName.startsWith("/")) {
 					layoutName = layoutName.substring(1);
+				}
+				if (layoutName.startsWith(".")) {
+					// new feature allow extends .sub.layout.html
+					if (layoutName.startsWith("./")) {
+						layoutName = getTemplateClassMetaData().packageName + "." + layoutName.substring(2);
+					}
+					else { 
+						layoutName = getTemplateClassMetaData().packageName + layoutName;
+					}
 				}
 				getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
 			} else if (line.startsWith("contentType ") || line.startsWith("contentType	")) {
@@ -350,6 +363,8 @@ public abstract class JapidAbstractCompiler {
 				String npe = line.substring("suppressNull".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(npe))
 					getTemplateClassMetaData().suppressNull();
+			} else if (line.equals("abstract")) {
+				getTemplateClassMetaData().setAbstract(true);
 			} else {
 				print(line);
 				markLine(parser.getLineNumber() + i);
@@ -444,20 +459,27 @@ public abstract class JapidAbstractCompiler {
 		this.parser = new JapidParser(source);
 
 		String tempName = template.name.replace("-", "_");// .replace('.', '_');
-		if (tempName.endsWith(HTML)) {
-			tempName = tempName.substring(0, tempName.indexOf(HTML));
-		}
+		String contentTypeHeader = MimeTypeEnum.getHeader(tempName.substring(tempName.lastIndexOf('.')));
+		getTemplateClassMetaData().setContentType(contentTypeHeader);
+		tempName = DirUtil.mapSrcToJava(tempName);
+		tempName = tempName.substring(0, tempName.lastIndexOf(".java"));
+		tempName = tempName.replace('\\', '/');
+//		if (tempName.endsWith(HTML)) {
+//			tempName = tempName.substring(0, tempName.indexOf(HTML));
+//		}
+
 		// extract path
-		int lastIndexOf = tempName.lastIndexOf(File.separator);
-		if (lastIndexOf > 0) {
-			String path = tempName.substring(0, lastIndexOf);
+		int lastSep = tempName.lastIndexOf('/');
+		if (lastSep > 0) {
+			String path = tempName.substring(0, lastSep);
 			path = path.replace('/', '.');
 			path = path.replace('\\', '.');
 			getTemplateClassMetaData().packageName = path;
-			getTemplateClassMetaData().className = tempName.substring(lastIndexOf + 1);
+			getTemplateClassMetaData().setClassName(tempName.substring(lastSep + 1));
 		} else {
-			getTemplateClassMetaData().className = tempName;
+			getTemplateClassMetaData().setClassName(tempName);
 		}
+		
 
 		parse();
 		// for (String n : BranTemplateCompiler.extensionsClassnames) {
@@ -472,7 +494,7 @@ public abstract class JapidAbstractCompiler {
 		// remove print nothing statement to save a few CPU cycles
 		this.getTemplateClassMetaData().body = tag.getBodyText().replace("p(\"\")", "").replace("pln(\"\")", "pln()");
 		postParsing(tag);
-		template.javaSource = this.getTemplateClassMetaData().toString();
+		template.javaSource = this.getTemplateClassMetaData().generateCode();
 
 		// try {
 		// log.trace(String.format("%s is compiled to %s", template.name,
@@ -507,6 +529,11 @@ public abstract class JapidAbstractCompiler {
 			Tag tag = new TagInvocationLineParser().parse(tagText);
 			if (tag.tagName== null || tag.tagName.length() == 0)
 				throw new RuntimeException("tag name was empty: " + tagText);
+			
+			if (tag.tagName.startsWith(".")) {
+				// partial path, use current package as the root and append the path to it
+				tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
+			}
 			tag.startLine = parser.getLineNumber();
 			tag.hasBody = hasBody;
 			tag.tagIndex = tagIndex++;
