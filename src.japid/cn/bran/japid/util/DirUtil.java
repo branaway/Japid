@@ -130,6 +130,11 @@ public class DirUtil {
 		return rs;
 	}
 
+	/**
+	 * map template source file name to the generated java file name
+	 * @param k
+	 * @return
+	 */
 	public static String mapSrcToJava(String k) {
 		if (k.endsWith(".txt")) {
 			return getRoot(k) + "_txt" + ".java";
@@ -148,6 +153,36 @@ public class DirUtil {
 		}
 		else { // including html
 			return getRoot(k) + ".java";
+		}
+	}
+	
+	/**
+	 * 
+	 * map java source file name to the template file name
+	 * @param k
+	 * @return
+	 */
+	public static String mapJavaToSrc(String k) {
+		if (k.endsWith(".java"))
+			k = k.substring(0, k.lastIndexOf(".java"));
+		
+		if (k.endsWith("_txt")) {
+			return k.substring(0, k.lastIndexOf("_txt")) + ".txt";
+		}
+		else if (k.endsWith("_xml")) {
+			return k.substring(0, k.lastIndexOf("_xml")) + ".xml";
+		}
+		else if (k.endsWith("_json")) {
+			return k.substring(0, k.lastIndexOf("_json")) + ".json";
+		}
+		else if (k.endsWith("_css")) {
+			return k.substring(0, k.lastIndexOf("_css")) + ".css";
+		}
+		else if (k.endsWith("_js")) {
+			return k.substring(0, k.lastIndexOf("_js")) + ".js";
+		}
+		else { // including html
+			return  k + ".html";
 		}
 	}
 

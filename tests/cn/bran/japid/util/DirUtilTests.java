@@ -64,4 +64,15 @@ public class DirUtilTests {
 		
 	}
 	
+	@Test
+	public void testJavaToSrc() {
+		String javasrc = "my/Action_xml.java";
+		String res = DirUtil.mapJavaToSrc(javasrc);
+		assertEquals("my/Action.xml", res);
+		
+		javasrc = "my/Action_json.java";
+		res = DirUtil.mapJavaToSrc(javasrc);
+		assertEquals("my/Action.json", res);
+	}
+	
 }

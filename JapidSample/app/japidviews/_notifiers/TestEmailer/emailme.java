@@ -3,6 +3,10 @@ package japidviews._notifiers.TestEmailer;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
+import static play.templates.JavaExtensions.*;
+import static cn.bran.play.JapidPlayAdapter.*;
+import static play.data.validation.Validation.*;
+import static cn.bran.play.WebUtils.*;
 import japidviews._layouts.*;
 import static japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Validation;
@@ -13,17 +17,17 @@ import japidviews._tags.*;
 import controllers.*;
 import play.mvc.Http.*;
 import japidviews._javatags.*;
-import static play.templates.JavaExtensions.*;
-import static cn.bran.play.JapidPlayAdapter.*;
-import static play.data.validation.Validation.*;
-import static cn.bran.play.WebUtils.*;
 //
 // NOTE: This file was generated from: japidviews/_notifiers/TestEmailer/emailme.html
 // Change to this file will be lost next time the template file is compiled.
+//
 
 @cn.bran.play.NoEnhance
 public class emailme extends cn.bran.japid.template.JapidTemplateBase {
 	public static final String sourceTemplate = "japidviews/_notifiers/TestEmailer/emailme.html";
+	{
+		headers.put("Content-Type", "text/html; charset=utf-8");
+	}
 
 	public emailme() {
 		super(null);
@@ -46,13 +50,12 @@ public class emailme extends cn.bran.japid.template.JapidTemplateBase {
 
 	@Override
 	protected void doLayout() {
-		//// -- set up the tag objects
-		//// -- end of the tag objects
 
-		////// - add implicit variables 
+		// - add implicit variables 
 
 		final Request request = Request.current();
 		assert request != null;
+
 		final Response response = Response.current();
 		assert response != null;
 
@@ -78,7 +81,7 @@ public class emailme extends cn.bran.japid.template.JapidTemplateBase {
 		final play.Play _play = new play.Play();
 		assert _play != null;
 
-		////// - end of implicit variables 
+		// - end of implicit variables 
 
 		//------
 		p("Hello ");// line 1
@@ -86,4 +89,5 @@ public class emailme extends cn.bran.japid.template.JapidTemplateBase {
 		p("!\n");// line 3
 
 	}
+
 }
