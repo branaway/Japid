@@ -23,6 +23,7 @@ Version History:
         `import .my.tags.*
             will be translated to 
         `import the.current.package.my.tags.*
+    5. included the eclipse plugin 0.8.4
         
 2011/1/8: V0.6.0
     1. bundled a Japid development plugin for Eclipse in the eclipse-plugin directory. Read the readme.txt in the directory for instructions.  
