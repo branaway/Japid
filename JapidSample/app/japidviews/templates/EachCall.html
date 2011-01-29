@@ -1,11 +1,16 @@
 `args List<String> posts
 
-the closure form:
-#{Each posts | String p}
+<p>
+The "each/Each" command is a for loop on steroid, with lots of loop information. 
+</p>
+
+<p> 
+The instance variable is defined after the | line, the same way as any tag render-back
+</p>
+
+`each posts | String p
     <p> $_index :: $p ||| $_parity, ^ $_isOdd, @ $_isFirst, # $_isLast </p>
-    
-    #{SampleTag p/}
-#{/}
-    #{SampleTag "end"/}
+    `tag SampleTag p
+`
 
-
+`tag SampleTag "end"

@@ -6,6 +6,70 @@
                    
 Version History:
 
+2011/1/26: V0.6.2: the old tag invocation syntax is deprecated in favor of directives.
+    1. internally, started using JavaParser to accurately parse parameters and arguments to tags and actions. 
+       
+    2. new syntax: tag calls without a body can now use a more explicit syntax(say goodbye to #$%%{):
+        was: #{myTag param1, param2/}
+        is: `tag myTag param1, param2  
+        or: `tag myTag(param1, param2)
+
+        was:         
+        
+        #{mytag 1, "2" | String backParam}
+            The param from the tag: ${backParam}
+        #{/} 
+        
+        is:
+        
+        `tag mytag 1, "2" | String backParam
+            The param from the tag: ${backParam}
+        `
+        
+        Note:  a stand-alone ` is used to close the tag invocation. 
+        
+    3. new syntax: the doBody tag that was used to callback the tag caller is deprecated in favor of a simpler syntax:
+        `doBody arg1, arg2...
+        The sample code is in the Display.html template in the JapidSample.   
+    4. new syntax: the doLayout tag in a layout is deprecated in favor of a simpler syntax:
+        `doLayout
+        The sample code is in the TagLayout.html in the JapidSample directory.   
+    5. new syntax: `def, to define a method for reusing layout logic. e.g.:
+        
+        `def foo(String a)
+          hi, #a!
+        `
+        ${foo("world")}
+        
+        Don't forget the closing `.
+        
+        See def.html in the JapidSample for examples.   
+    6. new syntax: `set and `get, to pass text from views to layouts, functionally equivalent to #{set ...} and #{get ...} 
+        in a view:
+        
+        `set title: "home page"
+        
+        or use the set block
+        
+        `set title
+             home page
+        `
+        Again, a single ` is used to close the set block.        
+        
+        In a layout:
+        
+        `get title
+        
+        See Set.html in the JapidSample for examples.
+        
+    7. new syntax: `each, ported from the #{Each...} tag, to loop through collections with auxiliary looping information:
+        
+        `each users | User user
+            user name: $user.name, is the first: $_isFirst, is the last: $_isLast, etc...
+        `
+        
+        See EachCall.html in the JapidSample for examples.
+        
 2011/1/20: V0.6.1
     1. internal change: all tag invocations are now local in the layout method. The idea was to reduce using fields and favor local variables;  
     2. fix: all implicit variables are labeled as final for use in inner classes.
@@ -23,7 +87,7 @@ Version History:
         `import .my.tags.*
             will be translated to 
         `import the.current.package.my.tags.*
-    5. included the eclipse plugin 0.8.4
+    6. included the eclipse plugin 0.8.4
         
 2011/1/8: V0.6.0
     1. bundled a Japid development plugin for Eclipse in the eclipse-plugin directory. Read the readme.txt in the directory for instructions.  

@@ -14,7 +14,9 @@
 package cn.bran.japid.classmeta;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.JapidTemplateBaseStreaming;
@@ -25,7 +27,7 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 		setAbstract(true);
 	}
 	
-	List<String> getterMethods = new ArrayList<String>();
+	Set<String> getterMethods = new HashSet<String>();
 
 	/**
 	 * map the #{get} tag
@@ -34,7 +36,6 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 	 */
 	public void get(String string) {
 		this.getterMethods.add(string);
-
 	}
 
 	/**

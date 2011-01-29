@@ -50,7 +50,8 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
 		assertEquals("a, b", t.args);
-		assertEquals("String c", t.bodyArgsString);
+		assertEquals("String c", t.callbackArgs);
+		assertTrue(t.hasBody);
 	}
 
 	@Test
@@ -59,7 +60,18 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
 		assertEquals("", t.args);
-		assertEquals("String c", t.bodyArgsString);
+		assertEquals("String c", t.callbackArgs);
+		assertTrue(t.hasBody);
+	}
+
+	@Test
+	public void testCallbackWithoutArgs() {
+		String src = "tag a |";
+		Tag t = p.parse(src);
+		assertEquals("tag", t.tagName);
+		assertEquals("a", t.args);
+		assertEquals("", t.callbackArgs);
+		assertTrue(t.hasBody);
 	}
 
 	@Test
@@ -68,7 +80,8 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
 		assertEquals("", t.args);
-		assertEquals("String c", t.bodyArgsString);
+		assertEquals("String c", t.callbackArgs);
+		assertTrue(t.hasBody);
 	}
 
 	@Test
@@ -77,7 +90,7 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
 		assertEquals("a, b", t.args);
-		assertNull(t.bodyArgsString);
+		assertNull(t.callbackArgs);
 	}
 
 	@Test
@@ -86,7 +99,7 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("get", t.tagName);
 		assertEquals("'title'", t.args);
-		assertNull(t.bodyArgsString);
+		assertNull(t.callbackArgs);
 	}
 
 	@Test
@@ -95,7 +108,7 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("my.tag", t.tagName);
 		assertEquals("a, b", t.args);
-		assertNull(t.bodyArgsString);
+		assertNull(t.callbackArgs);
 	}
 	
 	@Test
@@ -104,7 +117,7 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("my.tag", t.tagName);
 		assertEquals("a, b", t.args);
-		assertNull(t.bodyArgsString);
+		assertNull(t.callbackArgs);
 	}
 
 	@Test
@@ -113,7 +126,7 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals(".my.tag", t.tagName);
 		assertEquals("a, b", t.args);
-		assertNull(t.bodyArgsString);
+		assertNull(t.callbackArgs);
 	}
 
 	@Test
@@ -122,7 +135,7 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals(".my.tag", t.tagName);
 		assertEquals("a, b", t.args);
-		assertNull(t.bodyArgsString);
+		assertNull(t.callbackArgs);
 	}
 	
 }

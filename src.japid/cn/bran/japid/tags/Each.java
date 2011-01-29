@@ -134,7 +134,7 @@ public class Each extends SimpleTag {
 	public static interface DoBody<E> {
 		// the _parity is for quick use as a CSS class, or one can use
 		// "${_isOdd?"odd":"even"}"
-		void render(E e, int _index, boolean _isOdd, String _parity, boolean _isFirst, boolean _isLast);
+		void render(final E e, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast);
 	}
 
 }

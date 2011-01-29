@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.regex.Pattern;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.template.JapidTemplate;
@@ -84,6 +85,24 @@ public class JapidTemplateTransformer {
 		AbstractTemplateClassMetaData.addImportStatic(class1);
 	}
 
+	static Pattern doLayoutTag = Pattern.compile(".*\\#\\{\\s*doLayout\\s*.*");
+	static Pattern doLayoutDirective = Pattern.compile(".*`doLayout\\s*");
+	static Pattern getTag= Pattern.compile(".*\\#\\{\\s*get\\s*.*");
+	static Pattern getDirective = Pattern.compile(".*`get\\s+\\w+\\s*");
+	
+	public static boolean looksLikeLayout(String src) {
+		String[] split = src.split("[\r\n]");
+		for (String line : split) {
+			if (doLayoutTag.matcher(line).matches()
+					|| doLayoutDirective.matcher(line).matches()
+					|| getTag.matcher(line).matches()
+					|| getDirective.matcher(line).matches()
+			) {
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * 
 	 * @param fileName
@@ -98,7 +117,8 @@ public class JapidTemplateTransformer {
 		String src = readFileAsString(realSrcFile);
 		JapidTemplate temp = new JapidTemplate(fileName, src);
 		JapidAbstractCompiler c = null;
-		if (src.indexOf("#{doLayout") >= 0 || src.indexOf("#{get") >= 0) {
+		// TODO: more robust way of determine layout file or view file
+		if (looksLikeLayout(src)) {
 			c = new JapidLayoutCompiler();
 		} else {
 			// regular template and tag are the same thing

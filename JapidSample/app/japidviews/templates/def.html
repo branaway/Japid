@@ -3,10 +3,17 @@
 
 *{ define a method that return a String }*
 
-#{def foo}
-	`String s = "hi";
-	hello $s!
-#{/}
+
+`def foo2(String p)
+	hi $p!
+`
+
+`def foo
+	`String s = "hi there";
+	hello $foo2(s)
+`
+
+*{ the old syntax of def }*
 
 #{def bar}
 	`String s = "hi2";
@@ -15,4 +22,6 @@
 
 #{dummyTag get("bar")/}
 
-$get("foo")
+*{ can call it directly }*
+
+$foo()

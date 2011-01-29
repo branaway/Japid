@@ -42,5 +42,6 @@
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/joda-time-1.6.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/mail-1.4.3.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/snakeyaml-1.7.jar"/>
+	<classpathentry kind="lib" path="lib/javaparser-1.0.8.jar" sourcepath="lib/javaparser-1.0.8-src.zip"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

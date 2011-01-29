@@ -113,10 +113,22 @@ public abstract class AbstractTemplateClassMetaData {
 		sb.append(s);
 	}
 
-	public InnerClassMeta addCallTagBodyInnerClass(String className, int count, String classArgs, String body) {
-		InnerClassMeta inner = new InnerClassMeta(className, count, classArgs, body);
+	public InnerClassMeta addCallTagBodyInnerClass(String className, int count, String callbackArgs, String body) {
+		if (specialTags.contains(className))
+			return null;
+		InnerClassMeta inner = new InnerClassMeta(className, count, callbackArgs, body);
 		this.innersforTagCalls.add(inner);
 		return inner;
+	}
+	
+	private static Set<String> specialTags = new HashSet<String>(); 
+	static {
+		specialTags.add("set");
+		specialTags.add("get");
+		specialTags.add("invoke");
+		specialTags.add("doBody");
+		specialTags.add("doLayout");
+		specialTags.add("extends");
 	}
 
 	/**
@@ -321,7 +333,7 @@ public abstract class AbstractTemplateClassMetaData {
 
 		String abs = isAbstract? "abstract " : "";
 		
-		pln("public " + abs +  "class " + className + " extends " + superClass + "{");
+		pln("public " + abs +  "class " + className + " extends " + superClass );
 
 	}
 
@@ -468,7 +480,13 @@ public abstract class AbstractTemplateClassMetaData {
 
 	protected void processDefTags() {
 		for (Tag tag : this.defTags) {
-			pln("public String " + tag.args + "() {");
+			String meth = tag.args.trim();
+			if (meth.endsWith(")")) {
+				pln("public String " + meth + " {");
+			}
+			else {
+				pln("public String " + meth + "() {");
+			}
 			pln("StringBuilder sb = new StringBuilder();");
 			pln("StringBuilder ori = getOut();");
 			pln("this.setOut(sb);");
@@ -536,6 +554,7 @@ public abstract class AbstractTemplateClassMetaData {
 		printHeaders();
 		printAnnotations();
 		classDeclare();
+		p("{");
 		embedSourceTemplateName();
 		printHttpHeaderMap();
 //		buildStatics();

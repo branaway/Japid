@@ -60,7 +60,7 @@ public abstract class JapidAbstractCompiler {
 		public int startLine;
 		public boolean hasBody;
 		// bran: put everything in the args tag in it
-		public String bodyArgsString = null;
+		public String callbackArgs = null;
 //		public StringBuffer bodyBuffer = new StringBuffer(2000);
 		private List<String> bodyTextList = new ArrayList<String>();
 		{
@@ -108,14 +108,19 @@ public abstract class JapidAbstractCompiler {
 				doNextScan = true;
 			}
 
+			String token = parser.getToken();
+
 			switch (state) {
 			case EOF:
 				break loop;
 			case PLAIN:
-				plain();
+				plain(token);
 				break;
 			case SCRIPT:
-				script();
+				script(token);
+				break;
+			case CLOSING_BRACE:
+				closingBrace(token);
 				break;
 			case SCRIPT_LINE:
 				if (previousState == Token.PLAIN && stateBeforePreviousState == Token.SCRIPT_LINE) {
@@ -128,38 +133,49 @@ public abstract class JapidAbstractCompiler {
 						currentScope.bodyTextList.set(lastIndex - 1, spacer);
 					}
 				}
-				script();
+				scriptline(token);
 				break;
 			case EXPR:
-				expr();
+				expr(token);
 				break;
 			case MESSAGE:
-				message();
+				message(token);
 				break;
 			case ACTION:
-				action(false);
+				action(token, false);
 				break;
 			case ABS_ACTION:
-				action(true);
+				action(token, true);
 				break;
 			case COMMENT:
 				skipLineBreak = true;
 				break;
 			case START_TAG:
-				startTag();
+				startTag(buildTag(token));
 				break;
 			case END_TAG:
-				endTag();
+				String tagName = token.trim();
+				if (tagsStack.isEmpty()) {
+					throw new JapidCompilationException(template, currentLine, "#{/" + tagName + "} is not opened.");
+				}
+				Tag tag = tagsStack.pop();
+				endTag(tag);
 				break;
 			case TEMPLATE_ARGS:
-				templateArgs();
+				templateArgs(token);
 				break;
 			}
 		}
 	}
 
-	protected void plain() {
-		String text = parser.getToken().replace("\\", "\\\\").replaceAll("\"", "\\\\\"");
+	protected void closingBrace(String token) {
+		// ok a } after some space in a line
+		// treat it as `}
+		print("}");
+	}
+
+	protected void plain(String token) {
+		String text = token.replace("\\", "\\\\").replaceAll("\"", "\\\\\"");
 //		text = text.replace("``", "`"); // escaped `, already done by parser
 		if (skipLineBreak && text.startsWith(NEW_LINE)) {
 			text = text.substring(1);
@@ -233,9 +249,7 @@ public abstract class JapidAbstractCompiler {
 		return result;
 	}
 
-	protected abstract void startTag();
-
-	protected abstract void endTag();
+	protected abstract void startTag(Tag tag);
 
 	protected void println() {
 //		print(NEW_LINE);
@@ -280,10 +294,15 @@ public abstract class JapidAbstractCompiler {
 		template.linesMatrix.put(currentLine, line);
 	}
 
-	protected void script() {
-		String text = parser.getToken();
-		String[] lines = new String[] { text };
-		if (text.indexOf(NEW_LINE) > -1) {
+	protected void scriptline(String token) {
+		String line = token.trim();
+//		if ()
+		script(line);
+	}
+
+	protected void script(String token) {
+		String[] lines = new String[] { token };
+		if (token.indexOf(NEW_LINE) > -1) {
 			lines = parser.getToken().split(NEW_LINE);
 		}
 
@@ -336,7 +355,7 @@ public abstract class JapidAbstractCompiler {
 			} else if (line.startsWith(ARGS + " ") || line.startsWith(ARGS + "\t")) {
 				String contentType = line.substring(ARGS.length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				Tag currentTag = this.tagsStack.peek();
-				currentTag.bodyArgsString = contentType;
+				currentTag.callbackArgs = contentType;
 			} else if (line.startsWith("trim ") || line.startsWith("trim\t")) {
 				String sw = line.substring("trim".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(sw) || "true".equals(sw)) {
@@ -365,6 +384,52 @@ public abstract class JapidAbstractCompiler {
 					getTemplateClassMetaData().suppressNull();
 			} else if (line.equals("abstract")) {
 				getTemplateClassMetaData().setAbstract(true);
+			} else if (line.startsWith("tag ") || line.startsWith("tag\t")) {
+				// support one line type of tag invocation. 
+				String tagline = line.substring(4);
+				Tag tag = buildTagDirective(tagline);
+				startTag(tag);
+				if (!tag.hasBody) { // one liner.
+					tag = tagsStack.pop();
+					endTag(tag);
+				}
+			} else if (line.startsWith("each ") || line.startsWith("each\t")
+					|| line.startsWith("Each ") || line.startsWith("Each\t")) {
+				// support one line type of tag invocation. 
+				Tag tag = buildTagDirective(line);
+				tag.tagName = "Each";
+				tag.hasBody = true;
+				startTag(tag);
+			} else if (line.startsWith("set ") || line.startsWith("set\t")) {
+				Tag set = buildTagDirective(line);
+				if (line.contains(":"))
+					set.hasBody = false;
+				else
+					set.hasBody = true;
+				startTag(set);
+
+				if (!set.hasBody) { // one liner.
+					set = tagsStack.pop();
+				}
+			} else if (line.startsWith("get ") || line.startsWith("get\t")) {
+				Tag get = buildTagDirective(line);
+				get.hasBody = false;
+				startTag(get);
+				get = tagsStack.pop();
+			} else if (line.startsWith("def ") || line.startsWith("def\t")) {
+				// a function definition block
+				Tag get = buildTagDirective(line);
+				get.hasBody = true;
+				startTag(get);
+			} else if (line.length() == 0){
+				// a single ` empty line, treated as the closing for `tag
+				if (!tagsStack.empty()) {
+					Tag tag = tagsStack.peek();
+					if (!tag.tagName.equals("_root")) {
+						tag = tagsStack.pop();
+						endTag(tag);
+					}
+				}
 			} else {
 				print(line);
 				markLine(parser.getLineNumber() + i);
@@ -374,8 +439,8 @@ public abstract class JapidAbstractCompiler {
 		skipLineBreak = true;
 	}
 
-	protected void expr() {
-		String expr = parser.getToken().trim();
+	protected void expr(String token) {
+		String expr = token;
 		if (getTemplateClassMetaData().suppressNull)
 			printLine("try { p(" + expr + "); } catch (NullPointerException npe) {}");
 		else
@@ -388,8 +453,8 @@ public abstract class JapidAbstractCompiler {
 		println();
 	}
 
-	protected void message() {
-		String expr = parser.getToken().trim().replace('\'', '"');
+	protected void message(String token) {
+		String expr = token.trim().replace('\'', '"');
 		print(";p(getMessage(" + expr + "));");
 		markLine(parser.getLineNumber());
 		println();
@@ -397,11 +462,12 @@ public abstract class JapidAbstractCompiler {
 
 	/**
 	 * TODO: remove all the dependency on the Play classes
+	 * @param token 
 	 * 
 	 * @param absolute
 	 */
-	protected void action(boolean absolute) {
-		String action = parser.getToken().trim();
+	protected void action(String token, boolean absolute) {
+		String action = token.trim();
 		if (action.matches("^'.*'$") || action.matches("^\".*\"$")) {
 			// static content like @{'my.css'}
 			action = action.replace('\'', '"');
@@ -448,7 +514,7 @@ public abstract class JapidAbstractCompiler {
 		String source = template.source;
 		Tag rootTag = new Tag() {
 			{
-				tagName = "root";
+				tagName = "_root";
 				startLine = 0;
 				hasBody = true;
 			}
@@ -489,8 +555,8 @@ public abstract class JapidAbstractCompiler {
 		// println("}");
 
 		Tag tag = tagsStack.pop();
-		assert (tagsStack.empty());
-
+		if (!tagsStack.empty())
+			throw new RuntimeException ("There is(are) " + tagsStack.size() + " unclosed tag(s) in the template");
 		// remove print nothing statement to save a few CPU cycles
 		this.getTemplateClassMetaData().body = tag.getBodyText().replace("p(\"\")", "").replace("pln(\"\")", "pln()");
 		postParsing(tag);
@@ -512,17 +578,17 @@ public abstract class JapidAbstractCompiler {
 
 	abstract protected AbstractTemplateClassMetaData getTemplateClassMetaData();
 
-	protected void templateArgs() {
+	protected void templateArgs(String token) {
 		Tag currentTag = this.tagsStack.peek();
-		String args = parser.getToken();
-		currentTag.bodyArgsString = args;
+		String args = token;
+		currentTag.callbackArgs = args;
 	}
 
 	/**
 	 * @return
 	 */
-	protected Tag buildTag() {
-			String tagText = parser.getToken().trim().replaceAll(NEW_LINE, SPACE);
+	protected Tag buildTag(String token) {
+			String tagText = token.trim().replaceAll(NEW_LINE, SPACE);
 
 			boolean hasBody = !parser.checkNext().endsWith("/");
 	
@@ -536,6 +602,27 @@ public abstract class JapidAbstractCompiler {
 			}
 			tag.startLine = parser.getLineNumber();
 			tag.hasBody = hasBody;
+			tag.tagIndex = tagIndex++;
+			return tag;
+		}
+
+	/**
+	 * e.g.:
+	 * <pre>`tag myTag a, c |String c</pre>
+	 * @return
+	 */
+	protected Tag buildTagDirective(String token) {
+			String tagText = token.trim();
+	
+			Tag tag = new TagInvocationLineParser().parse(tagText);
+			if (tag.tagName== null || tag.tagName.length() == 0)
+				throw new RuntimeException("tag name was empty: " + tagText);
+			
+			if (tag.tagName.startsWith(".")) {
+				// partial path, use current package as the root and append the path to it
+				tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
+			}
+			tag.startLine = parser.getLineNumber();
 			tag.tagIndex = tagIndex++;
 			return tag;
 		}
@@ -581,24 +668,26 @@ public abstract class JapidAbstractCompiler {
 	 * @param tag
 	 */
 	protected void regularTagInvoke(Tag tag) {
-		String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
-//		println(tagVar + ".setActionRunners(getActionRunners());");
-		if (tag.hasBody) {
-			// old way: create a new instance for each call
-			// println("new " + tagClassName + "(getOut()).render(" +
-			// tagArgs + ", new " + tagName + tagIndex + "DoBody());");
-			// use a field to call a tag for better performance in case of
-			// loop
-
-			// let's postpone until we get the body
-			//println(tagVar + ".render(" + tag.args + ", " + tag.getBodyVar() + ");");
-			
-		} else {
-			// println("new " + tagClassName + "(getOut()).render(" +
-			// tagArgs + ", null);");
-			println(tagVar + ".render(" + tag.args + ");");
+		if ("extends".equals(tag.tagName)) {
+			String layoutName = tag.args;
+			layoutName = layoutName.replace("'", "");
+			layoutName = layoutName.replace("\"", "");
+			if (layoutName.endsWith(HTML)) {
+				layoutName = layoutName.substring(0, layoutName.indexOf(HTML));
+			}
+			if (layoutName.startsWith("/")) {
+				layoutName = layoutName.substring(1);
+			}
+			getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
+		} else if (tag.tagName.equals("invoke")) {
+			invokeAction(tag);
 		}
-//		println("actionRunners.putAll(" + tagVar + ".getActionRunners());");
+		else {
+			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
+			if (!tag.hasBody) {
+				println(tagVar + ".render(" + tag.args + ");");
+			}
+		}
 	}
 
 	/**
@@ -619,29 +708,63 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void endRegularTag(Tag tag) {
 		if (tag.hasBody) {
-			InnerClassMeta inner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.bodyArgsString, tag.getBodyText());
+			InnerClassMeta inner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.callbackArgs, tag.getBodyText());
+			if (inner == null)
+				System.out.println(tag.tagName + " not allowed to have instance of this tag");
 			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
 			String tagLine = tagVar + ".render(" + tag.args + ", " + inner.getAnonymous() + ");";
 			println(tagLine);
-		} else if (!"doLayout".equals(tag.tagName)) {
+		} else  {
 			// for simple tag call without call back:
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
 		}
 	}
 
 	/**
-	 * def a string returning method from a block
+	 * define a string returning method from a block
 	 * @param tag
 	 */
 	protected void def(Tag tag) {
 	}
 
 	protected void endDef(Tag tag) {
-		if (tag.hasBody) {
+		if (tag.hasBody) { // must always
 			this.getTemplateClassMetaData().addDefTag(tag);
 		}
 	}
 
+	protected void endTag(Tag tag) {
+		String lastInStack = tag.tagName;
+		String tagName = lastInStack;
+//		if (!lastInStack.equals(tagName)) {
+//			throw new JapidCompilationException(template, tag.startLine, "#{" + tag.tagName + "} is not closed.");
+//		}
+		if (tagName.equals("def")) {
+			endDef(tag);
+		} else if (tagName.equals("doBody")) {
+		} else if (tagName.equals("extends")) {
+		} else if (tagName.equals("get")) {
+//		} else if (tagName.equals("set")) { // the set is handled in the JapidTemplateCompiler endTagSpecial()
+		} else if (tagName.equals("invoke")) {
+		} else if (tagName.equals("doLayout")) {
+		} else if (endTagSpecial(tag)) { 
+		} else {
+			endRegularTag(tag);
+		}
+		markLine(tag.startLine);
+		println();
+		// tagIndex--;
+		skipLineBreak = true;
+	} 
+
+	/**
+	 * sub class can detect special tag and return true to indicate the tag has been processed. 
+	 * 
+	 * @param tag
+	 * @return
+	 */
+	protected boolean endTagSpecial(Tag tag) {return false;}
+	
 	static String createActionRunner(String action, String ttl, String base, String keys) {
 		String actionEscaped = action.replace("\"", "\\\"");
 		String controllerActionPart = action.substring(0, action.indexOf('('));

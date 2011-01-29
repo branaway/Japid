@@ -35,30 +35,18 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 	private static final String DO_BODY = "doBody";
 	
 	// StringBuilder mainRenderBodySource = new StringBuilder();
-	TemplateClassMetaData cmd = new TemplateClassMetaData();
+	TemplateClassMetaData tcmd = new TemplateClassMetaData();
 
 	@Override
-	protected void startTag() {
-		Tag tag = buildTag();
-
-		if ("extends".equals(tag.tagName)) {
-			String layoutName = tag.args;
-			layoutName = layoutName.replace("'", "");
-			layoutName = layoutName.replace("\"", "");
-			if (layoutName.endsWith(HTML)) {
-				layoutName = layoutName.substring(0, layoutName.indexOf(HTML));
-			}
-			if (layoutName.startsWith("/")) {
-				layoutName = layoutName.substring(1);
-			}
-			this.cmd.superClass = layoutName.replace('/', '.');
-		} else if (tag.tagName.equals(DO_BODY)) {
-			cmd.doBody(tag.args);
+	protected void startTag(Tag tag) {
+		
+		if (tag.tagName.equals(DO_BODY)) {
+			tcmd.doBody(tag.args);
 			println("if (body != null)");
 			println("\tbody.render(" + tag.args + ");");
 			// print to the root space before move one stack up
 		} else if ("set".equals(tag.tagName)) {
-			// only support value as tag content as opposed to as attribut:
+			// only support value as tag content as opposed to as attribute:
 			// #{set key}value#{/}
 			if (tag.args.contains(":")) {
 				if (tag.hasBody) {
@@ -73,11 +61,9 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 //						value = "\"" + value;
 //					if (!value.endsWith("\""))
 //						value = value + "\"";
-					this.cmd.addSetTag(key, "p(" + value + ");");
+					this.tcmd.addSetTag(key, "p(" + value + ");");
 				}
 			}
-		} else if (tag.tagName.equals("invoke")) {
-			invokeAction(tag);
 		} else if (tag.tagName.equals("def")) {
 			def(tag);
 		} else {
@@ -85,58 +71,49 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		}
 		
 		tagsStack.push(tag);
-		// XXX other tags
 		markLine(parser.getLineNumber());
 		println();
 		skipLineBreak = true;
 
 	}
-
+	
 	@Override
-	protected void endTag() {
-		String tagName = parser.getToken().trim();
-		if (tagsStack.isEmpty()) {
-			throw new JapidCompilationException(template, currentLine, "#{/" + tagName + "} is not opened.");
-		}
-		Tag tag = tagsStack.pop();
-		String lastInStack = tag.tagName;
-		if (tagName.equals("")) {
-			tagName = lastInStack;
-		}
-		if (!lastInStack.equals(tagName)) {
-			throw new JapidCompilationException(template, tag.startLine, "#{" + tag.tagName + "} is not closed.");
-		}
-
-		if ("set".equals(tagName)) {
+	protected boolean endTagSpecial(Tag tag) {
+		if ("set".equals(tag.tagName)) {
 			if (tag.hasBody) {
 				String key = tag.args;
-				this.cmd.addSetTag(key, tag.getBodyText());
+				this.tcmd.addSetTag(key, tag.getBodyText());
+				return true;
 			}
-		} else	if ("def".equals(tagName)) {
-			endDef(tag);
-		} else if (tagName.equals(DO_BODY)) {
-		} else if (tagName.equals("invoke")) {
-		} else if (tagName.equals("extends")) {
-		} else {
-			endRegularTag(tag);
 		}
-		markLine(tag.startLine);
-		println();
-		// tagIndex--;
-		skipLineBreak = true;
-	} // Writer
-
+		return false;
+	}
 	/**
 	 * @param tag
 	 */
 	@Override
 	protected void postParsing(Tag tag) {
-		this.cmd.renderArgs = tag.bodyArgsString;
+		this.tcmd.renderArgs = tag.callbackArgs;
 	}
 
 	@Override
 	protected AbstractTemplateClassMetaData getTemplateClassMetaData() {
-		return cmd;
+		return tcmd;
+	}
+	
+	@Override
+	protected void scriptline(String token) {
+		String line = token.trim();
+		if (line.startsWith(DO_BODY + " ") || line.startsWith(DO_BODY + "\t") || line.equals(DO_BODY)) {
+			String args = line.substring(DO_BODY.length()).trim();
+			tcmd.doBody(args);
+			println("if (body != null)");
+			println("\tbody.render(" + args + ");");
+			skipLineBreak = true;
+		}
+		else {
+			super.scriptline(token);
+		}
 	}
 
 }

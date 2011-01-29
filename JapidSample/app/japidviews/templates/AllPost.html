@@ -3,15 +3,16 @@
 `args		String blogTitle, List <Post> allPost
 `stopwatch	on
 
-#{set title:"Home"/}
+`set title:"Home"
 
 `for (Post p: allPost) { 
         *{ now we call a tag, with a body content that take a parameter title of String type }*
-	    #{Display p, "home"  | String title}
+
+	    `tag Display p, "home"  | String title
 		   The real title is: $title;
-	    #{/}
+	    `
 `}
 
-#{Tag2 blogTitle/}
+`tag Tag2 blogTitle
 
 <p>cool</p>

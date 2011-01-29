@@ -107,44 +107,6 @@ public abstract class JapidTemplateBaseWithStringBundler {
 
 	protected abstract void doLayout();
 
-	// protected abstract void doLayout();
-	//
-	// /**
-	// * not used for now. can be used to invoke a template dynamically
-	// * @param post
-	// * @param body
-	// */
-	// protected static void doBody(BranTemplateBase body, Object... args) {
-	// // must use reflection now
-	// Class<? extends BranTemplateBase> bodyClass = body.getClass();
-	// Method[] methods = bodyClass.getMethods();
-	// List<Method> renders = new ArrayList<Method>();
-	// for (Method m : methods) {
-	// if (m.getName().equals("render")) {
-	// renders.add(m);
-	// }
-	// }
-	// if (renders.size() == 0) {
-	// throw new
-	// RuntimeException("the template class does not have a render method: " +
-	// bodyClass.getName());
-	// }
-	// else if (renders.size() > 1 ) {
-	// throw new
-	// RuntimeException("the template class has more than one render method: " +
-	// bodyClass.getName());
-	// }
-	// else {
-	// Method render = renders.get(0);
-	// try {
-	// render.invoke(body, args);
-	// } catch (Exception e) {
-	// throw new RuntimeException("error run the render method on: " +
-	// bodyClass.getName());
-	// }
-	// }
-	// }
-
 	static protected byte[] getBytes(String src) {
 		if (src == null || src.length() == 0)
 			return new byte[] {};

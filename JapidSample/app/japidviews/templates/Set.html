@@ -1,6 +1,16 @@
 `extends japidviews/_layouts/SetLayout
 `args String a
 
+*{
+set as a tag
+	#{set title:"Home" + a /}
+	#{set footer}great footer#{/}
+}*
 
-#{set title:"Home" + a /}
-#{set footer}great footer#{/}
+*{ set as directive }*
+
+`set title : "Home away" + a
+
+`set footer
+    great footer
+`

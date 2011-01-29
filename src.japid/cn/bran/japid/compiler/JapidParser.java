@@ -13,7 +13,12 @@
  */
 package cn.bran.japid.compiler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 /**
  * Template parser
@@ -40,6 +45,7 @@ public class JapidParser {
 
 		EOF, //
 		PLAIN, //
+//		PLAIN_LEADINGSPACE, // the part after a new line and before any none-space characters
 		SCRIPT, // %{...}% or {%...%} bran: or ~{}~,  ~[]~ the open wings directives
 		SCRIPT_LINE, // single back-quote ` will turn the rest if the line in to script. 
 		EXPR, // ${...}
@@ -60,10 +66,12 @@ public class JapidParser {
 		EXPR_NATURAL_STRING_LITERAL, // bran ~user?.name.format( '#)#' ) or
 		// $'hello'.length
 		TEMPLATE_ARGS, // bran ~( )
+		CLOSING_BRACE, // an closing  curly brace after leading space
 	}
 
-	// end2/begin2 for mark the current returned token while the begin is the
-	// start pos of next token
+	// end2/begin2: for mark the current returned token
+	// begin is the start pos of next token
+	// end is the next pos pointer
 	private int end, begin, end2, begin2, len;
 	private JapidParser.Token state = Token.PLAIN;
 	private JapidParser.Token lastState;
@@ -91,6 +99,7 @@ public class JapidParser {
 		}
 	}
 
+	
 	public String getToken() {
 		String tokenString = pageSource.substring(begin2, end2);
 		if (lastState == Token.PLAIN) {
@@ -179,7 +188,22 @@ public class JapidParser {
 					}
 					else 
 						return found(Token.SCRIPT_LINE, 1);
+				// was trying to implement an escape-less }, but it may be too confusing with json, javascript syntax etc. 
+				// so it's disabled for now. 
+//				if (c == '}') {
+//					String curToken = getPrevTokenString();
+//					boolean allLeadingSpace = allLeadingSpaceInline(curToken);
+//					if (allLeadingSpace) {
+//						return found(Token.CLOSING_BRACE, 0);
+//					}
+//				}
 				break;
+			case CLOSING_BRACE:
+				if ( c == '\n') {
+					return found(Token.PLAIN, 1);
+				}
+				else 
+					return found(Token.SCRIPT_LINE, 1);
 			case SCRIPT:
 				if (c == '}' && c1 == '%') {
 					return found(Token.PLAIN, 2);
@@ -335,6 +359,34 @@ public class JapidParser {
 	}
 
 	/**
+	 * @return
+	 */
+	private String getPrevTokenString() {
+		return pageSource.substring(end2, end - 1);
+	}
+
+	/**
+	 * @param curToken
+	 * @return
+	 */
+	static boolean allLeadingSpaceInline(String curToken) {
+		boolean allLeadingSpace = true;
+		int len = curToken.length();
+		for (int i = len - 1; i > -1; i--) {
+			char ch = curToken.charAt(i);
+			if (ch == '\n')
+				break;
+			else if (ch == ' ' || ch == '\t')
+				continue;
+			else {
+				allLeadingSpace = false;
+				break;
+			}
+		}
+		return allLeadingSpace;
+	}
+
+	/**
 	 * push a nested token to the stack
 	 * @param token
 	 * @param i number of chars to skip
@@ -348,5 +400,24 @@ public class JapidParser {
 	void reset() {
 		end = begin = end2 = begin2 = 0;
 		state = Token.PLAIN;
+	}
+	
+	/**
+	 * get all the token and content in an ordered list. EOF is not included.
+	 * @return
+	 */
+	public List<TokenPair> allTokens() {
+		List<TokenPair> result = new ArrayList<TokenPair>();
+		loop: for (;;) {
+			Token state = nextToken();
+			switch (state) {
+			case EOF:
+				break loop;
+			default:
+				String tokenstring = getToken();
+				result.add(new TokenPair(state, tokenstring));
+			}
+		}
+		return result;
 	}
 }

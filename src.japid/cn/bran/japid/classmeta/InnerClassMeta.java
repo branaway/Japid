@@ -14,9 +14,12 @@
 
 package cn.bran.japid.classmeta;
 
+import japa.parser.ast.body.Parameter;
+
 import java.util.List;
 
-import cn.bran.japid.compiler.ExprParser;
+import cn.bran.japid.compiler.JavaSyntaxTool;
+import cn.bran.japid.compiler.JavaSyntaxTool.Param;
 import cn.bran.japid.tags.Each;
 
 
@@ -27,74 +30,74 @@ import cn.bran.japid.tags.Each;
  *
  */
 public class InnerClassMeta {
-	private static final String EXTRA_LOOP_ATTRS = ", int _index, boolean _isOdd, String _parity, boolean _isFirst, boolean _isLast";
+	private static final String EXTRA_LOOP_ATTRS = ", final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast";
 	String tagName;
 	// the sequence of the same tag called in a single template
 	int counter;
 	// like in a function call
-	String renderArgs;
+	String renderParams;
 	String renderBody;
 //	private String interfaceName;
-	public InnerClassMeta(String tagName, int counter, String renderArgs, String renderBody) {
+	public InnerClassMeta(String tagName, int counter, String callbackArgs, String renderBody) {
 		super();
 		this.tagName = tagName.replace('/', '.');
 		this.counter = counter;
-		this.renderArgs = renderArgs;
+		this.renderParams = callbackArgs;
 		this.renderBody = renderBody;
 //		this.interfaceName = interfaceName;
 	}
-
-	/**
-	 * something like this: 	
-	 * <pre>
-	 * class Display1_Body implements DoBodyInterface{
-			void render(String title) {
-				pln ("The real title is: ", title);
-			}
-	 *	}
-	</pre>
-	 * @deprecated this method is the old way of declaring inner class. Now use the getAnonymous() in inline fashion. 
-	 */
-	@Override
-	public String toString() {
-		ExprParser ep = new ExprParser(this.renderArgs);
-		List<String> argTokens = ep.split();
-		// something String a Date b
-		assert(argTokens.size() % 2 == 0);
-		
-		String[] argTypes = new String[argTokens.size() /2];
-		
-		String classParams = "";
-		for (int i = 0; i < argTypes.length; i++) {
-			classParams += ", " + argTokens.get(i * 2);
-		}
-		
-		if (Each.class.getSimpleName().equals(tagName)) {
-			// append extra argument to the render method
-			renderArgs += EXTRA_LOOP_ATTRS;
-		}
-		
-		// remove the leading ,
-		
-		
-		if (classParams.startsWith(","))
-				classParams = "<" + classParams.substring(1) + ">";
-
-		StringBuilder sb = new StringBuilder();
-		line(sb, "class " + getVarRoot() + counter + "DoBody implements " + tagName + ".DoBody" +  classParams + "{");
-		line(sb, "\tpublic void render(" + renderArgs  + ") {");
-		line(sb, "\t\t" + renderBody);
-		line(sb, "\t}");
-		line(sb, "}");
-		
-		// bodyclass instance
-		String bodyClassName = getVarRoot() + counter +  "DoBody"; 
-		String bodyField = "private " + bodyClassName +" _" + bodyClassName + 
-			" = new " + bodyClassName + "();";
-		line(sb, "\t" + bodyField);
-
-		return sb.toString();
-	}
+//
+//	/**
+//	 * something like this: 	
+//	 * <pre>
+//	 * class Display1_Body implements DoBodyInterface{
+//			void render(String title) {
+//				pln ("The real title is: ", title);
+//			}
+//	 *	}
+//	</pre>
+//	 * @deprecated this method is the old way of declaring inner class. Now use the getAnonymous() in inline fashion. 
+//	 */
+//	@Override
+//	public String toString() {
+//		ExprParser ep = new ExprParser(this.renderArgs);
+//		List<String> argTokens = ep.split();
+//		// something String a Date b
+//		assert(argTokens.size() % 2 == 0);
+//		
+//		String[] argTypes = new String[argTokens.size() /2];
+//		
+//		String classParams = "";
+//		for (int i = 0; i < argTypes.length; i++) {
+//			classParams += ", " + argTokens.get(i * 2);
+//		}
+//		
+//		if (Each.class.getSimpleName().equals(tagName)) {
+//			// append extra argument to the render method
+//			renderArgs += EXTRA_LOOP_ATTRS;
+//		}
+//		
+//		// remove the leading ,
+//		
+//		
+//		if (classParams.startsWith(","))
+//				classParams = "<" + classParams.substring(1) + ">";
+//
+//		StringBuilder sb = new StringBuilder();
+//		line(sb, "class " + getVarRoot() + counter + "DoBody implements " + tagName + ".DoBody" +  classParams + "{");
+//		line(sb, "\tpublic void render(" + renderArgs  + ") {");
+//		line(sb, "\t\t" + renderBody);
+//		line(sb, "\t}");
+//		line(sb, "}");
+//		
+//		// bodyclass instance
+//		String bodyClassName = getVarRoot() + counter +  "DoBody"; 
+//		String bodyField = "private " + bodyClassName +" _" + bodyClassName + 
+//			" = new " + bodyClassName + "();";
+//		line(sb, "\t" + bodyField);
+//
+//		return sb.toString();
+//	}
 	
 	private void line (StringBuilder sb, String line) {
 		sb.append(line + "\n");
@@ -117,28 +120,28 @@ public class InnerClassMeta {
 	 * @return
 	 */
 	public String getAnonymous() {
-		ExprParser ep = new ExprParser(this.renderArgs);
-		List<String> argTokens = ep.split();
-		// something String a Date b
-		assert(argTokens.size() % 2 == 0);
+		List<Parameter> params = JavaSyntaxTool.parseParams(this.renderParams);
 		
-		String[] argTypes = new String[argTokens.size() /2];
+		String[] argTypes = new String[params.size()];
 		
-		String classParams = "";
+		String generics = "";
 		for (int i = 0; i < argTypes.length; i++) {
-			classParams += ", " + argTokens.get(i * 2);
+			generics += ", " + params.get(i).getType();
 		}
-		if (classParams.startsWith(","))
-			classParams = "<" + classParams.substring(1) + ">";
+		if (generics.startsWith(","))
+			generics = "<" + generics.substring(1).trim() + ">";
 		
-		if (Each.class.getSimpleName().equals(tagName)) {
+		if (Each.class.getSimpleName().equalsIgnoreCase(tagName)) {
 			// append extra argument to the render method
-			renderArgs += EXTRA_LOOP_ATTRS;
+			tagName = Each.class.getSimpleName();
+			renderParams += EXTRA_LOOP_ATTRS;
 		}
+		
+		String renderArgsWithFinal = JavaSyntaxTool.addFinalToAllParams(renderParams);
 		
 		StringBuilder sb = new StringBuilder();
-		line(sb, "new " + tagName + ".DoBody" +  classParams + "(){");
-		line(sb, "public void render(" + renderArgs  + ") {");
+		line(sb, "new " + tagName + ".DoBody" +  generics + "(){");
+		line(sb, "public void render(" + renderArgsWithFinal  + ") {");
 		line(sb, renderBody);
 		line(sb, "}");
 		line(sb, "}");

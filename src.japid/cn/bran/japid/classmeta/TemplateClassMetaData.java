@@ -13,17 +13,15 @@
  */
 package cn.bran.japid.classmeta;
 
+import japa.parser.ast.body.Parameter;
+
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import cn.bran.japid.compiler.ExprParser;
-import cn.bran.japid.template.ActionRunner;
-import cn.bran.japid.template.JapidTemplateBase;
-import cn.bran.japid.template.JapidTemplateBaseStreaming;
-
+import cn.bran.japid.compiler.JavaSyntaxTool;
+import cn.bran.japid.compiler.JavaSyntaxTool.Param;
 
 /**
  * the class meta data for templates that are directly renderable, meaning this
@@ -56,11 +54,11 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	// null: no doBody, "": there is doBody but no parameters passed back
 	private String doBodyArgsString;
 	private char[] doBodyGenericTypeParams = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
-	//	
+
+	//
 	public void addSetTag(String setMethodName, String methodBody) {
 		setMethods.put(setMethodName, methodBody);
 	}
-
 
 	// for the doBody in the tag template
 	public void addDoBodyInterface(String bodyArgsString) {
@@ -68,15 +66,13 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	}
 
 	public void doBody(String tagArgs) {
-
-		tagArgs = tagArgs == null ? "" : tagArgs;
+		tagArgs = tagArgs == null ? "" : tagArgs.trim();
 		this.addDoBodyInterface(tagArgs);
 	}
 
-//	public void addDefTag(String key, String string) {
-//		// TODO Auto-generated method stub
-//	}
-
+	// public void addDefTag(String key, String string) {
+	// // TODO Auto-generated method stub
+	// }
 
 	/**
 	 * 
@@ -94,7 +90,6 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		}
 	}
 
-
 	/**
 	 * the main part of the render logic
 	 */
@@ -108,29 +103,24 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		pln("\t}");
 	}
 
-
 	/**
-	 * the entry point of the template: render(...). Concrete views have this method while the layouts do not. 
+	 * the entry point of the template: render(...). Concrete views have this
+	 * method while the layouts do not.
 	 */
 	protected void renderMethod() {
 		if (renderArgs != null) {
 			// create fields for the render args and create a render method to
-			ExprParser ep = new ExprParser(this.renderArgs);
-			List<String> argTokens = ep.split();
-			// something like String a Date b
-			assert (argTokens.size() % 2 == 0);
+			List<Parameter> params = JavaSyntaxTool.parseParams(this.renderArgs);
 
-			String[] argNames = new String[argTokens.size() / 2];
-
-			for (int i = 0; i < argNames.length; i++) {
-				pln(TAB + argTokens.get(i * 2) + " " + argTokens.get(i * 2 + 1) + ";");
+			for (Parameter p : params) {
+				pln(TAB + "private " + p.getType() + " " + p.getId() + ";");
 			}
 
 			// set the render(xxx)
 			if (doBodyArgsString != null) {
 				// the template can be called with a callback body
 				// the field
-				pln (TAB + "DoBody body;" );
+				pln(TAB + "private DoBody body;");
 				doBodyInterface();
 				pln("\tpublic " + RENDER_RESULT + " render(" + renderArgs + ", DoBody body) {");
 				pln("\t\t" + "this.body = body;");
@@ -138,17 +128,13 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				pln("\tpublic " + RENDER_RESULT + " render(" + renderArgs + ") {");
 			}
 			// assign the params to fields
-			for (int i = 0; i < argNames.length; i++) {
-				argNames[i] = argTokens.get(2 * i + 1);
+			for (Parameter p : params) {
+				pln("\t\tthis." + p.getId() + " = " + p.getId() + ";");
 			}
-			for (String arg : argNames) {
-				pln("\t\tthis." + arg + " = " + arg + ";");
-			}
-		}
-		else {
+		} else {
 			if (doBodyArgsString != null) {
 				// the field
-				pln (TAB + "DoBody body;" );
+				pln(TAB + "DoBody body;");
 				doBodyInterface();
 				pln("\tpublic " + RENDER_RESULT + " render(DoBody body) {");
 				pln("\t\t" + "this.body = body;");
@@ -165,48 +151,44 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t\tSystem.out.println(\"[" + super.className + "] rendering time: \" + t);");
 		}
 
-		
 		if (streaming) {
-			if (true || hasActionInvocation) 
+			if (true || hasActionInvocation)
 				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, null, t, " + ACTION_RUNNERS + ");");
-			else 
+			else
 				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, null, t);");
-				
-		}
-		else {
-			if (true || hasActionInvocation) 
+
+		} else {
+			if (true || hasActionInvocation)
 				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, getOut(), t, " + ACTION_RUNNERS + ");");
-			else 
+			else
 				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, getOut(), t);");
 		}
 		pln("\t}");
 	}
 
-
-	// code copied from the TagClassMetaData
 	private void doBodyInterface() {
 		// let do the dobody callback interface
 		// doBody interface:
-		if (doBodyArgsString != null && doBodyArgsString.length() > 0) {
-			ExprParser p = new ExprParser(doBodyArgsString);
-			List<String> argTokens = p.split();
-			// int numOfArgs = argTokens.size() /2;
+		if (doBodyArgsString != null) {
+			List<String> args = JavaSyntaxTool.parseArgs(doBodyArgsString);
+
 			String genericTypeList = "";
 			String renderArgList = "";
-			for (int i = 0; i < argTokens.size(); i++) {
-				char c = doBodyGenericTypeParams[i];
+			int i = 0;
+			for (String arg : args) {
+				char c = doBodyGenericTypeParams[i++];
 				genericTypeList += "," + c;
 				renderArgList += "," + c + " " + Character.toLowerCase(c);
 			}
-			genericTypeList = genericTypeList.substring(1); // remove the
-			// first
-			// comma
-			renderArgList = renderArgList.substring(1); // remove the first
-			// comma
-			pln("\tpublic static interface DoBody<", genericTypeList, "> {");
+			if (genericTypeList.startsWith(",")) {
+				// remove the first comma
+				genericTypeList = "<" + genericTypeList.substring(1) + ">";
+				renderArgList = renderArgList.substring(1); 
+			}
+			pln("\tpublic static interface DoBody", genericTypeList, " {");
 			pln("\t\t void render(" + renderArgList + ");");
 			pln("\t}");
-		} 
+		}
 	}
 
 	@Override

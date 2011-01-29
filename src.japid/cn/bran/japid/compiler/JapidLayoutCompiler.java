@@ -29,22 +29,21 @@ import cn.bran.japid.classmeta.LayoutClassMetaData;
 
 public class JapidLayoutCompiler extends JapidAbstractCompiler {
 
+	private static final String DO_LAYOUT = "doLayout";
 	// StringBuilder mainRenderBodySource = new StringBuilder();
 	LayoutClassMetaData cmd = new LayoutClassMetaData();
 
 	@Override
-	protected void templateArgs() {
+	protected void templateArgs(String token) {
 		Tag currentTag = this.tagsStack.peek();
 		if ("root".equals(currentTag.tagName)) {
 			throw new RuntimeException("Layouts don't take script level parameters!");
 		}
-		super.templateArgs();
+		super.templateArgs(token);
 	}
 
 	@Override
-	protected void startTag() {
-		Tag tag = buildTag();
-
+	protected void startTag(Tag tag) {
 		if ("get".equals(tag.tagName)) {
 			if (tag.hasBody) {
 				throw new RuntimeException("get tag cannot have a body. not closed?");
@@ -54,10 +53,8 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 			var = var.replace("\"", "");
 			this.cmd.get(var);
 			print("\t" + var + "();");
-		} else if ("doLayout".equals(tag.tagName)) {
+		} else if (DO_LAYOUT.equals(tag.tagName)) {
 			print("\tdoLayout();");
-		} else if (tag.tagName.equals("invoke")) {
-			invokeAction(tag);
 		} else {
 			regularTagInvoke(tag);
 		}
@@ -69,37 +66,6 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	}
 
 	@Override
-	protected void endTag() {
-		String tagName = parser.getToken().trim();
-		if (tagsStack.isEmpty()) {
-			throw new JapidCompilationException(template, currentLine, "#{/" + tagName + "} is not opened.");
-		}
-
-		Tag tag = tagsStack.pop();
-		String lastInStack = tag.tagName;
-		if (tagName.equals("")) {
-			tagName = lastInStack;
-		}
-		if (!lastInStack.equals(tagName)) {
-			throw new JapidCompilationException(template, tag.startLine, "#{" + tag.tagName + "} is not closed.");
-		}
-
-		if ("get".equals(tagName)) {
-			// // only support value as tag content as opposed to as attribute:
-			// // #{set key}value#{/}
-			// String key = tag.args;
-			// this.cmd.addSetTag(key, tag.bodyBuffer.toString());
-		} else if (tagName.equals("invoke")) {
-		} else {
-			endRegularTag(tag);
-		}
-		markLine(tag.startLine);
-		println();
-		// tagIndex--;
-		skipLineBreak = true;
-	} // Writer
-
-	@Override
 	protected AbstractTemplateClassMetaData getTemplateClassMetaData() {
 		return cmd;
 	}
@@ -108,6 +74,18 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	protected void postParsing(Tag tag) {
 		// nothing to add
 
+	}
+	
+	@Override
+	protected void scriptline(String token) {
+		String line = token.trim();
+		if (line.equals(DO_LAYOUT)) {
+			println("\tdoLayout();");
+			skipLineBreak = true;
+		}
+		else {
+			super.scriptline(token);
+		}
 	}
 
 }

@@ -7,5 +7,9 @@
 	<p>title: $post.getTitle()</p>
 	<p>at: $fastformat(post.getPostedAt(), ("yy-MMM-dd"))</p>
 	<p>by: $post.getAuthor().name, $post.getAuthor().gender</p>
-	#{doBody post.getTitle() /}
+	<p class="try again using a simple syntax">
+        *{this is the tag way of doBody:	#{doBody post.getTitle() + "!" /}  }*
+        *{this is the directive way of doBody:  }*
+	   `doBody post.getTitle() + "!"
+	</p>
 </div>

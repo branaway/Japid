@@ -2,20 +2,20 @@
 `extends 	Layout.html
 `args		String blogTitle, List <Post> allPost
 
-#{set title:"Home"/}
+`set title:"Home"
 
 
 `if (allPost.size() > 0 ) {
 	<p></p>
 	`for (Post p: allPost) {
-	    #{Display p, "home" |String title}
+	    `tag Display p, "home" |String title
 			<p>The real title is: $title;</p>
-	    #{/}
+	    `
 	`}
 `} else {
 	<p>There is no post at this moment</p>
 `}
 
-#{Tag2 blogTitle/}
+`tag Tag2(blogTitle)
 
 <p>end of it</p>

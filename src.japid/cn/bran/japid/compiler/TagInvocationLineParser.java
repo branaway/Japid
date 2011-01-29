@@ -38,19 +38,14 @@ public class TagInvocationLineParser {
 			return tag;
 		}
 
-		// let's parse the closure parem
+		// let's parse the closure params
 		int vertline = line.lastIndexOf('|');
 		if (vertline >= 0) {
 			String closureArgs = line.substring(vertline + 1).trim();
-			ExprParser ep = new ExprParser(closureArgs);
-			List<String> argTokens = ep.split();
-			if (argTokens.size() % 2 == 0) {
-				tag.bodyArgsString = closureArgs;
-			} else {
-				throw new RuntimeException(
-						"The parameters for the closure of the tag invocation has syntax error. Forgot declaring data types? " + original);
-			}
-
+			// test syntax 
+			JavaSyntaxTool.parseParams(closureArgs);
+			tag.callbackArgs = closureArgs;
+			tag.hasBody = true;
 			line = line.substring(0, vertline).trim();
 		}
 
