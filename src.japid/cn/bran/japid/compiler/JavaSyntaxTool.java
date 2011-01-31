@@ -16,9 +16,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import play.exceptions.JavaException;
-import play.templates.JavaExtensions;
-
 public class JavaSyntaxTool {
 	private static final String UTF_8 = "UTF-8";
 
