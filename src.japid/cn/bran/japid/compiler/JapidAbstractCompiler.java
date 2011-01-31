@@ -600,7 +600,7 @@ public abstract class JapidAbstractCompiler {
 
 		Tag tag = tagsStack.pop();
 		if (!tagsStack.empty())
-			throw new RuntimeException ("There is(are) " + tagsStack.size() + " unclosed tag(s) in the template");
+			throw new RuntimeException ("There is(are) " + tagsStack.size() + " unclosed tag(s) in the template: " + this.template.name);
 		// remove print nothing statement to save a few CPU cycles
 		this.getTemplateClassMetaData().body = tag.getBodyText().replace("p(\"\")", "").replace("pln(\"\")", "pln()");
 		postParsing(tag);

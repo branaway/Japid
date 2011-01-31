@@ -13,6 +13,9 @@
  */
 package cn.bran.japid.compiler;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.TemplateClassMetaData;
 import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
@@ -64,6 +67,15 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 					this.tcmd.addSetTag(key, "p(" + value + ");");
 				}
 			}
+			else {
+				Matcher matcher = setPattern.matcher(tag.args);
+				if (matcher.matches()) {
+					tag.hasBody = false;
+					String key = matcher.group(1);
+					String value = matcher.group(2);
+					this.tcmd.addSetTag(key, "p(" + value + ");");
+				}
+			}
 		} else if (tag.tagName.equals("def")) {
 			def(tag);
 		} else {
@@ -76,6 +88,8 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		skipLineBreak = true;
 
 	}
+	
+	static Pattern setPattern = Pattern.compile("(\\w+)\\s+(.*)");
 	
 	@Override
 	protected boolean endTagSpecial(Tag tag) {
