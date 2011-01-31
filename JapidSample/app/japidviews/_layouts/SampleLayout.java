@@ -65,7 +65,7 @@ p(";\n" +
 	doLayout();// line 6
 p("</div>\n");// line 6
 	}
-	protected abstract void title();
+	 protected void title() {};
 
 	protected abstract void doLayout();
 }

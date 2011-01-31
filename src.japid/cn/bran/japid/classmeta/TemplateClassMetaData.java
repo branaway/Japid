@@ -152,13 +152,13 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		}
 
 		if (streaming) {
-			if (true || hasActionInvocation)
+			if (useWithPlay && hasActionInvocation)
 				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, null, t, " + ACTION_RUNNERS + ");");
 			else
 				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, null, t);");
 
 		} else {
-			if (true || hasActionInvocation)
+			if (useWithPlay && hasActionInvocation)
 				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, getOut(), t, " + ACTION_RUNNERS + ");");
 			else
 				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, getOut(), t);");

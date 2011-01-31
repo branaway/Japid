@@ -64,7 +64,7 @@ public abstract class Layout extends cn.bran.japid.template.JapidTemplateBase
 	doLayout();
 p("</div>\n");// line 6
 	}
-	protected abstract void title();
+	 protected void title() {};
 
 	protected abstract void doLayout();
 }

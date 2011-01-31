@@ -62,8 +62,8 @@ p("\n" +
 "\n");// line 1
 	title();p("one more\n");// line 3
 	footer();	}
-	protected abstract void footer();
-	protected abstract void title();
+	 protected void footer() {};
+	 protected void title() {};
 
 	protected abstract void doLayout();
 }

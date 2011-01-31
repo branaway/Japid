@@ -37,7 +37,7 @@ public class authorPanel extends cn.bran.japid.template.JapidTemplateBase
 		this.a = a;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 

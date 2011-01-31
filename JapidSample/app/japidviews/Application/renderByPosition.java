@@ -46,7 +46,7 @@ public class renderByPosition extends cn.bran.japid.template.JapidTemplateBase
 		this.au22 = au22;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 

@@ -35,7 +35,7 @@ public class suppressNull extends cn.bran.japid.template.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 
@@ -66,12 +66,12 @@ public class suppressNull extends cn.bran.japid.template.JapidTemplateBase
 ;// line 1
 p("\n");// line 1
 p("\n");// line 2
-String a = "a";// line 4
+ String a = "a";// line 4
 p("safe to do a.something: ");// line 4
 try { p(a.length()); } catch (NullPointerException npe) {}// line 5
 p("\n" + 
 "\n");// line 5
-a = null;// line 7
+ a = null;// line 7
 p("safe to do a.something too: ");// line 7
 try { p(a.length()); } catch (NullPointerException npe) {}// line 8
 p("\n");// line 8

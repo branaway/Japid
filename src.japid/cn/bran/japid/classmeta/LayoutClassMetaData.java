@@ -47,11 +47,14 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 
 	/**
 	 * #{get "block name" /}
+	 * was creating abstract. Now changed to a no operation method stub so
+	 * subclass can selectively override the getters in the layout
 	 */
 	protected void getterSetter() {
 		pln();
 		for (String key : getterMethods) {
-			p("\tprotected abstract void " + key + "();\n");
+//			p("\t protected abstract void " + key + "();\n");
+			p("\t protected void " + key + "() {};\n");
 		}
 	}
 

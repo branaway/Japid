@@ -37,7 +37,7 @@ public class Set extends japidviews._layouts.SetLayout
 		this.a = a;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 
@@ -71,15 +71,17 @@ p("\n" +
 "\n");// line 8
 p("\n" + 
 "\n");// line 10
-p("\n");// line 12
-// line 14
-;// line 16
+p("\n" + 
+"\n");// line 13
+p("\n");// line 15
+// line 17
+;// line 19
 
 	}
 
 	@Override protected void footer() {
-		// line 14
-p("    great footer\n");// line 14
+		// line 17
+p("    great footer\n");// line 17
 ;
 	}
 	@Override protected void title() {

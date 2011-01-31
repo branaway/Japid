@@ -28,8 +28,11 @@ import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.JapidTemplateBaseStreaming;
+import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.template.RenderResultPartial;
+import cn.bran.play.JapidPlayAdapter;
+import cn.bran.play.WebUtils;
 
 /**
  * lots of the code block generation is done here
@@ -47,13 +50,15 @@ public abstract class AbstractTemplateClassMetaData {
 	private Set<String> staticImports = new HashSet<String>();
 	private String originalTemplate;
 	private static Pattern partialImport = Pattern.compile("import\\s+\\.(.+)");
-	
+
 	// control if we use a streaming based API or StringBuilder based API
 	public static boolean streaming = false;
 	// if we need to track the time to render
 	boolean stopWatch = false;
 	// control whether to allow safe expression navigation
 	public boolean suppressNull = false;
+
+	public boolean useWithPlay = true;
 
 	public String getOriginalTemplate() {
 		return originalTemplate;
@@ -120,8 +125,8 @@ public abstract class AbstractTemplateClassMetaData {
 		this.innersforTagCalls.add(inner);
 		return inner;
 	}
-	
-	private static Set<String> specialTags = new HashSet<String>(); 
+
+	private static Set<String> specialTags = new HashSet<String>();
 	static {
 		specialTags.add("set");
 		specialTags.add("get");
@@ -150,7 +155,7 @@ public abstract class AbstractTemplateClassMetaData {
 		else
 			pln(IMPORT_SPACE + cn.bran.japid.tags.Each.class.getName() + COMMA);
 
-		if (hasActionInvocation) {
+		if (hasActionInvocation && useWithPlay) {
 			pln(IMPORT_SPACE + ActionRunner.class.getName() + COMMA);
 		}
 
@@ -163,7 +168,8 @@ public abstract class AbstractTemplateClassMetaData {
 			// extension: allow partial imports. e.g.: import .sub.*
 			// which requires the current package name to prefix it.
 			l = expandPartialImport(l);
-			pln(l);
+			if (considerPlayDependency(l))
+				pln(l);
 		}
 
 		for (String l : globalStaticImports) {
@@ -175,7 +181,8 @@ public abstract class AbstractTemplateClassMetaData {
 				l += ".*;";
 			}
 			l = expandPartialImport(l);
-			pln(l);
+			if (considerPlayDependency(l))
+				pln(l);
 		}
 
 		for (String l : staticImports) {
@@ -187,7 +194,8 @@ public abstract class AbstractTemplateClassMetaData {
 				l += ".*;";
 			}
 			l = expandPartialImport(l);
-			pln(l);
+			if (considerPlayDependency(l))
+				pln(l);
 		}
 
 		// pln("import java.math.*;");
@@ -201,7 +209,8 @@ public abstract class AbstractTemplateClassMetaData {
 			if (!l.startsWith(IMPORT))
 				l = IMPORT_SPACE + l;
 			l = expandPartialImport(l);
-			pln(l);
+			if (considerPlayDependency(l))
+				pln(l);
 		}
 
 		pln("//");
@@ -211,9 +220,46 @@ public abstract class AbstractTemplateClassMetaData {
 
 	}
 
+	private boolean considerPlayDependency(String l) {
+		if (useWithPlay)
+			return true;
+
+		// filter out all Play related imports
+		if (l.startsWith(IMPORT)) {
+			l = l.substring(IMPORT.length()).trim();
+		}
+
+		if (l.startsWith(STATIC)) {
+			l = l.substring(STATIC.length()).trim();
+		}
+
+		if (l.startsWith("play"))
+			return false;
+
+		if (l.startsWith(JapidPlayAdapter.class.getName()))
+			return false;
+
+		if (l.startsWith(WebUtils.class.getName()))
+			return false;
+
+		if (l.startsWith("japidviews"))
+			return false;
+
+		if (l.startsWith("models"))
+			return false;
+
+		if (l.contains("JapidWebUtil"))
+			return false;
+
+		if (l.startsWith("controllers"))
+			return false;
+
+		return true;
+	}
+
 	/**
-	 * @param l 
-	 * 		a partially specified import line such as: import .tags.*;
+	 * @param l
+	 *            a partially specified import line such as: import .tags.*;
 	 * @return
 	 */
 	public String expandPartialImport(String l) {
@@ -236,45 +282,45 @@ public abstract class AbstractTemplateClassMetaData {
 	/**
 	 * 
 	 */
-//	protected void callTags() {
-//		// inners
-//		for (InnerClassMeta inner : this.innersforTagCalls) {
-//			// create a reusable instance _tagName_indexand a instance
-//			// initializer
-//			String tagClassName = inner.tagName;
-//			String field = "private " + tagClassName + " _" + inner.getInnerClassName() + inner.counter + " = new " + tagClassName + "(getOut());";
-//			pln("\t" + field);
-//
-//			if (inner.renderBody != null) {
-//				// body class
-//				pln(inner.toString());
-//			}
-//		}
-//	}
+	// protected void callTags() {
+	// // inners
+	// for (InnerClassMeta inner : this.innersforTagCalls) {
+	// // create a reusable instance _tagName_indexand a instance
+	// // initializer
+	// String tagClassName = inner.tagName;
+	// String field = "private " + tagClassName + " _" +
+	// inner.getInnerClassName() + inner.counter + " = new " + tagClassName +
+	// "(getOut());";
+	// pln("\t" + field);
+	//
+	// if (inner.renderBody != null) {
+	// // body class
+	// pln(inner.toString());
+	// }
+	// }
+	// }
 
 	protected void setupTagObjects() {
 		boolean hasTags = this.innersforTagCalls.size() > 0;
-		if (hasTags) 
+		if (hasTags)
 			pln("\n// -- set up the tag objects");
 		for (InnerClassMeta inner : this.innersforTagCalls) {
 			// create a reusable instance _tagName_indexand a instance
 			// initializer
 			String tagClassName = inner.tagName;
 			String var = "_" + inner.getVarRoot() + inner.counter;
-			String decl = "final " + tagClassName  + " " + var + " = new " + tagClassName + "(getOut());";
+			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
 			pln(decl);
-			String addRunner = var + ".setActionRunners(getActionRunners());";
-			pln(addRunner);
+			if (useWithPlay) {
+				String addRunner = var + ".setActionRunners(getActionRunners());";
+				pln(addRunner);
+			}
 			pln();
-//			if (inner.renderBody != null) {
-//				// body class
-//				pln(inner.toString());
-//			}
 		}
-		if (hasTags) 
+		if (hasTags)
 			pln("// -- end of the tag objects\n");
 	}
-	
+
 	protected void printAnnotations() {
 		for (Class<? extends Annotation> anno : typeAnnotations) {
 			pln("@" + anno.getName());
@@ -324,16 +370,21 @@ public abstract class AbstractTemplateClassMetaData {
 	/**
 	 * 
 	 */
-	private void classDeclare(){
+	private void classDeclare() {
 		if (superClass == null) {
-			superClass = JapidTemplateBase.class.getName();
-			if (streaming)
-				superClass  = JapidTemplateBaseStreaming.class.getName();
+			if (useWithPlay) {
+				superClass = JapidTemplateBase.class.getName();
+				if (streaming)
+					superClass = JapidTemplateBaseStreaming.class.getName();
+			}
+			else {
+				superClass = JapidTemplateBaseWithoutPlay.class.getName();
+			}
 		}
 
-		String abs = isAbstract? "abstract " : "";
-		
-		pln("public " + abs +  "class " + className + " extends " + superClass );
+		String abs = isAbstract ? "abstract " : "";
+
+		pln("public " + abs + "class " + className + " extends " + superClass);
 
 	}
 
@@ -380,7 +431,7 @@ public abstract class AbstractTemplateClassMetaData {
 	 * 
 	 * @param text
 	 *            something like \"hello\"
-	 * @param src 
+	 * @param src
 	 * @return
 	 */
 	public String addStaticText(String text, String src) {
@@ -424,13 +475,12 @@ public abstract class AbstractTemplateClassMetaData {
 	}
 
 	/**
-	 * suppress all NPE in expression ${} and display empty string 
+	 * suppress all NPE in expression ${} and display empty string
 	 */
 	public void suppressNull() {
 		this.suppressNull = true;
 	}
-	
-	
+
 	public void addStaticImports(String im) {
 		staticImports.add(im);
 	}
@@ -461,7 +511,8 @@ public abstract class AbstractTemplateClassMetaData {
 	}
 
 	public void printHttpHeaderMap() {
-		// now we use the headers var the template base, for slightly performance penalty
+		// now we use the headers var the template base, for slightly
+		// performance penalty
 		// pln("	private static final Map<String, String> headers = new HashMap<String, String>();");
 		if (headers.size() > 0) {
 			// pln("	static {");
@@ -483,8 +534,7 @@ public abstract class AbstractTemplateClassMetaData {
 			String meth = tag.args.trim();
 			if (meth.endsWith(")")) {
 				pln("public String " + meth + " {");
-			}
-			else {
+			} else {
 				pln("public String " + meth + "() {");
 			}
 			pln("StringBuilder sb = new StringBuilder();");
@@ -498,56 +548,59 @@ public abstract class AbstractTemplateClassMetaData {
 	}
 
 	/**
-	 * added variable declarations such as request, response, errors, flash, etc.
+	 * added variable declarations such as request, response, errors, flash,
+	 * etc.
 	 */
 	protected void addImplicitVariables() {
-		pln("\n// - add implicit variables \n");
-		pln("		final Request request = Request.current(); assert request != null;\n\n" + 
-				"		final Response response = Response.current(); assert response != null;\n\n" + 
-				"		final Flash flash = Flash.current();assert flash != null;\n\n" + 
-				"		final Session session = Session.current();assert session != null;\n\n" + 
-				"		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;\n\n" + 
-				"		final Params params = Params.current();assert params != null;\n\n" + 
-				"		final Validation validation = Validation.current();assert validation!= null;\n\n" + 
-				"		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;\n\n" + 
-				"		final play.Play _play = new play.Play(); assert _play != null;\n");
-		pln("// - end of implicit variables \n\n");
+		if (useWithPlay) {
+			pln("\n// - add implicit variables \n");
+			pln("		final Request request = Request.current(); assert request != null;\n\n" +
+					"		final Response response = Response.current(); assert response != null;\n\n" +
+					"		final Flash flash = Flash.current();assert flash != null;\n\n" +
+					"		final Session session = Session.current();assert session != null;\n\n" +
+					"		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;\n\n" +
+					"		final Params params = Params.current();assert params != null;\n\n" +
+					"		final Validation validation = Validation.current();assert validation!= null;\n\n" +
+					"		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;\n\n" +
+					"		final play.Play _play = new play.Play(); assert _play != null;\n");
+			pln("// - end of implicit variables \n\n");
+		}
 	}
 
 	/**
-	 * remove the plain text line between two consecutive script line, if the plain text is made of space chars only .
+	 * remove the plain text line between two consecutive script line, if the
+	 * plain text is made of space chars only .
 	 * 
 	 * return true if that's the case
 	 */
 	public String removeLastSingleEmptyLine() {
-		int last = staticsSrc.size()  - 1;
+		int last = staticsSrc.size() - 1;
 		String s = this.staticsSrc.get(last);
 		char[] charArray = s.toCharArray();
 		for (char c : charArray) {
 			if (!Character.isSpaceChar(c))
 				return null;
 		}
-		
+
 		if (s.contains("\n")) {
 			if (s.indexOf('\n') == s.lastIndexOf('\n')) {
 				// it contains only one newline
 				this.statics.remove(last);
 				this.staticsSrc.remove(last);
 				return s;
-			}
-			else 
+			} else
 				return null;
-		}
-		else {
+		} else {
 			this.statics.remove(last);
 			this.staticsSrc.remove(last);
 			return s;
 		}
-		
+
 	}
 
 	/**
 	 * output the java code
+	 * 
 	 * @return
 	 */
 	public String generateCode() {
@@ -557,34 +610,36 @@ public abstract class AbstractTemplateClassMetaData {
 		p("{");
 		embedSourceTemplateName();
 		printHttpHeaderMap();
-//		buildStatics();
+		// buildStatics();
 		addConstructors();
-		
+
 		renderMethod();
-		
+
 		layoutMethod();
-		
+
 		getterSetter();
-		
+
 		childLayout();
 
 		processDefTags();
-		
+
 		p("}");
 
 		return sb.toString();
 
 	}
 
-	abstract  void renderMethod();
-	abstract  void layoutMethod();
-	abstract  void getterSetter();
-	abstract  void childLayout();
-	
+	abstract void renderMethod();
+
+	abstract void layoutMethod();
+
+	abstract void getterSetter();
+
+	abstract void childLayout();
+
 	@Override
 	public String toString() {
 		return generateCode();
 	}
-	
-	
+
 }

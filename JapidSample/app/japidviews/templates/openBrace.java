@@ -35,7 +35,7 @@ public class openBrace extends cn.bran.japid.template.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 
@@ -74,7 +74,7 @@ p("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www
 int i = 3;// line 9
 if(true)// line 10
 {// line 11
-    while (i-- > 0)// line 12
+    while (i-- > 0) // line 12
     {// line 13
 p("        <p>in while ");// line 13
 p(i);// line 14

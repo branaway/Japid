@@ -46,7 +46,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	protected void startTag(Tag tag) {
 		if ("get".equals(tag.tagName)) {
 			if (tag.hasBody) {
-				throw new RuntimeException("get tag cannot have a body. not closed?");
+				throw new RuntimeException("get tag cannot have a body. ");
 			}
 			String var = tag.args;
 			var = var.replace("'", "");
@@ -78,8 +78,8 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	
 	@Override
 	protected void scriptline(String token) {
-		String line = token.trim();
-		if (line.equals(DO_LAYOUT)) {
+		String line = token; //.trim(); no trim. some tags are space sensitive
+		if (JapidAbstractCompiler.startsWithIgnoreSpace(line.trim(), DO_LAYOUT) || line.trim().equals(DO_LAYOUT)) {
 			println("\tdoLayout();");
 			skipLineBreak = true;
 		}

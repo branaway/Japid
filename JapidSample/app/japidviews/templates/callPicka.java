@@ -35,7 +35,7 @@ public class callPicka extends cn.bran.japid.template.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 
@@ -90,7 +90,7 @@ p("<p>before...<p>\n" +
 "\n" + 
 "first define something in a Java code block. \n" + 
 "\n");// line 1
-List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};// line 10
+ List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};// line 10
 p("\n");// line 10
 _aTag0.render(strings);
 // line 12

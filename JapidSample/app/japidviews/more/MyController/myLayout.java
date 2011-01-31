@@ -66,8 +66,8 @@ p("</p>\n" +
 	doLayout();// line 4
 p("</p>");// line 4
 	}
-	protected abstract void title();
-	protected abstract void side();
+	 protected void title() {};
+	 protected void side() {};
 
 	protected abstract void doLayout();
 }

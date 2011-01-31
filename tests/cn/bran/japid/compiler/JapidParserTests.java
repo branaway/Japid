@@ -323,6 +323,18 @@ public class JapidParserTests {
 			}
 		}
 	}
+	
+	@Test
+	public void testScriptline() {
+		String src = "hello `t Tag2 \"123\"`!";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+//		dumpTokens(tokens);
+		assertEquals(3, tokens.size());
+		assertEquals(Token.PLAIN, tokens.get(0).token);
+		assertEquals(Token.SCRIPT_LINE, tokens.get(1).token);
+		assertEquals(Token.PLAIN, tokens.get(2).token);
+	}
 
 	@Test
 	public void testAllLeadingSpaceInline() {

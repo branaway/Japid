@@ -62,7 +62,7 @@ p("\n");// line 1
 "\n" + 
 "\n");// line 3
 	}
-	protected abstract void title2();
+	 protected void title2() {};
 
 	protected abstract void doLayout();
 }

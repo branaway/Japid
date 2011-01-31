@@ -40,7 +40,7 @@ public class Posts extends cn.bran.japid.template.JapidTemplateBase
 		this.allPost = allPost;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 
@@ -70,7 +70,7 @@ public class Posts extends cn.bran.japid.template.JapidTemplateBase
 //------
 ;// line 1
 p("\n");// line 2
-for (Post post: allPost) {// line 4
+for (Post post: allPost) { // line 4
 p("	- title: ");// line 4
 p(post.title);// line 5
 p("\n" + 

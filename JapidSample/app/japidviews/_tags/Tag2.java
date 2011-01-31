@@ -37,7 +37,7 @@ public class Tag2 extends cn.bran.japid.template.JapidTemplateBase
 		this.msg = msg;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 
@@ -66,11 +66,9 @@ public class Tag2 extends cn.bran.japid.template.JapidTemplateBase
 
 //------
 ;// line 1
-p("\n" + 
-"\n" + 
-"<span>");// line 1
-p(msg);// line 3
-p("</span>");// line 3
+p("<span>");// line 1
+p(msg);// line 2
+p("</span>");// line 2
 
 	}
 

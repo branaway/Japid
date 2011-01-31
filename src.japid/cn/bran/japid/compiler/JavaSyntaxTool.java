@@ -4,15 +4,20 @@ import japa.parser.JavaParser;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.MethodDeclaration;
+import japa.parser.ast.body.ModifierSet;
 import japa.parser.ast.body.Parameter;
 import japa.parser.ast.expr.Expression;
 import japa.parser.ast.expr.MethodCallExpr;
+import japa.parser.ast.type.Type;
 import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import play.exceptions.JavaException;
+import play.templates.JavaExtensions;
 
 public class JavaSyntaxTool {
 	private static final String UTF_8 = "UTF-8";
@@ -161,6 +166,164 @@ public class JavaSyntaxTool {
 			return false;
 		else
 			return true;
+	}
+
+	public static boolean hasMethod(CompilationUnit cu, final String name, final int modis, 
+			final String returnType, String paramList) {
+		final StringBuilder sb = new StringBuilder();
+		
+		if (paramList == null)
+			paramList = "";
+		String formalParamList = addParamNamesPlaceHolder(paramList);
+		
+		final List<Parameter> params = parseParams(formalParamList);
+		
+		VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+			@Override
+			public void visit(MethodDeclaration n, Object arg) {
+				if (n.getName().equals(name)) {
+					int modifiers2 = n.getModifiers();
+					if (modifiers2 == modis) {
+						Type type = n.getType();
+						if (type.toString().equals(returnType)) {
+							List<Parameter> ps = n.getParameters();
+							if (ps == null)
+								ps = new ArrayList<Parameter>();
+							if (paramsMatch(params, ps)) {
+								sb.append(1);
+								return;
+							}
+						}
+					}
+				}
+			}
+		};
+		cu.accept(visitor, null);
+		if (sb.length() == 0)
+			return false;
+		else
+			return true;
+	}
+			/**
+	 * 
+	 * @param cu
+	 * @param name
+	 * @param modifiers
+	 * @param returnType
+	 * @param paramList, parameter type only: String, final int, etc
+	 * @return
+	 */
+	public static boolean hasMethod(CompilationUnit cu, final String name, final String modifiers, 
+			final String returnType, String paramList) {
+		final int modis = parseModifiers(modifiers);
+		return hasMethod(cu, name, modis, returnType, paramList);
+	}
+
+	/**
+	 * @param paramList
+	 * @return
+	 */
+	static String addParamNamesPlaceHolder(String paramList) {
+		List<String> names = getNames(paramList);
+
+		String formalParamList = "";
+		for (int i = 0; i < names.size(); i++) {
+			formalParamList += names.get(i) + " " + (char)('a' + i) + ",";
+		}
+		
+		if (formalParamList.endsWith(","))
+			formalParamList = formalParamList.substring(0, formalParamList.length() - 1);
+		return formalParamList;
+	}
+
+	/**
+	 * @param paramList
+	 * @return
+	 */
+	private static List<String> getNames(String paramList) {
+		paramList = paramList.replace(' ', ',');
+		String[] pams = paramList.split(",");
+		List<String> names = new ArrayList<String>();
+		for (int i = 0; i < pams.length; i++) {
+			String p = pams[i].trim();
+			if (p.length() > 0)
+				names.add(p);
+		}
+		return names;
+	}
+
+	protected static boolean paramsMatch(List<Parameter> params, List<Parameter> ps) {
+		if (params == ps)
+			return true;
+		
+		if ((params == null && ps != null) || (params != null && ps == null) )
+			return false;
+		
+		if (params.size() != ps.size()) {
+			return false;
+		}
+		
+		for (int i = 0; i < params.size(); i++) {
+			Parameter p1 = params.get(i);
+			Parameter p2 = ps.get(i);
+			if (!matchParams(p1, p2)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @return true if the parameters signature matches. Parameter name does not matter.
+	 */
+	private static boolean matchParams(Parameter p1, Parameter p2) {
+		if (p1.equals(p2)) 
+			return true;
+
+		if (p1.getModifiers() != p2.getModifiers())
+			return false;
+		
+		if (!p1.getType().equals(p2.getType())) 
+			return false;
+		
+		// TODO: compare annotations
+		
+		return true;
+	}
+
+	private static int parseModifiers(String modifiers) {
+		int ret = 0;
+		
+		List<String> names = getNames(modifiers);
+		
+		for (String m: names) {
+			if (m.equals("public")) {
+				ret |= ModifierSet.PUBLIC;
+			}
+			else if (m.equals("private")) {
+				ret |= ModifierSet.PRIVATE;
+			}
+			else if (m.equals("protected")) {
+				ret |= ModifierSet.PROTECTED;
+			}
+			else if (m.equals("static")) {
+				ret |= ModifierSet.STATIC;
+			}
+			else if (m.equals("final")) {
+				ret |= ModifierSet.FINAL;
+			}
+			else if (m.equals("final")) {
+				ret |= ModifierSet.FINAL;
+			}
+			else if (m.equals("synchronized")) {
+				ret |= ModifierSet.SYNCHRONIZED;
+			}
+		}
+		
+		return ret;
 	}
 
 	/**

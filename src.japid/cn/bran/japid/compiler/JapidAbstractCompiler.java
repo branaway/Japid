@@ -42,8 +42,6 @@ public abstract class JapidAbstractCompiler {
 
 	private static final String ARGS = "args";
 
-	// private static Log log = LogFactory.getLog(JapidAbstractCompiler.class);
-
 	protected static final String HTML = ".html";
 	// private static final String DO_BODY = "doBody";
 	protected static final String SPACE = " ";
@@ -54,7 +52,8 @@ public abstract class JapidAbstractCompiler {
 	protected Stack<Tag> tagsStack = new Stack<Tag>();
 	protected int tagIndex;
 	protected boolean skipLineBreak;
-
+	protected boolean useWithPlay = true;
+	
 	public static class Tag {
 		public String tagName;
 		public int startLine;
@@ -90,6 +89,7 @@ public abstract class JapidAbstractCompiler {
 	public void compile(JapidTemplate t) {
 		template = t;
 		getTemplateClassMetaData().setOriginalTemplate(t.name);
+		getTemplateClassMetaData().useWithPlay = this.useWithPlay;
 		hop();
 	}
 
@@ -295,9 +295,9 @@ public abstract class JapidAbstractCompiler {
 	}
 
 	protected void scriptline(String token) {
-		String line = token.trim();
+//		String line = token.trim();
 //		if ()
-		script(line);
+		script(token);
 	}
 
 	protected void script(String token) {
@@ -307,13 +307,13 @@ public abstract class JapidAbstractCompiler {
 		}
 
 		for (int i = 0; i < lines.length; i++) {
-			String line = lines[i].trim();
-			if (line.startsWith("import ") || line.startsWith("import\t")) {
+			String line = lines[i];//.trim();
+			if (startsWithIgnoreSpace(line, "import")) {
 				getTemplateClassMetaData().addImportLine(line);
-			} else if (line.startsWith("//")) {
+			} else if (startsWithIgnoreSpace(line, "//")) {
 				// ignore
-			} else if (line.startsWith("extends ") || line.startsWith("extends\t")) {
-				String layoutName = line.substring("extends".length()).trim();
+			} else if (startsWithIgnoreSpace(line, "extends")) {
+				String layoutName = line.trim().substring("extends".length()).trim();
 				//remove quotes if they present
 				layoutName = layoutName.replace("'", "");
 				layoutName = layoutName.replace("\"", "");
@@ -337,14 +337,14 @@ public abstract class JapidAbstractCompiler {
 					}
 				}
 				getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
-			} else if (line.startsWith("contentType ") || line.startsWith("contentType	")) {
+			} else if (startsWithIgnoreSpace(line, "contentType")) {
 				// TODO: should also take standard tag name: Content-Type
-				String contentType = line.substring("contentType".length()).trim().replace("'", "").replace("\"", "");
+				String contentType = line.trim().substring("contentType".length()).trim().replace("'", "").replace("\"", "");
 				if (contentType.endsWith(";"))
 					contentType = contentType.substring(0, contentType.length());
 				getTemplateClassMetaData().setContentType(contentType);
-			} else if (line.startsWith("setHeader ") || line.startsWith("setHeader\t")) {
-				String headerkv = line.substring("setHeader".length()).trim();
+			} else if (startsWithIgnoreSpace(line, "setHeader")) {
+				String headerkv = line.trim().substring("setHeader".length()).trim();
 				String[] split = headerkv.split("[ |\t]");
 				if (split.length < 2) {
 					throw new RuntimeException("setHeaader must take a key and a value string");
@@ -352,55 +352,52 @@ public abstract class JapidAbstractCompiler {
 				String name = split[0];
 				String value = headerkv.substring(name.length()).trim();
 				getTemplateClassMetaData().setHeader(name, value);
-			} else if (line.startsWith(ARGS + " ") || line.startsWith(ARGS + "\t")) {
-				String contentType = line.substring(ARGS.length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+			} else if (startsWithIgnoreSpace(line, ARGS)) {
+				String contentType = line.trim().substring(ARGS.length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				Tag currentTag = this.tagsStack.peek();
 				currentTag.callbackArgs = contentType;
-			} else if (line.startsWith("trim ") || line.startsWith("trim\t")) {
-				String sw = line.substring("trim".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+			} else if (startsWithIgnoreSpace(line, "trim")) {
+				String sw = line.trim().substring("trim".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(sw) || "true".equals(sw)) {
 					getTemplateClassMetaData().trimStaticContent();
 				}
-			} else if (line.startsWith("stopwatch ") || line.startsWith("stopwatch\t")) {
-				String sw = line.substring("stopwatch".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+			} else if (startsWithIgnoreSpace(line, "stopwatch")) {
+				String sw = line.trim().substring("stopwatch".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(sw))
 					getTemplateClassMetaData().turnOnStopwatch();
 				// Tag currentTag = this.tagsStack.peek();
 				// currentTag.bodyArgsString = contentType;
-			} else if (line.startsWith("log") || line.startsWith("log\t")) {
-				String args = line.substring("log".length()).trim().replace(";", "");
+			} else if (startsWithIgnoreSpace(line, "log") || line.trim().equals("log")) {
+				String args = line.trim().substring("log".length()).trim().replace(";", "");
 				if (args.trim().length() == 0)
 					args = "\"\"";
 				String logLine = "System.out.println(\"" + this.template.name.replace('\\', '/') + "(line " + (parser.getLineNumber() + i) + "): \" + " + args + ");";
 				println(logLine);
-			} else if (line.startsWith("invoke ") || line.startsWith("invoke\t")) {
-				String args = line.substring("invoke".length()).trim().replace(";", "");
-				if (args.trim().length() == 0)
-					args = "whatyouwantoinvoke()";
-				printActionInvocation(args);
-			} else if (line.startsWith("suppressNull ") || line.startsWith("suppressNull\t")) {
-				String npe = line.substring("suppressNull".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
-				if ("on".equals(npe))
+			} else if (startsWithIgnoreSpace(line, "invoke")) {
+				String args = line.trim().substring("invoke".length()).trim().replace(";", "");
+				doActionInvokeDirective(args);
+			} else if (startsWith(line, "a")) {  // `a == `invoke, the a must be the first char to avoid collision
+				String args = line.substring(2).trim().replace(";", "");
+				doActionInvokeDirective(args);
+			} else if (startsWithIgnoreSpace(line, "suppressNull") || line.trim().equals("suppressNull")) {
+				String npe = line.trim().substring("suppressNull".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+				if ("on".equals(npe) || "yes".equals(npe) || "".equals(npe))
 					getTemplateClassMetaData().suppressNull();
-			} else if (line.equals("abstract")) {
+			} else if (line.trim().equals("abstract")) {
 				getTemplateClassMetaData().setAbstract(true);
-			} else if (line.startsWith("tag ") || line.startsWith("tag\t")) {
-				// support one line type of tag invocation. 
-				String tagline = line.substring(4);
-				Tag tag = buildTagDirective(tagline);
-				startTag(tag);
-				if (!tag.hasBody) { // one liner.
-					tag = tagsStack.pop();
-					endTag(tag);
-				}
-			} else if (line.startsWith("each ") || line.startsWith("each\t")
-					|| line.startsWith("Each ") || line.startsWith("Each\t")) {
+			} else if (startsWithIgnoreSpace(line, "tag")) {
+				String tagline = line.trim().substring(4);
+				doTagDirective(tagline);
+			} else if (startsWith(line, "t")) { // `t == `tag, the t must be the first char to avoid collision
+				String tagline = line.substring(2);
+				doTagDirective(tagline);
+			} else if (startsWithIgnoreSpace(line, "each") || startsWithIgnoreSpace(line, "Each")) {
 				// support one line type of tag invocation. 
 				Tag tag = buildTagDirective(line);
 				tag.tagName = "Each";
 				tag.hasBody = true;
 				startTag(tag);
-			} else if (line.startsWith("set ") || line.startsWith("set\t")) {
+			} else if (startsWithIgnoreSpace(line, "set")) {
 				Tag set = buildTagDirective(line);
 				if (line.contains(":"))
 					set.hasBody = false;
@@ -411,17 +408,20 @@ public abstract class JapidAbstractCompiler {
 				if (!set.hasBody) { // one liner.
 					set = tagsStack.pop();
 				}
-			} else if (line.startsWith("get ") || line.startsWith("get\t")) {
+			} else if (startsWithIgnoreSpace(line, "get")) {
 				Tag get = buildTagDirective(line);
 				get.hasBody = false;
 				startTag(get);
 				get = tagsStack.pop();
-			} else if (line.startsWith("def ") || line.startsWith("def\t")) {
+			} else if (startsWithIgnoreSpace(line, "def")) {
 				// a function definition block
 				Tag get = buildTagDirective(line);
 				get.hasBody = true;
 				startTag(get);
-			} else if (line.length() == 0){
+			} else if (line.trim().startsWith("noplay")) {
+				// template is play independent
+				getTemplateClassMetaData().useWithPlay = false;
+			} else if (line.trim().length() == 0){
 				// a single ` empty line, treated as the closing for `tag
 				if (!tagsStack.empty()) {
 					Tag tag = tagsStack.peek();
@@ -437,6 +437,50 @@ public abstract class JapidAbstractCompiler {
 			}
 		}
 		skipLineBreak = true;
+	}
+
+	/**
+	 * @param line
+	 * @param string 
+	 * @return
+	 */
+	protected static boolean startsWithIgnoreSpace(String line, String string) {
+		line = line.trim();
+		return line.startsWith(string + " ") || line.startsWith(string + "\t");
+	}
+
+	/**
+	 * @param line
+	 * @param string 
+	 * @return
+	 */
+	private boolean startsWith(String line, String string) {
+		return line.startsWith(string + " ") || line.startsWith(string + "\t");
+	}
+	
+	/**
+	 * @param args
+	 */
+	private void doActionInvokeDirective(String args) {
+		if (!getTemplateClassMetaData().useWithPlay) {
+			throw new RuntimeException("action invocation is only supported in Play environment. ");
+		} else {
+			if (args.trim().length() == 0)
+				args = "whatyouwantoinvoke()";
+			printActionInvocation(args);
+		}
+	}
+
+	/**
+	 * @param tagline
+	 */
+	private void doTagDirective(String tagline) {
+		Tag tag = buildTagDirective(tagline);
+		startTag(tag);
+		if (!tag.hasBody) { // one liner.
+			tag = tagsStack.pop();
+			endTag(tag);
+		}
 	}
 
 	protected void expr(String token) {

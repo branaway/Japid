@@ -25,4 +25,8 @@ public class MyController extends BaseController {
 	public static void quickview() {
 		renderJapid();
 	}
+	
+	public static void scriptline() {
+		renderJapid();
+	}
 }

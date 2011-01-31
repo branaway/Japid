@@ -43,7 +43,7 @@ public class AllPost extends Layout
 		super.layout();
 		t = System.currentTimeMillis() - t;
 		System.out.println("[AllPost] rendering time: " + t);
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 
@@ -84,7 +84,7 @@ _Tag22.setActionRunners(getActionRunners());
 ;// line 1
 p("\n");// line 4
 p("\n");// line 6
-for (Post p: allPost) {// line 8
+for (Post p: allPost) { // line 8
 p("        ");// line 8
 p("\n" + 
 "\n" + 

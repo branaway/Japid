@@ -40,7 +40,7 @@ public class dummyTag extends cn.bran.japid.template.JapidTemplateBase
 		super.layout();
 		t = System.currentTimeMillis() - t;
 		System.out.println("[dummyTag] rendering time: " + t);
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
 

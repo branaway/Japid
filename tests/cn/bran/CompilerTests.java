@@ -8,6 +8,7 @@ import japa.parser.ast.CompilationUnit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
@@ -41,19 +42,30 @@ public class CompilerTests {
 	}
 
 	@Test
-	public void testAnotherLayout() throws IOException {
+	public void testAnotherLayout() throws IOException, ParseException {
 		String src = readFile("JapidSample/app/japidviews/_layouts/TagLayout.html");
 		JapidTemplate bt = new JapidTemplate("japidviews/_layouts/TagLayout.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
 		cp.compile(bt);
 		String srccode = bt.javaSource;
 		System.out.println(srccode);
-		assertTrue("invalid java code", JavaSyntaxTool.isValid(srccode));
+		CompilationUnit cu = JavaSyntaxTool.parse(srccode);
 		assertTrue(srccode.contains("package japidviews._layouts;"));
 		assertTrue(srccode.contains("public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase"));
 		assertTrue(srccode.contains("protected abstract void doLayout();"));
 		assertTrue(srccode.contains("@Override public void layout()"));
 		
+	}
+	
+	@Test
+	public void testNoPlayCommand() throws IOException, ParseException {
+		String src = readFile("JapidSample/app/japidviews/templates/noplay.html");
+		JapidTemplate bt = new JapidTemplate("japidviews/templates/noplay.html", src);
+		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		cp.compile(bt);
+		String srccode = bt.javaSource;
+		System.out.println(srccode);
+		CompilationUnit cu = JavaSyntaxTool.parse(srccode);
 	}
 	
 	@Test
@@ -87,14 +99,15 @@ public class CompilerTests {
 	}
 
 	@Test
-	public void testCompileTagWithDoubleDispatch() throws IOException {
+	public void testCompileTagWithDoubleDispatch() throws IOException, ParseException {
 		String src = readFile("japidSample/app/japidviews/_tags/Display.html");
 		JapidTemplate bt = new JapidTemplate("tags/Display.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
 		String srcCode = bt.javaSource;
 		System.out.println(srcCode);
-		assertTrue("invalid java code", JavaSyntaxTool.isValid(srcCode));
+		
+		CompilationUnit cu = JavaSyntaxTool.parse(srcCode);
 		assertTrue(srcCode.contains("package tags;"));
 		assertTrue(srcCode.contains("public class Display extends TagLayout"));
 		assertTrue(srcCode.contains("public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,	String as, DoBody body) {"));
@@ -159,17 +172,30 @@ public class CompilerTests {
 	}
 	
 	@Test
-	public void testTagline() throws IOException {
+	public void testTagline() throws IOException, ParseException {
 		String srcFile = "tests/tagline.html";
 		String src = readFile(srcFile);
 		
 		JapidTemplate bt = new JapidTemplate("tagline.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
 		cp.compile(bt);
-//		System.out.println(bt.javaSource);
-		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+		CompilationUnit cu = JavaSyntaxTool.parse(bt.javaSource);
+		System.out.println(cu);
 		assertTrue(bt.javaSource.contains("_my_tag0.render(a);"));
-		assertTrue(bt.javaSource.contains("_your_tag1.render(a + 123);"));
+		assertTrue(bt.javaSource.contains("_my_tag1.render(a);"));
+		assertTrue(bt.javaSource.contains("_your_tag2.render(a + 123);"));
+	}
+
+	@Test
+	public void testLog() throws IOException, ParseException {
+		String srcFile = "JapidSample/app/japidviews/templates/log.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("japidviews/templates/Actions.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		CompilationUnit cu = JavaSyntaxTool.parse(bt.javaSource);
+		System.out.println(cu);
 	}
 
 	@Test
@@ -224,12 +250,12 @@ public class CompilerTests {
 		JapidTemplate bt = new JapidTemplate("tests/getTag.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
 		cp.compile(bt);
-//		System.out.println(bt.javaSource);
+		System.out.println(bt.javaSource);
 //		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 		CompilationUnit cu = JavaSyntaxTool.parse(bt.javaSource);
-		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "title"));
-		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "footer"));
-		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "doLayout"));
+		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "title", Modifier.PROTECTED, "void", ""));
+		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "footer", Modifier.PROTECTED, "void", ""));
+		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "doLayout", Modifier.PROTECTED | Modifier.ABSTRACT, "void", ""));
 		assertTrue("method is never called", JavaSyntaxTool.hasMethodInvocatioin(cu, "title"));
 		assertTrue("method is never called", JavaSyntaxTool.hasMethodInvocatioin(cu, "footer"));
 		
@@ -248,9 +274,10 @@ public class CompilerTests {
 //		System.out.println(bt.javaSource);
 //		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 		CompilationUnit cu = JavaSyntaxTool.parse(bt.javaSource);
-		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "foo"));
-		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "foo2"));
-		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "bar"));
+//		System.out.println(cu);
+		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "foo", "public", "String", null));
+		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "foo2", "public", "String", "String"));
+		assertTrue("method is not declared", JavaSyntaxTool.hasMethod(cu, "bar", "public", "String", null));
 //		assertTrue("method is never called", JavaSyntaxTool.hasMethodInvocatioin(cu, "title"));
 //		assertTrue("method is never called", JavaSyntaxTool.hasMethodInvocatioin(cu, "footer"));
 		

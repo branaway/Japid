@@ -230,6 +230,9 @@ public class JapidParser {
 				else if ( c == '\n') {
 					return found(Token.PLAIN, 1);
 				}
+				else if ( c == '`') {
+					return found(Token.PLAIN, 1);
+				}
 				break;
 			case COMMENT:
 				if (c == '}' && c1 == '*') {

@@ -103,9 +103,9 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 	
 	@Override
 	protected void scriptline(String token) {
-		String line = token.trim();
-		if (line.startsWith(DO_BODY + " ") || line.startsWith(DO_BODY + "\t") || line.equals(DO_BODY)) {
-			String args = line.substring(DO_BODY.length()).trim();
+		String line = token;//.trim(); don't trim `a `t is sensitive to the space
+		if (JapidAbstractCompiler.startsWithIgnoreSpace(line.trim(), DO_BODY) || line.trim().equals(DO_BODY)) {
+			String args = line.trim().substring(DO_BODY.length()).trim();
 			tcmd.doBody(args);
 			println("if (body != null)");
 			println("\tbody.render(" + args + ");");

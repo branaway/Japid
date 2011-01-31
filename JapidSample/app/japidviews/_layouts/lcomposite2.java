@@ -56,7 +56,11 @@ public abstract class lcomposite2 extends cn.bran.japid.template.JapidTemplateBa
 // - end of implicit variables 
 
 
-		p("<p>beginning: lcomposite</p>\n");// line 1
+		p("<p>beginning: lcomposite</p>\n" + 
+"\n" + 
+"    ");// line 1
+p("\n" + 
+"\n");// line 3
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "controllers.Application.foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -65,11 +69,12 @@ public abstract class lcomposite2 extends cn.bran.japid.template.JapidTemplateBa
 			}
 		});
 
-p("\n");// line 2
+p("\n");// line 5
 	doLayout();
 p("\n" + 
 "<p>back to layout</p>\n" + 
-"\n");// line 4
+"\n" + 
+"\n");// line 7
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", "controllers.Application.foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
@@ -81,7 +86,7 @@ p("\n" +
 p("\n" + 
 "<p>back to layout again</p>\n" + 
 "\n" + 
-"<p>end of lcomposite</p>\n");// line 8
+"<p>end of lcomposite</p>\n");// line 12
 	}
 
 	protected abstract void doLayout();

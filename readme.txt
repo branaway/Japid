@@ -10,11 +10,22 @@ Version History:
     1. internally, started using JavaParser to accurately parse parameters and arguments to tags and actions. 
        
     2. new syntax: tag calls without a body can now use a more explicit syntax(say goodbye to #$%%{):
-        was: #{myTag param1, param2/}
-        is: `tag myTag param1, param2  
-        or: `tag myTag(param1, param2)
+        -- One line tag invocation:
+        
+        was: hello: #{myTag param1, param2/}!
+        is: hello: `tag myTag param1, param2`! 
+        or: hello: `tag myTag(param1, param2)`!
+        or even shorter: `t myTag(param1, param2), where `t == `tag and t must follow ` immediately.
 
-        was:         
+        Note: a second ` defines the end of the directive. The second ` is optional if there is nothing after the directive on the same line. 
+        
+        i.e.: only one back quote is required in the following case:
+        
+        hello: `tag myTag(param1, param2)
+        
+        -- Tag with callback block:
+        
+        was:
         
         #{mytag 1, "2" | String backParam}
             The param from the tag: ${backParam}
@@ -58,7 +69,9 @@ Version History:
         
         In a layout:
         
-        `get title
+        <title>`get title`</title>
+        
+        Note: a second ` defines the end of the directive. The second ` is optional if there is nothing after the directive on the same line. 
         
         See Set.html in the JapidSample for examples.
         
@@ -69,7 +82,11 @@ Version History:
         `
         
         See EachCall.html in the JapidSample for examples.
-        
+
+    8. behavior change: all the `get tags in the layouts will default to empty string and overriding them sub-classes are optional.
+    9. `invoke has now a shorter form: `a, for action invocation. 
+    10. internally added flag useWithPlay in the compiler and template meta data to control Play-dependency in the generated code.  
+
 2011/1/20: V0.6.1
     1. internal change: all tag invocations are now local in the layout method. The idea was to reduce using fields and favor local variables;  
     2. fix: all implicit variables are labeled as final for use in inner classes.
