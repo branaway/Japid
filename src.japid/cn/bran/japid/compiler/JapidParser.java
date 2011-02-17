@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
  */
 public class JapidParser {
 
+	private static final String VERBATIM2 = "verbatim";
 	private String pageSource;
 
 	public JapidParser(String pageSource) {
@@ -45,16 +46,19 @@ public class JapidParser {
 
 		EOF, //
 		PLAIN, //
-//		PLAIN_LEADINGSPACE, // the part after a new line and before any none-space characters
-		SCRIPT, // %{...}% or {%...%} bran: or ~{}~,  ~[]~ the open wings directives
-		SCRIPT_LINE, // single back-quote ` will turn the rest if the line in to script. 
+		// PLAIN_LEADINGSPACE, // the part after a new line and before any
+		// none-space characters
+		SCRIPT, // %{...}% or {%...%} bran: or ~{}~, ~[]~ the open wings
+				// directives
+		SCRIPT_LINE, // single back-quote ` will turn the rest if the line in to
+						// script.
 		EXPR, // ${...}
 		START_TAG, // #{...}
 		END_TAG, // #{/...}
 		MESSAGE, // &{...}
 		ACTION, // @{...}
 		ABS_ACTION, // @@{...}
-// bran: to indicate { in action arguments
+		// bran: to indicate { in action arguments
 		ACTION_CURLY, // @@{...}
 		COMMENT, // *{...}*
 		// bran expression without using {}, such as ~_;
@@ -66,7 +70,8 @@ public class JapidParser {
 		EXPR_NATURAL_STRING_LITERAL, // bran ~user?.name.format( '#)#' ) or
 		// $'hello'.length
 		TEMPLATE_ARGS, // bran ~( )
-		CLOSING_BRACE, // an closing  curly brace after leading space
+		CLOSING_BRACE, // an closing curly brace after leading space
+		VERBATIM, // raw text until another `
 	}
 
 	// end2/begin2: for mark the current returned token
@@ -75,6 +80,7 @@ public class JapidParser {
 	private int end, begin, end2, begin2, len;
 	private JapidParser.Token state = Token.PLAIN;
 	private JapidParser.Token lastState;
+	public boolean verbatim;
 
 	private JapidParser.Token found(JapidParser.Token newState, int skip) {
 		begin2 = begin;
@@ -99,7 +105,6 @@ public class JapidParser {
 		}
 	}
 
-	
 	public String getToken() {
 		String tokenString = pageSource.substring(begin2, end2);
 		if (lastState == Token.PLAIN) {
@@ -142,11 +147,11 @@ public class JapidParser {
 					// deprecated use ~[
 					return found(Token.SCRIPT, 2);
 				}
-				
+
 				if (c == '~' && c1 == '[') {
 					return found(Token.SCRIPT, 2);
 				}
-				
+
 				if (c == '$' && c1 == '{') {
 					return found(Token.EXPR, 2);
 				}
@@ -157,7 +162,7 @@ public class JapidParser {
 				}
 				// bran: shell like expression: ~_, ~user.name (this one is diff
 				// from sh, which requires ${user.name}
-				// 
+				//
 				if (c == '~' && c1 != '~' && (Character.isJavaIdentifierStart(c1) || '\'' == c1)) {
 					return found(Token.EXPR_NATURAL, 1);
 				}
@@ -185,26 +190,29 @@ public class JapidParser {
 				if (c == '`')
 					if (c1 == '`') {
 						skip(2);
-					}
-					else 
+					} else if (nextMatch(VERBATIM2)) {
+						return found(Token.VERBATIM, VERBATIM2.length() + 1);
+					} else {
 						return found(Token.SCRIPT_LINE, 1);
-				// was trying to implement an escape-less }, but it may be too confusing with json, javascript syntax etc. 
-				// so it's disabled for now. 
-//				if (c == '}') {
-//					String curToken = getPrevTokenString();
-//					boolean allLeadingSpace = allLeadingSpaceInline(curToken);
-//					if (allLeadingSpace) {
-//						return found(Token.CLOSING_BRACE, 0);
-//					}
-//				}
+					}
+				// was trying to implement an escape-less }, but it may be too
+				// confusing with json, javascript syntax etc.
+				// so it's disabled for now.
+				// if (c == '}') {
+				// String curToken = getPrevTokenString();
+				// boolean allLeadingSpace = allLeadingSpaceInline(curToken);
+				// if (allLeadingSpace) {
+				// return found(Token.CLOSING_BRACE, 0);
+				// }
+				// }
 				break;
 			case CLOSING_BRACE:
-				if ( c == '\n') {
+				if (c == '\n') {
 					return found(Token.PLAIN, 1);
-				}
-				else 
+				} else
 					return found(Token.SCRIPT_LINE, 1);
 			case SCRIPT:
+				// the parsing is fragile
 				if (c == '}' && c1 == '%') {
 					return found(Token.PLAIN, 2);
 				}
@@ -219,18 +227,24 @@ public class JapidParser {
 					return found(Token.PLAIN, 2);
 				}
 				break;
+			case VERBATIM:
+				if (c == '`') {
+					String currentLine = getCurrentLine(pageSource, end -1);
+					if (currentLine.trim().equals("`")) {
+						int skip = currentLine.length() - currentLine.indexOf('`');
+						return found(Token.PLAIN, skip);
+					}
+				}
+				break;
 			case SCRIPT_LINE:
 				if (c == '\r') {
-					if ( c1 == '\n') {
+					if (c1 == '\n') {
 						return found(Token.PLAIN, 2);
-					}
-					else 
+					} else
 						return found(Token.PLAIN, 1);
-				}
-				else if ( c == '\n') {
+				} else if (c == '\n') {
 					return found(Token.PLAIN, 1);
-				}
-				else if ( c == '`') {
+				} else if (c == '`') {
 					return found(Token.PLAIN, 1);
 				}
 				break;
@@ -287,8 +301,7 @@ public class JapidParser {
 							if (Character.isWhitespace(c2)) {
 								state = Token.EXPR;
 								return found(Token.PLAIN, 0); // it ea
-							}
-							else {
+							} else {
 								skip(2);
 							}
 						} else {
@@ -330,16 +343,15 @@ public class JapidParser {
 			case ACTION:
 				if (c == '}') {
 					return found(Token.PLAIN, 1);
-				}
-				else if (c == '{') { // bran: weak logic: assuming no "{" in string literals
+				} else if (c == '{') { // bran: weak logic: assuming no "{" in
+										// string literals
 					skipAhead(Token.ACTION_CURLY, 1);
 				}
 				break;
 			case ABS_ACTION:
 				if (c == '}') {
 					return found(Token.PLAIN, 1);
-				}
-				else if (c == '{') {
+				} else if (c == '{') {
 					skipAhead(Token.ACTION_CURLY, 1);
 				}
 				break;
@@ -347,8 +359,7 @@ public class JapidParser {
 				if (c == '}') {
 					state = this.emthodCallStackInExpr.pop();
 					skip(1);
-				}
-				else if (c == '{') {
+				} else if (c == '{') {
 					skipAhead(Token.ACTION_CURLY, 1);
 				}
 				break;
@@ -359,6 +370,65 @@ public class JapidParser {
 				break;
 			}
 		}
+	}
+
+	private boolean isStandAloneBackQuote() {
+		String currentLine = getCurrentLine(pageSource, end);
+		if (currentLine.trim().equals("`")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	static String getCurrentLine(String src, final int pos) {
+		int begin = 0, endp = 0;
+		int i = 1;
+		while (true) {
+			begin  = pos - i++;
+			if (begin  >= 0) {
+				char charAt = src.charAt(begin);
+				if (charAt == '\n') {
+					// got the beginning
+					break;
+				}
+			}
+			else {
+				break;
+			}
+		}
+		i = 1;
+		while (true) {
+			endp = pos + i++;
+			int length = src.length();
+			if (endp < length) {
+				char charAt = src.charAt(endp);
+				if (charAt == '\n') {
+					// got the beginning
+					break;
+				}
+			} else {
+				break;
+			}
+			
+		}
+		return src.substring(++begin, endp);
+	}
+
+	private boolean nextMatch(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			int index = end + i;
+			if (index < pageSource.length()) {
+				if (c != pageSource.charAt(index)) {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -391,8 +461,10 @@ public class JapidParser {
 
 	/**
 	 * push a nested token to the stack
+	 * 
 	 * @param token
-	 * @param i number of chars to skip
+	 * @param i
+	 *            number of chars to skip
 	 */
 	private void skipAhead(JapidParser.Token token, int i) {
 		this.emthodCallStackInExpr.push(state);
@@ -404,9 +476,10 @@ public class JapidParser {
 		end = begin = end2 = begin2 = 0;
 		state = Token.PLAIN;
 	}
-	
+
 	/**
 	 * get all the token and content in an ordered list. EOF is not included.
+	 * 
 	 * @return
 	 */
 	public List<TokenPair> allTokens() {

@@ -34,7 +34,7 @@ import cn.bran.japid.util.StackTraceUtils;
  * 
  *  Only html format is support for now. 
  *  
- *  The default template path is : /app/japidviews/{custom mailer package}/{custom mailer class}/{method name}.html
+ *  The default template path is : /app/japidviews/_notifiers/{custom mailer package}/{custom mailer class}/{method name}.html
  */
 public class JapidMailer  {
 

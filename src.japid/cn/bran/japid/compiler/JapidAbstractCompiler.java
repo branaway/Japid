@@ -53,6 +53,8 @@ public abstract class JapidAbstractCompiler {
 	protected int tagIndex;
 	protected boolean skipLineBreak;
 	protected boolean useWithPlay = true;
+
+	private boolean verbatim;
 	
 	public static class Tag {
 		public String tagName;
@@ -61,6 +63,7 @@ public abstract class JapidAbstractCompiler {
 		// bran: put everything in the args tag in it
 		public String callbackArgs = null;
 //		public StringBuffer bodyBuffer = new StringBuffer(2000);
+		// each line contains a line of text in the body of a tag scope.
 		private List<String> bodyTextList = new ArrayList<String>();
 		{
 			bodyTextList.add("");
@@ -109,11 +112,14 @@ public abstract class JapidAbstractCompiler {
 			}
 
 			String token = parser.getToken();
-
+			
 			switch (state) {
 			case EOF:
 				break loop;
 			case PLAIN:
+				plain(token);
+				break;
+			case VERBATIM:
 				plain(token);
 				break;
 			case SCRIPT:
@@ -421,6 +427,11 @@ public abstract class JapidAbstractCompiler {
 			} else if (line.trim().startsWith("noplay")) {
 				// template is play independent
 				getTemplateClassMetaData().useWithPlay = false;
+			} else if (line.trim().startsWith("verbatim")) {
+				parser.verbatim = true;
+				Tag get = buildTagDirective(line);
+				get.hasBody = true;
+				startTag(get);
 			} else if (line.trim().length() == 0){
 				// a single ` empty line, treated as the closing for `tag
 				if (!tagsStack.empty()) {
@@ -465,6 +476,7 @@ public abstract class JapidAbstractCompiler {
 		if (!getTemplateClassMetaData().useWithPlay) {
 			throw new RuntimeException("action invocation is only supported in Play environment. ");
 		} else {
+			this.getTemplateClassMetaData().setHasActionInvocation();
 			if (args.trim().length() == 0)
 				args = "whatyouwantoinvoke()";
 			printActionInvocation(args);
@@ -532,7 +544,7 @@ public abstract class JapidAbstractCompiler {
 			// extract params if any
 			int indexOfParam = action.indexOf("(");
 			if (indexOfParam < 1) {
-				throw new TemplateSyntaxException("action needs pair of ()", template.name, action, this.currentLine);
+				throw new TemplateSyntaxException("action arguments must be enclosed in parenthesis.", template.name, action, this.currentLine);
 			}
 
 			String actionPart = action.substring(0, indexOfParam).trim();
@@ -680,7 +692,7 @@ public abstract class JapidAbstractCompiler {
 		// remove the argument part to extract action string as key base
 		int left = action.indexOf('(');
 		if (left < 1) {
-			throw new RuntimeException("invoke: action needs pair of ()");
+			throw new RuntimeException("invoke: action arguments must be enclosed in parenthesis.");
 		}
 		int right = action.lastIndexOf(')');
 		String actionPath = "\"" + action.substring(0, left) + "\""; 
@@ -842,10 +854,10 @@ public abstract class JapidAbstractCompiler {
 			// hardcode the cache action runner name to avoid dependency on the Play jar
 			
 			String template = 
-					"		%s.put(getOut().length(), new %s(%s, %s, %s) {\r\n" + 
+					"		%s.put(getOut().length(), new %s(%s, %s, %s, %s) {\r\n" + 
 					"			@Override\r\n" + 
 					"			public void runPlayAction() throws %s {\r\n" + 
-					"				super.checkActionCacheFor(%s.class, \"%s\");\n" + 
+//					"				super.checkActionCacheFor(%s.class, \"%s\");\n" + 
 					"				%s; //\r\n" + 
 					"			}\r\n" + 
 					"		});\r\n";
@@ -853,13 +865,23 @@ public abstract class JapidAbstractCompiler {
 					AbstractTemplateClassMetaData.ACTION_RUNNERS, 
 					"cn.bran.play.CacheablePlayActionRunner",
 					ttl,
-					base, 
+					controllerName + ".class",
+					"\"" + actionName + "\"",
 					"".equals(keys) ? "\"\"" : keys,
 					JAPID_RESULT,
-					controllerName,
-					actionName,
 					action
 					);
+//			return String.format(template, 
+//					AbstractTemplateClassMetaData.ACTION_RUNNERS, 
+//					"cn.bran.play.CacheablePlayActionRunner",
+//					ttl,
+//					base, 
+//					"".equals(keys) ? "\"\"" : keys,
+//					JAPID_RESULT,
+//					controllerName,
+//					actionName,
+//					action
+//					);
 		}
 	
 	}

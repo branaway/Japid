@@ -20,9 +20,9 @@ import cn.bran.japid.template.RenderResult;
  */
 public abstract class CacheableRunner extends ActionRunner implements Serializable{
 //	private Object[] key = null;
-	private String ttlAbs = null;
+	protected String ttlAbs = null;
 	public String keyString;
-	private boolean noCache;
+	protected boolean noCache = true;
 	private boolean readThru;
 
 	/**
@@ -34,13 +34,24 @@ public abstract class CacheableRunner extends ActionRunner implements Serializab
 	 *            objects to make a key from their string values
 	 */
 	public CacheableRunner(String ttl, Object... args) {
-		super();
+		init(ttl, args);
+	}
+
+	public CacheableRunner() {
+	}
+
+	/**
+	 * @param ttl
+	 * @param args
+	 */
+	protected void init(String ttl, Object... args) {
 		if (args == null || args.length == 0)
 			this.noCache = true;
 
 		if (ttl == null || ttl.trim().length() == 0) {
 			this.noCache = true;
 		} else {
+			this.noCache = false;
 			if (ttl.startsWith("-")) {
 				this.ttlAbs = ttl.substring(1);
 				this.readThru = true;
@@ -50,7 +61,6 @@ public abstract class CacheableRunner extends ActionRunner implements Serializab
 		}
 
 		this.keyString = buildKey(args);
-
 	}
 	
 	/**
@@ -62,14 +72,14 @@ public abstract class CacheableRunner extends ActionRunner implements Serializab
 	}
 	
 	/**
-	 * I'm throwing a JapidResult rather than return a RenderResult. so users in
-	 * action don't need to. Convenience.
+	 * the main entry point this action runner
 	 */
 	@Override
 	public RenderResult run() {
-		if (noCache) {
+		if (!shouldCache()) {
 			return render();
 		} else {
+			// cache in work
 			RenderResult rr = null;
 			if (!readThru) {
 				try {
@@ -77,21 +87,35 @@ public abstract class CacheableRunner extends ActionRunner implements Serializab
 					if (rr != null)
 						return rr;
 				} catch (ShouldRefreshException e) {
+					// let's refresh the cache, flow through
 				}
 			}
 
-			RenderResult rr1;
 			try {
-				rr1 = render();
-				RenderResultCache.set(keyString, rr1, ttlAbs);
-				return (rr1);
+				rr = render();
 			} catch (JapidResult e) {
-				rr1 = e.getRenderResult();
-				RenderResultCache.set(keyString, rr1, ttlAbs);
-				return rr1;
+				rr = e.getRenderResult();
 			}
+			cacheResult(rr);
+			return (rr);
 		}
 		//
+	}
+
+	/**
+	 * @return
+	 */
+	protected boolean shouldCache() {
+//		System.out.println("CacheableRunner: should cache: " + !noCache);
+		return !noCache;
+	}
+
+	/**
+	 * @param rr1
+	 */
+	protected void cacheResult(RenderResult rr1) {
+//		System.out.println("CacheableRunner: put in cache");
+		RenderResultCache.set(keyString, rr1, ttlAbs);
 	}
 
 	/**
@@ -123,7 +147,7 @@ public abstract class CacheableRunner extends ActionRunner implements Serializab
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeUTF(ttlAbs);
 		out.writeUTF(keyString);
-		out.writeBoolean(noCache);
+		out.writeBoolean(shouldCache());
 		out.writeBoolean(readThru);
 	}
 

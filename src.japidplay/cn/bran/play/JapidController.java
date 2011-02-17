@@ -168,7 +168,7 @@ public class JapidController extends Controller {
 	 * render parameters to the prescribed template and return the RenderResult
 	 * 
 	 * @param template
-	 *            , relative path from japidview folder. if empty, use implicit
+	 *            relative path from japidviews folder. if empty, use implicit
 	 *            naming pattern to match the template
 	 * @param args
 	 */

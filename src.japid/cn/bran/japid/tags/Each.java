@@ -17,6 +17,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 import java.util.Iterator;
 
 /**
@@ -36,11 +37,16 @@ public class Each extends SimpleTag {
 
 	public void render(Iterable it, DoBody body) {
 		Iterator itor = it.iterator();
-		itBody(body, itor);
+		itBody(body, itor, -1);
 	}
 
+	public void render(Collection collection, DoBody body) {
+		Iterator itor = collection.iterator();
+		itBody(body, itor, collection.size());
+	}
+	
 	public void render(Iterator it, DoBody body) {
-		itBody(body, it);
+		itBody(body, it, -1);
 	}
 
 	public void render(Object[] it, DoBody body) {
@@ -49,7 +55,7 @@ public class Each extends SimpleTag {
 		for (Object o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
 		}
 	}
 
@@ -59,7 +65,7 @@ public class Each extends SimpleTag {
 		for (int  o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
 		}
 	}
 	
@@ -69,7 +75,7 @@ public class Each extends SimpleTag {
 		for (float o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
 		}
 	}
 	
@@ -79,7 +85,7 @@ public class Each extends SimpleTag {
 		for (long o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
 		}
 	}
 	
@@ -89,7 +95,7 @@ public class Each extends SimpleTag {
 		for (double o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
 		}
 	}
 	
@@ -99,7 +105,7 @@ public class Each extends SimpleTag {
 		for (char o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
 		}
 	}
 	
@@ -109,7 +115,7 @@ public class Each extends SimpleTag {
 		for (boolean o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
 		}
 	}
 	
@@ -120,21 +126,20 @@ public class Each extends SimpleTag {
 	 * @param body
 	 * @param it
 	 */
-	private void itBody(DoBody body, Iterator it) {
+	private void itBody(DoBody body, Iterator it, int size) {
 		int start = 0;
 		int i = 0;
 		while (it.hasNext()) {
 			i++;
 			Object o = it.next();
 			boolean isOdd = i % 2 == 1;
-			body.render(o, i, isOdd, isOdd ? "odd" : "even", i == start + 1, !it.hasNext());
+			body.render(o, size, i, isOdd, isOdd ? "odd" : "even", i == start + 1, !it.hasNext());
 		}
 	}
 
 	public static interface DoBody<E> {
 		// the _parity is for quick use as a CSS class, or one can use
 		// "${_isOdd?"odd":"even"}"
-		void render(final E e, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast);
+		void render(final E e, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast);
 	}
-
 }

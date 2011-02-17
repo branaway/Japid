@@ -129,7 +129,7 @@ public class CompilerTests {
 	@Test
 	public void testActionNotation() throws IOException {
 		String src = readFile("JapidSample/app/japidviews/templates/Actions.html");
-		
+	
 		JapidTemplate bt = new JapidTemplate("japidviews/templates/Actions.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
 		cp.compile(bt);
@@ -199,6 +199,18 @@ public class CompilerTests {
 	}
 
 	@Test
+	public void testVerbatim() throws IOException, ParseException {
+		String srcFile = "JapidSample/app/japidviews/Application/verbatim.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("japidviews/Application/verbatim.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		CompilationUnit cu = JavaSyntaxTool.parse(bt.javaSource);
+		System.out.println(cu);
+	}
+
+	@Test
 	public void testTagBlock() throws IOException {
 		String srcFile = "JapidSample/app/japidviews/templates/tagBody.html";
 		String src = readFile(srcFile);
@@ -225,7 +237,7 @@ public class CompilerTests {
 		assertTrue(bt.javaSource.contains("final Each _Each0 = new Each(getOut());"));
 		assertTrue(bt.javaSource.contains("_Each0.setActionRunners(getActionRunners());"));
 		assertTrue(bt.javaSource.contains("_Each0.render(sa, new Each.DoBody<String>(){"));
-		assertTrue(bt.javaSource.contains("public void render(final String a, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {"));
+		assertTrue(bt.javaSource.contains("public void render(final String a, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {"));
 	}
 	
 	@Test
@@ -298,6 +310,7 @@ public class CompilerTests {
 		System.out.println(code);
 		assertTrue(code.contains("actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner(\"\", \"MyController.action\", s)"));
 		assertTrue(code.contains("MyController.action(s);"));
+		assertTrue(code.contains("return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);"));
 		assertTrue(code.contains("actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner(\"\", \"MyController.action\", s + \"2\""));
 		assertTrue(code.contains("MyController.action(s + \"2\");"));
 		

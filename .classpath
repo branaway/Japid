@@ -7,7 +7,6 @@
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/c3p0-0.9.1.2.jar"/>
-	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/cglib-2.2.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/commons-beanutils-1.8.3.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/commons-codec-1.4.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/commons-collections-3.1.jar"/>
@@ -22,7 +21,6 @@
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/gson-1.4.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/hibernate-commons-annotations-3.2.0.Final.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/hsqldb-1.8.1.2.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jamon-2.7.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/javassist-3.9.0.GA.jar"/>
 	<classpathentry kind="lib" path="D:/home/bran/projects/play/framework/lib/jaxen-1.1.jar"/>

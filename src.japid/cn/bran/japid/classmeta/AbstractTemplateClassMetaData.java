@@ -31,8 +31,6 @@ import cn.bran.japid.template.JapidTemplateBaseStreaming;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.template.RenderResultPartial;
-import cn.bran.play.JapidPlayAdapter;
-import cn.bran.play.WebUtils;
 
 /**
  * lots of the code block generation is done here
@@ -236,10 +234,7 @@ public abstract class AbstractTemplateClassMetaData {
 		if (l.startsWith("play"))
 			return false;
 
-		if (l.startsWith(JapidPlayAdapter.class.getName()))
-			return false;
-
-		if (l.startsWith(WebUtils.class.getName()))
+		if (l.startsWith("cn.bran.play"))
 			return false;
 
 		if (l.startsWith("japidviews"))

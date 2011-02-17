@@ -1,22 +1,1101 @@
-h1. Japid Engine Quick Manual, V0.3
+h1. Japid Engine Quick Manual, V0.6
 
 h5. Bing Ran<bing_ran@hotmail.com>
 
-Japid is a Java-based dynamic content rendering templates system that aims to deliver the fastest possible result.  
+20100/2/16
 
-It's a generic template engine that can be used by any Java applications to render any Java objects. It also provides adapters specifically for the Play! Framework. 
+Japid is a Java*based dynamic content rendering templates system that aims to deliver the fastest possible result.  
 
-The main goal of Japid is for use in large and high traffic Play! bases web sites. To reach that goal, Japid transforms html based mark-up files to clean Java source code thus the rendering work can reach near raw Java speed. 
+It's a generic template engine that can be used by any Java applications to render any Java objects. It also provides adapters specifically for the Play! Framework. (The current version has some issues to be use standalone. So don't use it that way yet. Sorry for for claim.)
 
-The high-performance does not come at the cost of advanced features such as site-mesh like layout, tags, template inheritance, content caching, server-side include.   
+The main goal of Japid is for use in large, high-traffic and highly dynamic Play! bases web sites. To reach that goal, Japid transforms templates files to clean Java source code thus the rendering can reach near raw Java speed. 
+
+The high-performance does not come at the cost of advanced features such as site*mesh like layout, tags, template inheritance, content caching, server-side include.   
 
 This document focuses on using the Japid module for the Play! Framework. 
 
-h2. Features
+h2. The Design philosophy
 
-- templates are *strongly typed*. A template must declare the arguments it takes. 
-- templates are transformed to Java for best possible performance. This step takes place automatically in Play!'s DEV mode. Command line tools are provided for manual transformation.  This also means the templates are debug-able like regularJava code if you're so inclined.  
-- a clear Java object model for templates.
-- expression language is plain Java. 
+I want:
 
-For the full documentation, please visit the "wiki pages of the Japid project on github":http://wiki.github.com/branaway/Japid/
+* this template engine to be very syntax concise and practical. 
+* the templates to be *strongly typed*: all variables rendered in a template must be clearly declared as in a Java method. Developers get all the benefits of the strong typing: compile-time error checking, performance at runtime, debuggable, etc. 
+* to use Java as the flow control and expression language. Any java classes and features can be very easily used in the templates. 
+* to make it very easy and noise*free to mix plain text content with Java code construct. 
+* the best possible performance for any template engine. 
+* it to versatile to generate any text output and particular not limited to xml/xhtml content.
+* to use right amount of convention over configuration.
+
+I don't want:
+
+* it to be XHTML well*formatted, since the tool is used to generate potentially any text.
+* it to dependent on any other languages such as Groovy.
+
+h2. Mechanism
+
+* The engine is wrapped as a Play! module (Japid) which must be configured in the *application.conf* file. 
+* Templates are transformed to Java source files, automatically in a running Play! instance in *DEV (development)* mode, which then are picked up by the Play! runtime in the code change detection process. It also means the templates are debug*able like regularJava code if you're so inclined.
+* The Java classes that encapsulate all the layout logic can be called as plain java classes to generate text output, or they can be used reflectively with conventions in naming and location.  
+* A few command-line tools are also provided to generate Java source files from the templates. 
+* Master layouts are translated to abstract super classes, which is to be inherited by views. 
+
+h2. Japid Module
+
+First you need to get yourself familiar with the "Play! module concept":http://www.playframework.org/documentation/1.1.1/modules. 
+
+To show all the version of Japid module, from the command-line:
+
+<pre>
+$ play list-modules
+</pre>
+
+And the section for Japid is like:
+
+<pre>
+~ [japid]
+~   Japid template engine
+~   http://www.playframework.org/modules/japid
+~   Versions: 0.2, 0.3.1, 0.5.1, 0.6.0, head
+</pre>
+
+Then you can pick the version to install, usually the head version, which is also the default version. 
+
+To install the Japid module:
+
+<pre>
+$ play install japid-0.6.0
+</pre>
+  
+or, 
+
+<pre>
+$ play install japid-head
+</pre>
+
+or simply:
+
+<pre>
+$ play install japid
+</pre>
+
+to get the default version. 
+
+The module goes to the @modules@ directory of the Play!'s installation root. The module contains 
+
+# the module jars in the @lib@ directory
+# the Eclipse plugin in @the eclipse-plugin@
+# a sample Japid application in the @JapidSample@ 
+# the source code in the @src...@ directories
+
+Now add a reference to Japid module in the @application.conf@ file in your application:
+
+<pre>
+module.japid=${play.path}/modules/japid-head
+</pre>
+
+The next thing to do is to create the default directory structure required by Japid. From the app root:
+
+<pre>
+$ play japid:gen
+</pre>
+
+The @japidviews@ tree is now created in the @app@ directory
+
+Now you're ready to code your models, controllers and Japid views! Every time you add a new controller you can @play japid:gen@ to create a new sub-directory to match the controller or you can create the directory manually if you're confident of your typing. 
+
+h2. Runtime Directory Structure of Japid in Play! applications
+
+All template files are located in @app/japidviews@ directory tree, as illustrated here:
+
+<pre>
+
+/app/controllers/ControllerA.java
+                /more/ControllerB.java
+    /japidviews/_javatags/JapidWebUtil.java
+               /_layouts/
+               /_notifiers/
+               /_tags/
+               /ControllerA/action1.html
+                           /action1.java
+               /more/ControllerB/action1.html
+                                /action1.java
+                           
+</pre>
+
+Notes:
+
+# the @_javatags@ sub-directory contains a utility class that is statically imported to all generated java class definitions. One can add more static methods in the this class for use in the templates. 
+# the @_layouts@ sub-directory contains global layouts that are accessible to all view templates. However as explained below, Japid layouts can be place anywhere in the tree and can be referenced using the fully qualified name in the templates, just like the way a Java class class is referenced in a typical Java project. 
+# the @_tags@ sub-directory contains global tags that are accessible to all view templates. However as explained below, Japid tags can be place anywhere in the tree and can be referenced using the fully qualified name in the templates, just like the way a Java class class is referenced in a typical Java project.
+# the @_notifiers@ sub-directory contains email templates coded with Japid. There is a section for this later in this document. 
+# The rest nodes of the tree are conventionally created to match the structure of the controller and actions therein. For each controller, there is a directory (or directory path if the controller is nested in a deeper package) created which contains a bunch of template files named after the action method in the controller. The Japid converter translates the html template files to java files in the same directory. Please be noted though, the layouts of the template files are totally required only if we are going to use *implicit template binding*. A template can be placed anywhere in the case of *explicit template invocation*. There is a section of document for this later. 
+
+h2. Syntax 
+
+The original version of Japid (around version 0.3) copied a lot of the "syntax from the Play! framework":http://www.playframework.org/documentation/1.1.1/templates. The idea was to help the Play! users to pick up the engine quickly. New and simpler syntax has been introduced to Japid templates over the course of one year use in real-world projects. This documents tries to compare the syntax of different flavors. 
+
+Also noted, the "Microsoft Razor Template Engine":http://weblogs.asp.net/scottgu/archive/2010/07/02/introducing-razor.aspx is another source of inspiration. 
+
+h3. Views, Tags and Layout
+
+There are three types of templates in the Japid rendering system:
+
+# Views: the templates that play the central role in rendering data. Most of the rendering logic is done here. 
+# Tags: the templates that encapsulate some logic of data rendering and can be invoked from any other templates. They're equivalent to functions. 
+# Layouts: the templates that handle the out most level of "layout" of web pages, such as the arrangement of the headers, footers, side bars, columns etc.
+
+Views usually *extends* layouts and pass text snippet to the layout to be displayed in designated location in the layout. 
+
+Here is a simple layout template (I have left out irrelevant markups (such as HTML tags) as much as possible make the syntax structure cleaner.):
+
+*master.html*
+<pre>
+This is the header. 
+
+The title of this article is "`get title`"
+
+`doLayout
+
+This is the footer.
+</pre>
+
+A layout can placed anywhere but usually is in the @app/japidviews/_layouts@ directory, which is visible to any views in the project.
+
+
+There are two Japid syntax to learn:
+
+
+h2. Display a named text value: @`get <text block name>@
+
+In Japid the back quote "`" plays a very important role in mixing code in templates. A back quote basically starts a @script line@, which it may:
+
+# start a @directive@ or @command@, which is an instruction to the code generator to create special Java source. In this case @`get title`@ is to retrieve a text block named "title", to be passed from any child views that inherited from this layout. 
+# start a line of pure Java code to be placed in the generated code. 
+# end a script line if the line is already started by another `. 
+
+A script line ends with it encounter a @new line, i.e., '\n'@ or another `. In the sample above the script line is wrapped in a pair of `: @`get title`@. The second ` can be left out if there is no other meaningful letters in the rest of the line. 
+
+The Japid parser will first determine if the word following the ` is a command name and treat the rest of the line as Java code if it is not. 
+
+A @`get xxx@ command is usually matched by a @`set xxx@ command in the views that inherit from this layout. The @set@ command assign a string to the variable @xxx@. If the variable is not set by the child view, an empty string is returned. Note: older version of Japid requires each variable referenced by @get@ must be @set@ in the child. Japid 0.6.2 and up makes it optional.
+
+
+table{border:1px solid black; cellpadding: 1px}.
+|_. Japid syntax|_. Play! syntax|
+|@`get <text block name>`@|@#{get "title"/}@|
+
+
+h2. @`doLayout@
+
+This command is to let the child template to render itself. The result will be placed in the current position. 
+
+table{border: 1px dashed gray; cellpadding: 1px}.
+|_. Japid syntax|_. Play! syntax|
+|@`doLayout`@|@#{doLayout/}@|
+
+
+Once we have the layout we are ready to code the main view template. 
+
+*user.html*
+<pre>
+`import models.mymodels.User
+`extends master
+`args User user, int count
+
+`set title:"The User Detail"
+
+`for (int i > 0; i < count; i++) {
+    hello $user.name, and you are `tag showAge user.age`.
+`}
+</pre>
+
+Here are a few new syntax:
+
+h2. @`import@ 
+
+Purpose: same as in java.  
+
+table{border: 1px dashed gray; cellpadding: 1px}.
+|_. Japid syntax|_. Play! syntax|
+|@import x.y.z@, @import static x.y.Z.*@ |@`import@|none|
+
+Note: 
+
+# there is no ending `.
+# the ending ; is optional
+# one line per import
+
+h2. @`extends@ 
+
+Purpose: same as in java. The super class is usually a layout template. The template name can be:
+
+# the template file name: @master.html@  
+# the template file name without extension: @master@  
+# the template file in full path: @japidviews.mypackage.master@  
+# a file in a sub directory, using a leading ".": @.sub.master@  
+
+table{border: 1px dashed gray; cellpadding: 1px}.
+|_. Japid syntax|_. Play! syntax|
+|@import x.y.z@, @import static x.y.Z.*@ |none|
+
+Note: 
+
+# there is no ending `.
+# the ending ; is optional
+# one line per import
+
+h2. @`args@ 
+
+Purpose: the parameters to be passed to this template to render. The format is the same as in Java method declaration.
+
+Note: 
+
+# The data type must be visible, meaning it must be imported. However there are several classes and packaged that are imported to any templates by default:
+
+<pre>
+import java.util.*;
+import java.io.*;
+import cn.bran.japid.tags.Each;
+import static play.templates.JavaExtensions.*;
+import static cn.bran.play.JapidPlayAdapter.*;
+import static play.data.validation.Validation.*;
+import static cn.bran.play.WebUtils.*;
+
+import japidviews._layouts.*;
+import japidviews._tags.*;
+import japidviews._javatags.*;
+import models.*;
+import controllers.*;
+import static  japidviews._javatags.JapidWebUtil.*;
+
+import play.data.validation.Validation;
+import play.mvc.Scope.*;
+import play.data.validation.Error;
+import play.mvc.Http.*;
+</pre>
+
+
+table{border: 1px dashed gray; cellspacing: 2px}.
+|_. Japid|_. Play!|
+|{border:1px grey solid}. @import x.y.z@|none|
+
+h2. Create a named text value: @`set@
+
+*Purpose*: to create a text value under a name, which can be retrieved in the layout of the current view. 
+
+There are two forms of @set@:
+
+# one-liner: @`set title:"some value"@. The double quotes are required. 
+# block form: 
+<pre>
+`set title
+  a very long and funny title, a very long and funny title
+  a very long and funny title
+`
+</pre>
+
+Notes:
+
+# The @set@ commands location-insensitive, meaning they can be placed anywhere in a template and won't interfere with the main text flow.
+# There can be multiple @set@ commands in a template, of course each of which should define a different text block.
+# Limitations:
+## If there is any reference to variables, those variables must be 1) listed in the @`args@ directive; or 2) defined within the @set@ block.
+## Tags cannot be referenced in a @set@ command. This limitation will be lifted in the future. 
+
+
+h2. @`for@ 
+
+Actually this is the pure Java way of iterating through Java collections and arrays. The word "for" is not a special word in the Japid templates. It's pure Java code started by a back quote. Looping in Japid is Java as usual, including the closing brace.
+
+<pre>
+`for (int i = 0; i < count; i++) {
+    whatever you put here. ${i}
+`}
+</pre>
+
+or, 
+
+<pre>
+`String[] names = ...;
+
+`for (String name: names ) {
+    whatever you put here. ${i}
+`}
+</pre>
+
+However Japid provides @each@ command, an enhanced looping tool, inspired by Play!'s @list@ tag.
+
+
+h2. @`each@
+
+The @each@ command offer a loop construct that makes available additional looping attributes for users to fine-tune the data rendering. For an example:
+
+<pre>
+`each names | String name
+    $name $_size, $_index,  $_parity $_isOdd $_isFirst $_isLast 
+`
+</pre>
+
+Note:
+
+# The each block ends with a single ` sign on a whole line.
+# In fact the above syntax is a standard way to invoke a @tag@ with a @callback body@. 
+# The variable @names@ is the collection to iterate on. The construct after the vertical line is the instance variable for each round of iteration. The data type must present before the variable name. In the body of each we see a bunch of additional variables related to the current iteration:
+
+table{border: 1px dashed gray; cellspacing: 2px}.
+|_. Variable|_. Meaning|
+|{border:1px grey solid}. int _size| the size of the collection or array, -1 if not determined in the case of iterable as the collection|
+|{border:1px grey solid}. int _index| the index of the current instance in the collection |
+|{border:1px grey solid}. boolean _isOdd| true if the index is odd, false if it is even|
+|{border:1px grey solid}. String _parity | "odd" for the odd lines, "even" for the even lines|
+|{border:1px grey solid}. boolean _isFirst | true if the current instance is the first in the collection|
+|{border:1px grey solid}. boolean _isLast| true if the current line is the last in the collection|
+
+
+h2. Java Expression: @${expression}@
+
+The string value of a @Java expression@ can be interpolated in text stream using the ${} syntax, as is used in Play!. The {} signs can be omitted if it won't cause confusion to the compiler (or your eyes) because it fused with the rest of the context. For examples:
+
+<pre>
+
+${user.name} == $user.name
+${user.name.length()} == $user.name.length()
+
+</pre>
+
+As long as the expression is properly delimited by none identifier characters, the {} can be left out. The {} is mandatory in Play! default engine. 
+
+Note: Japid by default does *not* escape the string value of expressions, like what Play! does. One can simply do:
+
+@${escapeHtml(expr)}@
+
+to get the effect. The @escapeHtml()@ is a static method defined in @play.templates.JavaExtensions@ class in Play!, which is automatically imported to any Japid templates. There are other useful static methods in that class that are available directly in the templates.
+
+
+h2. Safe Property Navigation: @`supressNull on@
+
+An expression like @$user.name.length()@ can cause potential problems if any of the properties is null, in which case the template will throw NPE. There is so called @safe navigation operator@ in Groovy: @p?.p2?.p3@. Java does not have this. Instead Japid introduces a directive to suppress the NPE in case such property navigation throws NPEs.
+
+<pre>
+` suppressNull on
+
+` String a = "a";
+safe to do $a.length()
+
+` a = null;
+also safe to do a.something too: $a.length()
+</pre>
+
+The second call @$a.length()@ in the above sample throws an NPE, which is caught by the template and discarded with the @`suppressNull on@ directive at the top of the script. 
+
+Note: only NPEs thrown after the directive will be suppressed. 
+
+
+h2. Simple Tag Invocation: @`tag tagName arg1, arg2...`@
+
+Back to the view template:
+
+*user.html*
+<pre>
+`import models.mymodels.User
+`extends master
+`args User user, int count
+
+`for (int i > 0; i < count; i++) {
+    hello $user.name, and you are `tag showAge user.age`.
+`}
+</pre>
+
+In the body of the for loop we are invoking a @tag@ called showAge. Think of a tag as a function defined in a separate file. Here is the tag file:
+
+*showAge.html*
+<pre>
+`args int age
+$age years old
+</pre>
+
+The above tag simply take an @int@ as the age and append "years old" to it. 
+
+The tag invocation has alternative syntax: 
+
+@`tag tagName(arg1, arg2...)`@
+
+which looks more like function calls.
+
+And the @`tag@ command can be further cut short as @`t@ as in:
+
+@`t tagName(arg1, arg2...)`@
+
+Note: the closing @`@ can be omitted if there is no other letters in the rest of the current line. A new-line character is a valid tag closing symbol.
+
+h3. locating a tag file
+
+Similar to locating a layout file, the tag name can take a few forms:
+
+# a simple name: @tagName@, which can be either in the same directory as the current template file, or in the @japidviews._tags@ directory.
+# a full package form: @japidviews.my.pack.tagName@, or
+# a relative form: @.sub.tagName@, which is located in a sub directory of the current directory. 
+
+Also noted is one can use "/" in lieu of "." but I prefer the dot syntax. 
+
+h2. Advanced Tag Invocation: @`tag tagName arg1, arg2... | type1 arg1, type2 arg2`@
+
+A tag can take a block of template text as the last argument. For an example:
+
+<pre>
+`tag fancyTag "hello" | String name
+    what a fancy name: ~name
+`
+</pre>
+
+There are two arguments to the tag invocation:
+# @"hello"@, a String, and
+# @String name \n what a fancy name: ~name@, a template. 
+
+The vertical line "|" separates the regular arguments and the template. Note: the Japid parser requires the presence of this separator even if the template does not have any parameters. 
+
+This is valid:
+
+<pre>
+`tag fancyTag "hello" | 
+    what a fancy name!
+`
+</pre>
+
+And this is not:
+
+<pre>
+`tag fancyTag "hello"
+    what a fancy name!
+`
+</pre>
+
+The reason is that a new-line character '\n' can function as a tag terminator if the parser does not detect any a "|" in the argument list. The "|" tells the parser that a template block is following the current line. 
+
+The template parameter passed to a tag is rendered by a @`doBody arg1, arg2...@ command in the tag file, as explained in the *Tag Definition* later in this document. 
+
+h2. Tag definitions
+
+Any views can be used as tags. The above mentioned view file:
+
+
+*user.html*
+<pre>
+`import models.mymodels.User
+`extends master
+`args User user, int count
+
+`for (int i > 0; i < count; i++) {
+    hello $user.name, and you are `tag showAge user.age`.
+`}
+</pre>
+
+can be invoked from other views. e.g.,
+
+<pre>
+<p> another view </p>
+` User aUser = ...;
+`tag user aUser, 10
+
+</pre>
+
+In another word, regular views can be invoked either from the controller actions or from other views. 
+
+However, the regular views cannot take a template as an argument, unless it contains a special tag: @`doBody@, as in:
+
+@fancyTag.html@
+<pre>
+`args String m
+
+<p>I got ~m, and the body is:</p>
+<p>
+`doBody m
+</p>
+<p>done.</p>
+</pre>
+
+Note: the argument list of the @`doBody@ command must match that declared after the "|" symbol in the invoking templates. 
+
+The @doBody@ command pass matching arguments to the passed-in template. This behavior is sometimes referred to as "call-back".
+
+With this feature, a tag can be effectively used as a layout to a view. The layout part is done in the tag and the main template section is passed in as the last argument of the tag invocation.  
+
+Note:
+
+# tags can invoke other tags. 
+# tags usually don't inherit from layouts. 
+# Tags can be places anywhere in the @japidviews@ tree. 
+
+h2. Verbatim text: @`verbatim@
+
+Purpose: to display a block of text un-parsed by Japid. 
+
+<pre>
+`verbatim
+    OK, anything inside this block is not parsed: `command, ${expression}, etc
+`
+</pre>
+
+Note: a @verbatim@ block must be closed by a standalone back quote that occupies a whole line.
+
+table{border: 1px dashed gray; cellspacing: 2px}.
+|_. Japid|_. Play!|
+|{border:1px grey solid}. @`verbatim ....  \n`@|  #{verbatim}... {/}|
+
+h2. Invoking templates in Controllers 
+
+Japid templates are compiled java classes which can be invoked statically or reflectively. 
+
+Note: to use Japid in a controller, one must let the controller to @extends@ a special Japid controller super class named @cn.bran.play.JapidController@, instead of the Play!'s default @Controller@ class.
+
+h3. Explicit Template Binding
+
+Since any templates are compiled to Java classes, one can use them directly anywhere, of course including in the controller actions. Given a template @japidviews/MyController/foo.html@, Japid will generate a Java class named @japidviews.MyController.foo@. The entry point of using this class is:
+
+<pre>
+    public cn.bran.japid.template.RenderResult render(Bar bar)
+</pre>
+
+The @RenderResult@ object contains the text which is the result of template rendering, and the additional HTTP headers. As you may have known, The Play! way to return a result from a controller method is to throw an Object of @Result@ type. To use the result from the template class, one need to wrap it in a @cn.bran.play.JapidResult@ object and throw it out. For an example, one needs to code something similar to the following snippet in a controller action:
+
+<pre>
+    throw new JapidResult(new foo().render(myBar));
+</pre>
+
+Of course all the classes must have been properly imported before use or one must use the fully qualified names. 
+
+The @JapidContrller@ super class offers a static method @render(RenderResult rr)@ to hide the JapidResult, so one can write:
+
+<pre>
+    render(new foo().render(myBar));
+</pre>
+
+Slightly cleaner.
+
+As you may guess, invoking a template class directly does not require the class to be in a specific package. There is no need to match the name or the package of the template with the name of the action or the class or the package. The minimum requirement is the templates are in the @japidviews@ tree, since the template converter will only scan this tree for Japid templates. 
+
+How to convert the template files to Java source code?
+
+h4. Conversion method 1: command-line tools
+
+There are four Japid command-line commands that one can use in the application root:
+
+# @japid:mkdir@: check the proper @japidviews@ directory tree and create missing elements if necessary. 
+# @japid:gen@: do @mkir@ first then translate all templates in html, xml, json to Java sourse code. Most of the time this command supersedes the @japid:mkdir@.
+# @japid:clean@: remove all generated Java source files derived from the templates. 
+# @japid:regen@: do @clean@ and @gen@
+
+These commands are useful in what I call the "cold development" mode - in compile-time and you use the *static linking* (a.k.a. *explicit template binding* ) of the templates, i.e., you instantiate the java class derived from the view template in the controller actions and invoke the render() method directly. The workflow in this mode is:
+
+# create the model classes if they're to be rendered in the views.
+# create the Japid views in html. 
+# run the @play japid:gen@ to get the Java files derived from these templates. 
+# statically link the renderer in actions.  
+
+As explained before, *implicit template binding* is a lot more flexible and does not require the use of the code generation tools. 
+
+Let me show you how you can configure these commands in Eclipse to make using these commands less troublesome if one is using Eclipse as the main IDE to develop applications, me included. 
+
+The most used command is probably @play japid:gen@. 
+
+Here are the steps to create a quick link to the command in Eclipse:
+
+# Open menu: Run -> External Tools -> External Tools Configuration
+# Create a new entry with the following attributes:
+
+*Name*: japid-gen
+
+Under the *Main* tab:
+
+# *location*: D:\home\bran\projects\play\play.bat
+# *Working Directory*: ${project_loc}
+# *Arguments*: japid:gen
+
+Under the *Refresh* tab:
+
+# Check the "Refresh resources upon completion"
+# Select the "The project containing the selected resource"
+# Check the "Recursively include sub-folders"
+
+Now I can translate the latest templates to Java code right from the IDE. 
+
+Two other most useful commands are @play japid:regen@ and @play eclipsify@, if you're an Eclipse user. The latter is not directly related to Japid, but it's convenient when you upgrade either Play! or Japid module.
+
+h4. Conversion method 2: care-free conversion in DEV mode.
+
+The Play! runtime in DEV mode detects file changes automatically before processing any new HTTP requests or *job* activation, and Japid module will step in to translate the added/changed template files automatically. Java files derived from removed templates will get removed automatically too. 
+
+h4. Conversion method 3: using the Japid plugin for Eclipse
+
+There is a plugin for Eclipse that takes care of templates/Java synchronization at compile time. One don't need to run the app in DEV mode to get the templates automatically translated. The detail is explained in a later section of this document.  
+
+In conclusoin, there are good and bad sides of using a template explicitly as a Java class:
+
+* Pros:
+*# fast, since this is a regular Java class instantiation and method invocation.
+*# statically linked and thus there is compile-time check of arguments. 
+* Cons:
+*# verbose: the classes need to be imported; the results need to be thrown out.
+*# strict in workflow: one must write the templates first and convert them to Java classes (manually or automatically, depending on the development environment) before they can be used in controller actions. 
+
+h3. Implicit Template Binding
+
+To decouple an action and the template it defaults to render, the @JapidController@ offers a method @renderJapid(...)@ to hide the process of invoking the renderer. The method depends on the parallel package structure of the @controllers@ tree and the @japidviews@ tree to locate the right template to render with. 
+
+For an example, given the action method @controllers.p1.MyController.foo(...)@, the default template name is @japidviews/p1/MyController/foo.html@.
+
+The @renderJapid@ makes binding to the default template a lot easier as shown below:
+
+<pre>
+    public static void foo(...) {
+        Bar bar = ...;
+        renderJapid(bar);
+    }
+</pre>
+
+Note: the Play!'s default rendering engine binds the arguments *by name*. This means one must give any objects to be passed to the template a name or the template engine won't find them. In contrast Japid conveniently binds arguments by position, just like any regular java method invocation. One don't need to match the names of the variables in the action with those in the templates. 
+
+* Pros:
+*# a lot shorter.
+*# the templates do need to exist and compiled to Java classes before writing the action code. 
+* Cons:
+*# slightly slower, usually negligible, since it uses reflection to invoke the rendering code.
+*# no compile-time check on the parameters. 
+*# need to match the directory structure of the japid templates to the controllers'. 
+
+I personally find using the implicit template binding a lot easier on me, since I can work in the order of a request processing flow very naturally in this mode: the models, the controllers and then the views. I don't need to manually convert the templates files at all. I need to however make sure the @japidviews@ directory tree is synchronized with the @controllers@ tree in terms of the package names and the files names. With the *Japid Plugin for Eclipse*, which is the IDE of my choice, I don't even need to worry about the package structure and I can focus on the real coding logic. The Eclipse plugin will guide me to create the views in the proper locations, as described later in this document.
+
+Now, what if there are multiple possible Japid templates to render with in an action?
+
+Three ways:
+
+# statically link the template class as explained in the previous section.
+# use the @JapidController.renderJapidWith() method@: for an example: @renderJapidWith("more/MyController/anotherTemplate.html", bar)@ will render the @bar@ object with the @japidviews/more/MyController/anotherTemplate.html@ template. The template name is a relative name to the @japidviews@ directory. It can also be in the form of a Java class name: @more.MyController.anotherTemplate@.
+# call other methods and render implicitly, i.e., *action chaining*. 
+
+The below example demonstrates all ways of template bindings:
+
+<pre>
+    public static void foo() {
+        Bar b = ...;
+        if (cond1) {
+            // implicit binding
+            renderJapid(b);
+        }
+        else if (cond2) {
+            // action chaining
+            dontRedirect();
+            bar(b);
+        }
+        else if (cond3) {
+            // static linking
+            render(new foo().render(b));
+        }
+        else {
+            // explicit dynamic binding
+            renderJapidWith("more.MyController.foo", b);
+        }
+    }
+
+    public static void bar(Bar b) {
+        // implicit binding
+        renderJapid(b);
+    }     
+</pre>
+
+In the above example, when @cond1 == true@, the template to render with is @foo.html@; when @cond2 == true@, @bar.html@ will be used to render the data, etc. Note, @JapidController.dontRedirect()@ must be called to avoid an HTTP *redirect*, since calling another action in Play! runtime will usually create an HTTP redirect. Please note, Play!'s original author does not like action chaining for some reason. In fact there is no way to do action chaining without creating an HTTP redirect with the classic Play! controller. The @dontRedirect()@ opens up the possibility.
+
+h2. Use Japid to Render Email Content.
+
+Japid has a replacement for Play!'s email rendering engine. The mechanism is very similar to the "Play!'s email rendering flow":http://www.playframework.org/documentation/1.1.1/emails, but fully takes advantage of Japid templates. 
+
+This is how:
+1. Create a @mail controller@ (a.k.a. @mailer@) in @app/notifiers@ or any sub-directory. A @mailer@ is conceptually equivalent to action controllers except it must @extends cn.bran.play.JapidMailer@. Here is a sample mailer:
+
+<pre>
+public class CouponJapidMailer extends JapidMailer {
+    public static void sendEditorEmail(String title, String content) {
+        setSubject(title);
+        addRecipient("bing_ran@hotmail.com");
+        setFrom("memberships <memberships@maimaijia.cn>");
+        // add an attachment
+        EmailAttachment attachment = new EmailAttachment();
+        attachment.setDescription("A pdf document");
+        attachment.setPath(Play.getFile("rules.pdf").getPath());
+        addAttachment(attachment);
+        send(content);
+    }
+}
+</pre>
+
+* The @send@ method is the counterpart  of @renderJapid(...)@ in regular controller. It searches for the @japidviews/_notifiers@ directory for the matching template. e.g.:
+
+Given a mailer action @sendNote()@ in:
+
+<pre>
+app/notifiers/MyNoti.java
+</pre>
+
+The @send()@ action's default template must be:
+
+<pre>
+app/japidviews/_notifiers/MyNoti/sendNote.html
+</pre>
+
+If the mailer is 
+
+<pre>
+app/notifiers/org/MyNoti.java
+</pre>
+
+then the default template is:
+
+<pre>
+app/japidviews/_notifiers/org/MyNoti/sendNote.html
+</pre>
+
+2. Create the email content renderer as you would do for any regular Japid view templates. You can use the full capacity of Japid of course, including layouts, tags, etc.
+
+3. Invoking a mailer in your controller actions as you would invoke a static method. e.g.:
+
+<pre>
+    // in a regular controller
+    public static void feedback(String title, String content) {
+        // ...
+        CouponJapidMailer.sendEditorEmail(title, content);
+    }
+</pre>
+
+Note:
+
+# The email sending process takes place in the current thread therefore is synchronous. This has impact on the scalability of sending large amount of emails simultaneously. This is an area for future improvement.
+# The mailer can be invoked in the same way in Play! jobs.
+ 
+
+
+
+h2. Using the Japid Eclipse Plugin
+
+First of all, the plugin is based on the PlayClipse project for Play! In fact the new plugin still keeps the name and tries to keep itself compatible with the default rendering engine. 
+
+h3. Source code
+ 
+- https://github.com/branaway/playclipse, branched from https://github.com/erwan/playclipse
+
+h3. Features:
+
+# It integrates the Japid template transforming process to the standard Eclipse project incremental and full building processes, thus eliminates any manual process in applying Japid templates.
+# The plugin as of now offers the same level of features that are in the original plugin for the  groovy-based templates to the Japid template engine.
+# Menu items and short-cuts to navigate between actions and Japid views, japid html templates and the derived Java files. 
+# An enhanced Play HTML editor that recognizes some Japid syntax, notably the back single quotation mark syntax - the flagship Japid syntax.  
+# Ctrl-click navigation in html views to actions, layout templates and tags. 
+# It has also fixed a few bugs coming with the original plugin and enhanced the pop-up menu in the views and editors.
+
+h3. Installation:
+
+The plugin is in the @eclipse-plugin@ directory of the Japid module. 
+
+# Just put the jar file in the @dropins@ directory of the Eclipse installation and start/restart the IDE. 
+# You'll be able to see a new menu named "JapidPlay" in the main menu bar. A new entry of the same name is also added to the context menu in the Java package navigation view, Java editor. A new html editor called HTML(Play) is also registered as an editor for html files. You'll need to use this editor to edit HTML templates to gain the syntax highlighting, artifact navigation etc. 
+
+If you don't see the JapidPlay menu in the IDE workbench window menu bar, please try starting the IDE with a command line option : 
+
+<pre>
+$ ./eclipse -clean 
+</pre>
+ 
+Notes:
+# The plugin has been tested with Eclipse Helios (3.6).
+# If you have used the classic PlayClipse plugin, please remove it from the @dropins@ directory of your Eclipse installation amnd use the @-clean@ command line option to start the IDE.  
+    
+h3. Usage
+
+First of all, right click on your Japid/Play project and invoke menu @JapidPlay! -> "Enable Play! Nature"@ or the Japid transformation will not be integrated with the project building process, neither the popup menu will display the proper menu items.
+
+The enablement of the Play nature does a few things:
+
+# It adds a Japid builder in the project builders list, before the Java builder. 
+# The builder creating the necessary @japidviews@ tree if it's not there. This is the equivalent to the @play japid:mkdir@ command. 
+# The builder also adds two files in the @japidviews@ tree: @SampleLayout.html@ in the @_layouts@ and @SampleTag.html@ in the @_tags@ directory. These two files are not required by Japid _per se_. They are simply examples. Please leave them there since (actually the plugin will create them if you delete them.) any example views created by the Japid plugin reference them and there will compile-time errors without them. I figure this is good for Japid beginners, but it may change in the future.
+# The builder does a fresh template translation and convert html templates to java source code, which is automatically picked up by the Java builder.
+
+Now click on the @controllers@ directory or sub-directory to select it and invoke "New Controller" command from wither the main "JapidPlay" menu or the context menu (by right-clicking on the package node). Of course you can create the class without bothering it. 
+
+Assuming you have highlighted the @controllers.more@ node, the default controller created by the plugin looks like this:
+
+<pre>
+package controllers.more;
+import play.mvc.*;
+
+import cn.bran.play.JapidController;
+
+// make sure you have 
+//      module.japid=${play.path}/modules/japid-head
+// in your application.conf file, and "play eclipsify"
+// if you notice the JapidController is not found.
+
+public class MyController extends JapidController {
+
+    public static void index() {
+        renderJapid("Hello world!", 123);
+    }
+
+}
+</pre>
+
+As you can tell, the sample controller renders data with the default Japid template. Now let's try navigating from the action to the default view. 
+
+Move the cursor to anywhere in the action method, which starts from the @public@ modifier and ends at the closing curly brace of the method. Now you can navigate to the view either opening the main JapidPlay menu and invoke the "Go to view" item or right-clicking to bring up the context menu and invoke @JapidPlay! -> Go to view@. Of course @Ctrl-Alt-v@ is available if you're a key-board only guy.
+
+Since you don't have the view ready yet, the plugin asks if you would like to create a view at the proper location. Saying "yes" and you'll get a sample view created in the right location.
+
+<pre>
+`extends SampleLayout.html
+`args String s, int i 
+
+`set title:"index"
+
+hello ${s}, ${i}.
+Here goes your Japid template content.
+
+call a tag: 
+
+`tag SampleTag "world" 
+</pre>
+
+It should have already compiled to a Java source file names "index.java", and the Java code should compile clean, assuming that you have enabled the "Play Nature" on the project. If you don't see the derived Java file in the same package, follow this procedure:
+
+<pre>
+    if (you have enabled the "Play nature") {
+        invoke "JapidPlay! -> Disable Play! nature" on the context menu;
+    }
+    invoke "JapidPlay! -> Enable Play! nature" on the context menu;
+</pre>
+
+I have found occasionally I need to re-enable the Play! nature to get the Japid auto-compilation going. This is an issue to be explored. 
+
+The Japid plugin automatically synchronize the html templates to the derived Java files if the project is set to build automatically: 
+
+# when you add a new template, a new Java file is derived from it. You can immediately spot any errors in the generated Java code and change your template to fix it. Here you get the full benefit of static typing.
+# when you update a template, the derived Java file is also updated. Again, you get the error checking. 
+# when you delete or rename a template, the derived Java file is also removed or renamed accordingly. 
+# when you invoke the @Project -> clean@ menu command, all the derived Java files are removed. If the "Build automatically" option is on, all the templates are translated to Java files, effectively equivalent to the @play japid:regen@ command. 
+
+The template editor also does some basic error checking and rudimentary code completion, but it is far from being a sophisticated full-featured template editor. It does not
+
+# edit html tags.
+# do serious code completion.
+# parse in the Java expressions.
+
+But I have found it offers great assistance in navigating the code, which makes the users a lot more productive.
+
+h3. Navigating in the views
+
+The plugin offers an HTML editor that is Japid-aware. 
+
+If you have already used another HTML editor in your Eclipse IDE, usually your html files are associated with them and are opened in one of them. You'll need to use the HTML editor from the plugin to take advantage of some of the nice features. 
+
+In the @Package Explorer@, right-click on the template file and @Open with -> HTML(Play!)@. 
+
+The current Play html editor is unfortunately not HTML-aware(something to improve on later), but it offers some nice Japid-aware features:
+
+# highlight Japid constructs: Japid expressions, scripts, commands such as @`tag@, @`extends@, etc. 
+# Ctrl-click on @layouts@, @tags@, @imports@ to navigate to the target files. 
+# navigate to the controller action that uses this template as the default templates with the @Go to action@ context command, or simply @ctrl-alt-a@. I find myself using this key combination and @ctrl-alt-v@ a lot to switch between  the actions and the views.  
+# navigate to controller actions in the reverse route lookup expression: @controller.action(), again, with the @Go to action@ command.
+# navigate to the derived Java files, with the @Go to generated Java file@ context command.   
+
+h2. Invoking Actions in Views
+
+Let's image a porlet-like web page. It's composed of multiple panels each of which displays totally different content. Let's say we have already created a controller and corresponding views to display each of the content pane. How can we reuse all the controllers and views in the portlet page?
+
+This is a page composition that is not supported by the default Play! rendering pipeline. 
+
+Japid provides a special command named @`invoke@ or @`a@ for action to help users to invoke a controller action right from a view template. 
+
+For an example, we have this controller:
+
+<pre>
+package controllers.more;
+import cn.bran.play.JapidController;
+
+public class Portlets extends JapidController {
+    public static void index() {
+        renderJapid("a", "b");
+    }
+
+    public static void panel1(String a) {
+        renderJapid(a);
+    }
+
+    public static void panel2(String b) {
+        renderJapid(b);
+    }
+}
+</pre>
+
+Highlight anywhere in the index() method and @ctrl-alt-v@ and say "yes" to the question and you are in the index.html. Change it to something like this:
+
+<pre>
+`args String a, String b
+
+`invoke controllers.more.Portlets.panel1(a)
+
+`a controllers.more.Portlets.panel2(b)
+
+</pre> 
+
+The @invoke@ or the short form @`a@ basically invokes the action method in the controller with the argument and includes whatever content the action generate right on the location.
+
+I feel this is very intuitive for many developers to compose complex pages, although the original Play! developers do not seem to like this idea. 
+
+h3. Advanced Caching with Invoke
+
+Now the @`invoke@ command can take one more option: a timeout value to cache the result from the action invocation. 
+
+Let's change the above template a little bit:
+
+<pre>
+    `args String a, String b
+    
+    `invoke controllers.more.Portlets.panel1(a)
+
+    `a controllers.more.Portlets.panel2(b), "10s"
+</pre>
+
+I have attached a Timeout specification to the second action invocation. The timeout value is a string such as "1s", "2mn" ("mn" for minute), "3h", "4d" ("29d" maximum), to specify how long to cache the result content from the action.  
+
+There are another way to specify if the result should be cached and for how long: using the Play! @CacheFor@ annotation on the action, like this:
+
+<pre>
+package controllers.more;
+import play.cache.CacheFor;
+import cn.bran.play.JapidController;
+
+public class Portlets extends JapidController {
+
+    @CacheFor("10s")
+    public static void panel2(String b) {
+        renderJapid(b);
+    }
+}
+</pre>
+
+The @CacheFor@ annotation overrides any timeout spec in the @`invoke@ command. 
+
+Now on to the "advance" part, *nested caching*. 
+
+What if the first level cached content is from a template that contains another cached @`invoke@? Will the outer cache "annihilate" the inner cache? The answer is "no".
+
+This is what will happen: the inner cache will "penetrate" the outer shell and operate by its own timeout pace. Consider a scenario where a complex home page (in our example the index.html) is cached for 20 seconds, but the headline news section (the panel2.html in our example) on the page will need to be updated very 10 seconds (or refresh every time a new request comes in). 
+
+There are two ways to specify cache controls:
+# use the @CacheFor@ annotation with the action method. 
+# append a timeout spec to the @`invoke@ command. This will override any timeout value given by a @CacheFor@ annotation on the action, if the annotation exists.  
+
+The controller:
+
+<pre>
+package controllers.more;
+import java.util.Date;
+
+import play.cache.CacheFor;
+import cn.bran.play.JapidController;
+
+public class Portlets extends JapidController {
+    @CacheFor("20s")
+    public static void index() {
+        renderJapid("a", "b");
+    }
+
+    public static void panel1(String a) {
+        System.out.println("panel1 called");
+        renderJapid(a);
+    }
+
+    public static void panel2(String b) {
+        System.out.println("panel2 called");
+        renderJapid(b);
+    }
+
+    @CacheFor("5s")
+    public static void panel3(String whatever) {
+        System.out.println("panel3 called");
+        renderText("<div>" + new Date() + "</div>");
+    }
+}
+
+</pre>
+
+The view:
+
+<pre>
+    `args String a, String b
+    
+    The outer most content is cached for 20 seconds, using the CacheFor annotation. ${new Date()}
+    this part is never cached.
+        `invoke controllers.more.Portlets.panel1(a)
+    this part is cached for 10 seconds. Note the timeout spec with invoke overrides CacheFor annotation.
+        `a controllers.more.Portlets.panel2(b), "10s"
+    this part is cached for 4 seconds, specified with CacheFor annotation in the controller.
+        `a controllers.more.Portlets.panel3(a + b)
+</pre>
+
+With this composition pattern, the whole page will be cached for 20 seconds, and the @panel2@ will be cached for 10 seconds, the @panel3@ is cached for 4 seconds since the action is annotated with a @CacheFor("4s")@. The panel1 part will not be cached at all since there is no cache control at all. 
+
+</pre>
+
+If you have sharp eyes, you may notice that the content in a cached block is usually updated 1 second before the specified timeout value. The render result cache builds a mechanism to *pre-expire* an entry 1 second in advance. The first client to get the *pre-expire* is responsible to update the cache while other requests coming during the one second window will still get the cached entry until the entry is *fully expired*. This mechanism is to make sure the cache will perform seamlessly in a highly concurrent environment.  
+
+
+
+h2. Debugging the Templates
+
+Since all Japid templates are transformed to Java source files, debugging the views is as easy as debugging any Java code in Play!. Nothing fancy here. 
+
+I personally find it rare to need to debug the views, since usually it will work if the Java code compiles. That's compile-time error checking at work. You'll need to pay attention to the parameter list of the templates and make sure they match that in the actions that using *implicit template binding*.   
+
+Lastly, there is a handy command you can use to quickly log any data in your Japid templates. The command is natually called @`log@. 
+
+<pre>
+`args String a
+
+`log
+`log "the value of a: " + a
+`log 1 + 2
+
+</pre>
+
+The @log@ command will print the string value of whatever Java expression following it to the system console, with template name and line number information, such as 
+
+<pre>
+japidviews/templates/log.html(line 5): 
+japidviews/templates/log.html(line 6): the value of a: Hello 
+japidviews/templates/log.html(line 7): 3
+</pre>
+
+By the way, you can use the @log@ command without any arguments. You end up with just the template name and line number in the console, useful if you want to know where you are. 
+
+
+h2. Use the Sample Application in the Module
+
+There is a sample application distributed with the japid module in the @JapidSample@ directory. It does not serve any real world purpose other than as a demo of Japid features.  
+
+This is how to run the sample:
+
+# open the @application.conf@ to make sure it has a proper reference to the japid module.
+# run command @play japid:regen@ to regenerate all the template Java code.
+# if you would like to load it in Eclipse for example, you run @play eclipsify@ command and open it in Eclipse. 
+# start the application and hit @http://localhost:9000/@, you'll get a page with many links to different actions.
+# follow those links to see how each features are used in a demo code. 
+  
+h2. Future work
+
+# keep improving the Eclipse plugin
+# find more ways to simplify japid syntax.
+# keep improving the documentation.
+# assimilate some fancy features from the @Lift@ framework. Parallel action blocks comes to my mind. 
+
+Thanks for your interests in Japid!
+
+

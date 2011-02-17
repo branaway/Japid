@@ -6,6 +6,11 @@
                    
 Version History:
 
+2011/2/16: V0.7.0: 
+    1. Improved the integration of Play! built-in @CacheFor@ annotation with the @`invoke@/@`a@ command. Now it's recommended to use the annotation to specify the timeout value for caching, instead of using an optional argument with the @`invoke@ command.   
+        Please see the more.Portlets.index() action in the JapidSample sample app for an example.
+    2. Major improvement to the home.textile in the documentation directory. It's usable as a quick Japid guide.
+       
 2011/1/26: V0.6.2: the old tag invocation syntax is deprecated in favor of directives.
     1. internally, started using JavaParser to accurately parse parameters and arguments to tags and actions. 
        
@@ -86,7 +91,12 @@ Version History:
     8. behavior change: all the `get tags in the layouts will default to empty string and overriding them sub-classes are optional.
     9. `invoke has now a shorter form: `a, for action invocation. 
     10. internally added flag useWithPlay in the compiler and template meta data to control Play-dependency in the generated code.  
-
+    11. Enhancement: _size variable is available inside a `each loop. It's -1 if the size of the iterable cannot be determined.  
+    12. new feature: added `verbatim command to wrap a block a raw text in the template. Example:
+        `verbatim
+            ok, anything inside this block is not parsed: `command, ${expression}, etc
+        `
+        Note: it must be closed by a standalone back quote.
 2011/1/20: V0.6.1
     1. internal change: all tag invocations are now local in the layout method. The idea was to reduce using fields and favor local variables;  
     2. fix: all implicit variables are labeled as final for use in inner classes.

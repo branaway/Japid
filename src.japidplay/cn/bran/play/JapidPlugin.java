@@ -12,14 +12,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import play.Play;
 import play.Play.Mode;
 import play.PlayPlugin;
 import play.exceptions.UnexpectedException;
-import play.mvc.Http.Cookie;
 import play.mvc.Http.Header;
 import play.mvc.Http.Request;
 import play.mvc.Http.Response;
@@ -43,9 +41,9 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void onLoad() {
+		System.out.println("JapidPlugin.onload()");
 		beforeDetectingChanges();
 		getDumpRequest();
-		japidCache.clear();
 	}
 	
 	public static Map<String, Object> getCache() {
@@ -116,7 +114,7 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void onApplicationStop() {
 		try {
-			Japid.shutdown();
+
 		} catch (Exception e) {
 			throw new UnexpectedException(e);
 		}
@@ -311,14 +309,13 @@ public class JapidPlugin extends PlayPlugin {
 
 	@Override
 	public void afterApplicationStart() {
-		Japid.startup();
 		getDumpRequest();
 	}
 
 	@Override
 	public void onApplicationStart() {
-		// TODO Auto-generated method stub
-		super.onApplicationStart();
+		System.out.println("JapidPlugin: clean japidCache");
+		japidCache.clear();
 	}
 
 	@Override

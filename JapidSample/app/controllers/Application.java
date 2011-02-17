@@ -271,4 +271,7 @@ public class Application extends JapidController {
 	public static void decorateName(String name) {
 		renderJapid(name);
 	}
+	public static void verbatim() {
+		renderJapid();
+	}
 }

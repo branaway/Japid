@@ -20,18 +20,37 @@ import cn.bran.japid.template.RenderResult;
  * 
  */
 public abstract class CacheablePlayActionRunner extends CacheableRunner {
-	String controllerActionString;
+//	String controllerActionString;
 //	private CacheFor cacheFor;
 	private boolean gotFromCacheForCache;
-	private String cacheForVal;
+//	private String cacheForVal;
+	private Class<? extends JapidController> controllerClass;
+	private String actionName;
 	
+	/**
+	 * 
+	 * @param ttl
+	 * @param args
+	 * @deprecated use the other constructor that allow for better integration with CacheFor annotation
+	 */
 	public CacheablePlayActionRunner(String ttl, Object... args) {
 		super(ttl, args);
-		if (args != null && args.length > 0) {
-			// the first argument is the methodInvocation string, like myController.myMethod
-			controllerActionString = (String) args[0];
-		}
+//		if (args != null && args.length > 0) {
+//			// the first argument is the methodInvocation string, like myController.myMethod
+//			controllerActionString = (String) args[0];
+//		}
 	}
+	
+	public CacheablePlayActionRunner(String ttl, Class<? extends JapidController> controllerClass, String actionName, Object... args) {
+		this.controllerClass = controllerClass;
+		this.actionName = actionName;
+		Object[] fullArgs = new Object[args.length + 2];
+		System.arraycopy(args, 0, fullArgs, 0, args.length);
+		fullArgs[args.length] = controllerClass.getName();
+		fullArgs[args.length + 1] = actionName;
+		super.init(ttl, fullArgs);
+	}
+	
 
 	public CacheablePlayActionRunner(String ttl) {
 		super(ttl);
@@ -52,24 +71,81 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 			runPlayAction();
 			throw new RuntimeException("No render result from running play action. Probably the action was not using Japid templates.");
 		} catch (JapidResult jr) {
-			if (cacheForVal != null && cacheForVal.length() > 0 && !gotFromCacheForCache) {
-				play.cache.Cache.set(keyString, jr, cacheForVal);
-			}
-			return jr.getRenderResult();
+			RenderResult rr = jr.getRenderResult();
+//			if (shouldCache()) {
+////				play.cache.Cache.set(keyString, jr, cacheForVal);
+//				System.out.println("put in result cache");
+//				RenderResultCache.set(keyString, rr, cacheForVal);
+//			}
+			return rr;
 		}
 	}
 
 	/**
-	 * check the cache for the action. The cache should have been caused by the CacheFor annotation
-	 * 
+	 * @return
+	 */
+	protected boolean shouldCache() {
+		fillCacheFor(controllerClass, actionName);
+		return super.shouldCache();
+	}
+
+//	/**
+//	 * @param jr
+//	 */
+//	@Override
+//	protected void cacheResult(RenderResult jr) {
+//		if (shouldCache()) {
+//			// already cached
+//		}
+//		else {
+//			super.cacheResult(jr);
+//		}
+//	}
+
+
+//	/**
+//	 * check the cache for the action. The cache should have been caused by the CacheFor annotation
+//	 * 
+//	 * @param class1
+//	 * @param actionName
+//	 * @deprecated the logic is not robust. new logic has been implemented in the super class.  
+//	 * 
+//	 */
+//	protected void checkActionCacheFor(Class<? extends JapidController> class1, String actionName) {
+//		fillCacheFor(class1, actionName);
+//		
+//		if (cacheForVal != null && cacheForVal.length() > 0) {
+//			String key = super.keyString;
+//			try {
+////			Object v = play.cache.Cache.get(key);
+//				 RenderResult v = RenderResultCache.get(key);
+//				if (v != null) {
+//					System.out.println("got from cache");
+//					this.gotFromCacheForCache = true;
+//					throw new JapidResult(v);
+////					if (v instanceof JapidResult) {
+////						throw ((JapidResult) v);
+////					} else if (v instanceof CachedRenderResult) {
+////						throw new JapidResult(((CachedRenderResult) v).rr);
+////					} else {
+//////								throw new RuntimeException("got something from the cache but not sure what it is: "
+//////										+ v.getClass().getName());
+////					}
+//				}
+//			} catch (ShouldRefreshException e) {
+//			}
+//			return;
+//		}				
+//	}
+
+	/**
 	 * @param class1
 	 * @param actionName
 	 */
-	protected void checkActionCacheFor(Class<? extends JapidController> class1, String actionName) {
-		// TODO: should cache the CacheFor object
+	private void fillCacheFor(Class<? extends JapidController> class1, String actionName) {
 		String className = class1.getName();
 		String cacheForKey = className + "_" + actionName;
-		cacheForVal = (String) JapidPlugin.getCache().get(cacheForKey);
+		String cacheForVal = (String) JapidPlugin.getCache().get(cacheForKey);
 		if (cacheForVal == null) {
 			// the cache has not been filled up yet.
 			Method[] mths = class1.getDeclaredMethods();
@@ -78,6 +154,7 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 					if (!m.isAnnotationPresent(Before.class) && !m.isAnnotationPresent(After.class) && !m.isAnnotationPresent(Finally.class)) {
 						CacheFor cacheFor = m.getAnnotation(CacheFor.class);
 						if (cacheFor == null) {
+							// well no annotation level cache spec
 							cacheForVal = "";
 						}
 						else {
@@ -89,23 +166,13 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 			}
 		}
 		
-		if (cacheForVal != null && cacheForVal.length() > 0) {
-			String key = super.keyString;
-			Object v = play.cache.Cache.get(key);
-			if (v != null) {
-				if (v instanceof JapidResult) {
-					this.gotFromCacheForCache = true;
-					throw ((JapidResult) v);
-				} else if (v instanceof CachedRenderResult) {
-					this.gotFromCacheForCache = true;
-					throw new JapidResult(((CachedRenderResult) v).rr);
-				} else {
-//								throw new RuntimeException("got something from the cache but not sure what it is: "
-//										+ v.getClass().getName());
-				}
-			}
-			return;
-		}				
+		if (cacheForVal.length() > 0){
+			super.noCache = false;
+			// only override ttlAbs if it's not specified.
+			if (super.ttlAbs == null || super.ttlAbs.length() == 0)
+				super.ttlAbs = cacheForVal;
+			
+		}
 	}
 
 }

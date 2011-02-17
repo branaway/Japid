@@ -352,6 +352,20 @@ public class JapidParserTests {
 
 	}
 
+	@Test
+	public void testGetCurrentLine() {
+		String src = "abc\n def \n ghi";
+		assertEquals("abc", JapidParser.getCurrentLine(src, 0));
+		assertEquals(" def ", JapidParser.getCurrentLine(src, 4));
+		assertEquals(" def ", JapidParser.getCurrentLine(src, 5));
+		assertEquals(" def ", JapidParser.getCurrentLine(src, 7));
+		assertEquals(" def ", JapidParser.getCurrentLine(src, 7));
+		// the newline belongs to the next line
+		assertEquals(" ghi", JapidParser.getCurrentLine(src, 10));
+		assertEquals(" ghi", JapidParser.getCurrentLine(src, 11));
+		assertEquals(" ghi", JapidParser.getCurrentLine(src, src.length() - 1));
+	}
+	
 	/**
 	 * test the use of single back-quote char, as escaping script line, similar
 	 * to \\ in Java
