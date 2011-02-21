@@ -69,12 +69,6 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	protected AbstractTemplateClassMetaData getTemplateClassMetaData() {
 		return cmd;
 	}
-
-	@Override
-	protected void postParsing(Tag tag) {
-		// nothing to add
-
-	}
 	
 	@Override
 	protected void scriptline(String token) {

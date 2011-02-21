@@ -39,6 +39,7 @@ public class JapidTemplateTransformer {
 	private static final String HTML = ".html";
 	private String sourceFolder;
 	private String targetFolder;
+	private boolean usePlay = true;
 
 	// private MessageProvider messageProvider;
 	// private UrlMapper urlMapper;
@@ -124,6 +125,7 @@ public class JapidTemplateTransformer {
 			// regular template and tag are the same thing
 			c = new JapidTemplateCompiler();
 		}
+		c.setUseWithPlay(usePlay);
 		c.compile(temp);
 		String jsrc = temp.javaSource;
 
@@ -183,7 +185,7 @@ public class JapidTemplateTransformer {
 	 * transform a source template to Java
 	 * 
 	 * @param file
-	 *            the source file that must be a decendant of the source folder.
+	 *            the source file that must be a descendant of the source folder.
 	 * @return
 	 * @throws Exception
 	 */
@@ -200,6 +202,10 @@ public class JapidTemplateTransformer {
 	public void addAnnotation(Class<? extends Annotation> anno) {
 		AbstractTemplateClassMetaData.addAnnotation(anno);
 		// typeAnnotations.add(anno);
+	}
+
+	public void usePlay(boolean b) {
+		this.usePlay = b;
 	}
 
 	// List<Class<? extends Annotation>> typeAnnotations = new ArrayList<Class<?

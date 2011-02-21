@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.compiler.JapidTemplateTransformer;
 
 
@@ -15,22 +16,11 @@ import cn.bran.japid.compiler.JapidTemplateTransformer;
 public class TemplateTranslatorTest {
 	@Test
 	public void testGen() throws Exception {
-		JapidTemplateTransformer gen = new JapidTemplateTransformer("tempgen", null);
-//		gen.addImportStatic(JavaExtensions.class);
+		JapidTemplateTransformer gen = new JapidTemplateTransformer(".", ".");
 		gen.addImportLine("import java.math.*;");
-//		gen.setSourceFolder("tempgen");
-//		gen.setTargetFolder("tempgen");
-		File f = gen.generate("templates/AllPost.html");
+		gen.usePlay(false);
+		File f = gen.generate("tests/eachTag.html");
 		assertTrue(f.exists());
-		f = gen.generate("tag/Tag2.html");
-		assertTrue(f.exists());
-		f = gen.generate("layout/Layout.html");
-		assertTrue(f.exists());
-		f = gen.generate("tag/Display.html");
-		assertTrue(f.exists());
-		f = gen.generate("layout/TagLayout.html");
-		assertTrue(f.exists());
-
 	}
 	
 	/**

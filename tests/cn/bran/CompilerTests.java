@@ -42,6 +42,36 @@ public class CompilerTests {
 	}
 
 	@Test
+	public void testIfCommand() throws IOException {
+		String src = readFile("JapidSample/app/japidviews/Application/ifs.html");
+		JapidTemplate bt = new JapidTemplate("Application/ifs.html", src);
+		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+	}
+	
+	@Test
+	public void testLayoutWithArgs() throws IOException {
+		String src = readFile("JapidSample/app/japidviews/more/Perf/perfmain.html");
+		JapidTemplate bt = new JapidTemplate("more/Perf/perfmain.html", src);
+		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+	}
+	
+	@Test
+	public void testExtendsLayoutWithArgs() throws IOException {
+		String src = readFile("JapidSample/app/japidviews/more/Perf/perf.html");
+		JapidTemplate bt = new JapidTemplate("more/Perf/perf.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+	}
+	
+	@Test
 	public void testAnotherLayout() throws IOException, ParseException {
 		String src = readFile("JapidSample/app/japidviews/_layouts/TagLayout.html");
 		JapidTemplate bt = new JapidTemplate("japidviews/_layouts/TagLayout.html", src);

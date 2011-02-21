@@ -44,12 +44,11 @@ import cn.bran.japid.compiler.JavaSyntaxTool.Param;
  */
 public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
-	public String renderArgs;
 	// there are the "#{set var:val /}
 	// <methName, methodBody
 	Map<String, String> setMethods = new HashMap<String, String>();
 
-	// experiement: allow any template to be callable as a tag and can handle
+	// Experiment: allow any template to be callable as a tag and can handle
 	// doBody
 	// null: no doBody, "": there is doBody but no parameters passed back
 	private String doBodyArgsString;
@@ -145,7 +144,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		pln("\t\tlong t = -1;");
 		if (stopWatch)
 			pln("\t\tt = System.currentTimeMillis();");
-		pln("\t\tsuper.layout();");
+		pln("\t\tsuper.layout(" + superClassRenderArgs +  ");");
 		if (stopWatch) {
 			pln("\t\tt = System.currentTimeMillis() - t;");
 			pln("\t\tSystem.out.println(\"[" + super.className + "] rendering time: \" + t);");

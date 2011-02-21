@@ -17,6 +17,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.InnerClassMeta;
@@ -28,9 +30,9 @@ import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.DirUtil;
 
 /**
- * based on the original code from the Play! Frameowrk
+ * based on the original code from the Play! Framework
  * 
- * the parent class for all three type compilers: regular template conpiler, the
+ * the parent class for all three type compilers: regular template compiler, the
  * LayoutCompiler and the TagCompiler.
  * 
  * @author original Play! authors
@@ -38,9 +40,17 @@ import cn.bran.japid.util.DirUtil;
  * 
  */
 public abstract class JapidAbstractCompiler {
+	//pattern:  } else if xxx {
+	static final String ELSE_IF_PATTERN_STRING = "\\s*\\}\\s*else\\s*if\\s+([^\\(].*)\\{\\s*";
+	static final Pattern ELSE_IF_PATTERN = Pattern.compile(ELSE_IF_PATTERN_STRING);
+
+	//pattern:  if xxx {
+	static final String GROOVY_IF_PATTERN = "if\\s+[^\\(].*";
+
 	private static final String JAPID_RESULT = "cn.bran.play.JapidResult";
 
 	private static final String ARGS = "args";
+	private static final String ROOT_TAGNAME = "_root";
 
 	protected static final String HTML = ".html";
 	// private static final String DO_BODY = "doBody";
@@ -86,6 +96,9 @@ public abstract class JapidAbstractCompiler {
 		}
 		public String getBodyVar() {
 			 return "_" + getTagVarName() + tagIndex + "DoBody";
+		}
+		public boolean isRoot() {
+			return tagName.equals(ROOT_TAGNAME);
 		}
 	}
 
@@ -319,30 +332,55 @@ public abstract class JapidAbstractCompiler {
 			} else if (startsWithIgnoreSpace(line, "//")) {
 				// ignore
 			} else if (startsWithIgnoreSpace(line, "extends")) {
-				String layoutName = line.trim().substring("extends".length()).trim();
+				String layout = line.trim().substring("extends".length()).trim();
 				//remove quotes if they present
-				layoutName = layoutName.replace("'", "");
-				layoutName = layoutName.replace("\"", "");
 				
-				if (layoutName.endsWith(";")) {
-					layoutName = layoutName.substring(0, layoutName.length() - 1);
-				}
-				if (layoutName.endsWith(HTML)) {
-					layoutName = layoutName.substring(0, layoutName.indexOf(HTML));
-				}
-				if (layoutName.startsWith("/")) {
-					layoutName = layoutName.substring(1);
-				}
-				if (layoutName.startsWith(".")) {
-					// new feature allow extends .sub.layout.html
-					if (layoutName.startsWith("./")) {
-						layoutName = getTemplateClassMetaData().packageName + "." + layoutName.substring(2);
-					}
-					else { 
-						layoutName = getTemplateClassMetaData().packageName + layoutName;
+				boolean hasParam = false;
+				int p = 0;
+				for (; p < layout.length(); p++) {
+					char c = layout.charAt(p);
+					if (c == ' ' || c == '\t' || c == '(') {
+						hasParam = true;
+						break;
 					}
 				}
-				getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
+				
+				if (!hasParam) {
+					layout = layout.replace("'", "");
+					layout = layout.replace("\"", "");
+					layout = removeEndingString(layout, ";");
+					layout = removeEndingString(layout, HTML);
+					layout = removeEndingString(layout, "/");
+					if (layout.startsWith(".")) {
+						// new feature allow extends .sub.layout.html
+						if (layout.startsWith("./")) {
+							layout = getTemplateClassMetaData().packageName + layout.substring(1);
+						}
+						else { 
+							layout = getTemplateClassMetaData().packageName + layout;
+						}
+					}
+					getTemplateClassMetaData().superClass = layout.replace('/', '.');
+				}
+				else {
+					String layoutName  = layout.substring(0, p);
+					layoutName = layoutName.replace("'", "");
+					layoutName = layoutName.replace("\"", "");
+					layoutName = layoutName.replace('/', '.');
+					layoutName = removeEndingString(layoutName, HTML);
+					
+					// due to similarity, let's borrow a tag parsing
+					Tag tag = new TagInvocationLineParser().parse(layoutName + layout.substring(p));
+
+					if (tag.tagName.startsWith(".")) {
+						// partial path, use current package as the root and append the path to it
+						tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
+					}
+					getTemplateClassMetaData().superClass = tag.tagName;
+					getTemplateClassMetaData().superClassRenderArgs = tag.args;
+					
+				}
+				
 			} else if (startsWithIgnoreSpace(line, "contentType")) {
 				// TODO: should also take standard tag name: Content-Type
 				String contentType = line.trim().substring("contentType".length()).trim().replace("'", "").replace("\"", "");
@@ -432,11 +470,32 @@ public abstract class JapidAbstractCompiler {
 				Tag get = buildTagDirective(line);
 				get.hasBody = true;
 				startTag(get);
+			} else if (startsWithIgnoreSpace(line, "if")) {
+				// `if expr {, the last { is optional
+				String expr = line.trim();
+				if (expr.matches(GROOVY_IF_PATTERN)) {
+					// get the expression
+					expr = removeEndingString(expr.substring(2).trim(), "{").trim();
+					expr = "if(asBoolean(" + expr + ")) {";
+				}
+				print(expr);
+				markLine(parser.getLineNumber() + i);
+				println();
+			} else if (line.matches(ELSE_IF_PATTERN_STRING)) { 
+				String expr = line.trim();
+				Matcher matcher = ELSE_IF_PATTERN.matcher(line);
+				if (matcher.matches()) {
+					expr = matcher.group(1).trim();
+					expr = "} else if(asBoolean(" + expr + ")) {";
+				}
+				print(expr);
+				markLine(parser.getLineNumber() + i);
+				println();
 			} else if (line.trim().length() == 0){
 				// a single ` empty line, treated as the closing for `tag
 				if (!tagsStack.empty()) {
 					Tag tag = tagsStack.peek();
-					if (!tag.tagName.equals("_root")) {
+					if (!tag.isRoot()) {
 						tag = tagsStack.pop();
 						endTag(tag);
 					}
@@ -448,6 +507,17 @@ public abstract class JapidAbstractCompiler {
 			}
 		}
 		skipLineBreak = true;
+	}
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	private String removeEndingString(String string, String ending) {
+		if (string.endsWith(ending))
+			return string.substring(0, string.lastIndexOf(ending));
+		else
+			return string;
 	}
 
 	/**
@@ -570,7 +640,7 @@ public abstract class JapidAbstractCompiler {
 		String source = template.source;
 		Tag rootTag = new Tag() {
 			{
-				tagName = "_root";
+				tagName = ROOT_TAGNAME;
 				startLine = 0;
 				hasBody = true;
 			}
@@ -618,19 +688,14 @@ public abstract class JapidAbstractCompiler {
 		postParsing(tag);
 		template.javaSource = this.getTemplateClassMetaData().generateCode();
 
-		// try {
-		// log.trace(String.format("%s is compiled to %s", template.name,
-		// template.javaSource));
-		// } catch (Exception e) {
-		// //
-		// }
-
 	}
 
 	/**
 	 * add anything before the java source generation
 	 */
-	abstract protected void postParsing(Tag tag);
+	protected void postParsing(Tag tag) {
+			this.getTemplateClassMetaData().renderArgs = tag.callbackArgs;
+	}
 
 	abstract protected AbstractTemplateClassMetaData getTemplateClassMetaData();
 
@@ -728,12 +793,9 @@ public abstract class JapidAbstractCompiler {
 			String layoutName = tag.args;
 			layoutName = layoutName.replace("'", "");
 			layoutName = layoutName.replace("\"", "");
-			if (layoutName.endsWith(HTML)) {
-				layoutName = layoutName.substring(0, layoutName.indexOf(HTML));
-			}
-			if (layoutName.startsWith("/")) {
-				layoutName = layoutName.substring(1);
-			}
+			layoutName = removeEndingString(layoutName, HTML);
+			layoutName = removeEndingString(layoutName, "/");
+
 			getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
 		} else if (tag.tagName.equals("invoke")) {
 			invokeAction(tag);
@@ -897,4 +959,7 @@ public abstract class JapidAbstractCompiler {
 		super();
 	}
 
+	public void setUseWithPlay(boolean play) {
+		this.useWithPlay = play;
+	}
 }

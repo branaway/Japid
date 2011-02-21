@@ -6,6 +6,27 @@
                    
 Version History:
 
+2011/2/20: V0.7.1: 
+    1. added a new way to pass arguments from views to layout in the `extends command. See perf.html for an example.  
+        
+        `args String a
+        `extends myLayout(a, "home")
+        
+        The myLayout template must match the parameter list:
+        
+        `args String a, String b
+     
+    2. Enhanced the "if" and "else if" operator to take any expression as the condition without enclosing it in a pair of parenthesis "()"  
+        `if expr {
+            xxx
+        `} else if expr {
+            yyy
+        `} else {
+            zzz
+        `}
+
+        The expression value can be any object. The compiler wrap it in a static method asBoolean(), which infers a boolean value from it. See ifs.html for an example. 
+        Using parenthesis it becomes regular Java if statement. 
 2011/2/16: V0.7.0: 
     1. Improved the integration of Play! built-in @CacheFor@ annotation with the @`invoke@/@`a@ command. Now it's recommended to use the annotation to specify the timeout value for caching, instead of using an optional argument with the @`invoke@ command.   
         Please see the more.Portlets.index() action in the JapidSample sample app for an example.

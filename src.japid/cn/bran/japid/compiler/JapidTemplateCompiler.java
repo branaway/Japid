@@ -102,13 +102,6 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		}
 		return false;
 	}
-	/**
-	 * @param tag
-	 */
-	@Override
-	protected void postParsing(Tag tag) {
-		this.tcmd.renderArgs = tag.callbackArgs;
-	}
 
 	@Override
 	protected AbstractTemplateClassMetaData getTemplateClassMetaData() {

@@ -1,4 +1,4 @@
-package japidviews.more.MyController;
+package japidviews.more.Perf;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
@@ -17,27 +17,23 @@ import controllers.*;
 import play.mvc.Http.*;
 import japidviews._javatags.*;
 //
-// NOTE: This file was generated from: japidviews/more/MyController/superview.html
+// NOTE: This file was generated from: japidviews/more/Perf/perfmain.html
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public abstract class superview extends myLayout
-{	public static final String sourceTemplate = "japidviews/more/MyController/superview.html";
+public abstract class perfmain extends cn.bran.japid.template.JapidTemplateBase
+{	public static final String sourceTemplate = "japidviews/more/Perf/perfmain.html";
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
-	public superview() {
+	public perfmain() {
 		super(null);
 	}
-	public superview(StringBuilder out) {
+	public perfmain(StringBuilder out) {
 		super(out);
 	}
-	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
-	}
-	@Override protected void doLayout() {
+	private DataModel.User loggedInUser;
+	 public void layout(DataModel.User loggedInUser) {		this.loggedInUser = loggedInUser;
 
 // - add implicit variables 
 
@@ -62,15 +58,34 @@ public abstract class superview extends myLayout
 // - end of implicit variables 
 
 
-//------
-;// line 1
-;// line 2
-// line 4
-;// line 4
-
+		;// line 1
+p("\n" + 
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n" + 
+"        \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
+"<html>\n" + 
+"<head>\n" + 
+"    <title>");// line 1
+	title();p("</title>\n" + 
+"</head>\n" + 
+"<body>\n" + 
+"\n");// line 7
+if (loggedInUser != null) {// line 11
+p("	<div>\n" + 
+"	    Hello ");// line 11
+p(loggedInUser.getUserName());// line 13
+p(", You have ");// line 13
+p(loggedInUser.getFriends().size());// line 13
+p(" friends\n" + 
+"	</div>\n");// line 13
+}// line 15
+p("\n" + 
+"<h1>Entries</h1>\n" + 
+"    ");// line 15
+	doLayout();
+p("</body>\n" + 
+"</html>");// line 18
 	}
+	 protected void title() {};
 
-	@Override protected void title() {
-		p("super view");;
-	}
+	protected abstract void doLayout();
 }

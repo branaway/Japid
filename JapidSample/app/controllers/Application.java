@@ -274,4 +274,12 @@ public class Application extends JapidController {
 	public static void verbatim() {
 		renderJapid();
 	}
+	
+	public static void ifs() {
+		String s = "";
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		Object[] array = list.toArray();
+		renderJapid(s, list, true, array, new int[] {}, 0, "a");
+	}
 }

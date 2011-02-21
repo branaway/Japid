@@ -13,11 +13,14 @@
  */
 package cn.bran.japid.classmeta;
 
+import japa.parser.ast.body.Parameter;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cn.bran.japid.compiler.JavaSyntaxTool;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.JapidTemplateBaseStreaming;
 
@@ -26,7 +29,7 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 	{
 		setAbstract(true);
 	}
-	
+
 	Set<String> getterMethods = new HashSet<String>();
 
 	/**
@@ -46,14 +49,14 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 	}
 
 	/**
-	 * #{get "block name" /}
-	 * was creating abstract. Now changed to a no operation method stub so
-	 * subclass can selectively override the getters in the layout
+	 * #{get "block name" /} was creating abstract. Now changed to a no
+	 * operation method stub so subclass can selectively override the getters in
+	 * the layout
 	 */
 	protected void getterSetter() {
 		pln();
 		for (String key : getterMethods) {
-//			p("\t protected abstract void " + key + "();\n");
+			// p("\t protected abstract void " + key + "();\n");
 			p("\t protected void " + key + "() {};\n");
 		}
 	}
@@ -62,7 +65,24 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 	 * 
 	 */
 	protected void layoutMethod() {
-		p("\t@Override public void layout() {");
+		if (renderArgs != null) {
+			// create fields for the render args and create a render method to
+			List<Parameter> params = JavaSyntaxTool.parseParams(this.renderArgs);
+
+			for (Parameter p : params) {
+				pln(TAB + "private " + p.getType() + " " + p.getId() + ";");
+			}
+
+			p("\t public void layout(" + renderArgs + ") {");
+			// assign the params to fields
+			for (Parameter p : params) {
+				pln("\t\tthis." + p.getId() + " = " + p.getId() + ";");
+			}
+		}
+		else {
+			p("\t@Override public void layout() {");
+		}
+
 		super.setupTagObjects();
 		super.addImplicitVariables();
 		// the code to render things.

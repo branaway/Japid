@@ -464,6 +464,9 @@ public abstract class AbstractTemplateClassMetaData {
 	protected boolean hasActionInvocation;
 	private Map<String, String> headers = new HashMap<String, String>();
 	private List<Tag> defTags = new ArrayList<Tag>();
+	public String renderArgs;
+	// to support extends layout (arg1, arg2)
+	public String superClassRenderArgs = "";
 
 	public void turnOnStopwatch() {
 		this.stopWatch = true;

@@ -16,8 +16,11 @@ package cn.bran.japid.template;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.Collection;
+
+import cn.bran.play.WebUtils;
 
 /**
  * a java based template that dump content to a stream.
@@ -147,32 +150,8 @@ public abstract class JapidTemplateBaseStreaming {
 	}
 	protected abstract void doLayout();
 	
-	protected boolean asBoolean(Object o) {
-		if (o == null)
-			return false;
-		
-		boolean r = false;
-
-		if (o instanceof Boolean) {
-			r = (Boolean) o;
-		} else if (o instanceof Integer) {
-			Integer n = (Integer) o;
-			r = n != 0 ? true : false;
-		}
-		else if (o instanceof Collection){
-			Collection col = ((Collection)o);
-			if (col.size() > 0)
-				return true;
-			else
-				return false;
-		}
-//		else if ()
-		else {
-			// TODO more
-			r = o != null ? true : false;
-		}
-
-		return r;
+	public  boolean asBoolean(Object o) {
+		return WebUtils.asBoolean(o);
 	}
 
 	static protected byte[] getBytes(String src) {

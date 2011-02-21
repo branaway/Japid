@@ -1,8 +1,16 @@
-h1. Japid Engine Quick Manual, V0.6
+h1. Japid Engine Quick Manual, V0.7
 
 h5. Bing Ran<bing_ran@hotmail.com>
 
-20100/2/16
+h4. Document History
+
+# 2010/2/16, first draft
+# 2010/2/20, added a section for the enhanced @if@ statement 
+
+
+
+
+h2. Introduction
 
 Japid is a Java*based dynamic content rendering templates system that aims to deliver the fastest possible result.  
 
@@ -21,7 +29,6 @@ I want:
 * this template engine to be very syntax concise and practical. 
 * the templates to be *strongly typed*: all variables rendered in a template must be clearly declared as in a Java method. Developers get all the benefits of the strong typing: compile-time error checking, performance at runtime, debuggable, etc. 
 * to use Java as the flow control and expression language. Any java classes and features can be very easily used in the templates. 
-* to make it very easy and noise*free to mix plain text content with Java code construct. 
 * the best possible performance for any template engine. 
 * it to versatile to generate any text output and particular not limited to xml/xhtml content.
 * to use right amount of convention over configuration.
@@ -203,10 +210,11 @@ Once we have the layout we are ready to code the main view template.
 `args User user, int count
 
 `set title:"The User Detail"
-
-`for (int i > 0; i < count; i++) {
-    hello $user.name, and you are `tag showAge user.age`.
-`}
+`if count {
+    `for (int i > 0; i < count; i++) {
+        hello $user.name, and you are `tag showAge user.age`.
+    `}
+`
 </pre>
 
 Here are a few new syntax:
@@ -250,6 +258,7 @@ Purpose: the parameters to be passed to this template to render. The format is t
 
 Note: 
 
+# Data to be rendered must (almost) be declared passed to the templates via the @`args@ directive. However There are a few Play! specific data that are implicitly avaiable, as explained later in this document.
 # The data type must be visible, meaning it must be imported. However there are several classes and packaged that are imported to any templates by default:
 
 <pre>
@@ -303,9 +312,74 @@ Notes:
 ## Tags cannot be referenced in a @set@ command. This limitation will be lifted in the future. 
 
 
+h2. Condition Statement @`if@ 
+
+First of all you can use the plain Java if-else-statement :
+
+<pre>
+`if (cond) {
+    xxx
+`} else if (cond2){
+    yyy
+`} else {
+    zzz
+`}
+</pre>
+
+The @cond@ and @conds@ must be boolean values. This sometimes forces people to write bioler-plate code like this:
+
+<pre>
+`if (aString != null && aString.length() > 0) {
+    xxx
+`}
+</pre>
+
+The Japid compiler has imported a method @cn.bran.play.WebUtils.asBoolean(Object)@ that takes any object and infers a boolean value from it to any templates it generates. So you can improve the above a little bit:
+
+<pre>
+`if (asBoolean(aString)) {
+    xxx
+`}
+</pre>
+
+The @asBoolean@ returns @true@ if the argument is
+# none-empty string.
+# a collection that has at least one element.
+# an integer or long value that is not zero.
+# an array that has at least one element. 
+# an object that is not null.
+
+But some people really like the @if@ to be smarter. So I have decided to enhance the @if@ statement syntax to add some smartness to it, like in Groovy:
+
+<pre>
+`if cond {
+    xxx
+`} else if cond2{
+    yyy
+`} else {
+    zzz
+`}
+</pre>
+ 
+Note the enhanced syntax does not enclose the conditions in "()" otherwise it would become plain Java @if@ statement.
+
+So basically the compiler translates the above code to:
+
+<pre>
+`if (asBoolean(cond)) {
+    xxx
+`} else if (asBoolean(cond2)) {
+    yyy
+`} else {
+    zzz
+`}
+</pre>
+
+You get the idea. 
+
 h2. @`for@ 
 
-Actually this is the pure Java way of iterating through Java collections and arrays. The word "for" is not a special word in the Japid templates. It's pure Java code started by a back quote. Looping in Japid is Java as usual, including the closing brace.
+Actually this is the plain Java way of iterating through Java collections and arrays. The word "for" is not a special word in the Japid templates. It's pure Java code started by a back quote. Looping in Japid is Java as usual, including the closing brace.
 
 <pre>
 `for (int i = 0; i < count; i++) {
@@ -328,11 +402,11 @@ However Japid provides @each@ command, an enhanced looping tool, inspired by Pla
 
 h2. @`each@
 
-The @each@ command offer a loop construct that makes available additional looping attributes for users to fine-tune the data rendering. For an example:
+The @each@ command creates a loop construct that makes available additional looping attributes for the template authors to fine-tune the data rendering. For an example:
 
 <pre>
 `each names | String name
-    $name $_size, $_index,  $_parity $_isOdd $_isFirst $_isLast 
+    $name, $_size, $_index, $_parity $_isOdd $_isFirst $_isLast 
 `
 </pre>
 
@@ -401,9 +475,9 @@ Back to the view template:
 `extends master
 `args User user, int count
 
-`for (int i > 0; i < count; i++) {
-    hello $user.name, and you are `tag showAge user.age`.
-`}
+    `for (int i > 0; i < count; i++) {
+        hello $user.name, and you are `tag showAge user.age`.
+    `}
 </pre>
 
 In the body of the for loop we are invoking a @tag@ called showAge. Think of a tag as a function defined in a separate file. Here is the tag file:
@@ -526,6 +600,24 @@ Note:
 # tags usually don't inherit from layouts. 
 # Tags can be places anywhere in the @japidviews@ tree. 
 
+h2. Using Implicit Data Objects in Templates 
+
+Although it has been said that all data passed to the templates must be declared, there are a few Play! specific objects, implicitly available in Japid templates. If you open any Java source code derived from the templates (including the views, layouts and tags), you'll see in the main body that there are a few objects decalred:
+
+<pre>
+    final Request request = Request.current();
+    final Response response = Response.current();
+    final Flash flash = Flash.current();
+    final Session session = Session.current();
+    final RenderArgs renderArgs = RenderArgs.current();
+    final Params params = Params.current();
+    final Validation validation = Validation.current();
+    final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
+    final play.Play _play = new play.Play();
+</pre>
+
+TODO:
+
 h2. Verbatim text: @`verbatim@
 
 Purpose: to display a block of text un-parsed by Japid. 
@@ -541,6 +633,93 @@ Note: a @verbatim@ block must be closed by a standalone back quote that occupies
 table{border: 1px dashed gray; cellspacing: 2px}.
 |_. Japid|_. Play!|
 |{border:1px grey solid}. @`verbatim ....  \n`@|  #{verbatim}... {/}|
+
+
+h2. More about Passing Data to the Layouts
+
+Previousely I have explained how to use the @'set@ command to create a named text value and use the @`get@ in the layout to place the value in the output. 
+
+There are two other ways to pass data from the child templates to the layouts. 
+
+h3. Passing data in the @`extends@ Directive (new in Japid v0.7)
+
+The @extends@ directive allows passing objects to the layout in this way:
+
+*child template*
+
+<pre>
+`args String a
+`extends myLayout(a, 123, "home")
+
+</pre>
+
+*The layout*
+
+<pre>
+`args String a, int b, String c
+
+do whatever with them
+
+</pre>
+
+Smells Scala?
+
+The only limitation is the args to pass must either be from the arg list of the current template or a new object created inline. You cannot declare a variable somewhere else and pass it to the super class, like in:
+
+<pre>
+` String a = "hello"
+`extends myLayout(a)
+</pre>
+
+h3. Define a local method with @`def@ and invoke it with @get@ method
+
+The @`def@ directive create a local method that return a String. The method can then be invoked in the same templates. An example:
+
+
+*the child template*
+<pre>
+`extends defLayout
+
+`def foo
+    `String s = "hi there";
+    hello $foo2(s)
+`
+
+`def foo2(String p)
+    hi $p!
+`
+
+*{ the old syntax of def }*
+
+#{def bar}
+    `String s = "hi2";
+    hi $s!
+#{/}
+
+#{dummyTag get("bar")/}
+
+*{ can call it directly }*
+
+$foo()
+
+</pre>
+
+The @`def foo@ block defines a method named @foo@. The method body declares a variable @s@ and then calls another local method named @foo2@ with the variable. The @foo2@ is defined to take a String argument. Both return a string which is the result of interpolating the data in the text of the bodies. The arguments received from the @`args@ statement are avialable in the method bodies.
+ 
+The @def@ blocks can be though of tags defined inline, instead of in separate files. You will find it very useful. 
+
+
+The methods defined in the templates can be invoked with reflection. Japid provides a predefined method named @get@ (not to be confused with the @`get@) that can be used to invoke the method. In the above example, @#{dummyTag get("bar")/}@ is the "old" classic Play! way of invoking a tag. The argument is actually a function call to invoke the @bar@ method defined above it (in the classic Play! style again). One limitation though, the @get@ method can only invoke method without parameters. Future Japid will probably have another @get@ that can take additional arguments. 
+
+The @get()@ can be used in either the super class or the child class to reflect methods. The following example uses it call the @foo()@ defined in the child. 
+  
+*defLayout.html*
+<pre>
+$get("foo")
+#{doLayout/}
+</pre>
+
+Effectively the data is passed from the child to the layout. 
 
 h2. Invoking templates in Controllers 
 
@@ -704,6 +883,151 @@ The below example demonstrates all ways of template bindings:
 </pre>
 
 In the above example, when @cond1 == true@, the template to render with is @foo.html@; when @cond2 == true@, @bar.html@ will be used to render the data, etc. Note, @JapidController.dontRedirect()@ must be called to avoid an HTTP *redirect*, since calling another action in Play! runtime will usually create an HTTP redirect. Please note, Play!'s original author does not like action chaining for some reason. In fact there is no way to do action chaining without creating an HTTP redirect with the classic Play! controller. The @dontRedirect()@ opens up the possibility.
+
+
+h2. Invoking Actions in Templates
+
+Let's image a porlet-like web page. It's composed of multiple panels each of which displays totally different content. Let's say we have already created a controller and corresponding views to display each of the content pane. How can we reuse all the controllers and views in the portlet page?
+
+This is a page composition that is not supported by the default Play! rendering pipeline. 
+
+Japid provides a special command named @`invoke@ or @`a@ for action to help users to invoke a controller action right from a view template. 
+
+For an example, we have this controller:
+
+<pre>
+package controllers.more;
+import cn.bran.play.JapidController;
+
+public class Portlets extends JapidController {
+    public static void index() {
+        renderJapid("a", "b");
+    }
+
+    public static void panel1(String a) {
+        renderJapid(a);
+    }
+
+    public static void panel2(String b) {
+        renderJapid(b);
+    }
+}
+</pre>
+
+Highlight anywhere in the index() method and @ctrl-alt-v@ and say "yes" to the question and you are in the index.html. Change it to something like this:
+
+<pre>
+`args String a, String b
+
+`invoke controllers.more.Portlets.panel1(a)
+
+`a controllers.more.Portlets.panel2(b)
+
+</pre> 
+
+The @invoke@ or the short form @`a@ basically invokes the action method in the controller with the argument and includes whatever content the action generate right on the location.
+
+I feel this is very intuitive for many developers to compose complex pages, although the original Play! developers do not seem to like this idea. 
+
+h3. Advanced Caching with Invoke
+
+Now the @`invoke@ command can take one more option: a timeout value to cache the result from the action invocation. 
+
+Let's change the above template a little bit:
+
+<pre>
+    `args String a, String b
+    
+    `invoke controllers.more.Portlets.panel1(a)
+
+    `a controllers.more.Portlets.panel2(b), "10s"
+</pre>
+
+I have attached a Timeout specification to the second action invocation. The timeout value is a string such as "1s", "2mn" ("mn" for minute), "3h", "4d" ("29d" maximum), to specify how long to cache the result content from the action.  
+
+There are another way to specify if the result should be cached and for how long: using the Play! @CacheFor@ annotation on the action, like this:
+
+<pre>
+package controllers.more;
+import play.cache.CacheFor;
+import cn.bran.play.JapidController;
+
+public class Portlets extends JapidController {
+
+    @CacheFor("10s")
+    public static void panel2(String b) {
+        renderJapid(b);
+    }
+}
+</pre>
+
+The @CacheFor@ annotation overrides any timeout spec in the @`invoke@ command. 
+
+Now on to the "advance" part, *nested caching*. 
+
+What if the first level cached content is from a template that contains another cached @`invoke@? Will the outer cache "annihilate" the inner cache? The answer is "no".
+
+This is what will happen: the inner cache will "penetrate" the outer shell and operate by its own timeout pace. Consider a scenario where a complex home page (in our example the index.html) is cached for 20 seconds, but the headline news section (the panel2.html in our example) on the page will need to be updated very 10 seconds (or refresh every time a new request comes in). 
+
+There are two ways to specify cache controls:
+# use the @CacheFor@ annotation with the action method. 
+# append a timeout spec to the @`invoke@ command. This will override any timeout value given by a @CacheFor@ annotation on the action, if the annotation exists.  
+
+The controller:
+
+<pre>
+package controllers.more;
+import java.util.Date;
+
+import play.cache.CacheFor;
+import cn.bran.play.JapidController;
+
+public class Portlets extends JapidController {
+    @CacheFor("20s")
+    public static void index() {
+        renderJapid("a", "b");
+    }
+
+    public static void panel1(String a) {
+        System.out.println("panel1 called");
+        renderJapid(a);
+    }
+
+    public static void panel2(String b) {
+        System.out.println("panel2 called");
+        renderJapid(b);
+    }
+
+    @CacheFor("5s")
+    public static void panel3(String whatever) {
+        System.out.println("panel3 called");
+        renderText("<div>" + new Date() + "</div>");
+    }
+}
+
+</pre>
+
+The view:
+
+<pre>
+    `args String a, String b
+    
+    The outer most content is cached for 20 seconds, using the CacheFor annotation. ${new Date()}
+    this part is never cached.
+        `invoke controllers.more.Portlets.panel1(a)
+    this part is cached for 10 seconds. Note the timeout spec with invoke overrides CacheFor annotation.
+        `a controllers.more.Portlets.panel2(b), "10s"
+    this part is cached for 4 seconds, specified with CacheFor annotation in the controller.
+        `a controllers.more.Portlets.panel3(a + b)
+</pre>
+
+With this composition pattern, the whole page will be cached for 20 seconds, and the @panel2@ will be cached for 10 seconds, the @panel3@ is cached for 4 seconds since the action is annotated with a @CacheFor("4s")@. The panel1 part will not be cached at all since there is no cache control at all. 
+
+</pre>
+
+If you have sharp eyes, you may notice that the content in a cached block is usually updated 1 second before the specified timeout value. The render result cache builds a mechanism to *pre-expire* an entry 1 second in advance. The first client to get the *pre-expire* is responsible to update the cache while other requests coming during the one second window will still get the cached entry until the entry is *fully expired*. This mechanism is to make sure the cache will perform seamlessly in a highly concurrent environment.  
+
+
 
 h2. Use Japid to Render Email Content.
 
@@ -905,147 +1229,7 @@ The current Play html editor is unfortunately not HTML-aware(something to improv
 # navigate to controller actions in the reverse route lookup expression: @controller.action(), again, with the @Go to action@ command.
 # navigate to the derived Java files, with the @Go to generated Java file@ context command.   
 
-h2. Invoking Actions in Views
 
-Let's image a porlet-like web page. It's composed of multiple panels each of which displays totally different content. Let's say we have already created a controller and corresponding views to display each of the content pane. How can we reuse all the controllers and views in the portlet page?
-
-This is a page composition that is not supported by the default Play! rendering pipeline. 
-
-Japid provides a special command named @`invoke@ or @`a@ for action to help users to invoke a controller action right from a view template. 
-
-For an example, we have this controller:
-
-<pre>
-package controllers.more;
-import cn.bran.play.JapidController;
-
-public class Portlets extends JapidController {
-    public static void index() {
-        renderJapid("a", "b");
-    }
-
-    public static void panel1(String a) {
-        renderJapid(a);
-    }
-
-    public static void panel2(String b) {
-        renderJapid(b);
-    }
-}
-</pre>
-
-Highlight anywhere in the index() method and @ctrl-alt-v@ and say "yes" to the question and you are in the index.html. Change it to something like this:
-
-<pre>
-`args String a, String b
-
-`invoke controllers.more.Portlets.panel1(a)
-
-`a controllers.more.Portlets.panel2(b)
-
-</pre> 
-
-The @invoke@ or the short form @`a@ basically invokes the action method in the controller with the argument and includes whatever content the action generate right on the location.
-
-I feel this is very intuitive for many developers to compose complex pages, although the original Play! developers do not seem to like this idea. 
-
-h3. Advanced Caching with Invoke
-
-Now the @`invoke@ command can take one more option: a timeout value to cache the result from the action invocation. 
-
-Let's change the above template a little bit:
-
-<pre>
-    `args String a, String b
-    
-    `invoke controllers.more.Portlets.panel1(a)
-
-    `a controllers.more.Portlets.panel2(b), "10s"
-</pre>
-
-I have attached a Timeout specification to the second action invocation. The timeout value is a string such as "1s", "2mn" ("mn" for minute), "3h", "4d" ("29d" maximum), to specify how long to cache the result content from the action.  
-
-There are another way to specify if the result should be cached and for how long: using the Play! @CacheFor@ annotation on the action, like this:
-
-<pre>
-package controllers.more;
-import play.cache.CacheFor;
-import cn.bran.play.JapidController;
-
-public class Portlets extends JapidController {
-
-    @CacheFor("10s")
-    public static void panel2(String b) {
-        renderJapid(b);
-    }
-}
-</pre>
-
-The @CacheFor@ annotation overrides any timeout spec in the @`invoke@ command. 
-
-Now on to the "advance" part, *nested caching*. 
-
-What if the first level cached content is from a template that contains another cached @`invoke@? Will the outer cache "annihilate" the inner cache? The answer is "no".
-
-This is what will happen: the inner cache will "penetrate" the outer shell and operate by its own timeout pace. Consider a scenario where a complex home page (in our example the index.html) is cached for 20 seconds, but the headline news section (the panel2.html in our example) on the page will need to be updated very 10 seconds (or refresh every time a new request comes in). 
-
-There are two ways to specify cache controls:
-# use the @CacheFor@ annotation with the action method. 
-# append a timeout spec to the @`invoke@ command. This will override any timeout value given by a @CacheFor@ annotation on the action, if the annotation exists.  
-
-The controller:
-
-<pre>
-package controllers.more;
-import java.util.Date;
-
-import play.cache.CacheFor;
-import cn.bran.play.JapidController;
-
-public class Portlets extends JapidController {
-    @CacheFor("20s")
-    public static void index() {
-        renderJapid("a", "b");
-    }
-
-    public static void panel1(String a) {
-        System.out.println("panel1 called");
-        renderJapid(a);
-    }
-
-    public static void panel2(String b) {
-        System.out.println("panel2 called");
-        renderJapid(b);
-    }
-
-    @CacheFor("5s")
-    public static void panel3(String whatever) {
-        System.out.println("panel3 called");
-        renderText("<div>" + new Date() + "</div>");
-    }
-}
-
-</pre>
-
-The view:
-
-<pre>
-    `args String a, String b
-    
-    The outer most content is cached for 20 seconds, using the CacheFor annotation. ${new Date()}
-    this part is never cached.
-        `invoke controllers.more.Portlets.panel1(a)
-    this part is cached for 10 seconds. Note the timeout spec with invoke overrides CacheFor annotation.
-        `a controllers.more.Portlets.panel2(b), "10s"
-    this part is cached for 4 seconds, specified with CacheFor annotation in the controller.
-        `a controllers.more.Portlets.panel3(a + b)
-</pre>
-
-With this composition pattern, the whole page will be cached for 20 seconds, and the @panel2@ will be cached for 10 seconds, the @panel3@ is cached for 4 seconds since the action is annotated with a @CacheFor("4s")@. The panel1 part will not be cached at all since there is no cache control at all. 
-
-</pre>
-
-If you have sharp eyes, you may notice that the content in a cached block is usually updated 1 second before the specified timeout value. The render result cache builds a mechanism to *pre-expire* an entry 1 second in advance. The first client to get the *pre-expire* is responsible to update the cache while other requests coming during the one second window will still get the cached entry until the entry is *fully expired*. This mechanism is to make sure the cache will perform seamlessly in a highly concurrent environment.  
 
 
 
@@ -1088,6 +1272,11 @@ This is how to run the sample:
 # if you would like to load it in Eclipse for example, you run @play eclipsify@ command and open it in Eclipse. 
 # start the application and hit @http://localhost:9000/@, you'll get a page with many links to different actions.
 # follow those links to see how each features are used in a demo code. 
+
+h2. Using Groovy and Japid in the Same Project
+
+xxx
+
   
 h2. Future work
 

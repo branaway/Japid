@@ -1,6 +1,6 @@
 package controllers.more;
 
-
+import models.DataModel;
 
 // make sure you have 
 // 		module.japid=${play.path}/modules/japid-head
@@ -9,24 +9,25 @@ package controllers.more;
 
 public class MyController extends BaseController {
 
-    public static void index() {
-        renderJapid("Hello world!", 123);
-    }
+	public static void index() {
+		renderJapid("Hello world!", 123);
+	}
 
-    public static void echo(String m) {
-    	validation.required("m", m);
-    	renderJapid("m", 123);
-    }
-    
-    public static void subview() {
-    	renderJapid("subviews....");
-    }
+	public static void echo(String m) {
+		validation.required("m", m);
+		renderJapid("m", 123);
+	}
+
+	public static void subview() {
+		renderJapid("subviews....");
+	}
 
 	public static void quickview() {
 		renderJapid();
 	}
-	
+
 	public static void scriptline() {
 		renderJapid();
 	}
+
 }

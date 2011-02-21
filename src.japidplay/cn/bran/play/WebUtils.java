@@ -1,5 +1,6 @@
 package cn.bran.play;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Date;
 
@@ -35,6 +36,9 @@ public class WebUtils {
 		} else if (o instanceof Integer) {
 			Integer n = (Integer) o;
 			r = n != 0 ? true : false;
+		} else if (o instanceof Long) {
+			Long n = (Long) o;
+			r = n != 0 ? true : false;
 		}
 		else if (o instanceof Collection){
 			Collection col = ((Collection)o);
@@ -43,14 +47,14 @@ public class WebUtils {
 			else
 				return false;
 		}
+		else if (o.getClass().isArray()) {
+			return Array.getLength(o) > 0;
+		}
 		else if (o instanceof String) {
-			return ((String)o).trim().length() > 0;
+			return ((String)o).length() > 0;
 		}
-		else if (o instanceof Object[]) {
-			return ((Object[])o).length > 0;
-		}
+		// anything more?
 		else {
-			// TODO more
 			r = o != null ? true : false;
 		}
 
