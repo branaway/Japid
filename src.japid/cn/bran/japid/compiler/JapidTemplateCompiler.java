@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.TemplateClassMetaData;
-import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.RenderResult;
 
@@ -82,7 +81,7 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 			regularTagInvoke(tag);
 		}
 		
-		tagsStack.push(tag);
+		pushToStack(tag);
 		markLine(parser.getLineNumber());
 		println();
 		skipLineBreak = true;

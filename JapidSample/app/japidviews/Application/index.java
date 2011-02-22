@@ -91,6 +91,18 @@ p("\n" +
 "	predefined messages</a></li>\n" + 
 "	<li><a href=\"application/postlist\">looping and tag calling</a></li>\n" + 
 "	<li><a href=\"application/each\">the *Each* tag</a></li>\n" + 
+"	<li><a href=\"application/ifs2\">open if statement: minimalistic if-else exposing complete looping properties</a>\n" + 
+"	   <p>example: </p>\n" + 
+"	   <pre>\n" + 
+"		    `if expr\n" + 
+"		        xxx\n" + 
+"		    `else if expr\n" + 
+"		        yyy\n" + 
+"		    `else\n" + 
+"		        zzz\n" + 
+"		    `\n" + 
+"	   </pre>\n" + 
+"	</li>\n" + 
 "	<li><a href=\"application/invokeInLoop\">using invoke tag with\n" + 
 "	local variables requires final attribute</a></li>\n" + 
 "	<li><a href=\"renderJapidWith/templates/suppressNull.html\">suppressNull,\n" + 

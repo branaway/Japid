@@ -14,7 +14,6 @@
 package cn.bran.japid.compiler;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -24,6 +23,7 @@ import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.InnerClassMeta;
 import cn.bran.japid.classmeta.MimeTypeEnum;
 import cn.bran.japid.compiler.JapidParser.Token;
+import cn.bran.japid.compiler.Tag.TagIf;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
 import cn.bran.japid.template.RenderResult;
@@ -40,17 +40,26 @@ import cn.bran.japid.util.DirUtil;
  * 
  */
 public abstract class JapidAbstractCompiler {
-	//pattern:  } else if xxx {
-	static final String ELSE_IF_PATTERN_STRING = "\\s*\\}\\s*else\\s*if\\s+([^\\(].*)\\{\\s*";
+	// pattern: } else if xxx {
+	static final String ELSE_IF_PATTERN_STRING = "\\s*\\}\\s*else\\s*if\\s+([^\\(].*)\\s*";
 	static final Pattern ELSE_IF_PATTERN = Pattern.compile(ELSE_IF_PATTERN_STRING);
+	static final String OPEN_ELSE_IF_PATTERN_STRING = "\\s*else\\s*if\\s+([^\\(].*)\\s*";
+	static final Pattern OPEN_ELSE_IF_PATTERN = Pattern.compile(OPEN_ELSE_IF_PATTERN_STRING);
+	static final String OPEN_ELSE_STRING = "\\s*else\\s*";
+	static final String SPACE_OR_NONE = "\\s*";
+	static final String SPACE_AT_LEAST_ONE = "\\s+";
 
-	//pattern:  if xxx {
-	static final String GROOVY_IF_PATTERN = "if\\s+[^\\(].*";
+	// please trim the string before applying the pattern
+	// the idea is to substitute the open for with "each" tag
+	static final String OPEN_FOR_PATTERN_STRING = "for\\s+([^\\(].+)\\s*:\\s*(.+[^\\{])";
+	static final Pattern OPEN_FOR_PATTERN = Pattern.compile(OPEN_FOR_PATTERN_STRING);
+
+	// pattern: if xxx {
+	static final String OPEN_IF_PATTERN1 = "if\\s+[^\\(].*";
 
 	private static final String JAPID_RESULT = "cn.bran.play.JapidResult";
 
 	private static final String ARGS = "args";
-	private static final String ROOT_TAGNAME = "_root";
 
 	protected static final String HTML = ".html";
 	// private static final String DO_BODY = "doBody";
@@ -59,48 +68,16 @@ public abstract class JapidAbstractCompiler {
 	protected JapidTemplate template;
 	protected JapidParser parser;
 	protected boolean doNextScan = true;
-	protected Stack<Tag> tagsStack = new Stack<Tag>();
+
+	// the tagsStack only tracks the regular tags, particularly not including
+	// the open if
+	private Stack<Tag> tagsStack = new Stack<Tag>();
+	// the shadow is not used to keep the stacking of open if and regular tag
+	private Stack<Tag> tagsStackShadow = new Stack<Tag>();
+
 	protected int tagIndex;
 	protected boolean skipLineBreak;
 	protected boolean useWithPlay = true;
-
-	private boolean verbatim;
-	
-	public static class Tag {
-		public String tagName;
-		public int startLine;
-		public boolean hasBody;
-		// bran: put everything in the args tag in it
-		public String callbackArgs = null;
-//		public StringBuffer bodyBuffer = new StringBuffer(2000);
-		// each line contains a line of text in the body of a tag scope.
-		private List<String> bodyTextList = new ArrayList<String>();
-		{
-			bodyTextList.add("");
-		}
-		public String innerClassName;
-		public String args = "";
-		public int tagIndex;
-		public String getBodyText() {
-			if (!hasBody)
-				return null;
-			StringBuffer sb = new StringBuffer(2000);
-			for (String s: bodyTextList) {
-				sb.append(s).append('\n');
-			}
-			String string = sb.toString();
-			return string.substring(0, string.length() - 1);
-		}
-		public String getTagVarName() {
-			return tagName.replace('.', '_').replace('/', '_');
-		}
-		public String getBodyVar() {
-			 return "_" + getTagVarName() + tagIndex + "DoBody";
-		}
-		public boolean isRoot() {
-			return tagName.equals(ROOT_TAGNAME);
-		}
-	}
 
 	public void compile(JapidTemplate t) {
 		template = t;
@@ -125,7 +102,7 @@ public abstract class JapidAbstractCompiler {
 			}
 
 			String token = parser.getToken();
-			
+
 			switch (state) {
 			case EOF:
 				break loop;
@@ -177,7 +154,7 @@ public abstract class JapidAbstractCompiler {
 				if (tagsStack.isEmpty()) {
 					throw new JapidCompilationException(template, currentLine, "#{/" + tagName + "} is not opened.");
 				}
-				Tag tag = tagsStack.pop();
+				Tag tag = popStack();
 				endTag(tag);
 				break;
 			case TEMPLATE_ARGS:
@@ -185,6 +162,14 @@ public abstract class JapidAbstractCompiler {
 				break;
 			}
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	private Tag popStack() {
+		// tagsStackShadow.pop();
+		return tagsStack.pop();
 	}
 
 	protected void closingBrace(String token) {
@@ -195,7 +180,7 @@ public abstract class JapidAbstractCompiler {
 
 	protected void plain(String token) {
 		String text = token.replace("\\", "\\\\").replaceAll("\"", "\\\\\"");
-//		text = text.replace("``", "`"); // escaped `, already done by parser
+		// text = text.replace("``", "`"); // escaped `, already done by parser
 		if (skipLineBreak && text.startsWith(NEW_LINE)) {
 			text = text.substring(1);
 		}
@@ -214,10 +199,10 @@ public abstract class JapidAbstractCompiler {
 		String ref = this.getTemplateClassMetaData().addStaticText(lines, text);
 		if (ref != null) {
 			// print the static content via the varaible
-//			print("p(" + ref + ");");
+			// print("p(" + ref + ");");
 			// print the static content directly
 			print("p(" + lines + ");");
-			
+
 			markLine(parser.getLineNumber());
 			println();
 		}
@@ -262,7 +247,7 @@ public abstract class JapidAbstractCompiler {
 			// markLine(parser.getLine() + i);
 		}
 		String emptySuffix = " + \n\"\"";
-		if(result.endsWith(emptySuffix)) {
+		if (result.endsWith(emptySuffix)) {
 			result = result.substring(0, result.length() - emptySuffix.length());
 		}
 		return result;
@@ -271,12 +256,11 @@ public abstract class JapidAbstractCompiler {
 	protected abstract void startTag(Tag tag);
 
 	protected void println() {
-//		print(NEW_LINE);
+		// print(NEW_LINE);
 		Tag currentScope = this.tagsStack.peek();
 		currentScope.bodyTextList.add("");
 		currentLine++;
 	}
-
 
 	/**
 	 * always append to the last line
@@ -285,7 +269,7 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void print(String text) {
 		Tag currentScope = this.tagsStack.peek();
-//		currentScope.bodyBuffer.append(text);
+		// currentScope.bodyBuffer.append(text);
 		int lastIndex = currentScope.bodyTextList.size() - 1;
 		String lastLine = currentScope.bodyTextList.get(lastIndex);
 		lastLine += text;
@@ -314,8 +298,8 @@ public abstract class JapidAbstractCompiler {
 	}
 
 	protected void scriptline(String token) {
-//		String line = token.trim();
-//		if ()
+		// String line = token.trim();
+		// if ()
 		script(token);
 	}
 
@@ -326,15 +310,15 @@ public abstract class JapidAbstractCompiler {
 		}
 
 		for (int i = 0; i < lines.length; i++) {
-			String line = lines[i];//.trim();
+			String line = lines[i];// .trim();
 			if (startsWithIgnoreSpace(line, "import")) {
 				getTemplateClassMetaData().addImportLine(line);
 			} else if (startsWithIgnoreSpace(line, "//")) {
 				// ignore
 			} else if (startsWithIgnoreSpace(line, "extends")) {
 				String layout = line.trim().substring("extends".length()).trim();
-				//remove quotes if they present
-				
+				// remove quotes if they present
+
 				boolean hasParam = false;
 				int p = 0;
 				for (; p < layout.length(); p++) {
@@ -344,7 +328,7 @@ public abstract class JapidAbstractCompiler {
 						break;
 					}
 				}
-				
+
 				if (!hasParam) {
 					layout = layout.replace("'", "");
 					layout = layout.replace("\"", "");
@@ -355,32 +339,31 @@ public abstract class JapidAbstractCompiler {
 						// new feature allow extends .sub.layout.html
 						if (layout.startsWith("./")) {
 							layout = getTemplateClassMetaData().packageName + layout.substring(1);
-						}
-						else { 
+						} else {
 							layout = getTemplateClassMetaData().packageName + layout;
 						}
 					}
 					getTemplateClassMetaData().superClass = layout.replace('/', '.');
-				}
-				else {
-					String layoutName  = layout.substring(0, p);
+				} else {
+					String layoutName = layout.substring(0, p);
 					layoutName = layoutName.replace("'", "");
 					layoutName = layoutName.replace("\"", "");
 					layoutName = layoutName.replace('/', '.');
 					layoutName = removeEndingString(layoutName, HTML);
-					
+
 					// due to similarity, let's borrow a tag parsing
 					Tag tag = new TagInvocationLineParser().parse(layoutName + layout.substring(p));
 
 					if (tag.tagName.startsWith(".")) {
-						// partial path, use current package as the root and append the path to it
+						// partial path, use current package as the root and
+						// append the path to it
 						tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
 					}
 					getTemplateClassMetaData().superClass = tag.tagName;
 					getTemplateClassMetaData().superClassRenderArgs = tag.args;
-					
+
 				}
-				
+
 			} else if (startsWithIgnoreSpace(line, "contentType")) {
 				// TODO: should also take standard tag name: Content-Type
 				String contentType = line.trim().substring("contentType".length()).trim().replace("'", "").replace("\"", "");
@@ -415,12 +398,15 @@ public abstract class JapidAbstractCompiler {
 				String args = line.trim().substring("log".length()).trim().replace(";", "");
 				if (args.trim().length() == 0)
 					args = "\"\"";
-				String logLine = "System.out.println(\"" + this.template.name.replace('\\', '/') + "(line " + (parser.getLineNumber() + i) + "): \" + " + args + ");";
+				String logLine = "System.out.println(\"" + this.template.name.replace('\\', '/') + "(line " + (parser.getLineNumber() + i)
+						+ "): \" + " + args + ");";
 				println(logLine);
 			} else if (startsWithIgnoreSpace(line, "invoke")) {
 				String args = line.trim().substring("invoke".length()).trim().replace(";", "");
 				doActionInvokeDirective(args);
-			} else if (startsWith(line, "a")) {  // `a == `invoke, the a must be the first char to avoid collision
+			} else if (startsWith(line, "a")) { // `a == `invoke, the a must be
+												// the first char to avoid
+												// collision
 				String args = line.substring(2).trim().replace(";", "");
 				doActionInvokeDirective(args);
 			} else if (startsWithIgnoreSpace(line, "suppressNull") || line.trim().equals("suppressNull")) {
@@ -432,11 +418,12 @@ public abstract class JapidAbstractCompiler {
 			} else if (startsWithIgnoreSpace(line, "tag")) {
 				String tagline = line.trim().substring(4);
 				doTagDirective(tagline);
-			} else if (startsWith(line, "t")) { // `t == `tag, the t must be the first char to avoid collision
+			} else if (startsWith(line, "t")) { // `t == `tag, the t must be the
+												// first char to avoid collision
 				String tagline = line.substring(2);
 				doTagDirective(tagline);
 			} else if (startsWithIgnoreSpace(line, "each") || startsWithIgnoreSpace(line, "Each")) {
-				// support one line type of tag invocation. 
+				// support one line type of tag invocation.
 				Tag tag = buildTagDirective(line);
 				tag.tagName = "Each";
 				tag.hasBody = true;
@@ -450,13 +437,13 @@ public abstract class JapidAbstractCompiler {
 				startTag(set);
 
 				if (!set.hasBody) { // one liner.
-					set = tagsStack.pop();
+					set = popStack();
 				}
 			} else if (startsWithIgnoreSpace(line, "get")) {
 				Tag get = buildTagDirective(line);
 				get.hasBody = false;
 				startTag(get);
-				get = tagsStack.pop();
+				get = popStack();
 			} else if (startsWithIgnoreSpace(line, "def")) {
 				// a function definition block
 				Tag get = buildTagDirective(line);
@@ -473,34 +460,126 @@ public abstract class JapidAbstractCompiler {
 			} else if (startsWithIgnoreSpace(line, "if")) {
 				// `if expr {, the last { is optional
 				String expr = line.trim();
-				if (expr.matches(GROOVY_IF_PATTERN)) {
+				if (expr.matches(OPEN_IF_PATTERN1)) {
 					// get the expression
-					expr = removeEndingString(expr.substring(2).trim(), "{").trim();
-					expr = "if(asBoolean(" + expr + ")) {";
+					String trim = expr.substring(2).trim();
+					if (trim.endsWith("{")) {
+						// semi-open
+						expr = removeEndingString(trim, "{").trim();
+						expr = "if(asBoolean(" + expr + ")) {";
+					} else {
+						// true open. out a shadow tag, since we want reuse the
+						Tag.TagIf iftag = new Tag.TagIf(trim, parser.getLineNumber());
+						pushToStack(iftag);
+						expr = "if(asBoolean(" + trim + ")) {";
+					}
+					print(expr);
+					markLine(parser.getLineNumber() + i);
+					println();
+				} else {
+					// plain Java if
+					print(expr);
+					markLine(parser.getLineNumber() + i);
+					println();
 				}
-				print(expr);
-				markLine(parser.getLineNumber() + i);
-				println();
-			} else if (line.matches(ELSE_IF_PATTERN_STRING)) { 
+			} else if (line.matches(ELSE_IF_PATTERN_STRING)) {
+				// semi open
 				String expr = line.trim();
 				Matcher matcher = ELSE_IF_PATTERN.matcher(line);
 				if (matcher.matches()) {
 					expr = matcher.group(1).trim();
-					expr = "} else if(asBoolean(" + expr + ")) {";
+					expr = "} else if(asBoolean(" + removeEndingString(expr, "{") + ")) {";
+					print(expr);
+					markLine(parser.getLineNumber() + i);
+					println();
+				} else {
+					print(expr);
+					markLine(parser.getLineNumber() + i);
+					println();
 				}
+			} else if (line.matches(OPEN_ELSE_IF_PATTERN_STRING)) {
+				// open
+				String expr = line.trim();
+				Matcher matcher = OPEN_ELSE_IF_PATTERN.matcher(line);
+				if (matcher.matches()) {
+					expr = matcher.group(1).trim();
+					// end previous if shadow and star a new one
+					Tag tagShadow = tagsStackShadow.peek();
+					if (tagShadow instanceof TagIf) {
+						tagsStackShadow.pop();
+						// to close an open if
+						// start a new if
+						Tag.TagIf iftag = new Tag.TagIf(expr, parser.getLineNumber());
+						pushToStack(iftag);
+						expr = "} else if(asBoolean(" + expr + ")) {";
+					} else {
+						throw new RuntimeException("the open \"else if\" statement is not properly matched to a previous if");
+					}
+				} 
 				print(expr);
 				markLine(parser.getLineNumber() + i);
 				println();
-			} else if (line.trim().length() == 0){
+			} else if (line.matches(OPEN_ELSE_STRING)) {
+				Tag tagShadow = tagsStackShadow.peek();
+				if (tagShadow instanceof TagIf) {
+					tagsStackShadow.pop();
+					// to close an open if
+					// start a new if
+					print("} else {");
+					markLine(parser.getLineNumber() + i);
+					println();
+					Tag.TagIf iftag = new Tag.TagIf("", parser.getLineNumber());
+					pushToStack(iftag);
+				} else {
+					throw new RuntimeException("the open \"else\" statement is not properly matched to a previous if");
+				}
+			} else if (line.trim().matches(OPEN_FOR_PATTERN_STRING)) {
+				// simply replace it with a "each" tag call
+				String expr = line.trim();
+				Matcher matcher = OPEN_FOR_PATTERN.matcher(expr);
+				if (matcher.matches()) {
+					String instanceDecl = matcher.group(1);
+					String collection = matcher.group(2);
+					expr = "each " + collection + " | " + instanceDecl;
+					Tag tag = buildTagDirective(expr);
+					tag.tagName = "Each";
+					tag.hasBody = true;
+					startTag(tag);
+				} else {
+					// should not happen
+					print(expr);
+					markLine(parser.getLineNumber() + i);
+					println();
+				}
+			} else if (line.trim().length() == 0) {
 				// a single ` empty line, treated as the closing for `tag
-				if (!tagsStack.empty()) {
-					Tag tag = tagsStack.peek();
-					if (!tag.isRoot()) {
-						tag = tagsStack.pop();
-						endTag(tag);
+				try {
+					Tag tagShadow = tagsStackShadow.peek();
+					if (tagShadow.isRoot()) {
+//						System.out.println("");
+					} else {
+						tagShadow = tagsStackShadow.pop();
+
+						if (tagShadow instanceof TagIf) {
+							// to close an open if
+							print("}");
+							markLine(parser.getLineNumber() + i);
+							println();
+						} else {
+							if (!tagsStack.empty()) {
+								Tag tag = tagsStack.peek();
+								if (!tag.isRoot()) {
+									tag = popStack();
+									endTag(tag);
+								}
+							}
+						}
 					}
+				} catch (Exception e) {
+					System.out.println(e);
 				}
 			} else {
+				// OK plain Java code
 				print(line);
 				markLine(parser.getLineNumber() + i);
 				println();
@@ -522,7 +601,7 @@ public abstract class JapidAbstractCompiler {
 
 	/**
 	 * @param line
-	 * @param string 
+	 * @param string
 	 * @return
 	 */
 	protected static boolean startsWithIgnoreSpace(String line, String string) {
@@ -532,13 +611,13 @@ public abstract class JapidAbstractCompiler {
 
 	/**
 	 * @param line
-	 * @param string 
+	 * @param string
 	 * @return
 	 */
 	private boolean startsWith(String line, String string) {
 		return line.startsWith(string + " ") || line.startsWith(string + "\t");
 	}
-	
+
 	/**
 	 * @param args
 	 */
@@ -560,7 +639,8 @@ public abstract class JapidAbstractCompiler {
 		Tag tag = buildTagDirective(tagline);
 		startTag(tag);
 		if (!tag.hasBody) { // one liner.
-			tag = tagsStack.pop();
+			tag = tagsStackShadow.pop();
+			tag = popStack();
 			endTag(tag);
 		}
 	}
@@ -588,7 +668,8 @@ public abstract class JapidAbstractCompiler {
 
 	/**
 	 * TODO: remove all the dependency on the Play classes
-	 * @param token 
+	 * 
+	 * @param token
 	 * 
 	 * @param absolute
 	 */
@@ -614,7 +695,8 @@ public abstract class JapidAbstractCompiler {
 			// extract params if any
 			int indexOfParam = action.indexOf("(");
 			if (indexOfParam < 1) {
-				throw new TemplateSyntaxException("action arguments must be enclosed in parenthesis.", template.name, action, this.currentLine);
+				throw new TemplateSyntaxException("action arguments must be enclosed in parenthesis.", template.name, action,
+						this.currentLine);
 			}
 
 			String actionPart = action.substring(0, indexOfParam).trim();
@@ -647,6 +729,7 @@ public abstract class JapidAbstractCompiler {
 		};
 
 		this.tagsStack.push(rootTag);
+		this.tagsStackShadow.push(rootTag);
 
 		this.parser = new JapidParser(source);
 
@@ -656,9 +739,9 @@ public abstract class JapidAbstractCompiler {
 		tempName = DirUtil.mapSrcToJava(tempName);
 		tempName = tempName.substring(0, tempName.lastIndexOf(".java"));
 		tempName = tempName.replace('\\', '/');
-//		if (tempName.endsWith(HTML)) {
-//			tempName = tempName.substring(0, tempName.indexOf(HTML));
-//		}
+		// if (tempName.endsWith(HTML)) {
+		// tempName = tempName.substring(0, tempName.indexOf(HTML));
+		// }
 
 		// extract path
 		int lastSep = tempName.lastIndexOf('/');
@@ -671,7 +754,6 @@ public abstract class JapidAbstractCompiler {
 		} else {
 			getTemplateClassMetaData().setClassName(tempName);
 		}
-		
 
 		parse();
 		// for (String n : BranTemplateCompiler.extensionsClassnames) {
@@ -680,9 +762,9 @@ public abstract class JapidAbstractCompiler {
 		// println("} }");
 		// println("}");
 
-		Tag tag = tagsStack.pop();
+		Tag tag = popStack();
 		if (!tagsStack.empty())
-			throw new RuntimeException ("There is(are) " + tagsStack.size() + " unclosed tag(s) in the template: " + this.template.name);
+			throw new RuntimeException("There is(are) " + tagsStack.size() + " unclosed tag(s) in the template: " + this.template.name);
 		// remove print nothing statement to save a few CPU cycles
 		this.getTemplateClassMetaData().body = tag.getBodyText().replace("p(\"\")", "").replace("pln(\"\")", "pln()");
 		postParsing(tag);
@@ -694,7 +776,7 @@ public abstract class JapidAbstractCompiler {
 	 * add anything before the java source generation
 	 */
 	protected void postParsing(Tag tag) {
-			this.getTemplateClassMetaData().renderArgs = tag.callbackArgs;
+		this.getTemplateClassMetaData().renderArgs = tag.callbackArgs;
 	}
 
 	abstract protected AbstractTemplateClassMetaData getTemplateClassMetaData();
@@ -709,44 +791,50 @@ public abstract class JapidAbstractCompiler {
 	 * @return
 	 */
 	protected Tag buildTag(String token) {
-			String tagText = token.trim().replaceAll(NEW_LINE, SPACE);
+		String tagText = token.trim().replaceAll(NEW_LINE, SPACE);
 
-			boolean hasBody = !parser.checkNext().endsWith("/");
-	
-			Tag tag = new TagInvocationLineParser().parse(tagText);
-			if (tag.tagName== null || tag.tagName.length() == 0)
-				throw new RuntimeException("tag name was empty: " + tagText);
-			
-			if (tag.tagName.startsWith(".")) {
-				// partial path, use current package as the root and append the path to it
-				tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
-			}
-			tag.startLine = parser.getLineNumber();
-			tag.hasBody = hasBody;
-			tag.tagIndex = tagIndex++;
-			return tag;
+		boolean hasBody = !parser.checkNext().endsWith("/");
+
+		Tag tag = new TagInvocationLineParser().parse(tagText);
+		if (tag.tagName == null || tag.tagName.length() == 0)
+			throw new RuntimeException("tag name was empty: " + tagText);
+
+		if (tag.tagName.startsWith(".")) {
+			// partial path, use current package as the root and append the path
+			// to it
+			tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
 		}
+		tag.startLine = parser.getLineNumber();
+		tag.hasBody = hasBody;
+		tag.tagIndex = tagIndex++;
+		return tag;
+	}
 
 	/**
 	 * e.g.:
-	 * <pre>`tag myTag a, c |String c</pre>
+	 * 
+	 * <pre>
+	 * `tag myTag a, c |String c
+	 * </pre>
+	 * 
 	 * @return
 	 */
 	protected Tag buildTagDirective(String token) {
-			String tagText = token.trim();
-	
-			Tag tag = new TagInvocationLineParser().parse(tagText);
-			if (tag.tagName== null || tag.tagName.length() == 0)
-				throw new RuntimeException("tag name was empty: " + tagText);
-			
-			if (tag.tagName.startsWith(".")) {
-				// partial path, use current package as the root and append the path to it
-				tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
-			}
-			tag.startLine = parser.getLineNumber();
-			tag.tagIndex = tagIndex++;
-			return tag;
+		String tagText = token.trim();
+
+		Tag tag = new TagInvocationLineParser().parse(tagText);
+		if (tag.tagName == null || tag.tagName.length() == 0)
+			throw new RuntimeException("tag name was empty: " + tagText);
+
+		if (tag.tagName.startsWith(".")) {
+			// partial path, use current package as the root and append the path
+			// to it
+			tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
 		}
+		tag.startLine = parser.getLineNumber();
+		tag.tagIndex = tagIndex++;
+		return tag;
+	}
 
 	/**
 	 * @param actionInvocationWithCache
@@ -760,7 +848,7 @@ public abstract class JapidAbstractCompiler {
 			throw new RuntimeException("invoke: action arguments must be enclosed in parenthesis.");
 		}
 		int right = action.lastIndexOf(')');
-		String actionPath = "\"" + action.substring(0, left) + "\""; 
+		String actionPath = "\"" + action.substring(0, left) + "\"";
 		String args = action.substring(left + 1, right).trim();
 		String ttl = "\"\"";
 
@@ -768,12 +856,12 @@ public abstract class JapidAbstractCompiler {
 			ttl = params.get(1);
 			if (params.size() > 2) {
 				for (int i = 2; i < params.size(); i++) {
-					args += ","  + params.get(i);
+					args += "," + params.get(i);
 				}
 
-				if (args.startsWith(",")) 
+				if (args.startsWith(","))
 					args = args.substring(1);
-				
+
 				if (args.endsWith(","))
 					args = args.substring(0, args.length() - 1);
 			}
@@ -799,8 +887,7 @@ public abstract class JapidAbstractCompiler {
 			getTemplateClassMetaData().superClass = layoutName.replace('/', '.');
 		} else if (tag.tagName.equals("invoke")) {
 			invokeAction(tag);
-		}
-		else {
+		} else {
 			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
 			if (!tag.hasBody) {
 				println(tagVar + ".render(" + tag.args + ");");
@@ -815,7 +902,7 @@ public abstract class JapidAbstractCompiler {
 		if (tag.hasBody) {
 			throw new JapidCompilationException(template, currentLine, "invoke tag cannot have a body. Must be ended with /}");
 		}
-	
+
 		this.getTemplateClassMetaData().setHasActionInvocation();
 		String action = tag.args;
 		printActionInvocation(action);
@@ -826,13 +913,14 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void endRegularTag(Tag tag) {
 		if (tag.hasBody) {
-			InnerClassMeta inner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.callbackArgs, tag.getBodyText());
+			InnerClassMeta inner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.callbackArgs,
+					tag.getBodyText());
 			if (inner == null)
 				System.out.println(tag.tagName + " not allowed to have instance of this tag");
 			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
 			String tagLine = tagVar + ".render(" + tag.args + ", " + inner.getAnonymous() + ");";
 			println(tagLine);
-		} else  {
+		} else {
 			// for simple tag call without call back:
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
 		}
@@ -840,6 +928,7 @@ public abstract class JapidAbstractCompiler {
 
 	/**
 	 * define a string returning method from a block
+	 * 
 	 * @param tag
 	 */
 	protected void def(Tag tag) {
@@ -854,18 +943,20 @@ public abstract class JapidAbstractCompiler {
 	protected void endTag(Tag tag) {
 		String lastInStack = tag.tagName;
 		String tagName = lastInStack;
-//		if (!lastInStack.equals(tagName)) {
-//			throw new JapidCompilationException(template, tag.startLine, "#{" + tag.tagName + "} is not closed.");
-//		}
+		// if (!lastInStack.equals(tagName)) {
+		// throw new JapidCompilationException(template, tag.startLine, "#{" +
+		// tag.tagName + "} is not closed.");
+		// }
 		if (tagName.equals("def")) {
 			endDef(tag);
 		} else if (tagName.equals("doBody")) {
 		} else if (tagName.equals("extends")) {
 		} else if (tagName.equals("get")) {
-//		} else if (tagName.equals("set")) { // the set is handled in the JapidTemplateCompiler endTagSpecial()
+			// } else if (tagName.equals("set")) { // the set is handled in the
+			// JapidTemplateCompiler endTagSpecial()
 		} else if (tagName.equals("invoke")) {
 		} else if (tagName.equals("doLayout")) {
-		} else if (endTagSpecial(tag)) { 
+		} else if (endTagSpecial(tag)) {
 		} else {
 			endRegularTag(tag);
 		}
@@ -873,58 +964,62 @@ public abstract class JapidAbstractCompiler {
 		println();
 		// tagIndex--;
 		skipLineBreak = true;
-	} 
+	}
 
 	/**
-	 * sub class can detect special tag and return true to indicate the tag has been processed. 
+	 * sub class can detect special tag and return true to indicate the tag has
+	 * been processed.
 	 * 
 	 * @param tag
 	 * @return
 	 */
-	protected boolean endTagSpecial(Tag tag) {return false;}
-	
+	protected boolean endTagSpecial(Tag tag) {
+		return false;
+	}
+
 	static String createActionRunner(String action, String ttl, String base, String keys) {
 		String actionEscaped = action.replace("\"", "\\\"");
 		String controllerActionPart = action.substring(0, action.indexOf('('));
 		int lastDot = controllerActionPart.lastIndexOf('.');
 		String controllerName = controllerActionPart.substring(0, lastDot);
 		String actionName = controllerActionPart.substring(lastDot + 1);
-		
+
 		if (ttl == null) {
-			String template = 
-					"		%s.put(getOut().length(), new %s() {\n" + 
-					"			@Override\n" + 
-					"			public %s run() {\n" + 
-					"				try {\n" + 
-					"					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();\n" +
-					"					%s;\n" + 
-					"				} catch (%s jr) {\n" + 
-					"					return jr.getRenderResult();\n" + 
-					"				}\n" + 
-					"				throw new RuntimeException(\"No render result from running: %s\");\n" + 
-					"			}\n" + 
-					"		});";
-			return String.format(template, 
-					AbstractTemplateClassMetaData.ACTION_RUNNERS , 
+			String template =
+					"		%s.put(getOut().length(), new %s() {\n" +
+							"			@Override\n" +
+							"			public %s run() {\n" +
+							"				try {\n" +
+							"					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();\n" +
+							"					%s;\n" +
+							"				} catch (%s jr) {\n" +
+							"					return jr.getRenderResult();\n" +
+							"				}\n" +
+							"				throw new RuntimeException(\"No render result from running: %s\");\n" +
+							"			}\n" +
+							"		});";
+			return String.format(template,
+					AbstractTemplateClassMetaData.ACTION_RUNNERS,
 					ActionRunner.class.getName(),
 					RenderResult.class.getName(),
 					action,
 					JAPID_RESULT,
 					actionEscaped);
-		}
-		else {
-			// hardcode the cache action runner name to avoid dependency on the Play jar
-			
-			String template = 
-					"		%s.put(getOut().length(), new %s(%s, %s, %s, %s) {\r\n" + 
-					"			@Override\r\n" + 
-					"			public void runPlayAction() throws %s {\r\n" + 
-//					"				super.checkActionCacheFor(%s.class, \"%s\");\n" + 
-					"				%s; //\r\n" + 
-					"			}\r\n" + 
-					"		});\r\n";
-			return String.format(template, 
-					AbstractTemplateClassMetaData.ACTION_RUNNERS, 
+		} else {
+			// hardcode the cache action runner name to avoid dependency on the
+			// Play jar
+
+			String template =
+					"		%s.put(getOut().length(), new %s(%s, %s, %s, %s) {\r\n" +
+							"			@Override\r\n" +
+							"			public void runPlayAction() throws %s {\r\n" +
+							// "				super.checkActionCacheFor(%s.class, \"%s\");\n"
+							// +
+							"				%s; //\r\n" +
+							"			}\r\n" +
+							"		});\r\n";
+			return String.format(template,
+					AbstractTemplateClassMetaData.ACTION_RUNNERS,
 					"cn.bran.play.CacheablePlayActionRunner",
 					ttl,
 					controllerName + ".class",
@@ -933,19 +1028,19 @@ public abstract class JapidAbstractCompiler {
 					JAPID_RESULT,
 					action
 					);
-//			return String.format(template, 
-//					AbstractTemplateClassMetaData.ACTION_RUNNERS, 
-//					"cn.bran.play.CacheablePlayActionRunner",
-//					ttl,
-//					base, 
-//					"".equals(keys) ? "\"\"" : keys,
-//					JAPID_RESULT,
-//					controllerName,
-//					actionName,
-//					action
-//					);
+			// return String.format(template,
+			// AbstractTemplateClassMetaData.ACTION_RUNNERS,
+			// "cn.bran.play.CacheablePlayActionRunner",
+			// ttl,
+			// base,
+			// "".equals(keys) ? "\"\"" : keys,
+			// JAPID_RESULT,
+			// controllerName,
+			// actionName,
+			// action
+			// );
 		}
-	
+
 	}
 
 	protected int currentLine = 1;
@@ -961,5 +1056,15 @@ public abstract class JapidAbstractCompiler {
 
 	public void setUseWithPlay(boolean play) {
 		this.useWithPlay = play;
+	}
+
+	/**
+	 * @param tag
+	 */
+	protected void pushToStack(Tag tag) {
+		tagsStackShadow.push(tag);
+		if (!(tag instanceof TagIf))
+			tagsStack.push(tag);
+
 	}
 }

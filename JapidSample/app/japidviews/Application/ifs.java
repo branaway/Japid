@@ -84,8 +84,10 @@ p("\n" +
 p("\n" + 
 "    `if expr {\n" + 
 "        xxx\n" + 
-"    `} else {\n" + 
+"    `} else if expr {\n" + 
 "        yyy\n" + 
+"    `} else {\n" + 
+"        zzz\n" + 
 "    `}\n");// line 5
 p("</pre>\n" + 
 "</p>\n" + 
@@ -93,77 +95,83 @@ p("</pre>\n" +
 "    is equals to\n" + 
 "</p>\n" + 
 "<p>\n" + 
-"<pre>\n");// line 11
+"<pre>\n");// line 13
 p("\n" + 
 "    `if(cn.bran.play.WebUtils.asBoolean(expr)){\n" + 
 "        xxx\n" + 
-"    `} else {\n" + 
+"    `} else if(cn.bran.play.WebUtils.asBoolean(expr)){\n" + 
 "        yyy\n" + 
-"    `}\n");// line 19
+"    `} else {\n" + 
+"        zzz\n" + 
+"    `}\n");// line 21
 p("<pre>\n" + 
 "\n" + 
-"<p/>\n");// line 25
-if(asBoolean(str)) {// line 29
-p("    Got ");// line 29
-p(str);// line 30
-p("\n");// line 30
-} else {// line 31
-p("    str is empty\n");// line 31
-}// line 33
+"<p/>\n");// line 29
+if(asBoolean(str)) {// line 33
+p("    Got ");// line 33
+p(str);// line 34
+p("\n");// line 34
+} else if(asBoolean(str )) {// line 35
+p("    finally got ");// line 35
+p(str);// line 36
+p("\n");// line 36
+} else {// line 37
+p("    str is empty\n");// line 37
+}// line 39
 p("<p/>\n" + 
-"\n");// line 33
-if(asBoolean(col)) {// line 36
-p("    Got data from col: ");// line 36
-p(col);// line 37
-p("\n");// line 37
-} else {// line 38
-p("    col is empty\n");// line 38
-}// line 40
+"\n");// line 39
+if(asBoolean(col)) {// line 42
+p("    Got data from col: ");// line 42
+p(col);// line 43
+p("\n");// line 43
+} else {// line 44
+p("    col is empty\n");// line 44
+}// line 46
 p("\n" + 
-"<p/>\n");// line 40
-if(asBoolean(b)) {// line 43
-p("    right\n");// line 43
-} else {// line 45
-p("    wrong\n");// line 45
-}// line 47
+"<p/>\n");// line 46
+if(asBoolean(b)) {// line 49
+p("    right\n");// line 49
+} else {// line 51
+p("    wrong\n");// line 51
+}// line 53
 p("\n" + 
-"<p/>\n");// line 47
-if(asBoolean(a1)) {// line 50
-p("    got a1: ");// line 50
-p(a1);// line 51
-p("\n");// line 51
-} else {// line 52
-p("    a1 is empty\n");// line 52
-}// line 54
-p("<p/>\n");// line 54
-if(asBoolean(a2)) {// line 56
-p("    got a2: ");// line 56
-p(a2);// line 57
+"<p/>\n");// line 53
+if(asBoolean(a1)) {// line 56
+p("    got a1: ");// line 56
+p(a1);// line 57
 p("\n");// line 57
 } else {// line 58
-p("    a2 is empty\n");// line 58
+p("    a1 is empty\n");// line 58
 }// line 60
 p("<p/>\n");// line 60
-if(asBoolean(i)) {// line 62
-p("    got i: ");// line 62
-p(i);// line 63
+if(asBoolean(a2)) {// line 62
+p("    got a2: ");// line 62
+p(a2);// line 63
 p("\n");// line 63
 } else {// line 64
-p("    i == 0\n");// line 64
+p("    a2 is empty\n");// line 64
 }// line 66
 p("<p/>\n");// line 66
-if(asBoolean(s2)) {// line 68
-p("    got s2: ");// line 68
-p(s2);// line 69
+if(asBoolean(i)) {// line 68
+p("    got i: ");// line 68
+p(i);// line 69
 p("\n");// line 69
 } else {// line 70
-p("    s2 is empty\n");// line 70
+p("    i == 0\n");// line 70
 }// line 72
+p("<p/>\n");// line 72
+if(asBoolean(s2)) {// line 74
+p("    got s2: ");// line 74
+p(s2);// line 75
+p("\n");// line 75
+} else {// line 76
+p("    s2 is empty\n");// line 76
+}// line 78
 p("\n" + 
 "\n" + 
 "\n" + 
 "\n" + 
-"\n");// line 72
+"\n");// line 78
 
 	}
 

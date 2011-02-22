@@ -16,7 +16,7 @@ Version History:
         
         `args String a, String b
      
-    2. Enhanced the "if" and "else if" operator to take any expression as the condition without enclosing it in a pair of parenthesis "()"  
+    2. Enhanced the "if" and "else if" statements to take any expression as the condition without enclosing it in a pair of parenthesis "()"  
         `if expr {
             xxx
         `} else if expr {
@@ -27,6 +27,18 @@ Version History:
 
         The expression value can be any object. The compiler wrap it in a static method asBoolean(), which infers a boolean value from it. See ifs.html for an example. 
         Using parenthesis it becomes regular Java if statement. 
+    3. I went one step further to create what I call "open if-else"
+            `if expr
+                xxx
+            `else if expr
+                yyy
+            `else
+                zzz
+            `
+    4. new feature: enhanced for loop (open-for loop), a replacement of the "each" tag.
+        `for String a: myCollection
+            ${a}, $_index, $_parity, etc.
+        `
 2011/2/16: V0.7.0: 
     1. Improved the integration of Play! built-in @CacheFor@ annotation with the @`invoke@/@`a@ command. Now it's recommended to use the annotation to specify the timeout value for caching, instead of using an optional argument with the @`invoke@ command.   
         Please see the more.Portlets.index() action in the JapidSample sample app for an example.

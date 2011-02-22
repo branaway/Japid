@@ -14,3 +14,10 @@ The instance variable is defined after the | line, the same way as any tag rende
 `
 
 `tag SampleTag "end"
+
+<p> now we have an enhanced for loop (the "open for loop") that also makes all the loop properties available</p>
+
+`for String p : posts
+    <p>index: $_index, parity: $_parity, is odd? $_isOdd, is first? $_isFirst, is last? $_isLast, total size: $_size </p>
+    call a tag:  `tag SampleTag p
+`

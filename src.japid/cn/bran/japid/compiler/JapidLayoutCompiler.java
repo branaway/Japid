@@ -34,15 +34,6 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	LayoutClassMetaData cmd = new LayoutClassMetaData();
 
 	@Override
-	protected void templateArgs(String token) {
-		Tag currentTag = this.tagsStack.peek();
-		if ("root".equals(currentTag.tagName)) {
-			throw new RuntimeException("Layouts don't take script level parameters!");
-		}
-		super.templateArgs(token);
-	}
-
-	@Override
 	protected void startTag(Tag tag) {
 		if ("get".equals(tag.tagName)) {
 			if (tag.hasBody) {
@@ -58,7 +49,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 		} else {
 			regularTagInvoke(tag);
 		}
-		tagsStack.push(tag);
+		pushToStack(tag);
 		markLine(parser.getLineNumber());
 		println();
 		skipLineBreak = true;

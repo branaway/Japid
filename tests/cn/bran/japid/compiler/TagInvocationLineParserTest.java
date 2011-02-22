@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 
 public class TagInvocationLineParserTest {
 	TagInvocationLineParser p = new TagInvocationLineParser();

@@ -32,7 +32,7 @@ import cn.bran.japid.template.JapidTemplate;
 public class CompilerTests {
 
 	@Test
-	public void testCompileLayout() throws IOException {
+	public void testOpenFor() throws IOException {
 		String src = readFile("JapidSample/app/japidviews/_layouts/Layout.html");
 		JapidTemplate bt = new JapidTemplate("tag/Layout.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
@@ -42,10 +42,30 @@ public class CompilerTests {
 	}
 
 	@Test
+	public void testCompileLayout() throws IOException {
+		String src = readFile("JapidSample/app/japidviews/_layouts/Layout.html");
+		JapidTemplate bt = new JapidTemplate("tag/Layout.html", src);
+		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+	}
+	
+	@Test
 	public void testIfCommand() throws IOException {
 		String src = readFile("JapidSample/app/japidviews/Application/ifs.html");
 		JapidTemplate bt = new JapidTemplate("Application/ifs.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+	}
+	
+	@Test
+	public void testOpenIfCommand() throws IOException {
+		String src = readFile("JapidSample/app/japidviews/Application/ifs2.html");
+		JapidTemplate bt = new JapidTemplate("Application/ifs2.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));

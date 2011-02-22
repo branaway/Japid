@@ -51,6 +51,12 @@ _Each0.setActionRunners(getActionRunners());
 final SampleTag _SampleTag2 = new SampleTag(getOut());
 _SampleTag2.setActionRunners(getActionRunners());
 
+final SampleTag _SampleTag4 = new SampleTag(getOut());
+_SampleTag4.setActionRunners(getActionRunners());
+
+final Each _Each3 = new Each(getOut());
+_Each3.setActionRunners(getActionRunners());
+
 // -- end of the tag objects
 
 
@@ -115,7 +121,33 @@ _SampleTag1.render(p);
 p("\n");// line 14
 _SampleTag2.render("end");
 // line 16
-;// line 16
+p("\n" + 
+"<p> now we have an enhanced for loop (the \"open for loop\") that also makes all the loop properties available</p>\n" + 
+"\n");// line 16
+_Each3.render(posts, new Each.DoBody<String>(){
+public void render(final String p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
+// line 20
+p("    <p>index: ");// line 20
+p(_index);// line 21
+p(", parity: ");// line 21
+p(_parity);// line 21
+p(", is odd? ");// line 21
+p(_isOdd);// line 21
+p(", is first? ");// line 21
+p(_isFirst);// line 21
+p(", is last? ");// line 21
+p(_isLast);// line 21
+p(", total size: ");// line 21
+p(_size);// line 21
+p(" </p>\n" + 
+"    call a tag:  ");// line 21
+_SampleTag4.render(p);
+// line 22
+
+}
+}
+);
+// line 20
 
 	}
 

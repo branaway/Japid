@@ -282,4 +282,7 @@ public class Application extends JapidController {
 		Object[] array = list.toArray();
 		renderJapid(s, list, true, array, new int[] {}, 0, "a");
 	}
+	public static void ifs2() {
+		renderJapid(2, new String[] {"as"});
+	}
 }

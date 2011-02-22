@@ -2,7 +2,6 @@ package cn.bran.japid.compiler;
 
 import java.util.List;
 
-import cn.bran.japid.compiler.JapidAbstractCompiler.Tag;
 
 /**
  * parse #{tag (t, v) | U u }
