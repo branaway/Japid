@@ -14,6 +14,7 @@
 package cn.bran.japid.util;
 
 public interface FlashScope {
+	//these two constants must match those used in the play Flash
 	public static final String SUCCESS = "success"; 
 	public static final String ERROR = "error"; 
 
@@ -27,10 +28,8 @@ public interface FlashScope {
 
 	public abstract Object error();
 
-	public abstract void putError(Object error);
+	public abstract boolean contains(String key);
 
 	public abstract Object get(String key);
-
-	public abstract void put(String key, Object val);
 
 }

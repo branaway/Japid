@@ -40,6 +40,7 @@ import cn.bran.japid.util.DirUtil;
  * 
  */
 public abstract class JapidAbstractCompiler {
+	private static final String ELVIS = "?:";
 	// pattern: } else if xxx {
 	static final String ELSE_IF_PATTERN_STRING = "\\s*\\}\\s*else\\s*if\\s+([^\\(].*)\\s*";
 	static final Pattern ELSE_IF_PATTERN = Pattern.compile(ELSE_IF_PATTERN_STRING);
@@ -361,9 +362,7 @@ public abstract class JapidAbstractCompiler {
 					}
 					getTemplateClassMetaData().superClass = tag.tagName;
 					getTemplateClassMetaData().superClassRenderArgs = tag.args;
-
 				}
-
 			} else if (startsWithIgnoreSpace(line, "contentType")) {
 				// TODO: should also take standard tag name: Content-Type
 				String contentType = line.trim().substring("contentType".length()).trim().replace("'", "").replace("\"", "");
@@ -380,9 +379,9 @@ public abstract class JapidAbstractCompiler {
 				String value = headerkv.substring(name.length()).trim();
 				getTemplateClassMetaData().setHeader(name, value);
 			} else if (startsWithIgnoreSpace(line, ARGS)) {
-				String contentType = line.trim().substring(ARGS.length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+				String args = line.trim().substring(ARGS.length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				Tag currentTag = this.tagsStack.peek();
-				currentTag.callbackArgs = contentType;
+				currentTag.callbackArgs = args;
 			} else if (startsWithIgnoreSpace(line, "trim")) {
 				String sw = line.trim().substring("trim".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(sw) || "true".equals(sw)) {
@@ -452,6 +451,21 @@ public abstract class JapidAbstractCompiler {
 			} else if (line.trim().startsWith("noplay")) {
 				// template is play independent
 				getTemplateClassMetaData().useWithPlay = false;
+			} else if (line.trim().equalsIgnoreCase("xml")) {
+				// template is play independent
+				getTemplateClassMetaData().setContentType(MimeTypeEnum.xml.header);
+			} else if (line.trim().equalsIgnoreCase("json")) {
+				// template is play independent
+				getTemplateClassMetaData().setContentType(MimeTypeEnum.json.header);
+			} else if (line.trim().equalsIgnoreCase("css")) {
+				// template is play independent
+				getTemplateClassMetaData().setContentType(MimeTypeEnum.css.header);
+			} else if (line.trim().equalsIgnoreCase("txt") || line.trim().equalsIgnoreCase("text")) {
+				// template is play independent
+				getTemplateClassMetaData().setContentType(MimeTypeEnum.txt.header);
+			} else if (line.trim().equalsIgnoreCase("js") || line.trim().equalsIgnoreCase("javascript")) {
+				// template is play independent
+				getTemplateClassMetaData().setContentType(MimeTypeEnum.js.header);
 			} else if (line.trim().startsWith("verbatim")) {
 				parser.verbatim = true;
 				Tag get = buildTagDirective(line);
@@ -463,15 +477,18 @@ public abstract class JapidAbstractCompiler {
 				if (expr.matches(OPEN_IF_PATTERN1)) {
 					// get the expression
 					String trim = expr.substring(2).trim();
+					boolean negative = trim.startsWith("!");
+					if (negative)
+						trim = trim.substring(1).trim();
 					if (trim.endsWith("{")) {
 						// semi-open
 						expr = removeEndingString(trim, "{").trim();
-						expr = "if(asBoolean(" + expr + ")) {";
+						expr = "if(" + (negative ? "!" : "") +  "asBoolean(" + expr + ")) {";
 					} else {
-						// true open. out a shadow tag, since we want reuse the
+						// true open. out a shadow tag, since we want reuse the ` as the end delimitor
 						Tag.TagIf iftag = new Tag.TagIf(trim, parser.getLineNumber());
 						pushToStack(iftag);
-						expr = "if(asBoolean(" + trim + ")) {";
+						expr = "if(" + (negative ? "!" : "") + "asBoolean(" + trim + ")) {";
 					}
 					print(expr);
 					markLine(parser.getLineNumber() + i);
@@ -488,7 +505,10 @@ public abstract class JapidAbstractCompiler {
 				Matcher matcher = ELSE_IF_PATTERN.matcher(line);
 				if (matcher.matches()) {
 					expr = matcher.group(1).trim();
-					expr = "} else if(asBoolean(" + removeEndingString(expr, "{") + ")) {";
+					boolean negative = expr.startsWith("!");
+					if (negative)
+						expr = expr.substring(1).trim();
+					expr = "} else if(" + (negative ? "!" : "") +  "asBoolean(" + removeEndingString(expr, "{") + ")) {";
 					print(expr);
 					markLine(parser.getLineNumber() + i);
 					println();
@@ -503,6 +523,10 @@ public abstract class JapidAbstractCompiler {
 				Matcher matcher = OPEN_ELSE_IF_PATTERN.matcher(line);
 				if (matcher.matches()) {
 					expr = matcher.group(1).trim();
+					boolean negative = expr.startsWith("!");
+					if (negative)
+						expr = expr.substring(1).trim();
+
 					// end previous if shadow and star a new one
 					Tag tagShadow = tagsStackShadow.peek();
 					if (tagShadow instanceof TagIf) {
@@ -511,7 +535,7 @@ public abstract class JapidAbstractCompiler {
 						// start a new if
 						Tag.TagIf iftag = new Tag.TagIf(expr, parser.getLineNumber());
 						pushToStack(iftag);
-						expr = "} else if(asBoolean(" + expr + ")) {";
+						expr = "} else if(" + (negative ? "!" : "") +  "asBoolean(" + expr + ")) {";
 					} else {
 						throw new RuntimeException("the open \"else if\" statement is not properly matched to a previous if");
 					}
@@ -647,10 +671,37 @@ public abstract class JapidAbstractCompiler {
 
 	protected void expr(String token) {
 		String expr = token;
-		if (getTemplateClassMetaData().suppressNull)
-			printLine("try { p(" + expr + "); } catch (NullPointerException npe) {}");
-		else
-			printLine("p(" + expr + ");");
+		// let's support the  big or operator "|||"
+		int i = token.indexOf(ELVIS);
+		String substitute = null;
+		if (i > 0) {
+			expr = token.substring(0, i);
+			substitute = token.substring(i + ELVIS.length()).trim();
+			if (substitute.startsWith("\""))
+				substitute = substitute.substring(1);
+			if (substitute.endsWith("\""))
+				substitute = substitute.substring(0, substitute.length() - 1);
+		}
+		
+		if (substitute != null) {
+			// trap any null or empty string and use the substitute
+			printLine("try {" +
+					" Object o = " + expr + "; " + 
+					"if (o.toString().length() ==0) { " + 
+					"p(\"" + substitute + "\"); } " + 
+					"else { p(o); } } " +
+					"catch (NullPointerException npe) { " +
+					"p(\"" + substitute + "\"); }");
+//			printLine("try { Object o = expr; p(" + expr + "); } " +
+//					"catch (NullPointerException npe) { " +
+//					"p(\"" + substitute + "\"); }");
+		}
+		else {
+			if (getTemplateClassMetaData().suppressNull)
+				printLine("try { p(" + expr + "); } catch (NullPointerException npe) {}");
+			else
+				printLine("p(" + expr + ");");
+		}
 	}
 
 	private void printLine(String string) {
@@ -890,7 +941,9 @@ public abstract class JapidAbstractCompiler {
 		} else {
 			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
 			if (!tag.hasBody) {
-				println(tagVar + ".render(" + tag.args + ");");
+				String tagline = tagVar + ".setOut(getOut()); ";
+				tagline += tagVar + ".render(" + tag.args + ");";
+				println(tagline);
 			}
 		}
 	}
@@ -918,7 +971,8 @@ public abstract class JapidAbstractCompiler {
 			if (inner == null)
 				System.out.println(tag.tagName + " not allowed to have instance of this tag");
 			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
-			String tagLine = tagVar + ".render(" + tag.args + ", " + inner.getAnonymous() + ");";
+			String tagLine = tagVar + ".setOut(getOut()); "; // make sure to use the current string builder
+			tagLine += tagVar + ".render(" + tag.args + ", " + inner.getAnonymous() + ");";
 			println(tagLine);
 		} else {
 			// for simple tag call without call back:

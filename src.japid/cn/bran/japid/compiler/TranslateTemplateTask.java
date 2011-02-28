@@ -130,7 +130,7 @@ public class TranslateTemplateTask {
 	}
 
 	/**
-	 * add an import static entry to the template tranlator
+	 * add an import static entry to the template translator
 	 * 
 	 * @param clz
 	 */

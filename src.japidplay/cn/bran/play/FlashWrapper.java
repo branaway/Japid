@@ -44,17 +44,12 @@ public class FlashWrapper implements FlashScope{
 	}
 
 	@Override
-	public void put(String key, Object val) {
-		f().put(key, val);
-	}
-
-	@Override
-	public void putError(Object error) {
-		f().put(FlashScope.ERROR, error);
-	}
-
-	@Override
 	public void putSuccess(Object message) {
 		f().put(FlashScope.SUCCESS, message);
+	}
+
+	@Override
+	public boolean contains(String key) {
+		return f().contains(key);
 	}
 }

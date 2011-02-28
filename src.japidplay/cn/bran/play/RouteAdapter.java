@@ -17,6 +17,7 @@ import play.mvc.Router;
 import play.mvc.Http.Request;
 import play.mvc.Router.ActionDefinition;
 import play.mvc.Router.Route;
+import play.templates.GroovyTemplate;
 import cn.bran.japid.util.StringUtils;
 import cn.bran.japid.util.UrlMapper;
 
@@ -68,8 +69,10 @@ public class RouteAdapter implements UrlMapper {
 	 */
 	@Override
 	public String lookup(String actionString, Object[] params) {
-		return reverseWithCache(actionString, params);
+		ActionBridge ab = new ActionBridge(false);
 
+		ActionDefinition ad = ab.invokeMethod(actionString, params);
+		return ad.toString();
 	}
 
 	@Override
@@ -97,6 +100,7 @@ public class RouteAdapter implements UrlMapper {
 	 * @param action
 	 * @param args
 	 * @return
+	 * @deprecated use the modified {@link ActionBridge}
 	 */
 	public static String reverseWithCache(String actionString, Object[] params) {
 		// compose the key:
@@ -237,7 +241,7 @@ public class RouteAdapter implements UrlMapper {
 	}
 
 	/**
-	 * reverse looup a static resource
+	 * reverse lookup a static resource
 	 * 
 	 * provide cache
 	 * 

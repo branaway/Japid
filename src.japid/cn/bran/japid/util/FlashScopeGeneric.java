@@ -55,22 +55,15 @@ public class FlashScopeGeneric implements FlashScope {
 	}
 
 	/* (non-Javadoc)
-	 * @see bran.japid.Flash#putError(java.lang.Object)
-	 */
-	public void putError(Object error) {
-		store.put(ERROR, error);
-	}
-	
-	/* (non-Javadoc)
 	 * @see bran.japid.Flash#get(java.lang.String)
 	 */
 	public Object get(String key) {
 		return store.get(key);
 	}
-	/* (non-Javadoc)
-	 * @see bran.japid.Flash#put(java.lang.String, java.lang.Object)
-	 */
-	public void put(String key, Object val) {
-		store.put(key, val);
+
+	@Override
+	public boolean contains(String key) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

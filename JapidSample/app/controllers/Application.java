@@ -13,6 +13,7 @@ import controllers.more.BaseController;
 import play.cache.CacheFor;
 import play.mvc.Before;
 
+import models.SearchParams;
 import models.japidsample.Author;
 import models.japidsample.Author2;
 import models.japidsample.Post;
@@ -282,7 +283,55 @@ public class Application extends JapidController {
 		Object[] array = list.toArray();
 		renderJapid(s, list, true, array, new int[] {}, 0, "a");
 	}
+	
 	public static void ifs2() {
 		renderJapid(2, new String[] {"as"});
+	}
+	
+	public static void flashbad() {
+		flash.error("something bad");
+		// redirect to 
+		flashout();
+	}
+
+	public static void flashMsg() {
+		flash.put("msg", "a message");
+		// redirect to 
+		flashout();
+	}
+
+	public static void flashgood() {
+		flash.success("cool");
+		// redirect to 
+		flashout();
+	}
+	
+	public static void flashout() {
+		renderJapid();
+	}
+	
+	public static void validate(String name, Integer age) {
+		   validation.required("name/姓名", name);
+		   validation.required("age/年龄", age);
+		   validation.min("age", age, 10);
+		   renderJapid(name, age);
+	}
+	
+	public static void reverseUrl() {
+		renderJapid();
+	}
+	
+	public static void search(SearchParams sp) {
+		renderJapid(sp);
+	}
+	
+	public static void groovy() {
+		String a = "Groovy";
+		// render with Groovy
+		render(a);
+	}
+	
+	public static void list() {
+		renderJapid();
 	}
 }

@@ -95,8 +95,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	protected void layoutMethod() {
 		// doLayout body
 		pln(TAB + "@Override protected void doLayout() {");
-		super.setupTagObjects();
-		super.addImplicitVariables();
+//		super.setupTagObjectsAsVariables();
+//		super.addImplicitVariables(); // move to fields
 		pln("//------");
 		pln(super.body);
 		pln("\t}");

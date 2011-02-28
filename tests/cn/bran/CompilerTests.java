@@ -57,8 +57,11 @@ public class CompilerTests {
 		JapidTemplate bt = new JapidTemplate("Application/ifs.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
 		cp.compile(bt);
-		System.out.println(bt.javaSource);
-		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+		String javaSource = bt.javaSource;
+		System.out.println(javaSource);
+		assertTrue(javaSource.contains("if(!asBoolean(ss))"));
+		assertTrue(javaSource.contains("else if(!asBoolean(ss))"));
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(javaSource));
 	}
 	
 	@Test
@@ -358,10 +361,9 @@ public class CompilerTests {
 		String code = bt.javaSource;
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 		System.out.println(code);
-		assertTrue(code.contains("actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner(\"\", \"MyController.action\", s)"));
+		assertTrue(code.contains("actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner(\"\", MyController.class, \"action\", s + \"2\") {"));
 		assertTrue(code.contains("MyController.action(s);"));
 		assertTrue(code.contains("return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);"));
-		assertTrue(code.contains("actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner(\"\", \"MyController.action\", s + \"2\""));
 		assertTrue(code.contains("MyController.action(s + \"2\");"));
 		
 	}

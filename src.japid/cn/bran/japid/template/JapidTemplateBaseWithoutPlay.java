@@ -21,6 +21,8 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
 
+import cn.bran.japid.util.WebUtils;
+
 /**
  * a java based template suing StringBuilder as the content buffer, no play dependency.
  * 
@@ -29,7 +31,7 @@ import java.util.TreeMap;
  */ 
 public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 
-	StringBuilder out;
+	protected StringBuilder out;
 	protected Map<String, String> headers = new TreeMap<String, String>();
 	{
 		headers.put("Content-Type", "text/html; charset=utf-8");
@@ -157,5 +159,9 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	protected boolean asBoolean(Object o) {
+		return WebUtils.asBoolean(o);
 	}
 }

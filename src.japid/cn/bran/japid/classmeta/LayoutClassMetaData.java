@@ -73,18 +73,18 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 				pln(TAB + "private " + p.getType() + " " + p.getId() + ";");
 			}
 
-			p("\t public void layout(" + renderArgs + ") {");
+			pln("\t public void layout(" + renderArgs + ") {");
 			// assign the params to fields
 			for (Parameter p : params) {
 				pln("\t\tthis." + p.getId() + " = " + p.getId() + ";");
 			}
 		}
 		else {
-			p("\t@Override public void layout() {");
+			pln("\t@Override public void layout() {");
 		}
 
-		super.setupTagObjects();
-		super.addImplicitVariables();
+//		super.setupTagObjectsAsVariables();
+//		super.addImplicitVariables(); // moved to fields
 		// the code to render things.
 		p("\t\t" + body);
 		p("\t}");

@@ -3,15 +3,17 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
+import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import static cn.bran.play.WebUtils.*;
 import japidviews._layouts.*;
+import play.i18n.Messages;
 import static  japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
+import play.i18n.Lang;
 import japidviews._tags.*;
 import controllers.*;
 import play.mvc.Http.*;
@@ -26,6 +28,34 @@ public class tagBody extends cn.bran.japid.template.JapidTemplateBase
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
+
+// - add implicit fields with Play
+
+	final Request request = Request.current(); 
+	final Response response = Response.current(); 
+	final Session session = Session.current();
+	final RenderArgs renderArgs = RenderArgs.current();
+	final Params params = Params.current();
+	final Validation validation = Validation.current();
+	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
+	final play.Play _play = new play.Play(); 
+
+// - end of implicit fields with Play 
+
+
+
+// -- set up the tag objects
+final moreTag _moreTag2 = new moreTag(getOut());
+{ _moreTag2.setActionRunners(getActionRunners()); }
+
+final anotherTag _anotherTag1 = new anotherTag(getOut());
+{ _anotherTag1.setActionRunners(getActionRunners()); }
+
+final fooTag _fooTag0 = new fooTag(getOut());
+{ _fooTag0.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 	public tagBody() {
 		super(null);
 	}
@@ -38,43 +68,6 @@ public class tagBody extends cn.bran.japid.template.JapidTemplateBase
 		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final moreTag _moreTag2 = new moreTag(getOut());
-_moreTag2.setActionRunners(getActionRunners());
-
-final anotherTag _anotherTag1 = new anotherTag(getOut());
-_anotherTag1.setActionRunners(getActionRunners());
-
-final fooTag _fooTag0 = new fooTag(getOut());
-_fooTag0.setActionRunners(getActionRunners());
-
-// -- end of the tag objects
-
-
-// - add implicit variables 
-
-		final Request request = Request.current(); assert request != null;
-
-		final Response response = Response.current(); assert response != null;
-
-		final Flash flash = Flash.current();assert flash != null;
-
-		final Session session = Session.current();assert session != null;
-
-		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;
-
-		final Params params = Params.current();assert params != null;
-
-		final Validation validation = Validation.current();assert validation!= null;
-
-		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
-
-		final play.Play _play = new play.Play(); assert _play != null;
-
-// - end of implicit variables 
-
-
 //------
 p("\n" + 
 "Note: the last | is the separator for the tag arguments and the call back parameters. \n" + 
@@ -83,7 +76,7 @@ p("\n" +
 "before\n" + 
 "\n" + 
 "<p/>\n");// line 1
-_fooTag0.render("hi", new fooTag.DoBody(){
+_fooTag0.setOut(getOut()); _fooTag0.render("hi", new fooTag.DoBody(){
 public void render() {
 // line 8
     final String echo = "secret";// line 9
@@ -93,7 +86,7 @@ p(echo);// line 11
 p("\n" + 
 "\n" + 
 "	");// line 11
-_anotherTag1.render(echo, new anotherTag.DoBody<String>(){
+_anotherTag1.setOut(getOut()); _anotherTag1.render(echo, new anotherTag.DoBody<String>(){
 public void render(final String what) {
 // line 13
 p("	    got ");// line 13
@@ -102,7 +95,7 @@ p(" and ");// line 14
 p(echo);// line 14
 p("\n" + 
 "		");// line 14
-_moreTag2.render(echo, new moreTag.DoBody<String>(){
+_moreTag2.setOut(getOut()); _moreTag2.render(echo, new moreTag.DoBody<String>(){
 public void render(final String more) {
 // line 15
 p("		   got ");// line 15

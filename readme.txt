@@ -3,12 +3,16 @@
                     Bing Ran<bing_ran@hotmail.com>
                     
 
-*** Please visit the Wiki page of this project for full documentation ***
+Links:
 
-                   
+-- The Japid User Manual:   https://github.com/branaway/Japid/wiki/Japid-User-Guide
+-- Porting to Japid:        https://github.com/branaway/Japid/wiki/Porting-ZenContact-to-Japid
+
+
+
 Version History:
 
-2011/2/20: V0.7.1: 
+2011/2/25: V0.7.1: 
     1. added a new way to pass arguments from views to layout in the `extends command. See perf.html for an example.  
         
         `args String a
@@ -41,6 +45,17 @@ Version History:
         `for String a: myCollection
             ${a}, $_index, $_parity, etc.
         `
+    5. bug fix: could not pass null the renderJapid(); Added a new template invoke utility. 
+    6. enhanced:  added flash() in the JapidPlayAdapter so you can do:
+        ${flash(mykey)} to retrieve an object associated with a key in the flash object 
+    7. New feature: added Elvis operator in ${} expressions to set default values to display in case of nulls and empty string values.  
+        ${name ?: "empty"}
+    8. bug fix: reverse lookup works with complex object
+        `MyObject o = new ...;
+        <a href="@{action(o)}">link</a>
+    9. internally, move implicit objects and tag instances to fields. This allows the use of them in def methods.  
+    10. supported renderJapidWith("@anotherTemplate", bar) to render to another template in the same target directory.
+    11. added a sample: JapidContact, ported from the Zencontact sample from the Play distribution.
 2011/2/16: V0.7.0: 
     1. Improved the integration of Play! built-in @CacheFor@ annotation with the @`invoke@/@`a@ command. Now it's recommended to use the annotation to specify the timeout value for caching, instead of using an optional argument with the @`invoke@ command.   
         Please see the more.Portlets.index() action in the JapidSample sample app for an example.

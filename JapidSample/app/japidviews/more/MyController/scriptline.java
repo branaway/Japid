@@ -3,15 +3,17 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
+import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import static cn.bran.play.WebUtils.*;
 import japidviews._layouts.*;
+import play.i18n.Messages;
 import static  japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
+import play.i18n.Lang;
 import japidviews._tags.*;
 import controllers.*;
 import play.mvc.Http.*;
@@ -26,6 +28,31 @@ public class scriptline extends scriptlineLayout
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
+
+// - add implicit fields with Play
+
+	final Request request = Request.current(); 
+	final Response response = Response.current(); 
+	final Session session = Session.current();
+	final RenderArgs renderArgs = RenderArgs.current();
+	final Params params = Params.current();
+	final Validation validation = Validation.current();
+	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
+	final play.Play _play = new play.Play(); 
+
+// - end of implicit fields with Play 
+
+
+
+// -- set up the tag objects
+final Tag2 _Tag21 = new Tag2(getOut());
+{ _Tag21.setActionRunners(getActionRunners()); }
+
+final Tag2 _Tag22 = new Tag2(getOut());
+{ _Tag22.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 	public scriptline() {
 		super(null);
 	}
@@ -38,48 +65,14 @@ public class scriptline extends scriptlineLayout
 		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final Tag2 _Tag21 = new Tag2(getOut());
-_Tag21.setActionRunners(getActionRunners());
-
-final Tag2 _Tag22 = new Tag2(getOut());
-_Tag22.setActionRunners(getActionRunners());
-
-// -- end of the tag objects
-
-
-// - add implicit variables 
-
-		final Request request = Request.current(); assert request != null;
-
-		final Response response = Response.current(); assert response != null;
-
-		final Flash flash = Flash.current();assert flash != null;
-
-		final Session session = Session.current();assert session != null;
-
-		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;
-
-		final Params params = Params.current();assert params != null;
-
-		final Validation validation = Validation.current();assert validation!= null;
-
-		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
-
-		final play.Play _play = new play.Play(); assert _play != null;
-
-// - end of implicit variables 
-
-
 //------
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-_Tag21.render("123");
+_Tag21.setOut(getOut()); _Tag21.render("123");
 // line 4
 p(" a  ");// line 4
-_Tag22.render("456");
+_Tag22.setOut(getOut()); _Tag22.render("456");
 // line 4
 p("!\n" + 
 "this is how to print a single back quote: ");// line 4

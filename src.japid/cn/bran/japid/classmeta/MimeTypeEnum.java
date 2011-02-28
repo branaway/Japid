@@ -1,16 +1,15 @@
 package cn.bran.japid.classmeta;
 
 public enum MimeTypeEnum {
-	html("text/html"),
-	txt("text/plain"),
-	xml("text/xml"), // not using application/xml to be consistent with Play's way.
-	json("application/json"),
-	css("text/css"),
-	js("application/x-javascript"),
-	xls("application/excel"),
+	html("text/html; charset=utf-8"),
+	txt("text/plain; charset=utf-8"),
+	xml("text/xml; charset=utf-8"), // not using application/xml to be consistent with Play's way.
+	json("application/json; charset=utf-8"),
+	css("text/css; charset=utf-8"),
+	js("application/x-javascript; charset=utf-8"),
 	;
 	
-	private String header;
+	public String header;
 	
 	MimeTypeEnum(String header) {
 		this.header = header;
@@ -19,9 +18,10 @@ public enum MimeTypeEnum {
 	public static String getHeader(String ext) {
 		if (ext.startsWith("."))
 			ext = ext.substring(1);
+		ext = ext.toLowerCase();
 		try {
 			MimeTypeEnum valueOf = MimeTypeEnum.valueOf(ext);
-			return valueOf.header + "; charset=utf-8";
+			return valueOf.header;// + "; charset=utf-8";
 		} catch (Exception e) {
 			return null;
 		}

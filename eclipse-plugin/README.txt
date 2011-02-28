@@ -81,3 +81,5 @@ History:
 2011/2/15, v0.8.6
 	1. matched Japid 0.6.2.
 	2. put whatever error message during the code transform in the generated Java code to get the attention. 
+2011/2/22, v0.8.7
+	1. matched Japid 0.7.1.

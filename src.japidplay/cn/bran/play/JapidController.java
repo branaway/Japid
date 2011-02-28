@@ -8,19 +8,25 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.text.html.HTMLDocument.RunElement;
+
 import org.apache.commons.beanutils.MethodUtils;
 
 import play.Play;
 import play.cache.Cache;
 import play.classloading.ApplicationClasses.ApplicationClass;
 import play.exceptions.ActionNotFoundException;
+import play.mvc.After;
+import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.Finally;
 import play.mvc.Http.Request;
 import play.mvc.results.RenderTemplate;
 import play.utils.Java;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.japid.util.ControllerUtils;
 import cn.bran.japid.util.StackTraceUtils;
 
 import com.google.gson.Gson;
@@ -73,11 +79,12 @@ public class JapidController extends Controller {
 			throw new RuntimeException("Cannot init the template class since it's an abstract class: " + c.getName());
 		}
 		try {
-			String methodName = "render";
+//			String methodName = "render";
 			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
 			StringBuilder sb = new StringBuilder(8000);
 			T t = ctor.newInstance(sb);
-			RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t, methodName, args);
+			RenderResult rr = ControllerUtils.render(t, args);
+//			RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t, methodName, args);
 			return rr;
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException("Could not match the arguments with the template args.");
@@ -85,7 +92,10 @@ public class JapidController extends Controller {
 //			e.printStackTrace();
 			throw new RuntimeException("Could not instantiate the template object. Abstract?");
 		} catch (Exception e) {
-			throw new RuntimeException("Could not invoke the template object: " + e);
+			if (e instanceof RuntimeException)
+				throw (RuntimeException)e;
+			else
+				throw new RuntimeException("Could not invoke the template object: " + e);
 			// throw new RuntimeException(e);
 		}
 	}
@@ -127,7 +137,7 @@ public class JapidController extends Controller {
 		// the super.template() class uses current request object to determine
 		// the caller and method to find the matching template
 		// this won't work if the current method is called from another action.
-		// let's fall back to use the strack trace to deduce the template.
+		// let's fall back to use the stack trace to deduce the template.
 		// String caller2 = StackTraceUtils.getCaller2();
 
 		final StackTraceElement[] stes = new Throwable().getStackTrace();
@@ -138,7 +148,7 @@ public class JapidController extends Controller {
 			ApplicationClass conAppClass = Play.classes.getApplicationClass(controller);
 			if (conAppClass!= null) {
 				Class controllerClass = conAppClass.javaClass;
-				Method actionMethod = Java.findActionMethod(action, controllerClass);
+				Method actionMethod = /*Java.*/findActionMethod(action, controllerClass);
 				if (actionMethod != null) {
 					String expr = controller + "." + action;
 					// content negotiation
@@ -164,6 +174,28 @@ public class JapidController extends Controller {
 		throw new RuntimeException("The calling stack does not contain a valid controller. Should not have happended...");
 	}
 
+	/** 
+	 * copies from the same method in the Java class. Removed the public requirement for easier chaining.
+	 * 
+	 * @param name
+	 * @param clazz
+	 * @return
+	 */
+    public static Method findActionMethod(String name, Class clazz) {
+        while (!clazz.getName().equals("java.lang.Object")) {
+            for (Method m : clazz.getDeclaredMethods()) {
+                if (m.getName().equalsIgnoreCase(name) /*&& Modifier.isPublic(m.getModifiers())*/) {
+                    // Check that it is not an intercepter
+                    if (!m.isAnnotationPresent(Before.class) && !m.isAnnotationPresent(After.class) && !m.isAnnotationPresent(Finally.class)) {
+                        return m;
+                    }
+                }
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return null;
+    }
+
 	/**
 	 * render parameters to the prescribed template and return the RenderResult
 	 * 
@@ -186,10 +218,16 @@ public class JapidController extends Controller {
 		// stacktrace to track the caller action name
 		// something like controllers.japid.SampleController.testFindAction
 
+		
+		if (template.startsWith("@")) {
+			// a template in the current directory
+			template = request.controller + "/" + template.substring(1);
+		}
+
+		// map to default japid view
 		if (template.startsWith("controllers.")) {
 			template = template.substring(template.indexOf(DOT) + 1);
 		}
-		// map to default japid view
 		String templateClassName = template.startsWith(JapidPlugin.JAPIDVIEWS_ROOT) ?
 				template : JapidPlugin.JAPIDVIEWS_ROOT + File.separator + template;
 

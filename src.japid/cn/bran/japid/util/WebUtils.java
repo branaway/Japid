@@ -1,14 +1,12 @@
-package cn.bran.play;
+package cn.bran.japid.util;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Date;
 
-import org.apache.commons.lang.time.FastDateFormat;
-
 public class WebUtils {
     public static String fastformat(Date date, String pattern) {
-    	return FastDateFormat.getInstance(pattern).format(date);
+    	return JapidDateFormat.getInstance(pattern).format(date);
     }
     
 

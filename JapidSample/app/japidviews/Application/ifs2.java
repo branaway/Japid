@@ -3,15 +3,17 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
+import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import static cn.bran.play.WebUtils.*;
 import japidviews._layouts.*;
+import play.i18n.Messages;
 import static  japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
+import play.i18n.Lang;
 import japidviews._tags.*;
 import controllers.*;
 import play.mvc.Http.*;
@@ -26,6 +28,37 @@ public class ifs2 extends cn.bran.japid.template.JapidTemplateBase
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
+
+// - add implicit fields with Play
+
+	final Request request = Request.current(); 
+	final Response response = Response.current(); 
+	final Session session = Session.current();
+	final RenderArgs renderArgs = RenderArgs.current();
+	final Params params = Params.current();
+	final Validation validation = Validation.current();
+	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
+	final play.Play _play = new play.Play(); 
+
+// - end of implicit fields with Play 
+
+
+
+// -- set up the tag objects
+final SampleTag _SampleTag1 = new SampleTag(getOut());
+{ _SampleTag1.setActionRunners(getActionRunners()); }
+
+final Each _Each0 = new Each(getOut());
+{ _Each0.setActionRunners(getActionRunners()); }
+
+final SampleTag _SampleTag3 = new SampleTag(getOut());
+{ _SampleTag3.setActionRunners(getActionRunners()); }
+
+final Each _Each2 = new Each(getOut());
+{ _Each2.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 	public ifs2() {
 		super(null);
 	}
@@ -42,46 +75,6 @@ public class ifs2 extends cn.bran.japid.template.JapidTemplateBase
 		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final SampleTag _SampleTag1 = new SampleTag(getOut());
-_SampleTag1.setActionRunners(getActionRunners());
-
-final Each _Each0 = new Each(getOut());
-_Each0.setActionRunners(getActionRunners());
-
-final SampleTag _SampleTag3 = new SampleTag(getOut());
-_SampleTag3.setActionRunners(getActionRunners());
-
-final Each _Each2 = new Each(getOut());
-_Each2.setActionRunners(getActionRunners());
-
-// -- end of the tag objects
-
-
-// - add implicit variables 
-
-		final Request request = Request.current(); assert request != null;
-
-		final Response response = Response.current(); assert response != null;
-
-		final Flash flash = Flash.current();assert flash != null;
-
-		final Session session = Session.current();assert session != null;
-
-		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;
-
-		final Params params = Params.current();assert params != null;
-
-		final Validation validation = Validation.current();assert validation!= null;
-
-		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
-
-		final play.Play _play = new play.Play(); assert _play != null;
-
-// - end of implicit variables 
-
-
 //------
 ;// line 1
 p("\n" + 
@@ -115,12 +108,12 @@ p("\n" +
 if(asBoolean(ss)) {// line 30
 p("    well got ss\n" + 
 "    ");// line 30
-_Each0.render(ss, new Each.DoBody<String>(){
+_Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 32
 p("        call a tag\n" + 
 "        ");// line 32
-_SampleTag1.render(s);
+_SampleTag1.setOut(getOut()); _SampleTag1.render(s);
 // line 34
     
 }
@@ -132,12 +125,12 @@ p("    finally got ");// line 36
 p(ss);// line 37
 p("\n" + 
 "    ");// line 37
-_Each2.render(ss, new Each.DoBody<String>(){
+_Each2.setOut(getOut()); _Each2.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 38
 p("        call a tag\n" + 
 "        ");// line 38
-_SampleTag3.render(s);
+_SampleTag3.setOut(getOut()); _SampleTag3.render(s);
 // line 40
     
 }
@@ -154,7 +147,7 @@ p("        a false\n" +
 }// line 47
 p("    ss is empty\n");// line 47
 }// line 49
-;// line 49
+p("\n");// line 49
 
 	}
 

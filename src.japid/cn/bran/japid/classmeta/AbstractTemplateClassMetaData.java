@@ -31,6 +31,7 @@ import cn.bran.japid.template.JapidTemplateBaseStreaming;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.template.RenderResultPartial;
+//import cn.bran.play.JapidPlayAdapter;
 
 /**
  * lots of the code block generation is done here
@@ -295,7 +296,31 @@ public abstract class AbstractTemplateClassMetaData {
 	// }
 	// }
 
-	protected void setupTagObjects() {
+//	/**
+//	 * @deprecated declare it as fields instead
+//	 */
+//	protected void setupTagObjectsAsVariables() {
+//		boolean hasTags = this.innersforTagCalls.size() > 0;
+//		if (hasTags)
+//			pln("\n// -- set up the tag objects");
+//		for (InnerClassMeta inner : this.innersforTagCalls) {
+//			// create a reusable instance _tagName_indexand a instance
+//			// initializer
+//			String tagClassName = inner.tagName;
+//			String var = "_" + inner.getVarRoot() + inner.counter;
+//			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
+//			pln(decl);
+//			if (useWithPlay) {
+//				String addRunner = var + ".setActionRunners(getActionRunners());";
+//				pln(addRunner);
+//			}
+//			pln();
+//		}
+//		if (hasTags)
+//			pln("// -- end of the tag objects\n");
+//	}
+
+	protected void setupTagObjectsAsFields() {
 		boolean hasTags = this.innersforTagCalls.size() > 0;
 		if (hasTags)
 			pln("\n// -- set up the tag objects");
@@ -307,7 +332,7 @@ public abstract class AbstractTemplateClassMetaData {
 			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
 			pln(decl);
 			if (useWithPlay) {
-				String addRunner = var + ".setActionRunners(getActionRunners());";
+				String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
 				pln(addRunner);
 			}
 			pln();
@@ -546,25 +571,26 @@ public abstract class AbstractTemplateClassMetaData {
 	}
 
 	/**
-	 * added variable declarations such as request, response, errors, flash,
-	 * etc.
+	 * added field declarations such as request, response, errors
+	 * Some of the implicit objects are defined in the JapidPlayAdapter
+	 * Note: this basically removes the possibility to reuse the same instance of renderer to render multiple requests. 
 	 */
-	protected void addImplicitVariables() {
+	protected void addImplicitFields() {
+		
 		if (useWithPlay) {
-			pln("\n// - add implicit variables \n");
-			pln("		final Request request = Request.current(); assert request != null;\n\n" +
-					"		final Response response = Response.current(); assert response != null;\n\n" +
-					"		final Flash flash = Flash.current();assert flash != null;\n\n" +
-					"		final Session session = Session.current();assert session != null;\n\n" +
-					"		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;\n\n" +
-					"		final Params params = Params.current();assert params != null;\n\n" +
-					"		final Validation validation = Validation.current();assert validation!= null;\n\n" +
-					"		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;\n\n" +
-					"		final play.Play _play = new play.Play(); assert _play != null;\n");
-			pln("// - end of implicit variables \n\n");
+			pln("\n// - add implicit fields with Play\n");
+			pln("	final Request request = Request.current(); \n" +
+					"	final Response response = Response.current(); \n" +
+					"	final Session session = Session.current();\n" +
+					"	final RenderArgs renderArgs = RenderArgs.current();\n" +
+					"	final Params params = Params.current();\n" +
+					"	final Validation validation = Validation.current();\n" +
+					"	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);\n" +
+					"	final play.Play _play = new play.Play(); \n");
+			pln("// - end of implicit fields with Play \n\n");
 		}
 	}
-
+	
 	/**
 	 * remove the plain text line between two consecutive script line, if the
 	 * plain text is made of space chars only .
@@ -609,6 +635,11 @@ public abstract class AbstractTemplateClassMetaData {
 		embedSourceTemplateName();
 		printHttpHeaderMap();
 		// buildStatics();
+		if (useWithPlay) {
+			addImplicitFields();
+		}
+		setupTagObjectsAsFields();
+		
 		addConstructors();
 
 		renderMethod();

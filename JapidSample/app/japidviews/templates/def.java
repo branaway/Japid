@@ -3,15 +3,17 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
+import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import static cn.bran.play.WebUtils.*;
 import japidviews._layouts.*;
+import play.i18n.Messages;
 import static  japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
+import play.i18n.Lang;
 import japidviews._tags.*;
 import controllers.*;
 import play.mvc.Http.*;
@@ -26,6 +28,31 @@ public class def extends defLayout
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
+
+// - add implicit fields with Play
+
+	final Request request = Request.current(); 
+	final Response response = Response.current(); 
+	final Session session = Session.current();
+	final RenderArgs renderArgs = RenderArgs.current();
+	final Params params = Params.current();
+	final Validation validation = Validation.current();
+	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
+	final play.Play _play = new play.Play(); 
+
+// - end of implicit fields with Play 
+
+
+
+// -- set up the tag objects
+final dummyTag _dummyTag1 = new dummyTag(getOut());
+{ _dummyTag1.setActionRunners(getActionRunners()); }
+
+final dummyTag _dummyTag4 = new dummyTag(getOut());
+{ _dummyTag4.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 	public def() {
 		super(null);
 	}
@@ -38,61 +65,36 @@ public class def extends defLayout
 		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final dummyTag _dummyTag3 = new dummyTag(getOut());
-_dummyTag3.setActionRunners(getActionRunners());
-
-// -- end of the tag objects
-
-
-// - add implicit variables 
-
-		final Request request = Request.current(); assert request != null;
-
-		final Response response = Response.current(); assert response != null;
-
-		final Flash flash = Flash.current();assert flash != null;
-
-		final Session session = Session.current();assert session != null;
-
-		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;
-
-		final Params params = Params.current();assert params != null;
-
-		final Validation validation = Validation.current();assert validation!= null;
-
-		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
-
-		final play.Play _play = new play.Play(); assert _play != null;
-
-// - end of implicit variables 
-
-
 //------
 ;// line 1
 p("\n" + 
-"\n");// line 1
+"<p>check 1</p>\n");// line 1
 p("\n" + 
 "\n" + 
 "\n");// line 4
 // line 7
-p("\n");// line 9
-// line 11
-p("\n");// line 14
 p("\n" + 
-"\n");// line 16
-// line 18
+"<p>check 2</p>\n");// line 12
+// line 15
+p("<p>check 3</p>\n" + 
+"\n");// line 18
 p("\n" + 
 "\n");// line 21
-_dummyTag3.render(get("bar"));
 // line 23
 p("\n" + 
-"\n");// line 23
+"\n" + 
+"<p>check 4</p>\n");// line 26
+_dummyTag4.setOut(getOut()); _dummyTag4.render(get("bar"));
+// line 29
 p("\n" + 
-"\n");// line 25
-p(foo());// line 27
-p("\n");// line 27
+"\n");// line 29
+p("\n" + 
+"<p>check 5</p>\n" + 
+"\n");// line 31
+p(foo());// line 34
+p("\n" + 
+"\n" + 
+"<p>check 6</p>");// line 34
 
 	}
 
@@ -101,9 +103,16 @@ StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
 // line 7
-p("	hi ");// line 7
+p("	<p>hi ");// line 7
 p(p);// line 8
-p("!\n");// line 8
+p("!,</p> \n" + 
+"	<p>from ");// line 8
+p(request.action);// line 9
+p("</p>\n" + 
+"	<p>OK you can call a tag:</p>\n" + 
+"	");// line 9
+_dummyTag1.setOut(getOut()); _dummyTag1.render(p);
+// line 11
 
 this.setOut(ori);
 return sb.toString();
@@ -112,12 +121,12 @@ public String foo() {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
-// line 11
-p("	");// line 11
-String s = "hi there";// line 12
-p("	hello ");// line 12
-p(foo2(s));// line 13
-p("\n");// line 13
+// line 15
+p("	");// line 15
+String s = "hi there";// line 16
+p("	<p>foo hello ");// line 16
+p(foo2(s));// line 17
+p("</p>\n");// line 17
 
 this.setOut(ori);
 return sb.toString();
@@ -126,13 +135,13 @@ public String bar() {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
-// line 18
+// line 23
 p("\n" + 
-"	");// line 18
-String s = "hi2";// line 19
-p("	hi ");// line 19
-p(s);// line 20
-p("!\n");// line 20
+"	");// line 23
+String s = "hi2";// line 24
+p("	<p>bar hi ");// line 24
+p(s);// line 25
+p("!</p>\n");// line 25
 
 this.setOut(ori);
 return sb.toString();

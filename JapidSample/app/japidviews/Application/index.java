@@ -3,15 +3,17 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
+import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import static cn.bran.play.WebUtils.*;
 import japidviews._layouts.*;
+import play.i18n.Messages;
 import static  japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
+import play.i18n.Lang;
 import japidviews._tags.*;
 import controllers.*;
 import play.mvc.Http.*;
@@ -26,6 +28,21 @@ public class index extends cn.bran.japid.template.JapidTemplateBase
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
+
+// - add implicit fields with Play
+
+	final Request request = Request.current(); 
+	final Response response = Response.current(); 
+	final Session session = Session.current();
+	final RenderArgs renderArgs = RenderArgs.current();
+	final Params params = Params.current();
+	final Validation validation = Validation.current();
+	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
+	final play.Play _play = new play.Play(); 
+
+// - end of implicit fields with Play 
+
+
 	public index() {
 		super(null);
 	}
@@ -38,30 +55,6 @@ public class index extends cn.bran.japid.template.JapidTemplateBase
 		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
-
-// - add implicit variables 
-
-		final Request request = Request.current(); assert request != null;
-
-		final Response response = Response.current(); assert response != null;
-
-		final Flash flash = Flash.current();assert flash != null;
-
-		final Session session = Session.current();assert session != null;
-
-		final RenderArgs renderArgs = RenderArgs.current(); assert renderArgs != null;
-
-		final Params params = Params.current();assert params != null;
-
-		final Validation validation = Validation.current();assert validation!= null;
-
-		final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);assert errors != null;
-
-		final play.Play _play = new play.Play(); assert _play != null;
-
-// - end of implicit variables 
-
-
 //------
 p("<h2>Some Samples that demonstrate Japid features.</h2>\n" + 
 "\n" + 
@@ -87,7 +80,7 @@ p("\n" +
 "	and tags etc...</a></li>\n" + 
 "	<li><a href=\"renderJapidWith/templates/log.html\">use the log\n" + 
 "	macro in a template. watch the output in the console</a></li>\n" + 
-"	<li><a href=\"renderJapidWith/templates/Msg.html\">use\n" + 
+"	<li><a href=\"renderJapidWith/templates/Msg.html\">i18n, use\n" + 
 "	predefined messages</a></li>\n" + 
 "	<li><a href=\"application/postlist\">looping and tag calling</a></li>\n" + 
 "	<li><a href=\"application/each\">the *Each* tag</a></li>\n" + 
@@ -130,8 +123,31 @@ p("\n" +
 "	in layout spec and tags</a>: prefix the layout name or the tag name with a\n" + 
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
-"</ul>\n" + 
 "\n");// line 17
+String na = "bran";// line 71
+int ag = 123;// line 72
+p("	<li><a href=\"");// line 72
+p(lookup("validate", na, ag));// line 73
+p("\">validation and errors</a></li>\n" + 
+"    <li> using the <em>flash</em> object\n" + 
+"		<ul>\n" + 
+"			<li><a href=\"application/flashgood\">flash with success</a></li>\n" + 
+"			<li><a href=\"application/flashbad\">flash with errors</a></li>\n" + 
+"			<li><a href=\"application/flashmsg\">flash with a message</a></li>\n" + 
+"			<li><a href=\"");// line 73
+p(lookup("reverseUrl", new Object[]{}));// line 79
+p("\">flash with a message</a></li>\n" + 
+"		</ul>\n" + 
+"    </li>\n" + 
+"    <li>\n" + 
+"	   ");// line 79
+ SearchParams sp = new  SearchParams("key1, key2", "AND");// line 83
+p("	   <a href=\"");// line 83
+p(lookup("search", sp));// line 84
+p("\">reverse URL lookup with complex object</a>\n" + 
+"	</li>\n" + 
+"</ul>\n" + 
+"\n");// line 84
 
 	}
 

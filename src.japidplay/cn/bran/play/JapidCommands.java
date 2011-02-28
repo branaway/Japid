@@ -210,12 +210,14 @@ public class JapidCommands {
 		t.importStatic(JapidPlayAdapter.class);
 		t.importStatic(Validation.class);
 		t.importStatic(JavaExtensions.class);
-		t.importStatic(WebUtils.class);
+//		t.importStatic(WebUtils.class);
 		t.addAnnotation(NoEnhance.class);
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._layouts.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._javatags.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._tags.*");
 		t.addImport(play.mvc.Scope.class.getName() + ".*");
+		t.addImport(play.i18n.Messages.class);
+		t.addImport(play.i18n.Lang.class);
 		t.addImport(play.mvc.Http.class.getName() + ".*");
 		t.addImport(Validation.class.getName());
 		t.addImport(play.data.validation.Error.class.getName());

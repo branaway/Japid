@@ -12,6 +12,12 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
+
+// -- set up the tag objects
+final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(getOut());
+
+// -- end of the tag objects
+
 	public noplay() {
 		super(null);
 	}
@@ -26,17 +32,11 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-_japidviews__tags_Tag20.render(s);
+_japidviews__tags_Tag20.setOut(getOut()); _japidviews__tags_Tag20.render(s);
 // line 4
 p(" !\n" + 
 "\n");// line 4

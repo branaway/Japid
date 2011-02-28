@@ -16,11 +16,9 @@ package cn.bran.japid.template;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.nio.charset.Charset;
-import java.util.Collection;
 
-import cn.bran.play.WebUtils;
+import cn.bran.japid.util.WebUtils;
 
 /**
  * a java based template that dump content to a stream.

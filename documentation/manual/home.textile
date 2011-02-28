@@ -1,13 +1,15 @@
-h1. Japid Engine Quick Manual, V0.7
+h1. Japid Engine Quick Manual 
 
-h5. Bing Ran<bing_ran@hotmail.com>
+V0.7
+
+Bing Ran<bing_ran@hotmail.com>
 
 h4. Document History
 
 # 2010/2/16, first draft
 # 2010/2/20, added a section for the enhanced @if@ statement 
 # 2010/2/22, edited; added "open for" 
-
+# 2010/2/24, the Elvis operator: ?: 
 
 
 
@@ -22,6 +24,7 @@ The main goal of Japid is for use in large, high-traffic and highly dynamic Play
 The high-performance does not come at the cost of advanced features such as page composition, tags, template inheritance, content caching, and server-side include.
 
 This document focuses on using the Japid module for the Play! Framework. 
+
 
 h2. The Design philosophy
 
@@ -189,7 +192,8 @@ Views usually *extend* layouts and pass text snippet or variables to the layout 
 Here is a simple layout template (I have left out irrelevant markups (such as HTML tags) as much as possible make the syntax structure cleaner.):
 
 *master.html*
-<pre>
+
+<pre><code>
 This is the header. 
 
 The title of this article is "`get title`"
@@ -197,7 +201,7 @@ The title of this article is "`get title`"
 `doLayout
 
 This is the footer.
-</pre>
+</code></pre>
 
 A layout can placed anywhere but usually is in the @app/japidviews/_layouts@ directory, which is visible to any views in the project.
 
@@ -227,18 +231,19 @@ table{border: 1px dashed gray; cellpadding: 1px}.
 Once we have the layout we are ready to code the main view template. 
 
 *user.html*
-<pre>
+
+<pre><code>
 `import models.mymodels.User
 `extends master
 `args User user, int count
-
 `set title:"The User Detail"
+
 `if count
     `for (int i > 0; i < count; i++) {
         hello $user.name, and you are `tag showAge user.age`.
     `}
 `
-</pre>
+</code></pre>
 
 There are a few new syntax here:
 
@@ -289,7 +294,7 @@ Purpose: the parameters to be passed to this template to render. The format is t
 
 Note: 
 
-# Data to be rendered must (almost) be declared passed to the templates via the @`args@ directive. However There are a few Play! specific data that are implicitly avaiable, as explained later in this document.
+# Data to be rendered must (almost) be declared passed to the templates via the @`args@ directive. However There are a few Play! specific data that are implicitly available, as explained later in this document.
 # The data type must be visible, meaning it must be imported. However there are several classes and packaged that are imported to any templates by default:
 # Is @params@ a better name?
 
@@ -349,7 +354,7 @@ Notes:
 
 h3. Condition Statement @`if@ 
 
-First of all you can use the plain Java if-else-statement :
+First of all you can use the plain Java if-else-statement:
 
 <pre>
 `if (cond) {
@@ -421,12 +426,38 @@ But wait, you can go one more step further and get rid of the curly braces. Yes 
 `
 </pre>
 
+Remember to use a ` to close the if-else statement.
+
+What if you want to negate the condition? Use "!" of course.
+
+<pre>
+`if ! expr1
+    xxx
+`else if ! expr2
+    yyy
+`else
+    zzz
+`
+</pre>
+
 In summary,  
 
 # if you wrap the expression in "()", you must use the full Java syntax. The expression must be of a boolean type, otherwise it can be any data type. But check the conversion rule listed above and see if the outcome is what you're looking for.
-# If you use "{}", you must them all the way through. You cannot mix them up. 
+# If you use "{}", you must them all the way through. You cannot mix them u</code></pre>
 
 You get the idea. 
+
+BTW, in case you want to write the if-else statement in one line, you can do it this way:
+
+@`if xxx` foo `else` bar `@
+
+What happens here is that each of the single back quote switches the current mode between @script mode@ and @plain text mode@. The above line has odd number of ` therefore it's still in script mode. However since the "\n" character always changes the current mode to plain text mode, the next line will be in plain text mode. If you have more text to display, you'll need to add another ` like this:
+
+@`if xxx` foo `else` bar ` `more text to display@
+
+Note that I don't use two consecutive back quotes. The reason is @``@ is treated as a escape sequence for a @`@ literal. 
+
+
 
 
 h3. Iterate over collections, arrays: @`for@ 
@@ -449,7 +480,7 @@ or,
 `}
 </pre>
 
-Starting from version 0.7.1, the @for@ has an "open" form that gives template authors access to a few implicit variables related to the loop. The variables are explained in the following section, but here is the syntax, basically you leave out the "()" and the "{}"
+Starting from version 0.7.1, the @for@ has an "open" form that gives template authors access to a few implicit variables related to the loo</code></pre>The variables are explained in the following section, but here is the syntax, basically you leave out the "()" and the "{}"
 
 <pre>
 `String[] names = ...;
@@ -469,21 +500,19 @@ Starting from version 0.7.1, the @for@ has an "open" form that gives template au
 Notes:
 
 
-# Since this form involves multiple method dispatching, it's slower than the raw for loop. But the difference is in micro-second scale and probably does not matter. 
-# you cannot use "{}" with the open for loop. This is @invalid@:
-# there is @_isOdd@ but there is no @_isEven@
-
+* Since this form involves multiple method dispatching, it's slower than the raw for loo</code></pre>But the difference is in micro-second scale and probably does not matter. 
+* you cannot use "{}" with the open for loo</code></pre>This is *invalid*:
 <pre>
 `for String name: names { 
     xxx
 `}
 </pre>
-
+* there is @_isOdd@ but there is no @_isEven@
 
 
 h3. Enhanced looping: @`each@
 
-Note: it's been deprecated in favor of the the "open while" format. 
+Note: it's been deprecated in favor of the the "open for" format. 
 
 The @each@ command creates a loop construct that makes available additional looping attributes for the template authors to fine-tune the data rendering. For an example:
 
@@ -495,7 +524,7 @@ The @each@ command creates a loop construct that makes available additional loop
 
 Note:
 
-# The @each @block ends with a single ` sign on a whole new line.
+# The @each@ block ends with a single ` sign on a whole new line.
 # In fact the above syntax is a standard way to invoke a @tag@ with a @callback body@. See later in @tag@ invocation. 
 # The variable @names@ is the collection to iterate on. It can be of any of the following Java type:
 ## Collection
@@ -533,6 +562,37 @@ Note: Japid by default does *not* escape the string value of expressions to make
 
 to get the effect. The @escapeHtml()@ is a static method defined in @play.templates.JavaExtensions@ class in Play!, which is automatically imported to any Japid templates. There are other useful static methods in that class that are available directly in the templates. See "JavaExtension":http://www.playframework.org/documentation/1.1/javaextensions. 
 
+New! the *Elvis operator*: @?:@. 
+
+Quoted from the Groovy online documentation: 
+
+bq. The "Elvis operator" is a shortening of Java's ternary operator. One instance of where this is handy is for returning a 'sensible default' value if an expression resolves to false or null.
+
+Well it's not exactly that I have implemented the Elvis in Java:) What I have added is the @?:@ combination that works *only* inside of @${}@ expressions. An example:
+
+<pre><code>
+`args String name, Address addr
+
+The name is ${name ?: "empty"}
+The street number is ${addr.streetNo ?: "not present"}
+</code></pre>
+
+Here is what will happen: 
+
+bq. If the evaluation of the Java expression before the Elvis operator results in an empty string or an NPE is thrown during the evaluation, the default string value is displayed. 
+
+You can use "" as the default string, which effectively achieve "safe bean property navigation": @${my.fancy.expr ?: ""}@.
+
+Imagine what you have to do if without using this handy operator? Perhaps something like this:
+
+<pre>
+`args String name
+
+The name is: `if name` $name `else` empty! ` 
+</pre>
+ 
+This is a lot eye-stressing if you ask me. 
+
 
 
 h3. Safe Property Navigation: @`supressNull on@
@@ -553,6 +613,10 @@ The second @$a.length()@ in the above sample throws an NPE, which is caught by t
 
 Note: only NPEs thrown after the directive will be suppressed. 
 
+Again, you might find the *Elvis* operator "?:" a lot more flexible in dealing with nulls and empty variables.
+
+
+
 
 h3. Simple Tag Invocation: @`tag tagName arg1, arg2...`@
 
@@ -572,11 +636,10 @@ Back to the view template:
 In the body of the for loop we are invoking a @tag@ called @showAge@. Think of a tag as a function defined in a separate file. Here is the tag file:
 
 *showAge.html*
-<pre>
+<pre><code>
 `args int age
-
 you are $age years old
-</pre>
+</code></pre>
 
 The above tag simply take an @int@ as the age and append "years old" to it. 
 
@@ -603,6 +666,8 @@ Similar to locating a layout file, the tag name can take a few forms:
 # a relative form: @.sub.tagName@, which is located in a sub directory of the current directory. 
 
 Also please note that one can use "/" in lieu of "." but I prefer the dot syntax. 
+
+The default Play! templates assume that all tags are located in the @app/views/tags@ directory, just like the layouts which are assumed to be in the @app/views@. It will get too crowded when projects get bigger. Japid gives authors the flexibility to organize the layouts and tags in the whatever way the authors see fit, e.g., in the same directory as the view templates or sub-directories of it. 
 
 
 
@@ -650,7 +715,7 @@ Any views can be used as tags. The above mentioned view file:
 
 
 *user.html*
-<pre>
+<pre><code>
 `import models.mymodels.User
 `extends master
 `args User user, int count
@@ -667,14 +732,15 @@ can be invoked from other views. e.g.,
 ` User aUser = ...;
 `tag user(aUser, 10)
 
-</pre>
+</code></pre>
 
 In another word, regular views can be invoked either from the controller actions or from other views. 
 
 However, the regular views cannot take a template as an argument, unless it contains a special tag: @`doBody@, as in:
 
 *fancyTag.html*
-<pre>
+
+<pre><code>
 `args String m
 
 <p>I got $m, and the body is:</p>
@@ -682,7 +748,7 @@ However, the regular views cannot take a template as an argument, unless it cont
 `doBody m
 </p>
 <p>done.</p>
-</pre>
+</code></pre>
 
 Note: the argument list of the @`doBody@ command must match that declared after the "|" symbol in the invoking templates. 
 
@@ -692,9 +758,11 @@ With some imagination, a tag can be effectively used as a layout to a view. The 
 
 Note:
 
-# tags can invoke other tags. 
-# tags usually don't inherit from layouts. 
+# Tags can invoke other tags. 
+# Tags usually don't inherit from layouts. 
 # Tags can be placed anywhere in the @japidviews@ tree. 
+
+
 
 h3. Verbatim text: @`verbatim@
 
@@ -707,7 +775,6 @@ Purpose: to display a block of text un-parsed by Japid.
 </pre>
 
 Note: a @verbatim@ block must be closed by a standalone back quote that occupies a whole line.
-
 
 
 table{border: 1px dashed gray; cellspacing: 2px}.
@@ -751,13 +818,17 @@ The only limitation is the args to pass must either be from the arg list of the 
 `extends myLayout(a)
 </pre>
 
-h4. Define a local method with @`def@ and invoke it with @get@ method
-
-The @`def@ directive create a local method that return a String. The method can then be invoked in the same templates. An example:
 
 
-*the child template*
-<pre>
+
+h4. Define a local method with @`def@
+
+The @`def@ command defines a local method that returns a String. The method can then be invoked in the same templates. *def* blocks are considered as local tags. It's used to wrap a piece of rendering logic and presentation that can be reused in the the same template or its parent/children templates. @def@ blocks can take parameters. You can invoke real tags from within the def body too. Using the local methods is just like calling a method. 
+
+An example:
+
+*The child template*
+<pre><code>
 `extends defLayout
 
 `def foo
@@ -767,6 +838,7 @@ The @`def@ directive create a local method that return a String. The method can 
 
 `def foo2(String p)
     hi $p!
+    `tag SampleTag p
 `
 
 *{ the old syntax of def }*
@@ -781,12 +853,9 @@ The @`def@ directive create a local method that return a String. The method can 
 *{ can call it directly }*
 
 $foo()
+</code></pre>
 
-</pre>
-
-The @`def foo@ block defines a method named @foo@. The method body declares a variable @s@ and then calls another local method named @foo2@ with the variable. The @foo2@ is defined to take a String argument. Both return a string which is the result of interpolating the data in the text of the bodies. The arguments received from the @`args@ statement are avialable in the method bodies.
- 
-The @def@ blocks can be though of tags defined inline, instead of in separate files. You will find it very useful. 
+The @`def foo@ block defines a method named @foo@. The method body declares a variable @s@ and then calls another local method named @foo2@ with the variable. The @foo2@ is defined to take a String argument. Both return a string which is the result of interpolating the data in the text of the bodies. The arguments received from the @`args@ statement are available in the method bodies.
 
 
 The methods defined in the templates can be invoked with reflection. Japid provides a predefined method named @get@ (not to be confused with the @`get@) that can be used to invoke the method. In the above example, @#{dummyTag get("bar")/}@ is the "old" classic Play! way of invoking a tag. The argument is actually a function call to invoke the @bar@ method defined above it (in the classic Play! style again). One limitation though, the @get@ method can only invoke method without parameters. Future Japid will probably have another @get@ that can take additional arguments. 
@@ -810,7 +879,6 @@ Although it has been said that all data passed to the templates must be declared
 <pre>
     final Request request = Request.current();
     final Response response = Response.current();
-    final Flash flash = Flash.current();
     final Session session = Session.current();
     final RenderArgs renderArgs = RenderArgs.current();
     final Params params = Params.current();
@@ -819,7 +887,245 @@ Although it has been said that all data passed to the templates must be declared
     final play.Play _play = new play.Play();
 </pre>
 
-TODO: XXX
+
+First of all, please use the "Implicit objects available in a Play! template":http://www.playframework.org/documentation/1.1.1/templates#implicits as the background reference. 
+
+Japid implicit objects are comparable to those available in the standard Play! templates, but  is not strictly one-to-one matching. 
+
+# @request@: same as in Play! standard
+# @response@: not directly available in Play! standard, not advisable to use 
+# @session@: same as in Play! standard
+# @renderArgs@: not directly available in Play! standard, not advisable to use since all parameters are supposed to be passed in via the @`args@ directive. You would also loose data typing.
+# @params@: same as in Play! standard, not advisable to use since all parameters are supposed to be passed in via the @`args@ directive. 
+# @validation@: not directly available in Play! standard 
+# @errors@: comparable to the variable of the same name in Play! standard.
+# @_play@: same as the @play@ variable in Play! standard. The leading underscore is added to avoid possible name collision with user data. 
+
+There are a few static objects made available by the JapidPlayAdapter import. 
+
+# @flash@: a wrapper class @FlashWrapper@ that wraps the Play! @Flash@ class. 
+# @message@, same as in the standard Play! templates.  
+# @lang@, same as in the standard Play! templates.  
+
+There is an @out@ variable that is the content buffer for the current template. It's an instance of StringBuilder and you can append content to it if you want. Use of @out@ is not advisable. 
+
+
+Now I'll describe some of the most useful implicit objects. 
+
+
+
+
+
+h3. The @flash@ Object
+
+The _flash_ scope stores information that will be available in the current and the next HTTP request, including a _redirect_. 
+
+See "Flash and Session":http://www.playframework.org/documentation/1.1.1/controllers#session for the basic information. 
+
+The @flash@ object is an instance of @cn.bran.play.FlashWrapper@, which wraps the Play! @Flash@ class and provides a few handy methods, 
+
+# @hasError()@: true if there is a message associated with the key "error". This message can be created by invoking the @error(...)@ method of the standard Flash object. 
+# @error()@: return the message associated with the "error" key.
+# @hasSuccess()@: true if there is a message associated with the key "success". This message can be created by invoking the @success(...)@ method of the standard Flash object. 
+# @success()@: return the message associated with the "success" key.
+
+An example:
+
+In the controller:
+
+<pre><code>
+    
+    public static void flashbad() {
+        flash.error("something bad");
+        // redirect to 
+        flashout();
+    }
+
+    public static void flashMsg() {
+        flash.put("msg", "a message");
+        // redirect to 
+        flashout();
+    }
+
+    public static void flashgood() {
+        flash.success("cool");
+        // redirect to 
+        flashout();
+    }
+    
+    public static void flashout() {
+        renderJapid();
+    }
+    
+</code></pre>
+
+In the view:
+
+<pre>
+`// this is for demo the flash object, which is a wrapper of the Play's flash object
+
+`if flash.hasError() 
+    $flash.error()
+`else if flash.hasSuccess()
+    ${flash.success()}
+`else
+    `if flash.contains("msg")
+        the message: $flash.get("msg")
+    `else
+        oh well
+    `
+`
+</pre>
+
+Note we're using the "open if-else" statement for fast typing. Of course you can do:
+
+<pre>
+`if(flash.hasError()){ 
+    $flash.error()
+`} else if (flash.hasSuccess()){
+    ${flash.success()}
+`} else {
+    `if (flash.contains("msg")) {
+        the message: $flash.get("msg")
+    ` } else {
+        oh well
+    `}
+`}
+</pre>
+
+It's plain Java stuff. 
+
+New: @flash.get("msg")@ has been made simpler: @flash("msg")@ 
+
+
+h3. Validations and errors
+
+The Play! "validation":http://www.playframework.org/documentation/1.1.1/validation  is a good read. Get yourself familiar with that. 
+
+An object @validation@ of the Play! @Validation@ type is available in Japid templates. You can use the API to work with the validations and errors directly. 
+
+* Controller action:
+
+<pre>
+    public static void validate(String name, Integer age) {
+           validation.required("name/姓名", name);
+           validation.required("age/年龄", age);
+           validation.min("age", age, 10);
+           renderJapid(name, age);
+    }
+</pre>
+
+* the view
+
+<pre><code>
+`args String name, Integer age
+
+`if validation.hasErrors()
+
+    <h1>Oops…</h1>
+
+    `for Error error: validation.errors()
+        <p>$error.getKey() : $error</p>
+    `
+`else
+    name is: $name, age is: $age
+`
+</code></pre>
+
+Compare this to the Play! version:
+
+<pre><code>
+#{ifErrors}
+ 
+   <h1>Oops…</h1>
+ 
+   #{errors}
+       <li>${error}</li>
+   #{/errors}
+ 
+#{/ifErrors}
+#{else}
+   Hello ${name}, you are ${age}.
+#{/else}
+
+</code></pre>
+
+and you'll notice that Japid is a little "raw". 
+
+You can retrieve an @Error@ object associated with a key using:
+
+@validation.error(key)@
+
+You can also use the errors object:
+
+@errors.forKey(key)@
+
+Which is simply a wrapper to the @validation@ object. I feel like removing the @errors@ implicit object in the future.  
+
+
+New: 
+
+# @validation.hasErrors()@ has been made simpler: @hasErrors()@, just a static method invocation to the @Validation@
+# @validation.errors()@ has been made simpler: @errors()@, just a static method invocation to the @Validation@
+# To get the errors for a field/key: @List<Error> errors(String key)@
+# To get the first error for a field/key: @Error error(String key)@
+
+So the first example can be made simpler:
+
+<pre><code>
+
+`args String name, Integer age
+
+`if hasErrors()
+    <h1>Oops…</h1>
+
+    `for(Error e: errors()){
+        <p>$e.getKey() : $e </p>
+    `}
+`else
+    name is: $name, age is: $age
+`
+</code></pre>
+
+</pre>
+h4. Customizing the validation messages
+
+The default messages for each is in the @$PLAY_HOME/resources/messages@ and I copied here:
+
+<pre>
+validation.required=Required
+validation.minSize=Minimum size is %2$d
+validation.maxSize=Maximum size is %2$d
+validation.email=Invalid email address
+validation.range=Not in the range %2$d through %3$d
+validation.min=Cannot be lower than %2$d
+validation.max=Cannot be greater than %2$d
+validation.match=Must match %2$s
+validation.isTrue=Must be checked
+validation.equals=Must be equal to &{%2$s}
+validation.invalid=Incorrect value
+validation.future=Must be in the future
+validation.after=Must be after %2$s
+validation.past=Must be in the past
+validation.before=Must be before %2$s
+validation.object=Validation failed
+validation.notFound=Object not found for id %2$s
+validation.url=Not a valid URL
+validation.phone=Not a valid phone
+validation.ipv4=Not a valid IP address
+validation.ipv6=Not a valid IP v6 address
+</pre>
+
+You can override any of these in your @conf/messages@ file. 
+
+For example, I can use Chinese as the error message:
+
+<pre>
+    validation.required=不能为空
+    validation.min=不能小于 %2$d
+</pre>
+
+
 
 h2. Invoking templates in Controllers 
 
@@ -909,6 +1215,15 @@ h5. Conversion method 2: care-free conversion in DEV mode.
 
 The Play! runtime in DEV mode detects file changes automatically before processing any new HTTP requests or *job* activation, and Japid module will step in to translate the newly added/changed template files automatically. Java files derived from removed templates will get removed automatically too. 
 
+Note: for the IDE to display any changes made to the derived Java files, it's highly recommended to turn on *auto-refresh* on external file changes. Take Eclipse for an example:
+
+# Open the @Window@ menu in the main menu bar and open the @Preferences@ menu item. 
+# Open the @General -> Workspace@ panel and check the @Refresh    automatically@ checkbox. 
+
+Now the artifacts of Japid transforming process will be displayed instantaneously or with a short delay, depending on the size of the project and the OS you're running. If you have an error in your template, the derived Java file will be marked with an error marker and you can take a look at it to find out what's wrong with it.  
+
+
+
 h5. Conversion method 3: using the Japid plugin for Eclipse
 
 There is a plugin for Eclipse that takes care of templates/Java synchronization at compile time. One don't need to run the app in DEV mode to get the templates automatically translated. The detail is explained in a later section of this document.  
@@ -953,9 +1268,23 @@ Now, what if there are multiple possible Japid templates to render with in an ac
 
 Three ways:
 
-# statically link the template class as explained in the previous section.
-# use the @JapidController.renderJapidWith() method@: for an example: @renderJapidWith("more/MyController/anotherTemplate.html", bar)@ will render the @bar@ object with the @japidviews/more/MyController/anotherTemplate.html@ template. The template name is a relative name to the @japidviews@ directory. It can also be in the form of a Java class name: @more.MyController.anotherTemplate@.
-# call other methods and render implicitly, i.e., *action chaining*. 
+1. statically link the template class as explained in the previous section.
+2. use the @JapidController.renderJapidWith() method@: 
+for an example: 
+
+@renderJapidWith("more/MyController/anotherTemplate.html", bar)@ 
+will render the @bar@ object with the @japidviews/more/MyController/anotherTemplate.html@ template. The template name is a relative name to the @japidviews@ directory. 
+
+It can also be in the form of a Java class name: @more.MyController.anotherTemplate@. 
+
+You can specify the target target template in the same default directory using the "@" notation:
+
+<pre>
+    renderJapidWith("@anotherTemplate.html", bar), or
+    renderJapidWith("@anotherTemplate", bar)
+</pre>
+
+3. call other methods and render implicitly, i.e., *action chaining*. 
 
 The below example demonstrates all ways of template bindings:
 
@@ -1002,7 +1331,7 @@ Japid provides a special command named @`invoke@ or @`a@ for action to help user
 
 In a controller:
 
-<pre>
+<pre><code>
 package controllers.more;
 import cn.bran.play.JapidController;
 
@@ -1015,12 +1344,11 @@ public class Portlets extends JapidController {
         renderJapid(a);
     }
 
-
     public static void panel2(String b) {
         renderJapid(b);
     }
 }
-</pre>
+</code></pre>
 
 Highlight anywhere in the index() method and @ctrl-alt-v@ and say "yes" to the question and you are in the index.html. Change it to something like this:
 
@@ -1042,13 +1370,13 @@ The @`invoke@ command can take one optional argument: a timeout value to cache t
 
 Let's change the above template a little bit:
 
-<pre>
+<pre><code>
     `args String a, String b
     
     `invoke controllers.more.Portlets.panel1(a)
 
     `a controllers.more.Portlets.panel2(b), "10s"
-</pre>
+</code></pre>
 
 I have attached a timeout specification to the second action invocation. The timeout value is a string such as "1s", "2mn" ("mn" for minute), "3h" and "4d" ("29d" maximum), to specify how long to cache the result content from the action.  
 
@@ -1080,7 +1408,7 @@ An Example:
 
 *The controller:*
 
-<pre>
+<pre><code>
 package controllers.more;
 import java.util.Date;
 
@@ -1112,31 +1440,30 @@ public class Portlets extends JapidController {
         renderText("<div>" + new Date() + "</div>");
     }
 }
-
-</pre>
+</code></pre>
 
 The view:
 
-<pre>
+<pre><code>
     `args String a, String b
     
 The outer most content is cached for 20 seconds, using the CacheFor annotation. ${new Date()}
 
 this part is never cached.
-        `invoke controllers.more.Portlets.panel1(a)
+    `invoke controllers.more.Portlets.panel1(a)
 
 this part is cached for 10 seconds. Note the timeout spec with invoke overrides CacheFor annotation.
-        `a controllers.more.Portlets.panel2(b), "10s"
+    `a controllers.more.Portlets.panel2(b), "10s"
 
 this part is cached for 4 seconds, specified with CacheFor annotation in the controller.
-        `a controllers.more.Portlets.panel3(a + b)
-</pre>
+    `a controllers.more.Portlets.panel3(a + b)
+</code></pre>
 
 With this composition pattern, the whole page will be cached for 20 seconds, and the @panel2@ will be cached for 10 seconds, the @panel3@ is cached for 4 seconds since the action is annotated with a @CacheFor("4s")@. The panel1 part will not be cached at all since there is no cache control at all. 
 
-</pre>
-
 If you have sharp eyes, you may notice that the content in a cached block is usually updated one second before the specified timeout value. Japid builds a mechanism to *pre-expire* an entry 1 second in advance. The first client to get the *pre-expire* is responsible for updating the cache while other requests coming during the one second window will still get the cached entry until the entry is *fully expired*. This mechanism is to make sure the cache will be updated by only one thread thus perform seamlessly in a highly concurrent environment.  
+
+XXX: how to penetrate the cache programmatically. 
 
 
 
@@ -1389,11 +1716,155 @@ This is how to run the sample:
 # start the application and hit @http://localhost:9000/@, you'll get a page with many links to different actions.
 # follow those links to see how each features are used in the demo code. 
 
+
+
+h2. i18n
+
+Reference: "Play! i18n":http://www.playframework.org/documentation/1.1.1/i18n
+
+Everything said in the above documentation is supported in Japid. 
+
+There is one more API to retrieve an externalized messages, as illustrated in the following code snippet:
+
+A Sample view:
+
+<pre><code>
+login: &{'login.name'} 
+    or: ${i18n("login.name")}
+</p>
+customer name: &{'cus.name', "冉兵"} 
+            or: ${i18n("cus.name", "Bing Ran")}
+</code></pre>
+
+The method @i18n()@ basically calls the @Messages.get(...)@.
+
+
+
+
+
+h2. Reverse URL Lookup
+
+Play! uses the mapping rules in the @conf/routes@ to map URLs to controller actions. This is very powerful. What is more powerful is to do the "reverse" mapping: to map a expression of a action invoke back to a valid URL. 
+
+For example: if the rule maps @/myaction/{id}@ to @more.MyController.action(id)@, the reverse lookup is to map the latter to the former. The core syntax is 
+
+<pre><code>
+    @{package.Controller.action(arg1, arg2...)}
+</code></pre>
+
+for generating a relative URL from the host; and
+
+<pre><code>
+    @@{package.Controller.action(arg1, arg2...)}
+</code></pre>
+
+for generating an absolute URL including the host part.
+
+The most common use case for the reverse lookup is to set the @href@ attribute for the @a@ tags and the @action@ attribute for the @form@ tags.
+
+
+A sample view:
+
+<pre><code>
+`String name = "bran";
+<a href="@{validate(name)}">simple reverse lookup</a>
+<a href="@@{validate(name, 12)}">simple reverse lookup with absolute url</a>
+<form action="@{validate()}">
+    <input type="hidden" name="name" value="bran"/>
+    <input type="hidden" name="age" value="12"/>
+    <input type="submit"/>
+</form>
+<a href="@{more.MyController.echo(name)}">simple reverse lookup</a>
+</code></pre>
+
+
+Note:
+
+# When there is no controller identifier in front of the action name, it's assumed the controller is the current contoller that invoking this the template. 
+# The reverse lookup takes place at rendering time, and it's expensive.
+
+There are a few methods available in you Java code, again imported from @JapidPlayAdapter@:
+
+* @String lookup(String action, Object... args)@: the @action@ parameter is the controller plus action name, the args must be in the order of the parameters in the action.  
+* @String lookupAbs(String action, Object... args)@: same as above except it returns the full URL including the host.
+* @String lookupStatic(String resource)@: look up the URL for the static resource, such as JavaScript, CSS, etc. 
+* @String lookupStatic(String resource)@: same as above except it returns the full URL including the host.
+
+
+
+
+h2. Content Negotiation
+
+Reference: "Content Negotiation in Play!":http://www.playframework.org/documentation/1.1/routes#content-negotiation. 
+
+Japid tries to match the template to render to the @Accept@ HTTP header of a user agent. This happens when we use @renderJapid()@, i.e., implicit template binding.
+
+For the same controller action there can be multiple target templates to render depending on the client expections:
+
+* if the client accept @html@, the target defaults to @{action name}.html@ 
+* if the client accept @xml@, the target defaults to @{action name}.xml@
+* if the client accept @json@, the target defaults to @{action name}.json@
+* if the client accept @JavaScript@, the target defaults to @{action name}.js@
+* if the client accept @CSS@, the target defaults to @{action name}.css@
+
+Please note that the template translator maps the templates with an extension other than HTML to Java source file with the following naming pattern:
+
+<pre>
+{action name}.{extension}  -> {action name}_{extension}.java 
+</pre>
+
+The "Content-Type" header of the HTTP response is properly set in the above cases. 
+
+Japid allows you to set the @Content-Type@ explicitly. 
+
+* Use a directive named @`contentType@
+<pre>
+`// some examples
+`contentType text/html; charset=utf-8
+`contentType text/xml; charset=utf-8
+`contentType application/json; charset=utf-8
+`contentType application/x-javascript; charset=utf-8
+
+</pre>
+
+To make it a lot simpler you can simply use a set of directive that does not require you to remember the exact correct format:
+
+<pre>
+`txt
+    `// for ("text/plain; charset=utf-8"),
+`xml
+    `// for ("text/xml; charset=utf-8"),
+`json
+    `// for ("application/json; charset=utf-8"),
+`css
+    `// for ("text/css; charset=utf-8"),
+`js
+    `// for ("application/x-javascript; charset=utf-8"),
+</pre>
+
+BTW, you can directly manipulate the content type using the implicit object @response@:
+
+<pre>
+`response.contentType = "text/xml; charset=utf-8"
+</pre>
+
+Not recommended though. 
+
+
+
 h2. Using Groovy and Japid in the Same Project
 
-xxx
+Japid is a module to bring another rendering engine for developing Play! applications. It does not replace the default Groovy-based template engine. It's not one-or-the-other situation. In fact they can co-exist in the same project. 
 
-  
+Controllers extending @Controller@ will work as usual, meaning they search the @app/views@ directory for the matching Goorvy-based templates, while those extending @JapidController@ will use Japid, meaning use the @app/japidview@ tree to store Japid templates. 
+
+The emailer is likewise. Both the Groovy-emailer and Japid emailer can exist in the same projects. 
+
+You can even render with Groovy in Japid controllers by simply calling @render(...)@ methods instead of @renderJapid(...)@
+
+
+
+
 h2. Future work
 
 # keep improving the Eclipse plugin
@@ -1405,3 +1876,101 @@ h2. Future work
 Thanks for your interests in Japid!
 
 
+
+h2. Play! Default Syntax v.s. Japid
+
+Functionally, Japid provides a few features that are missing from the standard Play! trmplates. For exmaples:
+
+# Invoking actions from the templates, with the @`invoke/`a@ command, with advanced cache control. This is the Japid's way of component-based page compositon. 
+# Defining local methods in templates with the @`def@ command, a light-weighted way of reusing rendering logic and presentation in the same template. 
+# The *import*. Play! default must use the full qualified name to access static methods because you cannot do "import". In Japid you can simply do "import static" to import all the great static methods you have designed and use them as if they're part of your tempates. 
+
+Now let's look at some of the Play! syntax and how similar things are done in Japid.
+
+Japid has adopted most of the notations in the classic Play! templates.  
+
+* @*{ }*@: the server side comment block. Sometimes I use @`//@ to make a one line comment. 
+* @%{ }%@: the code block. Most of the time I like the ` leading code line though.  
+* @${ }@: the Java expression. Japid allows one to drop the curlies if won't cause any confusion. 
+* @&{ }@: the message block.
+* @#{ }@: the tag block. Note that named parameters are not supported. Many of the buidt-in tags has corresponding @command@ form that use the back quote, such as @extends@, @set@, @get@, etc. 
+
+
+The following list starts with the tags available in standard Play! and gives the Japid counterpart. An explaination is given if a couterpart is missing. 
+
+* @flash['user.name']@: 
+    @flash.get("user.name")@ or simply: @flash("user.name")@. There is an implicit object named @flash@ and a method @flash()@, implicitly imported from the @cn.bran.play.JapidPlayAdapter@ class. Don't be confused:)
+* @#{ifErrors}@: 
+    use the @hasErrors()@ with @`if@: @`if hasErrors()@. Again the method is from the @JapidPlayAdapter@. 
+* @#{else}@: 
+    @`else@
+* @#{ifnot xxx}@: 
+    @`if ! xxx@, @`else if ! xxx@.
+* @#{errors}@: 
+    use the @errors()@ method in a for loop:
+
+<pre><code>
+    `for Error e: errors()
+       <p>$e</p>
+    `
+</code></pre>
+
+    I might consider adding a special command for that.
+
+
+* @#{authenticityToken/}@: 
+    use the @authenticityToken()@ method, in an expression.
+
+<pre><code>
+    <form action="xxx">
+        $authenticityToken()
+        <input .../>
+    </form>
+</code></pre>
+
+
+* @#{form ...}@: 
+    this tag does not do much more than embedding the @$authenticityToken()@. So use the http *form* tag instead and add the authenticity token manually.
+* @#{field ...}@: 
+    I can live with *input* tags.
+* @#{jsAction ...}@: 
+    Japid provides a static method  for that, @jsAction(action, arg1, arg2)@: 
+    for:
+<pre>
+        #{jsAction \@form(':name', ':age')}, 
+</pre>    
+    we have a Japid version:
+<pre>
+        $jsAction("form", ":name", ":age")
+</pre>
+
+    You know that @:name@ etc are to generate a URL with named place holders, don't you?
+
+
+    
+h2. Performance Tips
+
+If you're so paranoid about your template performance, here are some of the tips to author Japid templates. 
+
+* All the general web site performance tips apply. 
+* Use @cacheFor()@ annotation.
+* All the field access in the model classes are transformed to invoke the @FieldAccessor.invokeReadProperty()@ & @FieldAccessor.invokeWriteProperty()@ and those two methods use reflection to finish the work. My advice is always create the getter and setter yourself if you're performance conscious. 
+* The @{} reverse URL lookup is expensive. Use it cautiously. 
+* Invoking tags are more expensive than using local methods defined by @def@
+* Use raw Java constructs, such as the @if@ and @for@, particularly the the "open for" loop involves a lot of method dispatching.
+* The @format(Date...)@ in the JavaExtensions are not cheap if you care.
+
+BTW, there is a special directive names @`stopwatch@ that can be used to log the time it takes a template to render data. 
+
+<pre>
+`stopwatch on
+</pre> 
+
+A line like the following will be printed to the console:
+
+<pre>
+[dummyTag] rendering time: 3
+</pre>
+
+The unit of measurement is "ms". 
+ 

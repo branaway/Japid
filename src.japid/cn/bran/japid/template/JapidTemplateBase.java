@@ -21,6 +21,8 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
 
+import cn.bran.japid.classmeta.MimeTypeEnum;
+
 /**
  * a java based template suing StringBuilder as the content buffer
  * 
@@ -28,7 +30,12 @@ import java.util.TreeMap;
  * 
  */ 
 public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
-
+	public static final String CONTENT_TYPE_JSON = MimeTypeEnum.json.header;
+	public static final String CONTENT_TYPE_HTML = MimeTypeEnum.html.header;
+	public static final String CONTENT_TYPE_XML = MimeTypeEnum.xml.header;
+	public static final String CONTENT_TYPE_TXT = MimeTypeEnum.txt.header;
+	public static final String CONTENT_TYPE_CSS = MimeTypeEnum.css.header;
+	
 	public JapidTemplateBase(StringBuilder out) {
 		super(out);
 	}

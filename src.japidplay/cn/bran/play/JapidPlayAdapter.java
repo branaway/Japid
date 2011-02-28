@@ -4,8 +4,13 @@ package cn.bran.play;
 import java.util.Collection;
 import java.util.List;
 
+import play.data.validation.Error;
+import play.data.validation.Validation;
+import play.i18n.Lang;
 import play.i18n.Messages;
 import play.mvc.Scope.Flash;
+import play.mvc.Scope.RenderArgs;
+import play.mvc.Scope.Session;
 import cn.bran.japid.util.FlashScope;
 
 /**
@@ -19,10 +24,12 @@ import cn.bran.japid.util.FlashScope;
  */
 public class JapidPlayAdapter {
 	public static FlashScope flash = new FlashWrapper();
-	public static ParamsWrapper params = new ParamsWrapper();
-	public static RenderArgsWrapper renderArgs = new RenderArgsWrapper();
+//	public static ParamsWrapper params = new ParamsWrapper();
+//	public static RenderArgsWrapper renderArgs = new RenderArgsWrapper();
+	public static Messages messages = new Messages();
+	public static Lang lang = new Lang();
+
 	private static RouteAdapter urlMapper = new RouteAdapter();
-	private static Messages messages = new Messages();
 
 	/**
 	 * this one is more generic and connected to Play!
@@ -31,24 +38,25 @@ public class JapidPlayAdapter {
 	 * @return
 	 */
 	public static Object renderArg(String k) {
-		return renderArgs.get(k);
+//		return renderArgs.get(k);
+		return RenderArgs.current().get(k);
 	}
 
-	/**
-	 * get the last item from a list
-	 * 
-	 * @param list
-	 * @return
-	 */
-	public static <T> T lastOf(List<T> list) {
-		if (list.size() == 0)
-			return null;
-		return list.get(list.size() - 1);
-	}
-
-	public static Flash flash() {
-		return Flash.current();
-	}
+//	/**
+//	 * get the last item from a list
+//	 * 
+//	 * @param list
+//	 * @return
+//	 */
+//	public static <T> T lastOf(List<T> list) {
+//		if (list.size() == 0)
+//			return null;
+//		return list.get(list.size() - 1);
+//	}
+//
+//	public static Flash flash() {
+//		return Flash.current();
+//	}
 
 	/**
 	 * map an action to an absolute url
@@ -86,5 +94,58 @@ public class JapidPlayAdapter {
 
 	public static String getMessage(String msgName, Object... params) {
 		return messages.get(msgName, params);
+	}
+
+	public static String i18n(String msgName, Object... params) {
+		return messages.get(msgName, params);
+	}
+	
+	public static Object flash(String key) {
+		return flash.get(key);
+	}
+
+	/**
+	 * generate an hidden field in the form with a security token to combat CSRF.
+	 * @return
+	 */
+	public static String authenticityToken() {
+		String t = "<input type=\"hidden\" name=\"authenticityToken\" value=\"%s\"/>" ;
+		return String.format(t, Session.current().getAuthenticityToken());
+	}
+	
+	public static String jsAction(String name, String... args) {
+		String funcPattern = 
+				"function(options) {\n" + 
+				"	var pattern = '%s'; \n" + 
+				"	for(key in options) { \n" + 
+				"		pattern = pattern.replace(':'+key, options[key]); \n" + 
+				"	} \n" + 
+				"	return pattern; \n" + 
+				"};";
+		
+		return String.format(funcPattern, lookup(name, (Object[])args));
+	}
+	
+	public static String or(Object o , String substitude) {
+		try {
+			String string = o.toString();
+			if (string == null || string.length() == 0)
+				return substitude;
+			else
+				return string;
+		}
+		catch (NullPointerException e) {
+			return substitude;
+		}
+	}
+	
+	/**
+	 * determine if the current user
+	 * @param roles
+	 * @return
+	 */
+	public static boolean inRole(String... roles) {
+		// TODO implement this
+		return false;
 	}
 }
