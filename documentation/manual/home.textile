@@ -254,7 +254,7 @@ Purpose: same as in java.
 
 table{border: 1px dashed gray; cellpadding: 1px}.
 |_. Japid syntax|_. Play! syntax|
-|@import x.y.z@, @import static x.y.Z.*@ |@`import@|none|
+|@`import x.y.z@, @`import static x.y.Z.*@ |none|
 
 Note: 
 
@@ -305,7 +305,6 @@ import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import static cn.bran.play.WebUtils.*;
 
 import japidviews._layouts.*;
 import japidviews._tags.*;
@@ -374,7 +373,7 @@ The @cond@ and @conds@ must be boolean values. This sometimes forces people to w
 `}
 </pre>
 
-The Japid compiler has imported a method @cn.bran.play.WebUtils.asBoolean(Object)@ that takes any object and infers a boolean value from it to any templates it generates. So you can improve the above a little bit:
+The Japid template base class has a method @asBoolean(Object)@ that takes any object and infers a boolean value from it to any templates it generates. So you can improve the above a little bit:
 
 <pre>
 `if (asBoolean(any_java_expression)) {
@@ -623,19 +622,21 @@ h3. Simple Tag Invocation: @`tag tagName arg1, arg2...`@
 Back to the view template:
 
 *user.html*
-<pre>
+
+<pre><code>
 `import models.mymodels.User
 `extends master
 `args User user, int count
 
-    `for (int i > 0; i < count; i++) {
-        hello $user.name, and you are `tag showAge user.age`.
-    `}
-</pre>
+`for (int i > 0; i < count; i++) {
+    hello $user.name, and you are `tag showAge user.age`.
+`}
+</code></pre>
 
 In the body of the for loop we are invoking a @tag@ called @showAge@. Think of a tag as a function defined in a separate file. Here is the tag file:
 
 *showAge.html*
+
 <pre><code>
 `args int age
 you are $age years old
@@ -715,6 +716,7 @@ Any views can be used as tags. The above mentioned view file:
 
 
 *user.html*
+
 <pre><code>
 `import models.mymodels.User
 `extends master
@@ -723,15 +725,15 @@ Any views can be used as tags. The above mentioned view file:
 `for (int i > 0; i < count; i++) {
     hello $user.name, and you are `tag showAge user.age`.
 `}
-</pre>
+</code></pre>
 
 can be invoked from other views. e.g.,
 
 *another view*
-<pre>
+
+<pre><code>
 ` User aUser = ...;
 `tag user(aUser, 10)
-
 </code></pre>
 
 In another word, regular views can be invoked either from the controller actions or from other views. 
@@ -804,9 +806,7 @@ The @extends@ directive allows passing objects to the layout in this way:
 
 <pre>
 `args String a, int b, String c
-
 do whatever with them
-
 </pre>
 
 Smells Scala?
@@ -828,6 +828,7 @@ The @`def@ command defines a local method that returns a String. The method can 
 An example:
 
 *The child template*
+
 <pre><code>
 `extends defLayout
 
@@ -909,10 +910,7 @@ There are a few static objects made available by the JapidPlayAdapter import.
 
 There is an @out@ variable that is the content buffer for the current template. It's an instance of StringBuilder and you can append content to it if you want. Use of @out@ is not advisable. 
 
-
 Now I'll describe some of the most useful implicit objects. 
-
-
 
 
 
@@ -1973,4 +1971,5 @@ A line like the following will be printed to the console:
 </pre>
 
 The unit of measurement is "ms". 
- 
+
+::eof

@@ -3,14 +3,24 @@
                     Bing Ran<bing_ran@hotmail.com>
                     
 
-Links:
+* Links:
 
--- The Japid User Manual:   https://github.com/branaway/Japid/wiki/Japid-User-Guide
--- Porting to Japid:        https://github.com/branaway/Japid/wiki/Porting-ZenContact-to-Japid
+-- The Japid User Manual:   
+    https://github.com/branaway/Japid/wiki/Japid-User-Guide
+-- Porting to Japid:        
+    https://github.com/branaway/Japid/wiki/Porting-ZenContact-to-Japid
+-- The Japid Plugin for Eclipse:
+    https://github.com/branaway/playclipse
+    
+* Note:
+
+Whenever you upgrade the Japid module, 
+
+1. do a "play japid:regen" to regenerate all the derived Java files.
+2. Or if you're using the Japid Plugin for Eclipse, re-enable the "Play nature", or do a "Project -> clean"
 
 
-
-Version History:
+* Version History:
 
 2011/2/25: V0.7.1: 
     1. added a new way to pass arguments from views to layout in the `extends command. See perf.html for an example.  
