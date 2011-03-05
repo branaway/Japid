@@ -238,17 +238,17 @@ public abstract class AbstractTemplateClassMetaData {
 		if (l.startsWith("cn.bran.play"))
 			return false;
 
-		if (l.startsWith("japidviews"))
-			return false;
+//		if (l.startsWith("japidviews"))
+//			return false;
 
-		if (l.startsWith("models"))
-			return false;
+//		if (l.startsWith("models"))
+//			return false;
 
 		if (l.contains("JapidWebUtil"))
 			return false;
 
-		if (l.startsWith("controllers"))
-			return false;
+//		if (l.startsWith("controllers"))
+//			return false;
 
 		return true;
 	}
@@ -537,7 +537,7 @@ public abstract class AbstractTemplateClassMetaData {
 		// now we use the headers var the template base, for slightly
 		// performance penalty
 		// pln("	private static final Map<String, String> headers = new HashMap<String, String>();");
-		if (headers.size() > 0) {
+		if (useWithPlay && headers.size() > 0) {
 			// pln("	static {");
 			pln("{");
 			for (String k : headers.keySet()) {

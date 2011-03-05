@@ -16,6 +16,7 @@ package cn.bran.japid.compiler;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
@@ -49,7 +50,23 @@ public class TranslateTemplateTask {
 
 	private List<Class<?>> staticImports = new ArrayList<Class<?>>();
 	private List<String> imports = new ArrayList<String>();
+	// changed html source files
 	private List<File> changedFiles;
+	// updated Java files
+	private List<File> changedTargetFiles = new LinkedList<File>();
+	public List<File> getChangedTargetFiles() {
+		return changedTargetFiles;
+	}
+
+	private boolean usePlay = true;
+
+	public boolean isUsePlay() {
+		return usePlay;
+	}
+
+	public void setUsePlay(boolean usePlay) {
+		this.usePlay = usePlay;
+	}
 
 	/**
 	 * get a list of changed files in the last task execution
@@ -98,9 +115,10 @@ public class TranslateTemplateTask {
 		changedFiles = DirUtil.findChangedSrcFiles(include);
 
 		if (changedFiles.size() > 0) {
-			System.out.println("[Japid]Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " to directory: " + destDir);
+			System.out.println("[Japid] Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " in directory tree: " + destDir);
 
 			JapidTemplateTransformer tran = new JapidTemplateTransformer(packageRoot.getPath(), null);
+			tran.usePlay(this.usePlay);
 			for (Class<?> c : this.staticImports) {
 				tran.addImportStatic(c);
 			}
@@ -113,14 +131,15 @@ public class TranslateTemplateTask {
 
 			for (int i = 0; i < changedFiles.size(); i++) {
 				File pFile = changedFiles.get(i);
-				System.out.println("[Japid]Transforming template: " + pFile.getPath() + " to: " + DirUtil.mapSrcToJava(pFile.getName()));
+				System.out.println("[Japid] Transforming template: " + pFile.getPath() + " to: " + DirUtil.mapSrcToJava(pFile.getName()));
 				if (listFiles) {
 					System.out.println(pFile.getAbsolutePath());
 				}
 
 				try {
 					String relativePath = JapidTemplateTransformer.getRelativePath(pFile, packageRoot);
-					tran.generate(relativePath);
+					File generate = tran.generate(relativePath);
+					changedTargetFiles.add(generate);
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new RuntimeException(e.getClass().getName() + ":" + e.getMessage());

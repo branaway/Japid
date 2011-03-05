@@ -273,8 +273,9 @@ Purpose: same as in java. The super class is usually a layout template. The temp
 
 Note: 
 
-# there is no ending `.
-# starting from version 0.7, the layout can take parameters right from the @extends@ directive, as in
+* there is no ending `.
+* starting from version 0.7, the layout can take parameters right from the @extends@ directive, as in
+
 <pre>
 `args String a, int b
 `extends aLayout(a, b +1)
@@ -499,8 +500,8 @@ Starting from version 0.7.1, the @for@ has an "open" form that gives template au
 Notes:
 
 
-* Since this form involves multiple method dispatching, it's slower than the raw for loo</code></pre>But the difference is in micro-second scale and probably does not matter. 
-* you cannot use "{}" with the open for loo</code></pre>This is *invalid*:
+* Since this form involves multiple method dispatching, it's slower than the raw @for@ loop. But the difference is in micro-second scale and probably does not matter. 
+* you cannot use "{}" with the "open for loop". This is *invalid*:
 <pre>
 `for String name: names { 
     xxx
@@ -1085,7 +1086,6 @@ So the first example can be made simpler:
 `
 </code></pre>
 
-</pre>
 h4. Customizing the validation messages
 
 The default messages for each is in the @$PLAY_HOME/resources/messages@ and I copied here:

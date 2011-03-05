@@ -28,8 +28,6 @@ import cn.bran.japid.classmeta.LayoutClassMetaData;
  */
 
 public class JapidLayoutCompiler extends JapidAbstractCompiler {
-
-	private static final String DO_LAYOUT = "doLayout";
 	// StringBuilder mainRenderBodySource = new StringBuilder();
 	LayoutClassMetaData cmd = new LayoutClassMetaData();
 

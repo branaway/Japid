@@ -210,7 +210,6 @@ public class JapidCommands {
 		t.importStatic(JapidPlayAdapter.class);
 		t.importStatic(Validation.class);
 		t.importStatic(JavaExtensions.class);
-//		t.importStatic(WebUtils.class);
 		t.addAnnotation(NoEnhance.class);
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._layouts.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._javatags.*");

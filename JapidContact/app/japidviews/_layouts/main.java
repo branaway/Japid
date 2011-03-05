@@ -3,7 +3,6 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
-import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;
@@ -110,8 +109,9 @@ p("    		</section>\n" +
 "	</body>\n" + 
 "</html>\n" + 
 "\n");// line 24
-// line 35
-p("    ");// line 37
+p("\n");// line 35
+// line 37
+;// line 39
 	}
 	 protected void title() {};
 
@@ -120,10 +120,10 @@ public String selected(String pattern) {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
-// line 35
-p("");// line 35
-p(request.action.matches(pattern) ? "selected" : "");// line 36
-p("");// line 36
+// line 37
+p("");// line 37
+p(request.action.matches(pattern) ? "selected" : "");// line 38
+p("");// line 38
 
 this.setOut(ori);
 return sb.toString();

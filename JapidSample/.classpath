@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry excluding="views/**" kind="src" path="app"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="src" path="japid-head"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Japid Module"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/play-git"/>

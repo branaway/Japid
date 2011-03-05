@@ -17,6 +17,9 @@ public class JapidTemplateTransformerTest {
 		src = "<p> `doLayout ";
 		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
 
+		src = "<p> `doLayout`</p> ";
+		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
+
 		src = "`doLayoutter ";
 		assertFalse(JapidTemplateTransformer.looksLikeLayout(src));
 

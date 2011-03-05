@@ -13,7 +13,6 @@
  */
 package cn.bran.japid.compiler;
 
-import java.io.File;
 import java.util.List;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -28,6 +27,7 @@ import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.DirUtil;
+import cn.bran.japid.util.WebUtils;
 
 /**
  * based on the original code from the Play! Framework
@@ -40,6 +40,7 @@ import cn.bran.japid.util.DirUtil;
  * 
  */
 public abstract class JapidAbstractCompiler {
+	public static final String DO_LAYOUT = "doLayout";
 	private static final String ELVIS = "?:";
 	// pattern: } else if xxx {
 	static final String ELSE_IF_PATTERN_STRING = "\\s*\\}\\s*else\\s*if\\s+([^\\(].*)\\s*";
@@ -972,7 +973,7 @@ public abstract class JapidAbstractCompiler {
 				System.out.println(tag.tagName + " not allowed to have instance of this tag");
 			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
 			String tagLine = tagVar + ".setOut(getOut()); "; // make sure to use the current string builder
-			tagLine += tagVar + ".render(" + tag.args + ", " + inner.getAnonymous() + ");";
+			tagLine += tagVar + ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + inner.getAnonymous() + ");";
 			println(tagLine);
 		} else {
 			// for simple tag call without call back:
@@ -1009,7 +1010,7 @@ public abstract class JapidAbstractCompiler {
 			// } else if (tagName.equals("set")) { // the set is handled in the
 			// JapidTemplateCompiler endTagSpecial()
 		} else if (tagName.equals("invoke")) {
-		} else if (tagName.equals("doLayout")) {
+		} else if (tagName.equals(DO_LAYOUT)) {
 		} else if (endTagSpecial(tag)) {
 		} else {
 			endRegularTag(tag);

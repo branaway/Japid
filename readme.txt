@@ -22,6 +22,9 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/3/5: V0.8.0: 
+    1. bug fix: calling tag without args but a callback block.  
+
 2011/2/25: V0.7.1: 
     1. added a new way to pass arguments from views to layout in the `extends command. See perf.html for an example.  
         

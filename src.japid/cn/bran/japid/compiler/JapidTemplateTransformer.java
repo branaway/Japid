@@ -87,7 +87,7 @@ public class JapidTemplateTransformer {
 	}
 
 	static Pattern doLayoutTag = Pattern.compile(".*\\#\\{\\s*doLayout\\s*.*");
-	static Pattern doLayoutDirective = Pattern.compile(".*`doLayout\\s*");
+	static Pattern doLayoutDirective = Pattern.compile(".*`doLayout[`\\s].*");
 	static Pattern getTag= Pattern.compile(".*\\#\\{\\s*get\\s*.*");
 	static Pattern getDirective = Pattern.compile(".*`get\\s+\\w+\\s*");
 	

@@ -41,6 +41,15 @@ public class DirUtil {
 		String[] ret = new String[files.size()];
 		return files.toArray(ret);
 	}
+	
+	public static String[] getAllTemplateHtmlFiles(File dir) {
+		List<String> files = new ArrayList<String>();
+		getAllFileNames("", dir, files, new String[] {".html"});
+		String[] ret = new String[files.size()];
+		return files.toArray(ret);
+	}
+	
+	
 
 	/**
 	 * collect all files with one of the extensions from the directory. 
@@ -107,22 +116,30 @@ public class DirUtil {
 
 		for (File s : allSrc) {
 			String path = s.getPath();
+			long modi = s.lastModified();
+//			System.out.println("file: " + path + ":" + modi);
 			if (path.endsWith(".java")) {
-				javas.put(path, s.lastModified());
+				javas.put(path, modi);
 			} else /*if (path.endsWith(".html"))*/ {
-				srcFiles.put(path, s.lastModified());
+				srcFiles.put(path, modi);
 			}
 		}
 
 		List<File> rs = new ArrayList<File>();
 		
 		for (String src : srcFiles.keySet()) {
-			Long t = javas.get(mapSrcToJava(src));
+			String javak = mapSrcToJava(src);
+//			System.out.println("mapped key: " + javak);
+			Long t = javas.get(javak);
 			if (t == null) {
+//				System.out.println("new file: " + src);
 				rs.add(new File(src));
 			}
 			else {
-				if (srcFiles.get(src).compareTo(t) > 0) {
+				Long srcStamp = srcFiles.get(src);
+//				System.out.println("src stamp:" + srcStamp);
+//				System.out.println("java stamp:" + t);
+				if (srcStamp.compareTo(t) > 0) {
 					rs.add(new File(src));
 				}
 			}
@@ -185,10 +202,11 @@ public class DirUtil {
 			return  k + ".html";
 		}
 	}
-
+ 
 	private static String getRoot(String k) {
-		if (k.indexOf('.')> 0) {
-			return k.substring(0, k.lastIndexOf('.'));
+		int indexOf = k.lastIndexOf(".");
+		if (indexOf > 0) {
+			return k.substring(0, indexOf);
 		}
 		return k;
 	}

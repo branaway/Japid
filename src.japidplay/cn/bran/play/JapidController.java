@@ -26,7 +26,7 @@ import play.utils.Java;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
-import cn.bran.japid.util.ControllerUtils;
+import cn.bran.japid.util.RenderInvokerUtils;
 import cn.bran.japid.util.StackTraceUtils;
 
 import com.google.gson.Gson;
@@ -83,7 +83,7 @@ public class JapidController extends Controller {
 			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
 			StringBuilder sb = new StringBuilder(8000);
 			T t = ctor.newInstance(sb);
-			RenderResult rr = ControllerUtils.render(t, args);
+			RenderResult rr = RenderInvokerUtils.render(t, args);
 //			RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t, methodName, args);
 			return rr;
 		} catch (NoSuchMethodException e) {
@@ -259,7 +259,7 @@ public class JapidController extends Controller {
 	 * 
 	 * To use this method and the getFromCache() effectively requires the each
 	 * of the argument has a toString() that uniquely identify itself. Otherwise
-	 * the user needs to provider its own kek building routine
+	 * the user needs to provider its own key building routine
 	 * 
 	 * mind the cost associated with this
 	 * 

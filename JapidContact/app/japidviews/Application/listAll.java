@@ -3,7 +3,6 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
-import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;
@@ -120,7 +119,6 @@ p("\n" +
 "</table>\n" + 
 "\n" + 
 "<script type=\"text/javascript\" charset=\"utf-8\">\n" + 
-"\n" + 
 "    // In place edition\n" + 
 "    $(\".contact td\").editInPlace({\n" + 
 "        bg_over: 'transparent',\n" + 
@@ -132,7 +130,7 @@ p("\n" +
 "            // Save result\n" + 
 "            $.ajax({\n" + 
 "                url: '");// line 27
-p(lookup("save", new Object[]{}));// line 50
+p(lookup("save", new Object[]{}));// line 49
 p("',\n" + 
 "                type: 'POST',\n" + 
 "                data: data,\n" + 
@@ -145,15 +143,15 @@ p("',\n" +
 "    })\n" + 
 "\n" + 
 "    	\n" + 
-"    ");// line 50
+"    ");// line 49
 p("\n" + 
 "    // Drag & Drop\n" + 
 "    var dragIcon = document.createElement('img')\n" + 
-"    dragIcon.src = '");// line 63
-p(lookupStatic("public/images/avatar.png"));// line 66
+"    dragIcon.src = '");// line 62
+p(lookupStatic("public/images/avatar.png"));// line 65
 p("'  \n" + 
-"    var action = ");// line 66
-p(jsAction("form", ":id"));// line 67
+"    var action = ");// line 65
+p(jsAction("form", ":id"));// line 66
 p("\n" + 
 "    var cancel = function cancel(e) {e.preventDefault()}\n" + 
 "    \n" + 
@@ -169,7 +167,7 @@ p("\n" +
 "        e.originalEvent.dataTransfer.setDragImage(dragIcon, 0, -10);\n" + 
 "    })\n" + 
 "    \n" + 
-"</script>");// line 67
+"</script>");// line 66
 
 	}
 

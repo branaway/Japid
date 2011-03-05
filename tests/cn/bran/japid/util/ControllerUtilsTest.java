@@ -16,22 +16,22 @@ public class ControllerUtilsTest {
 	public void testRender() {
 		RenderResult render;
 		
-		render = ControllerUtils.render(new Foo(null), "hi", new Integer(12));
+		render = RenderInvokerUtils.render(new Foo(null), "hi", new Integer(12));
 		assertNotNull(render);
 
-		render = ControllerUtils.render(new Foo(null), "hi", 12);
+		render = RenderInvokerUtils.render(new Foo(null), "hi", 12);
 		assertNotNull(render);
 
-		render = ControllerUtils.render(new Foo(null), "hi", null);
+		render = RenderInvokerUtils.render(new Foo(null), "hi", null);
 		assertNotNull(render);
 		
 		try {
-			render = ControllerUtils.render(new Foo2(null), 12);
+			render = RenderInvokerUtils.render(new Foo2(null), 12);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
-		render = ControllerUtils.render(new Foo2(null), new ArrayList<String>());
+		render = RenderInvokerUtils.render(new Foo2(null), new ArrayList<String>());
 		assertNotNull(render);
 
 		testSingleNull();
@@ -48,7 +48,7 @@ public class ControllerUtilsTest {
 		RenderResult render;
 		// if cast to Object, the null is treated as an argument.
 		// Otherwise the varargs is set to null. 
-		render = ControllerUtils.render(new Foo2(null), (Object)null);
+		render = RenderInvokerUtils.render(new Foo2(null), (Object)null);
 		assertNotNull(render);
 	}
 
@@ -58,7 +58,7 @@ public class ControllerUtilsTest {
 	@Test
 	public void testEmptyArgs() {
 		RenderResult render;
-		render = ControllerUtils.render(new Bar(null));
+		render = RenderInvokerUtils.render(new Bar(null));
 		assertNotNull(render);
 	}
 

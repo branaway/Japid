@@ -1,0 +1,618 @@
+package cn.bran.japid.compiler;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import cn.bran.japid.rendererloader.RendererClass;
+import cn.bran.japid.rendererloader.RendererCompiler;
+import cn.bran.japid.rendererloader.TemplateClassLoader;
+import cn.bran.japid.template.JapidPlainController;
+import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
+import cn.bran.japid.util.DirUtil;
+
+public class JapidRender {
+
+	public static JapidTemplateBaseWithoutPlay getRenderer(String name) {
+		Class<? extends JapidTemplateBaseWithoutPlay> c = getClass(name);
+		try {
+			return c.newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * the main entry for this class's intention
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static Class<? extends JapidTemplateBaseWithoutPlay> getClass(String name) {
+
+		refreshClasses(name);
+
+		RendererClass rc = classes.get(name);
+		if (rc == null)
+			throw new RuntimeException("renderer class not found: " + name);
+		else {
+			try {
+				Class<? extends JapidTemplateBaseWithoutPlay> cls = rc.getClz();
+				if (cls != null) {
+					return cls;
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		// always clear the mark to reload all
+		for (String c : classes.keySet()) {
+			RendererClass rendererClass = classes.get(c);
+			rendererClass.setLastUpdated(0);
+		}
+		TemplateClassLoader classReloader = new TemplateClassLoader();
+		try {
+			Class<JapidTemplateBaseWithoutPlay> loadClass = (Class<JapidTemplateBaseWithoutPlay>) classReloader.loadClass(name);
+			rc.setClz(loadClass);
+			return loadClass;
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	public static boolean timeToRefresh() {
+		long now = System.currentTimeMillis();
+		if (now - lastRefreshed > refreshInterval) {
+			lastRefreshed = now;
+			return true;
+		} else
+			return false;
+
+	}
+
+	public static synchronized void refreshClasses(String targetClass) {
+		if (!timeToRefresh())
+			return;
+
+		try {
+			// find out all removed classes
+			String[] allHtml = DirUtil.getAllTemplateHtmlFiles(new File(templateRoot));
+			Set<String> currentClassesOnDir = createNameSet(allHtml);
+			Set<String> tmp = new HashSet<String>(currentClassesOnDir);
+
+			Set<String> keySet = classes.keySet();
+			tmp.removeAll(keySet); // added html
+
+			removeRemoved(currentClassesOnDir, keySet);
+
+			for (String c : tmp) {
+				RendererClass rc = newRendererClass(c);
+				classes.put(c, rc);
+			}
+			// now all the class set size is up to date
+
+			// now update any Java source code
+			List<File> gen = gen(templateRoot);
+
+			// this would include both new and updated java
+			Set<String> updatedClasses = new HashSet<String>();
+			if (gen.size() > 0) {
+				// int i = 0;
+				for (File f : gen) {
+					String className = getClassName(f);
+					updatedClasses.add(className);
+					RendererClass rendererClass = classes.get(className);
+					if (rendererClass == null) {
+						// this should not happen, since
+						throw new RuntimeException("any new key should have been in the classes container: " + className);
+						// rendererClass = newRendererClass(className);
+						// classes.put(className, rendererClass);
+					}
+					rendererClass.setSourceCode(readSource(f));
+					removeInnerClasses(className);
+					cleanClassHolder(rendererClass);
+				}
+			}
+
+			// find all render class without bytecode
+			for (Iterator<String> i = classes.keySet().iterator(); i.hasNext();) {
+				String k = i.next();
+				RendererClass rc = classes.get(k);
+				if (rc.getSourceCode() == null) {
+					if (!rc.getClassName().contains("$")) {
+						rc.setSourceCode(getSourceCode(k));
+						cleanClassHolder(rc);
+						updatedClasses.add(k);
+					} else {
+						rc.setLastUpdated(0);
+					}
+				} else {
+					if (rc.getBytecode() == null) {
+						cleanClassHolder(rc);
+						updatedClasses.add(k);
+					}
+				}
+			}
+
+			// compile all
+			if (updatedClasses.size() > 0) {
+				// // let's clear the update mark for all the class
+				// String[] allClassNames = new String[classes.size()];
+				// int m = 0;
+				// for (String k : classes.keySet()) {
+				// RendererClass rc = classes.get(k);
+				// rc.lastUpdated = 0;
+				// allClassNames[m++] = k;
+				// }
+
+				// shall I add the target no matter what?
+				// updatedClasses.add(targetClass);
+
+				String[] names = new String[updatedClasses.size()];
+				int i = 0;
+				for (String s : updatedClasses) {
+					names[i++] = s;
+				}
+				long t = System.currentTimeMillis();
+				compiler.compile(names);
+				howlong("compile time for " + names.length + " classes", t);
+
+				// refresh the class
+				// for (String c : updatedClasses) {
+				// alright reload all classes since I don't know how to
+				// determine dependencies
+
+				// clear the global class cache
+				for (String k : classes.keySet()) {
+					RendererClass rc = classes.get(k);
+					rc.setClz(null);
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static void removeInnerClasses(String className) {
+		for (Iterator<String> i = classes.keySet().iterator(); i.hasNext();) {
+			String k = i.next();
+			if (k.startsWith(className + "$")) {
+				i.remove();
+			}
+		}
+	}
+
+	/**
+	 * @param currentClassesOnDir
+	 * @param keySet
+	 */
+	public static void removeRemoved(Set<String> currentClassesOnDir, Set<String> keySet) {
+		// need to consider inner classes
+		// keySet.retainAll(currentClassesOnDir);
+
+		for (Iterator<String> i = keySet.iterator(); i.hasNext();) {
+			String k = i.next();
+			int q = k.indexOf('$');
+			if (q > 0) {
+				k = k.substring(0, q);
+			}
+			if (!currentClassesOnDir.contains(k)) {
+				i.remove();
+			}
+		}
+	}
+
+	// <classname RendererClass>
+	public final static Map<String, RendererClass> classes = new ConcurrentHashMap<String, RendererClass>();
+	public static TemplateClassLoader crlr = new TemplateClassLoader();
+
+	public static TemplateClassLoader getCrlr() {
+		return crlr;
+	}
+
+	public static RendererCompiler compiler = new RendererCompiler(classes, crlr);
+	public static String templateRoot = "plainjapid";
+	public static final String JAPIDVIEWS = "japidviews";
+	public static String sep = File.separator;
+	public static String japidviews = templateRoot + sep + JAPIDVIEWS + sep;
+	// such as java.utils.*
+	public static List<String> importlines = new ArrayList<String>();
+	public static int refreshInterval;
+	public static long lastRefreshed;
+	public static boolean devMode;
+
+	public static void howlong(String string, long t) {
+		System.out.println(string + ":" + (System.currentTimeMillis() - t) + "ms");
+	}
+
+	/**
+	 * @param rendererClass
+	 */
+	public static void cleanClassHolder(RendererClass rendererClass) {
+		rendererClass.setBytecode(null);
+		rendererClass.setClz(null);
+		rendererClass.setLastUpdated(0);
+	}
+
+	public static Set<String> createNameSet(String[] allHtml) {
+		// the names start with template root
+		Set<String> names = new HashSet<String>();
+		for (String f : allHtml) {
+			names.add(getClassName(new File(f)));
+		}
+		return names;
+	}
+
+	public static String getSourceCode(String k) {
+		String pathname = templateRoot + sep + k;
+		pathname = pathname.replace(".", sep);
+		File f = new File(pathname + ".java");
+		return readSource(f);
+	}
+
+	/**
+	 * @param c
+	 * @return
+	 */
+	public static RendererClass newRendererClass(String c) {
+		RendererClass rc = new RendererClass();
+		rc.setClassName(c);
+		// the source code of the Java file might not be available yet
+		// rc.setSourceCode(getSouceCode(c));
+		rc.setLastUpdated(0);
+		return rc;
+	}
+
+	public static String readSource(File f) {
+		try {
+			FileInputStream fis = new FileInputStream(f);
+			BufferedInputStream bis = new BufferedInputStream(fis);
+			BufferedReader br = new BufferedReader(new InputStreamReader(bis, "UTF-8"));
+			StringBuilder b = new StringBuilder();
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				b.append(line + "\n");
+			}
+			br.close();
+			return b.toString();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static String getClassName(File f) {
+		String path = f.getPath();
+		String substring = path.substring(path.indexOf(JAPIDVIEWS));
+		substring = substring.replace('/', '.').replace('\\', '.');
+		if (substring.endsWith(".java")) {
+			substring = substring.substring(0, substring.length() - 5);
+		} else if (substring.endsWith(".html")) {
+			substring = substring.substring(0, substring.length() - 5);
+		}
+		return substring;
+	}
+
+	/**
+	 * set the interval to check template changes.
+	 * 
+	 * @param i
+	 *            the interval in seconds. Set it to {@link Integer.MAX_VALUE}
+	 *            to effectively disable refreshing
+	 */
+	public static void setRefreshInterval(int i) {
+		refreshInterval = i * 1000;
+	}
+
+	public static void setTemplateRoot(String root) {
+		templateRoot = root;
+		japidviews = templateRoot + sep + JAPIDVIEWS + sep;
+	}
+
+	public static void main(String[] args) throws IOException {
+		if (args.length > 0) {
+			String arg0 = args[0];
+
+			setTemplateRoot(".");
+			if ("gen".equals(arg0)) {
+				gen(templateRoot);
+			} else if ("regen".equals(arg0)) {
+				regen(templateRoot);
+			} else if ("clean".equals(arg0)) {
+				delAllGeneratedJava(getJapidviewsDir(templateRoot));
+			} else if ("mkdir".equals(arg0)) {
+				mkdir(templateRoot);
+			} else if ("changed".equals(arg0)) {
+				changed(japidviews);
+			} else {
+				System.err.println("help:  optionas are: gen, regen, mkdir and clean");
+			}
+		} else {
+			System.err.println("help:  optionas are: gen, regen, mkdir and clean");
+		}
+	}
+	
+
+	private static void changed(String root) {
+		List<File> changedFiles = DirUtil.findChangedSrcFiles(new File(root));
+		for (File f: changedFiles) {
+			System.out.println("changed: " + f.getPath());
+		}
+		
+	}
+
+	/**
+	 * create the basic layout: app/japidviews/_javatags app/japidviews/_layouts
+	 * app/japidviews/_tags
+	 * 
+	 * then create a dir for each controller. //TODO
+	 * 
+	 * @throws IOException
+	 * 
+	 */
+	public static List<File> mkdir(String root) throws IOException {
+		String japidviewsDir = getJapidviewsDir(root);
+		File layouts = new File(japidviewsDir + "_layouts");
+		if (!layouts.exists()) {
+			boolean mkdirs = layouts.mkdirs();
+			assert mkdirs == true;
+			log("created: " + layouts.getPath());
+		}
+
+		File tags = new File(japidviewsDir + "_tags");
+		if (!tags.exists()) {
+			boolean mkdirs = tags.mkdirs();
+			assert mkdirs == true;
+			log("created: " + tags.getPath());
+		}
+
+		File[] dirs = new File[] { layouts, tags };
+		List<File> res = new ArrayList<File>();
+		res.addAll(Arrays.asList(dirs));
+
+		return res;
+
+	}
+
+	/**
+	 * @param root
+	 * @return
+	 */
+	private static String getJapidviewsDir(String root) {
+		return root + sep + JAPIDVIEWS + sep;
+	}
+
+	public static void regen() throws IOException {
+		regen(templateRoot);
+	}
+
+	public static void regen(String root) throws IOException {
+		delAllGeneratedJava(getJapidviewsDir(root));
+		gen(root);
+	}
+
+	public static void delAllGeneratedJava(String pathname) {
+		String[] javas = DirUtil.getAllFileNames(new File(pathname), new String[] { "java" });
+
+		for (String j : javas) {
+			log("removed: " + pathname  + j);
+			boolean delete = new File(pathname + File.separatorChar + j).delete();
+			if (!delete)
+				throw new RuntimeException("file was not deleted: " + j);
+		}
+		// log("removed: all none java tag java files in " +
+		// JapidPlugin.JAPIDVIEWS_ROOT);
+	}
+
+	/**
+	 * update the java files from the html files, for the changed only
+	 * 
+	 * @throws IOException
+	 */
+	public static List<File> gen(String packageRoot) throws IOException {
+		// mkdir(packageRoot);
+		// moved to reloadChanged
+		List<File> changedFiles = reloadChanged(packageRoot);
+		if (changedFiles.size() > 0) {
+			for (File f : changedFiles) {
+//				log("updated: " + f.getName().replace("html", "java"));
+			}
+		} else {
+			log("All java files are up to date.");
+		}
+
+		rmOrphanJava(packageRoot);
+		return changedFiles;
+	}
+
+	/**
+	 * @param root
+	 *            the package root "/"
+	 * @return the updated Java files.
+	 */
+	public static List<File> reloadChanged(String root) {
+		try {
+			mkdir(root);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		TranslateTemplateTask t = new TranslateTemplateTask();
+		t.setUsePlay(false);
+		File rootDir = new File(root);
+		t.setPackageRoot(rootDir);
+		t.setInclude(new File(japidviews));
+		t.addImport("japidviews ._layouts.*");
+		// t.addImport(root + "/" + "._javatags.*");
+		t.addImport("japidviews ._tags.*");
+
+		for (String imp : importlines) {
+			t.addImport(imp);
+		}
+
+		t.execute();
+		// List<File> changedFiles = t.getChangedFiles();
+		return t.getChangedTargetFiles();
+		// return changedFiles;
+	}
+
+	/**
+	 * get all the java files in a dir with the "java" removed
+	 * 
+	 * @return
+	 */
+	public static File[] getAllJavaFilesInDir(String root) {
+		// from source files only
+		String[] allFiles = DirUtil.getAllFileNames(new File(root), new String[] { ".java" });
+		File[] fs = new File[allFiles.length];
+		int i = 0;
+		for (String f : allFiles) {
+			String path = f.replace(".java", "");
+			fs[i++] = new File(path);
+		}
+		return fs;
+	}
+
+	/**
+	 * delete orphaned java artifacts from the japidviews directory
+	 * @param packageRoot 
+	 * 
+	 * @return
+	 */
+	public static boolean rmOrphanJava(String packageRoot) {
+
+		boolean hasRealOrphan = false;
+		try {
+			String pathname = getJapidviewsDir(packageRoot);
+			File src = new File(pathname);
+			if (!src.exists()) {
+				log("Could not find required Japid root directory: " + pathname);
+				return hasRealOrphan;
+			}
+
+			Set<File> oj = DirUtil.findOrphanJava(src, null);
+			for (File j : oj) {
+				String path = j.getPath();
+				// log("found: " + path);
+				hasRealOrphan = true;
+				String realfile = pathname + File.separator + path;
+				File file = new File(realfile);
+				boolean r = file.delete();
+				if (r)
+					log("deleted orphan " + realfile);
+				else
+					log("failed to delete: " + realfile);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return hasRealOrphan;
+	}
+
+	public static List<File> reloadChanged() {
+		return reloadChanged(templateRoot);
+	}
+
+	public static void log(String m) {
+		System.out.println("[JapidRender]: " + m);
+	}
+
+	public static void gen() {
+		if (templateRoot == null) {
+			throw new RuntimeException("the template root directory must be set");
+		} else {
+			try {
+				gen(templateRoot);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * set to development mode
+	 */
+	public static void setDevMode() {
+		devMode = true;
+	}
+
+	/**
+	 * set to production mode
+	 */
+	public static void setProdMode() {
+		devMode = false;
+	}
+
+	public static boolean isDevMode() {
+		return devMode;
+	}
+
+	public static String removeSemi(String imp) {
+		imp = imp.trim();
+		if (imp.endsWith(";")) {
+			imp = imp.substring(0, imp.length() - 1);
+		}
+		return imp;
+	}
+
+	//
+	// public <T extends JapidTemplateBaseWithoutPlay> String render(Class<T> c,
+	// Object... args) {
+	// int modifiers = c.getModifiers();
+	// if (Modifier.isAbstract(modifiers)) {
+	// throw new
+	// RuntimeException("Cannot init the template class since it's an abstract class: "
+	// + c.getName());
+	// }
+	// try {
+	// Constructor<T> ctor = c.getConstructor(StringBuilder.class);
+	// StringBuilder sb = new StringBuilder(8000);
+	// T t = ctor.newInstance(sb);
+	// RenderResult rr = RenderInvokerUtils.render(t, args);
+	// return rr.getContent().toString();
+	// } catch (NoSuchMethodException e) {
+	// throw new
+	// RuntimeException("Could not match the arguments with the template args.");
+	// } catch (InstantiationException e) {
+	// throw new
+	// RuntimeException("Could not instantiate the template object. Abstract?");
+	// } catch (Exception e) {
+	// if (e instanceof RuntimeException)
+	// throw (RuntimeException) e;
+	// else
+	// throw new RuntimeException("Could not invoke the template object: " + e);
+	// }
+	// }
+
+	public static void addStaticImportLine(String imp) {
+		importlines.add(" static " + removeSemi(imp));
+	}
+
+	/**
+	 * 
+	 * @param imp
+	 *            the part after import, no ";"
+	 */
+	public static void addImportLine(String imp) {
+		importlines.add(removeSemi(imp));
+	}
+
+	public String render(Class<? extends JapidTemplateBaseWithoutPlay> cls, Object... args) {
+		return JapidPlainController.render(cls, args);
+	}
+
+}

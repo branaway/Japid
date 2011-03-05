@@ -38,6 +38,8 @@ h3. Install the Japid module.
 
 @play japid:gen@
 
+This step is not necessary if you use the Japid plugin for Eclipse, as explained later. Neither is it necessary if you write code while you're running the app in DEV mode. 
+
 * Re-create the Eclipse project:
 
 @play eclipsify@
@@ -47,22 +49,31 @@ h3. Install the Japid module.
 Japid transforms html-based templates to Java source files to integrate into the rest of the Play applications. Every time the author changes a template file, the derived Java file will be updated too. For the IDE to display any changes made to the derived Java files, it's highly recommended to turn on *auto-refresh* on external file changes. Take Eclipse for an example:
 
 # Open the @Window@ menu in the main menu bar and open the @Preferences@ menu item. 
-# Open the @General -> Workspace@ panel and check the @Refresh    automatically@ checkbox. 
+# Open the @General -> Workspace@ panel and check the @Refresh automatically@ checkbox. 
 
 Now the changes to the artifacts of Japid transforming process will be displayed instantaneously or with a short delay, depending on the size of the project and the OS you're running. If you have an error in your template, the derived Java file will be marked with an error marker and you can take a look at it to find out what's wrong with it. This is the next best thing to using the Eclipse plugin.
 
 
 h3. Optionally install the Japid plugin for Eclipse
 
-* Copy the @org.playframework.playclipse_0.8.6.jar@ in the @{play_root}\modules\japid-0.7.1\eclipse-plugin@ to @{eclipse_root}/dropins@ directory. Remove any previously installed PlayClipse jar if it's there. 
+* Copy the @org.playframework.playclipse_0.8.7.jar@ in the @{play_root}\modules\japid-0.7.1\eclipse-plugin@ to @{eclipse_root}/dropins@ directory. Remove any previously installed PlayClipse jar if there is one. 
 * Start/Restart the Eclipse IDE. Please verify that a new menu named *JapidPlay* is installed in the main menu bar. Start Eclipse with @-clean@ option if you don't see the new menu. 
 * Right click on the project and issue the @JapidPlay -> Add Play! nature@, you'll notice a new directory tree is created in the @app/japidviews@. 
 
-Again, you don't need this plugin to develop with Japid. Developing with Japid in a plain Eclipse project is almost as easy as developing with the plain Play! application without a plugin. 
+Please note that you don't need this plugin to develop with Japid. Developing with Japid in a plain Eclipse project is almost as easy as developing with the plain Play! application without a plugin. 
 
 
 Now let's get started porting the code.
 
+Make sure that your have this line in the @conf/application.conf@:
+
+<pre>
+application.mode=dev
+</pre> 
+
+and start the application. Hit @http://localhost:9000/@ and verify that the application works. 
+
+We are going to take advantage of the hot code replacement of Play! and edit code while the server is running in "development" mode.
 
 h3. The "Home" page
 
@@ -84,7 +95,7 @@ public class Application extends JapidController {
 }
 </code></pre>
 
-You'll find that that everything should just work since the @JapidController@ is a subclass of @Controller@ class. 
+Reload the home page and you'll find that that everything should just work since the @JapidController@ is a subclass of @Controller@ class. 
 
 h4. Change the @index@ method 
 
