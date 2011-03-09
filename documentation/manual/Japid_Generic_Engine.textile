@@ -98,7 +98,19 @@ Notes:
 
 h2. Japid API
 
-There are two classes that developers need to use: 
+
+Using Japid as a generic template engine requires three jars:
+
+1. @lib/japid-{version}.jar@
+2. @lib/javaparser-{version}.jar@
+3. @lib.plain/org.eclipse.jdt.core_{version}.jar@
+
+The @lib/japidplay-{version}.jar@ contains the code for working with the Play! Framework.
+
+
+
+
+There is only one class that developers need to use: 
 
 h3. @cn.bran.japid.template.JapidRenderer@. 
 
@@ -138,9 +150,25 @@ Same as the above method, except that a template is specified. In this case no n
 
 Same as the above method, except that a template is specified with a template class. In this case no naming pattern is required to bind the parameters and the templates. The class will be reloaded to reflect the changed to the original template in @dev@ mode.
 
-h3. @cn.bran.japid.template.JapidTemplateBaseWithoutPlay@
 
-This is the base class for all Java classes derived from the Japid templates. The template classes has one method named @render(arg1, arg2...)@ that developers can use to invoke them and get a string result.
+So the typical use case is like this:
+
+<pre><code>
+    // somewhere in application initialization phase.
+    // use OpMode.prod in production and OpMode.dev 
+    // in development to get automatic template reloading
+    
+    JapidRenderer.init(OpMode.dev, "myTemplateDir", "3");
+    
+    // then whenever rendering is required anywhere in the application.
+    // There are multiple ways to invoke a renderer. Here is one that using implicit
+    // template binding.   
+    
+    String result = JapidRenderer.render(arg1, arg2);
+</code></pre>
+
+As Simple as it can get.
+
 
 
 h2. Syntax System
