@@ -13,11 +13,16 @@ h4. Document History
 # 2010/3/8, Japid as a generic template engine 
 
 
+h4. Reference
+
+"Use Japid with Play":https://github.com/branaway/Japid/wiki/Japid-User-Guide
+
+
 h2. Introduction
 
 Japid is a Java-based statically typed text rendering templates system that aims to deliver the best possible performance with Java.
 
-It's a generic template engine that can be used by any Java applications to render any text type, html, xml, json, etc.  It also provides adapters specifically for the Play! Framework (please check out the other documentation for use with the Play Framework). 
+It's a generic template engine that can be used by any Java applications to render any text type, html, xml, json, etc.  It also provides adapters specifically for the Play! Framework (please check out the other documentation for using with the Play Framework). 
 
 Japid transforms templates files to clean Java source code thus the rendering can run at the raw Java speed. 
 
@@ -40,7 +45,8 @@ I want:
 I don't want:
 
 * it to be XHTML well-formatted, since the tool is used to generate potentially any text.
-* it to dependent on any other languages such as Groovy.
+* it to depend on any other languages than Java.
+* to invent another set of expression language.
 
 h2. Mechanism
 
@@ -52,7 +58,7 @@ h2. Installation
 
 There are two ways to get Japid. 
 
-1. Downloading from the Github repository. You can either checkout the entire project and find the distribution in the @dist@ directory, or you can click on the @download@ button and get the package in zip file. 
+1. Downloading from the Github repository. You can either checkout the entire project and find the distribution in the @dist@ directory, or you can click on the @download@ button and get the latest package in a zip file. 
 2. Downloading it as a Play module, as explained in the other document. 
 
 
@@ -134,7 +140,7 @@ Same as the above method, except that a template is specified with a template cl
 
 h3. @cn.bran.japid.template.JapidTemplateBaseWithoutPlay@
 
-This is the base class for all Java classes derived from the Japid templates. The template classes has one method named @render(arg1, arg2...)@ that developers can use to invoke them: 
+This is the base class for all Java classes derived from the Japid templates. The template classes has one method named @render(arg1, arg2...)@ that developers can use to invoke them and get a string result.
 
 
 h2. Syntax System
@@ -842,21 +848,55 @@ Effectively the data is passed from the child to the layout.
 
 
 
+h2. Invoking Japid Templates in Java Code
+
+There are multiple ways to invoke Japid templates. Check out this piece of code in a POJO:
+
+<pre><code>
+public class FooClass extends JapidRenderer {
+     public String a1(String p) {
+        return render(p);
+    }
+
+    public String foo(String p) {
+        return JapidRenderer.render(p);
+    }
+
+    public String bar(String p) {
+        return JapidRenderer.renderWith(foo.class, p);
+    }
+
+    public String bar2(String p) {
+        return new foo().render(p);
+    }
+}
+</code></pre>
+
+
+In method @a1@, the template binding is handled by the @render()@ which is actually a static method in the @JapidRenderer@. Letting the @FooClass@ extending @JapidRenderer@ is not necessary. It's convenient only if there are many instances of invocations of @JapidRenderer.render()@.
+
+In method @foo@, the template binding is directly handled by the @JapidRenderer.render()@.
+
+In method @bar@, a specific template class is specified to render the data. 
+
+Lastly in @bar2@, the template class is directly invoked, a case I call *Explicit Template Binding*.
+
+
+
+
 h3. Explicit Template Binding
 
 Since all Japid templates are compiled to Java classes, one can use them directly anywhere, of course including in the controller actions. Given a template @japidviews/MyController/foo.html@, Japid will generate a Java class named @japidviews.MyController.foo@. The entry point of using this class is:
 
 <pre>
-    public cn.bran.japid.template.RenderResult render(Bar bar)
+    public String render(Object.. args)
 </pre>
 
-The @RenderResult@ object contains the text which is the result of the template rendering and can be obtained with the @getText()@ method.
+For an example:
 
 <pre>
-    String result = new foo().render(arg1， arg2...).getText();
+    String result = new foo().render(arg1， arg2...);
 </pre>
-
-Of course all the classes must have been properly imported before use or one must use the fully qualified names. 
 
 
 As you may guess, invoking a template class directly does not require the class to be in a specific package. There is no need to match the name or the package of the template with the name of the action, the class or the package. The minimum requirement is the templates are in the @japidviews@ tree, since the template converter will only scan this tree for Japid templates. 
@@ -864,9 +904,8 @@ As you may guess, invoking a template class directly does not require the class 
 
 h4. How and when are the template files translated to Java source code?
 
-Three ways and timing.
 
-h5. Conversion method 1: command-line tools
+*Conversion method 1: command-line tools*
 
 There are four Japid command-line commands that one can use in the application root:
 
@@ -915,7 +954,7 @@ Now I can translate the latest templates to Java code right from the IDE with ju
 
 Two other most useful commands are @japid.sh regen@ and @play eclipsify@ (if you're an Eclipse user). The latter is not directly related to Japid, but it's convenient when you upgrade either the Play! installation or the Japid module.
 
-h5. Conversion method 2: care-free conversion in DEV mode.
+*Conversion method 2: care-free conversion in DEV mode.*
 
 The @dev@ mode is turned on when Japid is initialized with @OpMode.dev@.
 
@@ -1058,11 +1097,9 @@ By the way, you can use the @log@ command without any arguments. You end up with
 
 h2. Future work
 
-# keep improving the Eclipse plugin
+# keep improving the Eclipse plugin for use in none-Play application.
 # find more ways to simplify japid syntax.
 # keep improving the documentation.
-# assimilate some fancy features from the @Lift@ framework. Parallel action blocks comes to my mind. 
-# release a package that can be used in any Java projects.
 
 Thanks for your interests in Japid!
 

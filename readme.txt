@@ -5,8 +5,10 @@
 
 * Links:
 
--- The Japid User Manual:   
+-- The Japid/Play User Manual:   
     https://github.com/branaway/Japid/wiki/Japid-User-Guide
+-- Use Japid as a Generic Template Engine:
+    https://github.com/branaway/Japid/wiki/Japid-Generic-Template-Engine-Guide
 -- Porting to Japid:        
     https://github.com/branaway/Japid/wiki/Porting-ZenContact-to-Japid
 -- The Japid Plugin for Eclipse:

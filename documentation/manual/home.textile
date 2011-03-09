@@ -1,6 +1,6 @@
 h1. The Quick Manual of Japid Engine with Play Framework
 
-V0.7
+V0.8
 
 Bing Ran<bing_ran@hotmail.com>
 
@@ -11,6 +11,9 @@ h4. Document History
 # 2010/2/22, edited; added "open for" 
 # 2010/2/24, the Elvis operator: ?: 
 
+h4. Reference
+
+"Use Japid as a Generic Template Engine":https://github.com/branaway/Japid/wiki/Japid-Generic-Template-Engine-Guide
 
 
 h2. Introduction
@@ -40,7 +43,7 @@ I want:
 I don't want:
 
 * it to be XHTML well-formatted, since the tool is used to generate potentially any text.
-* it to dependent on any other languages such as Groovy.
+* it to depend on any other languages such as Groovy.
 
 h2. Mechanism
 
