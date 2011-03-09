@@ -3,7 +3,6 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
-import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;
@@ -83,8 +82,8 @@ p("\n" +
 "	<li><a href=\"renderJapidWith/templates/Msg.html\">i18n, use\n" + 
 "	predefined messages</a></li>\n" + 
 "	<li><a href=\"application/postlist\">looping and tag calling</a></li>\n" + 
-"	<li><a href=\"application/each\">the *Each* tag</a></li>\n" + 
-"	<li><a href=\"application/ifs2\">open if statement: minimalistic if-else exposing complete looping properties</a>\n" + 
+"	<li><a href=\"application/each\">the \"open for\" loop and the now deprecated \"*Each* tag</a></li>\n" + 
+"	<li><a href=\"application/ifs2\">open if statement: minimalistic if-else statement can can take any expression rather than boolean values as the condition.</a>\n" + 
 "	   <p>example: </p>\n" + 
 "	   <pre>\n" + 
 "		    `if expr\n" + 

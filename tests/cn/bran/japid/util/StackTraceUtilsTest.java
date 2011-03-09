@@ -4,7 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import cn.bran.play.JapidResult;
+
 public class StackTraceUtilsTest {
+	private static final int LOOPS = 10000;
+
 	@Test public void testCallerInfo() {
 		String r = foo();
 		assertEquals(StackTraceUtilsTest.class.getName() + ".foo", r );
@@ -54,4 +58,38 @@ public class StackTraceUtilsTest {
 		}
 		System.out.println("runs " + runs + " took/ms: " + (System.currentTimeMillis() - t));
 	}
+	
+	@Test
+	public void testGetJapidRenderInvoker() {
+		// how to test that?
+	}
+
+	@Test
+	public void testGetInvokerOf() {
+		String invokerOf = StackTraceUtils.getInvokerOf(StackTraceUtils.class.getName(), "getInvokerOf");
+		assertEquals(this.getClass().getName() + "." + "testGetInvokerOf", invokerOf);
+	}
+	
+	@Test
+	public void testStackTracePerf() {
+		String holder = "";
+		int i = 0;
+		long t = System.currentTimeMillis();
+		while (i++ < LOOPS) {
+			StackTraceElement[] ste = new Throwable().getStackTrace();
+			holder = ste[2].getClassName();
+			holder += ste[2].getMethodName();
+		}
+		System.out.println(LOOPS + " loops of native exceptino took:" + (System.currentTimeMillis() - t) + "ms :" + holder); ;
+
+		t = System.currentTimeMillis();
+		i = 0;
+		while (i++ < LOOPS) {
+			StackTraceElement[] ste = new JapidResult().getStackTrace();
+			holder = ste == null? "null": "else";
+//			holder += ste[2].getMethodName();
+		}
+		System.out.println(LOOPS + " loops of JapidResult took:" + (System.currentTimeMillis() - t) + "ms :" + holder); ;
+	}
+	
 }

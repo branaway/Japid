@@ -54,6 +54,14 @@ public class RenderResult implements Externalizable {
 		return content;
 	}
 
+	/**
+	 * get the text result
+	 * @return
+	 */
+	public String getText() {
+		return content.toString();
+	}
+	
 	public long getRenderTime() {
 		return this.renderTime;
 	}
@@ -78,7 +86,6 @@ public class RenderResult implements Externalizable {
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
-		// TODO Auto-generated method stub
 		String contentString = content == null? _NULL : content.toString();
 		out.writeUTF(contentString);
 		out.writeLong(renderTime);

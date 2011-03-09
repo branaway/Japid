@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import cn.bran.japid.compiler.JavaSyntaxTool;
-import cn.bran.japid.compiler.JavaSyntaxTool.Param;
 
 /**
  * the class meta data for templates that are directly renderable, meaning this
@@ -107,6 +106,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	 * method while the layouts do not.
 	 */
 	protected void renderMethod() {
+		String resultType = useWithPlay? RENDER_RESULT : "String";
+
 		if (renderArgs != null) {
 			// create fields for the render args and create a render method to
 			List<Parameter> params = JavaSyntaxTool.parseParams(this.renderArgs);
@@ -121,10 +122,10 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				// the field
 				pln(TAB + "private DoBody body;");
 				doBodyInterface();
-				pln("\tpublic " + RENDER_RESULT + " render(" + renderArgs + ", DoBody body) {");
+				pln("\tpublic " + resultType + " render(" + renderArgs + ", DoBody body) {");
 				pln("\t\t" + "this.body = body;");
 			} else {
-				pln("\tpublic " + RENDER_RESULT + " render(" + renderArgs + ") {");
+				pln("\tpublic " + resultType + " render(" + renderArgs + ") {");
 			}
 			// assign the params to fields
 			for (Parameter p : params) {
@@ -135,10 +136,10 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				// the field
 				pln(TAB + "DoBody body;");
 				doBodyInterface();
-				pln("\tpublic " + RENDER_RESULT + " render(DoBody body) {");
+				pln("\tpublic " + resultType + " render(DoBody body) {");
 				pln("\t\t" + "this.body = body;");
 			} else {
-				pln("\tpublic " + RENDER_RESULT + " render() {");
+				pln("\tpublic " + resultType + " render() {");
 			}
 		}
 		pln("\t\tlong t = -1;");
@@ -153,14 +154,25 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		if (streaming) {
 			if (useWithPlay && hasActionInvocation)
 				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, null, t, " + ACTION_RUNNERS + ");");
-			else
-				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, null, t);");
+			else {
+				if (useWithPlay) {
+					pln("\t\treturn new " + resultType + "(this.headers, null, t);");
+				}
+				else {
+					pln("\t\treturn getOut().toString();");
+				}
+			}
 
 		} else {
-			if (useWithPlay && hasActionInvocation)
-				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, getOut(), t, " + ACTION_RUNNERS + ");");
-			else
-				pln("\t\treturn new " + RENDER_RESULT + "(this.headers, getOut(), t);");
+			if (useWithPlay) {
+				if (hasActionInvocation) 
+					pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, getOut(), t, " + ACTION_RUNNERS + ");");
+				else
+					pln("\t\treturn new " + resultType + "(this.headers, getOut(), t);");
+			}
+			else {
+				pln("\t\treturn getOut().toString();");
+			}
 		}
 		pln("\t}");
 	}

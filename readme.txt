@@ -22,8 +22,11 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
-2011/3/5: V0.8.0: 
+2011/3/10: V0.8.0: 
     1. bug fix: calling tag without args but a callback block.  
+    2. naming change: the jar for the play connector was renamed from play-japid-{version}.jar to japidplay-{version}.jar.
+    3. the standalone japid is working now. The additional dependency is in the lib.plain directory.   
+    4. updated eclipse plugin to support the latest syntax change.   
 
 2011/2/25: V0.7.1: 
     1. added a new way to pass arguments from views to layout in the `extends command. See perf.html for an example.  

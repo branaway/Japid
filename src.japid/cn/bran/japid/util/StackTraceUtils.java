@@ -1,5 +1,7 @@
 package cn.bran.japid.util;
 
+import cn.bran.japid.template.JapidRenderer;
+
 //import static org.junit.Assert.*;
 //
 //import org.junit.Test;
@@ -15,12 +17,12 @@ public class StackTraceUtils {
 		int depth = 4;
 		return getCaller(depth);
 	}
-	
+
 	public static String getCaller3() {
 		int depth = 5;
 		return getCaller(depth);
 	}
-	
+
 	/**
 	 * @param depth
 	 * @return
@@ -30,18 +32,39 @@ public class StackTraceUtils {
 		StackTraceElement st = ste[depth];
 		return st.getClassName() + "." + st.getMethodName();
 	}
-	
+
 	public static String getCurrentMethodFullName() {
 		return getCaller(2);
 	}
 
-//	@Test
-//	public void testCaller() {
-//		String caller = getCaller(1);
-//		Class<StackTraceUtils> class1 = StackTraceUtils.class;
-//		String methodFullName = class1.getName() + ".testCaller";
-//		assertEquals (methodFullName, caller);
-//		caller = getCurrentMethodFullName();
-//		assertEquals (methodFullName, caller);
-//	}
+	public static String getJapidRenderInvoker() {
+		return getInvokerOf(JapidRenderer.class.getName(), "render");
+	}
+
+	/**
+	 * @return
+	 */
+	public static String getInvokerOf(String targetClassName, String methodName) {
+		final StackTraceElement[] ste = new Throwable().getStackTrace();
+		for (int i = 0; i < ste.length; i++) {
+			StackTraceElement st = ste[i];
+			String className = st.getClassName();
+			String method = st.getMethodName();
+			if (className.equals(targetClassName) && method.equals(methodName)) {
+				// the next one is what I want
+				st = ste[i + 1];
+				className = st.getClassName();
+				method = st.getMethodName();
+				return className + "." + method;
+			}
+		}
+		return null;
+	}
+
+	static class QuickThrowable extends Throwable {
+		@Override
+		public synchronized Throwable fillInStackTrace() {
+			return this;
+		}
+	}
 }

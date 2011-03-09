@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import cn.bran.japid.compiler.JapidRender;
 import cn.bran.japid.util.RenderInvokerUtils;
 
 /**
@@ -14,8 +13,10 @@ import cn.bran.japid.util.RenderInvokerUtils;
  * since the template invocation API is simple enough.
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
+ * @deprecated don't use the play way of subclassing a controller. Use
+ *             JapidRender directly anywhere.
  */
-public class JapidPlainController {
+class JapidPlainController {
 	private static final char DOT = '.';
 	private static final String HTML = ".html";
 	private static final String JAPIDVIEWS_ROOT = "japidviews";
@@ -24,27 +25,38 @@ public class JapidPlainController {
 	 * render an array of objects to a template defined by a Template class.
 	 * 
 	 * @param <T>
-	 *            a sub-class type of JapidTemplateBase
+	 *            a sub-class type of JapidTemplateBaseWithoutPlay
 	 * @param c
 	 *            a sub-class of JapidTemplateBase
 	 * @param args
 	 *            arguments
 	 */
-	public static <T extends JapidTemplateBaseWithoutPlay> String render(Class<T> c, Object... args) {
-		if (JapidRender.isDevMode())
+	public static <T extends JapidTemplateBaseWithoutPlay> String renderWith(Class<T> c, Object... args) {
+		checkJapidInit();
+
+		if (JapidRenderer.isDevMode())
 			return renderJapidWith(c.getName(), args);
 		else
 			try {
-				RenderResult rr = invokeRender(c, args);
-				return rr.getContent().toString();
+				return invokeRender(c, args);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 	}
 
 	/**
+	 * 
+	 */
+	private static void checkJapidInit() {
+		if (!JapidRenderer.isInited()) {
+			throw new RuntimeException("The Japid is not initialized. Please use JapidRender.init(...) to set it up.");
+		}
+	}
+
+	/**
 	 * @param <T>
 	 * @param c
+	 *            the Japid renderer class, to be used with reflection.
 	 * @param args
 	 * @return
 	 * @throws NoSuchMethodException
@@ -52,7 +64,7 @@ public class JapidPlainController {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	private static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeRender(Class<T> c, Object... args) {
+	private static <T extends JapidTemplateBaseWithoutPlay> String invokeRender(Class<T> c, Object... args) {
 		int modifiers = c.getModifiers();
 		if (Modifier.isAbstract(modifiers)) {
 			throw new RuntimeException("Cannot init the template class since it's an abstract class: " + c.getName());
@@ -61,7 +73,7 @@ public class JapidPlainController {
 			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
 			StringBuilder sb = new StringBuilder(8000);
 			T t = ctor.newInstance(sb);
-			RenderResult rr = RenderInvokerUtils.render(t, args);
+			String rr = (String) RenderInvokerUtils.render(t, args);
 			return rr;
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException("Could not match the arguments with the template args.");
@@ -84,13 +96,14 @@ public class JapidPlainController {
 	 * @param objects
 	 */
 	protected static String render(Object... objects) {
+		checkJapidInit();
 		String action = template();
 		return renderJapidWith(action, objects);
 	}
 
 	public static String renderJapidWith(String template, Object... args) {
-		RenderResult rr = getRenderResultWith(template, args);
-		return rr.getContent().toString();
+		checkJapidInit();
+		return getRenderResultWith(template, args);
 	}
 
 	protected static String template() {
@@ -110,7 +123,7 @@ public class JapidPlainController {
 				controllerClass = JapidPlainController.class.getClassLoader().loadClass(controller);
 				if (controllerClass != null) {
 					Class<?> superclass = controllerClass.getSuperclass();
-					if (superclass == JapidPlainController.class) {
+					if (JapidPlainController.class.isAssignableFrom(superclass)) {
 						String expr = controller + "." + action;
 						return expr;
 					}
@@ -131,7 +144,7 @@ public class JapidPlainController {
 	 * @param clazz
 	 * @return
 	 */
-	public static Method findActionMethod(String name, Class clazz) {
+	static Method findActionMethod(String name, Class clazz) {
 		while (!clazz.getName().equals("java.lang.Object")) {
 			for (Method m : clazz.getDeclaredMethods()) {
 				if (m.getName().equalsIgnoreCase(name) /*
@@ -155,11 +168,9 @@ public class JapidPlainController {
 	 *            naming pattern to match the template
 	 * @param args
 	 */
-	public static RenderResult getRenderResultWith(String template, Object... args) {
-		//
-		// if (TemplateClassLoader.isDevMode())
-		// Thread.currentThread().setContextClassLoader(TemplateClassLoader.getCrlr());
-		//
+	public static String getRenderResultWith(String template, Object... args) {
+		checkJapidInit();
+
 		if (template == null || template.length() == 0) {
 			template = template();
 		}
@@ -167,20 +178,6 @@ public class JapidPlainController {
 		if (template.endsWith(HTML)) {
 			template = template.substring(0, template.length() - HTML.length());
 		}
-
-		// String action = StackTraceUtils.getCaller(); // too tricky to use
-		// stacktrace to track the caller action name
-		// something like controllers.japid.SampleController.testFindAction
-
-		// if (template.startsWith("@")) {
-		// // a template in the current directory
-		// template = request.controller + "/" + template.substring(1);
-		// }
-
-		// map to default japid view
-		// if (template.startsWith("controllers.")) {
-		// template = template.substring(template.indexOf(DOT) + 1);
-		// }
 
 		String templateClassName = template.startsWith(JAPIDVIEWS_ROOT) ?
 					template :
@@ -190,8 +187,8 @@ public class JapidPlainController {
 
 		Class<? extends JapidTemplateBaseWithoutPlay> tClass = null;
 
-		if (JapidRender.isDevMode())
-			tClass = JapidRender.getClass(templateClassName);
+		if (JapidRenderer.isDevMode())
+			tClass = JapidRenderer.getClass(templateClassName);
 		else
 			try {
 				tClass = (Class<? extends JapidTemplateBaseWithoutPlay>)
@@ -204,10 +201,9 @@ public class JapidPlainController {
 			String templateFileName = templateClassName.replace(DOT, '/') + HTML;
 			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
 		} else {
-			RenderResult rr;
 			// render(tClass, args);
-			rr = invokeRender(tClass, args);
-			return (rr);
+			String rr = invokeRender(tClass, args);
+			return rr;
 		}
 	}
 

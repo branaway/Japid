@@ -12,7 +12,7 @@ public class a1 extends main
 {	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/a1.html";
 
 // -- set up the tag objects
-final taggy _taggy1 = new taggy(getOut());
+final taggy _taggy2 = new taggy(getOut());
 
 // -- end of the tag objects
 
@@ -23,23 +23,37 @@ final taggy _taggy1 = new taggy(getOut());
 		super(out);
 	}
 	private String a;
-	public cn.bran.japid.template.RenderResult render(String a) {
+	public String render(String a) {
 		this.a = a;
 		long t = -1;
 		super.layout(a + "1");
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return getOut().toString();
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
+p("\n");// line 3
+p(foo(a));// line 5
 p("\n" + 
-"->a1: ");// line 3
-_taggy1.setOut(getOut()); _taggy1.render(a + "1");
-// line 5
+"\n");// line 5
+// line 7
+;// line 9
 
 	}
 
 	@Override protected void title() {
 		p("my view");;
 	}
+public String foo(String ar) {
+StringBuilder sb = new StringBuilder();
+StringBuilder ori = getOut();
+this.setOut(sb);
+// line 7
+p("    ->a1-: ");// line 7
+_taggy2.setOut(getOut()); _taggy2.render(ar);
+// line 8
+
+this.setOut(ori);
+return sb.toString();
+}
 }

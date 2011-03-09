@@ -20,11 +20,11 @@ public class taddy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	public static interface DoBody<A> {
 		 void render(A a);
 	}
-	public cn.bran.japid.template.RenderResult render(DoBody body) {
+	public String render(DoBody body) {
 		this.body = body;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return getOut().toString();
 	}
 	@Override protected void doLayout() {
 //------

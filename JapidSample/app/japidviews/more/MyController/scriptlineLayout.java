@@ -3,7 +3,6 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
-import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;
@@ -50,7 +49,7 @@ public abstract class scriptlineLayout extends cn.bran.japid.template.JapidTempl
 		super(out);
 	}
 	@Override public void layout() {
-		p("the meta is \"");// line 1
+		p("the meta is  \"");// line 1
 	meta();p("\"\n" + 
 "\n");// line 1
 	doLayout();

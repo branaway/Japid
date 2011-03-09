@@ -24,19 +24,6 @@ public class JapidCommandsTest {
 		}
 	}
 
-	/**
-	 * mk the dirs for sample app
-	 * @throws IOException 
-	 */
-	@Test
-	public void makeSampleDir() throws IOException {
-		List<File> mkdir = JapidCommands.mkdir("app");
-		for (File f : mkdir) {
-			System.out.println("verify existence: " + f.getPath());
-			assertTrue(f.exists());
-		}
-	}
-	
 	@Test
 	public void testDelete() {
 		String root = ROOT;

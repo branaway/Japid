@@ -4,7 +4,6 @@ import java.io.*;
 import cn.bran.japid.tags.Each;
 import cn.bran.japid.template.ActionRunner;
 import static play.templates.JavaExtensions.*;
-import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;
@@ -52,8 +51,7 @@ public abstract class lcomposite2 extends cn.bran.japid.template.JapidTemplateBa
 	}
 	@Override public void layout() {
 		p("<p>beginning: lcomposite</p>\n" + 
-"\n" + 
-"    ");// line 1
+"\n");// line 1
 p("\n" + 
 "\n");// line 3
 		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {

@@ -18,7 +18,7 @@ import cn.bran.japid.template.RenderResult;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public abstract class CacheableRunner extends ActionRunner implements Serializable{
+public abstract class CacheableRunner extends ActionRunner /*implements Externalizable*/{
 //	private Object[] key = null;
 	protected String ttlAbs = null;
 	public String keyString;
@@ -147,7 +147,7 @@ public abstract class CacheableRunner extends ActionRunner implements Serializab
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeUTF(ttlAbs);
 		out.writeUTF(keyString);
-		out.writeBoolean(shouldCache());
+		out.writeBoolean(noCache);
 		out.writeBoolean(readThru);
 	}
 

@@ -136,7 +136,8 @@ public class JapidResult extends Result implements Externalizable {
 	}
 
 	/**
-	 * override to save a native call for better performance (5%)?
+	 * override to save a native call for better performance (35 x better in object creation. 
+	 * ~1us after this optimization)
 	 */
 	@Override
 	public synchronized Throwable fillInStackTrace() {

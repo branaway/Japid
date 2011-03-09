@@ -25,6 +25,10 @@ import java.util.TreeMap;
 public class RenderResultPartial extends RenderResult {
 	Map<Integer, ActionRunner> actionRunners;
 
+	public Map<Integer, ActionRunner> getActionRunners() {
+		return actionRunners;
+	}
+
 	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime, Map<Integer, ActionRunner> actions) {
 		super(headers, content, renderTime);
 		this.actionRunners = actions;

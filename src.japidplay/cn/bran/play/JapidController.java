@@ -79,21 +79,22 @@ public class JapidController extends Controller {
 			throw new RuntimeException("Cannot init the template class since it's an abstract class: " + c.getName());
 		}
 		try {
-//			String methodName = "render";
+			// String methodName = "render";
 			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
 			StringBuilder sb = new StringBuilder(8000);
 			T t = ctor.newInstance(sb);
-			RenderResult rr = RenderInvokerUtils.render(t, args);
-//			RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t, methodName, args);
+			RenderResult rr = (RenderResult) RenderInvokerUtils.render(t, args);
+			// RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t,
+			// methodName, args);
 			return rr;
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException("Could not match the arguments with the template args.");
 		} catch (InstantiationException e) {
-//			e.printStackTrace();
+			// e.printStackTrace();
 			throw new RuntimeException("Could not instantiate the template object. Abstract?");
 		} catch (Exception e) {
 			if (e instanceof RuntimeException)
-				throw (RuntimeException)e;
+				throw (RuntimeException) e;
 			else
 				throw new RuntimeException("Could not invoke the template object: " + e);
 			// throw new RuntimeException(e);
@@ -146,26 +147,28 @@ public class JapidController extends Controller {
 			String controller = st.getClassName();
 			String action = st.getMethodName();
 			ApplicationClass conAppClass = Play.classes.getApplicationClass(controller);
-			if (conAppClass!= null) {
+			if (conAppClass != null) {
 				Class controllerClass = conAppClass.javaClass;
-				Method actionMethod = /*Java.*/findActionMethod(action, controllerClass);
-				if (actionMethod != null) {
-					String expr = controller + "." + action;
-					// content negotiation
-					String format = Request.current().format;
-					if ("html".equals(format)) {
-						return expr;
-					} else {
-						String expr_format = expr + "_" + format;
-						if (expr_format.startsWith("controllers.")) {
-							expr_format = "japidviews" + expr_format.substring(expr_format.indexOf('.'));
-						}
-						ApplicationClass appClass = Play.classes.getApplicationClass(expr_format);
-						if (appClass != null)
-							return expr_format;
-						else {
-							// fallback
+				if (JapidController.class.isAssignableFrom(controllerClass)) {
+					Method actionMethod = /* Java. */findActionMethod(action, controllerClass);
+					if (actionMethod != null) {
+						String expr = controller + "." + action;
+						// content negotiation
+						String format = Request.current().format;
+						if ("html".equals(format)) {
 							return expr;
+						} else {
+							String expr_format = expr + "_" + format;
+							if (expr_format.startsWith("controllers.")) {
+								expr_format = "japidviews" + expr_format.substring(expr_format.indexOf('.'));
+							}
+							ApplicationClass appClass = Play.classes.getApplicationClass(expr_format);
+							if (appClass != null)
+								return expr_format;
+							else {
+								// fallback
+								return expr;
+							}
 						}
 					}
 				}
@@ -174,27 +177,33 @@ public class JapidController extends Controller {
 		throw new RuntimeException("The calling stack does not contain a valid controller. Should not have happended...");
 	}
 
-	/** 
-	 * copies from the same method in the Java class. Removed the public requirement for easier chaining.
+	/**
+	 * copies from the same method in the Java class. Removed the public
+	 * requirement for easier chaining.
 	 * 
 	 * @param name
 	 * @param clazz
 	 * @return
 	 */
-    public static Method findActionMethod(String name, Class clazz) {
-        while (!clazz.getName().equals("java.lang.Object")) {
-            for (Method m : clazz.getDeclaredMethods()) {
-                if (m.getName().equalsIgnoreCase(name) /*&& Modifier.isPublic(m.getModifiers())*/) {
-                    // Check that it is not an intercepter
-                    if (!m.isAnnotationPresent(Before.class) && !m.isAnnotationPresent(After.class) && !m.isAnnotationPresent(Finally.class)) {
-                        return m;
-                    }
-                }
-            }
-            clazz = clazz.getSuperclass();
-        }
-        return null;
-    }
+	public static Method findActionMethod(String name, Class clazz) {
+		while (!clazz.getName().equals("java.lang.Object")) {
+			for (Method m : clazz.getDeclaredMethods()) {
+				if (m.getName().equalsIgnoreCase(name) /*
+														 * &&
+														 * Modifier.isPublic(m
+														 * .getModifiers())
+														 */) {
+					// Check that it is not an intercepter
+					if (!m.isAnnotationPresent(Before.class) && !m.isAnnotationPresent(After.class)
+							&& !m.isAnnotationPresent(Finally.class)) {
+						return m;
+					}
+				}
+			}
+			clazz = clazz.getSuperclass();
+		}
+		return null;
+	}
 
 	/**
 	 * render parameters to the prescribed template and return the RenderResult
@@ -218,7 +227,6 @@ public class JapidController extends Controller {
 		// stacktrace to track the caller action name
 		// something like controllers.japid.SampleController.testFindAction
 
-		
 		if (template.startsWith("@")) {
 			// a template in the current directory
 			template = request.controller + "/" + template.substring(1);

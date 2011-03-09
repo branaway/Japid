@@ -87,18 +87,20 @@ public class JapidTemplateTransformer {
 	}
 
 	static Pattern doLayoutTag = Pattern.compile(".*\\#\\{\\s*doLayout\\s*.*");
-	static Pattern doLayoutDirective = Pattern.compile(".*`doLayout[`\\s].*");
+	static Pattern doLayoutDirective = Pattern.compile(".*`doLayout");
+	static Pattern doLayoutDirective2 = Pattern.compile(".*`doLayout\\s?`.*");
 	static Pattern getTag= Pattern.compile(".*\\#\\{\\s*get\\s*.*");
 	static Pattern getDirective = Pattern.compile(".*`get\\s+\\w+\\s*");
 	
 	public static boolean looksLikeLayout(String src) {
 		String[] split = src.split("[\r\n]");
 		for (String line : split) {
+			line = line.trim();
 			if (doLayoutTag.matcher(line).matches()
 					|| doLayoutDirective.matcher(line).matches()
+					|| doLayoutDirective2.matcher(line).matches()
 					|| getTag.matcher(line).matches()
-					|| getDirective.matcher(line).matches()
-			) {
+					|| getDirective.matcher(line).matches()) {
 				return true;
 			}
 		}

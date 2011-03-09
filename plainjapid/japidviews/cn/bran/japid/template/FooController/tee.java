@@ -17,11 +17,11 @@ public class tee extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 		super(out);
 	}
 	private cn.bran.japid.template.FooController.ModelUser u;
-	public cn.bran.japid.template.RenderResult render(cn.bran.japid.template.FooController.ModelUser u) {
+	public String render(cn.bran.japid.template.FooController.ModelUser u) {
 		this.u = u;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return getOut().toString();
 	}
 	@Override protected void doLayout() {
 //------

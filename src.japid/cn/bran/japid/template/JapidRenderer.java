@@ -1,4 +1,4 @@
-package cn.bran.japid.compiler;
+package cn.bran.japid.template;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -15,14 +15,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cn.bran.japid.compiler.OpMode;
+import cn.bran.japid.compiler.TranslateTemplateTask;
 import cn.bran.japid.rendererloader.RendererClass;
 import cn.bran.japid.rendererloader.RendererCompiler;
 import cn.bran.japid.rendererloader.TemplateClassLoader;
-import cn.bran.japid.template.JapidPlainController;
-import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.util.DirUtil;
+import cn.bran.japid.util.StackTraceUtils;
 
-public class JapidRender {
+public class JapidRenderer {
 
 	public static JapidTemplateBaseWithoutPlay getRenderer(String name) {
 		Class<? extends JapidTemplateBaseWithoutPlay> c = getClass(name);
@@ -34,7 +35,7 @@ public class JapidRender {
 	}
 
 	/**
-	 * the main entry for this class's intention
+	 * Get a newly loaded class for the template renderer
 	 * 
 	 * @param name
 	 * @return
@@ -73,7 +74,7 @@ public class JapidRender {
 
 	}
 
-	public static boolean timeToRefresh() {
+	static boolean timeToRefresh() {
 		long now = System.currentTimeMillis();
 		if (now - lastRefreshed > refreshInterval) {
 			lastRefreshed = now;
@@ -83,7 +84,7 @@ public class JapidRender {
 
 	}
 
-	public static synchronized void refreshClasses(String targetClass) {
+	static synchronized void refreshClasses(String targetClass) {
 		if (!timeToRefresh())
 			return;
 
@@ -149,18 +150,6 @@ public class JapidRender {
 
 			// compile all
 			if (updatedClasses.size() > 0) {
-				// // let's clear the update mark for all the class
-				// String[] allClassNames = new String[classes.size()];
-				// int m = 0;
-				// for (String k : classes.keySet()) {
-				// RendererClass rc = classes.get(k);
-				// rc.lastUpdated = 0;
-				// allClassNames[m++] = k;
-				// }
-
-				// shall I add the target no matter what?
-				// updatedClasses.add(targetClass);
-
 				String[] names = new String[updatedClasses.size()];
 				int i = 0;
 				for (String s : updatedClasses) {
@@ -169,11 +158,6 @@ public class JapidRender {
 				long t = System.currentTimeMillis();
 				compiler.compile(names);
 				howlong("compile time for " + names.length + " classes", t);
-
-				// refresh the class
-				// for (String c : updatedClasses) {
-				// alright reload all classes since I don't know how to
-				// determine dependencies
 
 				// clear the global class cache
 				for (String k : classes.keySet()) {
@@ -232,22 +216,32 @@ public class JapidRender {
 	public static List<String> importlines = new ArrayList<String>();
 	public static int refreshInterval;
 	public static long lastRefreshed;
-	public static boolean devMode;
+	private static boolean inited;
 
-	public static void howlong(String string, long t) {
+	public static boolean isInited() {
+		return inited;
+	}
+
+	private static OpMode opMode;
+
+	public static OpMode getOpMode() {
+		return opMode;
+	}
+
+	static void howlong(String string, long t) {
 		System.out.println(string + ":" + (System.currentTimeMillis() - t) + "ms");
 	}
 
 	/**
 	 * @param rendererClass
 	 */
-	public static void cleanClassHolder(RendererClass rendererClass) {
+	static void cleanClassHolder(RendererClass rendererClass) {
 		rendererClass.setBytecode(null);
 		rendererClass.setClz(null);
 		rendererClass.setLastUpdated(0);
 	}
 
-	public static Set<String> createNameSet(String[] allHtml) {
+	static Set<String> createNameSet(String[] allHtml) {
 		// the names start with template root
 		Set<String> names = new HashSet<String>();
 		for (String f : allHtml) {
@@ -256,7 +250,7 @@ public class JapidRender {
 		return names;
 	}
 
-	public static String getSourceCode(String k) {
+	static String getSourceCode(String k) {
 		String pathname = templateRoot + sep + k;
 		pathname = pathname.replace(".", sep);
 		File f = new File(pathname + ".java");
@@ -267,7 +261,7 @@ public class JapidRender {
 	 * @param c
 	 * @return
 	 */
-	public static RendererClass newRendererClass(String c) {
+	static RendererClass newRendererClass(String c) {
 		RendererClass rc = new RendererClass();
 		rc.setClassName(c);
 		// the source code of the Java file might not be available yet
@@ -276,7 +270,7 @@ public class JapidRender {
 		return rc;
 	}
 
-	public static String readSource(File f) {
+	static String readSource(File f) {
 		try {
 			FileInputStream fis = new FileInputStream(f);
 			BufferedInputStream bis = new BufferedInputStream(fis);
@@ -293,7 +287,7 @@ public class JapidRender {
 		}
 	}
 
-	public static String getClassName(File f) {
+	static String getClassName(File f) {
 		String path = f.getPath();
 		String substring = path.substring(path.indexOf(JAPIDVIEWS));
 		substring = substring.replace('/', '.').replace('\\', '.');
@@ -312,15 +306,23 @@ public class JapidRender {
 	 *            the interval in seconds. Set it to {@link Integer.MAX_VALUE}
 	 *            to effectively disable refreshing
 	 */
-	public static void setRefreshInterval(int i) {
+	static void setRefreshInterval(int i) {
 		refreshInterval = i * 1000;
 	}
 
-	public static void setTemplateRoot(String root) {
+	static void setTemplateRoot(String root) {
 		templateRoot = root;
 		japidviews = templateRoot + sep + JAPIDVIEWS + sep;
 	}
 
+	/**
+	 * The entry point for the command line tool japid.bat and japid.sh
+	 * 
+	 * The "gen" and "regen" are probably the most useful ones.
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length > 0) {
 			String arg0 = args[0];
@@ -343,14 +345,13 @@ public class JapidRender {
 			System.err.println("help:  optionas are: gen, regen, mkdir and clean");
 		}
 	}
-	
 
 	private static void changed(String root) {
 		List<File> changedFiles = DirUtil.findChangedSrcFiles(new File(root));
-		for (File f: changedFiles) {
+		for (File f : changedFiles) {
 			System.out.println("changed: " + f.getPath());
 		}
-		
+
 	}
 
 	/**
@@ -362,7 +363,7 @@ public class JapidRender {
 	 * @throws IOException
 	 * 
 	 */
-	public static List<File> mkdir(String root) throws IOException {
+	static List<File> mkdir(String root) throws IOException {
 		String japidviewsDir = getJapidviewsDir(root);
 		File layouts = new File(japidviewsDir + "_layouts");
 		if (!layouts.exists()) {
@@ -394,7 +395,7 @@ public class JapidRender {
 		return root + sep + JAPIDVIEWS + sep;
 	}
 
-	public static void regen() throws IOException {
+	static void regen() throws IOException {
 		regen(templateRoot);
 	}
 
@@ -403,11 +404,11 @@ public class JapidRender {
 		gen(root);
 	}
 
-	public static void delAllGeneratedJava(String pathname) {
+	static void delAllGeneratedJava(String pathname) {
 		String[] javas = DirUtil.getAllFileNames(new File(pathname), new String[] { "java" });
 
 		for (String j : javas) {
-			log("removed: " + pathname  + j);
+			log("removed: " + pathname + j);
 			boolean delete = new File(pathname + File.separatorChar + j).delete();
 			if (!delete)
 				throw new RuntimeException("file was not deleted: " + j);
@@ -421,13 +422,13 @@ public class JapidRender {
 	 * 
 	 * @throws IOException
 	 */
-	public static List<File> gen(String packageRoot) throws IOException {
+	static List<File> gen(String packageRoot) throws IOException {
 		// mkdir(packageRoot);
 		// moved to reloadChanged
 		List<File> changedFiles = reloadChanged(packageRoot);
 		if (changedFiles.size() > 0) {
 			for (File f : changedFiles) {
-//				log("updated: " + f.getName().replace("html", "java"));
+				// log("updated: " + f.getName().replace("html", "java"));
 			}
 		} else {
 			log("All java files are up to date.");
@@ -442,7 +443,7 @@ public class JapidRender {
 	 *            the package root "/"
 	 * @return the updated Java files.
 	 */
-	public static List<File> reloadChanged(String root) {
+	static List<File> reloadChanged(String root) {
 		try {
 			mkdir(root);
 		} catch (Exception e) {
@@ -473,7 +474,7 @@ public class JapidRender {
 	 * 
 	 * @return
 	 */
-	public static File[] getAllJavaFilesInDir(String root) {
+	static File[] getAllJavaFilesInDir(String root) {
 		// from source files only
 		String[] allFiles = DirUtil.getAllFileNames(new File(root), new String[] { ".java" });
 		File[] fs = new File[allFiles.length];
@@ -487,11 +488,12 @@ public class JapidRender {
 
 	/**
 	 * delete orphaned java artifacts from the japidviews directory
-	 * @param packageRoot 
+	 * 
+	 * @param packageRoot
 	 * 
 	 * @return
 	 */
-	public static boolean rmOrphanJava(String packageRoot) {
+	static boolean rmOrphanJava(String packageRoot) {
 
 		boolean hasRealOrphan = false;
 		try {
@@ -522,15 +524,15 @@ public class JapidRender {
 		return hasRealOrphan;
 	}
 
-	public static List<File> reloadChanged() {
+	static List<File> reloadChanged() {
 		return reloadChanged(templateRoot);
 	}
 
-	public static void log(String m) {
+	static void log(String m) {
 		System.out.println("[JapidRender]: " + m);
 	}
 
-	public static void gen() {
+	static void gen() {
 		if (templateRoot == null) {
 			throw new RuntimeException("the template root directory must be set");
 		} else {
@@ -543,25 +545,26 @@ public class JapidRender {
 		}
 	}
 
-	/**
-	 * set to development mode
-	 */
-	public static void setDevMode() {
-		devMode = true;
-	}
+	// /**
+	// * set to development mode
+	// */
+	// public static void setDevMode() {
+	// devMode = true;
+	// }
 
-	/**
-	 * set to production mode
-	 */
-	public static void setProdMode() {
-		devMode = false;
-	}
+	// /**
+	// * set to production mode
+	// */
+	// public static void setProdMode() {
+	// devMode = false;
+	// }
+	//
 
 	public static boolean isDevMode() {
-		return devMode;
+		return opMode == OpMode.dev;
 	}
 
-	public static String removeSemi(String imp) {
+	static String removeSemi(String imp) {
 		imp = imp.trim();
 		if (imp.endsWith(";")) {
 			imp = imp.substring(0, imp.length() - 1);
@@ -611,8 +614,87 @@ public class JapidRender {
 		importlines.add(removeSemi(imp));
 	}
 
+	/**
+	 * one of the ways to invoke a renderer
+	 * 
+	 * @param cls
+	 * @param args
+	 * @return
+	 */
 	public String render(Class<? extends JapidTemplateBaseWithoutPlay> cls, Object... args) {
-		return JapidPlainController.render(cls, args);
+		return JapidPlainController.renderWith(cls, args);
+	}
+
+	/**
+	 * The <em>required</em> initialization step in using the JapidRender.
+	 * 
+	 * @param opMode
+	 *            the operational mode of Japid. When set to OpMode.prod, it's
+	 *            assumed that all Java derivatives are already been generated
+	 *            and used directly. When set to OpMode.dev, and using
+	 *            none-static linking to using the renderer, file system changes
+	 *            are detected for every rendering request given the refresh
+	 *            interval is respected. New Java files are generated and
+	 *            compiled and new classes are loaded to serve the request.
+	 * @param templateRoot
+	 *            the root directory to contain the "japidviews" directory tree.
+	 * @param refreshInterval
+	 *            the minimal time, in second, that must elapse before trying to
+	 *            detect any changes in the file system.
+	 */
+	public static void init(OpMode opMode, String templateRoot, int refreshInterval) {
+		inited = true;
+		JapidRenderer.opMode = opMode;
+		setTemplateRoot(templateRoot);
+		setRefreshInterval(refreshInterval);
+	}
+
+	/**
+	 * a facet method to wrap implicit template binding. The default template is
+	 * named as the class and method that immediately invoke this method. e.g.
+	 * for an invocation scenario like this
+	 * 
+	 * <pre>
+	 * package pack;
+	 * 
+	 * public class Foo {
+	 * 	public String bar() {
+	 * 		return JapidRender.render(p);
+	 * 	}
+	 * }
+	 * </pre>
+	 * 
+	 * The template to use is "{templateRoot}/japidviews/pack/Foo/bar.html".
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public static String render(Object... args) {
+		String templateName = findTemplate();
+		return JapidPlainController.renderJapidWith(templateName, args);
+	}
+
+	/**
+	 * render with the specified template.
+	 * 
+	 * @param templateName
+	 *            The template must be rooted in the {templateRoot/}/japidviews
+	 *            tree. The template name starts with or without "japidviews".
+	 *            The naming pattern is the same as in ClassLoader.getResource(). 
+	 * @param args
+	 * @return the result string
+	 */
+	public static String renderWith(String templateName, Object... args) {
+		return JapidPlainController.renderJapidWith(templateName, args);
+	}
+
+	private static String findTemplate() {
+		String japidRenderInvoker = StackTraceUtils.getJapidRenderInvoker();
+		return japidRenderInvoker;
+	}
+
+	public static String renderWith(Class<? extends JapidTemplateBaseWithoutPlay> cla, Object... args) {
+		return JapidPlainController.renderWith(cla, args);
 	}
 
 }

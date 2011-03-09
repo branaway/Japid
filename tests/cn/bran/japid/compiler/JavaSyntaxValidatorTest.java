@@ -91,7 +91,7 @@ public class JavaSyntaxValidatorTest {
 		try {
 			CompilationUnit cu = JavaSyntaxTool.parse(validSrc);
 		} catch (ParseException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw e;
 		}
 	}

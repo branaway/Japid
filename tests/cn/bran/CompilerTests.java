@@ -1,7 +1,6 @@
 package cn.bran;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertTrue;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
 
@@ -236,7 +235,7 @@ public class CompilerTests {
 		System.out.println(cu);
 		assertTrue(bt.javaSource.contains("_my_tag0.render(a);"));
 		assertTrue(bt.javaSource.contains("_my_tag1.render(a);"));
-		assertTrue(bt.javaSource.contains("_your_tag2.render(a + 123);"));
+		assertTrue(bt.javaSource.contains("_your_tag4.render(a + 123);"));
 	}
 
 	@Test
@@ -282,7 +281,7 @@ public class CompilerTests {
 		String srcFile = "tests/eachTag.html";
 		String src = readFile(srcFile);
 		
-		JapidTemplate bt = new JapidTemplate("tests/eachTag.html", src);
+		JapidTemplate bt = new JapidTemplate("eachTag.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
@@ -366,6 +365,20 @@ public class CompilerTests {
 		assertTrue(code.contains("return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);"));
 		assertTrue(code.contains("MyController.action(s + \"2\");"));
 		
+	}
+
+	@Test
+	public void testScriptlineLayout() throws IOException {
+		String srcFile = "JapidSample/app/japidviews/more/MyController/scriptlineLayout.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("scriptlineLayout.html", src);
+		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		cp.compile(bt);
+		String code = bt.javaSource;
+		System.out.println(code);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+			
 	}
 
 	@Test

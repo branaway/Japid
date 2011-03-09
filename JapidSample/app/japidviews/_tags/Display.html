@@ -1,11 +1,9 @@
-`import static cn.bran.play.WebUtils.*
 `extends  TagLayout
 `args models.japidsample.Post post,	String as
 
-
 <div class="divvy">
 	<p>title: $post.getTitle()</p>
-	<p>at: $fastformat(post.getPostedAt(), ("yy-MMM-dd"))</p>
+	<p>at: ${format(post.getPostedAt(), ("yy-MMM-dd"))}</p>
 	<p>by: $post.getAuthor().name, $post.getAuthor().gender</p>
 	<p class="try again using a simple syntax">
         *{this is the tag way of doBody:	#{doBody post.getTitle() + "!" /}  }*

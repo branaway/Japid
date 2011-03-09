@@ -23,6 +23,9 @@
 	</path>
 
 	<path id="project.classpath.standalone">
+		<fileset dir="lib.plain">
+			<include name="*.jar" />
+		</fileset>
 		<fileset dir="lib">
 			<include name="*.jar" />
 		</fileset>
@@ -41,9 +44,9 @@
 		</copy>
 
 		<delete>
-		  <fileset dir="lib" includes="play-japid-*.jar"/>
+		  <fileset dir="lib" includes="japidplay-*.jar"/>
 		</delete>
-		<jar destfile="lib/play-japid-${version}.jar" basedir="${classes.play}">
+		<jar destfile="lib/japidplay-${version}.jar" basedir="${classes.play}">
 			<manifest>
 				<section name="Japid-Play-module">
 					<attribute name="Specification-Title" value="japidplay" />

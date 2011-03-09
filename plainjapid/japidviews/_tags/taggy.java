@@ -25,11 +25,11 @@ final taddy _taddy0 = new taddy(getOut());
 		super(out);
 	}
 	private String a;
-	public cn.bran.japid.template.RenderResult render(String a) {
+	public String render(String a) {
 		this.a = a;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return getOut().toString();
 	}
 	@Override protected void doLayout() {
 //------

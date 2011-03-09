@@ -10,7 +10,7 @@ import cn.bran.japid.template.RenderResult;
 public class RenderInvokerUtils {
 	private static final String RENDER_METHOD = "render";
 
-	public static <T extends JapidTemplateBaseWithoutPlay> RenderResult render(T t, Object... args) {
+	public static <T extends JapidTemplateBaseWithoutPlay> Object render(T t, Object... args) {
 		String className = t.getClass().getName();
 		Method[] methods = t.getClass().getDeclaredMethods();
 		if (args == null) {
@@ -28,7 +28,7 @@ public class RenderInvokerUtils {
 				else {
 					try {
 						Object invoke = m.invoke(t, args);
-						return (RenderResult) invoke;
+						return invoke;
 					} 
 					catch (IllegalArgumentException e) {
 						throw new RuntimeException("Template argument type mismatch: " + className);

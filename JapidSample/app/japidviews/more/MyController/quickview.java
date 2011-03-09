@@ -4,7 +4,6 @@ import java.io.*;
 import cn.bran.japid.tags.Each;
 import japidviews.more.MyController._tags2.*;
 import static play.templates.JavaExtensions.*;
-import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;

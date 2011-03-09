@@ -14,7 +14,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import cn.bran.play.AltCacheSimpleImpl;
 import cn.bran.play.CacheableRunner;
+import cn.bran.play.RenderResultCache;
 
 public class RenderResultTest implements Serializable {
 	private static final String KEKKE = "kekke";
@@ -40,16 +42,15 @@ public class RenderResultTest implements Serializable {
 
 	@Test
 	public void testExternalizeRenderResultPartial() throws IOException, ClassNotFoundException {
+		RenderResultCache.setAltCache(new AltCacheSimpleImpl());
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("a", "aa");
 		map.put("b", "bb");
 		StringBuilder sb = new StringBuilder("hello");
 		long rt = 1000;
 		CacheableRunner cr = new CacheableRunner("1m", "anything") {
-
 			@Override
 			protected RenderResult render() {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
@@ -63,9 +64,10 @@ public class RenderResultTest implements Serializable {
 		Map<String, String> headers = rr.getHeaders();
 		assertEquals(2, headers.size());
 		assertEquals("aa", headers.get("a"));
-		assertEquals("hello", rr.getContent().toString());
+		assertEquals("hello", rr.getText());
 		assertEquals(rt, rr.renderTime);
-
+		Map<Integer, ActionRunner> map2 = rr.getActionRunners();
+		assertEquals(1, map2.size());
 	}
 	
 	@Test

@@ -1,4 +1,4 @@
-h1. Japid Engine Quick Manual 
+h1. The Quick Manual of Japid Engine with Play Framework
 
 V0.7
 
@@ -15,9 +15,9 @@ h4. Document History
 
 h2. Introduction
 
-Japid is a Java-based dynamic text rendering templates system that aims to deliver the the performance.
+Japid is a Java-based statically typed text rendering templates system that aims to deliver the  best possible performance.
 
-It's a generic template engine that can be used by any Java applications to render any Java objects. It also provides adapters specifically for the Play! Framework. (The current version has some issues to be use standalone. So don't use it that way yet. To be fixed.)
+It's a generic template engine that can be used by any Java applications to render any Java objects. It also provides adapters specifically for the Play! Framework. 
 
 The main goal of Japid is for use in large, high-traffic and highly dynamic Play! bases web applications. To reach that goal, Japid transforms templates files to clean Java source code thus the rendering can run at the raw Java speed. 
 

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import cn.bran.japid.compiler.JapidRender;
+import cn.bran.japid.template.JapidRenderer;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.RenderInvokerUtils;
@@ -43,7 +43,7 @@ public class TemplateClassLoader extends ClassLoader {
 
 	@Override
 	public Class<?> loadClass(String name) throws ClassNotFoundException {
-		if (!name.startsWith(JapidRender.JAPIDVIEWS))
+		if (!name.startsWith(JapidRenderer.JAPIDVIEWS))
 			return super.loadClass(name);
 		String oid = "[TemplateClassLoader@" + Integer.toHexString(hashCode()) + "]";
 
@@ -54,7 +54,7 @@ public class TemplateClassLoader extends ClassLoader {
 		}
 			
 		// System.out.println("[TemplateClassLoader] loading: " + name);
-		RendererClass rc = JapidRender.classes.get(name);
+		RendererClass rc = JapidRenderer.classes.get(name);
 
 		byte[] bytecode = rc.bytecode;
 

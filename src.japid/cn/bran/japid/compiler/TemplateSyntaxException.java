@@ -15,12 +15,12 @@ package cn.bran.japid.compiler;
 
 public class TemplateSyntaxException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
-	String fileName;
-	String hotspot;
-	int line;
+	public String fileName;
+	public String hotspot;
+	public int line;
 	
 	public TemplateSyntaxException(String msg, String fileName, String hotspot, int line) {
-		super(msg);
+		super(msg + "@ " + fileName + ":" + hotspot + ". line " + line );
 		this.fileName = fileName;
 		this.hotspot = hotspot;
 		this.line = line;

@@ -3,7 +3,6 @@ import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import static play.templates.JavaExtensions.*;
-import static cn.bran.japid.util.WebUtils.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;
@@ -77,7 +76,7 @@ p("\n" +
 "    ");// line 15
 	doLayout();
 p("</body>\n" + 
-"</html>");// line 18
+"</html>\n");// line 18
 	}
 	 protected void title() {};
 

@@ -2,7 +2,6 @@ package japidviews._tags;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import static cn.bran.japid.util.WebUtils.*;
 import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
@@ -67,29 +66,28 @@ public class Display extends TagLayout
 //------
 ;// line 1
 p("\n" + 
-"\n" + 
 "<div class=\"divvy\">\n" + 
-"	<p>title: ");// line 3
-p(post.getTitle());// line 7
+"	<p>title: ");// line 2
+p(post.getTitle());// line 5
 p("</p>\n" + 
-"	<p>at: ");// line 7
-p(fastformat(post.getPostedAt(), ("yy-MMM-dd")));// line 8
+"	<p>at: ");// line 5
+p(format(post.getPostedAt(), ("yy-MMM-dd")));// line 6
 p("</p>\n" + 
-"	<p>by: ");// line 8
-p(post.getAuthor().name);// line 9
-p(", ");// line 9
-p(post.getAuthor().gender);// line 9
+"	<p>by: ");// line 6
+p(post.getAuthor().name);// line 7
+p(", ");// line 7
+p(post.getAuthor().gender);// line 7
 p("</p>\n" + 
 "	<p class=\"try again using a simple syntax\">\n" + 
+"        ");// line 7
+p("\n" + 
 "        ");// line 9
 p("\n" + 
-"        ");// line 11
-p("\n" + 
-"	   ");// line 12
+"	   ");// line 10
 if (body != null)
 	body.render(post.getTitle() + "!");
 p("	</p>\n" + 
-"</div>");// line 13
+"</div>");// line 11
 
 	}
 

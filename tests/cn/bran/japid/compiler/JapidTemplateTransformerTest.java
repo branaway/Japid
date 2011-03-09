@@ -14,10 +14,13 @@ public class JapidTemplateTransformerTest {
 		src = "<p> #{ doLayout /} </p>";
 		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
 
-		src = "<p> `doLayout ";
+		src = "<p> `doLayout`</p> ";
 		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
 
-		src = "<p> `doLayout`</p> ";
+		src = "<p> `doLayout\n";
+		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
+
+		src = "<p> `doLayout\r\n";
 		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
 
 		src = "`doLayoutter ";

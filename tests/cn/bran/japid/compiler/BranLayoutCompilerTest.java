@@ -22,7 +22,7 @@ public class BranLayoutCompilerTest {
 
 	@Test
 	public void testHop() throws IOException {
-		FileInputStream fis = new FileInputStream("tempgen/tag/Layout.html");
+		FileInputStream fis = new FileInputStream("JapidSample/app/japidviews/_layouts/Layout.html");
 		InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
 		BufferedReader br = new BufferedReader(isr);
 		String src = "";
