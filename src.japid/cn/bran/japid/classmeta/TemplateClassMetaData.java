@@ -159,6 +159,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 					pln("\t\treturn new " + resultType + "(this.headers, null, t);");
 				}
 				else {
+					pln("\t\t if (t != -1) System.out.println(\"[" + super.className + "] rendering time: \" + t);");
 					pln("\t\treturn getOut().toString();");
 				}
 			}
@@ -171,6 +172,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 					pln("\t\treturn new " + resultType + "(this.headers, getOut(), t);");
 			}
 			else {
+				pln("\t\t if (t != -1) System.out.println(\"[" + super.className + "] rendering time: \" + t);");
 				pln("\t\treturn getOut().toString();");
 			}
 		}

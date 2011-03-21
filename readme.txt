@@ -24,6 +24,12 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/3/20: V0.8.1: 
+    1. The Eclipse plug: upgraded to 0.8.8.1   
+    2. The Eclipse plug: fixed syntax coloring for lines containing multiple back quote.
+    3. The Eclipse plug: added synchronization of the templates with the controller type, method and package renaming refactoring.  
+    4. The Eclipse plug: added ctrl-alt-B to invoke current action in an external browser.   
+
 2011/3/10: V0.8.0: 
     1. bug fix: calling tag without args but a callback block.  
     2. naming change: the jar for the play connector was renamed from play-japid-{version}.jar to japidplay-{version}.jar.
