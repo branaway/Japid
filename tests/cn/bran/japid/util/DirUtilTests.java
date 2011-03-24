@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 
@@ -52,13 +51,13 @@ public class DirUtilTests {
 	public void testChangedHtml() throws IOException {
 		File src = new File("tests/testdir");
 		File newer = new File ("tests/testdir/A.html");
-		FileUtils.touch(newer);
+		DirUtil.touch(newer);
 		List<File> fs = DirUtil.findChangedSrcFiles(src);
 		assertEquals(3, fs.size());
 //		for (File f: fs) {
 //			System.out.println(f.getPath());
 //		}
-		FileUtils.touch(new File("tests/testdir/A.java"));
+		DirUtil.touch(new File("tests/testdir/A.java"));
 		fs = DirUtil.findChangedSrcFiles(src);
 		assertEquals(2, fs.size());
 		

@@ -1,6 +1,5 @@
 package cn.bran.play;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,23 +10,21 @@ import java.util.concurrent.Future;
 
 import javax.mail.internet.InternetAddress;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.MultiPartEmail;
-import org.apache.commons.mail.SimpleEmail;
 
 import play.Logger;
 import play.Play;
-import play.classloading.enhancers.LocalvariablesNamesEnhancer.LocalVariablesNamesTracer;
 import play.exceptions.MailException;
 import play.exceptions.UnexpectedException;
 import play.libs.Mail;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.StackTraceUtils;
+import cn.bran.japid.util.StringUtils;
 
 /**
  *  Application mailer support, based on the Mail class in the Play distribution.

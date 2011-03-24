@@ -1,6 +1,12 @@
 package cn.bran.japid.util;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -209,5 +215,16 @@ public class DirUtil {
 			return k.substring(0, indexOf);
 		}
 		return k;
+	}
+
+	public static void writeStringToFile(File file, String content) throws IOException {
+		Writer fw = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.append(content);
+		bw.close();
+	}
+
+	public static void touch(File newer) throws IOException {
+		writeStringToFile(newer, "");
 	}
 }

@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
-
 import play.data.validation.Validation;
 import play.templates.JavaExtensions;
 import cn.bran.japid.compiler.TranslateTemplateTask;
@@ -60,7 +58,7 @@ public class JapidCommands {
 
 		File webutil = new File(javatags, "JapidWebUtil.java");
 		if (!webutil.exists()) {
-			FileUtils.writeStringToFile(webutil, JapidWebUtil, "UTF-8");
+			DirUtil.writeStringToFile(webutil, JapidWebUtil);
 			log("created JapidWebUtil.java.");
 		}
 		// add the place-holder for utility class for use in templates

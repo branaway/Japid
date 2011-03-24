@@ -8,28 +8,20 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.text.html.HTMLDocument.RunElement;
-
-import org.apache.commons.beanutils.MethodUtils;
-
 import play.Play;
 import play.cache.Cache;
 import play.classloading.ApplicationClasses.ApplicationClass;
-import play.exceptions.ActionNotFoundException;
 import play.mvc.After;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Finally;
 import play.mvc.Http.Request;
 import play.mvc.results.RenderTemplate;
-import play.utils.Java;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.RenderInvokerUtils;
 import cn.bran.japid.util.StackTraceUtils;
-
-import com.google.gson.Gson;
 
 /**
  * a helper class. for hiding the template API from user eyes. not really needed
@@ -470,13 +462,6 @@ public class JapidController extends Controller {
 
 	protected static void renderText(char o) {
 		renderText(new String(new char[] { o }));
-	}
-
-	protected static void renderJson(Object o) {
-		String json = new Gson().toJson(o);
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Content-Type", "application/json; charset=utf-8");
-		render(new RenderResult(headers, new StringBuilder(json), -1L));
 	}
 
 	/**

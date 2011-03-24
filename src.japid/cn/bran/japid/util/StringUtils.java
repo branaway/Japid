@@ -128,4 +128,8 @@ public class StringUtils {
 		return qs;
 	}
 
+	public static boolean isEmpty(String charset) {
+		return WebUtils.asBoolean(charset);
+	}
+
 }
