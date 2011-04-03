@@ -150,7 +150,9 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t\tt = System.currentTimeMillis() - t;");
 			pln("\t\tSystem.out.println(\"[" + super.className + "] rendering time: \" + t);");
 		}
-
+		// bug fix: always assume there is action invocation in the super class or it won't get rendered!
+		hasActionInvocation = true;
+		
 		if (streaming) {
 			if (useWithPlay && hasActionInvocation)
 				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, null, t, " + ACTION_RUNNERS + ");");

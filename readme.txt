@@ -24,6 +24,9 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/4/1: V0.8.1.2: 
+    1. bug fix: now the template always return RenderResultPartial and evaluate the action runners to make sure the super class's action runners get evaluated    
+
 2011/3/20: V0.8.1: 
     1. The Eclipse plug: upgraded to 0.8.8.1   
     2. The Eclipse plug: fixed syntax coloring for lines containing multiple back quote.
