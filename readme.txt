@@ -24,6 +24,9 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/4/20: V0.8.2.0: now compatible with 1.2.x only for the route lookup syntax: "@action()"
+    1. Compatibility fix: The unbinder in the current trunk of Play requires annotations as the last param. Added in the ActionBridge to make compatible. 
+    2. bug fix: the "open for" loop did not take primitive elements. Now the compiler smartly boxes the primitive type.   
 2011/4/1: V0.8.1.2: 
     1. bug fix: now the template always return RenderResultPartial and evaluate the action runners to make sure the super class's action runners get evaluated    
 

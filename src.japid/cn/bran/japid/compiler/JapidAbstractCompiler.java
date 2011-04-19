@@ -564,6 +564,7 @@ public abstract class JapidAbstractCompiler {
 				Matcher matcher = OPEN_FOR_PATTERN.matcher(expr);
 				if (matcher.matches()) {
 					String instanceDecl = matcher.group(1);
+					instanceDecl = cleanDeclPrimitive(instanceDecl);
 					String collection = matcher.group(2);
 					expr = "each " + collection + " | " + instanceDecl;
 					Tag tag = buildTagDirective(expr);
@@ -1121,5 +1122,50 @@ public abstract class JapidAbstractCompiler {
 		if (!(tag instanceof TagIf))
 			tagsStack.push(tag);
 
+	}
+
+	/**
+	 * check if the data type is primitive in a var declaration
+	 * 
+	 * @param decl
+	 *   int i,  int[] ia, etc
+	 * @return
+	 */
+	static String cleanDeclPrimitive(String decl) {
+		decl = decl.trim();
+		int i = decl.length();
+		String var = "";
+		String type = "";
+		while (--i >=0) {
+			char c = decl.charAt(i);
+			if (c == ' ' || c == '\t') {
+				var = decl.substring(i + 1); 
+				type = decl.substring(0, i).trim();
+				break;
+			}
+		}
+		if ("int".equals(type)) {
+			decl = "Integer " + var;
+		}
+		else if ("long".equals(type)) {
+			decl = "Long " + var;
+		}
+		else if ("float".equals(type)) {
+			decl = "Float " + var;
+		}
+		else if ("double".equals(type)) {
+			decl = "Double " + var;
+		}
+		else if ("char".equals(type)) {
+			decl = "Character " + var;
+		}
+		else if ("boolean".equals(type)) {
+			decl = "Boolean " + var;
+		}
+		else if ("byte".equals(type)) {
+			decl = "Byte " + var;
+		}
+			
+		return decl;
 	}
 }

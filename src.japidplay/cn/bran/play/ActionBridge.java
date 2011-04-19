@@ -1,5 +1,6 @@
 package cn.bran.play;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,15 +78,16 @@ public class ActionBridge {
 					if (names.length < ((Object[]) param).length) {
 						throw new NoRouteFoundException(action, null);
 					}
+					Annotation[] annos = actionMethod.getAnnotations();
 					for (int i = 0; i < ((Object[]) param).length; i++) {
 						if (((Object[]) param)[i] instanceof Router.ActionDefinition && ((Object[]) param)[i] != null) {
-							Unbinder.unBind(r, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "");
+							Unbinder.unBind(r, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "", annos);
 						} else if (isSimpleParam(actionMethod.getParameterTypes()[i])) {
 							if (((Object[]) param)[i] != null) {
-								Unbinder.unBind(r, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "");
+								Unbinder.unBind(r, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "", annos);
 							}
 						} else {
-							Unbinder.unBind(r, ((Object[]) param)[i], i < names.length ? names[i] : "");
+							Unbinder.unBind(r, ((Object[]) param)[i], i < names.length ? names[i] : "", annos);
 						}
 					}
 				}

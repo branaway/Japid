@@ -8,13 +8,15 @@ import java.util.regex.Pattern;
 import org.junit.Test;
 
 public class JapidAbstractCompilerTest {
-	@Test public void testActionRunnerline() {
+	@Test
+	public void testActionRunnerline() {
 		String action = "my.action(param), \"12s\", a, 123";
 		String line = JapidAbstractCompiler.createActionRunner(action);
 		System.out.println(line);
 	}
-	
-	@Test public void testIfPattern() {
+
+	@Test
+	public void testIfPattern() {
 		String ifPattern = JapidAbstractCompiler.OPEN_IF_PATTERN1;
 		assertTrue("if 3 + 2 {".matches(ifPattern));
 		assertTrue("if foo(\"hello\") {".matches(ifPattern));
@@ -23,7 +25,8 @@ public class JapidAbstractCompilerTest {
 		assertFalse("if(expr){".matches(ifPattern));
 	}
 
-	@Test public void testElseIfPattern() {
+	@Test
+	public void testElseIfPattern() {
 		String elseifPattern = JapidAbstractCompiler.ELSE_IF_PATTERN_STRING;
 		assertTrue("} else if 3 + 2 {".matches(elseifPattern));
 		assertTrue("}  else  if expr.goo()  {".matches(elseifPattern));
@@ -32,17 +35,19 @@ public class JapidAbstractCompilerTest {
 		assertFalse("} else {".matches(elseifPattern));
 	}
 
-	@Test public void testOpenElseIfPattern() {
+	@Test
+	public void testOpenElseIfPattern() {
 		String elseifPattern = JapidAbstractCompiler.OPEN_ELSE_IF_PATTERN_STRING;
 		assertTrue(" else if 3 + 2 ".matches(elseifPattern));
 		assertTrue("else  if expr.goo()".matches(elseifPattern));
 		assertFalse("} else if expr".matches(elseifPattern));
 		assertFalse("else if (asd)".matches(elseifPattern));
 	}
-	
-	@Test public void testOpentForPattern() {
+
+	@Test
+	public void testOpentForPattern() {
 		String forPattern = JapidAbstractCompiler.OPEN_FOR_PATTERN_STRING;
-		Pattern p = Pattern.compile(forPattern);
+		Pattern p = JapidAbstractCompiler.OPEN_FOR_PATTERN;
 		assertTrue("for String a:aaa ".matches(forPattern));
 		assertFalse(" for String a : aaa".matches(forPattern));
 		assertTrue("for String a : foo()".matches(forPattern));
@@ -50,11 +55,35 @@ public class JapidAbstractCompilerTest {
 		assertTrue(string.matches(forPattern));
 		Matcher matcher = p.matcher(string);
 		assertTrue(matcher.matches());
-		assertEquals("String a" , matcher.group(1).trim());
-		assertEquals("new foo.bar(){}" , matcher.group(2));
+		assertEquals("String a", matcher.group(1).trim());
+		assertEquals("new foo.bar(){}", matcher.group(2));
 
 		assertFalse("for String a:aaa {".matches(forPattern));
 		assertFalse("for(String a: aaa)  ".matches(forPattern));
 		assertFalse("for(String a: aaa) { ".matches(forPattern));
+	}
+
+	@Test
+	public void testCleanDeclPrimitive() {
+		String s = "int i";
+		assertEquals("Integer i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+		
+		s = "int[] i";
+		assertEquals("int[] i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+
+		s = "long i";
+		assertEquals("Long i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+
+		s = "double i";
+		assertEquals("Double i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+
+		s = "float	i";
+		assertEquals("Float i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+
+		s = "String i";
+		assertEquals("String i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+		
+		s = "char	i";
+		assertEquals("Character i", JapidAbstractCompiler.cleanDeclPrimitive(s));
 	}
 }

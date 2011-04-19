@@ -59,6 +59,9 @@ final SampleTag _SampleTag4 = new SampleTag(getOut());
 final Each _Each3 = new Each(getOut());
 { _Each3.setActionRunners(getActionRunners()); }
 
+final Each _Each5 = new Each(getOut());
+{ _Each5.setActionRunners(getActionRunners()); }
+
 // -- end of the tag objects
 
 	public EachCall() {
@@ -72,7 +75,7 @@ final Each _Each3 = new Each(getOut());
 		this.posts = posts;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
@@ -140,6 +143,20 @@ _SampleTag4.setOut(getOut()); _SampleTag4.render(p);
 }
 );
 // line 20
+p("\n");// line 23
+int[] ints = {1, 2,3};// line 25
+_Each5.setOut(getOut()); _Each5.render(ints, new Each.DoBody<Integer>(){
+public void render(final Integer i, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
+// line 26
+p("    -> ");// line 26
+p(i);// line 27
+p("\n");// line 27
+
+}
+}
+);
+// line 26
+;// line 28
 
 	}
 
