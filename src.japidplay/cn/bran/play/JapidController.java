@@ -106,6 +106,9 @@ public class JapidController extends Controller {
 	 * pickup the Japid renderer in the conventional location and render it.
 	 * Positional match is used to assign values to parameters
 	 * 
+	 * TODO: the signature would be confusing for cases where there is a single argument and the type is an array!
+	 * In that case the user must cast it to Object: <code>renderJapid((Object)myArray);</code>
+	 * 
 	 * @param objects
 	 */
 	protected static void renderJapid(Object... objects) {

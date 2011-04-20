@@ -1150,6 +1150,12 @@ public abstract class JapidAbstractCompiler {
 		else if ("long".equals(type)) {
 			decl = "Long " + var;
 		}
+		else if ("short".equals(type)) {
+			decl = "Short " + var;
+		}
+		else if ("byte".equals(type)) {
+			decl = "Byte " + var;
+		}
 		else if ("float".equals(type)) {
 			decl = "Float " + var;
 		}
@@ -1161,9 +1167,6 @@ public abstract class JapidAbstractCompiler {
 		}
 		else if ("boolean".equals(type)) {
 			decl = "Boolean " + var;
-		}
-		else if ("byte".equals(type)) {
-			decl = "Byte " + var;
 		}
 			
 		return decl;
