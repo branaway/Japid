@@ -144,11 +144,15 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		}
 		pln("\t\tlong t = -1;");
 		if (stopWatch)
-			pln("\t\tt = System.currentTimeMillis();");
+//			pln("\t\tt = System.currentTimeMillis();");
+			pln("\t\t t = System.nanoTime();");
 		pln("\t\tsuper.layout(" + superClassRenderArgs +  ");");
 		if (stopWatch) {
-			pln("\t\tt = System.currentTimeMillis() - t;");
-			pln("\t\tSystem.out.println(\"[" + super.className + "] rendering time: \" + t);");
+			pln("     	String l = \"\" + (System.nanoTime() - t) / 100000;\r\n" + 
+					"		int len = l.length();\r\n" + 
+					"		l = l.substring(0, len - 1) + \".\" +  l.substring(len - 1);\r\n" + 
+					"");
+			pln("\t\tSystem.out.println(\"[" + super.className + "] rendering time(ms): \" + l);");
 		}
 		// bug fix: always assume there is action invocation in the super class or it won't get rendered!
 		hasActionInvocation = true;

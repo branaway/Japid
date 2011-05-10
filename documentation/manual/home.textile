@@ -561,9 +561,9 @@ As long as the expression is properly delimited by none identifier characters, t
 
 Note: Japid by default does *not* escape the string value of expressions to make it html safe, like what Play! does. One can simply do:
 
-@${escapeHtml(expr)}@
+@${escape(expr)}@
 
-to get the effect. The @escapeHtml()@ is a static method defined in @play.templates.JavaExtensions@ class in Play!, which is automatically imported to any Japid templates. There are other useful static methods in that class that are available directly in the templates. See "JavaExtension":http://www.playframework.org/documentation/1.1/javaextensions. 
+to get the effect. The @escape()@ is a static method defined in @play.templates.JavaExtensions@ class in Play!, which is automatically imported to any Japid templates. There are other useful static methods in that class that are available directly in the templates. See "JavaExtension":http://www.playframework.org/documentation/1.1/javaextensions. 
 
 New! the *Elvis operator*: @?:@. 
 

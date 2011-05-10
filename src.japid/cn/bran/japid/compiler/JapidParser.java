@@ -53,6 +53,7 @@ public class JapidParser {
 		SCRIPT_LINE, // single back-quote ` will turn the rest if the line in to
 						// script.
 		EXPR, // ${...}
+		EXPR_ESCAPED, // ~{}
 		START_TAG, // #{...}
 		END_TAG, // #{/...}
 		MESSAGE, // &{...}
@@ -63,7 +64,8 @@ public class JapidParser {
 		COMMENT, // *{...}*
 		// bran expression without using {}, such as ~_;
 		EXPR_WING, // ~{...}
-		EXPR_NATURAL, // ~xxx or $xxx
+		EXPR_NATURAL, // $xxx
+		EXPR_NATURAL_ESCAPED, // ~xxx 
 		EXPR_NATURAL_METHOD_CALL, // bran function call in expression:
 		// ~user?.name.format( '###' )
 		EXPR_NATURAL_ARRAY_OP, // bran : ~myarray[-1].val
@@ -71,7 +73,7 @@ public class JapidParser {
 		// $'hello'.length
 		TEMPLATE_ARGS, // bran ~( )
 		CLOSING_BRACE, // an closing curly brace after leading space
-		VERBATIM, // raw text until another `
+		VERBATIM,  // raw text until another `
 	}
 
 	// end2/begin2: for mark the current returned token
@@ -143,10 +145,11 @@ public class JapidParser {
 					return found(Token.SCRIPT, 2);
 				}
 				// bran open wings
-				if (c == '~' && c1 == '{') {
-					// deprecated use ~[
-					return found(Token.SCRIPT, 2);
-				}
+				// breaking changes. now used as escaped expression
+//				if (c == '~' && c1 == '{') {
+//					// deprecated use ~[
+//					return found(Token.SCRIPT, 2);
+//				}
 
 				if (c == '~' && c1 == '[') {
 					return found(Token.SCRIPT, 2);
@@ -154,6 +157,9 @@ public class JapidParser {
 
 				if (c == '$' && c1 == '{') {
 					return found(Token.EXPR, 2);
+				}
+				if (c == '~' && c1 == '{') {
+					return found(Token.EXPR_ESCAPED, 2);
 				}
 
 				if (c == '~' && c1 == '(') {
@@ -164,7 +170,8 @@ public class JapidParser {
 				// from sh, which requires ${user.name}
 				//
 				if (c == '~' && c1 != '~' && (Character.isJavaIdentifierStart(c1) || '\'' == c1)) {
-					return found(Token.EXPR_NATURAL, 1);
+					return found(Token.EXPR_NATURAL_ESCAPED, 1);
+//					return found(Token.EXPR_NATURAL, 1);
 				}
 				if (c == '$' && c1 != '$' && (Character.isJavaIdentifierStart(c1) || '\'' == c1)) {
 					return found(Token.EXPR_NATURAL, 1);
@@ -267,6 +274,7 @@ public class JapidParser {
 				}
 				break;
 			case EXPR:
+			case EXPR_ESCAPED:
 				if (c == '}') {
 					return found(Token.PLAIN, 1);
 				}
@@ -280,6 +288,7 @@ public class JapidParser {
 			// special characters considered an expression: '?.()
 			// break characters: space, other punctuations, new lines, returns
 			case EXPR_NATURAL:
+			case EXPR_NATURAL_ESCAPED:
 				if ('(' == c) {
 					skipAhead(Token.EXPR_NATURAL_METHOD_CALL, 1);
 				} else if ('[' == c) {
@@ -290,22 +299,22 @@ public class JapidParser {
 					// start of literal
 					skipAhead(Token.EXPR_NATURAL_STRING_LITERAL, 1);
 				} else if (Character.isWhitespace(c)) {
-					state = Token.EXPR;
+//					state = Token.EXPR;
 					return found(Token.PLAIN, 0); // it ea
 				} else if (!Character.isJavaIdentifierPart(c)) {
 					if (c != '?' && c != '.' && c != ':' && c != '=') {
-						state = Token.EXPR;
+//						state = Token.EXPR;
 						return found(Token.PLAIN, 0); // it ea
 					} else if (!Character.isJavaIdentifierStart(c1)) {
 						if (c == '=' && c1 == '=') {
 							if (Character.isWhitespace(c2)) {
-								state = Token.EXPR;
+//								state = Token.EXPR;
 								return found(Token.PLAIN, 0); // it ea
 							} else {
 								skip(2);
 							}
 						} else {
-							state = Token.EXPR;
+//							state = Token.EXPR;
 							return found(Token.PLAIN, 0); // it ea
 						}
 					}

@@ -50,11 +50,18 @@ public class index extends cn.bran.japid.template.JapidTemplateBase
 	}
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
+		 t = System.nanoTime();
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+     	String l = "" + (System.nanoTime() - t) / 100000;
+		int len = l.length();
+		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
+
+		System.out.println("[index] rendering time(ms): " + l);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
+;// line 1
 p("<h2>Some Samples that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
@@ -62,13 +69,13 @@ p("<h2>Some Samples that demonstrate Japid features.</h2>\n" +
 "\n" + 
 "<ul>\n" + 
 "	<li><a href=\"");// line 1
-p(lookup("hello", new Object[]{}));// line 7
+p(lookup("hello", new Object[]{}));// line 8
 p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
 "	<li><a href=\"application/callTag\">using tags in a template</a></li>\n" + 
 "	<li><a href=\"renderJapidWith/templates/def.html\"><em>def</em>\n" + 
 "	tag: define a method that return a string that can be invoked from\n" + 
-"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 7
+"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 8
 p("\n" + 
 "	<li><a href=\"more.Portlets/index\">demo how to composite a\n" + 
 "	page with independent segments with the <b>invoke</b> tag</a></li>\n" + 
@@ -110,6 +117,11 @@ p("\n" +
 "	dontRedirect() from JapidController</a></li>\n" + 
 "	<li><a href=\"renderJapidWith/templates/openBrace.html\"> use\n" + 
 "	`{ in if and while </a></li>\n" + 
+"	<li><a href=\"application/escapedExpr\"> ");// line 18
+p("\n" + 
+"	raw expression with ${} and html-safe expression with ~{}\n" + 
+"	");// line 59
+p("	</li>\n" + 
 "	<li><a href=\"more.ContentNegotiation/index\"> content\n" + 
 "	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
 "	<p>Content negotiation works with renderJapid(), which does\n" + 
@@ -122,31 +134,33 @@ p("\n" +
 "	in layout spec and tags</a>: prefix the layout name or the tag name with a\n" + 
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
-"\n");// line 17
-String na = "bran";// line 71
-int ag = 123;// line 72
-p("	<li><a href=\"");// line 72
-p(lookup("validate", na, ag));// line 73
+"\n");// line 61
+String na = "bran";// line 76
+int ag = 123;// line 77
+p("	<li><a href=\"");// line 77
+p(lookup("validate", na, ag));// line 78
 p("\">validation and errors</a></li>\n" + 
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"application/flashgood\">flash with success</a></li>\n" + 
 "			<li><a href=\"application/flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"application/flashmsg\">flash with a message</a></li>\n" + 
-"			<li><a href=\"");// line 73
-p(lookup("reverseUrl", new Object[]{}));// line 79
+"			<li><a href=\"");// line 78
+p(lookup("reverseUrl", new Object[]{}));// line 84
 p("\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
-"	   ");// line 79
- SearchParams sp = new  SearchParams("key1, key2", "AND");// line 83
-p("	   <a href=\"");// line 83
-p(lookup("search", sp));// line 84
+"	   ");// line 84
+ SearchParams sp = new  SearchParams("key1, key2", "AND");// line 88
+p("	   <a href=\"");// line 88
+p(lookup("search", sp));// line 89
 p("\">reverse URL lookup with complex object</a>\n" + 
 "	</li>\n" + 
+"    ");// line 89
+p("\n" + 
 "</ul>\n" + 
-"\n");// line 84
+"\n");// line 92
 
 	}
 

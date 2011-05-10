@@ -1,3 +1,4 @@
+`stopwatch on
 <h2>Some Samples that demonstrate Japid features.</h2>
 
 <p>Please follow the controller actions and render paths for the
@@ -55,6 +56,10 @@ this is a little too complicated
 	dontRedirect() from JapidController</a></li>
 	<li><a href="renderJapidWith/templates/openBrace.html"> use
 	``{ in if and while </a></li>
+	<li><a href="application/escapedExpr"> `verbatim
+	raw expression with ${} and html-safe expression with ~{}
+	`
+	</li>
 	<li><a href="more.ContentNegotiation/index"> content
 	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H "Accept: application/json" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>
 	<p>Content negotiation works with renderJapid(), which does
@@ -83,5 +88,7 @@ this is a little too complicated
 	   ` SearchParams sp = new  SearchParams("key1, key2", "AND");
 	   <a href="@{search(sp)}">reverse URL lookup with complex object</a>
 	</li>
+    *{
+    }*
 </ul>
 

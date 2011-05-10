@@ -24,6 +24,11 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/5/10: V0.8.3.0: 
+    1. new feature: escaped expression syntax ~{}, which makes the result html safe.  ~{expr} === ${escape(expr)}. Note, ~{}~ used to have special undocumented meaning. 
+    2. enhancement: ~expr is now also html safe.
+2011/4/20: V0.8.2.1: 
+    1. bug fix: the "stopwatch" directive used System.milliSeconds(), which might be too raw. Now use nanoTime();
 2011/4/20: V0.8.2.0: now compatible with 1.2.x only for the route lookup syntax: "@action()"
     1. Compatibility fix: The unbinder in the current trunk of Play requires annotations as the last param. Added in the ActionBridge to make compatible. 
     2. bug fix: the "open for" loop did not take primitive elements. Now the compiler smartly boxes the primitive type.   

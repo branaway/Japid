@@ -148,7 +148,7 @@ int[] ints = {1, 2,3};// line 25
 _Each5.setOut(getOut()); _Each5.render(ints, new Each.DoBody<Integer>(){
 public void render(final Integer i, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 26
-p("    -> ");// line 26
+p("    --> ");// line 26
 p(i);// line 27
 p("\n");// line 27
 

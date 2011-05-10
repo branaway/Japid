@@ -134,7 +134,13 @@ public abstract class JapidAbstractCompiler {
 				scriptline(token);
 				break;
 			case EXPR:
-				expr(token);
+				expr(token, false);
+				break;
+			case EXPR_NATURAL_ESCAPED:
+				expr(token, true);
+				break;
+			case EXPR_ESCAPED:
+				expr(token, true);
 				break;
 			case MESSAGE:
 				message(token);
@@ -671,9 +677,9 @@ public abstract class JapidAbstractCompiler {
 		}
 	}
 
-	protected void expr(String token) {
+	protected void expr(String token, boolean escape) {
 		String expr = token;
-		// let's support the  big or operator "|||"
+
 		int i = token.indexOf(ELVIS);
 		String substitute = null;
 		if (i > 0) {
@@ -683,6 +689,10 @@ public abstract class JapidAbstractCompiler {
 				substitute = substitute.substring(1);
 			if (substitute.endsWith("\""))
 				substitute = substitute.substring(0, substitute.length() - 1);
+		}
+		
+		if (escape) {
+			expr = "escape(" + expr + ")";
 		}
 		
 		if (substitute != null) {
