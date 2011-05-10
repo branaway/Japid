@@ -546,7 +546,7 @@ table{border: 1px dashed gray; cellspacing: 2px}.
 |{border:1px grey solid}. boolean _isLast| true if the current line is the last in the collection|
 
 
-h3. Java Expression: @${expression}@
+h3. Java Expression: @${expression}@ and @~{expression}@
 
 The string value of a @Java expression@ can be interpolated in text stream using the ${} syntax, as is used in Play!. The {} signs can be omitted if doing so won't make the expression fuse with the rest of the context thus cause confusion to the compiler (or your eyes). For examples:
 
@@ -559,11 +559,18 @@ ${user.name.length()} == $user.name.length()
 
 As long as the expression is properly delimited by none identifier characters, the {} can be left out. The {} is mandatory in Play! default engine. 
 
-Note: Japid by default does *not* escape the string value of expressions to make it html safe, like what Play! does. One can simply do:
+Note: the @${}@ notation does *not* escape the string value of expressions to make it html safe, like what Play! does. One can simply do:
 
 @${escape(expr)}@
 
 to get the effect. The @escape()@ is a static method defined in @play.templates.JavaExtensions@ class in Play!, which is automatically imported to any Japid templates. There are other useful static methods in that class that are available directly in the templates. See "JavaExtension":http://www.playframework.org/documentation/1.1/javaextensions. 
+
+Another way to make the string value of expressions HTML safe is to take advantage of the @escaped expression notation@, i.e., the @~{}@ notation.
+
+The @~{}@ does exactly the same as the @${escape(...)}@. So if you are not concerned about the slight performance penalty caused by the @escape@ method call, you can safely use the @~{}@ notation as the safe expression throughout the entire application and forget about @${}@.
+
+BTW, @~expr@ also works.
+
 
 New! the *Elvis operator*: @?:@. 
 
@@ -596,7 +603,7 @@ The name is: `if name` $name `else` empty! `
  
 This is a lot eye-stressing if you ask me. 
 
-
+Of course you can use the Elvis operator with the escaped expression notation: @~{}@. 
 
 h3. Safe Property Navigation: @`supressNull on@
 
