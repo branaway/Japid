@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/5/10: V0.8.3.1: 
+    1. bug fix: jsAction was escaping the & sign. 
 2011/5/10: V0.8.3.0: 
     1. new feature: escaped expression syntax ~{}, which makes the result html safe.  ~{expr} === ${escape(expr)}. Note, ~{}~ used to have special undocumented meaning. 
     2. enhancement: ~expr is now also html safe.

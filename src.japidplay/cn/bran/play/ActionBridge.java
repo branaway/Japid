@@ -42,7 +42,7 @@ public class ActionBridge {
 	}
 
 	/**
-	 * this is really to to the reverse url lookup
+	 * this is really to do the reverse url lookup
 	 * 
 	 * @param actionString
 	 * @param param

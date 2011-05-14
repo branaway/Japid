@@ -123,7 +123,7 @@ public class JapidPlayAdapter {
 				"	return pattern; \n" + 
 				"};";
 		
-		return String.format(funcPattern, lookup(name, (Object[])args));
+		return String.format(funcPattern, lookup(name, (Object[])args).replace("&amp;", "&"));
 	}
 	
 	public static String or(Object o , String substitude) {
