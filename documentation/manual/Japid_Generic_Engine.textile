@@ -303,12 +303,13 @@ The classic syntax style is still supported:
 
 Please note: you should use double quotes to enclose the layout name in the "classic" Japid style. The profuse use of single quote in Play!'s templates are mostly replaced with double quotes in Japid's classic style to better match Java syntax. Some Japid's recent syntax goes even further to remove those quotes.  
 
-h3. Specify the Data Objects to Render: @`args@ 
+h3. Specify the Data Objects to Render: @`args@ or @`()@
 
 Purpose: the parameters to be passed to this template to render. The format is the same as in Java method declaration.
 
 Note: 
 
+# some people may find the @`()@ more expressive than the @`args@ syntax, but they're functionally identical: @`(String a, Integer b)@ === @`args String a, Integer b@. There is no space between the back quote and the left parenthesis.
 # Data to be rendered must (almost) be declared passed to the templates via the @`args@ directive. However There are a few Play! specific data that are implicitly available, as explained later in this document.
 # The data type must be visible, meaning it must be imported. However there are several classes and packaged that are imported to any templates by default:
 # Is @params@ a better name?

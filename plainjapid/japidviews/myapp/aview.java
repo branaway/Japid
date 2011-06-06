@@ -27,16 +27,21 @@ final taggy _taggy1 = new taggy(getOut());
 		this.a = a;
 		long t = -1;
 		super.layout();
+		 if (t != -1) System.out.println("[aview] rendering time: " + t);
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
+p("\n");// line 1
 p("\n" + 
-"nice view: ");// line 3
+"escaped: ");// line 3
+p(escape(a));// line 5
+p("\n" + 
+"nice view: ");// line 5
 _taggy1.setOut(getOut()); _taggy1.render(a + "1");
-// line 5
-;// line 5
+// line 6
+;// line 6
 
 	}
 

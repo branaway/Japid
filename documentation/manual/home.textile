@@ -292,12 +292,13 @@ The classic syntax style is still supported:
 
 Please note: you should use double quotes to enclose the layout name in the "classic" Japid style. The profuse use of single quote in Play!'s templates are mostly replaced with double quotes in Japid's classic style to better match Java syntax. Some Japid's recent syntax goes even further to remove those quotes.  
 
-h3. Specify the Data Objects to Render: @`args@ 
+h3. Specify the Data Objects to Render: @`args@, or @`()@
 
-Purpose: the parameters to be passed to this template to render. The format is the same as in Java method declaration.
+Purpose: the parameters to be passed to this template to render. The format is the same as in Java method declaration. 
 
 Note: 
 
+# some people may find the @`()@ more expressive than the @`args@ syntax, but they're functionally identical: @`(String a, Integer b)@ === @`args String a, Integer b@.
 # Data to be rendered must (almost) be declared passed to the templates via the @`args@ directive. However There are a few Play! specific data that are implicitly available, as explained later in this document.
 # The data type must be visible, meaning it must be imported. However there are several classes and packaged that are imported to any templates by default:
 # Is @params@ a better name?
@@ -907,7 +908,7 @@ Japid implicit objects are comparable to those available in the standard Play! t
 # @request@: same as in Play! standard
 # @response@: not directly available in Play! standard, not advisable to use 
 # @session@: same as in Play! standard
-# @renderArgs@: not directly available in Play! standard, not advisable to use since all parameters are supposed to be passed in via the @`args@ directive. You would also loose data typing.
+# @renderArgs@: not directly available in Play! standard. Objects passed to this container can be retrieved in templates as @`MyType my = (MyType)renderArgs.get("aKey");@. 
 # @params@: same as in Play! standard, not advisable to use since all parameters are supposed to be passed in via the @`args@ directive. 
 # @validation@: not directly available in Play! standard 
 # @errors@: comparable to the variable of the same name in Play! standard.

@@ -197,7 +197,11 @@ public class JapidParser {
 				if (c == '`')
 					if (c1 == '`') {
 						skip(2);
-					} else if (nextMatch(VERBATIM2)) {
+					}
+					else if ( c1 == '(') {
+						return found(Token.TEMPLATE_ARGS, 2);
+					}
+					else if (nextMatch(VERBATIM2)) {
 						return found(Token.VERBATIM, VERBATIM2.length() + 1);
 					} else {
 						return found(Token.SCRIPT_LINE, 1);

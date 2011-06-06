@@ -21,6 +21,7 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
 
+import cn.bran.japid.util.HTMLUtils;
 import cn.bran.japid.util.WebUtils;
 
 /**
@@ -163,5 +164,16 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	
 	protected boolean asBoolean(Object o) {
 		return WebUtils.asBoolean(o);
+	}
+	
+	/**
+	 * escape the string representation of the object to make it HTML safe.
+	 * @param o
+	 * @return
+	 */
+	public static String escape(Object o) {
+		if(o == null)
+			return null;
+		return HTMLUtils.htmlEscape(o.toString());
 	}
 }

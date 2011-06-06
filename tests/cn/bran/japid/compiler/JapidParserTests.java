@@ -287,6 +287,26 @@ public class JapidParserTests {
 	}
 
 	@Test
+	public void testTemplateArgs() {
+		String src = "`(String a, a.b.A c)\nhello";
+		List<Token> tokens = new ArrayList<Token>();
+		JapidParser p = new JapidParser(src);
+		loop: for (;;) {
+			JapidParser.Token state = p.nextToken();
+			switch (state) {
+			case EOF:
+				break loop;
+			default:
+//				String tokenstring = p.getToken();
+				tokens.add(state);
+//				System.out.println(state.name() + ": [" + tokenstring + "]");
+			}
+		}
+		assertEquals(3, tokens.size());
+		assertEquals(Token.TEMPLATE_ARGS, tokens.get(1));
+	}
+
+	@Test
 	public void testBackquoteAlone() {
 		String src = "hello \n  `\n ss\n`  ";
 		JapidParser p = new JapidParser(src);
