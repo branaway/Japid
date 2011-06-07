@@ -57,7 +57,7 @@ public class perf extends perfmain
 		this.entries = entries;
 		long t = -1;
 		super.layout(user);
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------

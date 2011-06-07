@@ -32,6 +32,9 @@ public class Application extends JapidController {
 	public static void index() {
 		renderJapid(); // use the default index.html in the japidviews/SampleController directory
 	}
+	public static void indexAt() {
+		renderJapid(); // 
+	}
 	public static void authorPanel(final Author a) {
 		CacheableRunner r = new CacheableRunner("10s", genCacheKey()) {
 			@Override

@@ -13,6 +13,9 @@
  */
 package cn.bran.japid.compiler;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,15 +31,60 @@ import java.util.regex.Pattern;
  */
 public class JapidParser {
 
+	private char MARKER_CHAR = '`';
+	private String MARKER_STRING = "`";
 	private static final String VERBATIM2 = "verbatim";
 	private String pageSource;
 
 	public JapidParser(String pageSource) {
 		this.pageSource = pageSource;
 		this.len = pageSource.length();
+		// detect marker
+		// the logic is to find the first line that starts with either ` or @
+
+		char mar = detectMarker(pageSource);
+		setMarker(mar);
 	}
 
-	// bran keep track of nested state tokens, eg. nested function calls in
+	/**
+	 * @param pageSource
+	 */
+	public static char detectMarker(String pageSource) {
+		BufferedReader br = new BufferedReader(new StringReader(pageSource));
+		String line;
+		try {
+			line = br.readLine();
+			while (line != null) {
+				line = line.trim();
+				if (line.startsWith("@")) {
+					return '@';
+				}
+				if (line.startsWith("`")) {
+					if (!line.startsWith("``") && !line.startsWith("`@")) {
+						return '`';
+					}
+				}
+				line = br.readLine();
+			}
+			br.close();
+		} catch (IOException e) {
+		}
+		// default 
+		return '`';
+	}
+
+	public void setMarker(char m) {
+		MARKER_CHAR = m;
+		MARKER_STRING = new String(new char[] { m });
+	}
+
+	public void resetMarker() {
+		MARKER_CHAR = '`';
+		MARKER_STRING = new String(new char[] { MARKER_CHAR });
+	}
+
+	// bran:
+	// keep track of nested state tokens, eg. nested function calls in
 	// expressions
 	// what inside is not used for now, we only are interested in the depth
 	Stack<JapidParser.Token> emthodCallStackInExpr = new Stack<JapidParser.Token>();
@@ -50,7 +98,8 @@ public class JapidParser {
 		// none-space characters
 		SCRIPT, // %{...}% or {%...%} bran: or ~{}~, ~[]~ the open wings
 				// directives
-		SCRIPT_LINE, // single back-quote ` will turn the rest if the line in to
+		SCRIPT_LINE, // line started with marker. will turn the rest if the line
+						// in to
 						// script.
 		EXPR, // ${...}
 		EXPR_ESCAPED, // ~{}
@@ -65,15 +114,16 @@ public class JapidParser {
 		// bran expression without using {}, such as ~_;
 		EXPR_WING, // ~{...}
 		EXPR_NATURAL, // $xxx
-		EXPR_NATURAL_ESCAPED, // ~xxx 
+		EXPR_NATURAL_ESCAPED, // ~xxx
 		EXPR_NATURAL_METHOD_CALL, // bran function call in expression:
 		// ~user?.name.format( '###' )
 		EXPR_NATURAL_ARRAY_OP, // bran : ~myarray[-1].val
 		EXPR_NATURAL_STRING_LITERAL, // bran ~user?.name.format( '#)#' ) or
 		// $'hello'.length
 		TEMPLATE_ARGS, // bran ~( )
-		CLOSING_BRACE, // an closing curly brace after leading space
-		VERBATIM,  // raw text until another `
+		CLOSING_BRACE, // a closing curly brace after leading space. Used? Good
+						// idea?
+		VERBATIM, // raw text until another marker
 	}
 
 	// end2/begin2: for mark the current returned token
@@ -110,8 +160,8 @@ public class JapidParser {
 	public String getToken() {
 		String tokenString = pageSource.substring(begin2, end2);
 		if (lastState == Token.PLAIN) {
-			// unescape special sequence
-			tokenString = tokenString.replace("``", "`");
+			// un-escape special sequence
+			tokenString = tokenString.replace("``", "`").replace("`@", "@");
 		}
 		return tokenString;
 	}
@@ -146,10 +196,10 @@ public class JapidParser {
 				}
 				// bran open wings
 				// breaking changes. now used as escaped expression
-//				if (c == '~' && c1 == '{') {
-//					// deprecated use ~[
-//					return found(Token.SCRIPT, 2);
-//				}
+				// if (c == '~' && c1 == '{') {
+				// // deprecated use ~[
+				// return found(Token.SCRIPT, 2);
+				// }
 
 				if (c == '~' && c1 == '[') {
 					return found(Token.SCRIPT, 2);
@@ -171,7 +221,7 @@ public class JapidParser {
 				//
 				if (c == '~' && c1 != '~' && (Character.isJavaIdentifierStart(c1) || '\'' == c1)) {
 					return found(Token.EXPR_NATURAL_ESCAPED, 1);
-//					return found(Token.EXPR_NATURAL, 1);
+					// return found(Token.EXPR_NATURAL, 1);
 				}
 				if (c == '$' && c1 != '$' && (Character.isJavaIdentifierStart(c1) || '\'' == c1)) {
 					return found(Token.EXPR_NATURAL, 1);
@@ -194,14 +244,19 @@ public class JapidParser {
 				if (c == '*' && c1 == '{') {
 					return found(Token.COMMENT, 2);
 				}
+
 				if (c == '`')
-					if (c1 == '`') {
+					if (c1 == '@' || c1 == '`') {
 						skip(2);
+						break;
 					}
-					else if ( c1 == '(') {
+
+				if (c == MARKER_CHAR)
+					if (c1 == MARKER_CHAR) {
+						skip(2);
+					} else if (c1 == '(') {
 						return found(Token.TEMPLATE_ARGS, 2);
-					}
-					else if (nextMatch(VERBATIM2)) {
+					} else if (nextMatch(VERBATIM2)) {
 						return found(Token.VERBATIM, VERBATIM2.length() + 1);
 					} else {
 						return found(Token.SCRIPT_LINE, 1);
@@ -239,10 +294,10 @@ public class JapidParser {
 				}
 				break;
 			case VERBATIM:
-				if (c == '`') {
-					String currentLine = getCurrentLine(pageSource, end -1);
-					if (currentLine.trim().equals("`")) {
-						int skip = currentLine.length() - currentLine.indexOf('`');
+				if (c == MARKER_CHAR) {
+					String currentLine = getCurrentLine(pageSource, end - 1);
+					if (currentLine.trim().equals(MARKER_STRING)) {
+						int skip = currentLine.length() - currentLine.indexOf(MARKER_CHAR);
 						return found(Token.PLAIN, skip);
 					}
 				}
@@ -255,7 +310,7 @@ public class JapidParser {
 						return found(Token.PLAIN, 1);
 				} else if (c == '\n') {
 					return found(Token.PLAIN, 1);
-				} else if (c == '`') {
+				} else if (c == MARKER_CHAR) {
 					return found(Token.PLAIN, 1);
 				}
 				break;
@@ -303,22 +358,22 @@ public class JapidParser {
 					// start of literal
 					skipAhead(Token.EXPR_NATURAL_STRING_LITERAL, 1);
 				} else if (Character.isWhitespace(c)) {
-//					state = Token.EXPR;
+					// state = Token.EXPR;
 					return found(Token.PLAIN, 0); // it ea
 				} else if (!Character.isJavaIdentifierPart(c)) {
 					if (c != '?' && c != '.' && c != ':' && c != '=') {
-//						state = Token.EXPR;
+						// state = Token.EXPR;
 						return found(Token.PLAIN, 0); // it ea
 					} else if (!Character.isJavaIdentifierStart(c1)) {
 						if (c == '=' && c1 == '=') {
 							if (Character.isWhitespace(c2)) {
-//								state = Token.EXPR;
+								// state = Token.EXPR;
 								return found(Token.PLAIN, 0); // it ea
 							} else {
 								skip(2);
 							}
 						} else {
-//							state = Token.EXPR;
+							// state = Token.EXPR;
 							return found(Token.PLAIN, 0); // it ea
 						}
 					}
@@ -387,7 +442,7 @@ public class JapidParser {
 
 	private boolean isStandAloneBackQuote() {
 		String currentLine = getCurrentLine(pageSource, end);
-		if (currentLine.trim().equals("`")) {
+		if (currentLine.trim().equals(MARKER_STRING)) {
 			return true;
 		} else {
 			return false;
@@ -398,15 +453,14 @@ public class JapidParser {
 		int begin = 0, endp = 0;
 		int i = 1;
 		while (true) {
-			begin  = pos - i++;
-			if (begin  >= 0) {
+			begin = pos - i++;
+			if (begin >= 0) {
 				char charAt = src.charAt(begin);
 				if (charAt == '\n') {
 					// got the beginning
 					break;
 				}
-			}
-			else {
+			} else {
 				break;
 			}
 		}
@@ -423,7 +477,7 @@ public class JapidParser {
 			} else {
 				break;
 			}
-			
+
 		}
 		return src.substring(++begin, endp);
 	}

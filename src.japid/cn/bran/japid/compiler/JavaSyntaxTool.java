@@ -96,6 +96,14 @@ public class JavaSyntaxTool {
 		if (line == null || line.trim().length() == 0)
 			return ret;
 
+		line = line.trim();
+		if (line.startsWith("(")) {
+			if (line.endsWith(")"))
+				line = line.substring(1, line.length() - 1);
+			else
+				throw new RuntimeException("no closing ')' in arg expression: " + line);
+		}
+		
 		String cl = String.format(classTempForArgs, line);
 		try {
 			CompilationUnit cu = parse(cl);

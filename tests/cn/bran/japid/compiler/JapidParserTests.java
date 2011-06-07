@@ -263,49 +263,66 @@ public class JapidParserTests {
 	@Test
 	public void testLineScript() {
 		String src = "`code\n\t`code2 \r\nhtml`code3\nhello ``html`code4\nhello";
-		List<String> tokens = new ArrayList<String>();
 		JapidParser p = new JapidParser(src);
-		loop: for (;;) {
-			JapidParser.Token state = p.nextToken();
-			switch (state) {
-			case EOF:
-				break loop;
-			default:
-				String tokenstring = p.getToken();
-				tokens.add(tokenstring);
-				System.out.println(state.name() + ": [" + tokenstring + "]");
-			}
-		}
+		List<TokenPair> tokens = p.allTokens();
+
 		assertEquals(9, tokens.size());
-		assertEquals("code", tokens.get(1));
-		assertEquals("code2", tokens.get(3).trim());
-		assertEquals("code3", tokens.get(5).trim());
-		assertEquals("hello `html", tokens.get(6).trim());
-		assertEquals("code4", tokens.get(7).trim());
-		assertEquals("hello", tokens.get(8).trim());
+		assertEquals("code", tokens.get(1).source.trim());
+		assertEquals("code2", tokens.get(3).source.trim());
+		assertEquals("code3", tokens.get(5).source.trim());
+		assertEquals("hello `html", tokens.get(6).source.trim());
+		assertEquals("code4", tokens.get(7).source.trim());
+		assertEquals("hello", tokens.get(8).source.trim());
 
 	}
 
 	@Test
-	public void testTemplateArgs() {
-		String src = "`(String a, a.b.A c)\nhello";
-		List<Token> tokens = new ArrayList<Token>();
+	public void testReverse() {
+		String src = "@\n@{appliction.index()}";
 		JapidParser p = new JapidParser(src);
-		loop: for (;;) {
-			JapidParser.Token state = p.nextToken();
-			switch (state) {
-			case EOF:
-				break loop;
-			default:
-//				String tokenstring = p.getToken();
-				tokens.add(state);
-//				System.out.println(state.name() + ": [" + tokenstring + "]");
-			}
-		}
-		assertEquals(3, tokens.size());
-		assertEquals(Token.TEMPLATE_ARGS, tokens.get(1));
+		List<TokenPair> tokens = p.allTokens();
+		assertEquals(5, tokens.size());
+		assertEquals(Token.PLAIN, tokens.get(0).token);
+		assertEquals(Token.SCRIPT_LINE, tokens.get(1).token);
+		assertEquals(Token.PLAIN, tokens.get(2).token);
+		assertEquals(Token.ACTION, tokens.get(3).token);
+		assertEquals(Token.PLAIN, tokens.get(4).token);
 	}
 
+	@Test
+	public void testLineScriptAt() {
+		String src = "@code\n\r\t@code2 \r\nhtml@code3\n\rhello `html@code4\nhello";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+		
+		assertEquals(9, tokens.size());
+		assertEquals("code", tokens.get(1).source.trim());
+		assertEquals("code2", tokens.get(3).source.trim());
+		assertEquals("code3", tokens.get(5).source.trim());
+		assertEquals("hello `html", tokens.get(6).source.trim());
+		assertEquals("code4", tokens.get(7).source.trim());
+		assertEquals("hello", tokens.get(8).source.trim());
+		
+	}
+	
+	@Test
+	public void testTemplateArgs() {
+		String src = "`(String a, a.b.A c)\nhello";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+		assertEquals(3, tokens.size());
+		assertEquals(Token.TEMPLATE_ARGS, tokens.get(1).token);
+	}
+
+	@Test
+	public void testTemplateArgsAt() {
+		String src = "@(String a, a.b.A c)\nhello";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+		assertEquals(3, tokens.size());
+		assertEquals(Token.TEMPLATE_ARGS, tokens.get(1).token);
+	}
+	
 	@Test
 	public void testBackquoteAlone() {
 		String src = "hello \n  `\n ss\n`  ";
@@ -357,6 +374,30 @@ public class JapidParserTests {
 	}
 
 	@Test
+	public void testScriptlineWithAt() {
+		String src = "@\nhello @t Tag2 \"123\"@!";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+		dumpTokens(tokens);
+		assertEquals(5, tokens.size());
+		assertEquals(Token.PLAIN, tokens.get(0).token);
+		assertEquals(Token.SCRIPT_LINE, tokens.get(1).token);
+		assertEquals(Token.PLAIN, tokens.get(2).token);
+		assertEquals(Token.SCRIPT_LINE, tokens.get(3).token);
+		assertEquals(Token.PLAIN, tokens.get(4).token);
+	}
+
+	@Test
+	public void testAtLiteral() {
+		String src = "`@hello";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+		dumpTokens(tokens);
+		assertEquals(1, tokens.size());
+		assertEquals(Token.PLAIN, tokens.get(0).token);
+	}
+
+	@Test
 	public void testAllLeadingSpaceInline() {
 		String src = "  \t";
 		assertTrue(JapidParser.allLeadingSpaceInline(src));
@@ -386,53 +427,8 @@ public class JapidParserTests {
 		assertEquals(" ghi", JapidParser.getCurrentLine(src, src.length() - 1));
 	}
 	
-	/**
-	 * test the use of single back-quote char, as escaping script line, similar
-	 * to \\ in Java
-	 * 
-	 * note: the use case is disabled since it's confusing to javascript construct
-	 */
-//	@Test
-//	public void testStandaloneClosingBrace() {
-//		String src = "hello\n  } else {";
-//		JapidParser p = new JapidParser(src);
-//		List<TokenPair> tokens = p.allTokens();
-//		dumpTokens(tokens);
-//		assertEquals(Token.PLAIN, tokens.get(0).token);
-//		assertEquals(Token.CLOSING_BRACE, tokens.get(1).token);
-//		assertEquals(Token.SCRIPT_LINE, tokens.get(2).token);
-//		//
-//		// src = "hello\n  }  \n more";
-//		// p = new JapidParser(src);
-//		// tokens = p.allTokens();
-//		// dumpTokens(tokens);
-//		// assertEquals(Token.PLAIN, tokens.get(0).token);
-//		// assertEquals(Token.CLOSING_BRACE, tokens.get(1).token);
-//		// assertEquals(Token.SCRIPT_LINE, tokens.get(2).token);
-//		// assertEquals(Token.PLAIN, tokens.get(3).token);
-//		//
-//		// src = "hello\n  }  \n `more";
-//		// p = new JapidParser(src);
-//		// tokens = p.allTokens();
-//		//
-//		// dumpTokens(tokens);
-//		//
-//		// assertEquals(Token.PLAIN, tokens.get(0).token);
-//		// assertEquals(Token.CLOSING_BRACE, tokens.get(1).token);
-//		// assertEquals(Token.SCRIPT_LINE, tokens.get(2).token);
-//		// assertEquals(Token.PLAIN, tokens.get(3).token);
-//		// assertEquals(Token.SCRIPT_LINE, tokens.get(4).token);
-//	}
 
-//	@Test
-//	public void testNoneStandaloneClosingBrace() {
-//		String src = " hmm }";
-//		JapidParser p = new JapidParser(src);
-//		List<TokenPair> tokens = p.allTokens();
-//		dumpTokens(tokens);
-//		assertEquals(1, tokens.size());
-//		assertEquals(Token.PLAIN, tokens.get(0).token);
-//	}
+
 
 	/**
 	 * @param tokens

@@ -148,25 +148,22 @@ h2. Japid Syntax by Examples
 
 The original version of Japid (around version 0.3) copied a lot of the "syntax from the Play! framework":http://www.playframework.org/documentation/1.1.1/templates. The idea was to help the Play! users to pick up the engine quickly. New and simpler syntax has been introduced over the course of one year use in real-world projects. This documents tries to compare the syntax of different flavors. 
 
-For your information, the "Microsoft Razor Template Engine":http://weblogs.asp.net/scottgu/archive/2010/07/02/introducing-razor.aspx is a source of inspiration for some recent syntax improvement, particularly the consolidation of the usage of "`".
+For your information, the "Microsoft Razor Template Engine":http://weblogs.asp.net/scottgu/archive/2010/07/02/introducing-razor.aspx is a source of inspiration for some recent syntax improvement, particularly the consolidation of the usage of "`", or "@" since version 0.8.4.1.
 
 
+h3. The delimiter: @`@ and *@*
 
-h3. The delimiter: @`@
+The delimiter plays a very important role in dynamic templates: 
 
-Before going into the details of Japid syntax, I'll explain the special character "`", the back quote, that appears a lot in Japid templates. 
+# It starts a @directive@ or @command@, which is instruction to the code generator to create special Java source code.  
+# It starts a line of pure Java code to be placed in the generated code. 
+# It ends a script line if the line is already started by another `. 
 
-The back quote "`" plays a very important role in mixing code in templates: the delimiter;
+A script line ends with it encounter a @new line, i.e., '\n'@ or another delimiter. 
 
-# start a @directive@ or @command@, which is instruction to the code generator to create special Java source code.  
-# start a line of pure Java code to be placed in the generated code. 
-# end a script line if the line is already started by another `. 
+The Japid parser will first determine if the word following the delimiter is a command name and treat the rest of the line as Java code if it is not. 
 
-A script line ends with it encounter a @new line, i.e., '\n'@ or another `. 
-
-The Japid parser will first determine if the word following the ` is a command name and treat the rest of the line as Java code if it is not. 
-
-The back quote has been selected as the special character, because:
+Originally the back quote has been selected as the special character, because:
 
 # The back quote is the most left upper key on most keyboard ( except the escape key ) so it's easy to remember.
 # It's not a key combination like the #$%, which requires pressing two keys: the Shift and 3, 4 or 5, and with both hands. I think it's easy for even the most untrained fingers. Comparing  `get title` with #{get "title"/}, the Japid syntax requires 10 key pressings and the latter requires ~20 key pressings, including all the shift keys.
@@ -175,12 +172,32 @@ The back quote has been selected as the special character, because:
 
 A little annoying problem with ` is it appears less visible in some fonts, although not an issue for the fixed-width fonts that source code usually is displayed with.
 
-Note: to escape the ` sign, please use two back quote:
+Since version 0.8.4.1, one can use the '@' sign in lieu of the the back quote. In some keyboard layout, the back quote is difficult to access while the "at" sign is a lot easier. The result is that both the back quote and the @ sign are valid delimiters, but they cannot be used in the same template file. There is no global configuration to specify which one is the special marker. Instead the system determines the marker file-by-file. This is how the parser determines which delimiter is used in template file:
+# It scans the template file for the first occurrence of a line that starts with either the back quote or the at sign and use the character as the Japid delimiter for the specific file.
+# If for some reason the marker cannot be determined, the back quote is used as the default. 
+# To make sure the parser picks up the correct marker, one can add a single line on the top of the document and the single line contains the intended marker to use, like this:
 
-@``this is normal text@
+<pre>
+`
+the rest of the file
+</pre>
 
+or:
 
+<pre>
+@
+the rest of the file
+</pre>
 
+One of the ramifications is that a project can contain template files and some of them are using the @`@ as the special marker and the others using the @ sign.
+
+Note: to escape the delimiter, please use a single back quote followed by the delimiter:
+
+<pre>
+``this is normal text and so is `@
+</pre>
+
+The rest of the documents uses the single back quote as the delimiter in most of the cases. 
 
 h3. Views, Tags and Layout
 

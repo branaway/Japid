@@ -53,15 +53,17 @@ public class search extends cn.bran.japid.template.JapidTemplateBase
 		this.sp = sp;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p(" keys: ");// line 1
-try { Object o = sp.keywords; if (o.toString().length() ==0) { p("没有 keywords"); } else { p(o); } } catch (NullPointerException npe) { p("没有 keywords"); }// line 3
+p("\n" + 
+"\n" + 
+"keys: ");// line 1
+try { Object o = sp.keywords ; if (o.toString().length() ==0) { p("没有 keywords"); } else { p(o); } } catch (NullPointerException npe) { p("没有 keywords"); }// line 3
 p(", mode: ");// line 3
-try { Object o = sp.mode; if (o.toString().length() ==0) { p("no mode"); } else { p(o); } } catch (NullPointerException npe) { p("no mode"); }// line 3
+try { Object o = sp.mode ; if (o.toString().length() ==0) { p("no mode"); } else { p(o); } } catch (NullPointerException npe) { p("no mode"); }// line 3
 ;// line 3
 
 	}

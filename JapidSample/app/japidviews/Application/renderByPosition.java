@@ -49,13 +49,13 @@ public class renderByPosition extends cn.bran.japid.template.JapidTemplateBase
 	public renderByPosition(StringBuilder out) {
 		super(out);
 	}
-	private String sss;
+	private String ss;
 	private int ii;
 	private Author au1;
 	private Author au2;
 	private Author2 au22;
-	public cn.bran.japid.template.RenderResult render(String sss, int ii, Author au1, Author au2, Author2 au22) {
-		this.sss = sss;
+	public cn.bran.japid.template.RenderResult render(String ss, int ii, Author au1, Author au2, Author2 au22) {
+		this.ss = ss;
 		this.ii = ii;
 		this.au1 = au1;
 		this.au2 = au2;
@@ -71,7 +71,7 @@ public class renderByPosition extends cn.bran.japid.template.JapidTemplateBase
 p("\n" + 
 "\n" + 
 "got: ");// line 2
-p(sss);// line 4
+p(ss);// line 4
 p("\n" + 
 "got: ");// line 4
 p(ii);// line 5

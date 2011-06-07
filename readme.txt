@@ -24,7 +24,9 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
-2011/5/10: V0.8.4: 
+2011/6/7: V0.8.4.1: 
+    1. new feature: made @ a valid japid marker.
+2011/6/4: V0.8.4: 
     1. new feature: a more expressive syntax for `args: `().  For an example:  `(String a, Integer b) === `args String a, Integer b
     2. bug fix: ~{} now works in the plain Japid. It used to depend on the JavaExtension in the Play lib. 
 2011/5/10: V0.8.3.1: 

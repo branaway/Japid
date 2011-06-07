@@ -60,12 +60,14 @@ public class Display extends TagLayout
 		this.as = as;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
+;// line 1
 p("\n" + 
+"\n" + 
 "<div class=\"divvy\">\n" + 
 "	<p>title: ");// line 2
 p(post.getTitle());// line 5

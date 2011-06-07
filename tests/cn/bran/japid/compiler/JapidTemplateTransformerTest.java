@@ -17,7 +17,13 @@ public class JapidTemplateTransformerTest {
 		src = "<p> `doLayout`</p> ";
 		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
 
+		src = "<p> @doLayout@</p> ";
+		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
+		
 		src = "<p> `doLayout\n";
+		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
+
+		src = "<p> @doLayout\n";
 		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
 
 		src = "<p> `doLayout\r\n";
@@ -35,7 +41,13 @@ public class JapidTemplateTransformerTest {
 		src = "<p> `get something  ";
 		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
 
+		src = "<p> @get something  ";
+		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
+		
 		src = "`get something";
+		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
+
+		src = "@get something";
 		assertTrue(JapidTemplateTransformer.looksLikeLayout(src));
 
 		src = "`getter (something)";

@@ -182,13 +182,12 @@ public abstract class JapidAbstractCompiler {
 
 	protected void closingBrace(String token) {
 		// ok a } after some space in a line
-		// treat it as `}
+		// treat it as MARKER }
 		print("}");
 	}
 
 	protected void plain(String token) {
 		String text = token.replace("\\", "\\\\").replaceAll("\"", "\\\\\"");
-		// text = text.replace("``", "`"); // escaped `, already done by parser
 		if (skipLineBreak && text.startsWith(NEW_LINE)) {
 			text = text.substring(1);
 		}

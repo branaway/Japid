@@ -31,6 +31,7 @@ final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(
 		this.s = s;
 		long t = -1;
 		super.layout();
+		 if (t != -1) System.out.println("[noplay] rendering time: " + t);
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {

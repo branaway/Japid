@@ -52,11 +52,14 @@ public class dummyTag extends cn.bran.japid.template.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long t = -1;
-		t = System.currentTimeMillis();
+		 t = System.nanoTime();
 		super.layout();
-		t = System.currentTimeMillis() - t;
-		System.out.println("[dummyTag] rendering time: " + t);
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+     	String l = "" + (System.nanoTime() - t) / 100000;
+		int len = l.length();
+		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
+
+		System.out.println("[dummyTag] rendering time(ms): " + l);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------

@@ -65,15 +65,20 @@ final Tag2 _Tag22 = new Tag2(getOut());
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long t = -1;
-		t = System.currentTimeMillis();
+		 t = System.nanoTime();
 		super.layout();
-		t = System.currentTimeMillis() - t;
-		System.out.println("[AllPost] rendering time: " + t);
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+     	String l = "" + (System.nanoTime() - t) / 100000;
+		int len = l.length();
+		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
+
+		System.out.println("[AllPost] rendering time(ms): " + l);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
+;// line 2
+p("\n");// line 3
 p("\n");// line 4
 p("\n");// line 6
 for (Post p: allPost) { // line 8
@@ -81,7 +86,7 @@ p("        ");// line 8
 p("\n" + 
 "\n" + 
 "	    ");// line 9
-_Display1.setOut(getOut()); _Display1.render(p, "home", new Display.DoBody<String>(){
+_Display1.setOut(getOut()); _Display1.render(p, "home2", new Display.DoBody<String>(){
 public void render(final String title) {
 // line 11
 p("		   The real title is: ");// line 11

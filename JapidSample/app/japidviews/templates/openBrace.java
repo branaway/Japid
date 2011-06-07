@@ -51,7 +51,7 @@ public class openBrace extends cn.bran.japid.template.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
@@ -64,26 +64,22 @@ p("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www
 "<body>\n" + 
 "<p>hello</p>\n");// line 1
 int i = 3;// line 9
-if(true)// line 10
-{// line 11
-    while (i-- > 0) // line 12
-    {// line 13
-p("        <p>in while ");// line 13
-p(i);// line 14
+if(true) {// line 10
+    while (i-- > 0) {// line 11
+p("        <p>in while ");// line 11
+p(i);// line 12
 p("</p>\n" + 
-"    ");// line 14
+"    ");// line 12
+}// line 13
+p("    <p>good2</p>\n");// line 13
 }// line 15
-p("    <p>good2</p>\n");// line 15
-}// line 17
-p("\n" + 
-"  ");// line 17
-if (true) {// line 19
-p("    <p>good 3</p>\n" + 
-"  ");// line 19
-}// line 21
+p("\n");// line 15
+if (true) {// line 17
+p("    <p>good 3</p>\n");// line 17
+}// line 19
 p("\n" + 
 "</body>\n" + 
-"</html>");// line 21
+"</html>");// line 19
 
 	}
 

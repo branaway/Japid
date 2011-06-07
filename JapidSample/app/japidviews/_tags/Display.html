@@ -1,5 +1,5 @@
-`extends  TagLayout
-`args models.japidsample.Post post,	String as
+@extends  TagLayout
+@(models.japidsample.Post post,	String as)
 
 <div class="divvy">
 	<p>title: $post.getTitle()</p>
@@ -8,6 +8,6 @@
 	<p class="try again using a simple syntax">
         *{this is the tag way of doBody:	#{doBody post.getTitle() + "!" /}  }*
         *{this is the directive way of doBody:  }*
-	   `doBody post.getTitle() + "!"
+	   @doBody post.getTitle() + "!"
 	</p>
 </div>
