@@ -4,7 +4,7 @@
        @for(Category cat: categories) {
 	       <li>
 	           <a href="">${cat.name}</a>
-	           @tag categories(cat.subCategories)
+	           @tag this(cat.subCategories)
 	       </li>
        @}
      </ul>

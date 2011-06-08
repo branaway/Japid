@@ -333,6 +333,10 @@ public abstract class AbstractTemplateClassMetaData {
 				String decl = "final " + tagClassName + " " + var + " = this;";
 				pln(decl);
 			}
+			else if (tagClassName.equals("this")) {
+				String decl = "final " + this.getClassName() + " " + var + " = this;";
+				pln(decl);
+			}
 			else {
 				String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
 				pln(decl);

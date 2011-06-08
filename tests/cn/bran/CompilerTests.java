@@ -232,10 +232,10 @@ public class CompilerTests {
 		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
 		cp.compile(bt);
 		String code = bt.javaSource;
+		System.out.println(code);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 		assertTrue(bt.javaSource.contains("final recursiveTagging _recursiveTagging0 = this;"));
 		assertTrue(bt.javaSource.contains("new another(getOut());"));
-//		System.out.println(code);
 	}
 	
 	@Test

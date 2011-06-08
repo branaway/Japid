@@ -18,12 +18,12 @@ import controllers.*;
 import play.mvc.Http.*;
 import japidviews._javatags.*;
 //
-// NOTE: This file was generated from: japidviews/Application/categories.html
+// NOTE: This file was generated from: japidviews/Application/listy.html
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class categories extends cn.bran.japid.template.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/Application/categories.html";
+public class listy extends cn.bran.japid.template.JapidTemplateBase
+{	public static final String sourceTemplate = "japidviews/Application/listy.html";
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
@@ -42,46 +42,20 @@ public class categories extends cn.bran.japid.template.JapidTemplateBase
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final categories _this0 = this;
-{ _this0.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
-	public categories() {
+	public listy() {
 		super(null);
 	}
-	public categories(StringBuilder out) {
+	public listy(StringBuilder out) {
 		super(out);
 	}
-	private List<Category> categories;
-	public cn.bran.japid.template.RenderResult render(List<Category> categories) {
-		this.categories = categories;
+	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
-p(" ");// line 1
- if(asBoolean(categories)) {// line 2
-p("     <ul>\n" + 
-"       ");// line 2
-for(Category cat: categories) {// line 4
-p("	       <li>\n" + 
-"	           <a href=\"\">");// line 4
-p(cat.name);// line 6
-p("</a>\n" + 
-"	           ");// line 6
-_this0.setOut(getOut()); _this0.render(cat.subCategories);
-// line 7
-p("	       </li>\n" + 
-"       ");// line 7
-}// line 9
-p("     </ul>\n" + 
-" ");// line 9
-}// line 11
+p("will the name \"list\" a forbidden word?");// line 1
 
 	}
 

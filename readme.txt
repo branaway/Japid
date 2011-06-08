@@ -26,6 +26,7 @@ Whenever you upgrade the Japid module,
 
 2011/6/8: V0.8.4.2: 
     1. bug fix: could not call itself from a template.
+    2. enhancement: use "this" to invoke itself from within a template: `tag this(arg1)
 2011/6/7: V0.8.4.1: 
     1. new feature: made @ a valid japid marker.
 2011/6/4: V0.8.4: 
