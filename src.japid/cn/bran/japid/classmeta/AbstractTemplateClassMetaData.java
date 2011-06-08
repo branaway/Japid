@@ -329,8 +329,14 @@ public abstract class AbstractTemplateClassMetaData {
 			// initializer
 			String tagClassName = inner.tagName;
 			String var = "_" + inner.getVarRoot() + inner.counter;
-			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
-			pln(decl);
+			if (tagClassName.equals(this.getClassName())) {
+				String decl = "final " + tagClassName + " " + var + " = this;";
+				pln(decl);
+			}
+			else {
+				String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
+				pln(decl);
+			}
 			if (useWithPlay) {
 				String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
 				pln(addRunner);

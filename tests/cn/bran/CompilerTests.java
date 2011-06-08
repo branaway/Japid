@@ -222,6 +222,21 @@ public class CompilerTests {
 		assertTrue(code.contains("final my.tag _my_tag1 = new my.tag(getOut());"));
 		assertTrue(code.contains("final my.tag _my_tag2 = new my.tag(getOut());"));
 	}
+
+	@Test
+	public void testRecursiveTags() throws IOException {
+		String srcFile = "tests/recursiveTagging.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("tests/recursiveTagging.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		String code = bt.javaSource;
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+		assertTrue(bt.javaSource.contains("final recursiveTagging _recursiveTagging0 = this;"));
+		assertTrue(bt.javaSource.contains("new another(getOut());"));
+//		System.out.println(code);
+	}
 	
 	@Test
 	public void testTagline() throws IOException, ParseException {

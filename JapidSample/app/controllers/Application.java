@@ -8,11 +8,14 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.experimental.categories.Categories;
+
 import controllers.more.BaseController;
 
 import play.cache.CacheFor;
 import play.mvc.Before;
 
+import models.Category;
 import models.SearchParams;
 import models.japidsample.Author;
 import models.japidsample.Author2;
@@ -340,5 +343,28 @@ public class Application extends JapidController {
 	
 	public static void escapedExpr() {
 		renderJapid();
+	}
+	public static void categories() {
+		Category a = new Category();
+		a.name = "a";
+		Category cate1 = new Category();
+		cate1.name = "1";
+		Category cate2 = new Category();
+		cate2.name = "2";
+		Category cate11 = new Category();
+		cate11.name = "11";
+		Category cate12 = new Category();
+		cate12.name = "12";
+		a.subCategories = new ArrayList<Category>();
+		a.subCategories.add(cate1);
+		a.subCategories.add(cate2);
+		cate1.subCategories = new ArrayList<Category>();
+		cate1.subCategories.add(cate11);
+		cate1.subCategories.add(cate12);
+		
+		List<Category> cats = new ArrayList<Category>();
+		cats.add(a);
+		renderJapid(cats);
+		
 	}
 }

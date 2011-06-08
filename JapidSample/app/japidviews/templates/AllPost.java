@@ -61,7 +61,10 @@ final Tag2 _Tag22 = new Tag2(getOut());
 	}
 	private String blogTitle;
 	private List<Post> allPost;
-	public cn.bran.japid.template.RenderResult render(String blogTitle, List <Post> allPost) {
+	public cn.bran.japid.template.RenderResult render(
+    String blogTitle, 
+    List <Post> allPost
+) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long t = -1;
@@ -78,32 +81,32 @@ final Tag2 _Tag22 = new Tag2(getOut());
 //------
 ;// line 1
 ;// line 2
-p("\n");// line 3
-p("\n");// line 4
 p("\n");// line 6
-for (Post p: allPost) { // line 8
-p("        ");// line 8
+p("\n");// line 7
+p("\n");// line 9
+for (Post p: allPost) { // line 11
+p("        ");// line 11
 p("\n" + 
 "\n" + 
-"	    ");// line 9
+"	    ");// line 12
 _Display1.setOut(getOut()); _Display1.render(p, "home2", new Display.DoBody<String>(){
 public void render(final String title) {
-// line 11
-p("		   The real title is: ");// line 11
-p(title);// line 12
+// line 14
+p("		   The real title is: ");// line 14
+p(title);// line 15
 p(";\n" + 
-"	    ");// line 12
+"	    ");// line 15
 
 }
 }
 );
-// line 11
-}// line 14
-p("\n");// line 14
+// line 14
+}// line 17
+p("\n");// line 17
 _Tag22.setOut(getOut()); _Tag22.render(blogTitle);
-// line 16
+// line 19
 p("\n" + 
-"<p>cool</p>");// line 16
+"<p>cool</p>");// line 19
 
 	}
 

@@ -64,7 +64,7 @@ p("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www
 "<body>\n" + 
 "<p>hello</p>\n");// line 1
 int i = 3;// line 9
-if(true) {// line 10
+if(asBoolean(true)) {// line 10
     while (i-- > 0) {// line 11
 p("        <p>in while ");// line 11
 p(i);// line 12
@@ -73,13 +73,27 @@ p("</p>\n" +
 }// line 13
 p("    <p>good2</p>\n");// line 13
 }// line 15
-p("\n");// line 15
-if (true) {// line 17
-p("    <p>good 3</p>\n");// line 17
-}// line 19
 p("\n" + 
+"<p>\n");// line 15
+for(i =0; i < 4; i++){// line 18
+p("    ");// line 18
+p(i);// line 19
+p(", \n");// line 19
+}// line 20
+p("<p/>\n" + 
+"<p>good22</p>\n" + 
+"\n");// line 20
+if (true) {// line 24
+p("    <p>good 3</p>\n");// line 24
+}// line 26
+p("<p/>\n" + 
+"the result is ");// line 26
+if(asBoolean(true)) {// line 28
+p("got you!");// line 28
+}// line 28
+p(".\n" + 
 "</body>\n" + 
-"</html>");// line 19
+"</html>");// line 28
 
 	}
 

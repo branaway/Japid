@@ -315,10 +315,9 @@ Purpose: the parameters to be passed to this template to render. The format is t
 
 Note: 
 
-# some people may find the @`()@ more expressive than the @`args@ syntax, but they're functionally identical: @`(String a, Integer b)@ === @`args String a, Integer b@.
+# some people may find the @`()@ more expressive than the @`args@ syntax, but they're functionally identical: @`(String a, Integer b)@ === @`args String a, Integer b@. 
 # Data to be rendered must (almost) be declared passed to the templates via the @`args@ directive. However There are a few Play! specific data that are implicitly available, as explained later in this document.
 # The data type must be visible, meaning it must be imported. However there are several classes and packaged that are imported to any templates by default:
-# Is @params@ a better name?
 
 <pre>
 import java.util.*;
@@ -346,7 +345,16 @@ table{border: 1px dashed gray; cellspacing: 2px}.
 |_. Japid|_. Play!|
 |{border:1px grey solid}. @`args Type1 a1, Type2 a2@|none|
 
+Note: One advantage of using `() is it can span multiple lines, useful when the argument list is long.
 
+<pre>
+*{here I'm using the alternate marker @ instead of the default `}*
+@(
+    my.Objecy o,
+    int i,
+    String s
+)
+</pre>
 
 h3. Create a named text block: @`set@
 

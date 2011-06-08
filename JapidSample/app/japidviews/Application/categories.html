@@ -1,0 +1,11 @@
+ @args List<Category> categories
+ @if categories
+     <ul>
+       @for(Category cat: categories) {
+	       <li>
+	           <a href="">${cat.name}</a>
+	           @tag categories(cat.subCategories)
+	       </li>
+       @}
+     </ul>
+ @

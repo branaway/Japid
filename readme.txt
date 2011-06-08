@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/8: V0.8.4.2: 
+    1. bug fix: could not call itself from a template.
 2011/6/7: V0.8.4.1: 
     1. new feature: made @ a valid japid marker.
 2011/6/4: V0.8.4: 
