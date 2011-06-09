@@ -42,16 +42,6 @@ public class def extends defLayout
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final dummyTag _dummyTag1 = new dummyTag(getOut());
-{ _dummyTag1.setActionRunners(getActionRunners()); }
-
-final dummyTag _dummyTag4 = new dummyTag(getOut());
-{ _dummyTag4.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public def() {
 		super(null);
 	}
@@ -83,7 +73,7 @@ p("\n" +
 p("\n" + 
 "\n" + 
 "<p>check 4</p>\n");// line 26
-_dummyTag4.setOut(getOut()); _dummyTag4.render(get("bar"));
+((dummyTag)(new dummyTag(getOut()).setActionRunners(getActionRunners()))).render(get("bar"));
 // line 29
 p("\n" + 
 "\n");// line 29
@@ -110,7 +100,7 @@ p(request.action);// line 9
 p("</p>\n" + 
 "	<p>OK you can call a tag:</p>\n" + 
 "	");// line 9
-_dummyTag1.setOut(getOut()); _dummyTag1.render(p);
+((dummyTag)(new dummyTag(getOut()).setActionRunners(getActionRunners()))).render(p);
 // line 11
 
 this.setOut(ori);

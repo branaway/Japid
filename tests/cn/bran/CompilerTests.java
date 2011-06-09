@@ -212,17 +212,10 @@ public class CompilerTests {
 		String code = bt.javaSource;
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 		System.out.println(code);
-		assertTrue(code.contains("_tag0.setActionRunners(getActionRunners());"));
-		assertTrue(code.contains("_tag0.render(a);"));
-		assertTrue(code.contains("_my_tag1.setActionRunners(getActionRunners());"));
-		assertTrue(code.contains("_my_tag1.render(a);"));
-		assertTrue(code.contains("_my_tag2.setActionRunners(getActionRunners());"));
-		assertTrue(code.contains("_my_tag2.render(a, new my.tag.DoBody<String>(){"));
-		assertTrue(code.contains("final tag _tag0 = new tag(getOut());"));
-		assertTrue(code.contains("final my.tag _my_tag1 = new my.tag(getOut());"));
-		assertTrue(code.contains("final my.tag _my_tag2 = new my.tag(getOut());"));
+		assertTrue(code.contains("((tag)(new tag(getOut()).setActionRunners(getActionRunners()))).render(a)"));
+		assertTrue(code.contains("((my.tag)(new my.tag(getOut())).setActionRunners(getActionRunners())).render(a, new my.tag.DoBody<String>(){"));
+		
 	}
-
 	@Test
 	public void testRecursiveTags() throws IOException {
 		String srcFile = "tests/recursiveTagging.html";
@@ -234,8 +227,6 @@ public class CompilerTests {
 		String code = bt.javaSource;
 		System.out.println(code);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
-		assertTrue(bt.javaSource.contains("final recursiveTagging _recursiveTagging0 = this;"));
-		assertTrue(bt.javaSource.contains("new another(getOut());"));
 	}
 	
 	@Test
@@ -247,10 +238,8 @@ public class CompilerTests {
 		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
 		cp.compile(bt);
 		CompilationUnit cu = JavaSyntaxTool.parse(bt.javaSource);
-		System.out.println(cu);
-		assertTrue(bt.javaSource.contains("_my_tag0.render(a);"));
-		assertTrue(bt.javaSource.contains("_my_tag1.render(a);"));
-		assertTrue(bt.javaSource.contains("_your_tag4.render(a + 123);"));
+//		System.out.println(cu);
+
 	}
 
 	@Test
@@ -287,8 +276,7 @@ public class CompilerTests {
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
-		assertTrue(bt.javaSource.contains("_fooTag0.render(\"hi\", new fooTag.DoBody(){"));
-		assertTrue(bt.javaSource.contains("_anotherTag1.render(echo, new anotherTag.DoBody<String>(){"));
+		assertTrue(bt.javaSource.contains("((anotherTag)(new anotherTag(getOut())).setActionRunners(getActionRunners())).render(echo, new anotherTag.DoBody<String>(){"));
 	}
 
 	@Test
@@ -301,10 +289,7 @@ public class CompilerTests {
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
-		assertTrue(bt.javaSource.contains("final Each _Each0 = new Each(getOut());"));
-		assertTrue(bt.javaSource.contains("_Each0.setActionRunners(getActionRunners());"));
-		assertTrue(bt.javaSource.contains("_Each0.render(sa, new Each.DoBody<String>(){"));
-		assertTrue(bt.javaSource.contains("public void render(final String a, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {"));
+		assertTrue(bt.javaSource.contains("((Each)(new Each(getOut())).setActionRunners(getActionRunners())).render(sa, new Each.DoBody<String>(){"));
 	}
 	
 	@Test

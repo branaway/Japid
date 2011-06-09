@@ -42,13 +42,6 @@ public class foo extends cn.bran.japid.template.JapidTemplateBase
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final bar _bar0 = new bar(getOut());
-{ _bar0.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public foo() {
 		super(null);
 	}
@@ -72,7 +65,7 @@ p("? \n" +
 "\n");// line 3
 p("\n" + 
 "\n");// line 5
-_bar0.setOut(getOut()); _bar0.render();
+((bar)(new bar(getOut()).setActionRunners(getActionRunners()))).render();
 // line 7
 ;// line 7
 

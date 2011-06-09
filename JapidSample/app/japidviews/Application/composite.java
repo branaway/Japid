@@ -44,13 +44,6 @@ public class composite extends lcomposite2
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final invokeInTag _invokeInTag4 = new invokeInTag(getOut());
-{ _invokeInTag4.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public composite() {
 		super(null);
 	}
@@ -118,7 +111,7 @@ p("</div>\n" +
 "\n" + 
 "<p>Let's invoke a tag which invokes an action</p>\n" + 
 "\n");// line 15
-_invokeInTag4.setOut(getOut()); _invokeInTag4.render();
+((invokeInTag)(new invokeInTag(getOut()).setActionRunners(getActionRunners()))).render();
 // line 19
 p("\n" + 
 "<p>let's invoke an action that renders a template that contains another invoke: ");// line 19

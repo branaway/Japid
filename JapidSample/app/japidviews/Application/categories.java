@@ -42,13 +42,6 @@ public class categories extends cn.bran.japid.template.JapidTemplateBase
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final categories _this0 = this;
-{ _this0.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public categories() {
 		super(null);
 	}
@@ -74,7 +67,7 @@ p("	       <li>\n" +
 p(cat.name);// line 6
 p("</a>\n" + 
 "	           ");// line 6
-_this0.setOut(getOut()); _this0.render(cat.subCategories);
+((categories)(new categories(getOut()).setActionRunners(getActionRunners()))).render(cat.subCategories);
 // line 7
 p("	       </li>\n" + 
 "       ");// line 7
@@ -82,6 +75,8 @@ p("	       </li>\n" +
 p("     </ul>\n" + 
 " ");// line 9
 }// line 11
+p(" \n" + 
+" ");// line 11
 
 	}
 

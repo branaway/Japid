@@ -648,7 +648,8 @@ public abstract class AbstractTemplateClassMetaData {
 		if (useWithPlay) {
 			addImplicitFields();
 		}
-		setupTagObjectsAsFields();
+		// now tags are local variables in dolayout for better safety
+//		setupTagObjectsAsFields();
 		
 		addConstructors();
 

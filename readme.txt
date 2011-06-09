@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/8: V0.8.4.3: 
+    1. bug fix: now using anew instance of tag class for each tag invocation, for best safety. Canceled the this hack
 2011/6/8: V0.8.4.2: 
     1. bug fix: could not call itself from a template.
     2. enhancement: use "this" to invoke itself from within a template: `tag this(arg1)

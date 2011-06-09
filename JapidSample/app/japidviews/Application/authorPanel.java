@@ -42,13 +42,6 @@ public class authorPanel extends cn.bran.japid.template.JapidTemplateBase
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final SampleTag _SampleTag0 = new SampleTag(getOut());
-{ _SampleTag0.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public authorPanel() {
 		super(null);
 	}
@@ -76,7 +69,7 @@ p("</p>\n" +
 p(a.getGender());// line 5
 p("'</p>\n" + 
 "    ");// line 5
-_SampleTag0.setOut(getOut()); _SampleTag0.render("end");
+((SampleTag)(new SampleTag(getOut()).setActionRunners(getActionRunners()))).render("end");
 // line 6
 p("    ");// line 6
 

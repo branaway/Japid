@@ -43,16 +43,6 @@ public class AllPost2 extends Layout
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final Display _Display1 = new Display(getOut());
-{ _Display1.setActionRunners(getActionRunners()); }
-
-final Tag2 _Tag22 = new Tag2(getOut());
-{ _Tag22.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public AllPost2() {
 		super(null);
 	}
@@ -79,7 +69,7 @@ p("	<p></p>\n" +
 "	");// line 8
 for (Post p: allPost) {// line 10
 p("	    ");// line 10
-_Display1.setOut(getOut()); _Display1.render(p, "home", new Display.DoBody<String>(){
+((Display)(new Display(getOut())).setActionRunners(getActionRunners())).render(p, "home", new Display.DoBody<String>(){
 public void render(final String title) {
 // line 11
 p("			<p>The real title is: ");// line 11
@@ -97,7 +87,7 @@ p("	");// line 13
 p("	<p>There is no post at this moment</p>\n");// line 15
 }// line 17
 p("\n");// line 17
-_Tag22.setOut(getOut()); _Tag22.render(blogTitle);
+((Tag2)(new Tag2(getOut()).setActionRunners(getActionRunners()))).render(blogTitle);
 // line 19
 p("\n" + 
 "<p>end of it</p>");// line 19

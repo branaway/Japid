@@ -42,16 +42,6 @@ public class scriptline extends scriptlineLayout
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final Tag2 _Tag21 = new Tag2(getOut());
-{ _Tag21.setActionRunners(getActionRunners()); }
-
-final Tag2 _Tag22 = new Tag2(getOut());
-{ _Tag22.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public scriptline() {
 		super(null);
 	}
@@ -68,10 +58,10 @@ final Tag2 _Tag22 = new Tag2(getOut());
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-_Tag21.setOut(getOut()); _Tag21.render("123");
+((Tag2)(new Tag2(getOut()).setActionRunners(getActionRunners()))).render("123");
 // line 4
 p(" a  ");// line 4
-_Tag22.setOut(getOut()); _Tag22.render("456");
+((Tag2)(new Tag2(getOut()).setActionRunners(getActionRunners()))).render("456");
 // line 4
 p("!\n" + 
 "this is how to print a single back quote: ");// line 4

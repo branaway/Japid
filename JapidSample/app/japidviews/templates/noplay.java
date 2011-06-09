@@ -14,12 +14,6 @@ import japidviews._javatags.*;
 @cn.bran.play.NoEnhance
 public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {	public static final String sourceTemplate = "japidviews/templates/noplay.html";
-
-// -- set up the tag objects
-final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(getOut());
-
-// -- end of the tag objects
-
 	public noplay() {
 		super(null);
 	}
@@ -39,7 +33,7 @@ final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-_japidviews__tags_Tag20.setOut(getOut()); _japidviews__tags_Tag20.render(s);
+new japidviews._tags.Tag2(getOut()).render(s);
 // line 4
 p(" !\n" + 
 "\n");// line 4

@@ -42,13 +42,6 @@ public class subview extends superview
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy2 = new japidviews.more.MyController._tags.taggy(getOut());
-{ _japidviews_more_MyController__tags_taggy2.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public subview() {
 		super(null);
 	}
@@ -74,7 +67,7 @@ p("\n" +
 "hello ");// line 5
 p(s);// line 8
 p("\n");// line 8
-_japidviews_more_MyController__tags_taggy2.setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s);
+((japidviews.more.MyController._tags.taggy)(new japidviews.more.MyController._tags.taggy(getOut()).setActionRunners(getActionRunners()))).render(s);
 // line 10
 p(" ");// line 10
 

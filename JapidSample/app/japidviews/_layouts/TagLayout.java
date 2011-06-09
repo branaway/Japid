@@ -42,13 +42,6 @@ public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final dummyTag _dummyTag0 = new dummyTag(getOut());
-{ _dummyTag0.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public TagLayout() {
 		super(null);
 	}
@@ -58,7 +51,7 @@ final dummyTag _dummyTag0 = new dummyTag(getOut());
 	@Override public void layout() {
 		p("标签布局\n");// line 1
 p("\n");// line 2
-_dummyTag0.setOut(getOut()); _dummyTag0.render("me");
+((dummyTag)(new dummyTag(getOut()).setActionRunners(getActionRunners()))).render("me");
 // line 3
 p("<div>\n" + 
 "\n");// line 3

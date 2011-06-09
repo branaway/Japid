@@ -42,22 +42,6 @@ public class ifs2 extends cn.bran.japid.template.JapidTemplateBase
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final SampleTag _SampleTag1 = new SampleTag(getOut());
-{ _SampleTag1.setActionRunners(getActionRunners()); }
-
-final Each _Each0 = new Each(getOut());
-{ _Each0.setActionRunners(getActionRunners()); }
-
-final SampleTag _SampleTag3 = new SampleTag(getOut());
-{ _SampleTag3.setActionRunners(getActionRunners()); }
-
-final Each _Each2 = new Each(getOut());
-{ _Each2.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public ifs2() {
 		super(null);
 	}
@@ -107,12 +91,12 @@ p("\n" +
 if(asBoolean(ss)) {// line 30
 p("    well got ss\n" + 
 "    ");// line 30
-_Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
+((Each)(new Each(getOut())).setActionRunners(getActionRunners())).render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 32
 p("        call a tag\n" + 
 "        ");// line 32
-_SampleTag1.setOut(getOut()); _SampleTag1.render(s);
+((SampleTag)(new SampleTag(getOut()).setActionRunners(getActionRunners()))).render(s);
 // line 34
     
 }
@@ -124,12 +108,12 @@ p("    finally got ");// line 36
 p(ss);// line 37
 p("\n" + 
 "    ");// line 37
-_Each2.setOut(getOut()); _Each2.render(ss, new Each.DoBody<String>(){
+((Each)(new Each(getOut())).setActionRunners(getActionRunners())).render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 38
 p("        call a tag\n" + 
 "        ");// line 38
-_SampleTag3.setOut(getOut()); _SampleTag3.render(s);
+((SampleTag)(new SampleTag(getOut()).setActionRunners(getActionRunners()))).render(s);
 // line 40
     
 }

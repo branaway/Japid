@@ -950,10 +950,27 @@ public abstract class JapidAbstractCompiler {
 		} else if (tag.tagName.equals("invoke")) {
 			invokeAction(tag);
 		} else {
+			// the safest thing to do is to create a new instance of the tag class
+			// this however comes at a performance cost
+			
 			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
+			
 			if (!tag.hasBody) {
-				String tagline = tagVar + ".setOut(getOut()); ";
-				tagline += tagVar + ".render(" + tag.args + ");";
+				String tagClassName = tag.tagName;
+				if (tagClassName.equals("this")) {
+					tagClassName = getTemplateClassMetaData().getClassName();
+				}
+				String tagline = "";
+//				tagline = "final " + tagClassName + " " + tagVar + " = new " + tagClassName + "(getOut());";
+//				tagline += " " + tagVar + ".render(" + tag.args + ");";
+				
+				if (getTemplateClassMetaData().useWithPlay) {
+					tagline = "((" + tagClassName + ")(new " + tagClassName + "(getOut()).setActionRunners(getActionRunners()))).render(" + tag.args + ");";
+				}
+				else {
+					tagline = "new " + tagClassName + "(getOut()).render(" + tag.args + ");";
+				}
+				
 				println(tagline);
 			}
 		}
@@ -980,14 +997,32 @@ public abstract class JapidAbstractCompiler {
 			InnerClassMeta inner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.callbackArgs,
 					tag.getBodyText());
 			if (inner == null)
-				System.out.println(tag.tagName + " not allowed to have instance of this tag");
-			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
-			String tagLine = tagVar + ".setOut(getOut()); "; // make sure to use the current string builder
-			tagLine += tagVar + ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + inner.getAnonymous() + ");";
-			println(tagLine);
+				throw new RuntimeException("compiler bug? " + tag.tagName + " not allowed to have instance of this tag");
+			
+//			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
+//			String tagLine = tagVar + ".setOut(getOut()); "; // make sure to use the current string builder
+//							String tagClassName = tag.tagName;
+			String tagClassName = tag.tagName;
+			if (tagClassName.equals("this")) {
+				tagClassName = getTemplateClassMetaData().getClassName();
+			}
+
+			String tagline = "";
+
+			if (getTemplateClassMetaData().useWithPlay) {
+				tagline = "((" + tagClassName + ")(new " + tagClassName + "(getOut()))";
+				tagline += ".setActionRunners(getActionRunners()))";
+			}
+			else {
+				tagline = "new " + tagClassName + "(getOut())";
+			}
+			tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + inner.getAnonymous() + ");";
+			
+			println(tagline);
 		} else {
 			// for simple tag call without call back:
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
+			// the calling statement has been added in the regularTagInvoke() method
 		}
 	}
 

@@ -42,13 +42,6 @@ public class verbatim extends cn.bran.japid.template.JapidTemplateBase
 // - end of implicit fields with Play 
 
 
-
-// -- set up the tag objects
-final Each _Each0 = new Each(getOut());
-{ _Each0.setActionRunners(getActionRunners()); }
-
-// -- end of the tag objects
-
 	public verbatim() {
 		super(null);
 	}
@@ -80,7 +73,7 @@ p("\n" +
 "<p>got it?</p>\n" + 
 "\n");// line 15
 String[] ss = new String[]{"a", "b"};// line 18
-_Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
+((Each)(new Each(getOut())).setActionRunners(getActionRunners())).render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 19
 p("    <p>loop: ");// line 19

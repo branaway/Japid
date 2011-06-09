@@ -49,7 +49,8 @@ public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
 		return actionRunners;
 	}
 
-	public void setActionRunners(TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners) {
+	public JapidTemplateBase setActionRunners(TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners) {
 		this.actionRunners = actionRunners;
+		return this;
 	}
 }
