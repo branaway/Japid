@@ -44,6 +44,8 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 			print("\t" + var + "();");
 		} else if (DO_LAYOUT.equals(tag.tagName)) {
 			print("\tdoLayout();");
+		} else if (tag.tagName.equals("def")) {
+			def(tag);
 		} else {
 			regularTagInvoke(tag);
 		}

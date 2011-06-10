@@ -32,13 +32,17 @@ public class Tag {
 	}
 
 	public String getTagVarName() {
-		return tagName.replace('.', '_').replace('/', '_');
+		return "_" + tagName.replace('.', '_').replace('/', '_') + tagIndex;
 	}
 
 	public String getBodyVar() {
-		return "_" + getTagVarName() + tagIndex + "DoBody";
+		return getTagVarName() + "DoBody";
 	}
 
+	@Override
+	public String toString() {
+		return tagName;
+	}
 	public boolean isRoot() {
 		return tagName.equals(ROOT_TAGNAME);
 	}
@@ -54,6 +58,19 @@ public class Tag {
 
 	}
 
+	// the `def tag
+	public static class TagDef extends Tag {
+		public List<Tag> tags = new ArrayList<Tag>();
+		
+		public TagDef() {
+			super();
+			tagName = "def";
+			hasBody = true;
+		}
+		
+	}
+	
+	
 	// the "else if" might just be an if
 //	public static class TagElseIf extends Tag {
 //		public TagElseIf(String expr) {

@@ -56,6 +56,13 @@ public class categories extends cn.bran.japid.template.JapidTemplateBase
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final categories _this0 = new categories(getOut());
+{ _this0.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 p(" ");// line 1
  if(asBoolean(categories)) {// line 2
@@ -67,7 +74,7 @@ p("	       <li>\n" +
 p(cat.name);// line 6
 p("</a>\n" + 
 "	           ");// line 6
-((categories)(new categories(getOut()).setActionRunners(getActionRunners()))).render(cat.subCategories);
+_this0.render(cat.subCategories);
 // line 7
 p("	       </li>\n" + 
 "       ");// line 7

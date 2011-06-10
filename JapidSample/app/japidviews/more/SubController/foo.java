@@ -56,6 +56,13 @@ public class foo extends cn.bran.japid.template.JapidTemplateBase
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final bar _bar0 = new bar(getOut());
+{ _bar0.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 p("\n" + 
@@ -65,7 +72,7 @@ p("? \n" +
 "\n");// line 3
 p("\n" + 
 "\n");// line 5
-((bar)(new bar(getOut()).setActionRunners(getActionRunners()))).render();
+_bar0.render();
 // line 7
 ;// line 7
 

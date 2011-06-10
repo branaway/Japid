@@ -54,14 +54,24 @@ public class scriptline extends scriptlineLayout
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final Tag2 _Tag21 = new Tag2(getOut());
+{ _Tag21.setActionRunners(getActionRunners()); }
+
+final Tag2 _Tag22 = new Tag2(getOut());
+{ _Tag22.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-((Tag2)(new Tag2(getOut()).setActionRunners(getActionRunners()))).render("123");
+_Tag21.render("123");
 // line 4
 p(" a  ");// line 4
-((Tag2)(new Tag2(getOut()).setActionRunners(getActionRunners()))).render("456");
+_Tag22.render("456");
 // line 4
 p("!\n" + 
 "this is how to print a single back quote: ");// line 4

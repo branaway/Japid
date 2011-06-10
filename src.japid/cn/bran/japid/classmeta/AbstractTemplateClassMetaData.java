@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.bran.japid.compiler.Tag;
+import cn.bran.japid.compiler.Tag.TagDef;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.JapidTemplateBaseStreaming;
@@ -125,6 +126,10 @@ public abstract class AbstractTemplateClassMetaData {
 		return inner;
 	}
 
+	public void removeLastCallTagBodyInnerClass() {
+		this.innersforTagCalls.remove(this.innersforTagCalls.size() - 1);
+	}
+	
 	private static Set<String> specialTags = new HashSet<String>();
 	static {
 		specialTags.add("set");
@@ -320,6 +325,7 @@ public abstract class AbstractTemplateClassMetaData {
 //			pln("// -- end of the tag objects\n");
 //	}
 
+	// can be used to create local variables too!
 	protected void setupTagObjectsAsFields() {
 		boolean hasTags = this.innersforTagCalls.size() > 0;
 		if (hasTags)
@@ -329,18 +335,14 @@ public abstract class AbstractTemplateClassMetaData {
 			// initializer
 			String tagClassName = inner.tagName;
 			String var = "_" + inner.getVarRoot() + inner.counter;
-			if (tagClassName.equals(this.getClassName())) {
-				String decl = "final " + tagClassName + " " + var + " = this;";
-				pln(decl);
+			
+			if (tagClassName.equals("this")) {
+				tagClassName = this.className;
 			}
-			else if (tagClassName.equals("this")) {
-				String decl = "final " + this.getClassName() + " " + var + " = this;";
-				pln(decl);
-			}
-			else {
-				String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
-				pln(decl);
-			}
+
+			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
+			pln(decl);
+
 			if (useWithPlay) {
 				String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
 				pln(addRunner);
@@ -498,7 +500,7 @@ public abstract class AbstractTemplateClassMetaData {
 	private boolean trimStaticContent = false;
 	protected boolean hasActionInvocation;
 	private Map<String, String> headers = new HashMap<String, String>();
-	private List<Tag> defTags = new ArrayList<Tag>();
+	private List<TagDef> defTags = new ArrayList<TagDef>();
 	public String renderArgs;
 	// to support extends layout (arg1, arg2)
 	public String superClassRenderArgs = "";
@@ -558,12 +560,12 @@ public abstract class AbstractTemplateClassMetaData {
 		}
 	}
 
-	public void addDefTag(Tag tag) {
+	public void addDefTag(TagDef tag) {
 		this.defTags.add(tag);
 	}
 
 	protected void processDefTags() {
-		for (Tag tag : this.defTags) {
+		for (TagDef tag : this.defTags) {
 			String meth = tag.args.trim();
 			if (meth.endsWith(")")) {
 				pln("public String " + meth + " {");
@@ -573,6 +575,27 @@ public abstract class AbstractTemplateClassMetaData {
 			pln("StringBuilder sb = new StringBuilder();");
 			pln("StringBuilder ori = getOut();");
 			pln("this.setOut(sb);");
+			
+			// define local tag instance
+			for(Tag t: tag.tags) {
+				String tagClassName = t.tagName;
+				String var = t.getTagVarName();
+				
+				
+				if (tagClassName.equals("this")) {
+					tagClassName = this.getClassName();
+				}
+				
+				String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
+				pln(decl);
+
+				if (useWithPlay) {
+					String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
+					pln(addRunner);
+				}
+				pln();
+			}
+			
 			pln(tag.getBodyText());
 			pln("this.setOut(ori);");
 			pln("return sb.toString();");

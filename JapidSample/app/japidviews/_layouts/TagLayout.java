@@ -49,9 +49,16 @@ public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase
 		super(out);
 	}
 	@Override public void layout() {
+
+// -- set up the tag objects
+final dummyTag _dummyTag0 = new dummyTag(getOut());
+{ _dummyTag0.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 		p("标签布局\n");// line 1
 p("\n");// line 2
-((dummyTag)(new dummyTag(getOut()).setActionRunners(getActionRunners()))).render("me");
+_dummyTag0.render("me");
 // line 3
 p("<div>\n" + 
 "\n");// line 3

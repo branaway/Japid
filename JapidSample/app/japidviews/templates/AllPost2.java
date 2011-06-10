@@ -59,6 +59,16 @@ public class AllPost2 extends Layout
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final Display _Display1 = new Display(getOut());
+{ _Display1.setActionRunners(getActionRunners()); }
+
+final Tag2 _Tag22 = new Tag2(getOut());
+{ _Tag22.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 p("\n");// line 3
@@ -69,7 +79,7 @@ p("	<p></p>\n" +
 "	");// line 8
 for (Post p: allPost) {// line 10
 p("	    ");// line 10
-((Display)(new Display(getOut())).setActionRunners(getActionRunners())).render(p, "home", new Display.DoBody<String>(){
+_Display1.render(p, "home", new Display.DoBody<String>(){
 public void render(final String title) {
 // line 11
 p("			<p>The real title is: ");// line 11
@@ -87,7 +97,7 @@ p("	");// line 13
 p("	<p>There is no post at this moment</p>\n");// line 15
 }// line 17
 p("\n");// line 17
-((Tag2)(new Tag2(getOut()).setActionRunners(getActionRunners()))).render(blogTitle);
+_Tag22.render(blogTitle);
 // line 19
 p("\n" + 
 "<p>end of it</p>");// line 19

@@ -14,6 +14,7 @@ public class TagInvocationLineParser {
 	public Tag parse(String line) {
 		String original = line;
 		Tag tag = new Tag();
+		
 		for (int i = 0; i < line.length(); i++) {
 			char c = line.charAt(i);
 			if (Character.isJavaIdentifierPart(c) || c == '.' || c == '/') {
@@ -37,6 +38,9 @@ public class TagInvocationLineParser {
 			return tag;
 		}
 
+		if (tag.tagName.equals("def")) {
+			tag = new Tag.TagDef();
+		}
 		// let's parse the closure params
 		int vertline = line.lastIndexOf('|');
 		if (vertline >= 0) {

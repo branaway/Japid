@@ -54,6 +54,25 @@ public class callPicka extends cn.bran.japid.template.JapidTemplateBase
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final aTag _aTag0 = new aTag(getOut());
+{ _aTag0.setActionRunners(getActionRunners()); }
+
+final SampleTag _SampleTag2 = new SampleTag(getOut());
+{ _SampleTag2.setActionRunners(getActionRunners()); }
+
+final picka _picka1 = new picka(getOut());
+{ _picka1.setActionRunners(getActionRunners()); }
+
+final japidviews.templates.aTag _japidviews_templates_aTag3 = new japidviews.templates.aTag(getOut());
+{ _japidviews_templates_aTag3.setActionRunners(getActionRunners()); }
+
+final japidviews.templates.aTag _japidviews_templates_aTag4 = new japidviews.templates.aTag(getOut());
+{ _japidviews_templates_aTag4.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 p("<p>before...<p>\n" + 
 "<p>\n" + 
@@ -65,12 +84,12 @@ p("<p>before...<p>\n" +
 "\n");// line 1
  List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};// line 10
 p("\n");// line 10
-((aTag)(new aTag(getOut()).setActionRunners(getActionRunners()))).render(strings);
+_aTag0.render(strings);
 // line 12
 p("\n" + 
 "note: the picka tag is defined in the japidviews/_tags directory\n" + 
 "\n");// line 12
-((picka)(new picka(getOut())).setActionRunners(getActionRunners())).render("a", "b" + "c", new picka.DoBody<String>(){
+_picka1.render("a", "b" + "c", new picka.DoBody<String>(){
 public void render(final String r) {
 // line 16
 p("    the tag chosed: ");// line 16
@@ -78,7 +97,7 @@ p(r);// line 17
 p("\n" + 
 "    <p>and we can can call a tag recurive?</p>\n" + 
 "    ");// line 17
-((SampleTag)(new SampleTag(getOut()).setActionRunners(getActionRunners()))).render(r);
+_SampleTag2.render(r);
 // line 19
 
 }
@@ -91,12 +110,12 @@ p("</p>\n" +
 "Or using the full path of the tag\n" + 
 "</p>\n" + 
 "\n");// line 20
-((japidviews.templates.aTag)(new japidviews.templates.aTag(getOut()).setActionRunners(getActionRunners()))).render(strings);
+_japidviews_templates_aTag3.render(strings);
 // line 27
 p("\n" + 
 "<p>You can use \".\" instead of \"/\" in the path:</p>\n" + 
 "\n");// line 27
-((japidviews.templates.aTag)(new japidviews.templates.aTag(getOut()).setActionRunners(getActionRunners()))).render(strings);
+_japidviews_templates_aTag4.render(strings);
 // line 31
 ;// line 31
 

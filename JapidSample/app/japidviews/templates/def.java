@@ -54,6 +54,13 @@ public class def extends defLayout
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final dummyTag _dummyTag4 = new dummyTag(getOut());
+{ _dummyTag4.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 p("\n" + 
@@ -73,7 +80,7 @@ p("\n" +
 p("\n" + 
 "\n" + 
 "<p>check 4</p>\n");// line 26
-((dummyTag)(new dummyTag(getOut()).setActionRunners(getActionRunners()))).render(get("bar"));
+_dummyTag4.render(get("bar"));
 // line 29
 p("\n" + 
 "\n");// line 29
@@ -83,7 +90,8 @@ p("\n" +
 p(foo());// line 34
 p("\n" + 
 "\n" + 
-"<p>check 6</p>");// line 34
+"<p>check 6</p>\n" + 
+"\n");// line 34
 
 	}
 
@@ -91,6 +99,9 @@ public String foo2(String p) {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
+final dummyTag _dummyTag1 = new dummyTag(getOut());
+{ _dummyTag1.setActionRunners(getActionRunners()); }
+
 // line 7
 p("	<p>hi ");// line 7
 p(p);// line 8
@@ -100,7 +111,7 @@ p(request.action);// line 9
 p("</p>\n" + 
 "	<p>OK you can call a tag:</p>\n" + 
 "	");// line 9
-((dummyTag)(new dummyTag(getOut()).setActionRunners(getActionRunners()))).render(p);
+_dummyTag1.render(p);
 // line 11
 
 this.setOut(ori);

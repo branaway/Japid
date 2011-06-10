@@ -83,7 +83,7 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t@Override public void layout() {");
 		}
 
-//		super.setupTagObjectsAsVariables();
+		super.setupTagObjectsAsFields();
 //		super.addImplicitVariables(); // moved to fields
 		// the code to render things.
 		p("\t\t" + body);

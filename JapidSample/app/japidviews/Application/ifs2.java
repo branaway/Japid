@@ -58,6 +58,22 @@ public class ifs2 extends cn.bran.japid.template.JapidTemplateBase
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final SampleTag _SampleTag1 = new SampleTag(getOut());
+{ _SampleTag1.setActionRunners(getActionRunners()); }
+
+final Each _Each0 = new Each(getOut());
+{ _Each0.setActionRunners(getActionRunners()); }
+
+final SampleTag _SampleTag3 = new SampleTag(getOut());
+{ _SampleTag3.setActionRunners(getActionRunners()); }
+
+final Each _Each2 = new Each(getOut());
+{ _Each2.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 p("\n" + 
@@ -91,12 +107,12 @@ p("\n" +
 if(asBoolean(ss)) {// line 30
 p("    well got ss\n" + 
 "    ");// line 30
-((Each)(new Each(getOut())).setActionRunners(getActionRunners())).render(ss, new Each.DoBody<String>(){
+_Each0.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 32
 p("        call a tag\n" + 
 "        ");// line 32
-((SampleTag)(new SampleTag(getOut()).setActionRunners(getActionRunners()))).render(s);
+_SampleTag1.render(s);
 // line 34
     
 }
@@ -108,12 +124,12 @@ p("    finally got ");// line 36
 p(ss);// line 37
 p("\n" + 
 "    ");// line 37
-((Each)(new Each(getOut())).setActionRunners(getActionRunners())).render(ss, new Each.DoBody<String>(){
+_Each2.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 38
 p("        call a tag\n" + 
 "        ");// line 38
-((SampleTag)(new SampleTag(getOut()).setActionRunners(getActionRunners()))).render(s);
+_SampleTag3.render(s);
 // line 40
     
 }

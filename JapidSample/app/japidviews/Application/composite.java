@@ -58,6 +58,13 @@ public class composite extends lcomposite2
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final invokeInTag _invokeInTag4 = new invokeInTag(getOut());
+{ _invokeInTag4.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 p("\n" + 
@@ -111,7 +118,7 @@ p("</div>\n" +
 "\n" + 
 "<p>Let's invoke a tag which invokes an action</p>\n" + 
 "\n");// line 15
-((invokeInTag)(new invokeInTag(getOut()).setActionRunners(getActionRunners()))).render();
+_invokeInTag4.render();
 // line 19
 p("\n" + 
 "<p>let's invoke an action that renders a template that contains another invoke: ");// line 19

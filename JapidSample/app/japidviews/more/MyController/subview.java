@@ -56,6 +56,13 @@ public class subview extends superview
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy2 = new japidviews.more.MyController._tags.taggy(getOut());
+{ _japidviews_more_MyController__tags_taggy2.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 ;// line 2
@@ -67,7 +74,7 @@ p("\n" +
 "hello ");// line 5
 p(s);// line 8
 p("\n");// line 8
-((japidviews.more.MyController._tags.taggy)(new japidviews.more.MyController._tags.taggy(getOut()).setActionRunners(getActionRunners()))).render(s);
+_japidviews_more_MyController__tags_taggy2.render(s);
 // line 10
 p(" ");// line 10
 

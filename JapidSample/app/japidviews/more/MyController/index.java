@@ -58,6 +58,13 @@ public class index extends SampleLayout
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final SampleTag _SampleTag1 = new SampleTag(getOut());
+{ _SampleTag1.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 ;// line 1
@@ -71,7 +78,7 @@ p(i);// line 7
 p(".\n" + 
 "Here goes your Japid template content.\n" + 
 "call a tag: \n");// line 7
-((SampleTag)(new SampleTag(getOut()).setActionRunners(getActionRunners()))).render("world");
+_SampleTag1.render("world");
 // line 10
 ;// line 10
 

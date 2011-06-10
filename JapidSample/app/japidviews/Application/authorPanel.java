@@ -56,6 +56,13 @@ public class authorPanel extends cn.bran.japid.template.JapidTemplateBase
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final SampleTag _SampleTag0 = new SampleTag(getOut());
+{ _SampleTag0.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 p("\n" + 
@@ -69,7 +76,7 @@ p("</p>\n" +
 p(a.getGender());// line 5
 p("'</p>\n" + 
 "    ");// line 5
-((SampleTag)(new SampleTag(getOut()).setActionRunners(getActionRunners()))).render("end");
+_SampleTag0.render("end");
 // line 6
 p("    ");// line 6
 

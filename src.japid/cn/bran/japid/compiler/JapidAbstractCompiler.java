@@ -22,6 +22,7 @@ import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.InnerClassMeta;
 import cn.bran.japid.classmeta.MimeTypeEnum;
 import cn.bran.japid.compiler.JapidParser.Token;
+import cn.bran.japid.compiler.Tag.TagDef;
 import cn.bran.japid.compiler.Tag.TagIf;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
@@ -489,9 +490,10 @@ public abstract class JapidAbstractCompiler {
 					if (trim.endsWith("{")) {
 						// semi-open
 						expr = removeEndingString(trim, "{").trim();
-						expr = "if(" + (negative ? "!" : "") +  "asBoolean(" + expr + ")) {";
+						expr = "if(" + (negative ? "!" : "") + "asBoolean(" + expr + ")) {";
 					} else {
-						// true open. out a shadow tag, since we want reuse the ` as the end delimitor
+						// true open. out a shadow tag, since we want reuse the
+						// ` as the end delimiter
 						Tag.TagIf iftag = new Tag.TagIf(trim, parser.getLineNumber());
 						pushToStack(iftag);
 						expr = "if(" + (negative ? "!" : "") + "asBoolean(" + trim + ")) {";
@@ -514,7 +516,7 @@ public abstract class JapidAbstractCompiler {
 					boolean negative = expr.startsWith("!");
 					if (negative)
 						expr = expr.substring(1).trim();
-					expr = "} else if(" + (negative ? "!" : "") +  "asBoolean(" + removeEndingString(expr, "{") + ")) {";
+					expr = "} else if(" + (negative ? "!" : "") + "asBoolean(" + removeEndingString(expr, "{") + ")) {";
 					print(expr);
 					markLine(parser.getLineNumber() + i);
 					println();
@@ -541,11 +543,11 @@ public abstract class JapidAbstractCompiler {
 						// start a new if
 						Tag.TagIf iftag = new Tag.TagIf(expr, parser.getLineNumber());
 						pushToStack(iftag);
-						expr = "} else if(" + (negative ? "!" : "") +  "asBoolean(" + expr + ")) {";
+						expr = "} else if(" + (negative ? "!" : "") + "asBoolean(" + expr + ")) {";
 					} else {
 						throw new RuntimeException("the open \"else if\" statement is not properly matched to a previous if");
 					}
-				} 
+				}
 				print(expr);
 				markLine(parser.getLineNumber() + i);
 				println();
@@ -587,7 +589,7 @@ public abstract class JapidAbstractCompiler {
 				try {
 					Tag tagShadow = tagsStackShadow.peek();
 					if (tagShadow.isRoot()) {
-//						System.out.println("");
+						// System.out.println("");
 					} else {
 						tagShadow = tagsStackShadow.pop();
 
@@ -689,25 +691,24 @@ public abstract class JapidAbstractCompiler {
 			if (substitute.endsWith("\""))
 				substitute = substitute.substring(0, substitute.length() - 1);
 		}
-		
+
 		if (escape) {
 			expr = "escape(" + expr + ")";
 		}
-		
+
 		if (substitute != null) {
 			// trap any null or empty string and use the substitute
 			printLine("try {" +
-					" Object o = " + expr + "; " + 
-					"if (o.toString().length() ==0) { " + 
-					"p(\"" + substitute + "\"); } " + 
+					" Object o = " + expr + "; " +
+					"if (o.toString().length() ==0) { " +
+					"p(\"" + substitute + "\"); } " +
 					"else { p(o); } } " +
 					"catch (NullPointerException npe) { " +
 					"p(\"" + substitute + "\"); }");
-//			printLine("try { Object o = expr; p(" + expr + "); } " +
-//					"catch (NullPointerException npe) { " +
-//					"p(\"" + substitute + "\"); }");
-		}
-		else {
+			// printLine("try { Object o = expr; p(" + expr + "); } " +
+			// "catch (NullPointerException npe) { " +
+			// "p(\"" + substitute + "\"); }");
+		} else {
 			if (getTemplateClassMetaData().suppressNull)
 				printLine("try { p(" + expr + "); } catch (NullPointerException npe) {}");
 			else
@@ -950,27 +951,35 @@ public abstract class JapidAbstractCompiler {
 		} else if (tag.tagName.equals("invoke")) {
 			invokeAction(tag);
 		} else {
-			// the safest thing to do is to create a new instance of the tag class
+			// the safest thing to do is to create a new instance of the tag
+			// class
 			// this however comes at a performance cost
-			
-			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
-			
+
+			String tagVar = tag.getTagVarName();
+
 			if (!tag.hasBody) {
-				String tagClassName = tag.tagName;
-				if (tagClassName.equals("this")) {
-					tagClassName = getTemplateClassMetaData().getClassName();
-				}
 				String tagline = "";
-//				tagline = "final " + tagClassName + " " + tagVar + " = new " + tagClassName + "(getOut());";
-//				tagline += " " + tagVar + ".render(" + tag.args + ");";
-				
-				if (getTemplateClassMetaData().useWithPlay) {
-					tagline = "((" + tagClassName + ")(new " + tagClassName + "(getOut()).setActionRunners(getActionRunners()))).render(" + tag.args + ");";
-				}
-				else {
-					tagline = "new " + tagClassName + "(getOut()).render(" + tag.args + ");";
-				}
-				
+
+				tagline = tagVar + ".render(" + tag.args + ");";
+
+				// String tagClassName = tag.tagName;
+				// if (tagClassName.equals("this")) {
+				// tagClassName = getTemplateClassMetaData().getClassName();
+				// }
+				// // tagline = "final " + tagClassName + " " + tagVar +
+				// " = new " + tagClassName + "(getOut());";
+				// // tagline += " " + tagVar + ".render(" + tag.args + ");";
+				//
+				// if (getTemplateClassMetaData().useWithPlay) {
+				// tagline = "((" + tagClassName + ")(new " + tagClassName +
+				// "(getOut()).setActionRunners(getActionRunners()))).render(" +
+				// tag.args + ");";
+				// }
+				// else {
+				// tagline = "new " + tagClassName + "(getOut()).render(" +
+				// tag.args + ");";
+				// }
+
 				println(tagline);
 			}
 		}
@@ -994,36 +1003,65 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void endRegularTag(Tag tag) {
 		if (tag.hasBody) {
-			InnerClassMeta inner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, tag.callbackArgs,
+			InnerClassMeta inner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex,
+					tag.callbackArgs,
 					tag.getBodyText());
+
 			if (inner == null)
 				throw new RuntimeException("compiler bug? " + tag.tagName + " not allowed to have instance of this tag");
-			
-//			String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
-//			String tagLine = tagVar + ".setOut(getOut()); "; // make sure to use the current string builder
-//							String tagClassName = tag.tagName;
-			String tagClassName = tag.tagName;
-			if (tagClassName.equals("this")) {
-				tagClassName = getTemplateClassMetaData().getClassName();
-			}
+			String tagVar = tag.getTagVarName();
+			String tagline = tagVar + ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + inner.getAnonymous() + ");";
 
-			String tagline = "";
 
-			if (getTemplateClassMetaData().useWithPlay) {
-				tagline = "((" + tagClassName + ")(new " + tagClassName + "(getOut()))";
-				tagline += ".setActionRunners(getActionRunners()))";
-			}
-			else {
-				tagline = "new " + tagClassName + "(getOut())";
-			}
-			tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + inner.getAnonymous() + ");";
-			
-			println(tagline);
+
+				// String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
+				// String tagLine = tagVar + ".setOut(getOut()); "; // make sure
+				// to
+				// use the current string builder
+				// String tagClassName = tag.tagName;
+//				String tagClassName = tag.tagName;
+//				if (tagClassName.equals("this")) {
+//					tagClassName = getTemplateClassMetaData().getClassName();
+//				}
+//
+//				String tagline = "";
+
+//				if (getTemplateClassMetaData().useWithPlay) {
+//					tagline = "((" + tagClassName + ")(new " + tagClassName + "(getOut()))";
+//					tagline += ".setActionRunners(getActionRunners()))";
+//				} else {
+//					tagline = "new " + tagClassName + "(getOut())";
+//				}
+//				tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + inner.getAnonymous() + ");";
+
+				println(tagline);
 		} else {
 			// for simple tag call without call back:
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
-			// the calling statement has been added in the regularTagInvoke() method
+			// the calling statement has been added in the regularTagInvoke()
+			// method
 		}
+		// is inside of def 
+		// retract the tag inner body class
+		TagDef def = getDefTag();
+		if (def != null) {
+			this.getTemplateClassMetaData().removeLastCallTagBodyInnerClass();
+		} 
+	}
+
+	private TagDef getDefTag() {
+		// recursively search the stack for def
+		Tag t;
+		try {
+			for (int i = tagsStack.size(); i > 0; i--) {
+				t = tagsStack.get(i - 1);
+				if (t instanceof TagDef) {
+					return (TagDef) t;
+				}
+			}
+		} catch (Exception e) {
+		}
+		return null;
 	}
 
 	/**
@@ -1036,7 +1074,7 @@ public abstract class JapidAbstractCompiler {
 
 	protected void endDef(Tag tag) {
 		if (tag.hasBody) { // must always
-			this.getTemplateClassMetaData().addDefTag(tag);
+			this.getTemplateClassMetaData().addDefTag((TagDef) tag);
 		}
 	}
 
@@ -1162,6 +1200,15 @@ public abstract class JapidAbstractCompiler {
 	 * @param tag
 	 */
 	protected void pushToStack(Tag tag) {
+		// if calling inside a def tag, put it in def
+		TagDef def = getDefTag();
+		if (def != null) {
+			if (tag instanceof TagDef) {
+				throw new RuntimeException("Syntax error: def tag cannot be nested in another def tag.");
+			}
+			def.tags.add(tag);
+		}
+
 		tagsStackShadow.push(tag);
 		if (!(tag instanceof TagIf))
 			tagsStack.push(tag);
@@ -1172,7 +1219,7 @@ public abstract class JapidAbstractCompiler {
 	 * check if the data type is primitive in a var declaration
 	 * 
 	 * @param decl
-	 *   int i,  int[] ia, etc
+	 *            int i, int[] ia, etc
 	 * @return
 	 */
 	static String cleanDeclPrimitive(String decl) {
@@ -1180,39 +1227,32 @@ public abstract class JapidAbstractCompiler {
 		int i = decl.length();
 		String var = "";
 		String type = "";
-		while (--i >=0) {
+		while (--i >= 0) {
 			char c = decl.charAt(i);
 			if (c == ' ' || c == '\t') {
-				var = decl.substring(i + 1); 
+				var = decl.substring(i + 1);
 				type = decl.substring(0, i).trim();
 				break;
 			}
 		}
 		if ("int".equals(type)) {
 			decl = "Integer " + var;
-		}
-		else if ("long".equals(type)) {
+		} else if ("long".equals(type)) {
 			decl = "Long " + var;
-		}
-		else if ("short".equals(type)) {
+		} else if ("short".equals(type)) {
 			decl = "Short " + var;
-		}
-		else if ("byte".equals(type)) {
+		} else if ("byte".equals(type)) {
 			decl = "Byte " + var;
-		}
-		else if ("float".equals(type)) {
+		} else if ("float".equals(type)) {
 			decl = "Float " + var;
-		}
-		else if ("double".equals(type)) {
+		} else if ("double".equals(type)) {
 			decl = "Double " + var;
-		}
-		else if ("char".equals(type)) {
+		} else if ("char".equals(type)) {
 			decl = "Character " + var;
-		}
-		else if ("boolean".equals(type)) {
+		} else if ("boolean".equals(type)) {
 			decl = "Boolean " + var;
 		}
-			
+
 		return decl;
 	}
 }

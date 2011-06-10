@@ -29,11 +29,17 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(getOut());
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-new japidviews._tags.Tag2(getOut()).render(s);
+_japidviews__tags_Tag20.render(s);
 // line 4
 p(" !\n" + 
 "\n");// line 4
