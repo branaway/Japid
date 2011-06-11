@@ -42,7 +42,8 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void onLoad() {
 		System.out.println("JapidPlugin.onload()");
-		beforeDetectingChanges();
+		if (Play.mode == Mode.DEV)
+			beforeDetectingChanges();
 		getDumpRequest();
 	}
 	

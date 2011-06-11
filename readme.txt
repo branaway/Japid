@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/11: V0.8.4.5: 
+    1. improvement: no detect changes at plugin load when running in PROD mode. Possibly a bug impacting GAE. 
 2011/6/8: V0.8.4.4: 
     1. improvement: made tag objects as method local objects and reuse them for better performance.
 2011/6/8: V0.8.4.3: 
