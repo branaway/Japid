@@ -6,10 +6,12 @@ Bing Ran<bing_ran@hotmail.com>
 
 h4. Document History
 
-# 2010/2/16, first draft
-# 2010/2/20, added a section for the enhanced @if@ statement 
-# 2010/2/22, edited; added "open for" 
-# 2010/2/24, the Elvis operator: ?: 
+# 2011/2/16, first draft
+# 2011/2/20, added a section for the enhanced @if@ statement 
+# 2011/2/22, edited; added "open for" 
+# 2011/2/24, the Elvis operator: ?: 
+# lots of other stuff
+# 2011/6/10, confirmed working with GAE
 
 h4. Reference
 
