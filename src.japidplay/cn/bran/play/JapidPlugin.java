@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 
+import play.Logger;
 import play.Play;
 import play.Play.Mode;
 import play.PlayPlugin;
@@ -36,19 +37,32 @@ public class JapidPlugin extends PlayPlugin {
 	private static AtomicLong lastTimeChecked = new AtomicLong(0);
 	// can be used to cache a plugin scoped valules
 	private static Map<String, Object> japidCache = new ConcurrentHashMap<String, Object>();
+
 	/**
 	 * pre-compile the templates so PROD mode would work
 	 */
 	@Override
 	public void onLoad() {
-		System.out.println("JapidPlugin.onload()");
-		if (Play.mode == Mode.DEV) {
-			System.out.println("[Japid] play in DEV mode. Detecting changes...");
-			beforeDetectingChanges();
-		}
-		getDumpRequest();
+		Logger.info("JapidPlugin.onload().");
+		 if (Play.mode == Mode.DEV) {
+			 Logger.info("[Japid] play in DEV mode. Detecting changes...");
+			 beforeDetectingChanges();
+		 }
+		 else {
+			 String isPrecompiling = System.getProperty("precompile");
+			 if (isPrecompiling != null && isPrecompiling.equals("yes")) {
+				 Logger.info("JapidPlugin in precompile: detect japid template changes.");
+				 beforeDetectingChanges();
+			 }
+		 }
+		 getDumpRequest();
 	}
-	
+
+	@Override
+	public void onConfigurationRead() {
+//		System.out.println("JapidPlugin.onConfigurationRead().");
+	}
+
 	public static Map<String, Object> getCache() {
 		return japidCache;
 	}
@@ -163,15 +177,15 @@ public class JapidPlugin extends PlayPlugin {
 				}
 			}
 		}
-		
-//		// shortcut 
-//		String path = Request.current().path;
-//		// System.out.println("request path:" + path);
-//		Matcher matcher = renderJapidWithPattern.matcher(path);
-//		if (matcher.matches()) {
-//			String template = matcher.group(1);
-//			JapidController.renderJapidWith(template);
-//		}
+
+		// // shortcut
+		// String path = Request.current().path;
+		// // System.out.println("request path:" + path);
+		// Matcher matcher = renderJapidWithPattern.matcher(path);
+		// if (matcher.matches()) {
+		// String template = matcher.group(1);
+		// JapidController.renderJapidWith(template);
+		// }
 	}
 
 	String dumpRequest = null;
