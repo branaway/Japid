@@ -42,8 +42,10 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void onLoad() {
 		System.out.println("JapidPlugin.onload()");
-		if (Play.mode == Mode.DEV)
+		if (Play.mode == Mode.DEV) {
+			System.out.println("[Japid] play in DEV mode. Detecting changes...");
 			beforeDetectingChanges();
+		}
 		getDumpRequest();
 	}
 	
