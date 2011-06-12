@@ -40,6 +40,9 @@ public class TagInvocationLineParser {
 
 		if (tag.tagName.equals("def")) {
 			tag = new Tag.TagDef();
+		} 
+		else if (tag.tagName.equals("set")) {
+			tag = new Tag.TagSet();
 		}
 		// let's parse the closure params
 		int vertline = line.lastIndexOf('|');

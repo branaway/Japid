@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import cn.bran.japid.compiler.JavaSyntaxTool;
+import cn.bran.japid.compiler.Tag;
+import cn.bran.japid.compiler.Tag.TagSet;
 
 /**
  * the class meta data for templates that are directly renderable, meaning this
@@ -46,6 +48,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	// there are the "#{set var:val /}
 	// <methName, methodBody
 	Map<String, String> setMethods = new HashMap<String, String>();
+	Map<String, TagSet> setTags = new HashMap<String, TagSet>();
 
 	// Experiment: allow any template to be callable as a tag and can handle
 	// doBody
@@ -54,8 +57,9 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	private char[] doBodyGenericTypeParams = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
 
 	//
-	public void addSetTag(String setMethodName, String methodBody) {
+	public void addSetTag(String setMethodName, String methodBody, TagSet tag) {
 		setMethods.put(setMethodName, methodBody);
+		setTags.put(setMethodName, tag);
 	}
 
 	// for the doBody in the tag template
@@ -83,6 +87,11 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			String meth = en.getKey();
 			String setBody = en.getValue();
 			pln("\t@Override protected void " + meth + "() {");
+			// local tag defs
+			TagSet set = setTags.get(meth);
+			for (Tag t: set.tags) {
+				declareTagInstance(t);
+			}
 			pln("\t\t" + setBody + ";");
 			pln("\t}");
 		}

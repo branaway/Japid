@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.TemplateClassMetaData;
+import cn.bran.japid.compiler.Tag.TagSet;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.RenderResult;
 
@@ -28,7 +29,7 @@ import cn.bran.japid.template.RenderResult;
  * as tags, assume ~{ if (xxx) { }~ ~{}}~ #{tags} with body will be compiled to
  * inner classes /anonymous class#{tags sdfs df /} don't create inner class
  * 
- * -- extends can take parnt.html or a java class direcly.
+ * -- extends can take parnt.html or a java class directly.
  * @author Bing Ran<bing_ran@hotmail.com>
  * @author Play! framework original authors
  */
@@ -63,7 +64,7 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 //						value = "\"" + value;
 //					if (!value.endsWith("\""))
 //						value = value + "\"";
-					this.tcmd.addSetTag(key, "p(" + value + ");");
+					this.tcmd.addSetTag(key, "p(" + value + ");", (TagSet) tag);
 				}
 			}
 			else {
@@ -72,7 +73,7 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 					tag.hasBody = false;
 					String key = matcher.group(1);
 					String value = matcher.group(2);
-					this.tcmd.addSetTag(key, "p(" + value + ");");
+					this.tcmd.addSetTag(key, "p(" + value + ");", (TagSet) tag);
 				}
 			}
 		} else if (tag.tagName.equals("def")) {
@@ -91,18 +92,6 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 	static Pattern setPattern = Pattern.compile("(\\w+)\\s+(.*)");
 	
 	@Override
-	protected boolean endTagSpecial(Tag tag) {
-		if ("set".equals(tag.tagName)) {
-			if (tag.hasBody) {
-				String key = tag.args;
-				this.tcmd.addSetTag(key, tag.getBodyText());
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
 	protected AbstractTemplateClassMetaData getTemplateClassMetaData() {
 		return tcmd;
 	}
@@ -119,6 +108,14 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		}
 		else {
 			super.scriptline(token);
+		}
+	}
+
+	@Override
+	void endSet(TagSet tag) {
+		if (tag.hasBody) {
+			String key = tag.args.replace("\"", "").replace("'", "");
+			this.tcmd.addSetTag(key, tag.getBodyText(), tag);
 		}
 	}
 

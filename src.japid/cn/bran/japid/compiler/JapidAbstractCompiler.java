@@ -24,6 +24,8 @@ import cn.bran.japid.classmeta.MimeTypeEnum;
 import cn.bran.japid.compiler.JapidParser.Token;
 import cn.bran.japid.compiler.Tag.TagDef;
 import cn.bran.japid.compiler.Tag.TagIf;
+import cn.bran.japid.compiler.Tag.TagInTag;
+import cn.bran.japid.compiler.Tag.TagSet;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
 import cn.bran.japid.template.RenderResult;
@@ -609,7 +611,8 @@ public abstract class JapidAbstractCompiler {
 						}
 					}
 				} catch (Exception e) {
-					System.out.println(e);
+					// should throw it out?
+					e.printStackTrace();
 				}
 			} else {
 				// OK plain Java code
@@ -1012,51 +1015,80 @@ public abstract class JapidAbstractCompiler {
 			String tagVar = tag.getTagVarName();
 			String tagline = tagVar + ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + inner.getAnonymous() + ");";
 
+			// String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
+			// String tagLine = tagVar + ".setOut(getOut()); "; // make sure
+			// to
+			// use the current string builder
+			// String tagClassName = tag.tagName;
+			// String tagClassName = tag.tagName;
+			// if (tagClassName.equals("this")) {
+			// tagClassName = getTemplateClassMetaData().getClassName();
+			// }
+			//
+			// String tagline = "";
 
+			// if (getTemplateClassMetaData().useWithPlay) {
+			// tagline = "((" + tagClassName + ")(new " + tagClassName +
+			// "(getOut()))";
+			// tagline += ".setActionRunners(getActionRunners()))";
+			// } else {
+			// tagline = "new " + tagClassName + "(getOut())";
+			// }
+			// tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args
+			// + ", " : "") + inner.getAnonymous() + ");";
 
-				// String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
-				// String tagLine = tagVar + ".setOut(getOut()); "; // make sure
-				// to
-				// use the current string builder
-				// String tagClassName = tag.tagName;
-//				String tagClassName = tag.tagName;
-//				if (tagClassName.equals("this")) {
-//					tagClassName = getTemplateClassMetaData().getClassName();
-//				}
-//
-//				String tagline = "";
-
-//				if (getTemplateClassMetaData().useWithPlay) {
-//					tagline = "((" + tagClassName + ")(new " + tagClassName + "(getOut()))";
-//					tagline += ".setActionRunners(getActionRunners()))";
-//				} else {
-//					tagline = "new " + tagClassName + "(getOut())";
-//				}
-//				tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + inner.getAnonymous() + ");";
-
-				println(tagline);
+			println(tagline);
 		} else {
 			// for simple tag call without call back:
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);
 			// the calling statement has been added in the regularTagInvoke()
 			// method
 		}
-		// is inside of def 
-		// retract the tag inner body class
-		TagDef def = getDefTag();
+		// is inside of a tag of own scope and retract the tag inner body class
+		TagInTag def = getTagInTag();
 		if (def != null) {
 			this.getTemplateClassMetaData().removeLastCallTagBodyInnerClass();
-		} 
+		}
 	}
+//
+//	private TagDef getDefTag() {
+//		// recursively search the stack for def
+//		Tag t;
+//		try {
+//			for (int i = tagsStack.size(); i > 0; i--) {
+//				t = tagsStack.get(i - 1);
+//				if (t instanceof TagDef) {
+//					return (TagDef) t;
+//				}
+//			}
+//		} catch (Exception e) {
+//		}
+//		return null;
+//	}
+//
+//	private TagSet getSetTag() {
+//		// recursively search the stack for set
+//		Tag t;
+//		try {
+//			for (int i = tagsStack.size(); i > 0; i--) {
+//				t = tagsStack.get(i - 1);
+//				if (t instanceof TagSet) {
+//					return (TagSet) t;
+//				}
+//			}
+//		} catch (Exception e) {
+//		}
+//		return null;
+//	}
 
-	private TagDef getDefTag() {
-		// recursively search the stack for def
+	private TagInTag getTagInTag() {
+		// recursively search the stack for TagInTag
 		Tag t;
 		try {
 			for (int i = tagsStack.size(); i > 0; i--) {
 				t = tagsStack.get(i - 1);
-				if (t instanceof TagDef) {
-					return (TagDef) t;
+				if (t instanceof TagInTag) {
+					return (TagInTag) t;
 				}
 			}
 		} catch (Exception e) {
@@ -1075,6 +1107,8 @@ public abstract class JapidAbstractCompiler {
 	protected void endDef(Tag tag) {
 		if (tag.hasBody) { // must always
 			this.getTemplateClassMetaData().addDefTag((TagDef) tag);
+		} else {
+			throw new RuntimeException("def tag must have a body");
 		}
 	}
 
@@ -1087,6 +1121,8 @@ public abstract class JapidAbstractCompiler {
 		// }
 		if (tagName.equals("def")) {
 			endDef(tag);
+		} else if (tagName.equals("set")) {
+			endSet((TagSet) tag);
 		} else if (tagName.equals("doBody")) {
 		} else if (tagName.equals("extends")) {
 		} else if (tagName.equals("get")) {
@@ -1103,6 +1139,8 @@ public abstract class JapidAbstractCompiler {
 		// tagIndex--;
 		skipLineBreak = true;
 	}
+
+	abstract void endSet(TagSet tag);
 
 	/**
 	 * sub class can detect special tag and return true to indicate the tag has
@@ -1200,13 +1238,13 @@ public abstract class JapidAbstractCompiler {
 	 * @param tag
 	 */
 	protected void pushToStack(Tag tag) {
-		// if calling inside a def tag, put it in def
-		TagDef def = getDefTag();
-		if (def != null) {
-			if (tag instanceof TagDef) {
-				throw new RuntimeException("Syntax error: def tag cannot be nested in another def tag.");
+		// if calling inside a TagInTag tag, put it in the scope
+		TagInTag tagtagf = getTagInTag();
+		if (tagtagf != null) {
+			if (tag instanceof TagInTag) {
+				throw new RuntimeException("Syntax error: def/set tag cannot be nested in another def/set tag.");
 			}
-			def.tags.add(tag);
+			tagtagf.tags.add(tag);
 		}
 
 		tagsStackShadow.push(tag);

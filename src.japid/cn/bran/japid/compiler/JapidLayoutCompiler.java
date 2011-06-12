@@ -16,6 +16,7 @@ package cn.bran.japid.compiler;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.classmeta.LayoutClassMetaData;
+import cn.bran.japid.compiler.Tag.TagSet;
 
 /**
  * Code partly from Play! Framework
@@ -71,6 +72,11 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 		else {
 			super.scriptline(token);
 		}
+	}
+
+	@Override
+	void endSet(TagSet tag) {
+		// should allow set in layout？
 	}
 
 }

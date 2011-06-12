@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tag {
+
 	static final String ROOT_TAGNAME = "_root";
 	public String tagName;
 	public int startLine;
@@ -57,11 +58,21 @@ public class Tag {
 		}
 
 	}
-
-	// the `def tag
-	public static class TagDef extends Tag {
+	/**
+	 *  the `def, `sett tag that has end up as methods thus a new scope for tags inside
+	 * @author Bing Ran<bing_ran@hotmail.com>
+	 *
+	 */
+	public static class TagInTag extends Tag {
 		public List<Tag> tags = new ArrayList<Tag>();
-		
+	}
+
+	/**
+	 * the def tag
+	 * @author Bing Ran<bing_ran@hotmail.com>
+	 *
+	 */
+	public static class TagDef extends TagInTag {
 		public TagDef() {
 			super();
 			tagName = "def";
@@ -69,14 +80,15 @@ public class Tag {
 		}
 		
 	}
-	
-	
-	// the "else if" might just be an if
-//	public static class TagElseIf extends Tag {
-//		public TagElseIf(String expr) {
-//			super();
-//			args = expr;
-//			tagName = "else if";
-//		}
-//	}
+	/**
+	 * the set tag
+	 * @author Bing Ran<bing_ran@hotmail.com>
+	 *
+	 */
+	public static class TagSet extends TagInTag {
+		public TagSet() {
+			super();
+			tagName = "set";
+		}
+	}
 }

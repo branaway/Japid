@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/11: V0.8.4.7: 
+    1. bug fix: tag invoke in @set was not properly scoped.  
 2011/6/11: V0.8.4.6: 
     1. improvement: always check file changes in pre-compiling mode so "play war", "play gae:deploy" work regardless of mode.  
 2011/6/11: V0.8.4.5: 

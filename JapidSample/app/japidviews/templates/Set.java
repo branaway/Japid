@@ -63,17 +63,20 @@ p("\n" +
 "\n");// line 8
 p("\n" + 
 "\n");// line 10
-p("\n" + 
-"\n");// line 13
-p("\n");// line 15
-// line 17
-;// line 19
+p("\n");// line 12
+// line 14
+;// line 16
 
 	}
 
 	@Override protected void footer() {
-		// line 17
-p("    great footer\n");// line 17
+final dummyTag _dummyTag2 = new dummyTag(getOut());
+{ _dummyTag2.setActionRunners(getActionRunners()); }
+
+		// line 14
+p("    great footer. Call a tag: ");// line 14
+_dummyTag2.render("me");
+// line 15
 ;
 	}
 	@Override protected void title() {

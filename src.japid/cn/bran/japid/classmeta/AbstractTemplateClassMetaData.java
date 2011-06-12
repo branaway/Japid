@@ -578,22 +578,7 @@ public abstract class AbstractTemplateClassMetaData {
 			
 			// define local tag instance
 			for(Tag t: tag.tags) {
-				String tagClassName = t.tagName;
-				String var = t.getTagVarName();
-				
-				
-				if (tagClassName.equals("this")) {
-					tagClassName = this.getClassName();
-				}
-				
-				String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
-				pln(decl);
-
-				if (useWithPlay) {
-					String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
-					pln(addRunner);
-				}
-				pln();
+				declareTagInstance(t);
 			}
 			
 			pln(tag.getBodyText());
@@ -601,6 +586,28 @@ public abstract class AbstractTemplateClassMetaData {
 			pln("return sb.toString();");
 			pln("}");
 		}
+	}
+
+	/**
+	 * @param t
+	 */
+	protected void declareTagInstance(Tag t) {
+		String tagClassName = t.tagName;
+		String var = t.getTagVarName();
+		
+		
+		if (tagClassName.equals("this")) {
+			tagClassName = this.getClassName();
+		}
+		
+		String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
+		pln(decl);
+
+		if (useWithPlay) {
+			String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
+			pln(addRunner);
+		}
+		pln();
 	}
 
 	/**
