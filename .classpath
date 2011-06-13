@@ -6,7 +6,7 @@
 	<classpathentry kind="src" path="plainjapid"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/javaparser-1.0.8.jar" sourcepath="lib/javaparser-1.0.8-src.zip"/>
-	<classpathentry kind="lib" path="lib.plain/org.eclipse.jdt.core_3.6.1.v_A68_R36x.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/play-git"/>
+	<classpathentry kind="lib" path="lib.plain/.org.eclipse.jdt.core_3.6.1.v_A68_R36x.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>
