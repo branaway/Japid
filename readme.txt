@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/11: V0.8.4.8: 
+    1. bug fix: the htmlentities.properties file was not included in ant build causing escape() to fail.  
 2011/6/11: V0.8.4.7: 
     1. bug fix: tag invoke in @set was not properly scoped.  
 2011/6/11: V0.8.4.6: 
