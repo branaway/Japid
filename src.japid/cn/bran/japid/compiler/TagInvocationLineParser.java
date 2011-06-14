@@ -71,6 +71,26 @@ public class TagInvocationLineParser {
 			tag.args = line;
 		}
 
+		
+		// check named arguments
+		if (tag.args.trim().length() > 2 && tag.args.contains("=")) {
+			try {
+				List<NamedArg> args = JavaSyntaxTool.parseNamedArgs(tag.args);
+				tag.namedArgs = args;
+				// let reformat the args to named("a1", a), named("a2", 12), etc
+				String ar = "";
+				for (NamedArg na : args) {
+					ar += na.toNamed() + ", ";
+				}
+				if (ar.endsWith(", ")) {
+					ar = ar.substring(0, ar.length() - 2);
+				}
+				tag.args = ar;
+			} catch (Exception e) {
+				// not a named arg list
+			}
+		}
+		
 		return tag;
 	}
 }

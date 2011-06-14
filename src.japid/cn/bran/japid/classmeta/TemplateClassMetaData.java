@@ -15,6 +15,7 @@ package cn.bran.japid.classmeta;
 
 import japa.parser.ast.body.Parameter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,10 +118,21 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	protected void renderMethod() {
 		String resultType = useWithPlay? RENDER_RESULT : "String";
 
+		String paramArray = "";
+		String currentClassFQN = this.packageName + "." + this.className;
+
 		if (renderArgs != null) {
 			// create fields for the render args and create a render method to
 			List<Parameter> params = JavaSyntaxTool.parseParams(this.renderArgs);
 
+			/// named param stuff
+			for (Parameter p: params) {
+				paramArray  += "\"" + p.getId() + "\", ";
+			}
+			String nameParamCode = String.format(NAMED_PARAM_CODE, paramArray, currentClassFQN);
+			pln(nameParamCode);
+			///
+			
 			for (Parameter p : params) {
 				pln(TAB + "private " + p.getType() + " " + p.getId() + ";");
 			}
@@ -141,6 +153,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				pln("\t\tthis." + p.getId() + " = " + p.getId() + ";");
 			}
 		} else {
+			String nameParamCode = String.format(NAMED_PARAM_CODE, paramArray, currentClassFQN);
+			pln(nameParamCode);
 			if (doBodyArgsString != null) {
 				// the field
 				pln(TAB + "DoBody body;");
@@ -157,9 +171,9 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t\t t = System.nanoTime();");
 		pln("\t\tsuper.layout(" + superClassRenderArgs +  ");");
 		if (stopWatch) {
-			pln("     	String l = \"\" + (System.nanoTime() - t) / 100000;\r\n" + 
-					"		int len = l.length();\r\n" + 
-					"		l = l.substring(0, len - 1) + \".\" +  l.substring(len - 1);\r\n" + 
+			pln("     	String l = \"\" + (System.nanoTime() - t) / 100000;\n" + 
+					"		int len = l.length();\n" + 
+					"		l = l.substring(0, len - 1) + \".\" +  l.substring(len - 1);\n" + 
 					"");
 			pln("\t\tSystem.out.println(\"[" + super.className + "] rendering time(ms): \" + l);");
 		}
@@ -224,4 +238,16 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		// concrete views do not have this
 	}
 
+	protected static final String NAMED_PARAM_CODE = "" +
+			"/* based on https://github.com/branaway/Japid/issues/12\n" + 
+			" * This static mapping will be later user in method renderModel to construct an proper Object[] array\n" + 
+			" *which is needed to invoke the method render(Object... args) over reflection.\n" + 
+			" */\n" +
+			"public static final String[] argNames = new String[] {/* args of the template*/%s };\r\n" + 
+			"public static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\r\n" + 
+			"{\r\n" + 
+			"	setRenderMethod(renderMethod);\r\n" + 
+			"	setArgNames(argNames);\r\n" + 
+			"}\n" + 
+			"////// end of named args stuff\n";
 }

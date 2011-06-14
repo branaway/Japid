@@ -17,6 +17,8 @@ import play.mvc.Controller;
 import play.mvc.Finally;
 import play.mvc.Http.Request;
 import play.mvc.results.RenderTemplate;
+import cn.bran.japid.compiler.NamedArg;
+import cn.bran.japid.compiler.NamedArgRuntime;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
@@ -97,6 +99,38 @@ public class JapidController extends Controller {
 		}
 	}
 
+	private static <T extends JapidTemplateBase> RenderResult invokeNamedArgsRender(Class<T> c, NamedArgRuntime[] args) {
+		int modifiers = c.getModifiers();
+		if (Modifier.isAbstract(modifiers)) {
+			throw new RuntimeException("Cannot init the template class since it's an abstract class: " + c.getName());
+		}
+		try {
+			// String methodName = "render";
+			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
+			StringBuilder sb = new StringBuilder(8000);
+			T t = ctor.newInstance(sb);
+			RenderResult rr = (RenderResult) RenderInvokerUtils.renderWithNamedArgs(t, args);
+			// RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t,
+			// methodName, args);
+			return rr;
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException("Could not match the arguments with the template args.");
+		} catch (InstantiationException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Could not instantiate the template object. Abstract?");
+		} catch (InvocationTargetException e) {
+			// e.printStackTrace();
+			Throwable e1 = e.getTargetException();
+			throw new RuntimeException("Could not invoke the template object:  ", e1);
+		} catch (Exception e) {
+			if (e instanceof RuntimeException)
+				throw (RuntimeException) e;
+			else
+				throw new RuntimeException("Could not invoke the template object: ",  e);
+			// throw new RuntimeException(e);
+		}
+	}
+
 	/**
 	 * just hide the result throwing
 	 * 
@@ -120,6 +154,11 @@ public class JapidController extends Controller {
 		renderJapidWith(action, objects);
 	}
 
+	protected static void renderJapidByName(NamedArgRuntime... namedArgs) {
+		String action = template();
+		renderJapidWith(action, namedArgs);
+	}
+
 	protected static void renderJapidEager(Object... objects) {
 		String action = template();
 		renderJapidWithEager(action, objects);
@@ -129,6 +168,10 @@ public class JapidController extends Controller {
 		throw new JapidResult(getRenderResultWith(template, args));
 	}
 
+	public static void renderJapidWith(String template, NamedArgRuntime[] namedArgs) {
+		throw new JapidResult(getRenderResultWith(template, namedArgs));
+	}
+	
 	public static void renderJapidWithEager(String template, Object... args) {
 		throw new JapidResult(getRenderResultWith(template, args)).eval();
 	}
@@ -204,6 +247,25 @@ public class JapidController extends Controller {
 		return null;
 	}
 
+	public static RenderResult getRenderResultWith(String template, NamedArgRuntime[] args) {
+		String templateClassName = getTemapletClassName(template);
+		ApplicationClass appClass = Play.classes.getApplicationClass(templateClassName);
+		if (appClass == null) {
+			String templateFileName = templateClassName.replace(DOT, '/') + HTML;
+			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
+		} else {
+			Class tClass = appClass.javaClass;
+			if (JapidTemplateBase.class.isAssignableFrom(tClass)) {
+				RenderResult rr;
+				// render(tClass, args);
+				rr = invokeNamedArgsRender(tClass, args);
+				return (rr);
+			} else {
+				throw new RuntimeException("The found class is not a Japid template class: " + templateClassName);
+			}
+		}
+		
+	}
 	/**
 	 * render parameters to the prescribed template and return the RenderResult
 	 * 
@@ -213,6 +275,29 @@ public class JapidController extends Controller {
 	 * @param args
 	 */
 	public static RenderResult getRenderResultWith(String template, Object... args) {
+		String templateClassName = getTemapletClassName(template);
+		ApplicationClass appClass = Play.classes.getApplicationClass(templateClassName);
+		if (appClass == null) {
+			String templateFileName = templateClassName.replace(DOT, '/') + HTML;
+			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
+		} else {
+			Class tClass = appClass.javaClass;
+			if (JapidTemplateBase.class.isAssignableFrom(tClass)) {
+				RenderResult rr;
+				// render(tClass, args);
+				rr = invokeRender(tClass, args);
+				return (rr);
+			} else {
+				throw new RuntimeException("The found class is not a Japid template class: " + templateClassName);
+			}
+		}
+	}
+
+	/**
+	 * @param template
+	 * @return
+	 */
+	private static String getTemapletClassName(String template) {
 		//
 		if (template == null || template.length() == 0) {
 			template = template();
@@ -239,21 +324,7 @@ public class JapidController extends Controller {
 				template : JapidPlugin.JAPIDVIEWS_ROOT + File.separator + template;
 
 		templateClassName = templateClassName.replace('/', DOT).replace('\\', DOT);
-		ApplicationClass appClass = Play.classes.getApplicationClass(templateClassName);
-		if (appClass == null) {
-			String templateFileName = templateClassName.replace(DOT, '/') + HTML;
-			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
-		} else {
-			Class tClass = appClass.javaClass;
-			if (JapidTemplateBase.class.isAssignableFrom(tClass)) {
-				RenderResult rr;
-				// render(tClass, args);
-				rr = invokeRender(tClass, args);
-				return (rr);
-			} else {
-				throw new RuntimeException("The found class is not a Japid template class: " + templateClassName);
-			}
-		}
+		return templateClassName;
 	}
 
 	// protected static String caller() {
@@ -517,5 +588,9 @@ public class JapidController extends Controller {
 	 */
 	public static String genCacheKey() {
 		return "japidcache:" + Request.current().action + ":" + Request.current().querystring;
+	}
+	
+	protected static NamedArgRuntime named(String name, Object val) {
+		return new NamedArgRuntime(name, val);
 	}
 }

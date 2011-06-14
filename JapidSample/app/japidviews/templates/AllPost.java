@@ -49,6 +49,18 @@ public class AllPost extends Layout
 	public AllPost(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"blogTitle", "allPost",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.AllPost.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	private String blogTitle;
 	private List<Post> allPost;
 	public cn.bran.japid.template.RenderResult render(
@@ -103,7 +115,7 @@ p(";\n" +
 // line 14
 }// line 17
 p("\n");// line 17
-_Tag22.render(blogTitle);
+_Tag22.render(named("msg", blogTitle), named("m2", "msg2"), named("age", 10000));
 // line 19
 p("\n" + 
 "<p>cool</p>");// line 19

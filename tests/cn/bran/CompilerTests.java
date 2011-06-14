@@ -321,6 +321,21 @@ public class CompilerTests {
 //		assertTrue(bt.javaSource.contains("@Override protected void message() {"));
 //		assertTrue(bt.javaSource.contains("@Override protected void title() {"));
 	}
+
+	@Test
+	public void testNamedParams() throws IOException, ParseException {
+		String srcFile = "tests/namedParam.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("tests/namedParam.html", src);
+		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+		
+		assertTrue(bt.javaSource.contains("_person0.render(named(\"name\", \"Bing\"), named(\"age\", foo(18)))"));
+//		assertTrue(bt.javaSource.contains("@Override protected void title() {"));
+	}
 	
 	@Test
 	public void testDefDirective() throws IOException, ParseException {

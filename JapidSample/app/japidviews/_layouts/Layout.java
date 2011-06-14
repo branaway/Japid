@@ -49,14 +49,13 @@ public abstract class Layout extends cn.bran.japid.template.JapidTemplateBase
 		super(out);
 	}
 	@Override public void layout() {
-		p("\n" + 
-"I'm the layout.\n" + 
+		p(" I'm the layout.\n" + 
 "<p>The title is: ");// line 1
 	title();p("</p>\n" + 
 "<div >\n" + 
-"    ");// line 3
+"    ");// line 2
 	doLayout();
-p("</div>\n");// line 5
+p("</div>\n");// line 4
 	}
 	 protected void title() {};
 

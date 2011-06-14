@@ -48,6 +48,18 @@ public class scriptline extends scriptlineLayout
 	public scriptline(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/ };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.MyController.scriptline.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
@@ -68,10 +80,10 @@ final Tag2 _Tag22 = new Tag2(getOut());
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-_Tag21.render("123");
+_Tag21.render(named("msg", "123"));
 // line 4
 p(" a  ");// line 4
-_Tag22.render("456");
+_Tag22.render(named("msg", "456"));
 // line 4
 p("!\n" + 
 "this is how to print a single back quote: ");// line 4

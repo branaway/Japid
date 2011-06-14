@@ -49,6 +49,18 @@ public class renderByPosition extends cn.bran.japid.template.JapidTemplateBase
 	public renderByPosition(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"ss", "ii", "au1", "au2", "au22",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.renderByPosition.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	private String ss;
 	private int ii;
 	private Author au1;

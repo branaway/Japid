@@ -21,6 +21,9 @@ public class Tag {
 	public String args = "";
 	public int tagIndex;
 
+	// null == not named args
+	List<NamedArg> namedArgs = null;
+	
 	public String getBodyText() {
 		if (!hasBody)
 			return null;

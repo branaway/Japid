@@ -6,6 +6,7 @@ import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.body.ModifierSet;
 import japa.parser.ast.body.Parameter;
+import japa.parser.ast.expr.AssignExpr;
 import japa.parser.ast.expr.Expression;
 import japa.parser.ast.expr.MethodCallExpr;
 import japa.parser.ast.type.Type;
@@ -121,6 +122,52 @@ public class JavaSyntaxTool {
 			cu.accept(visitor, null);
 		} catch (ParseException e) {
 			throw new RuntimeException("the line does not seem to be a valid arg list: " + line);
+		}
+		return ret;
+	}
+
+	/**
+	 * 
+	 * @param line
+	 * @return list of named args  or an exception is thrown if the input is not a valid named arg list.
+	 */
+	public static List<NamedArg> parseNamedArgs(String line) {
+		final List<NamedArg> ret = new ArrayList<NamedArg>();
+		if (line == null || line.trim().length() == 0)
+			return ret;
+		
+		line = line.trim();
+		if (line.startsWith("(")) {
+			if (line.endsWith(")"))
+				line = line.substring(1, line.length() - 1);
+			else
+				throw new RuntimeException("no closing ')' in arg expression: " + line);
+		}
+		
+		String cl = String.format(classTempForArgs, line);
+		try {
+			CompilationUnit cu = parse(cl);
+			VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+				@Override
+				public void visit(MethodCallExpr n, Object arg) {
+					List<Expression> args = n.getArgs();
+					// api issue: args can be null in case of empty arg list
+					if (args != null)
+						for (Expression e : args) {
+							if (e instanceof AssignExpr) {
+								AssignExpr ae = (AssignExpr)e;
+								NamedArg na = new NamedArg(ae.getTarget(), ae.getValue());
+								ret.add(na);
+							}
+							else {
+								throw new RuntimeException("the line does not seem to be a valid named arg list: not a named arg: " + e);
+							}
+						}
+				}
+			};
+			cu.accept(visitor, null);
+		} catch (ParseException e) {
+			throw new RuntimeException("the line does not seem to be a valid named arg list: " + line + ". " + e.getMessage());
 		}
 		return ret;
 	}

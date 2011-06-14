@@ -320,7 +320,7 @@ public class Application extends JapidController {
 		   validation.required("name/姓名", name);
 		   validation.required("age/年龄", age);
 		   validation.min("age", age, 10);
-		   renderJapid(name, age);
+		   renderJapidByName(named("name", name), named("age", age));
 	}
 	
 	public static void reverseUrl() {

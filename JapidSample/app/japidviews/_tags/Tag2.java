@@ -48,9 +48,25 @@ public class Tag2 extends cn.bran.japid.template.JapidTemplateBase
 	public Tag2(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"msg", "m2", "age",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.Tag2.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	private String msg;
-	public cn.bran.japid.template.RenderResult render(String msg) {
+	private String m2;
+	private Integer age;
+	public cn.bran.japid.template.RenderResult render(String msg, String m2, Integer age) {
 		this.msg = msg;
+		this.m2 = m2;
+		this.age = age;
 		long t = -1;
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
@@ -60,7 +76,14 @@ public class Tag2 extends cn.bran.japid.template.JapidTemplateBase
 ;// line 1
 p("<span>");// line 1
 p(msg);// line 2
-p("</span>");// line 2
+p("</span>\n" + 
+"<span>");// line 2
+p(m2);// line 3
+p("</span>\n" + 
+"<span>");// line 3
+p(age);// line 4
+p("</span>\n" + 
+"\n");// line 4
 
 	}
 

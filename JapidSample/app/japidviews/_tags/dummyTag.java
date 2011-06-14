@@ -48,6 +48,18 @@ public class dummyTag extends cn.bran.japid.template.JapidTemplateBase
 	public dummyTag(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"a",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.dummyTag.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	private String a;
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;

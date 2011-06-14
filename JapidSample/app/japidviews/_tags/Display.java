@@ -48,6 +48,18 @@ public class Display extends TagLayout
 	public Display(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"post", "as",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.Display.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	private models.japidsample.Post post;
 	private String as;
 	private DoBody body;

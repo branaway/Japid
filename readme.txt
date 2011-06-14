@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/14: V0.8.5 
+    1. new feature(experimental): invoke tags with named arguments: `tag myTag(name="my name", age=20). If one argument is named, all must be named. Missed args default to nulls.
 2011/6/11: V0.8.4.8: 
     1. bug fix: the htmlentities.properties file was not included in ant build causing escape() to fail.  
     2. improvement: excluded the JDT core jar from the final module package to reduce the size.

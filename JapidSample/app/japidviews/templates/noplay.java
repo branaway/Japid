@@ -20,6 +20,18 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	public noplay(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"s",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.noplay.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	private String s;
 	public String render(String s) {
 		this.s = s;
@@ -39,7 +51,7 @@ final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-_japidviews__tags_Tag20.render(s);
+_japidviews__tags_Tag20.render(named("msg", s));
 // line 4
 p(" !\n" + 
 "\n");// line 4

@@ -135,4 +135,30 @@ public class JavaSyntaxValidatorTest {
 		assertEquals("b + 123", args.get(1));
 		assertEquals("foo('d', \"hello\")", args.get(2));
 	}
+
+	@Test
+	public void testParseNamedArgs() {
+		String src = "a1 =a, a2= b + 123, a3 = foo('d', \"hello\")";
+		List<NamedArg> args = JavaSyntaxTool.parseNamedArgs(src);
+		
+		for (NamedArg a: args) {
+			System.out.println(a);
+		}
+		
+		assertEquals(3, args.size());
+		assertEquals("a1", args.get(0).name);
+		assertEquals("a", args.get(0).valExpr);
+		assertEquals("b + 123", args.get(1).valExpr);
+		assertEquals("foo('d', \"hello\")", args.get(2).valExpr);
+
+		// invalid format
+		src = "a1, a2= b";
+		try {
+			args = JavaSyntaxTool.parseNamedArgs(src);
+			fail("shoudl have thrown an exception");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+	}
 }

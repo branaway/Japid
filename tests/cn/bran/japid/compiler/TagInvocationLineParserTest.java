@@ -137,4 +137,12 @@ public class TagInvocationLineParserTest {
 		assertNull(t.callbackArgs);
 	}
 	
+	@Test
+	public void testNamedArgs() {
+		String src = "tag name=\"a\", age=b + 1";
+		Tag t = p.parse(src);
+		assertEquals("tag", t.tagName);
+		assertEquals("named(\"name\", \"a\"), named(\"age\", b + 1)", t.args);
+	}
+	
 }

@@ -48,6 +48,18 @@ public class perf extends perfmain
 	public perf(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"title", "user", "entries",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.Perf.perf.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	private String title;
 	private DataModel.User user;
 	private ArrayList<DataModel.Entry> entries;

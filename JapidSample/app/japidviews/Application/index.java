@@ -48,6 +48,18 @@ public class index extends cn.bran.japid.template.JapidTemplateBase
 	public index(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/ };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.index.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		 t = System.nanoTime();
@@ -62,20 +74,21 @@ public class index extends cn.bran.japid.template.JapidTemplateBase
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("<h2>Some Samples that demonstrate Japid features.</h2>\n" + 
+p("\n" + 
+"<h2>Some Samples that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
 "source code.</p>\n" + 
 "\n" + 
 "<ul>\n" + 
 "	<li><a href=\"");// line 1
-p(lookup("hello", new Object[]{}));// line 8
+p(lookup("hello", new Object[]{}));// line 9
 p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
 "	<li><a href=\"application/callTag\">using tags in a template</a></li>\n" + 
 "	<li><a href=\"renderJapidWith/templates/def.html\"><em>def</em>\n" + 
 "	tag: define a method that return a string that can be invoked from\n" + 
-"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 8
+"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 9
 p("\n" + 
 "	<li><a href=\"more.Portlets/index\">demo how to composite a\n" + 
 "	page with independent segments with the <b>invoke</b> tag</a></li>\n" + 
@@ -117,10 +130,10 @@ p("\n" +
 "	dontRedirect() from JapidController</a></li>\n" + 
 "	<li><a href=\"renderJapidWith/templates/openBrace.html\"> use\n" + 
 "	`{ in if and while </a></li>\n" + 
-"	<li><a href=\"application/escapedExpr\"> ");// line 18
+"	<li><a href=\"application/escapedExpr\"> ");// line 19
 p("\n" + 
 "	raw expression with ${} and html-safe expression with ~{}\n" + 
-"	");// line 59
+"	");// line 60
 p("	</li>\n" + 
 "	<li><a href=\"more.ContentNegotiation/index\"> content\n" + 
 "	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
@@ -134,33 +147,33 @@ p("	</li>\n" +
 "	in layout spec and tags</a>: prefix the layout name or the tag name with a\n" + 
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
-"\n");// line 61
-String na = "bran";// line 76
-int ag = 123;// line 77
-p("	<li><a href=\"");// line 77
-p(lookup("validate", na, ag));// line 78
+"\n");// line 62
+String na = "bran";// line 77
+int ag = 123;// line 78
+p("	<li><a href=\"");// line 78
+p(lookup("validate", na, ag));// line 79
 p("\">validation and errors</a></li>\n" + 
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"application/flashgood\">flash with success</a></li>\n" + 
 "			<li><a href=\"application/flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"application/flashmsg\">flash with a message</a></li>\n" + 
-"			<li><a href=\"");// line 78
-p(lookup("reverseUrl", new Object[]{}));// line 84
+"			<li><a href=\"");// line 79
+p(lookup("reverseUrl", new Object[]{}));// line 85
 p("\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
-"	   ");// line 84
- SearchParams sp = new  SearchParams("key1, key2", "AND");// line 88
-p("	   <a href=\"");// line 88
-p(lookup("search", sp));// line 89
+"	   ");// line 85
+ SearchParams sp = new  SearchParams("key1, key2", "AND");// line 89
+p("	   <a href=\"");// line 89
+p(lookup("search", sp));// line 90
 p("\">reverse URL lookup with complex object</a>\n" + 
 "	</li>\n" + 
-"    ");// line 89
+"    ");// line 90
 p("\n" + 
 "</ul>\n" + 
-"\n");// line 92
+"\n");// line 93
 
 	}
 

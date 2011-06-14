@@ -665,13 +665,13 @@ Back to the view template:
 *user.html*
 
 <pre><code>
-`import models.mymodels.User
-`extends master
-`args User user, int count
+@import models.mymodels.User
+@extends master
+@(User user, int count)
 
-`for (int i > 0; i < count; i++) {
-    hello $user.name, and you are `tag showAge user.age`.
-`}
+@for (int i > 0; i < count; i++) {
+    hello $user.name, and you are @tag showAge user.age @.
+@}
 </code></pre>
 
 In the body of the for loop we are invoking a @tag@ called @showAge@. Think of a tag as a function defined in a separate file. Here is the tag file:
@@ -679,7 +679,7 @@ In the body of the for loop we are invoking a @tag@ called @showAge@. Think of a
 *showAge.html*
 
 <pre><code>
-`args int age
+@(int age)
 you are $age years old
 </code></pre>
 
@@ -697,7 +697,14 @@ And the @`tag@ command can be further cut short as @`t@ as in:
 
 Note: the closing @`@ can be omitted if there is no other letters in the rest of the current line, for a new-line character is a valid tag closing symbol.
 
+Since version 0.8.5, Japid also supports invoking tags with @named arguments@: 
 
+@`t tagName(argName1=arg1, argName2=arg2...)`@
+
+The caller side does not need to provides arguments for all the parameters. The missing ones default to null.  
+
+Note: you cannot mix these two conventions. You either use arguments without any name prefix or all the arguments must the named format. 
+ 
 
 h4. locating a tag file
 
@@ -1290,7 +1297,7 @@ The @renderJapid@ makes binding to the default template a lot easier as shown be
     }
 </pre>
 
-Note: the Play!'s default rendering engine binds the arguments *by name*. This means one must give any objects to be passed to the template a name or the template engine won't find them. In contrast Japid conveniently binds arguments by position, just like in any java method invocations. One does't need to match the names of the variables in the action with those in the templates. 
+Note: the Play!'s default rendering engine binds the arguments *by name*. This means one must give any objects to be passed to the template a name or the template engine won't find them. In contrast Japid implicit argument binding binds arguments by position, just like in any java method invocations. One does't need to match the names of the variables in the action with those in the templates. 
 
 * Pros:
 *# a lot shorter.
@@ -1355,6 +1362,18 @@ The below example demonstrates all ways of template bindings:
 </pre>
 
 In the above example, when @cond1 == true@, the template to render with is @foo.html@; when @cond2 == true@, @bar.html@ will be used to render the data, etc. Note, @JapidController.dontRedirect()@ must be called to avoid an HTTP *redirect*, since calling another action in Play! runtime will trigger an HTTP redirect. Please note, Play!'s original author does not like action chaining for some reason. In fact there is no way to do action chaining without creating an HTTP redirect with the classic Play! controllers. The @dontRedirect()@ opens up the possibility.
+
+h3. Invoking Templates with Named Argument
+
+Since version 0.8.5, I have added support for invoking templates/tags with named arguments. 
+
+<pre>
+    renderJapidByName(named("name", "my name"), named("age", 100));
+</pre>
+
+As of now, we're not using the parameter name discovery mechanism provided by Play's name enhancer. 
+
+The above calling convention offers a little advantage in that developers can omit some arguments provided they're null. 
 
 
 h2. Invoking Actions in Templates

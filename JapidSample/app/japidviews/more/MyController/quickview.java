@@ -49,6 +49,18 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 	public quickview(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ * This static mapping will be later user in method renderModel to construct an proper Object[] array
+ *which is needed to invoke the method render(Object... args) over reflection.
+ */
+public static final String[] argNames = new String[] {/* args of the template*/ };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.MyController.quickview.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+}
+////// end of named args stuff
+
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
