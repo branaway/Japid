@@ -21,14 +21,14 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 		super(out);
 	}
 /* based on https://github.com/branaway/Japid/issues/12
- * This static mapping will be later user in method renderModel to construct an proper Object[] array
- *which is needed to invoke the method render(Object... args) over reflection.
  */
 public static final String[] argNames = new String[] {/* args of the template*/"s",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.noplay.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
+	setArgTypes(argTypes);
 }
 ////// end of named args stuff
 

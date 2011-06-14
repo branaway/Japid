@@ -26,6 +26,7 @@ Whenever you upgrade the Japid module,
 
 2011/6/14: V0.8.5 
     1. new feature(experimental): invoke tags with named arguments: `tag myTag(name="my name", age=20). If one argument is named, all must be named. Missed args default to nulls.
+    2. improvement(experimental): primitives and Strings have intuitive defaults now if they are missing for the named args.
 2011/6/11: V0.8.4.8: 
     1. bug fix: the htmlentities.properties file was not included in ant build causing escape() to fail.  
     2. improvement: excluded the JDT core jar from the final module package to reduce the size.
@@ -56,7 +57,7 @@ Whenever you upgrade the Japid module,
     1. bug fix: the "stopwatch" directive used System.milliSeconds(), which might be too raw. Now use nanoTime();
 2011/4/20: V0.8.2.0: now compatible with 1.2.x only for the route lookup syntax: "@action()"
     1. Compatibility fix: The unbinder in the current trunk of Play requires annotations as the last param. Added in the ActionBridge to make compatible. 
-    2. bug fix: the "open for" loop did not take primitive elements. Now the compiler smartly boxes the primitive type.   
+    2. bug fix: the "open for" loop did not take primitive elements. Now the compiler smartly boxes the primitive types.   
 2011/4/1: V0.8.1.2: 
     1. bug fix: now the template always return RenderResultPartial and evaluate the action runners to make sure the super class's action runners get evaluated    
 

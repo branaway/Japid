@@ -18,12 +18,12 @@ import controllers.*;
 import play.mvc.Http.*;
 import japidviews._javatags.*;
 //
-// NOTE: This file was generated from: japidviews/_tags/moreTag.html
+// NOTE: This file was generated from: japidviews/_tags/tagPrimitives.html
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class moreTag extends cn.bran.japid.template.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/_tags/moreTag.html";
+public class tagPrimitives extends cn.bran.japid.template.JapidTemplateBase
+{	public static final String sourceTemplate = "japidviews/_tags/tagPrimitives.html";
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
@@ -42,17 +42,17 @@ public class moreTag extends cn.bran.japid.template.JapidTemplateBase
 // - end of implicit fields with Play 
 
 
-	public moreTag() {
+	public tagPrimitives() {
 		super(null);
 	}
-	public moreTag(StringBuilder out) {
+	public tagPrimitives(StringBuilder out) {
 		super(out);
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/"s",  };
-public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.moreTag.class);
+public static final String[] argNames = new String[] {/* args of the template*/"s", "i", "ii", "d", "dd", "b", "bb", "map", "f",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "int", "Integer", "double", "Double", "boolean", "Boolean", "Map<Object, String>", "float",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.tagPrimitives.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
@@ -61,13 +61,35 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 ////// end of named args stuff
 
 	private String s;
-	private DoBody body;
-	public static interface DoBody<A> {
-		 void render(A a);
-	}
-	public cn.bran.japid.template.RenderResult render(String s, DoBody body) {
-		this.body = body;
+	private int i;
+	private Integer ii;
+	private double d;
+	private Double dd;
+	private boolean b;
+	private Boolean bb;
+	private Map<Object, String> map;
+	private float f;
+	public cn.bran.japid.template.RenderResult render(
+    String s, 
+    int i, 
+    Integer ii,
+    double d,
+    Double dd,
+    boolean b,
+    Boolean bb,
+    Map<Object, String> map,
+    float f
+    
+) {
 		this.s = s;
+		this.i = i;
+		this.ii = ii;
+		this.d = d;
+		this.dd = dd;
+		this.b = b;
+		this.bb = bb;
+		this.map = map;
+		this.f = f;
 		long t = -1;
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
@@ -76,16 +98,32 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 //------
 ;// line 1
 p("\n" + 
-"<p/>\n" + 
-"ok\n" + 
 "\n" + 
-"<p/>\n" + 
-"\n");// line 1
-if (body != null)
-	body.render(s);
-p("\n" + 
-"<p/>\n" + 
-"mmm\n");// line 8
+"<div>");// line 12
+p(s);// line 14
+p("</div>\n" + 
+"<div>");// line 14
+p(i);// line 15
+p(", ");// line 15
+p(ii);// line 15
+p("</div>\n" + 
+"<div>");// line 15
+p(d);// line 16
+p(", ");// line 16
+p(dd);// line 16
+p("</div>\n" + 
+"<div>");// line 16
+p(b);// line 17
+p(", ");// line 17
+p(bb);// line 17
+p("</div>\n" + 
+"<div>");// line 17
+p(map);// line 18
+p("</div>\n" + 
+"<div>");// line 18
+p(f);// line 19
+p("</div>\n" + 
+"\n");// line 19
 
 	}
 

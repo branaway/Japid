@@ -49,14 +49,14 @@ public class validate extends cn.bran.japid.template.JapidTemplateBase
 		super(out);
 	}
 /* based on https://github.com/branaway/Japid/issues/12
- * This static mapping will be later user in method renderModel to construct an proper Object[] array
- *which is needed to invoke the method render(Object... args) over reflection.
  */
 public static final String[] argNames = new String[] {/* args of the template*/"name", "age",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "Integer",  };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.validate.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
+	setArgTypes(argTypes);
 }
 ////// end of named args stuff
 
@@ -72,6 +72,8 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	@Override protected void doLayout() {
 //------
 ;// line 1
+p("\n" + 
+"\n");// line 1
 if(asBoolean(hasErrors())) {// line 3
 p("    <p>Got some errors:</p>\n" + 
 "    ");// line 3

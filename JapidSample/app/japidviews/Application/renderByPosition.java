@@ -50,14 +50,14 @@ public class renderByPosition extends cn.bran.japid.template.JapidTemplateBase
 		super(out);
 	}
 /* based on https://github.com/branaway/Japid/issues/12
- * This static mapping will be later user in method renderModel to construct an proper Object[] array
- *which is needed to invoke the method render(Object... args) over reflection.
  */
 public static final String[] argNames = new String[] {/* args of the template*/"ss", "ii", "au1", "au2", "au22",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "int", "Author", "Author", "Author2",  };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.renderByPosition.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
+	setArgTypes(argTypes);
 }
 ////// end of named args stuff
 
@@ -77,6 +77,13 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut());
+{ _tagPrimitives0.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 ;// line 1
@@ -95,7 +102,11 @@ p(au2.name);// line 6
 p(", ");// line 6
 p(au22.who);// line 6
 p("\n" + 
+"\n" + 
+"<p>Lets call a tag by name:</p>\n" + 
 "\n");// line 6
+_tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6));
+// line 10
 
 	}
 

@@ -49,14 +49,14 @@ public class ifs extends cn.bran.japid.template.JapidTemplateBase
 		super(out);
 	}
 /* based on https://github.com/branaway/Japid/issues/12
- * This static mapping will be later user in method renderModel to construct an proper Object[] array
- *which is needed to invoke the method render(Object... args) over reflection.
  */
 public static final String[] argNames = new String[] {/* args of the template*/"str", "col", "b", "a1", "a2", "i", "s2",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "Collection", "boolean", "Object[]", "int[]", "int", "String",  };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.ifs.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
+	setArgTypes(argTypes);
 }
 ////// end of named args stuff
 

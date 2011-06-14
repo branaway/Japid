@@ -118,7 +118,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	protected void renderMethod() {
 		String resultType = useWithPlay? RENDER_RESULT : "String";
 
-		String paramArray = "";
+		String paramNameArray = "";
+		String paramTypeArray = "";
 		String currentClassFQN = this.packageName + "." + this.className;
 
 		if (renderArgs != null) {
@@ -127,9 +128,10 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
 			/// named param stuff
 			for (Parameter p: params) {
-				paramArray  += "\"" + p.getId() + "\", ";
+				paramNameArray  += "\"" + p.getId() + "\", ";
+				paramTypeArray  += "\"" + p.getType() + "\", ";
 			}
-			String nameParamCode = String.format(NAMED_PARAM_CODE, paramArray, currentClassFQN);
+			String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, currentClassFQN);
 			pln(nameParamCode);
 			///
 			
@@ -153,7 +155,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				pln("\t\tthis." + p.getId() + " = " + p.getId() + ";");
 			}
 		} else {
-			String nameParamCode = String.format(NAMED_PARAM_CODE, paramArray, currentClassFQN);
+			String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, currentClassFQN);
 			pln(nameParamCode);
 			if (doBodyArgsString != null) {
 				// the field
@@ -240,14 +242,14 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
 	protected static final String NAMED_PARAM_CODE = "" +
 			"/* based on https://github.com/branaway/Japid/issues/12\n" + 
-			" * This static mapping will be later user in method renderModel to construct an proper Object[] array\n" + 
-			" *which is needed to invoke the method render(Object... args) over reflection.\n" + 
 			" */\n" +
 			"public static final String[] argNames = new String[] {/* args of the template*/%s };\r\n" + 
+			"public static final String[] argTypes = new String[] {/* arg types of the template*/%s };\r\n" + 
 			"public static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\r\n" + 
 			"{\r\n" + 
 			"	setRenderMethod(renderMethod);\r\n" + 
 			"	setArgNames(argNames);\r\n" + 
+			"	setArgTypes(argTypes);\r\n" + 
 			"}\n" + 
 			"////// end of named args stuff\n";
 }
