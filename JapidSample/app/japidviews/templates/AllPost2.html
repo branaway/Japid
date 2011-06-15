@@ -8,7 +8,7 @@
 `if (allPost.size() > 0 ) {
 	<p></p>
 	`for (Post p: allPost) {
-	    `tag Display p, "home" |String title
+	    `tag Display post=p, as="home" |String title
 			<p>The real title is: $title;</p>
 	    `
 	`}

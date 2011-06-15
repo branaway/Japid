@@ -203,7 +203,15 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 					}
 				}
 				else {
-					return m;
+					boolean hasNamedArg = false;
+					for (Class<?> c : parameterTypes) {
+						if (c == NamedArgRuntime.class || c == NamedArgRuntime[].class) {
+							hasNamedArg = true;
+							break;
+						}
+					}
+					if (!hasNamedArg)
+						return m;
 				}
 			}
 		}
@@ -255,7 +263,15 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	public cn.bran.japid.template.RenderResult render(NamedArgRuntime... named) {
 	    // a static utils method of JapidModelMap to build up an Object[] array. Nulls are used where the args are omitted.
 	    Object[] args = buildArgs(named);
-	    try {
+	    return runRenderer(args);
+	}
+
+	/**
+	 * @param args
+	 * @return
+	 */
+	protected cn.bran.japid.template.RenderResult runRenderer(Object[] args) {
+		try {
 			return (cn.bran.japid.template.RenderResult ) renderMethodInstance.invoke(this, args);
 		} catch (IllegalArgumentException e) {
 			throw new RuntimeException(e);
@@ -306,6 +322,15 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 			vs +="]";
 			throw new RuntimeException("One or more argument names are not valid: " + ks + ". Valid argument names are: " + vs);
 		}
+		return ret;
+	}
+	
+	protected Object[] buildArgs(NamedArgRuntime[] named, Object body) {
+		Object[] obsNoBody = buildArgs(named);
+		int len = obsNoBody.length;
+		Object[] ret = new Object[len + 1];
+		System.arraycopy(obsNoBody, 0, ret, 0, len);
+		ret[len] = body;
 		return ret;
 	}
 

@@ -1006,14 +1006,21 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void endRegularTag(Tag tag) {
 		if (tag.hasBody) {
-			InnerClassMeta inner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex,
+			InnerClassMeta bodyInner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex,
 					tag.callbackArgs,
 					tag.getBodyText());
 
-			if (inner == null)
+			if (bodyInner == null)
 				throw new RuntimeException("compiler bug? " + tag.tagName + " not allowed to have instance of this tag");
 			String tagVar = tag.getTagVarName();
-			String tagline = tagVar + ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + inner.getAnonymous() + ");";
+			
+			String tagline = tagVar; 
+			if (tag.argsNamed()) {
+				tagline += ".render(" + bodyInner.getAnonymous() + ", " + (WebUtils.asBoolean(tag.args) ? tag.args: "") +");";
+			}
+			else {
+				tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + bodyInner.getAnonymous() + ");";
+			}
 
 			// String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
 			// String tagLine = tagVar + ".setOut(getOut()); "; // make sure

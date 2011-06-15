@@ -91,7 +91,7 @@ p("	<p></p>\n" +
 "	");// line 8
 for (Post p: allPost) {// line 10
 p("	    ");// line 10
-_Display1.render(p, "home", new Display.DoBody<String>(){
+_Display1.render(new Display.DoBody<String>(){
 public void render(final String title) {
 // line 11
 p("			<p>The real title is: ");// line 11
@@ -101,7 +101,7 @@ p(";</p>\n" +
 
 }
 }
-);
+, named("post", p), named("as", "home"));
 // line 11
 p("	");// line 13
 }// line 14

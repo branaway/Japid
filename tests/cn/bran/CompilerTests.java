@@ -237,6 +237,20 @@ public class CompilerTests {
 	}
 
 	@Test
+	public void testTagNamedArgsWithBody() throws IOException, ParseException {
+		String srcFile = "tests/callTagWithBody.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("tests/callTagWithBody.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		String code = bt.javaSource;
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(code));
+		System.out.println(code);
+		
+	}
+
+	@Test
 	public void testLog() throws IOException, ParseException {
 		String srcFile = "JapidSample/app/japidviews/templates/log.html";
 		String src = readFile(srcFile);

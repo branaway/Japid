@@ -11,8 +11,8 @@
 @for (Post p: allPost) { 
         *{ now we call a tag, with a body content that take a parameter title of String type }*
 
-	    @tag Display(p, "home2") | String title
-		   The real title is: $title;
+	    @tag Display(post=p, as="home2") | String title
+		   The real title iiiis: $title;
 	    @
 @}
 

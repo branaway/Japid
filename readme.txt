@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/15: V0.8.5.1 
+    1. bug fix: named arguments did not work with tag calls with a body block
 2011/6/14: V0.8.5 
     1. new feature(experimental): invoke tags with named arguments: `tag myTag(name="my name", age=20). If one argument is named, all must be named. Missed args default to nulls.
     2. improvement(experimental): primitives and Strings have intuitive defaults now if they are missing for the named args.

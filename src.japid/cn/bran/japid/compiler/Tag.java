@@ -8,7 +8,7 @@ public class Tag {
 	static final String ROOT_TAGNAME = "_root";
 	public String tagName;
 	public int startLine;
-	public boolean hasBody;
+	public boolean hasBody; // tga invoke with a body part
 	// bran: put everything in the args tag in it
 	public String callbackArgs = null;
 	// public StringBuffer bodyBuffer = new StringBuffer(2000);
@@ -93,5 +93,8 @@ public class Tag {
 			super();
 			tagName = "set";
 		}
+	}
+	public boolean argsNamed() {
+		return (namedArgs != null && namedArgs.size() > 0);
 	}
 }

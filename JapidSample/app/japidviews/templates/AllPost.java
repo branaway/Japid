@@ -101,17 +101,17 @@ p("        ");// line 11
 p("\n" + 
 "\n" + 
 "	    ");// line 12
-_Display1.render(p, "home2", new Display.DoBody<String>(){
+_Display1.render(new Display.DoBody<String>(){
 public void render(final String title) {
 // line 14
-p("		   The real title is: ");// line 14
+p("		   The real title iiiis: ");// line 14
 p(title);// line 15
 p(";\n" + 
 "	    ");// line 15
 
 }
 }
-);
+, named("post", p), named("as", "home2"));
 // line 14
 }// line 17
 p("\n");// line 17

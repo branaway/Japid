@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import cn.bran.japid.compiler.JavaSyntaxTool;
+import cn.bran.japid.compiler.NamedArgRuntime;
 import cn.bran.japid.compiler.Tag;
 import cn.bran.japid.compiler.Tag.TagSet;
 
@@ -141,6 +142,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
 			// set the render(xxx)
 			if (doBodyArgsString != null) {
+				pln(NAMED_PARAM_WITH_BODY);
 				// the template can be called with a callback body
 				// the field
 				pln(TAB + "private DoBody body;");
@@ -158,6 +160,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, currentClassFQN);
 			pln(nameParamCode);
 			if (doBodyArgsString != null) {
+				pln(NAMED_PARAM_WITH_BODY);
 				// the field
 				pln(TAB + "DoBody body;");
 				doBodyInterface();
@@ -250,6 +253,14 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			"	setRenderMethod(renderMethod);\r\n" + 
 			"	setArgNames(argNames);\r\n" + 
 			"	setArgTypes(argTypes);\r\n" + 
-			"}\n" + 
+			"}\n" +
+			"" + 
 			"////// end of named args stuff\n";
+	
+	protected static final String NAMED_PARAM_WITH_BODY = 
+		"public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {\n" + 
+		"    Object[] args = buildArgs(named, body);\n" + 
+		"    return runRenderer(args);\n" + 
+		"}\n"; 
+
 }

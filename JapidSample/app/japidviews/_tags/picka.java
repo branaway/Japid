@@ -62,6 +62,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 	private String a;
 	private String b;
+public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
+    Object[] args = buildArgs(named, body);
+    return runRenderer(args);
+}
+
 	private DoBody body;
 	public static interface DoBody<A> {
 		 void render(A a);
