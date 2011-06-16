@@ -69,7 +69,7 @@ public class JapidParser {
 			br.close();
 		} catch (IOException e) {
 		}
-		// default 
+		// default
 		return '`';
 	}
 
@@ -162,8 +162,85 @@ public class JapidParser {
 		if (lastState == Token.PLAIN) {
 			// un-escape special sequence
 			tokenString = tokenString.replace("``", "`").replace("`@", "@");
+			tokenString = escapeSpecialWith(tokenString, '~');
+		}
+		else {
+			tokenString = escapeSpecialWith(tokenString, (char) 0);
 		}
 		return tokenString;
+	}
+
+	public static String escapeSpecialWith(String src, char marker) {
+		int len = src.length();
+		StringBuffer buf = new StringBuffer(len);
+		if (len < 2)
+			return src;
+		for (int i = 0; i < len - 1; i++) {
+			char c = src.charAt(i);
+			char c1 = src.charAt(i + 1);
+			char c2 = 0;
+			if (i < len - 2) {
+				c2 = src.charAt(i + 2);
+			}
+			if (c == marker) {
+				switch (c1) {
+				case '`':
+					buf.append('`');
+					i++;
+					break;
+				case '~':
+					buf.append('~');
+					i++;
+					break;
+				case '@':
+					buf.append('@');
+					i++;
+					break;
+				case '#':
+					buf.append('#');
+					i++;
+					break;
+				case '$':
+					buf.append('$');
+					i++;
+					break;
+				case '%':
+					buf.append('%');
+					i++;
+					break;
+				case '&':
+					buf.append('%');
+					i++;
+					break;
+				case '*':
+					buf.append('*');
+					i++;
+					break;
+				default:
+					buf.append(marker);
+				}
+			} else {
+				// detect line continue sign
+				if (c == '\\') {
+					if (c1 == '\r') {
+						if (c2 == '\n') {
+							i ++; i++;
+							continue;
+						} else {
+							i++;
+							continue;
+						}
+					} else if (c1 == '\n') {
+						i++;
+						continue;
+					}
+				}
+
+				buf.append(c);
+			}
+		}
+		buf.append(src.charAt(len - 1));
+		return buf.toString();
 	}
 
 	public String checkNext() {
@@ -186,6 +263,22 @@ public class JapidParser {
 			char c1 = left > 1 ? pageSource.charAt(end) : 0;
 			char c2 = left > 2 ? pageSource.charAt(end + 1) : 0;
 
+			// detect line continue sign
+			if (c == '\\') {
+				if (c1 == '\r') {
+					if (c2 == '\n') {
+						skip(3);
+						continue;
+					} else {
+						skip(2);
+						continue;
+					}
+				} else if (c1 == '\n') {
+					skip(2);
+					continue;
+				}
+			}
+
 			switch (state) {
 			case PLAIN:
 				if (c == '%' && c1 == '{') {
@@ -200,6 +293,18 @@ public class JapidParser {
 				// // deprecated use ~[
 				// return found(Token.SCRIPT, 2);
 				// }
+				if (c == '~')
+					if (c1 == '`' ||
+								c1 == '~' ||
+								c1 == '@' ||
+								c1 == '#' ||
+								c1 == '$' ||
+								c1 == '%' ||
+								c1 == '&' ||
+								c1 == '*') {
+						skip(2);
+						break;
+					}
 
 				if (c == '~' && c1 == '[') {
 					return found(Token.SCRIPT, 2);
@@ -216,7 +321,8 @@ public class JapidParser {
 					// deprecated in favor of args directive in a script
 					return found(Token.TEMPLATE_ARGS, 2);
 				}
-				// bran: shell like expression: ~_, ~user.name (this one is diff
+				// bran: shell like expression: ~_, ~user.name (this one is
+				// diff
 				// from sh, which requires ${user.name}
 				//
 				if (c == '~' && c1 != '~' && (Character.isJavaIdentifierStart(c1) || '\'' == c1)) {
@@ -246,7 +352,14 @@ public class JapidParser {
 				}
 
 				if (c == '`')
-					if (c1 == '@' || c1 == '`') {
+					if (c1 == '`' ||
+								c1 == '~' ||
+								c1 == '@' ||
+								c1 == '#' ||
+								c1 == '$' ||
+								c1 == '%' ||
+								c1 == '&' ||
+								c1 == '*') {
 						skip(2);
 						break;
 					}
@@ -261,12 +374,14 @@ public class JapidParser {
 					} else {
 						return found(Token.SCRIPT_LINE, 1);
 					}
-				// was trying to implement an escape-less }, but it may be too
+				// was trying to implement an escape-less }, but it may be
+				// too
 				// confusing with json, javascript syntax etc.
 				// so it's disabled for now.
 				// if (c == '}') {
 				// String curToken = getPrevTokenString();
-				// boolean allLeadingSpace = allLeadingSpaceInline(curToken);
+				// boolean allLeadingSpace =
+				// allLeadingSpaceInline(curToken);
 				// if (allLeadingSpace) {
 				// return found(Token.CLOSING_BRACE, 0);
 				// }
@@ -345,7 +460,8 @@ public class JapidParser {
 				break;
 			// bran
 			// special characters considered an expression: '?.()
-			// break characters: space, other punctuations, new lines, returns
+			// break characters: space, other punctuations, new lines,
+			// returns
 			case EXPR_NATURAL:
 			case EXPR_NATURAL_ESCAPED:
 				if ('(' == c) {
@@ -411,7 +527,8 @@ public class JapidParser {
 			case ACTION:
 				if (c == '}') {
 					return found(Token.PLAIN, 1);
-				} else if (c == '{') { // bran: weak logic: assuming no "{" in
+				} else if (c == '{') { // bran: weak logic: assuming no "{"
+										// in
 										// string literals
 					skipAhead(Token.ACTION_CURLY, 1);
 				}

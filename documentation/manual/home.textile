@@ -154,6 +154,37 @@ The original version of Japid (around version 0.3) copied a lot of the "syntax f
 
 For your information, the "Microsoft Razor Template Engine":http://weblogs.asp.net/scottgu/archive/2010/07/02/introducing-razor.aspx is a source of inspiration for some recent syntax improvement, particularly the consolidation of the usage of "`", or "@" since version 0.8.4.1.
 
+Note:
+
+1. To escape the special markers used in various syntax constructs, please prefix them with the escape sign "~", such as:
+
+<pre>
+~~ for ~
+~@ for @
+~$ for $
+~% for %
+~& for &
+~* for *
+</pre>
+
+2. To join lines, please use back slash "\" immediately followed by a new line. Effective anywhere in the template. The back slash and the new line symbol will be simply swollen by the parser. 
+
+<pre>
+@ Str\
+ing a = "hello\
+ "; \
+String b = "world";
+message:\
+ ${a+b}
+</pre>
+
+is equals to:
+
+<pre>
+@ String a = "hello "; String b = "world";
+message: ${a+b}
+</pre>
+
 
 h3. The delimiter: @`@ and *@*
 

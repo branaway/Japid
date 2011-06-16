@@ -24,6 +24,9 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/16: V0.8.6 
+    1. new feature: use the escape sign as general escape marker for various special markers, such as ~~, ~`, ~@, ~$, ~&, ~%, etc. 
+    2. new feature: join lines by using back slash "\" immediately followed by a new line. Effective anywhere in the template.  
 2011/6/15: V0.8.5.1 
     1. bug fix: named arguments did not work with tag calls with a body block
 2011/6/14: V0.8.5 

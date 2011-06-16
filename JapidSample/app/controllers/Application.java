@@ -367,4 +367,8 @@ public class Application extends JapidController {
 		renderJapid(cats);
 		
 	}
+	
+	public static void special() {
+		renderJapid();
+	}
 }

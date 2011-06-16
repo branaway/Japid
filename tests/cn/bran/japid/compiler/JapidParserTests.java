@@ -427,7 +427,48 @@ public class JapidParserTests {
 		assertEquals(" ghi", JapidParser.getCurrentLine(src, src.length() - 1));
 	}
 	
+	@Test
+	public void testEscapeSpecial() {
+		String src = "hello ``, `@, `#, `$, `% `&, `*end";
+		String r = JapidParser.escapeSpecialWith(src, '`');
+		System.out.println(r); 
+		assertEquals("hello `, @, #, $, % %, *end", r);
+		assertTrue(r.endsWith("end"));
+		src = "hello ~~, ~`, ~@, ~#, ~$, ~% ~&, ~*end";
+		r = JapidParser.escapeSpecialWith(src, '~');
+		System.out.println(r); 
+		assertEquals("hello ~, `, @, #, $, % %, *end", r);
+		assertTrue(r.endsWith("end"));
+		// continue sign
+		src = "hello \\\r\nworld";
+		r = JapidParser.escapeSpecialWith(src, '~');
+		System.out.println(r); 
+		assertEquals("hello world", r);
 
+		src = "hello \\\nworld";
+		r = JapidParser.escapeSpecialWith(src, '~');
+		System.out.println(r); 
+		assertEquals("hello world", r);
+
+		src = "hello \\world";
+		r = JapidParser.escapeSpecialWith(src, '~');
+		System.out.println(r); 
+		assertEquals("hello \\world", r);
+	}
+
+	@Test
+	public void testContinue() {
+		String src = "hello \\\n `t Tag2 \\\n \"123\"`!";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+//		dumpTokens(tokens);
+		assertEquals(3, tokens.size());
+		assertEquals(Token.PLAIN, tokens.get(0).token);
+		assertEquals("hello  ", tokens.get(0).source);
+		assertEquals(Token.SCRIPT_LINE, tokens.get(1).token);
+		assertEquals("t Tag2  \"123\"", tokens.get(1).source);
+		assertEquals(Token.PLAIN, tokens.get(2).token);
+	}
 
 
 	/**
