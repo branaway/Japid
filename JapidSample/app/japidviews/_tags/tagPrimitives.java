@@ -7,15 +7,14 @@ import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;
 import play.i18n.Messages;
-import static  japidviews._javatags.JapidWebUtil.*;
+import models.*;
+import play.i18n.Lang;
+import play.mvc.Http.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
-import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
 import controllers.*;
-import play.mvc.Http.*;
 import japidviews._javatags.*;
 //
 // NOTE: This file was generated from: japidviews/_tags/tagPrimitives.html

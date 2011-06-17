@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/11: V0.8.7 
+    1. new feature: Any java classes defined in the japidviews/_javatags will be imported in the generated template java code. Any static members will be imported too. The JapidWebUtil is not enforced anymore and is deprecated. 
 2011/6/16: V0.8.6 
     1. new feature: use the escape sign as general escape marker for various special markers, such as ~~, ~`, ~@, ~$, ~&, ~%, etc. 
     2. new feature: join lines by using back slash "\" immediately followed by a new line. Effective anywhere in the template.  

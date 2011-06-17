@@ -209,4 +209,11 @@ public class TranslateTemplateTask {
 	public void setInclude(File file) {
 		this.include = file;
 	}
+
+	public void clearImports() {
+		staticImports.clear();
+		imports.clear();
+		
+		AbstractTemplateClassMetaData.clearImports();
+	}
 }

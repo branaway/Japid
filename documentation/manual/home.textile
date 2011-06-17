@@ -129,7 +129,7 @@ All template files are located in @app/japidviews@ directory tree, as illustrate
 
 /app/controllers/ControllerA.java
                 /more/ControllerB.java
-    /japidviews/_javatags/JapidWebUtil.java
+    /japidviews/_javatags/
                /_layouts/
                /_notifiers/
                /_tags/
@@ -142,7 +142,7 @@ All template files are located in @app/japidviews@ directory tree, as illustrate
 
 Notes:
 
-# the @_javatags@ sub-directory contains a utility class named @JapidWebUtil.java@ that is statically imported to all generated java class definitions. One can add more static methods in the this class for use in the templates. 
+# the @_javatags@ sub-directory contains any Java code you want to use in your templates. Any java classes defined in the japidviews/_javatags will be imported in the generated template java code. Any static members will be imported too. There used to be a file named  JapidWebUtil in Japid versions earlier than 0.8.6. It is not enforced anymore and is deprecated. 
 # the @_layouts@ sub-directory contains global layouts that are accessible to all view templates. However as explained below, Japid layouts can be placed anywhere in the tree and can be referenced using the fully qualified name in the templates, just like the way a Java class class is referenced. 
 # the @_tags@ sub-directory contains global tags that are accessible to all view templates. However as explained below, Japid tags can be place anywhere in the tree and can be referenced using the fully qualified name in the templates, just like the way a Java class class is referenced.
 # the @_notifiers@ sub-directory contains email templates coded in Japid. There is a section for this later in this document. 
@@ -178,7 +178,7 @@ message:\
  ${a+b}
 </pre>
 
-is equals to:
+is equal to:
 
 <pre>
 @ String a = "hello "; String b = "world";
@@ -367,7 +367,6 @@ import japidviews._tags.*;
 import japidviews._javatags.*;
 import models.*;
 import controllers.*;
-import static  japidviews._javatags.JapidWebUtil.*;
 
 import play.data.validation.Validation;
 import play.mvc.Scope.*;

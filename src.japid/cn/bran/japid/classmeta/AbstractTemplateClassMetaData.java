@@ -712,4 +712,9 @@ public abstract class AbstractTemplateClassMetaData {
 		return generateCode();
 	}
 
+	public static void clearImports() {
+		globalImports.clear();
+		globalStaticImports.clear();
+	}
+
 }

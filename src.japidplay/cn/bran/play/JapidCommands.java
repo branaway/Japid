@@ -1,6 +1,7 @@
 package cn.bran.play;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,11 +57,11 @@ public class JapidCommands {
 			log("created: " + javatags.getPath());
 		}
 
-		File webutil = new File(javatags, "JapidWebUtil.java");
-		if (!webutil.exists()) {
-			DirUtil.writeStringToFile(webutil, JapidWebUtil);
-			log("created JapidWebUtil.java.");
-		}
+//		File webutil = new File(javatags, "JapidWebUtil.java");
+//		if (!webutil.exists()) {
+//			DirUtil.writeStringToFile(webutil, JapidWebUtil);
+//			log("created JapidWebUtil.java.");
+//		}
 		// add the place-holder for utility class for use in templates
 
 		File layouts = new File(japidViews + JapidPlugin.LAYOUTDIR);
@@ -140,7 +141,6 @@ public class JapidCommands {
 			log(e.toString());
 		}
 		return res;
-
 	}
 	
 	public static void regen() throws IOException {
@@ -205,6 +205,7 @@ public class JapidCommands {
 		File rootDir = new File(root);
 		t.setPackageRoot(rootDir);
 		t.setInclude(new File(rootDir, JapidPlugin.JAPIDVIEWS_ROOT));
+		t.clearImports();
 		t.importStatic(JapidPlayAdapter.class);
 		t.importStatic(Validation.class);
 		t.importStatic(JavaExtensions.class);
@@ -220,12 +221,43 @@ public class JapidCommands {
 		t.addImport(play.data.validation.Error.class.getName());
 		t.addImport("models.*");
 		t.addImport("controllers.*");
-		t.addImport("static  japidviews._javatags.JapidWebUtil.*");
+//		t.addImport("static  japidviews._javatags.JapidWebUtil.*");
+		List<String> javatags = scanJavaTags(root);
+		for (String f : javatags) {
+			t.addImport(f);
+			t.addImport("static " + f + ".*");
+		}
 		t.execute();
 		List<File> changedFiles = t.getChangedFiles();
 		return changedFiles;
 	}
 
+	public static List<String> scanJavaTags(String root) {
+		String sep = File.separator;
+		String japidViews = root + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep;
+		File javatags = new File(japidViews + JapidPlugin.JAVATAGS);
+		if (!javatags.exists()) {
+			boolean mkdirs = javatags.mkdirs();
+			assert mkdirs == true;
+			log("created: " + javatags.getPath());
+		}
+
+		File[] javafiles = javatags.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				if (name.endsWith(".java"))
+					return true;
+				return false;
+			}
+		});
+		
+		List<String> files = new ArrayList<String>();
+		for (File f : javafiles) {
+			String fname = f.getName();
+			files.add(JapidPlugin.JAPIDVIEWS_ROOT + "." + JapidPlugin.JAVATAGS + "." + fname.substring(0, fname.lastIndexOf(".java")));
+		}
+		return files;
+	}
 	/**
 	 * get all the java files in a dir with the "java" removed
 	 * 
