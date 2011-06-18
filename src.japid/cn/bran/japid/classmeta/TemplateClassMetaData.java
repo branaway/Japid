@@ -121,7 +121,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
 		String paramNameArray = "";
 		String paramTypeArray = "";
-		String currentClassFQN = this.packageName + "." + this.className;
+		String currentClassFQN = (this.packageName == null ? "":  this.packageName + ".") + this.className;
 
 		if (renderArgs != null) {
 			// create fields for the render args and create a render method to

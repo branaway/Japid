@@ -25,10 +25,10 @@ public class JapidParserTests {
 		final String L = "{";
 		final String R = "}";
 
-		String source = "~ ~~ ~ur	~u ~_ ~_index3\r\n ~'hello'[1..3].length.hi(foo(var+ 'sd')) etc... ~a=='a'";
+		String source = "~ ~ ~ur	~u ~_ ~_index3\r\n ~'hello'[1..3].length.hi(foo(var+ 'sd')) etc... ~a=='a'";
 		// String source = "hello ~user.name.toUpperCase()! ~user";
 		String[] se = new String[] {
-				"~ ~~ ",
+				"~ ~ ",
 				"ur",
 				"	",
 				"u",

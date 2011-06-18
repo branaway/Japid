@@ -1804,6 +1804,58 @@ This is how to run the sample:
 # follow those links to see how each features are used in the demo code. 
 
 
+h2. Use Japid in Modules (version 0.8.7 and up)
+
+Play modules are used for 
+
+# providing development and runtime tools.
+# Composing multi-aspects big applications, with each part of separated functionality as a module. 
+
+Let see how we can use Japid in Module for application composition.
+
+The way Japid is used in modules is almost the same as it being used in a standalone application. However, The Japid template files need to be compiled to Java files separately from the "main" application. The Japid tool won't detect any changes in the template file in the modules. Therefore if one makes changes to the Japid files in a module, he/she must compile the file from within the module. 
+
+Here are the steps:
+
+1 The "play japid:xxx" requires the currrent directory is a valid application. Therefore we need to put a dummy @application.conf@ in the module's conf directory. 
+2 Create a reference to the Japid module either in the application.conf or follow the new dependency management model and add an entry in the @dependencies.yml@ file, like
+
+<pre>
+self: play -> mymodule 0.1
+
+require:
+    - play
+    - play -> japid 0.8.7
+</pre>
+
+Then run
+
+<pre>
+play deps
+</pre>
+
+Or:
+
+<pre>
+play deps --sync
+</pre>
+
+3. Create controller and Japid templates files as in usual Japid applications. You can use the @play japid:xxx@ commands to manipulate the Japid assets as you wish. 
+
+4. Update the @routes@ file in the module to set up the URL access patterns, again as usual.
+
+Back in the main application, set up your main app's dependency on your module as usual and update your "routes" file to create an access path to your modules, like
+
+<pre>
+*       /mymodule                                 module:mymodule
+</pre>
+
+Now you should be able access your module normally. 
+
+Everytime you change the code in the code in the module, you'll need to compile them separately.
+
+Perhaps I can make this smarter in the future.
+
 
 h2. i18n
 

@@ -24,7 +24,9 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
-2011/6/11: V0.8.7 
+2011/6/17: V0.8.7.1 
+    1. bug fix: vertical bar could not be part of tag argument. It was confused as the separator between args and callback params.  
+2011/6/17: V0.8.7 
     1. new feature: Any java classes defined in the japidviews/_javatags will be imported in the generated template java code. Any static members will be imported too. The JapidWebUtil is not enforced anymore and is deprecated. 
 2011/6/16: V0.8.6 
     1. new feature: use the escape sign as general escape marker for various special markers, such as ~~, ~`, ~@, ~$, ~&, ~%, etc. 

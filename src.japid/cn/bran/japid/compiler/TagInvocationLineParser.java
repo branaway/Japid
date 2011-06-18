@@ -1,5 +1,7 @@
 package cn.bran.japid.compiler;
 
+import japa.parser.ast.body.Parameter;
+
 import java.util.List;
 
 
@@ -11,10 +13,17 @@ import java.util.List;
  */
 public class TagInvocationLineParser {
 
+	/**
+	 * TODO: use stricter syntax checker
+	 * 
+	 * @param line
+	 * @return
+	 */
 	public Tag parse(String line) {
-		String original = line;
+//		String original = line;
 		Tag tag = new Tag();
 		
+		// get tag name
 		for (int i = 0; i < line.length(); i++) {
 			char c = line.charAt(i);
 			if (Character.isJavaIdentifierPart(c) || c == '.' || c == '/') {
@@ -44,15 +53,22 @@ public class TagInvocationLineParser {
 		else if (tag.tagName.equals("set")) {
 			tag = new Tag.TagSet();
 		}
+		
 		// let's parse the closure params
 		int vertline = line.lastIndexOf('|');
 		if (vertline >= 0) {
 			String closureArgs = line.substring(vertline + 1).trim();
 			// test syntax 
-			JavaSyntaxTool.parseParams(closureArgs);
-			tag.callbackArgs = closureArgs;
-			tag.hasBody = true;
-			line = line.substring(0, vertline).trim();
+			try {
+				// test syntax 
+				JavaSyntaxTool.parseParams(closureArgs);
+				tag.callbackArgs = closureArgs;
+				tag.hasBody = true;
+				line = line.substring(0, vertline).trim();
+			} catch (Throwable e) {
+				// the vertical bar is not a valid separator
+//								e.printStackTrace();
+			}
 		}
 
 		if (line.length() == 0)

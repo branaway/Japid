@@ -1,6 +1,9 @@
 package cn.bran.japid.template;
 
 import static org.junit.Assert.*;
+
+import java.io.IOException;
+
 import japidviews.myapp.aview;
 
 import org.junit.Test;
@@ -14,6 +17,12 @@ public class JapidRenderTest {
 	public void testGen() {
 		JapidRenderer.init(null, "plainjapid", 1);
 		JapidRenderer.gen();
+	}
+
+	@Test
+	public void testReGen() throws IOException {
+		JapidRenderer.init(null, "plainjapid", 1);
+		JapidRenderer.regen();
 	}
 
 	@Test

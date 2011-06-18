@@ -7,13 +7,13 @@ import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;
 import play.i18n.Messages;
-import models.*;
-import play.i18n.Lang;
-import play.mvc.Http.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
+import models.*;
 import play.data.validation.Error;
+import play.i18n.Lang;
 import japidviews._tags.*;
+import play.mvc.Http.*;
 import controllers.*;
 import japidviews._javatags.*;
 //
@@ -103,6 +103,13 @@ p("\n" +
 "\n" + 
 "<p>check 6</p>\n" + 
 "\n");// line 34
+    String a = "";// line 39
+    a += "bssdfsdf";// line 40
+p("\n");// line 41
+if (a.length() > 0) {// line 42
+      p(a);// line 43
+    }// line 44
+p("\n");// line 44
 
 	}
 

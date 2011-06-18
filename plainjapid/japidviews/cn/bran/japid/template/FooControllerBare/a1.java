@@ -16,11 +16,24 @@ public class a1 extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	public a1(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"a",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooControllerBare.a1.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+	setArgTypes(argTypes);
+}
+////// end of named args stuff
+
 	private String a;
 	public String render(String a) {
 		this.a = a;
 		long t = -1;
 		super.layout();
+		 if (t != -1) System.out.println("[a1] rendering time: " + t);
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {

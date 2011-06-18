@@ -16,6 +16,23 @@ public class taddy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	public taddy(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ */
+public static final String[] argNames = new String[] {/* args of the template*/ };
+public static final String[] argTypes = new String[] {/* arg types of the template*/ };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.taddy.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+	setArgTypes(argTypes);
+}
+////// end of named args stuff
+
+public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
+    Object[] args = buildArgs(named, body);
+    return runRenderer(args);
+}
+
 	DoBody body;
 	public static interface DoBody<A> {
 		 void render(A a);
@@ -24,6 +41,7 @@ public class taddy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 		this.body = body;
 		long t = -1;
 		super.layout();
+		 if (t != -1) System.out.println("[taddy] rendering time: " + t);
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {

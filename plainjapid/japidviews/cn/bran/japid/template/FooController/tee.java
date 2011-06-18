@@ -16,11 +16,24 @@ public class tee extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	public tee(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"u",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"cn.bran.japid.template.FooController.ModelUser",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.tee.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+	setArgTypes(argTypes);
+}
+////// end of named args stuff
+
 	private cn.bran.japid.template.FooController.ModelUser u;
 	public String render(cn.bran.japid.template.FooController.ModelUser u) {
 		this.u = u;
 		long t = -1;
 		super.layout();
+		 if (t != -1) System.out.println("[tee] rendering time: " + t);
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {

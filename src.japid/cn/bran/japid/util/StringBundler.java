@@ -1,5 +1,8 @@
 package cn.bran.japid.util;
 
+import java.io.IOException;
+import java.io.Writer;
+
 /**
  * Copyright (c) 2000-2009 Liferay, Inc. All rights reserved.
  *
@@ -86,7 +89,7 @@ public class StringBundler {
 		if (s == null) {
 			// bran: don't want to see the null
 			return this;
-//			s = "null";
+			// s = "null";
 		}
 
 		if (_arrayIndex >= _array.length) {
@@ -172,6 +175,16 @@ public class StringBundler {
 		}
 
 		return s;
+	}
+
+	public void print(Writer w) throws IOException {
+		if (_arrayIndex == 0) {
+			return;
+		}
+
+		for (int i = 0; i < _arrayIndex; i++) {
+			w.write(_array[i]);
+		}
 	}
 
 	protected void expandCapacity() {

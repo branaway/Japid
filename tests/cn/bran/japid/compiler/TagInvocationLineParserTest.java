@@ -32,7 +32,8 @@ public class TagInvocationLineParserTest {
 		} catch (Exception e) {
 			return;
 		}
-		fail("shoudl have reported syntax error");
+//		fail("shoudl have reported syntax error");
+		// let the | be part of the tag args
 	}
 
 	@Test
@@ -143,6 +144,14 @@ public class TagInvocationLineParserTest {
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
 		assertEquals("named(\"name\", \"a\"), named(\"age\", b + 1)", t.args);
+	}
+	
+	@Test
+	public void testVerticalBars() {
+		String src = "tag name=\"|\", age=b + 1";
+		Tag t = p.parse(src);
+		assertEquals("tag", t.tagName);
+		assertEquals("named(\"name\", \"|\"), named(\"age\", b + 1)", t.args);
 	}
 	
 }

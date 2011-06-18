@@ -10,30 +10,43 @@ import japidviews ._layouts.*;
 //
 public class foo1 extends main
 {	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/foo1.html";
-
-// -- set up the tag objects
-final taggy _taggy1 = new taggy(getOut());
-
-// -- end of the tag objects
-
 	public foo1() {
 		super(null);
 	}
 	public foo1(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"a",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.foo1.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+	setArgTypes(argTypes);
+}
+////// end of named args stuff
+
 	private String a;
 	public String render(String a) {
 		this.a = a;
 		long t = -1;
 		super.layout();
+		 if (t != -1) System.out.println("[foo1] rendering time: " + t);
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final taggy _taggy1 = new taggy(getOut());
+
+// -- end of the tag objects
+
 //------
 ;// line 1
 p("foo12: ");// line 3
-_taggy1.setOut(getOut()); _taggy1.render(a + "1");
+_taggy1.render(a + "1");
 // line 4
 ;// line 4
 

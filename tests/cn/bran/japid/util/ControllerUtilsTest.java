@@ -63,7 +63,16 @@ public class ControllerUtilsTest {
 	}
 
 	static class Foo extends JapidTemplateBase {
-
+		/* based on https://github.com/branaway/Japid/issues/12
+		 */
+		public static final String[] argNames = new String[] {/* args of the template*/"str","i"  };
+		public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "Integer"  };
+		public static java.lang.reflect.Method renderMethod = getRenderMethod(cn.bran.japid.util.ControllerUtilsTest.Foo.class);
+		{
+			setRenderMethod(renderMethod);
+			setArgNames(argNames);
+			setArgTypes(argTypes);
+		}
 		public Foo(StringBuilder out) {
 			super(out);
 		}
@@ -79,6 +88,14 @@ public class ControllerUtilsTest {
 	}
 
 	static class Foo2 extends Foo{
+		public static final String[] argNames = new String[] {/* args of the template*/"lists", };
+		public static final String[] argTypes = new String[] {/* arg types of the template*/"List<String>", };
+		public static java.lang.reflect.Method renderMethod = getRenderMethod(cn.bran.japid.util.ControllerUtilsTest.Foo2.class);
+		{
+			setRenderMethod(renderMethod);
+			setArgNames(argNames);
+			setArgTypes(argTypes);
+		}
 		public Foo2(StringBuilder out) {
 			super(out);
 		}
@@ -90,6 +107,14 @@ public class ControllerUtilsTest {
 	}
 
 	static class Bar extends Foo{
+		public static final String[] argNames = new String[] {/* args of the template*/ };
+		public static final String[] argTypes = new String[] {/* arg types of the template*/};
+		public static java.lang.reflect.Method renderMethod = getRenderMethod(cn.bran.japid.util.ControllerUtilsTest.Bar.class);
+		{
+			setRenderMethod(renderMethod);
+			setArgNames(argNames);
+			setArgTypes(argTypes);
+		}
 		public Bar(StringBuilder out) {
 			super(out);
 		}

@@ -10,18 +10,24 @@ import japidviews ._layouts.*;
 //
 public class a1 extends main
 {	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/a1.html";
-
-// -- set up the tag objects
-final taggy _taggy2 = new taggy(getOut());
-
-// -- end of the tag objects
-
 	public a1() {
 		super(null);
 	}
 	public a1(StringBuilder out) {
 		super(out);
 	}
+/* based on https://github.com/branaway/Japid/issues/12
+ */
+public static final String[] argNames = new String[] {/* args of the template*/"a",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.a1.class);
+{
+	setRenderMethod(renderMethod);
+	setArgNames(argNames);
+	setArgTypes(argTypes);
+}
+////// end of named args stuff
+
 	private String a;
 	public String render(String a) {
 		this.a = a;
@@ -49,9 +55,11 @@ public String foo(String ar) {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
+final taggy _taggy2 = new taggy(getOut());
+
 // line 7
 p("  -> a1-: ");// line 7
-_taggy2.setOut(getOut()); _taggy2.render(ar);
+_taggy2.render(ar);
 // line 8
 
 this.setOut(ori);

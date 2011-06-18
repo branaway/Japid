@@ -213,18 +213,17 @@ public class JapidCommands {
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._layouts.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._javatags.*");
 		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._tags.*");
+		t.addImport("models.*");
+		t.addImport("controllers.*");
 		t.addImport(play.mvc.Scope.class.getName() + ".*");
 		t.addImport(play.i18n.Messages.class);
 		t.addImport(play.i18n.Lang.class);
 		t.addImport(play.mvc.Http.class.getName() + ".*");
 		t.addImport(Validation.class.getName());
 		t.addImport(play.data.validation.Error.class.getName());
-		t.addImport("models.*");
-		t.addImport("controllers.*");
 //		t.addImport("static  japidviews._javatags.JapidWebUtil.*");
 		List<String> javatags = scanJavaTags(root);
 		for (String f : javatags) {
-			t.addImport(f);
 			t.addImport("static " + f + ".*");
 		}
 		t.execute();

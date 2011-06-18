@@ -249,8 +249,8 @@ public abstract class AbstractTemplateClassMetaData {
 //		if (l.startsWith("models"))
 //			return false;
 
-		if (l.contains("JapidWebUtil"))
-			return false;
+//		if (l.contains("JapidWebUtil"))
+//			return false;
 
 //		if (l.startsWith("controllers"))
 //			return false;

@@ -231,7 +231,9 @@ public class CompilerTests {
 		JapidTemplate bt = new JapidTemplate("tagline.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
 		cp.compile(bt);
-		CompilationUnit cu = JavaSyntaxTool.parse(bt.javaSource);
+		String code = bt.javaSource;
+		System.out.println(code);
+		CompilationUnit cu = JavaSyntaxTool.parse(code);
 //		System.out.println(cu);
 
 	}
