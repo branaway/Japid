@@ -51,17 +51,19 @@ public class index extends SampleLayout
  */
 public static final String[] argNames = new String[] {/* args of the template*/"s", "i",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "int",  };
+public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.MyController.index.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
 	private String s;
 	private int i;
-	public cn.bran.japid.template.RenderResult render(String s, int i) {
+	public cn.bran.japid.template.RenderResult render(String s,int i) {
 		this.s = s;
 		this.i = i;
 		long t = -1;

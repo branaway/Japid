@@ -14,6 +14,8 @@
 
 package cn.bran.japid.classmeta;
 
+import japa.parser.ast.body.Parameter;
+
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.bran.japid.compiler.JavaSyntaxTool;
 import cn.bran.japid.compiler.Tag;
 import cn.bran.japid.compiler.Tag.TagDef;
 import cn.bran.japid.template.ActionRunner;
@@ -710,6 +713,15 @@ public abstract class AbstractTemplateClassMetaData {
 	@Override
 	public String toString() {
 		return generateCode();
+	}
+
+	/**
+	 * @param p
+	 */
+	protected void addField(Parameter p) {
+		// no need 
+		String defaultVal = "=" /*+ JavaSyntaxTool.getDefault(p)*/;
+		pln(TAB + "private " + p.getType() + " " + p.getId() + (defaultVal.equals("=") ? "":defaultVal) + ";");
 	}
 
 	public static void clearImports() {

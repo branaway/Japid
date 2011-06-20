@@ -6,9 +6,13 @@ import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.body.ModifierSet;
 import japa.parser.ast.body.Parameter;
+import japa.parser.ast.body.VariableDeclarator;
+import japa.parser.ast.body.VariableDeclaratorId;
+import japa.parser.ast.expr.AnnotationExpr;
 import japa.parser.ast.expr.AssignExpr;
 import japa.parser.ast.expr.Expression;
 import japa.parser.ast.expr.MethodCallExpr;
+import japa.parser.ast.expr.VariableDeclarationExpr;
 import japa.parser.ast.type.Type;
 import japa.parser.ast.visitor.VoidVisitorAdapter;
 
@@ -104,7 +108,7 @@ public class JavaSyntaxTool {
 			else
 				throw new RuntimeException("no closing ')' in arg expression: " + line);
 		}
-		
+
 		String cl = String.format(classTempForArgs, line);
 		try {
 			CompilationUnit cu = parse(cl);
@@ -129,13 +133,14 @@ public class JavaSyntaxTool {
 	/**
 	 * 
 	 * @param line
-	 * @return list of named args  or an exception is thrown if the input is not a valid named arg list.
+	 * @return list of named args or an exception is thrown if the input is not
+	 *         a valid named arg list.
 	 */
 	public static List<NamedArg> parseNamedArgs(String line) {
 		final List<NamedArg> ret = new ArrayList<NamedArg>();
 		if (line == null || line.trim().length() == 0)
 			return ret;
-		
+
 		line = line.trim();
 		if (line.startsWith("(")) {
 			if (line.endsWith(")"))
@@ -143,7 +148,7 @@ public class JavaSyntaxTool {
 			else
 				throw new RuntimeException("no closing ')' in arg expression: " + line);
 		}
-		
+
 		String cl = String.format(classTempForArgs, line);
 		try {
 			CompilationUnit cu = parse(cl);
@@ -155,7 +160,7 @@ public class JavaSyntaxTool {
 					if (args != null)
 						for (Expression e : args) {
 							if (e instanceof AssignExpr) {
-								AssignExpr ae = (AssignExpr)e;
+								AssignExpr ae = (AssignExpr) e;
 								NamedArg na = new NamedArg(ae.getTarget(), ae.getValue());
 								ret.add(na);
 							}
@@ -220,16 +225,16 @@ public class JavaSyntaxTool {
 			return true;
 	}
 
-	public static boolean hasMethod(CompilationUnit cu, final String name, final int modis, 
+	public static boolean hasMethod(CompilationUnit cu, final String name, final int modis,
 			final String returnType, String paramList) {
 		final StringBuilder sb = new StringBuilder();
-		
+
 		if (paramList == null)
 			paramList = "";
 		String formalParamList = addParamNamesPlaceHolder(paramList);
-		
+
 		final List<Parameter> params = parseParams(formalParamList);
-		
+
 		VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
 			@Override
 			public void visit(MethodDeclaration n, Object arg) {
@@ -256,16 +261,18 @@ public class JavaSyntaxTool {
 		else
 			return true;
 	}
-			/**
+
+	/**
 	 * 
 	 * @param cu
 	 * @param name
 	 * @param modifiers
 	 * @param returnType
-	 * @param paramList, parameter type only: String, final int, etc
+	 * @param paramList
+	 *            , parameter type only: String, final int, etc
 	 * @return
 	 */
-	public static boolean hasMethod(CompilationUnit cu, final String name, final String modifiers, 
+	public static boolean hasMethod(CompilationUnit cu, final String name, final String modifiers,
 			final String returnType, String paramList) {
 		final int modis = parseModifiers(modifiers);
 		return hasMethod(cu, name, modis, returnType, paramList);
@@ -280,9 +287,9 @@ public class JavaSyntaxTool {
 
 		String formalParamList = "";
 		for (int i = 0; i < names.size(); i++) {
-			formalParamList += names.get(i) + " " + (char)('a' + i) + ",";
+			formalParamList += names.get(i) + " " + (char) ('a' + i) + ",";
 		}
-		
+
 		if (formalParamList.endsWith(","))
 			formalParamList = formalParamList.substring(0, formalParamList.length() - 1);
 		return formalParamList;
@@ -307,14 +314,14 @@ public class JavaSyntaxTool {
 	protected static boolean paramsMatch(List<Parameter> params, List<Parameter> ps) {
 		if (params == ps)
 			return true;
-		
-		if ((params == null && ps != null) || (params != null && ps == null) )
+
+		if ((params == null && ps != null) || (params != null && ps == null))
 			return false;
-		
+
 		if (params.size() != ps.size()) {
 			return false;
 		}
-		
+
 		for (int i = 0; i < params.size(); i++) {
 			Parameter p1 = params.get(i);
 			Parameter p2 = ps.get(i);
@@ -329,81 +336,76 @@ public class JavaSyntaxTool {
 	 * 
 	 * @param p1
 	 * @param p2
-	 * @return true if the parameters signature matches. Parameter name does not matter.
+	 * @return true if the parameters signature matches. Parameter name does not
+	 *         matter.
 	 */
 	private static boolean matchParams(Parameter p1, Parameter p2) {
-		if (p1.equals(p2)) 
+		if (p1.equals(p2))
 			return true;
 
 		if (p1.getModifiers() != p2.getModifiers())
 			return false;
-		
-		if (!p1.getType().equals(p2.getType())) 
+
+		if (!p1.getType().equals(p2.getType()))
 			return false;
-		
+
 		// TODO: compare annotations
-		
+
 		return true;
 	}
 
 	private static int parseModifiers(String modifiers) {
 		int ret = 0;
-		
+
 		List<String> names = getNames(modifiers);
-		
-		for (String m: names) {
+
+		for (String m : names) {
 			if (m.equals("public")) {
 				ret |= ModifierSet.PUBLIC;
-			}
-			else if (m.equals("private")) {
+			} else if (m.equals("private")) {
 				ret |= ModifierSet.PRIVATE;
-			}
-			else if (m.equals("protected")) {
+			} else if (m.equals("protected")) {
 				ret |= ModifierSet.PROTECTED;
-			}
-			else if (m.equals("static")) {
+			} else if (m.equals("static")) {
 				ret |= ModifierSet.STATIC;
-			}
-			else if (m.equals("final")) {
+			} else if (m.equals("final")) {
 				ret |= ModifierSet.FINAL;
-			}
-			else if (m.equals("final")) {
+			} else if (m.equals("final")) {
 				ret |= ModifierSet.FINAL;
-			}
-			else if (m.equals("synchronized")) {
+			} else if (m.equals("synchronized")) {
 				ret |= ModifierSet.SYNCHRONIZED;
 			}
 		}
-		
+
 		return ret;
 	}
 
 	/**
 	 * 
 	 * @param params
-	 * 	 Type1 p1, Type2 p2...
-	 * @return
-	 *   Final Type1 p1, final Type2 p2...
+	 *            Type1 p1, Type2 p2...
+	 * @return Final Type1 p1, final Type2 p2...
 	 */
 	public static String addFinalToAllParams(String paramline) {
 		if (paramline == null)
 			return null;
-		paramline  = paramline.trim();
+		paramline = paramline.trim();
 		if (paramline.length() == 0)
 			return "";
 		List<Parameter> params = parseParams(paramline);
 		String s = "";
-		for (Parameter p: params) {
+		for (Parameter p : params) {
 			s += "final " + p.getType() + " " + p.getId().getName() + ", ";
 		}
-		
+
 		return s.substring(0, s.lastIndexOf(", "));
 	}
-	
+
 	private static final String classTempForExpr = "class T {  {  f = %s ; } }";
 
 	/**
-	 * starting from the start of a string and find out the longest possible valid java expression
+	 * starting from the start of a string and find out the longest possible
+	 * valid java expression
 	 * 
 	 * @param src
 	 * @return the longest or "" in case of none
@@ -411,9 +413,9 @@ public class JavaSyntaxTool {
 	public static String matchLongestPossibleExpr(String src) {
 		if (src == null || src.trim().length() == 0)
 			return "";
-		
+
 		src = src.trim();
-		
+
 		String expr = "";
 		int i = src.length();
 		for (; i > 0; i--) {
@@ -426,7 +428,75 @@ public class JavaSyntaxTool {
 				continue;
 			}
 		}
-		
+
 		return expr.trim();
 	}
+
+	public static String getDefault(Parameter p) {
+		String r = "";
+		List<AnnotationExpr> annotations = p.getAnnotations();
+		if (annotations == null)
+			return null;
+		for (AnnotationExpr an : annotations) {
+			String name = an.getName().getName();
+			if ("Default".equals(name)) {
+				String string = an.toString();
+				r = string.substring("@Default(".length(), string.length() - 1);
+				break;
+			}
+		}
+		return r;
+	}
+
+	//
+//	static final String classTempForVarDef = "class T {  {   %s ; } }";
+//
+//	/**
+//	 * 
+//	 * @param s
+//	 *            something like: "int a = 1, int b"
+//	 * @return
+//	 */
+//	public static String getFirstVarDeclare(String src) {
+//		if (src == null || src.trim().length() == 0)
+//			return "";
+//
+//		src = src.trim();
+//		final String[] ra = new String[1];
+//
+//		VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+//			public void visit(VariableDeclarationExpr n, Object arg) {
+////				Type type = n.getType();
+//				List<VariableDeclarator> vars = n.getVars();
+//				if (vars.size() > 1) {
+//					// not good yet
+//				}
+//				else {
+//					VariableDeclarator var = vars.get(0);
+//					VariableDeclaratorId id = var.getId();
+//					ra[0] = id.getName();
+//				}
+//			}
+//		};
+//
+//		String expr = "";
+//		int i = src.length();
+//		for (; i > 0; i--) {
+//			expr = src.substring(0, i);
+//			String ss = String.format(classTempForVarDef, expr);
+//			try {
+//				CompilationUnit cu = parse(ss);
+//				cu.accept(visitor, null);
+//				if (ra[0] != null)
+//					break;
+//				else 
+//					continue;
+//			} catch (ParseException e) {
+//				continue;
+//			}
+//		}
+//
+//		return expr.trim();
+//	}
+
 }

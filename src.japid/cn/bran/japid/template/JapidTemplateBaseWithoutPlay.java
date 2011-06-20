@@ -201,8 +201,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 					if (t != NamedArgRuntime[].class) {
 						return m;
 					}
-				}
-				else {
+				} else {
 					boolean hasNamedArg = false;
 					for (Class<?> c : parameterTypes) {
 						if (c == NamedArgRuntime.class || c == NamedArgRuntime[].class) {
@@ -218,52 +217,68 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		throw new RuntimeException("no render method found for the template: " + currentClass.getCanonicalName());
 	}
 
-	/* based on https://github.com/branaway/Japid/issues/12
-	 * This static mapping will be later user in method renderModel to construct an proper Object[] array
-	 *which is needed to invoke the method render(Object... args) over reflection.
+	/*
+	 * based on https://github.com/branaway/Japid/issues/12 This static mapping
+	 * will be later user in method renderModel to construct an proper Object[]
+	 * arraywhich is needed to invoke the method render(Object... args) over
+	 * reflection.
 	 */
-	
+
 	public java.lang.reflect.Method renderMethodInstance;
+
 	protected void setRenderMethod(Method renderMethod) {
-//		System.out.println("-> setrender name: " + renderMethod);
+		// System.out.println("-> setrender name: " + renderMethod);
 		renderMethodInstance = renderMethod;
 	}
-	
+
 	public String[] argNamesInstance = null;
+
 	protected void setArgNames(String[] argNames) {
-//		System.out.println("-> set args names: " + argNames);
+		// System.out.println("-> set args names: " + argNames);
 		this.argNamesInstance = argNames;
 	}
-	
+
 	public String[] argTypesInstance = null;
+
 	protected void setArgTypes(String[] argTypes) {
-//		System.out.println("-> set args names: " + argNames);
+		// System.out.println("-> set args names: " + argNames);
 		this.argTypesInstance = argTypes;
 	}
-	
-//	public cn.bran.japid.template.RenderResult renderModel(cn.bran.japid.template.JapidModelMap model) {
-//	    // a static utils method of JapidModelMap to build up an Object[] array. Nulls are used where the args are omitted.
-//	    Object[] args = model.buildArgs(argNamesInstance);
-//	    try {
-//			return (cn.bran.japid.template.RenderResult ) renderMethodInstance.invoke(this, args);
-//		} catch (IllegalArgumentException e) {
-//			throw new RuntimeException(e);
-//		} catch (IllegalAccessException e) {
-//			throw new RuntimeException(e);
-//		} catch (InvocationTargetException e) {
-//			Throwable t = e.getTargetException();
-//			throw new RuntimeException(t);
-//		}
-//	}
-//	
+
+	public Object[] argDefaultsInstance = null;
+
+	protected void setArgDefaults(Object[] argDefaults) {
+		// System.out.println("-> set args names: " + argNames);
+		this.argDefaultsInstance = argDefaults;
+	}
+
+	// public cn.bran.japid.template.RenderResult
+	// renderModel(cn.bran.japid.template.JapidModelMap model) {
+	// // a static utils method of JapidModelMap to build up an Object[] array.
+	// Nulls are used where the args are omitted.
+	// Object[] args = model.buildArgs(argNamesInstance);
+	// try {
+	// return (cn.bran.japid.template.RenderResult )
+	// renderMethodInstance.invoke(this, args);
+	// } catch (IllegalArgumentException e) {
+	// throw new RuntimeException(e);
+	// } catch (IllegalAccessException e) {
+	// throw new RuntimeException(e);
+	// } catch (InvocationTargetException e) {
+	// Throwable t = e.getTargetException();
+	// throw new RuntimeException(t);
+	// }
+	// }
+	//
 	protected static NamedArgRuntime named(String name, Object val) {
 		return new NamedArgRuntime(name, val);
 	}
-	
+
 	public cn.bran.japid.template.RenderResult render(NamedArgRuntime... named) {
-	    // a static utils method of JapidModelMap to build up an Object[] array. Nulls are used where the args are omitted.
-	    Object[] args = buildArgs(named);
-	    return runRenderer(args);
+		// a static utils method of JapidModelMap to build up an Object[] array.
+		// Nulls are used where the args are omitted.
+		Object[] args = buildArgs(named);
+		return runRenderer(args);
 	}
 
 	/**
@@ -272,7 +287,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	 */
 	protected cn.bran.japid.template.RenderResult runRenderer(Object[] args) {
 		try {
-			return (cn.bran.japid.template.RenderResult ) renderMethodInstance.invoke(this, args);
+			return (cn.bran.japid.template.RenderResult) renderMethodInstance.invoke(this, args);
 		} catch (IllegalArgumentException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalAccessException e) {
@@ -282,49 +297,56 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 			throw new RuntimeException(t);
 		}
 	}
-	
+
 	/**
 	 * build
+	 * 
 	 * @param argNames
 	 * @param namedArgs
 	 * @return
 	 */
-	public Object[] buildArgs(NamedArgRuntime[] namedArgs ) {
+	public Object[] buildArgs(NamedArgRuntime[] namedArgs) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		for (NamedArgRuntime na : namedArgs) {
 			map.put(na.name, na.val);
 		}
-		
+
 		Object[] ret = new Object[argNamesInstance.length];
-		
+
 		for (int i = 0; i < argNamesInstance.length; i++) {
 			String name = argNamesInstance[i];
 			if (map.containsKey(name)) {
 				ret[i] = map.remove(name);
-			}
-			else {
-				// set default value for primitives and Strings, or null for complex object
-				String type = argTypesInstance[i];
-				Object defaultVal  = getDefaultValForType(type);
-				ret[i] = defaultVal;
+			} else {
+				// any default set?
+				Object defa = this.argDefaultsInstance[i];
+				if (defa != null)
+					ret[i] = defa;
+				else {
+					// set default value for primitives and Strings, or null for
+					// complex object
+					String type = argTypesInstance[i];
+					Object defaultVal = getDefaultValForType(type);
+					ret[i] = defaultVal;
+				}
 			}
 		}
 		if (map.size() > 0) {
 			Set<String> keys = map.keySet();
 			String ks = "";
-			for(String k : keys) {
+			for (String k : keys) {
 				ks += k + " ";
 			}
 			String vs = "[";
 			for (String n : argNamesInstance) {
 				vs += n + " ";
 			}
-			vs +="]";
+			vs += "]";
 			throw new RuntimeException("One or more argument names are not valid: " + ks + ". Valid argument names are: " + vs);
 		}
 		return ret;
 	}
-	
+
 	protected Object[] buildArgs(NamedArgRuntime[] named, Object body) {
 		Object[] obsNoBody = buildArgs(named);
 		int len = obsNoBody.length;
@@ -335,25 +357,25 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	}
 
 	private Object getDefaultValForType(String type) {
-		if (type.equals("String")) 
+		if (type.equals("String"))
 			return "";
-		else if (/*type.equals("Boolean") ||*/ type.equals("boolean"))
+		else if (/* type.equals("Boolean") || */type.equals("boolean"))
 			return false;
-		else if (type.equals("char") /*|| type.equals("Character")*/)
-			return (char)0;
-		else if (type.equals("byte") /*|| type.equals("Byte")*/)
-			return (byte)0;
-		else if (type.equals("short") /*|| type.equals("Short") */)
-			return (short)0;
-		else if (type.equals("int") /*|| type.equals("Integer") */)
+		else if (type.equals("char") /* || type.equals("Character") */)
+			return (char) 0;
+		else if (type.equals("byte") /* || type.equals("Byte") */)
+			return (byte) 0;
+		else if (type.equals("short") /* || type.equals("Short") */)
+			return (short) 0;
+		else if (type.equals("int") /* || type.equals("Integer") */)
 			return 0;
-		else if (type.equals("float") /*|| type.equals("Float") */)
+		else if (type.equals("float") /* || type.equals("Float") */)
 			return 0f;
-		else if (type.equals("long") /*|| type.equals("Long") */)
+		else if (type.equals("long") /* || type.equals("Long") */)
 			return 0L;
-		else if (type.equals("double") /*|| type.equals("Double") */)
+		else if (type.equals("double") /* || type.equals("Double") */)
 			return 0d;
-		
+
 		return null;
 	}
 }

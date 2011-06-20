@@ -51,11 +51,13 @@ public class Display extends TagLayout
  */
 public static final String[] argNames = new String[] {/* args of the template*/"post", "as",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"models.japidsample.Post", "String",  };
+public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.Display.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
@@ -70,7 +72,7 @@ public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.com
 	public static interface DoBody<A> {
 		 void render(A a);
 	}
-	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,	String as, DoBody body) {
+	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as, DoBody body) {
 		this.body = body;
 		this.post = post;
 		this.as = as;

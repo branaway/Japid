@@ -428,6 +428,16 @@ public class JapidParserTests {
 	}
 	
 	@Test
+	public void testGetRestLine() {
+		String src = "abc\n def \n ghi";
+		assertEquals("bc", JapidParser.getRestLine(src, 0));
+		assertEquals("def ", JapidParser.getRestLine(src, 4));
+		assertEquals("ef ", JapidParser.getRestLine(src, 5));
+		assertEquals(" ", JapidParser.getRestLine(src, 7));
+		assertEquals("", JapidParser.getRestLine(src, 13));
+	}
+	
+	@Test
 	public void testEscapeSpecial() {
 		String src = "hello ``, `@, `#, `$, `% `&, `*end";
 		String r = JapidParser.escapeSpecialWith(src, '`');
@@ -456,7 +466,17 @@ public class JapidParserTests {
 		assertEquals("hello \\world", r);
 	}
 
+	/**
+	 * test the parsing of `()
+	 */
 	@Test
+	public void testTemplateArgsWithDefaults() {
+		String src = "`(A a, @Default(1)int b \n) \t \n end";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+		dumpTokens(tokens);
+	}
+		@Test
 	public void testContinue() {
 		String src = "hello \\\n `t Tag2 \\\n \"123\"`!";
 		JapidParser p = new JapidParser(src);

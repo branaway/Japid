@@ -51,18 +51,20 @@ public class Tag2 extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"msg", "m2", "age",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String", "Integer",  };
+public static final Object[] argDefaults= new Object[] {null,new String("m2message"),null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.Tag2.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
 	private String msg;
 	private String m2;
 	private Integer age;
-	public cn.bran.japid.template.RenderResult render(String msg, String m2, Integer age) {
+	public cn.bran.japid.template.RenderResult render(String msg,String m2,Integer age) {
 		this.msg = msg;
 		this.m2 = m2;
 		this.age = age;

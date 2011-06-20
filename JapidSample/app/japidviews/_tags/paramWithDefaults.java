@@ -1,4 +1,4 @@
-package japidviews.more.ContentNegotiation;
+package japidviews._tags;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
@@ -17,12 +17,12 @@ import play.mvc.Http.*;
 import controllers.*;
 import japidviews._javatags.*;
 //
-// NOTE: This file was generated from: japidviews/more/ContentNegotiation/index.html
+// NOTE: This file was generated from: japidviews/_tags/paramWithDefaults.html
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class index extends cn.bran.japid.template.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/more/ContentNegotiation/index.html";
+public class paramWithDefaults extends cn.bran.japid.template.JapidTemplateBase
+{	public static final String sourceTemplate = "japidviews/_tags/paramWithDefaults.html";
 {
 	headers.put("Content-Type", "text/html; charset=utf-8");
 }
@@ -41,18 +41,18 @@ public class index extends cn.bran.japid.template.JapidTemplateBase
 // - end of implicit fields with Play 
 
 
-	public index() {
+	public paramWithDefaults() {
 		super(null);
 	}
-	public index(StringBuilder out) {
+	public paramWithDefaults(StringBuilder out) {
 		super(out);
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/ };
-public static final String[] argTypes = new String[] {/* arg types of the template*/ };
-public static final Object[] argDefaults= new Object[] { };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.ContentNegotiation.index.class);
+public static final String[] argNames = new String[] {/* args of the template*/"msg", "m2", "age",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String", "Integer",  };
+public static final Object[] argDefaults= new Object[] {"message 1 default value",new String("m2message"),20, };
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.paramWithDefaults.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
@@ -61,16 +61,31 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	public cn.bran.japid.template.RenderResult render() {
+	private String msg;
+	private String m2;
+	private Integer age;
+	public cn.bran.japid.template.RenderResult render(String msg,String m2,Integer age) {
+		this.msg = msg;
+		this.m2 = m2;
+		this.age = age;
 		long t = -1;
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
-p("The content format: ");// line 1
-p(request.format);// line 1
 ;// line 1
+p("\n" + 
+"<span>");// line 5
+p(msg);// line 6
+p("</span>\n" + 
+"<span>");// line 6
+p(m2);// line 7
+p("</span>\n" + 
+"<span>");// line 7
+p(age);// line 8
+p("</span>\n" + 
+"\n");// line 8
 
 	}
 

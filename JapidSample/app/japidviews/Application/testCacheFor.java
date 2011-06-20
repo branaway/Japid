@@ -52,11 +52,13 @@ public class testCacheFor extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"a",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
+public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.testCacheFor.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 

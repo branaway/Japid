@@ -51,11 +51,13 @@ public class search extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"sp",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"SearchParams",  };
+public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.search.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 

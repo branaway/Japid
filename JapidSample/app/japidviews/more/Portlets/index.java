@@ -52,17 +52,19 @@ public class index extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"a", "b",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String",  };
+public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.Portlets.index.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
 	private String a;
 	private String b;
-	public cn.bran.japid.template.RenderResult render(String a, String b) {
+	public cn.bran.japid.template.RenderResult render(String a,String b) {
 		this.a = a;
 		this.b = b;
 		long t = -1;

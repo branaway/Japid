@@ -24,6 +24,18 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/20: V0.8.8 
+    1. new feature: template parameter can be annotated with a default value for use with tag invocation with named arguments. E.g.
+    `args String msg, @Default(new String("m2message"))String m2, Integer age
+        
+        or:
+    
+    `(
+        @Default("message 1 default value") String msg, 
+        @Default(new String("m2message")) String m2, 
+        @Default(20) Integer age
+    )
+    Due to parser limitation, there cannot be a new-line between the annotation and the parameter type.
 2011/6/17: V0.8.7.1 
     1. bug fix: vertical bar could not be part of tag argument. It was confused as the separator between args and callback params.  
 2011/6/17: V0.8.7 

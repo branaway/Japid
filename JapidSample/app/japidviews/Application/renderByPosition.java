@@ -52,11 +52,13 @@ public class renderByPosition extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"ss", "ii", "au1", "au2", "au22",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "int", "Author", "Author", "Author2",  };
+public static final Object[] argDefaults= new Object[] {null,null,null,null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.renderByPosition.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
@@ -65,7 +67,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	private Author au1;
 	private Author au2;
 	private Author2 au22;
-	public cn.bran.japid.template.RenderResult render(String ss, int ii, Author au1, Author au2, Author2 au22) {
+	public cn.bran.japid.template.RenderResult render(String ss,int ii,Author au1,Author au2,Author2 au22) {
 		this.ss = ss;
 		this.ii = ii;
 		this.au1 = au1;

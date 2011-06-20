@@ -7,6 +7,11 @@ import java.util.List;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.Parameter;
+import japa.parser.ast.body.VariableDeclarator;
+import japa.parser.ast.expr.AnnotationExpr;
+import japa.parser.ast.expr.VariableDeclarationExpr;
+import japa.parser.ast.type.Type;
+import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 import org.junit.Test;
 
@@ -56,20 +61,45 @@ public class JavaSyntaxToolTests {
 
 	@Test
 	public void testaddParamNamesPlaceHolder() {
-		String src = "int  String Obj";
+		String src = "int  String Object";
 		String pama = JavaSyntaxTool.addParamNamesPlaceHolder(src);
 		List<Parameter> parseParams = JavaSyntaxTool.parseParams(pama);
 		assertEquals(3, parseParams.size());
 		assertEquals("int", parseParams.get(0).getType().toString());
 		assertEquals("String", parseParams.get(1).getType().toString());
-		assertEquals("Obj", parseParams.get(2).getType().toString());
+		assertEquals("Object", parseParams.get(2).getType().toString());
 
-		src = "int,  String Obj";
+		src = "int,  String Object";
 		pama = JavaSyntaxTool.addParamNamesPlaceHolder(src);
 		parseParams = JavaSyntaxTool.parseParams(pama);
 		assertEquals(3, parseParams.size());
 		assertEquals("int", parseParams.get(0).getType().toString());
 		assertEquals("String", parseParams.get(1).getType().toString());
-		assertEquals("Obj", parseParams.get(2).getType().toString());
+		assertEquals("Object", parseParams.get(2).getType().toString());
 	}
+
+	@Test
+	public void testParseParams() {
+		String src = "@ Default (3 ) int i,  @Default(foo()+ \"aa\")String s, String m, @Default(\"aa\")String ss";
+		List<Parameter> pama = JavaSyntaxTool.parseParams(src);
+		Parameter p = pama.get(0);
+		String def = JavaSyntaxTool.getDefault(p);
+		assertEquals("3", def);
+//		System.out.println(def);
+		
+		p = pama.get(1);
+		def = JavaSyntaxTool.getDefault(p);
+		assertEquals("foo() + \"aa\"", def);
+
+		p = pama.get(2);
+		def = JavaSyntaxTool.getDefault(p);
+		assertNull(def);
+
+		p = pama.get(3);
+		def = JavaSyntaxTool.getDefault(p);
+		assertEquals("\"aa\"", def);
+		
+//		System.out.println(def);
+	}
+	
 }

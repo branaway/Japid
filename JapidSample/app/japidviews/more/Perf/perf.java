@@ -51,18 +51,20 @@ public class perf extends perfmain
  */
 public static final String[] argNames = new String[] {/* args of the template*/"title", "user", "entries",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "DataModel.User", "ArrayList<DataModel.Entry>",  };
+public static final Object[] argDefaults= new Object[] {null,null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.Perf.perf.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
 	private String title;
 	private DataModel.User user;
 	private ArrayList<DataModel.Entry> entries;
-	public cn.bran.japid.template.RenderResult render(String title, DataModel.User user, ArrayList<DataModel.Entry> entries) {
+	public cn.bran.japid.template.RenderResult render(String title,DataModel.User user,ArrayList<DataModel.Entry> entries) {
 		this.title = title;
 		this.user = user;
 		this.entries = entries;

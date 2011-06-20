@@ -51,11 +51,13 @@ public class picka extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"a", "b",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String",  };
+public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.picka.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
@@ -70,7 +72,7 @@ public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.com
 	public static interface DoBody<A> {
 		 void render(A a);
 	}
-	public cn.bran.japid.template.RenderResult render(String a, String b, DoBody body) {
+	public cn.bran.japid.template.RenderResult render(String a,String b, DoBody body) {
 		this.body = body;
 		this.a = a;
 		this.b = b;

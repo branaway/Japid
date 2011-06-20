@@ -121,23 +121,31 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
 		String paramNameArray = "";
 		String paramTypeArray = "";
+		String paramDefaultsArray = "";
 		String currentClassFQN = (this.packageName == null ? "":  this.packageName + ".") + this.className;
 
 		if (renderArgs != null) {
 			// create fields for the render args and create a render method to
 			List<Parameter> params = JavaSyntaxTool.parseParams(this.renderArgs);
 
+			String renderArgsWithoutAnnos = "";
 			/// named param stuff
 			for (Parameter p: params) {
 				paramNameArray  += "\"" + p.getId() + "\", ";
 				paramTypeArray  += "\"" + p.getType() + "\", ";
+				String defa = JavaSyntaxTool.getDefault(p);
+				paramDefaultsArray += defa + ",";
+				renderArgsWithoutAnnos += p.getType() + " " + p.getId() + ",";
 			}
-			String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, currentClassFQN);
+			if (renderArgsWithoutAnnos.endsWith(",")){
+				renderArgsWithoutAnnos = renderArgsWithoutAnnos.substring(0, renderArgsWithoutAnnos.length() - 1);
+			}
+			String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, paramDefaultsArray, currentClassFQN);
 			pln(nameParamCode);
 			///
 			
 			for (Parameter p : params) {
-				pln(TAB + "private " + p.getType() + " " + p.getId() + ";");
+				addField(p);
 			}
 
 			// set the render(xxx)
@@ -147,17 +155,17 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				// the field
 				pln(TAB + "private DoBody body;");
 				doBodyInterface();
-				pln("\tpublic " + resultType + " render(" + renderArgs + ", DoBody body) {");
+				pln("\tpublic " + resultType + " render(" + renderArgsWithoutAnnos + ", DoBody body) {");
 				pln("\t\t" + "this.body = body;");
 			} else {
-				pln("\tpublic " + resultType + " render(" + renderArgs + ") {");
+				pln("\tpublic " + resultType + " render(" + renderArgsWithoutAnnos + ") {");
 			}
 			// assign the params to fields
 			for (Parameter p : params) {
 				pln("\t\tthis." + p.getId() + " = " + p.getId() + ";");
 			}
 		} else {
-			String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, currentClassFQN);
+			String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, paramDefaultsArray, currentClassFQN);
 			pln(nameParamCode);
 			if (doBodyArgsString != null) {
 				pln(NAMED_PARAM_WITH_BODY);
@@ -246,13 +254,15 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	protected static final String NAMED_PARAM_CODE = "" +
 			"/* based on https://github.com/branaway/Japid/issues/12\n" + 
 			" */\n" +
-			"public static final String[] argNames = new String[] {/* args of the template*/%s };\r\n" + 
-			"public static final String[] argTypes = new String[] {/* arg types of the template*/%s };\r\n" + 
-			"public static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\r\n" + 
-			"{\r\n" + 
-			"	setRenderMethod(renderMethod);\r\n" + 
-			"	setArgNames(argNames);\r\n" + 
-			"	setArgTypes(argTypes);\r\n" + 
+			"public static final String[] argNames = new String[] {/* args of the template*/%s };\n" + 
+			"public static final String[] argTypes = new String[] {/* arg types of the template*/%s };\n" + 
+			"public static final Object[] argDefaults= new Object[] {%s };\n"  + 
+			"public static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\n" + 
+			"{\n" + 
+			"	setRenderMethod(renderMethod);\n" + 
+			"	setArgNames(argNames);\n" + 
+			"	setArgTypes(argTypes);\n" + 
+			"	setArgDefaults(argDefaults);\n" + 
 			"}\n" +
 			"" + 
 			"////// end of named args stuff\n";

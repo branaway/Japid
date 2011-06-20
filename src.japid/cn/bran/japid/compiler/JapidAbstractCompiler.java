@@ -388,7 +388,7 @@ public abstract class JapidAbstractCompiler {
 				String value = headerkv.substring(name.length()).trim();
 				getTemplateClassMetaData().setHeader(name, value);
 			} else if (startsWithIgnoreSpace(line, ARGS)) {
-				String args = line.trim().substring(ARGS.length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+				String args = line.trim().substring(ARGS.length()).trim()/*.replace(";", "").replace("'", "").replace("\"", "")*/;
 				Tag currentTag = this.tagsStack.peek();
 				currentTag.callbackArgs = args;
 			} else if (startsWithIgnoreSpace(line, "trim")) {

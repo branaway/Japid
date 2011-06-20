@@ -51,11 +51,13 @@ public class tagPrimitives extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"s", "i", "ii", "d", "dd", "b", "bb", "map", "f",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "int", "Integer", "double", "Double", "boolean", "Boolean", "Map<Object, String>", "float",  };
+public static final Object[] argDefaults= new Object[] {null,null,null,null,null,null,null,null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.tagPrimitives.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
@@ -68,18 +70,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	private Boolean bb;
 	private Map<Object, String> map;
 	private float f;
-	public cn.bran.japid.template.RenderResult render(
-    String s, 
-    int i, 
-    Integer ii,
-    double d,
-    Double dd,
-    boolean b,
-    Boolean bb,
-    Map<Object, String> map,
-    float f
-    
-) {
+	public cn.bran.japid.template.RenderResult render(String s,int i,Integer ii,double d,Double dd,boolean b,Boolean bb,Map<Object, String> map,float f) {
 		this.s = s;
 		this.i = i;
 		this.ii = ii;

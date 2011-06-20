@@ -51,17 +51,19 @@ public class validate extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"name", "age",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "Integer",  };
+public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.validate.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
 	private String name;
 	private Integer age;
-	public cn.bran.japid.template.RenderResult render(String name, Integer age) {
+	public cn.bran.japid.template.RenderResult render(String name,Integer age) {
 		this.name = name;
 		this.age = age;
 		long t = -1;

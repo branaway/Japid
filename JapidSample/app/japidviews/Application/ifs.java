@@ -51,11 +51,13 @@ public class ifs extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"str", "col", "b", "a1", "a2", "i", "s2",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "Collection", "boolean", "Object[]", "int[]", "int", "String",  };
+public static final Object[] argDefaults= new Object[] {null,null,null,null,null,null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.ifs.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
@@ -66,7 +68,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	private int[] a2;
 	private int i;
 	private String s2;
-	public cn.bran.japid.template.RenderResult render(String str, Collection col, boolean b, Object[] a1, int[] a2, int i, String s2) {
+	public cn.bran.japid.template.RenderResult render(String str,Collection col,boolean b,Object[] a1,int[] a2,int i,String s2) {
 		this.str = str;
 		this.col = col;
 		this.b = b;

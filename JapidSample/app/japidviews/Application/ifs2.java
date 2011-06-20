@@ -51,17 +51,19 @@ public class ifs2 extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"i", "ss",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"int", "String[]",  };
+public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.ifs2.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
 	private int i;
 	private String[] ss;
-	public cn.bran.japid.template.RenderResult render(int i, String[] ss) {
+	public cn.bran.japid.template.RenderResult render(int i,String[] ss) {
 		this.i = i;
 		this.ss = ss;
 		long t = -1;

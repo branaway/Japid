@@ -20,11 +20,13 @@ public class tee extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
  */
 public static final String[] argNames = new String[] {/* args of the template*/"u",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"cn.bran.japid.template.FooController.ModelUser",  };
+public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.tee.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 

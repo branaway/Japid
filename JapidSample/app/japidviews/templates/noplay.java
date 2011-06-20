@@ -24,11 +24,13 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
  */
 public static final String[] argNames = new String[] {/* args of the template*/"s",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
+public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.noplay.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 

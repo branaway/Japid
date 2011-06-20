@@ -52,17 +52,19 @@ public class Posts extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"blogTitle", "allPost",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "List<Post>",  };
+public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.Posts.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
 	private String blogTitle;
 	private List<Post> allPost;
-	public cn.bran.japid.template.RenderResult render(String blogTitle,  List <Post> allPost) {
+	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long t = -1;

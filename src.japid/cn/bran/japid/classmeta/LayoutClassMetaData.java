@@ -69,11 +69,21 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 			// create fields for the render args and create a render method to
 			List<Parameter> params = JavaSyntaxTool.parseParams(this.renderArgs);
 
-			for (Parameter p : params) {
-				pln(TAB + "private " + p.getType() + " " + p.getId() + ";");
+			String renderArgsWithoutAnnos = "";
+			for (Parameter p: params) {
+				renderArgsWithoutAnnos += p.getType() + " " + p.getId() + ",";
+			}
+			if (renderArgsWithoutAnnos.endsWith(",")){
+				renderArgsWithoutAnnos = renderArgsWithoutAnnos.substring(0, renderArgsWithoutAnnos.length() - 1);
 			}
 
-			pln("\t public void layout(" + renderArgs + ") {");
+			
+			for (Parameter p : params) {
+//				pln(TAB + "private " + p.getType() + " " + p.getId() + ";");
+				addField(p);
+			}
+
+			pln("\t public void layout(" + renderArgsWithoutAnnos + ") {");
 			// assign the params to fields
 			for (Parameter p : params) {
 				pln("\t\tthis." + p.getId() + " = " + p.getId() + ";");

@@ -162,7 +162,7 @@ public class CompilerTests {
 		CompilationUnit cu = JavaSyntaxTool.parse(srcCode);
 		assertTrue(srcCode.contains("package tags;"));
 		assertTrue(srcCode.contains("public class Display extends TagLayout"));
-		assertTrue(srcCode.contains("public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,	String as, DoBody body) {"));
+		assertTrue(srcCode.contains("public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as, DoBody body) {"));
 		assertTrue(srcCode.contains("@Override protected void doLayout() {"));
 		assertTrue("doBody is not presenting", srcCode.contains("body.render(post.getTitle() + \"!\");"));
 		assertTrue(srcCode.contains("public static interface DoBody<A>"));
@@ -344,7 +344,7 @@ public class CompilerTests {
 		String src = readFile(srcFile);
 		
 		JapidTemplate bt = new JapidTemplate("tests/namedParam.html", src);
-		JapidAbstractCompiler cp = new JapidLayoutCompiler();
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));

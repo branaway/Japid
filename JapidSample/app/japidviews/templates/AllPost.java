@@ -52,20 +52,19 @@ public class AllPost extends Layout
  */
 public static final String[] argNames = new String[] {/* args of the template*/"blogTitle", "allPost",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "List<Post>",  };
+public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.AllPost.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
 	private String blogTitle;
 	private List<Post> allPost;
-	public cn.bran.japid.template.RenderResult render(
-    String blogTitle, 
-    List <Post> allPost
-) {
+	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long t = -1;
@@ -114,7 +113,7 @@ p(";\n" +
 // line 14
 }// line 17
 p("\n");// line 17
-_Tag22.render(named("msg", blogTitle), named("m2", "msg2"), named("age", 10000));
+_Tag22.render(named("msg", blogTitle), named("age", 10000));
 // line 19
 p("\n" + 
 "<p>cool</p>");// line 19

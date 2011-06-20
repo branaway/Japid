@@ -51,18 +51,20 @@ public class dumpPost extends cn.bran.japid.template.JapidTemplateBase
  */
 public static final String[] argNames = new String[] {/* args of the template*/"f1", "f2", "body",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String", "String",  };
+public static final Object[] argDefaults= new Object[] {null,null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.dumpPost.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
 	private String f1;
 	private String f2;
 	private String body;
-	public cn.bran.japid.template.RenderResult render(String f1, String f2, String body) {
+	public cn.bran.japid.template.RenderResult render(String f1,String f2,String body) {
 		this.f1 = f1;
 		this.f2 = f2;
 		this.body = body;

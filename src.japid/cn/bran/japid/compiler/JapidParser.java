@@ -410,7 +410,7 @@ public class JapidParser {
 				break;
 			case VERBATIM:
 				if (c == MARKER_CHAR) {
-					String currentLine = getCurrentLine(pageSource, end - 1);
+					String currentLine = getCurrentLine();
 					if (currentLine.trim().equals(MARKER_STRING)) {
 						int skip = currentLine.length() - currentLine.indexOf(MARKER_CHAR);
 						return found(Token.PLAIN, skip);
@@ -454,7 +454,7 @@ public class JapidParser {
 				}
 				break;
 			case TEMPLATE_ARGS:
-				if (c == ')') {
+				if (c == ')' && getRestLine().trim().length() == 0) {
 					return found(Token.PLAIN, 1);
 				}
 				break;
@@ -557,6 +557,10 @@ public class JapidParser {
 		}
 	}
 
+	private String getCurrentLine() {
+		return getCurrentLine(pageSource, end - 1);
+	}
+
 	private boolean isStandAloneBackQuote() {
 		String currentLine = getCurrentLine(pageSource, end);
 		if (currentLine.trim().equals(MARKER_STRING)) {
@@ -565,7 +569,34 @@ public class JapidParser {
 			return false;
 		}
 	}
+	
+	String getRestLine() {
+		return getRestLine(pageSource, end - 1);
+	}
+	/**
+	 * get the rest of the current line 
+	 * @return
+	 */
+	static String getRestLine(String src, int pos) {
+		int begin = pos, endp = 0;
+		int i = 1;
+		int length = src.length();
+		while (true) {
+			endp = begin + i++;
+			if (endp < length) {
+				char charAt = src.charAt(endp);
+				if (charAt == '\n' || charAt == '\r') {
+					// got the end
+					break;
+				}
+			} else {
+				break;
+			}
+			
+		}
+		return src.substring(++begin, endp);
 
+	}
 	static String getCurrentLine(String src, final int pos) {
 		int begin = 0, endp = 0;
 		int i = 1;
@@ -588,7 +619,7 @@ public class JapidParser {
 			if (endp < length) {
 				char charAt = src.charAt(endp);
 				if (charAt == '\n') {
-					// got the beginning
+					// got the end
 					break;
 				}
 			} else {

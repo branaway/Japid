@@ -53,11 +53,13 @@ public class composite extends lcomposite2
  */
 public static final String[] argNames = new String[] {/* args of the template*/"post",  };
 public static final String[] argTypes = new String[] {/* arg types of the template*/"models.japidsample.Post",  };
+public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.composite.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 

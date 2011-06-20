@@ -20,11 +20,13 @@ public class taddy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
  */
 public static final String[] argNames = new String[] {/* args of the template*/ };
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
+public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.taddy.class);
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
+	setArgDefaults(argDefaults);
 }
 ////// end of named args stuff
 
