@@ -78,6 +78,9 @@ public class JavaSyntaxTool {
 		final List<Parameter> ret = new ArrayList<Parameter>();
 		if (line == null || line.trim().length() == 0)
 			return ret;
+
+		//make it tolerant of lowercase default
+		line = line.replace("@default(", "@Default(");
 		String cl = String.format(classTempForParams, line);
 		try {
 			CompilationUnit cu = parse(cl);

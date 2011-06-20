@@ -476,6 +476,20 @@ public class JapidParserTests {
 		List<TokenPair> tokens = p.allTokens();
 		dumpTokens(tokens);
 	}
+
+	/**
+	 * test the parsing of `()
+	 */
+	@Test
+	public void testTemplateArgsWithDefaults2() {
+		String src = "`( String name, String url, String type, String data, String reRender,\r\n" + 
+				"       @default(\"html\") String dataType,\r\n" + 
+				"       String beforeSend, String success, String jsData, Boolean cache, String event\r\n" + 
+				"   )\n well...";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+		dumpTokens(tokens);
+	}
 		@Test
 	public void testContinue() {
 		String src = "hello \\\n `t Tag2 \\\n \"123\"`!";
@@ -498,5 +512,13 @@ public class JapidParserTests {
 		for (TokenPair tp : tokens) {
 			System.out.println(tp.token + ":[" + tp.source + "]");
 		}
+	}
+	
+	@Test
+	public void testReplaceAll() {
+		String src = "$[mary] and $[tom]";
+		String res = src.replaceAll(JapidParser.PLACE_HOLDER_PATTERN_S, JapidParser.SUB_PATTERN_S);
+		System.out.println(res);
+		assertEquals("\"+mary+\" and \"+tom+\"", res);
 	}
 }

@@ -24,6 +24,10 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/20: V0.8.8.2 
+    1. hack: added a preprocessor to expand $[anything] to \"+anything+\" before compiling, maybe useful in String interpolation. See: https://github.com/branaway/Japid/issues/19
+2011/6/20: V0.8.8.1 
+    1. enhancement: trivial enhancement. tolerant of @default and @Default.
 2011/6/20: V0.8.8 
     1. new feature: template parameter can be annotated with a default value for use with tag invocation with named arguments. E.g.
     `args String msg, @Default(new String("m2message"))String m2, Integer age

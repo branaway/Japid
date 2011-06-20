@@ -102,4 +102,12 @@ public class JavaSyntaxToolTests {
 //		System.out.println(def);
 	}
 	
+	
+	@Test
+	public void testParseParams2() {
+		String src = "@default(\"html\") String dataType";
+		List<Parameter> pama = JavaSyntaxTool.parseParams(src);
+//		System.out.println(def);
+	}
+	
 }

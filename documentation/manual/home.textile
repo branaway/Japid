@@ -375,11 +375,7 @@ import play.mvc.Http.*;
 </pre>
 
 
-table{border: 1px dashed gray; cellspacing: 2px}.
-|_. Japid|_. Play!|
-|{border:1px grey solid}. @`args Type1 a1, Type2 a2@|none|
-
-Note: One advantage of using `() is it can span multiple lines, useful when the argument list is long.
+Note: One advantage of using `() is it can span multiple lines, useful when the argument list is long. Of course you can use the @`args@ and the line continuator "\" to simulate multi-line paramters too. 
 
 <pre>
 *{here I'm using the alternate marker @ instead of the default `}*
@@ -389,6 +385,27 @@ Note: One advantage of using `() is it can span multiple lines, useful when the 
     String s
 )
 </pre>
+
+Since 0.8.8, template parameter can be annotated with a default value for use with @tag invocations with named arguments@. E.g.:
+
+<pre>
+    `args String msg, @Default(new String("m2message"))String m2, Integer age
+</pre>        
+
+or:
+    
+<pre>
+`(
+    @Default("message 1 default value") String msg, 
+    @Default(new String("m2message")) String m2, 
+    @Default(20) Integer age
+)
+</pre>        
+
+Note: 
+
+1. due to parser limitation, there cannot be a new-line between the annotation and the parameter type.
+2. It's @Default@, not @default@. 
 
 h3. Create a named text block: @`set@
 

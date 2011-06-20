@@ -37,13 +37,18 @@ public class JapidParser {
 	private String pageSource;
 
 	public JapidParser(String pageSource) {
-		this.pageSource = pageSource;
-		this.len = pageSource.length();
+		// hack: allow $[] string interpolation in String literals in script block. 
+		// see: https://github.com/branaway/Japid/issues/19
+		pageSource = pageSource.replaceAll(JapidParser.PLACE_HOLDER_PATTERN_S, JapidParser.SUB_PATTERN_S);
+
 		// detect marker
 		// the logic is to find the first line that starts with either ` or @
-
 		char mar = detectMarker(pageSource);
 		setMarker(mar);
+
+		this.pageSource = pageSource;
+		this.len = pageSource.length();
+		
 	}
 
 	/**
@@ -133,6 +138,8 @@ public class JapidParser {
 	private JapidParser.Token state = Token.PLAIN;
 	private JapidParser.Token lastState;
 	public boolean verbatim;
+	public static final String SUB_PATTERN_S = "\"\\+$1\\+\"";
+	public static final String PLACE_HOLDER_PATTERN_S = "\\$\\[(\\w+)\\]";
 
 	private JapidParser.Token found(JapidParser.Token newState, int skip) {
 		begin2 = begin;
