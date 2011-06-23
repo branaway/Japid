@@ -24,7 +24,7 @@ import japidviews._javatags.*;
 public class perf extends perfmain
 {	public static final String sourceTemplate = "japidviews/more/Perf/perf.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
+putHeader("Content-Type", "text/html; charset=utf-8");
 }
 
 // - add implicit fields with Play
@@ -70,7 +70,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.entries = entries;
 		long t = -1;
 		super.layout(user);
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------

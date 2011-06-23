@@ -516,9 +516,9 @@ public class JapidParserTests {
 	
 	@Test
 	public void testReplaceAll() {
-		String src = "$[mary] and $[tom]";
+		String src = "$[mary[13]]$ and $[tom]$";
 		String res = src.replaceAll(JapidParser.PLACE_HOLDER_PATTERN_S, JapidParser.SUB_PATTERN_S);
 		System.out.println(res);
-		assertEquals("\"+mary+\" and \"+tom+\"", res);
+		assertEquals("\"+mary[13]+\" and \"+tom+\"", res);
 	}
 }

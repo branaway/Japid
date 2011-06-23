@@ -195,10 +195,10 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		
 		if (streaming) {
 			if (useWithPlay && hasActionInvocation)
-				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, null, t, " + ACTION_RUNNERS + ");");
+				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(getHeaders(), null, t, " + ACTION_RUNNERS + ");");
 			else {
 				if (useWithPlay) {
-					pln("\t\treturn new " + resultType + "(this.headers, null, t);");
+					pln("\t\treturn new " + resultType + "(getHeaders(), null, t);");
 				}
 				else {
 					pln("\t\t if (t != -1) System.out.println(\"[" + super.className + "] rendering time: \" + t);");
@@ -209,9 +209,9 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		} else {
 			if (useWithPlay) {
 				if (hasActionInvocation) 
-					pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(this.headers, getOut(), t, " + ACTION_RUNNERS + ");");
+					pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(getHeaders(), getOut(), t, " + ACTION_RUNNERS + ");");
 				else
-					pln("\t\treturn new " + resultType + "(this.headers, getOut(), t);");
+					pln("\t\treturn new " + resultType + "(getHeaders(), getOut(), t);");
 			}
 			else {
 				pln("\t\t if (t != -1) System.out.println(\"[" + super.className + "] rendering time: \" + t);");

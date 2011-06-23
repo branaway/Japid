@@ -24,7 +24,7 @@ import japidviews._javatags.*;
 public class SimpleTemp_xml extends cn.bran.japid.template.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/SimpleTemp.xml";
 {
-	headers.put("Content-Type", "text/xml; charset=utf-8");
+putHeader("Content-Type", "text/xml; charset=utf-8");
 }
 
 // - add implicit fields with Play
@@ -66,7 +66,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.blogTitle = blogTitle;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------

@@ -26,7 +26,7 @@ import japidviews._javatags.*;
 public class invokeInLoop extends cn.bran.japid.template.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/invokeInLoop.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
+putHeader("Content-Type", "text/html; charset=utf-8");
 }
 
 // - add implicit fields with Play
@@ -68,7 +68,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.posts = posts;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------

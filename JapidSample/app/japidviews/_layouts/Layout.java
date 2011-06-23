@@ -24,7 +24,7 @@ import japidviews._javatags.*;
 public abstract class Layout extends cn.bran.japid.template.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_layouts/Layout.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
+putHeader("Content-Type", "text/html; charset=utf-8");
 }
 
 // - add implicit fields with Play

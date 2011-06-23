@@ -38,8 +38,8 @@ import cn.bran.japid.util.WebUtils;
  */
 public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 
-	protected StringBuilder out;
-	protected Map<String, String> headers = new TreeMap<String, String>();
+	private StringBuilder out;
+	private Map<String, String> headers = new TreeMap<String, String>();
 	{
 		headers.put("Content-Type", "text/html; charset=utf-8");
 	}
@@ -55,6 +55,14 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	// public JapidTemplateBase() {
 	//
 	// };
+
+	protected void putHeader(String k, String v) {
+		headers.put(k, v);
+	}
+	
+	protected Map<String, String> getHeaders(){
+		return this.headers;
+	}
 
 	public JapidTemplateBaseWithoutPlay(StringBuilder out2) {
 		this.out = out2 == null ? new StringBuilder(4000) : out2;

@@ -557,7 +557,7 @@ public abstract class AbstractTemplateClassMetaData {
 			pln("{");
 			for (String k : headers.keySet()) {
 				String v = headers.get(k);
-				pln("	headers.put(\"" + k + "\", \"" + v + "\");");
+				pln("putHeader(\"" + k + "\", \"" + v + "\");");
 			}
 			pln("}");
 		}

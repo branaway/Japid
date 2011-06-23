@@ -24,7 +24,7 @@ import japidviews._javatags.*;
 public class index extends SampleLayout
 {	public static final String sourceTemplate = "japidviews/more/MyController/index.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
+putHeader("Content-Type", "text/html; charset=utf-8");
 }
 
 // - add implicit fields with Play
@@ -68,7 +68,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.i = i;
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 

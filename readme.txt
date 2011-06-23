@@ -24,6 +24,11 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/6/20: V0.8.8.4 
+    1. trivial improvement: changed the string builder and the header to private in the very template base class. All java code MUST be refreshed.
+    2. improvement: updated the eclipse-plugin to support the line continuation in script block. 
+2011/6/20: V0.8.8.3 
+    1. improvement: changed the reference pattern to $[.+]$ to match everything between. 
 2011/6/20: V0.8.8.2 
     1. hack: added a preprocessor to expand $[anything] to \"+anything+\" before compiling, maybe useful in String interpolation. See: https://github.com/branaway/Japid/issues/19
 2011/6/20: V0.8.8.1 

@@ -139,7 +139,7 @@ public class JapidParser {
 	private JapidParser.Token lastState;
 	public boolean verbatim;
 	public static final String SUB_PATTERN_S = "\"\\+$1\\+\"";
-	public static final String PLACE_HOLDER_PATTERN_S = "\\$\\[(\\w+)\\]";
+	public static final String PLACE_HOLDER_PATTERN_S = "\\$\\[(.+?)\\]\\$"; // none-greedy match 
 
 	private JapidParser.Token found(JapidParser.Token newState, int skip) {
 		begin2 = begin;

@@ -25,7 +25,7 @@ import japidviews._javatags.*;
 public abstract class lcomposite2 extends cn.bran.japid.template.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_layouts/lcomposite2.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
+putHeader("Content-Type", "text/html; charset=utf-8");
 }
 
 // - add implicit fields with Play

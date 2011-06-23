@@ -24,7 +24,7 @@ import japidviews._javatags.*;
 public class def extends defLayout
 {	public static final String sourceTemplate = "japidviews/templates/def.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
+putHeader("Content-Type", "text/html; charset=utf-8");
 }
 
 // - add implicit fields with Play
@@ -64,7 +64,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		super.layout();
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 
@@ -97,8 +97,7 @@ _dummyTag4.render(get("bar"));
 // line 29
 p("\n" + 
 "\n");// line 29
-p("\n" + 
-"<p>check 5</p>\n" + 
+p("<p>check 5</p>\n" + 
 "\n");// line 31
 p(foo());// line 34
 p("\n" + 

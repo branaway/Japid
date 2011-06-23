@@ -24,7 +24,7 @@ import japidviews._javatags.*;
 public abstract class perfmain extends cn.bran.japid.template.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/Perf/perfmain.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
+putHeader("Content-Type", "text/html; charset=utf-8");
 }
 
 // - add implicit fields with Play

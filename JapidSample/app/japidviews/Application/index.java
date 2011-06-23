@@ -24,7 +24,7 @@ import japidviews._javatags.*;
 public class index extends cn.bran.japid.template.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/Application/index.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
+putHeader("Content-Type", "text/html; charset=utf-8");
 }
 
 // - add implicit fields with Play
@@ -70,7 +70,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
 
 		System.out.println("[index] rendering time(ms): " + l);
-		return new cn.bran.japid.template.RenderResultPartial(this.headers, getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------

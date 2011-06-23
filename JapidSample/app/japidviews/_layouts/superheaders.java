@@ -24,8 +24,8 @@ import japidviews._javatags.*;
 public abstract class superheaders extends cn.bran.japid.template.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_layouts/superheaders.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
-	headers.put("Cache-Control", "max-age=300");
+putHeader("Content-Type", "text/html; charset=utf-8");
+putHeader("Cache-Control", "max-age=300");
 }
 
 // - add implicit fields with Play

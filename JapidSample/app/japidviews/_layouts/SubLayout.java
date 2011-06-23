@@ -24,7 +24,7 @@ import japidviews._javatags.*;
 public abstract class SubLayout extends Layout
 {	public static final String sourceTemplate = "japidviews/_layouts/SubLayout.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
+putHeader("Content-Type", "text/html; charset=utf-8");
 }
 
 // - add implicit fields with Play
