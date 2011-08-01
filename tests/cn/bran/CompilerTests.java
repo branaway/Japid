@@ -152,7 +152,7 @@ public class CompilerTests {
 
 	@Test
 	public void testCompileTagWithDoubleDispatch() throws IOException, ParseException {
-		String src = readFile("japidSample/app/japidviews/_tags/Display.html");
+		String src = readFile("JapidSample/app/japidviews/_tags/Display.html");
 		JapidTemplate bt = new JapidTemplate("tags/Display.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
