@@ -16,12 +16,12 @@ import cn.bran.japid.util.DirUtil;
 public class JapidCommands {
 	private static final String APP = "app";
 
-	private static final String JapidWebUtil = "package japidviews._javatags;\n" + "\n" + "/**\n"
-			+ " * a well-know place to add all the static method you want to use in your\n" + " * templates.\n" + " * \n"
-			+ " * All the public static methods will be automatically \"import static \" to the\n"
-			+ " * generated Java classes by the Japid compiler.\n" + " * \n" + " */\n" + "public class JapidWebUtil {\n"
-			+ "	public static String hi() {\n" + "		return \"Hi\";\n" + "	}\n" + "	// your utility methods...\n" + "	\n" + "}\n" + "";
-
+//	private static final String JapidWebUtil = "package japidviews._javatags;\n" + "\n" + "/**\n"
+//			+ " * a well-know place to add all the static method you want to use in your\n" + " * templates.\n" + " * \n"
+//			+ " * All the public static methods will be automatically \"import static \" to the\n"
+//			+ " * generated Java classes by the Japid compiler.\n" + " * \n" + " */\n" + "public class JapidWebUtil {\n"
+//			+ "	public static String hi() {\n" + "		return \"Hi\";\n" + "	}\n" + "	// your utility methods...\n" + "	\n" + "}\n" + "";
+//
 	public static void main(String[] args) throws IOException {
 		String arg0 = args[0];
 

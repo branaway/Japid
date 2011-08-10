@@ -18,7 +18,7 @@
 		<link>
 			<name>conf/japid-head</name>
 			<type>2</type>
-			<location>D:/home/bran/projects/play/modules/japid-head/conf</location>
+			<location>/Applications/eclipse3.7/Eclipse.app/Contents/MacOS/D::/home/bran/projects/play/modules/japid-head/conf</location>
 		</link>
 	</linkedResources>
 </projectDescription>

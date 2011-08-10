@@ -15,7 +15,7 @@ import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 import org.junit.Test;
 
-public class JavaSyntaxToolTests {
+public class JavaSyntaxToolTest {
 	@Test
 	public void testAddFinalToAllParams() {
 		String src = "String a, final int b, MyObject[] c";
@@ -110,4 +110,10 @@ public class JavaSyntaxToolTests {
 //		System.out.println(def);
 	}
 	
+	@Test
+	public void testBoxPrimitiveTypesInParams(){
+		String src = "String a, int b, long[] c, long d";
+		String res = JavaSyntaxTool.boxPrimitiveTypesInParams(src);
+		assertEquals("String a, Integer b, long[] c, Long d", res);
+	}
 }

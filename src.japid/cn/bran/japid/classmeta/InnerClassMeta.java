@@ -19,7 +19,6 @@ import japa.parser.ast.body.Parameter;
 import java.util.List;
 
 import cn.bran.japid.compiler.JavaSyntaxTool;
-import cn.bran.japid.compiler.JavaSyntaxTool.Param;
 import cn.bran.japid.tags.Each;
 
 
@@ -42,7 +41,7 @@ public class InnerClassMeta {
 		super();
 		this.tagName = tagName.replace('/', '.');
 		this.counter = counter;
-		this.renderParams = callbackArgs;
+		this.renderParams = JavaSyntaxTool.boxPrimitiveTypesInParams(callbackArgs);
 		this.renderBody = renderBody;
 //		this.interfaceName = interfaceName;
 	}
@@ -137,13 +136,27 @@ public class InnerClassMeta {
 			renderParams += EXTRA_LOOP_ATTRS;
 		}
 		
-		String renderArgsWithFinal = JavaSyntaxTool.addFinalToAllParams(renderParams);
+		String paramList = renderParams;
+		String renderArgsWithFinal = JavaSyntaxTool.addFinalToAllParams(paramList);
 		
 		StringBuilder sb = new StringBuilder();
 		line(sb, "new " + tagName + ".DoBody" +  generics + "(){");
 		line(sb, "public void render(" + renderArgsWithFinal  + ") {");
 		line(sb, renderBody);
 		line(sb, "}");
+		String bufferString = "\r\n" + 
+				"StringBuilder oriBuffer;\r\n" + 
+				"@Override\r\n" + 
+				"public void setBuffer(StringBuilder sb) {\r\n" + 
+				"	oriBuffer = getOut();\r\n" + 
+				"	setOut(sb);\r\n" + 
+				"}\r\n" + 
+				"\r\n" + 
+				"@Override\r\n" + 
+				"public void resetBuffer() {\r\n" + 
+				"	setOut(oriBuffer);\r\n" + 
+				"}\r\n";
+		line(sb, bufferString);
 		line(sb, "}");
 		
 		return sb.toString();

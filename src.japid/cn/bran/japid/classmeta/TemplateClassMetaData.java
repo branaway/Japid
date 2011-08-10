@@ -155,6 +155,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				// the field
 				pln(TAB + "private DoBody body;");
 				doBodyInterface();
+				
+				// now the render(...)
 				pln("\tpublic " + resultType + " render(" + renderArgsWithoutAnnos + ", DoBody body) {");
 				pln("\t\t" + "this.body = body;");
 			} else {
@@ -172,6 +174,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				// the field
 				pln(TAB + "DoBody body;");
 				doBodyInterface();
+
+				// now the render(...)
 				pln("\tpublic " + resultType + " render(DoBody body) {");
 				pln("\t\t" + "this.body = body;");
 			} else {
@@ -222,7 +226,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	}
 
 	private void doBodyInterface() {
-		// let do the dobody callback interface
+		// let do the doDody callback interface
 		// doBody interface:
 		if (doBodyArgsString != null) {
 			List<String> args = JavaSyntaxTool.parseArgs(doBodyArgsString);
@@ -240,9 +244,25 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				genericTypeList = "<" + genericTypeList.substring(1) + ">";
 				renderArgList = renderArgList.substring(1); 
 			}
-			pln("\tpublic static interface DoBody", genericTypeList, " {");
-			pln("\t\t void render(" + renderArgList + ");");
-			pln("\t}");
+			pln("public static interface DoBody", genericTypeList, " {");
+			pln("		void render(" + renderArgList + ");");
+			pln("		void setBuffer(StringBuilder sb);\n" + 
+					"		void resetBuffer();\n" + 
+					"}");
+			
+			// add a convenient method to get the render result from the doBody object
+			String renderArgs = renderArgList.replaceAll("[A-Z]", "");
+			pln(genericTypeList, " String renderBody(" + renderArgList + ") {\n" + 
+					"		StringBuilder sb = new StringBuilder();\n" + 
+					"		if (body != null){\n" + 
+					"			body.setBuffer(sb);\n" + 
+					"			body.render(" + renderArgs + ");\n" + 
+					"			body.resetBuffer();\n" + 
+					"		}\n" + 
+					"		return sb.toString();\n" + 
+					"	}");
+			
+			
 		}
 	}
 

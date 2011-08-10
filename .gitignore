@@ -4,3 +4,6 @@ JapidSample/eclipse/*
 JapidSample/tmp/*
 /dist/*
 *~
+.DS_Store
+.settings/
+JapidSample/test-result/

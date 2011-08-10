@@ -141,5 +141,8 @@ public class Each extends SimpleTag {
 		// the _parity is for quick use as a CSS class, or one can use
 		// "${_isOdd?"odd":"even"}"
 		void render(final E e, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast);
+		void setBuffer(StringBuilder sb);
+		void resetBuffer();
+
 	}
 }

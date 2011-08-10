@@ -120,17 +120,56 @@ p("\n" +
 "		");// line 16
 
 }
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
 }
 );
 // line 15
 p("	");// line 17
 
 }
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
 }
 );
 // line 13
 
 }
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
 }
 );
 // line 8

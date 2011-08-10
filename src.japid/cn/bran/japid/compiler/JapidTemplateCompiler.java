@@ -45,8 +45,10 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		
 		if (tag.tagName.equals(DO_BODY)) {
 			tcmd.doBody(tag.args);
-			println("if (body != null)");
-			println("\tbody.render(" + tag.args + ");");
+			println("if (body != null){\n" + 
+					"	body.setBuffer(getOut());");
+			println("	body.render(" + tag.args + ");");
+			println("	body.resetBuffer();\n" + "}");
 			// print to the root space before move one stack up
 		} else if ("set".equals(tag.tagName)) {
 			// only support value as tag content as opposed to as attribute:
@@ -102,8 +104,11 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		if (JapidAbstractCompiler.startsWithIgnoreSpace(line.trim(), DO_BODY) || line.trim().equals(DO_BODY)) {
 			String args = line.trim().substring(DO_BODY.length()).trim();
 			tcmd.doBody(args);
-			println("if (body != null)");
-			println("\tbody.render(" + args + ");");
+			println("if (body != null){\n" + 
+					"	body.setBuffer(getOut());\n");
+			println("	body.render(" + args + ");");
+			println("	body.resetBuffer();\n" + "}");
+			
 			skipLineBreak = true;
 		}
 		else {

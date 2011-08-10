@@ -30,4 +30,8 @@ public class MyController extends BaseController {
 		renderJapid();
 	}
 
+	public static void doBodyInDef() {
+		renderJapid();
+	}
+
 }

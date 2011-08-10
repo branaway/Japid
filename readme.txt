@@ -24,6 +24,11 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/8/10: V0.8.9, breaking compiler change, requires regeneration of all Japid templates using "play japid:regen" for an example.
+    1. new feature: added a method named renderBody(...) to the generated Java class for tags. The method runs doBody and returns the result as a String. So a user can manipulate the result in the tag.
+    	e.g.:  `String body = renderBody("my name", 30);
+	2. bug fix: could not use "doBody" tag in a "def" block.
+	3. bug fix: could not use primitive types in the parameter list of a callback block of a tag invocation.   
 2011/6/20: V0.8.8.4 
     1. trivial improvement: changed the string builder and the header to private in the very template base class. All java code MUST be refreshed.
     2. improvement: updated the eclipse-plugin to support the line continuation in script block. 
@@ -55,7 +60,7 @@ Whenever you upgrade the Japid module,
 2011/6/15: V0.8.5.1 
     1. bug fix: named arguments did not work with tag calls with a body block
 2011/6/14: V0.8.5 
-    1. new feature(experimental): invoke tags with named arguments: `tag myTag(name="my name", age=20). If one argument is named, all must be named. Missed args default to nulls.
+    1. new feature(experimental): invoke tags with named arguments: `tag myTag(name="my name", age=20). If one argument is named, all must be named. Missing args default to nulls or default value as in Java for primitives.
     2. improvement(experimental): primitives and Strings have intuitive defaults now if they are missing for the named args.
 2011/6/11: V0.8.4.8: 
     1. bug fix: the htmlentities.properties file was not included in ant build causing escape() to fail.  

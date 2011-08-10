@@ -129,6 +129,19 @@ _SampleTag1.render(s);
 // line 34
     
 }
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
 }
 );
 // line 32
@@ -146,6 +159,19 @@ _SampleTag3.render(s);
 // line 40
     
 }
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
 }
 );
 // line 38

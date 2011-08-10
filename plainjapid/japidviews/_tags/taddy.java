@@ -36,8 +36,19 @@ public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.com
 }
 
 	DoBody body;
-	public static interface DoBody<A> {
-		 void render(A a);
+public static interface DoBody<A> {
+		void render(A a);
+		void setBuffer(StringBuilder sb);
+		void resetBuffer();
+}
+<A> String getCallerBody(A a) {
+		StringBuilder sb = new StringBuilder();
+		if (body != null){
+			body.setBuffer(sb);
+			body.render( a);
+			body.resetBuffer();
+		}
+		return sb.toString();
 	}
 	public String render(DoBody body) {
 		this.body = body;
@@ -52,8 +63,12 @@ p("teddy bear\n" +
 "\n");// line 1
 String[] ss = new String[]{"a", "add", "cd"};// line 3
 p("\n");// line 3
-if (body != null)
+if (body != null){
+	body.setBuffer(getOut());
+
 	body.render(ss);
+	body.resetBuffer();
+}
 
 	}
 

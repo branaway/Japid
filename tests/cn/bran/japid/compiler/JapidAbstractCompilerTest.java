@@ -66,24 +66,24 @@ public class JapidAbstractCompilerTest {
 	@Test
 	public void testCleanDeclPrimitive() {
 		String s = "int i";
-		assertEquals("Integer i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+		assertEquals("Integer i", JavaSyntaxTool.cleanDeclPrimitive(s));
 		
 		s = "int[] i";
-		assertEquals("int[] i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+		assertEquals("int[] i", JavaSyntaxTool.cleanDeclPrimitive(s));
 
 		s = "long i";
-		assertEquals("Long i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+		assertEquals("Long i", JavaSyntaxTool.cleanDeclPrimitive(s));
 
 		s = "double i";
-		assertEquals("Double i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+		assertEquals("Double i", JavaSyntaxTool.cleanDeclPrimitive(s));
 
 		s = "float	i";
-		assertEquals("Float i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+		assertEquals("Float i", JavaSyntaxTool.cleanDeclPrimitive(s));
 
 		s = "String i";
-		assertEquals("String i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+		assertEquals("String i", JavaSyntaxTool.cleanDeclPrimitive(s));
 		
 		s = "char	i";
-		assertEquals("Character i", JapidAbstractCompiler.cleanDeclPrimitive(s));
+		assertEquals("Character i", JavaSyntaxTool.cleanDeclPrimitive(s));
 	}
 }

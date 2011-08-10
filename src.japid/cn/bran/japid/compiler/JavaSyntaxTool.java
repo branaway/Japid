@@ -404,6 +404,29 @@ public class JavaSyntaxTool {
 		return s.substring(0, s.lastIndexOf(", "));
 	}
 
+	/**
+	 * box all primitive type declarations in a parameter list
+	 * 
+	 * @param paramline
+	 * @return
+	 */
+	public static String boxPrimitiveTypesInParams(String paramline) {
+		if (paramline == null)
+			return null;
+		paramline = paramline.trim();
+		if (paramline.length() == 0)
+			return "";
+		List<Parameter> params = parseParams(paramline);
+		String s = "";
+		for (Parameter p : params) {
+			String decl = p.getType() + " " + p.getId().getName();
+			decl = cleanDeclPrimitive(decl);
+			s += decl + ", ";
+		}
+		
+		return s.substring(0, s.lastIndexOf(", "));
+	}
+
 	private static final String classTempForExpr = "class T {  {  f = %s ; } }";
 
 	/**
@@ -449,6 +472,48 @@ public class JavaSyntaxTool {
 			}
 		}
 		return r;
+	}
+
+	/**
+	 * change all primitive data types to the object wrapper type in the parameter list
+	 * 
+	 * @param decl
+	 *            int i, int[] ia, etc
+	 * @return
+	 * 	           the wrapper form
+	 */
+	public static String cleanDeclPrimitive(String decl) {
+		decl = decl.trim();
+		int i = decl.length();
+		String var = "";
+		String type = "";
+		while (--i >= 0) {
+			char c = decl.charAt(i);
+			if (c == ' ' || c == '\t') {
+				var = decl.substring(i + 1);
+				type = decl.substring(0, i).trim();
+				break;
+			}
+		}
+		if ("int".equals(type)) {
+			decl = "Integer " + var;
+		} else if ("long".equals(type)) {
+			decl = "Long " + var;
+		} else if ("short".equals(type)) {
+			decl = "Short " + var;
+		} else if ("byte".equals(type)) {
+			decl = "Byte " + var;
+		} else if ("float".equals(type)) {
+			decl = "Float " + var;
+		} else if ("double".equals(type)) {
+			decl = "Double " + var;
+		} else if ("char".equals(type)) {
+			decl = "Character " + var;
+		} else if ("boolean".equals(type)) {
+			decl = "Boolean " + var;
+		}
+	
+		return decl;
 	}
 
 	//

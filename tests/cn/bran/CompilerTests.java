@@ -302,6 +302,18 @@ public class CompilerTests {
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 //		assertTrue(bt.javaSource.contains("((Each)(new Each(getOut())).setActionRunners(getActionRunners())).render(sa, new Each.DoBody<String>(){"));
 	}
+
+	@Test
+	public void testDoBodyInDef() throws IOException {
+		String srcFile = "tests/doBodyInDef.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate("doBodyInDef.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
+	}
 	
 	@Test
 	public void testSetDirective() throws IOException {

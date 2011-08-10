@@ -68,8 +68,19 @@ public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.com
 }
 
 	private DoBody body;
-	public static interface DoBody {
-		 void render();
+public static interface DoBody {
+		void render();
+		void setBuffer(StringBuilder sb);
+		void resetBuffer();
+}
+ String getCallerBody() {
+		StringBuilder sb = new StringBuilder();
+		if (body != null){
+			body.setBuffer(sb);
+			body.render();
+			body.resetBuffer();
+		}
+		return sb.toString();
 	}
 	public cn.bran.japid.template.RenderResult render(String well, DoBody body) {
 		this.body = body;
@@ -84,8 +95,12 @@ public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.com
 p("\n" + 
 "<span>something</span>\n" + 
 "\n");// line 1
-if (body != null)
+if (body != null){
+	body.setBuffer(getOut());
+
 	body.render();
+	body.resetBuffer();
+}
 p(" ");// line 5
 
 	}
