@@ -89,7 +89,7 @@ p("</p>\n" +
 p(a.getGender());// line 5
 p("'</p>\n" + 
 "    ");// line 5
-_SampleTag0.render("end");
+_SampleTag0.setOut(getOut()); _SampleTag0.render("end");
 // line 6
 p("    ");// line 6
 

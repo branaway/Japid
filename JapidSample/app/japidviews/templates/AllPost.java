@@ -99,7 +99,7 @@ p("        ");// line 11
 p("\n" + 
 "\n" + 
 "	    ");// line 12
-_Display1.render(new Display.DoBody<String>(){
+_Display1.setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
 public void render(final String title) {
 // line 14
 p("		   The real title iiiis: ");// line 14
@@ -126,7 +126,7 @@ public void resetBuffer() {
 // line 14
 }// line 17
 p("\n");// line 17
-_Tag22.render(named("msg", blogTitle), named("age", 10000));
+_Tag22.setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 10000));
 // line 19
 p("\n" + 
 "<p>cool</p>");// line 19

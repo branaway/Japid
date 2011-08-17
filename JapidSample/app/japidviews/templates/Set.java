@@ -87,7 +87,7 @@ final dummyTag _dummyTag2 = new dummyTag(getOut());
 
 		// line 17
 p("    great footer. Call a tag: ");// line 17
-_dummyTag2.render("me");
+_dummyTag2.setOut(getOut()); _dummyTag2.render("me");
 // line 18
 ;
 	}

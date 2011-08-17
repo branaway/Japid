@@ -88,6 +88,13 @@ public static interface DoBody<A,B> {
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
+
+// -- set up the tag objects
+final fooTag _fooTag1 = new fooTag(getOut());
+{ _fooTag1.setActionRunners(getActionRunners()); }
+
+// -- end of the tag objects
+
 //------
 p("outside: ");// line 1
 if (body != null){
@@ -106,6 +113,35 @@ p("call the def\n" +
 "\n");// line 9
 p(foo());// line 12
 p("\n");// line 12
+_fooTag1.setOut(getOut()); _fooTag1.render(new fooTag.DoBody(){
+public void render() {
+// line 14
+p("  -> called footag:  ");// line 14
+if (body != null){
+	body.setBuffer(getOut());
+
+	body.render("kaddy", 13);
+	body.resetBuffer();
+}
+
+}
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
+}
+);
+// line 14
+;// line 16
 
 	}
 

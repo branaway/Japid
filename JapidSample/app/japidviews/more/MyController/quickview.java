@@ -86,11 +86,11 @@ p("<p>\n" +
 "<p>\n");// line 2
 String s = "quick" ;// line 8
 ;// line 8
-_japidviews_more_MyController__tags_taggy0.render(s);
+_japidviews_more_MyController__tags_taggy0.setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s);
 // line 9
 p("</p> \n" + 
 "<p>\n");// line 9
-_taggy21.render(s);
+_taggy21.setOut(getOut()); _taggy21.render(s);
 // line 12
 p("</p>");// line 12
 

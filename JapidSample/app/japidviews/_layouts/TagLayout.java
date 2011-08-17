@@ -57,7 +57,7 @@ final dummyTag _dummyTag0 = new dummyTag(getOut());
 
 		p("标签布局\n");// line 1
 p("\n");// line 2
-_dummyTag0.render("me");
+_dummyTag0.setOut(getOut()); _dummyTag0.render("me");
 // line 3
 p("<div>\n" + 
 "\n");// line 3

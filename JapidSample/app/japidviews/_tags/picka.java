@@ -74,7 +74,7 @@ public static interface DoBody<A> {
 		void setBuffer(StringBuilder sb);
 		void resetBuffer();
 }
-<A> String getCallerBody(A a) {
+<A> String renderBody(A a) {
 		StringBuilder sb = new StringBuilder();
 		if (body != null){
 			body.setBuffer(sb);

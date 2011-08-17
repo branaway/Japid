@@ -93,7 +93,7 @@ p("\n" +
 p("\n" + 
 "\n" + 
 "<p>check 4</p>\n");// line 26
-_dummyTag4.render(get("bar"));
+_dummyTag4.setOut(getOut()); _dummyTag4.render(get("bar"));
 // line 29
 p("\n" + 
 "\n");// line 29
@@ -130,7 +130,7 @@ p(request.action);// line 9
 p("</p>\n" + 
 "	<p>OK you can call a tag:</p>\n" + 
 "	");// line 9
-_dummyTag1.render(p);
+_dummyTag1.setOut(getOut()); _dummyTag1.render(p);
 // line 11
 
 this.setOut(ori);

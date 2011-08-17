@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/8/17: V0.8.9.1 
+    1. bug fix: when doBody is used in a def, or the new renderBody() is used, the content by a tag in the callback body was lost. Now the tag output buffer always sets to the calling context's output buffer. 
 2011/8/10: V0.8.9, breaking compiler change, requires regeneration of all Japid templates using "play japid:regen" for an example.
     1. new feature: added a method named renderBody(...) to the generated Java class for tags. The method runs doBody and returns the result as a String. So a user can manipulate the result in the tag.
     	e.g.:  `String body = renderBody("my name", 30);

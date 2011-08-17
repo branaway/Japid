@@ -97,12 +97,12 @@ p("<p>before...<p>\n" +
 "\n");// line 1
  List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};// line 10
 p("\n");// line 10
-_aTag0.render(strings);
+_aTag0.setOut(getOut()); _aTag0.render(strings);
 // line 12
 p("\n" + 
 "note: the picka tag is defined in the japidviews/_tags directory\n" + 
 "\n");// line 12
-_picka1.render("a", "b" + "c", new picka.DoBody<String>(){
+_picka1.setOut(getOut()); _picka1.render("a", "b" + "c", new picka.DoBody<String>(){
 public void render(final String r) {
 // line 16
 p("    the tag chosed: ");// line 16
@@ -110,7 +110,7 @@ p(r);// line 17
 p("\n" + 
 "    <p>and we can can call a tag recurive?</p>\n" + 
 "    ");// line 17
-_SampleTag2.render(r);
+_SampleTag2.setOut(getOut()); _SampleTag2.render(r);
 // line 19
 
 }
@@ -136,12 +136,12 @@ p("</p>\n" +
 "Or using the full path of the tag\n" + 
 "</p>\n" + 
 "\n");// line 20
-_japidviews_templates_aTag3.render(strings);
+_japidviews_templates_aTag3.setOut(getOut()); _japidviews_templates_aTag3.render(strings);
 // line 27
 p("\n" + 
 "<p>You can use \".\" instead of \"/\" in the path:</p>\n" + 
 "\n");// line 27
-_japidviews_templates_aTag4.render(strings);
+_japidviews_templates_aTag4.setOut(getOut()); _japidviews_templates_aTag4.render(strings);
 // line 31
 ;// line 31
 

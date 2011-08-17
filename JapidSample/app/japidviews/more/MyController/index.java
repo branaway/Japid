@@ -91,7 +91,7 @@ p(i);// line 7
 p(".\n" + 
 "Here goes your Japid template content.\n" + 
 "call a tag: \n");// line 7
-_SampleTag1.render("world");
+_SampleTag1.setOut(getOut()); _SampleTag1.render("world");
 // line 10
 ;// line 10
 

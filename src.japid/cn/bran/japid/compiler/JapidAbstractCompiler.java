@@ -961,9 +961,7 @@ public abstract class JapidAbstractCompiler {
 			String tagVar = tag.getTagVarName();
 
 			if (!tag.hasBody) {
-				String tagline = "";
-
-				tagline = tagVar + ".render(" + tag.args + ");";
+				String tagline = tagVar + ".setOut(getOut()); " + tagVar + ".render(" + tag.args + ");";
 
 				// String tagClassName = tag.tagName;
 				// if (tagClassName.equals("this")) {
@@ -1015,6 +1013,8 @@ public abstract class JapidAbstractCompiler {
 			String tagVar = tag.getTagVarName();
 			
 			String tagline = tagVar; 
+			// make sure the tag always use the current output buffer;
+			tagline += ".setOut(getOut()); " + tagVar;
 			if (tag.argsNamed()) {
 				tagline += ".render(" + bodyInner.getAnonymous() + ", " + (WebUtils.asBoolean(tag.args) ? tag.args: "") +");";
 			}

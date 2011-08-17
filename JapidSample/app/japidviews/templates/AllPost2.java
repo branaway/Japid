@@ -92,7 +92,7 @@ p("	<p></p>\n" +
 "	");// line 8
 for (Post p: allPost) {// line 10
 p("	    ");// line 10
-_Display1.render(new Display.DoBody<String>(){
+_Display1.setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
 public void render(final String title) {
 // line 11
 p("			<p>The real title is: ");// line 11
@@ -123,7 +123,7 @@ p("	");// line 13
 p("	<p>There is no post at this moment</p>\n");// line 15
 }// line 17
 p("\n");// line 17
-_Tag22.render(named("msg", blogTitle), named("age", 1000));
+_Tag22.setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000));
 // line 19
 p("\n" + 
 "<p>end of it</p>");// line 19

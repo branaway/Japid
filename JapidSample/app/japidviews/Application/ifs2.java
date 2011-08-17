@@ -120,12 +120,12 @@ p("\n" +
 if(asBoolean(ss)) {// line 30
 p("    well got ss\n" + 
 "    ");// line 30
-_Each0.render(ss, new Each.DoBody<String>(){
+_Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 32
 p("        call a tag\n" + 
 "        ");// line 32
-_SampleTag1.render(s);
+_SampleTag1.setOut(getOut()); _SampleTag1.render(s);
 // line 34
     
 }
@@ -150,12 +150,12 @@ p("    finally got ");// line 36
 p(ss);// line 37
 p("\n" + 
 "    ");// line 37
-_Each2.render(ss, new Each.DoBody<String>(){
+_Each2.setOut(getOut()); _Each2.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 38
 p("        call a tag\n" + 
 "        ");// line 38
-_SampleTag3.render(s);
+_SampleTag3.setOut(getOut()); _SampleTag3.render(s);
 // line 40
     
 }

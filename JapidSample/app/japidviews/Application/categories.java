@@ -87,7 +87,7 @@ p("	       <li>\n" +
 p(cat.name);// line 6
 p("</a>\n" + 
 "	           ");// line 6
-_this0.render(cat.subCategories);
+_this0.setOut(getOut()); _this0.render(cat.subCategories);
 // line 7
 p("	       </li>\n" + 
 "       ");// line 7

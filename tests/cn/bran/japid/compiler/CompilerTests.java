@@ -1,4 +1,4 @@
-package cn.bran;
+package cn.bran.japid.compiler;
 
 import static org.junit.Assert.assertTrue;
 import japa.parser.ParseException;

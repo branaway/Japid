@@ -73,7 +73,7 @@ public static interface DoBody {
 		void setBuffer(StringBuilder sb);
 		void resetBuffer();
 }
- String getCallerBody() {
+ String renderBody() {
 		StringBuilder sb = new StringBuilder();
 		if (body != null){
 			body.setBuffer(sb);

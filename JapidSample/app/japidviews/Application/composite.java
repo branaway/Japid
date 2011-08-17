@@ -131,7 +131,7 @@ p("</div>\n" +
 "\n" + 
 "<p>Let's invoke a tag which invokes an action</p>\n" + 
 "\n");// line 15
-_invokeInTag4.render();
+_invokeInTag4.setOut(getOut()); _invokeInTag4.render();
 // line 19
 p("\n" + 
 "<p>let's invoke an action that renders a template that contains another invoke: ");// line 19

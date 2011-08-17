@@ -106,7 +106,7 @@ p("\n" +
 "\n" + 
 "<p>Lets call a tag by name:</p>\n" + 
 "\n");// line 6
-_tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6));
+_tagPrimitives0.setOut(getOut()); _tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6));
 // line 10
 
 	}

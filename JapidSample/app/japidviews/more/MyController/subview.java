@@ -87,7 +87,7 @@ p("\n" +
 "hello ");// line 5
 p(s);// line 8
 p("\n");// line 8
-_japidviews_more_MyController__tags_taggy2.render(s);
+_japidviews_more_MyController__tags_taggy2.setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s);
 // line 10
 p(" ");// line 10
 

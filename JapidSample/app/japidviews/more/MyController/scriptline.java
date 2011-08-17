@@ -81,10 +81,10 @@ final Tag2 _Tag22 = new Tag2(getOut());
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-_Tag21.render(named("msg", "123"));
+_Tag21.setOut(getOut()); _Tag21.render(named("msg", "123"));
 // line 4
 p(" a  ");// line 4
-_Tag22.render(named("msg", "456"));
+_Tag22.setOut(getOut()); _Tag22.render(named("msg", "456"));
 // line 4
 p("!\n" + 
 "this is how to print a single back quote: ");// line 4

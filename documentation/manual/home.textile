@@ -853,6 +853,17 @@ The @doBody@ command passes matching arguments to the passed-in template. This b
 
 With some imagination, a tag can be effectively used as a layout to a view. The layout part is done in the tag and the main template section is passed in as the last argument of the tag invocation.  
 
+
+New feature since 0.8.9: sometimes authors may want to store the doBody result in a local String variable. One can acheive that using a method named @renderBody()@. E.g.:
+
+<pre>
+`String body = renderBody();
+<p>Before body</p>
+$body
+<p>After body</p>
+</pre>
+
+
 Note:
 
 # Tags can invoke other tags. 

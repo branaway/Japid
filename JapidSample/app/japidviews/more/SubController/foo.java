@@ -85,7 +85,7 @@ p("? \n" +
 "\n");// line 3
 p("\n" + 
 "\n");// line 5
-_bar0.render();
+_bar0.setOut(getOut()); _bar0.render();
 // line 7
 ;// line 7
 

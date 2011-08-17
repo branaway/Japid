@@ -76,7 +76,7 @@ final doBodyInDefTag _doBodyInDefTag0 = new doBodyInDefTag(getOut());
 
 //------
 p("\n");// line 1
-_doBodyInDefTag0.render(new doBodyInDefTag.DoBody<String, Integer>(){
+_doBodyInDefTag0.setOut(getOut()); _doBodyInDefTag0.render(new doBodyInDefTag.DoBody<String, Integer>(){
 public void render(final String c, final Integer i) {
 // line 2
 p("  my body plus ");// line 2
