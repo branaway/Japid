@@ -781,7 +781,7 @@ There are two arguments to the tag invocation:
 # @"hello"@, a String, and
 # @String name \n what a fancy name: $name@, a template. 
 
-The vertical line "|" separates the regular arguments and the template block. Note: the Japid parser requires the presence of this separator even if the template does not have any parameters. 
+The vertical line "|" separates the regular arguments and the template block. Note: the Japid parser requires the presence of this separator even if the template body does not have any parameters. 
 
 This is valid:
 
@@ -801,9 +801,15 @@ And this is not:
 
 The reason is that a new-line character '\n' is a tag terminator if the parser does not detect any a "|" in the argument list. The "|" tells the parser that a template block is following the current line. 
 
-The template parameters passed to a tag are rendered by a @`doBody arg1, arg2...@ command in the tag file, as explained in the *Tag Definition* later in this document. 
+The template parameters passed to a tag are rendered by a @`doBody arg1, arg2...@ command in the tag file, as explained in the *Tag Definition* later in this document. Or one can use the @renderBody(...)@ to get the result as a String in the template.
 
+Note: the callback template block is optional and can be left out, such as:
 
+<pre>
+`tag fancyTag "hello"
+</pre>
+
+In the above invocation, the doBody in the fancyTag has no effect.
 
 h3. Tag definitions
 

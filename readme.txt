@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/8/18: V0.8.9.2
+    1. small feature: the callback body part (or so called "closure") can be left out, in which case the doBody in the callee tag has no effect 
 2011/8/17: V0.8.9.1 
     1. bug fix: when doBody is used in a def, or the new renderBody() is used, the content by a tag in the callback body was lost. Now the tag output buffer always sets to the calling context's output buffer. 
 2011/8/10: V0.8.9, breaking compiler change, requires regeneration of all Japid templates using "play japid:regen" for an example.

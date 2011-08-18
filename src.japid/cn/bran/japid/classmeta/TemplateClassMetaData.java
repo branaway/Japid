@@ -123,26 +123,25 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		String paramTypeArray = "";
 		String paramDefaultsArray = "";
 		String currentClassFQN = (this.packageName == null ? "":  this.packageName + ".") + this.className;
+		List<Parameter> params = JavaSyntaxTool.parseParams(this.renderArgs);
+		String renderArgsWithoutAnnos = "";
+
+		/// named param stuff
+		for (Parameter p: params) {
+			paramNameArray  += "\"" + p.getId() + "\", ";
+			paramTypeArray  += "\"" + p.getType() + "\", ";
+			String defa = JavaSyntaxTool.getDefault(p);
+			paramDefaultsArray += defa + ",";
+			renderArgsWithoutAnnos += p.getType() + " " + p.getId() + ",";
+		}
+		if (renderArgsWithoutAnnos.endsWith(",")){
+			renderArgsWithoutAnnos = renderArgsWithoutAnnos.substring(0, renderArgsWithoutAnnos.length() - 1);
+		}
+
+		String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, paramDefaultsArray, currentClassFQN);
+		pln(nameParamCode);
 
 		if (renderArgs != null) {
-			// create fields for the render args and create a render method to
-			List<Parameter> params = JavaSyntaxTool.parseParams(this.renderArgs);
-
-			String renderArgsWithoutAnnos = "";
-			/// named param stuff
-			for (Parameter p: params) {
-				paramNameArray  += "\"" + p.getId() + "\", ";
-				paramTypeArray  += "\"" + p.getType() + "\", ";
-				String defa = JavaSyntaxTool.getDefault(p);
-				paramDefaultsArray += defa + ",";
-				renderArgsWithoutAnnos += p.getType() + " " + p.getId() + ",";
-			}
-			if (renderArgsWithoutAnnos.endsWith(",")){
-				renderArgsWithoutAnnos = renderArgsWithoutAnnos.substring(0, renderArgsWithoutAnnos.length() - 1);
-			}
-			String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, paramDefaultsArray, currentClassFQN);
-			pln(nameParamCode);
-			///
 			
 			for (Parameter p : params) {
 				addField(p);
@@ -159,16 +158,21 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				// now the render(...)
 				pln("\tpublic " + resultType + " render(" + renderArgsWithoutAnnos + ", DoBody body) {");
 				pln("\t\t" + "this.body = body;");
-			} else {
-				pln("\tpublic " + resultType + " render(" + renderArgsWithoutAnnos + ") {");
-			}
+				// assign the params to fields
+				for (Parameter p : params) {
+					pln("\t\tthis." + p.getId() + " = " + p.getId() + ";");
+				}
+				restOfRenderBody(resultType);
+			} 
+			
+			// a version without the body part to allow optinal body
+			pln("\tpublic " + resultType + " render(" + renderArgsWithoutAnnos + ") {");
 			// assign the params to fields
 			for (Parameter p : params) {
 				pln("\t\tthis." + p.getId() + " = " + p.getId() + ";");
 			}
+			restOfRenderBody(resultType);
 		} else {
-			String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, paramDefaultsArray, currentClassFQN);
-			pln(nameParamCode);
 			if (doBodyArgsString != null) {
 				pln(NAMED_PARAM_WITH_BODY);
 				// the field
@@ -178,14 +182,20 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				// now the render(...)
 				pln("\tpublic " + resultType + " render(DoBody body) {");
 				pln("\t\t" + "this.body = body;");
-			} else {
-				pln("\tpublic " + resultType + " render() {");
-			}
+				restOfRenderBody(resultType);
+			} 
+
+			pln("\tpublic " + resultType + " render() {");
+			restOfRenderBody(resultType);
 		}
+	
+	}
+
+	private void restOfRenderBody(String resultType) {
 		pln("\t\tlong t = -1;");
 		if (stopWatch)
-//			pln("\t\tt = System.currentTimeMillis();");
 			pln("\t\t t = System.nanoTime();");
+
 		pln("\t\tsuper.layout(" + superClassRenderArgs +  ");");
 		if (stopWatch) {
 			pln("     	String l = \"\" + (System.nanoTime() - t) / 100000;\n" + 
@@ -224,6 +234,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		}
 		pln("\t}");
 	}
+	
 
 	private void doBodyInterface() {
 		// let do the doDody callback interface

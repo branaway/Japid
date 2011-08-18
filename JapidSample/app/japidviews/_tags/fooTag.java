@@ -89,6 +89,12 @@ public static interface DoBody {
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
+	public cn.bran.japid.template.RenderResult render(String well) {
+		this.well = well;
+		long t = -1;
+		super.layout();
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+	}
 	@Override protected void doLayout() {
 //------
 ;// line 1

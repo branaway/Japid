@@ -179,6 +179,7 @@ public class Application extends JapidController {
 	}
 	
 	public static void callTag() {
+		dontRedirect();
 		renderJapidWith("templates/callPicka");
 	}
 	

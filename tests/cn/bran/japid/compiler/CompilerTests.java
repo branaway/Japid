@@ -163,6 +163,7 @@ public class CompilerTests {
 		assertTrue(srcCode.contains("package tags;"));
 		assertTrue(srcCode.contains("public class Display extends TagLayout"));
 		assertTrue(srcCode.contains("public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as, DoBody body) {"));
+		assertTrue(srcCode.contains("public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as) {"));
 		assertTrue(srcCode.contains("@Override protected void doLayout() {"));
 		assertTrue("doBody is not presenting", srcCode.contains("body.render(post.getTitle() + \"!\");"));
 		assertTrue(srcCode.contains("public static interface DoBody<A>"));

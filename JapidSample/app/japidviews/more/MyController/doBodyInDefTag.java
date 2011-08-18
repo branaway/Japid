@@ -87,6 +87,11 @@ public static interface DoBody<A,B> {
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
+	public cn.bran.japid.template.RenderResult render() {
+		long t = -1;
+		super.layout();
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+	}
 	@Override protected void doLayout() {
 
 // -- set up the tag objects

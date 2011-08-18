@@ -91,13 +91,22 @@ public static interface DoBody<A> {
 		super.layout();
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
+	public cn.bran.japid.template.RenderResult render(String a,String b) {
+		this.a = a;
+		this.b = b;
+		long t = -1;
+		super.layout();
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
 p("<p>\n" + 
-"some text \n" + 
+"some text: ");// line 1
+p(a);// line 3
+p(" \n" + 
 "</p>\n" + 
-"<p>\n");// line 1
+"<p>\n");// line 3
 if (body != null){
 	body.setBuffer(getOut());
 
@@ -106,9 +115,11 @@ if (body != null){
 }
 p("</p>\n" + 
 "<p>\n" + 
-"more text \n" + 
+"more text: ");// line 6
+p(b);// line 9
+p("\n" + 
 "</p>\n" + 
-" ");// line 6
+" ");// line 9
 
 	}
 
