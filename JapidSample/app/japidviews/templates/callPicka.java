@@ -81,11 +81,14 @@ final picka _picka1 = new picka(getOut());
 final picka _picka3 = new picka(getOut());
 { _picka3.setActionRunners(getActionRunners()); }
 
-final japidviews.templates.aTag _japidviews_templates_aTag4 = new japidviews.templates.aTag(getOut());
-{ _japidviews_templates_aTag4.setActionRunners(getActionRunners()); }
+final picka _picka4 = new picka(getOut());
+{ _picka4.setActionRunners(getActionRunners()); }
 
 final japidviews.templates.aTag _japidviews_templates_aTag5 = new japidviews.templates.aTag(getOut());
 { _japidviews_templates_aTag5.setActionRunners(getActionRunners()); }
+
+final japidviews.templates.aTag _japidviews_templates_aTag6 = new japidviews.templates.aTag(getOut());
+{ _japidviews_templates_aTag6.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -138,21 +141,26 @@ p("</p>\n" +
 "<p>\n" + 
 "we can call without the body part:\n" + 
 "\n");// line 20
-_picka3.setOut(getOut()); _picka3.render("zzz", "yyy");
+_picka3.setOut(getOut()); _picka3.render(named("a", "aa"), named("b", "bb"));
 // line 26
-p("</p>\n" + 
+p("\n" + 
+"or \n");// line 26
+_picka4.setOut(getOut()); _picka4.render("cc", "dd");
+// line 29
+p("\n" + 
+"</p>\n" + 
 "<p>\n" + 
 "Or using the full path of the tag\n" + 
 "</p>\n" + 
-"\n");// line 26
-_japidviews_templates_aTag4.setOut(getOut()); _japidviews_templates_aTag4.render(strings);
-// line 32
-p("\n" + 
-"<p>You can use \".\" instead of \"/\" in the path:</p>\n" + 
-"\n");// line 32
+"\n");// line 29
 _japidviews_templates_aTag5.setOut(getOut()); _japidviews_templates_aTag5.render(strings);
 // line 36
-;// line 36
+p("\n" + 
+"<p>You can use \".\" instead of \"/\" in the path:</p>\n" + 
+"\n");// line 36
+_japidviews_templates_aTag6.setOut(getOut()); _japidviews_templates_aTag6.render(strings);
+// line 40
+;// line 40
 
 	}
 

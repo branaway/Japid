@@ -689,10 +689,10 @@ public abstract class JapidAbstractCompiler {
 		if (i > 0) {
 			expr = token.substring(0, i);
 			substitute = token.substring(i + ELVIS.length()).trim();
-			if (substitute.startsWith("\""))
-				substitute = substitute.substring(1);
-			if (substitute.endsWith("\""))
-				substitute = substitute.substring(0, substitute.length() - 1);
+//			if (substitute.startsWith("\""))
+//				substitute = substitute.substring(1);
+//			if (substitute.endsWith("\""))
+//				substitute = substitute.substring(0, substitute.length() - 1);
 		}
 
 		if (escape) {
@@ -704,10 +704,10 @@ public abstract class JapidAbstractCompiler {
 			printLine("try {" +
 					" Object o = " + expr + "; " +
 					"if (o.toString().length() ==0) { " +
-					"p(\"" + substitute + "\"); } " +
+					"p(" + substitute + "); } " +
 					"else { p(o); } } " +
 					"catch (NullPointerException npe) { " +
-					"p(\"" + substitute + "\"); }");
+					"p(" + substitute + "); }");
 			// printLine("try { Object o = expr; p(" + expr + "); } " +
 			// "catch (NullPointerException npe) { " +
 			// "p(\"" + substitute + "\"); }");
@@ -1251,7 +1251,9 @@ public abstract class JapidAbstractCompiler {
 			if (tag instanceof TagInTag) {
 				throw new RuntimeException("Syntax error: def/set tag cannot be nested in another def/set tag.");
 			}
-			tagtagf.tags.add(tag);
+			
+			if (!(tag instanceof TagIf))
+				tagtagf.tags.add(tag);
 		}
 
 		tagsStackShadow.push(tag);

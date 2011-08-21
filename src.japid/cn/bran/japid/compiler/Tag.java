@@ -62,7 +62,7 @@ public class Tag {
 
 	}
 	/**
-	 *  the `def, `sett tag that has end up as methods thus a new scope for tags inside
+	 *  the `def, `set tag that end up as methods thus a new scope for tags inside
 	 * @author Bing Ran<bing_ran@hotmail.com>
 	 *
 	 */

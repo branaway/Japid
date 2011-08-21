@@ -233,7 +233,12 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	 */
 
 	public java.lang.reflect.Method renderMethodInstance;
+	public boolean hasDoBody = false;
 
+	protected void setHasDoBody() {
+		hasDoBody = true;
+	}
+	
 	protected void setRenderMethod(Method renderMethod) {
 		// System.out.println("-> setrender name: " + renderMethod);
 		renderMethodInstance = renderMethod;
@@ -285,7 +290,11 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	public cn.bran.japid.template.RenderResult render(NamedArgRuntime... named) {
 		// a static utils method of JapidModelMap to build up an Object[] array.
 		// Nulls are used where the args are omitted.
-		Object[] args = buildArgs(named);
+		Object[] args = null;
+		if (hasDoBody) // called without the callback block
+			args = buildArgs(named, null);
+		else
+			args = buildArgs(named);
 		return runRenderer(args);
 	}
 

@@ -24,6 +24,11 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/8/21: V0.8.9.3. Note: Japid regen is required for existing templates.
+    1. bug fix: the Elvis operator now supports variable expression as the substitute. 
+    2. bug fix: "open if" expression did not work in def tag.
+    3. bug fix: the callback body could not be left out in tag invocation with named arguments.
+     
 2011/8/18: V0.8.9.2
     1. small feature: the callback body part (or so called "closure") can be left out, in which case the doBody in the callee tag has no effect 
 2011/8/17: V0.8.9.1 

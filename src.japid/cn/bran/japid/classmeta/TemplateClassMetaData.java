@@ -141,6 +141,9 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, paramDefaultsArray, currentClassFQN);
 		pln(nameParamCode);
 
+		if (doBodyArgsString != null)
+			pln("	{ setHasDoBody(); }");
+
 		if (renderArgs != null) {
 			
 			for (Parameter p : params) {

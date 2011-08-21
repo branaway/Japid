@@ -169,6 +169,29 @@ public class CompilerTests {
 		assertTrue(srcCode.contains("public static interface DoBody<A>"));
 	}
 
+	
+	@Test
+	public void testIfindef() throws IOException, ParseException {
+		String src = readFile("tests/ifindef.html");
+		JapidTemplate bt = new JapidTemplate("tests/ifindef.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
+		cp.compile(bt);
+		String srcCode = bt.javaSource;
+//		System.out.println(srcCode);
+		assertTrue(!srcCode.contains("_if"));
+	}
+	
+	
+	@Test
+	public void testElvis() throws IOException, ParseException {
+		String src = readFile("tests/elvis.html");
+		JapidTemplate bt = new JapidTemplate("tests/elvis.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
+		cp.compile(bt);
+		String srcCode = bt.javaSource;
+		System.out.println(srcCode);
+	}
+	
 
 	@Test
 	public void testActionNotation() throws IOException {

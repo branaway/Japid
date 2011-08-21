@@ -1,5 +1,7 @@
 @(SearchParams sp)
 
-keys: ${sp.keywords ?: "没有 keywords"}, mode: ${sp.mode ?: "no mode"}
+@String nomode = "no mode";
+
+keys: ${sp.keywords ?: "没有 keywords"}, mode: ${sp.mode ?: nomode}
 
 true/false: ${true?"class=\"someclass\"":""}

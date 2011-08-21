@@ -61,6 +61,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
+	{ setHasDoBody(); }
 	private String well;
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
