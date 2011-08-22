@@ -24,6 +24,11 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/8/23: V0.8.9.4. Note: Japid regen is required for existing templates.
+    1. small feature: added a new syntax to assign the render result of doBody to a local variable:
+    	`doBody "hi", 123 -> var
+    	Of course the "->" part is optional is assigning local variable is not required.
+    	Note: this feature is to deprecate the direct use of renderBody() method, introduced very recently.
 2011/8/21: V0.8.9.3. Note: Japid regen is required for existing templates.
     1. bug fix: the Elvis operator now supports variable expression as the substitute. 
     2. bug fix: "open if" expression did not work in def tag.

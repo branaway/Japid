@@ -20,6 +20,8 @@ import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JavaSyntaxTool {
 	private static final String UTF_8 = "UTF-8";
@@ -516,6 +518,8 @@ public class JavaSyntaxTool {
 		return decl;
 	}
 
+	public static final Pattern AS_PATTERN = Pattern.compile("(.*)->\\s*(\\w+)");
+
 	//
 //	static final String classTempForVarDef = "class T {  {   %s ; } }";
 //
@@ -567,4 +571,24 @@ public class JavaSyntaxTool {
 //		return expr.trim();
 //	}
 
+	/**
+	 * to extract the arg list part and optionally the local var part to take the result. Used in doBody to set the result to a local variable
+	 * Can also be used to catch the tag invocation result in a local variable.
+	 *  
+	 * 
+	 * @param s arg list: a, 1 -> var, (1, 2, 3, "as") -> var
+	 * @return an array of string, the first one being the arg list, the second one, if exists, being the local var name
+	 */
+	public static String[] breakArgParts(String s){
+		Matcher m = AS_PATTERN.matcher(s);
+		if (m.matches()){
+			String[] r = new String[2];
+			r[0] = m.group(1);
+			r[1] = m.group(2);
+			return r;
+		}
+		else {
+			return new String[]{s};
+		}
+	}
 }

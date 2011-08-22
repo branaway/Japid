@@ -42,13 +42,21 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 
 	@Override
 	protected void startTag(Tag tag) {
-		
 		if (tag.tagName.equals(DO_BODY)) {
-			tcmd.doBody(tag.args);
-			println("if (body != null){\n" + 
-					"	body.setBuffer(getOut());");
-			println("	body.render(" + tag.args + ");");
-			println("	body.resetBuffer();\n" + "}");
+			String[] argPartsAndVar = JavaSyntaxTool.breakArgParts(tag.args);
+			if (argPartsAndVar.length == 1){
+				tcmd.doBody(tag.args);
+				println("if (body != null){\n" + 
+						"	body.setBuffer(getOut());\n");
+				println("	body.render(" + tag.args + ");");
+				println("	body.resetBuffer();\n" + "}");
+			}
+			else {
+				String args = argPartsAndVar[0];
+				tcmd.doBody(args);
+				String localVar = argPartsAndVar[1];
+				println("String " + localVar + " = renderBody(" + args + ");");
+			}
 			// print to the root space before move one stack up
 		} else if ("set".equals(tag.tagName)) {
 			// only support value as tag content as opposed to as attribute:
@@ -103,11 +111,20 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		String line = token;//.trim(); don't trim `a `t is sensitive to the space
 		if (JapidAbstractCompiler.startsWithIgnoreSpace(line.trim(), DO_BODY) || line.trim().equals(DO_BODY)) {
 			String args = line.trim().substring(DO_BODY.length()).trim();
-			tcmd.doBody(args);
-			println("if (body != null){\n" + 
-					"	body.setBuffer(getOut());\n");
-			println("	body.render(" + args + ");");
-			println("	body.resetBuffer();\n" + "}");
+			String[] argPartsAndVar = JavaSyntaxTool.breakArgParts(args);
+			if (argPartsAndVar.length == 1){
+				tcmd.doBody(args);
+				println("if (body != null){\n" + 
+						"	body.setBuffer(getOut());\n");
+				println("	body.render(" + args + ");");
+				println("	body.resetBuffer();\n" + "}");
+			}
+			else {
+				args = argPartsAndVar[0];
+				tcmd.doBody(args);
+				String localVar = argPartsAndVar[1];
+				println("String " + localVar + " = renderBody(" + args + ");");
+			}
 			
 			skipLineBreak = true;
 		}

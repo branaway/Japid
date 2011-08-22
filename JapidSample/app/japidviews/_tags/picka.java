@@ -114,13 +114,17 @@ if (body != null){
 	body.render(a + b);
 	body.resetBuffer();
 }
-p("</p>\n" + 
+p("</p>\n");// line 6
+String x = renderBody("xxx" );
+p("[");// line 8
+p(x);// line 9
+p("]\n" + 
 "<p>\n" + 
-"more text: ");// line 6
-p(b);// line 9
+"more text: ");// line 9
+p(b);// line 11
 p("\n" + 
 "</p>\n" + 
-" ");// line 9
+" ");// line 11
 
 	}
 

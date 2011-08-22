@@ -3,6 +3,8 @@ package cn.bran.japid.compiler;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
@@ -115,5 +117,45 @@ public class JavaSyntaxToolTest {
 		String src = "String a, int b, long[] c, long d";
 		String res = JavaSyntaxTool.boxPrimitiveTypesInParams(src);
 		assertEquals("String a, Integer b, long[] c, Long d", res);
+	}
+	
+	/**
+	 * doBody a, b -> c
+	 */
+	@Test
+	public void testAsClausePattern(){
+		Pattern m = JavaSyntaxTool.AS_PATTERN;
+		
+		String s1 = "a, 'sfsdf', 123 -> var";
+		Matcher matcher = m.matcher(s1);
+		assertTrue(matcher.matches());
+//		matcher.find();
+		assertEquals("a, 'sfsdf', 123", matcher.group(1));
+		assertEquals("var", matcher.group(2));
+
+		s1 = "a, 'sfsdf', asr - 1";
+		matcher = m.matcher(s1);
+		assertTrue(!matcher.matches());
+	}
+	
+	@Test
+	public void testAsClauseExtraction(){
+		String s = "a, 1 -> c";
+		String[] r = JavaSyntaxTool.breakArgParts(s);
+		assertEquals(2, r.length);
+		assertEquals("a, 1 ", r[0]);
+		assertEquals("c", r[1]);
+
+		s = "a, 1";
+		r = JavaSyntaxTool.breakArgParts(s);
+		assertEquals(1, r.length);
+		assertEquals("a, 1", r[0]);
+
+		s = "-> c";
+		r = JavaSyntaxTool.breakArgParts(s);
+		assertEquals(2, r.length);
+		assertEquals("", r[0]);
+		assertEquals("c", r[1]);
+		
 	}
 }
