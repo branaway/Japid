@@ -61,7 +61,7 @@ final taggy _taggy2 = new taggy(getOut());
 
 // line 7
 p("  -> a1-: ");// line 7
-_taggy2.render(ar);
+_taggy2.setOut(getOut()); _taggy2.render(ar);
 // line 8
 
 this.setOut(ori);

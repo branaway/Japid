@@ -201,13 +201,16 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	public static Method getRenderMethod(Class<? extends JapidTemplateBaseWithoutPlay> currentClass) {
 		java.lang.reflect.Method[] methods = currentClass.getDeclaredMethods();
 
+		Method r = null;
 		for (java.lang.reflect.Method m : methods) {
 			if (m.getName().equals("render")) {
 				Class<?>[] parameterTypes = m.getParameterTypes();
-				if (parameterTypes.length == 1) {
+				int paramLength = parameterTypes.length;
+				if (paramLength == 1) {
 					Class<?> t = parameterTypes[0];
 					if (t != NamedArgRuntime[].class) {
-						return m;
+						if (r == null)
+							r = m;
 					}
 				} else {
 					boolean hasNamedArg = false;
@@ -217,12 +220,20 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 							break;
 						}
 					}
-					if (!hasNamedArg)
-						return m;
+					if (!hasNamedArg) {
+						// a candidate. choose the one with longer param list
+						if ( r == null)
+							r = m;
+						else if (paramLength > r.getParameterTypes().length) 
+							r = m;
+					}
 				}
 			}
 		}
-		throw new RuntimeException("no render method found for the template: " + currentClass.getCanonicalName());
+		if (r != null)
+			return r;
+		else
+		      throw new RuntimeException("no render method found for the template: " + currentClass.getCanonicalName());
 	}
 
 	/*

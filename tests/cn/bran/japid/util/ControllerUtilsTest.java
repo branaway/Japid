@@ -2,6 +2,7 @@ package cn.bran.japid.util;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import cn.bran.japid.template.RenderResult;
 public class ControllerUtilsTest {
 
 	@Test
-	public void testRender() {
+	public void testRender() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		RenderResult render;
 		
 		render = (RenderResult) RenderInvokerUtils.render(new Foo(null), "hi", new Integer(12));
@@ -41,10 +42,13 @@ public class ControllerUtilsTest {
 	}
 
 	/**
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
 	 * 
 	 */
 	@Test
-	public void testSingleNull() {
+	public void testSingleNull() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		RenderResult render;
 		// if cast to Object, the null is treated as an argument.
 		// Otherwise the varargs is set to null. 
@@ -53,10 +57,13 @@ public class ControllerUtilsTest {
 	}
 
 	/**
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
 	 * 
 	 */
 	@Test
-	public void testEmptyArgs() {
+	public void testEmptyArgs() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		RenderResult render;
 		render = (RenderResult) RenderInvokerUtils.render(new Bar(null));
 		assertNotNull(render);

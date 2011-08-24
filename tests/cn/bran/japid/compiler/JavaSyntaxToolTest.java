@@ -43,6 +43,15 @@ public class JavaSyntaxToolTest {
 		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
 		assertEquals("a | 2", finals);
 
+		src = " ";
+		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
+		assertEquals("", finals);
+
+		src = "a;";
+		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
+		assertEquals("a", finals);
+		
+		
 		src = "a b c a b c a b c a b c a b c a b c a b c a b c a b c a b c a b c " +
 				"a b c a b c a b c a b c a b c a b c a b c a b c a b c a b c a b c " +
 				"a b c a b c a b c a b c a b c a b c a b c a b c a b c a b c a b c " +
@@ -53,7 +62,15 @@ public class JavaSyntaxToolTest {
 		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
 		assertEquals("a", finals);
 	}
-	
+
+	@Test
+	public void testWeirdExpr() {
+		String ex = "\"hello\".hi(foo(var+ \"sd\"))";
+		String src = ex + "etc... ~a=='a'";
+		String finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
+		assertEquals(ex, finals);
+
+	}
 	@Test
 	public void testHasMathod() throws ParseException {
 		String src = "class A { private static void foo(int i, B b); }";
@@ -130,7 +147,7 @@ public class JavaSyntaxToolTest {
 		Matcher matcher = m.matcher(s1);
 		assertTrue(matcher.matches());
 //		matcher.find();
-		assertEquals("a, 'sfsdf', 123", matcher.group(1));
+		assertEquals("a, 'sfsdf', 123 ", matcher.group(1));
 		assertEquals("var", matcher.group(2));
 
 		s1 = "a, 'sfsdf', asr - 1";

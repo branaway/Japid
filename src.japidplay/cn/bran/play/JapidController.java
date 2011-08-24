@@ -88,8 +88,12 @@ public class JapidController extends Controller {
 			throw new RuntimeException("Could not instantiate the template object. Abstract?");
 		} catch (InvocationTargetException e) {
 			// e.printStackTrace();
-			Throwable e1 = e.getTargetException();
-			throw new RuntimeException("Could not invoke the template object:  ", e1);
+			Throwable te = e.getTargetException();
+			Throwable cause = te.getCause();
+			if (cause != null)
+				throw new RuntimeException("error in running the renderer: " + cause.getMessage(), cause);
+			else 
+				throw new RuntimeException("error in running the renderer: " + te.getMessage(), te);
 		} catch (Exception e) {
 			if (e instanceof RuntimeException)
 				throw (RuntimeException) e;

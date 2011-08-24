@@ -92,7 +92,7 @@ public class JapidParser {
 	// keep track of nested state tokens, eg. nested function calls in
 	// expressions
 	// what inside is not used for now, we only are interested in the depth
-	Stack<JapidParser.Token> emthodCallStackInExpr = new Stack<JapidParser.Token>();
+	Stack<JapidParser.Token> methodCallStackInExpr = new Stack<JapidParser.Token>();
 
 	//
 	public enum Token {
@@ -120,10 +120,10 @@ public class JapidParser {
 		EXPR_WING, // ~{...}
 		EXPR_NATURAL, // $xxx
 		EXPR_NATURAL_ESCAPED, // ~xxx
-		EXPR_NATURAL_METHOD_CALL, // bran function call in expression:
-		// ~user?.name.format( '###' )
-		EXPR_NATURAL_ARRAY_OP, // bran : ~myarray[-1].val
-		EXPR_NATURAL_STRING_LITERAL, // bran ~user?.name.format( '#)#' ) or
+//		EXPR_NATURAL_METHOD_CALL, // bran function call in expression:
+//		// ~user?.name.format( '###' )
+//		EXPR_NATURAL_ARRAY_OP, // bran : ~myarray[-1].val
+//		EXPR_NATURAL_STRING_LITERAL, // bran ~user?.name.format( '#)#' ) or
 		// $'hello'.length
 		TEMPLATE_ARGS, // bran ~( )
 		CLOSING_BRACE, // a closing curly brace after leading space. Used? Good
@@ -332,11 +332,11 @@ public class JapidParser {
 				// diff
 				// from sh, which requires ${user.name}
 				//
-				if (c == '~' && c1 != '~' && (Character.isJavaIdentifierStart(c1) || '\'' == c1)) {
+				if (c == '~' && c1 != '~' && (Character.isJavaIdentifierStart(c1) || '\'' == c1 || '\"' == c1)) {
 					return found(Token.EXPR_NATURAL_ESCAPED, 1);
 					// return found(Token.EXPR_NATURAL, 1);
 				}
-				if (c == '$' && c1 != '$' && (Character.isJavaIdentifierStart(c1) || '\'' == c1)) {
+				if (c == '$' && c1 != '$' && (Character.isJavaIdentifierStart(c1) || '\'' == c1 || '\"' == c1)) {
 					return found(Token.EXPR_NATURAL, 1);
 				}
 				if (c == '#' && c1 == '{' && c2 == '/') {
@@ -471,66 +471,84 @@ public class JapidParser {
 			// returns
 			case EXPR_NATURAL:
 			case EXPR_NATURAL_ESCAPED:
-				if ('(' == c) {
-					skipAhead(Token.EXPR_NATURAL_METHOD_CALL, 1);
-				} else if ('[' == c) {
-					skipAhead(Token.EXPR_NATURAL_ARRAY_OP, 1);
-				} else if ('\'' == c) {
-					// \' is valid only at the beginning
-					// FIXME
-					// start of literal
-					skipAhead(Token.EXPR_NATURAL_STRING_LITERAL, 1);
-				} else if (Character.isWhitespace(c)) {
-					// state = Token.EXPR;
-					return found(Token.PLAIN, 0); // it ea
-				} else if (!Character.isJavaIdentifierPart(c)) {
-					if (c != '?' && c != '.' && c != ':' && c != '=') {
-						// state = Token.EXPR;
-						return found(Token.PLAIN, 0); // it ea
-					} else if (!Character.isJavaIdentifierStart(c1)) {
-						if (c == '=' && c1 == '=') {
-							if (Character.isWhitespace(c2)) {
-								// state = Token.EXPR;
-								return found(Token.PLAIN, 0); // it ea
-							} else {
-								skip(2);
-							}
-						} else {
-							// state = Token.EXPR;
-							return found(Token.PLAIN, 0); // it ea
-						}
-					}
-				}
-				break;
-			case EXPR_NATURAL_METHOD_CALL:
-				if ('(' == c) {
-					// nested call
-					skipAhead(Token.EXPR_NATURAL_METHOD_CALL, 1);
-				} else if (')' == c) {
-					state = this.emthodCallStackInExpr.pop();
-					skip(1);
-				}
-				break;
-			case EXPR_NATURAL_ARRAY_OP:
-				if ('[' == c) {
-					// nested call
-					skipAhead(Token.EXPR_NATURAL_ARRAY_OP, 1);
-				} else if (']' == c) {
-					state = this.emthodCallStackInExpr.pop();
-					skip(1);
-				}
-				break;
-			case EXPR_NATURAL_STRING_LITERAL:
-				if ('\\' == c && '\'' == c1) {
-					// the escaped ' in a literal string
-					skip(2);
-				}
-				if ('\'' == c) {
-					// end of literal
-					state = this.emthodCallStackInExpr.pop();
-					skip(1);
-				}
-				break;
+				//////// using syntax tool to find the end of expression smartly
+				String restline = c + getRestLine();
+				String longestExpr = JavaSyntaxTool.matchLongestPossibleExpr(restline);
+				skip(longestExpr.length() + 1);
+
+//				int nowleft = len - end + 1;
+//				if (nowleft == 0) {
+//					end++;
+//					return found(Token.EOF, 0);
+//				}
+//				else {
+					return found(Token.PLAIN, 0);
+//				}
+//				
+//				
+//				////////
+//				
+//				
+//				if ('(' == c) {
+//					skipAhead(Token.EXPR_NATURAL_METHOD_CALL, 1);
+//				} else if ('[' == c) {
+//					skipAhead(Token.EXPR_NATURAL_ARRAY_OP, 1);
+//				} else if ('\'' == c) {
+//					// \' is valid only at the beginning
+//					// FIXME
+//					// start of literal
+//					skipAhead(Token.EXPR_NATURAL_STRING_LITERAL, 1);
+//				} else if (Character.isWhitespace(c)) {
+//					// state = Token.EXPR;
+//					return found(Token.PLAIN, 0); // it ea
+//				} else if (!Character.isJavaIdentifierPart(c)) {
+//					if (c != '?' && c != '.' && c != ':' && c != '=') {
+//						// state = Token.EXPR;
+//						return found(Token.PLAIN, 0); // it ea
+//					} else if (!Character.isJavaIdentifierStart(c1)) {
+//						if (c == '=' && c1 == '=') {
+//							if (Character.isWhitespace(c2)) {
+//								// state = Token.EXPR;
+//								return found(Token.PLAIN, 0); // it ea
+//							} else {
+//								skip(2);
+//							}
+//						} else {
+//							// state = Token.EXPR;
+//							return found(Token.PLAIN, 0); // it ea
+//						}
+//					}
+//				}
+//				break;
+//			case EXPR_NATURAL_METHOD_CALL:
+//				if ('(' == c) {
+//					// nested call
+//					skipAhead(Token.EXPR_NATURAL_METHOD_CALL, 1);
+//				} else if (')' == c) {
+//					state = this.emthodCallStackInExpr.pop();
+//					skip(1);
+//				}
+//				break;
+//			case EXPR_NATURAL_ARRAY_OP:
+//				if ('[' == c) {
+//					// nested call
+//					skipAhead(Token.EXPR_NATURAL_ARRAY_OP, 1);
+//				} else if (']' == c) {
+//					state = this.emthodCallStackInExpr.pop();
+//					skip(1);
+//				}
+//				break;
+//			case EXPR_NATURAL_STRING_LITERAL:
+//				if ('\\' == c && '\'' == c1) {
+//					// the escaped ' in a literal string
+//					skip(2);
+//				}
+//				if ('\'' == c) {
+//					// end of literal
+//					state = this.emthodCallStackInExpr.pop();
+//					skip(1);
+//				}
+//				break;
 			case ACTION:
 				if (c == '}') {
 					return found(Token.PLAIN, 1);
@@ -549,7 +567,7 @@ public class JapidParser {
 				break;
 			case ACTION_CURLY:
 				if (c == '}') {
-					state = this.emthodCallStackInExpr.pop();
+					state = this.methodCallStackInExpr.pop();
 					skip(1);
 				} else if (c == '{') {
 					skipAhead(Token.ACTION_CURLY, 1);
@@ -568,15 +586,15 @@ public class JapidParser {
 		return getCurrentLine(pageSource, end - 1);
 	}
 
-	private boolean isStandAloneBackQuote() {
-		String currentLine = getCurrentLine(pageSource, end);
-		if (currentLine.trim().equals(MARKER_STRING)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
+//	private boolean isStandAloneBackQuote() {
+//		String currentLine = getCurrentLine(pageSource, end);
+//		if (currentLine.trim().equals(MARKER_STRING)) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
+//	
 	String getRestLine() {
 		return getRestLine(pageSource, end - 1);
 	}
@@ -653,12 +671,12 @@ public class JapidParser {
 		return true;
 	}
 
-	/**
-	 * @return
-	 */
-	private String getPrevTokenString() {
-		return pageSource.substring(end2, end - 1);
-	}
+//	/**
+//	 * @return
+//	 */
+//	private String getPrevTokenString() {
+//		return pageSource.substring(end2, end - 1);
+//	}
 
 	/**
 	 * @param curToken
@@ -689,7 +707,7 @@ public class JapidParser {
 	 *            number of chars to skip
 	 */
 	private void skipAhead(JapidParser.Token token, int i) {
-		this.emthodCallStackInExpr.push(state);
+		this.methodCallStackInExpr.push(state);
 		state = token;
 		skip(i);
 	}

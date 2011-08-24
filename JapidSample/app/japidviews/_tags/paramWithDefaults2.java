@@ -99,6 +99,7 @@ p("\n" +
 p("\n" + 
 "The fancy name is ");// line 8
 p(fancyname);// line 10
+;// line 10
 
 	}
 

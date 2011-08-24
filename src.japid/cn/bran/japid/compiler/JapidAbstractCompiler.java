@@ -48,7 +48,9 @@ public abstract class JapidAbstractCompiler {
 	// pattern: } else if xxx {
 	static final String ELSE_IF_PATTERN_STRING = "\\s*\\}\\s*else\\s*if\\s+([^\\(].*)\\s*";
 	static final Pattern ELSE_IF_PATTERN = Pattern.compile(ELSE_IF_PATTERN_STRING);
-	static final String OPEN_ELSE_IF_PATTERN_STRING = "\\s*else\\s*if\\s+([^\\(].*)\\s*";
+//	static final String OPEN_ELSE_IF_PATTERN_STRING = "\\s*else\\s*if\\s+([^\\(].*)\\s*";
+// relax the excluding of the ()
+	static final String OPEN_ELSE_IF_PATTERN_STRING = "\\s*else\\s*if\\s+(.*)\\s*";
 	static final Pattern OPEN_ELSE_IF_PATTERN = Pattern.compile(OPEN_ELSE_IF_PATTERN_STRING);
 	static final String OPEN_ELSE_STRING = "\\s*else\\s*";
 	static final String SPACE_OR_NONE = "\\s*";
@@ -61,6 +63,8 @@ public abstract class JapidAbstractCompiler {
 
 	// pattern: if xxx {
 	static final String OPEN_IF_PATTERN1 = "if\\s+[^\\(].*";
+	static final String IF_PATTERN_STRING = "if\\s*\\((.*)\\).*";
+	static final Pattern IF_PATTERN = Pattern.compile(IF_PATTERN_STRING);
 
 	private static final String JAPID_RESULT = "cn.bran.play.JapidResult";
 
@@ -484,30 +488,24 @@ public abstract class JapidAbstractCompiler {
 				// `if expr {, the last { is optional
 				String expr = line.trim();
 				if (expr.matches(OPEN_IF_PATTERN1)) {
-					// get the expression
-					String trim = expr.substring(2).trim();
-					boolean negative = trim.startsWith("!");
-					if (negative)
-						trim = trim.substring(1).trim();
-					if (trim.endsWith("{")) {
-						// semi-open
-						expr = removeEndingString(trim, "{").trim();
-						expr = "if(" + (negative ? "!" : "") + "asBoolean(" + expr + ")) {";
-					} else {
-						// true open. out a shadow tag, since we want reuse the
-						// ` as the end delimiter
-						Tag.TagIf iftag = new Tag.TagIf(trim, parser.getLineNumber());
-						pushToStack(iftag);
-						expr = "if(" + (negative ? "!" : "") + "asBoolean(" + trim + ")) {";
-					}
-					print(expr);
-					markLine(parser.getLineNumber() + i);
-					println();
+					handleOpenIf(i, expr);
 				} else {
 					// plain Java if
-					print(expr);
-					markLine(parser.getLineNumber() + i);
-					println();
+					// wait! but may be open due to regex limitation. 
+					Matcher m = IF_PATTERN.matcher(expr);
+					if (m.matches()){
+						String condition = m.group(1);
+						if (JavaSyntaxTool.isValidExpr(condition)){
+							// true classic if
+							print(expr);
+							markLine(parser.getLineNumber() + i);
+							println();
+						}
+						else {
+							// is actually open if
+							handleOpenIf(i, expr);
+						}
+					}
 				}
 			} else if (line.matches(ELSE_IF_PATTERN_STRING)) {
 				// semi open
@@ -534,25 +532,43 @@ public abstract class JapidAbstractCompiler {
 				if (matcher.matches()) {
 					expr = matcher.group(1).trim();
 					boolean negative = expr.startsWith("!");
-					if (negative)
-						expr = expr.substring(1).trim();
-
-					// end previous if shadow and star a new one
-					Tag tagShadow = tagsStackShadow.peek();
-					if (tagShadow instanceof TagIf) {
-						tagsStackShadow.pop();
-						// to close an open if
-						// start a new if
-						Tag.TagIf iftag = new Tag.TagIf(expr, parser.getLineNumber());
-						pushToStack(iftag);
-						expr = "} else if(" + (negative ? "!" : "") + "asBoolean(" + expr + ")) {";
-					} else {
-						throw new RuntimeException("the open \"else if\" statement is not properly matched to a previous if");
+					if (negative) {
+						handleOpenElseIf(i, expr.substring(1), negative);
+					}
+					else {
+						if (expr.startsWith("(") && expr.endsWith(")")){
+							// test if the part is classic if
+							String ex = expr.substring(1, expr.length() - 1);
+							if (JavaSyntaxTool.isValidExpr(ex)){
+								//OK, the insider is a valid expression (better be boolean!)
+								// end previous if shadow and star a new one
+								Tag tagShadow = tagsStackShadow.peek();
+								if (tagShadow instanceof TagIf) {
+									tagsStackShadow.pop();
+									// to close an open if
+									// start a new if
+									Tag.TagIf iftag = new Tag.TagIf(expr, parser.getLineNumber());
+									pushToStack(iftag);
+									expr = "} else if(" + ex + ")) {";
+									print(expr);
+									markLine(parser.getLineNumber() + i);
+									println();
+								} else {
+									throw new RuntimeException("the open \"else if\" statement is not properly matched to a previous if");
+								}
+							}
+							else {
+								handleOpenElseIf(i, expr, negative);
+							}
+						}
+						else {
+							handleOpenElseIf(i, expr, negative);
+						}
 					}
 				}
-				print(expr);
-				markLine(parser.getLineNumber() + i);
-				println();
+				else {
+					throw new RuntimeException("JapidAbstractCompiler bug: Should never be here!");
+				}
 			} else if (line.matches(OPEN_ELSE_STRING)) {
 				Tag tagShadow = tagsStackShadow.peek();
 				if (tagShadow instanceof TagIf) {
@@ -622,6 +638,53 @@ public abstract class JapidAbstractCompiler {
 			}
 		}
 		skipLineBreak = true;
+	}
+
+	private void handleOpenElseIf(int i, String expr, boolean negative) {
+//		expr = expr.substring(1).trim();
+		// end previous if shadow and star a new one
+		Tag tagShadow = tagsStackShadow.peek();
+		if (tagShadow instanceof TagIf) {
+			tagsStackShadow.pop();
+			// to close an open if
+			// start a new if
+			Tag.TagIf iftag = new Tag.TagIf(expr, parser.getLineNumber());
+			pushToStack(iftag);
+			expr = "} else if(" + (negative ? "!" : "") + "asBoolean(" + expr + ")) {";
+			print(expr);
+			markLine(parser.getLineNumber() + i);
+			println();
+		} else {
+			throw new RuntimeException("the open \"else if\" statement is not properly matched to a previous if");
+		}
+	}
+
+	/**
+	 * 
+	 * @param i
+	 * @param expr the open if statement: if my_condition...
+	 */
+	private void handleOpenIf(int i, String expr) {
+		// get the expression
+		String ex = expr.substring(2).trim();
+		boolean negative = ex.startsWith("!");
+		if (negative)
+			ex = ex.substring(1).trim();
+		
+		if (ex.endsWith("{")) {
+			// semi-open
+			ex = removeEndingString(ex, "{").trim();
+			ex = "if(" + (negative ? "!" : "") + "asBoolean(" + ex + ")) {";
+		} else {
+			// true open. out a shadow tag, since we want reuse the
+			// ` as the end delimiter
+			Tag.TagIf iftag = new Tag.TagIf(ex, parser.getLineNumber());
+			pushToStack(iftag);
+			ex = "if(" + (negative ? "!" : "") + "asBoolean(" + ex + ")) {";
+		}
+		print(ex);
+		markLine(parser.getLineNumber() + i);
+		println();
 	}
 
 	/**

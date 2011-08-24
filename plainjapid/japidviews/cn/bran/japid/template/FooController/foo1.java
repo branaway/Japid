@@ -48,7 +48,7 @@ final taggy _taggy1 = new taggy(getOut());
 //------
 ;// line 1
 p("foo12: ");// line 3
-_taggy1.render(a + "1");
+_taggy1.setOut(getOut()); _taggy1.render(a + "1");
 // line 4
 ;// line 4
 

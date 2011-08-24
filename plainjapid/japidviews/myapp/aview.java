@@ -53,7 +53,7 @@ p("\n" +
 p(escape(a));// line 5
 p("\n" + 
 "nice view: ");// line 5
-_taggy1.render(a + "1");
+_taggy1.setOut(getOut()); _taggy1.render(a + "1");
 // line 6
 ;// line 6
 

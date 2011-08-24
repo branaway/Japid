@@ -16,7 +16,7 @@ public class JapidAbstractCompilerTest {
 	}
 
 	@Test
-	public void testIfPattern() {
+	public void testOpenIfPattern() {
 		String ifPattern = JapidAbstractCompiler.OPEN_IF_PATTERN1;
 		assertTrue("if 3 + 2 {".matches(ifPattern));
 		assertTrue("if foo(\"hello\") {".matches(ifPattern));
@@ -25,6 +25,22 @@ public class JapidAbstractCompilerTest {
 		assertFalse("if(expr){".matches(ifPattern));
 	}
 
+	@Test
+	public void testIfPattern() {
+		String ifPattern = JapidAbstractCompiler.IF_PATTERN_STRING;
+		assertTrue("if(3 + 2 ) {".matches(ifPattern));
+		assertTrue("if (foo).bar() {".matches(ifPattern));
+		assertTrue("if (expr)".matches(ifPattern));
+		assertTrue("if(expr){".matches(ifPattern));
+	}
+
+	@Test
+	public void testIfPatternGroup() {
+		Matcher m = JapidAbstractCompiler.IF_PATTERN.matcher("if (foo).bar() {");
+		assertTrue(m.matches());
+		assertEquals("foo).bar(", m.group(1));
+	}
+	
 	@Test
 	public void testElseIfPattern() {
 		String elseifPattern = JapidAbstractCompiler.ELSE_IF_PATTERN_STRING;
@@ -40,8 +56,9 @@ public class JapidAbstractCompilerTest {
 		String elseifPattern = JapidAbstractCompiler.OPEN_ELSE_IF_PATTERN_STRING;
 		assertTrue(" else if 3 + 2 ".matches(elseifPattern));
 		assertTrue("else  if expr.goo()".matches(elseifPattern));
+		assertTrue("else  if (expr).goo()".matches(elseifPattern));
 		assertFalse("} else if expr".matches(elseifPattern));
-		assertFalse("else if (asd)".matches(elseifPattern));
+		assertTrue("else if (asd)".matches(elseifPattern));
 	}
 
 	@Test

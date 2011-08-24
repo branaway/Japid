@@ -43,6 +43,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 ;// line 1
 p(">");// line 1
 p(a);// line 2
+;// line 2
 
 	}
 

@@ -143,7 +143,7 @@ public class CompilerTests {
 		JapidTemplate bt = new JapidTemplate("japidviews/templates/AllPost.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
-//		System.out.println(bt.javaSource);
+		System.out.println(bt.javaSource);
 		CompilationUnit cu = JavaSyntaxTool.parse(bt.javaSource);
 		System.out.println(cu);
 //		assertTrue("invalid java code", JavaSyntaxValidator.isValid(bt.javaSource));
@@ -190,6 +190,17 @@ public class CompilerTests {
 		cp.compile(bt);
 		String srcCode = bt.javaSource;
 		System.out.println(srcCode);
+	}
+	
+	@Test
+	public void testOpenIf() throws IOException, ParseException {
+		String src = readFile("tests/openif.html");
+		JapidTemplate bt = new JapidTemplate("tests/openif.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
+		cp.compile(bt);
+		String srcCode = bt.javaSource;
+		System.out.println(srcCode);
+		CompilationUnit cu = JavaSyntaxTool.parse(srcCode);
 	}
 	
 

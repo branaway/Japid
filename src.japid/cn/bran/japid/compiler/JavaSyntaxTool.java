@@ -2,6 +2,7 @@ package cn.bran.japid.compiler;
 
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
+import japa.parser.TokenMgrError;
 import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.body.ModifierSet;
@@ -36,6 +37,8 @@ public class JavaSyntaxTool {
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (TokenMgrError e) {
+			throw new ParseException(e.getMessage());
 		}
 		return null;
 	}
@@ -448,11 +451,14 @@ public class JavaSyntaxTool {
 		int i = src.length();
 		for (; i > 0; i--) {
 			expr = src.substring(0, i);
+			if (expr.endsWith(";"))
+				continue;
 			String ss = String.format(classTempForExpr, expr);
 			try {
 				parse(ss);
 				break;
-			} catch (ParseException e) {
+			} catch (ParseException e) { // TODO perhaps modify Japa to create a light weighted ParseException
+				expr = "";
 				continue;
 			}
 		}
@@ -589,6 +595,16 @@ public class JavaSyntaxTool {
 		}
 		else {
 			return new String[]{s};
+		}
+	}
+
+	public static boolean isValidExpr(String condition) {
+		String ss = String.format(classTempForExpr, condition);
+		try {
+			parse(ss);
+			return true;
+		} catch (ParseException e) { 
+			return false;
 		}
 	}
 }

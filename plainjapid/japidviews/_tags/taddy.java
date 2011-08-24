@@ -30,6 +30,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
+	{ setHasDoBody(); }
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
     return runRenderer(args);
@@ -41,7 +42,7 @@ public static interface DoBody<A> {
 		void setBuffer(StringBuilder sb);
 		void resetBuffer();
 }
-<A> String getCallerBody(A a) {
+<A> String renderBody(A a) {
 		StringBuilder sb = new StringBuilder();
 		if (body != null){
 			body.setBuffer(sb);
@@ -52,6 +53,12 @@ public static interface DoBody<A> {
 	}
 	public String render(DoBody body) {
 		this.body = body;
+		long t = -1;
+		super.layout();
+		 if (t != -1) System.out.println("[taddy] rendering time: " + t);
+		return getOut().toString();
+	}
+	public String render() {
 		long t = -1;
 		super.layout();
 		 if (t != -1) System.out.println("[taddy] rendering time: " + t);
