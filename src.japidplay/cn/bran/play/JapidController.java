@@ -317,7 +317,7 @@ public class JapidController extends Controller {
 
 		if (template.startsWith("@")) {
 			// a template in the current directory
-			template = request.controller + "/" + template.substring(1);
+			template = Request.current().controller + "/" + template.substring(1);
 		}
 
 		// map to default japid view

@@ -43,6 +43,26 @@ public class JavaSyntaxToolTest {
 		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
 		assertEquals("a | 2", finals);
 
+		src = "\"String\".length * 12";
+		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
+		assertEquals("\"String\".length * 12", finals);
+
+		src = "12.0";
+		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
+		assertEquals("12.0", finals);
+		
+		src = "12. a";
+		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
+		assertEquals("12.", finals);
+
+		src = "a + b().";
+		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
+		assertEquals("a + b()", finals);
+
+		src = "a + b!";
+		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
+		assertEquals("a + b", finals);
+		
 		src = " ";
 		finals = JavaSyntaxTool.matchLongestPossibleExpr(src);
 		assertEquals("", finals);

@@ -27,6 +27,7 @@ import cn.bran.play.JapidResult;
 public class Application extends JapidController {
 	public static void index() {
 		renderJapid(); // use the default index.html in the japidviews/SampleController directory
+//		renderJapidWith("@index.html"); // use the default index.html in the japidviews/SampleController directory
 	}
 	public static void indexAt() {
 		renderJapid(); // 
@@ -265,7 +266,7 @@ public class Application extends JapidController {
 		renderText("Hi out!");
 	}
 
-	public static void renderJapidWith(String template) {
+	public static void go(String template) {
 		JapidController.renderJapidWith(template);
 	}
 	

@@ -625,18 +625,24 @@ table{border: 1px dashed gray; cellspacing: 2px}.
 
 h3. Java Expression: @${expression}@ and @~{expression}@
 
-The string value of a @Java expression@ can be interpolated in text stream using the ${} syntax, as is used in Play!. The {} signs can be omitted if doing so won't make the expression fuse with the rest of the context thus cause confusion to the compiler (or your eyes). For examples:
+The string value of a @Java expression@ can be interpolated in text stream using the ${} syntax, as is used in Play's Groovy based templates. The {} signs can be omitted if doing so won't make the expression fuse with the rest of the context thus cause confusion to the compiler (or your eyes). For examples:
 
 <pre>
-
 ${user.name} == $user.name
 ${user.name.length()} == $user.name.length()
 
+Japid parser is greedy in matching the Java expression:
+
+$user.age + 10! == ${user.age + 10}!
+
 </pre>
 
-As long as the expression is properly delimited by none identifier characters, the {} can be left out. The {} is mandatory in Play! default engine. 
+Japid parser uses greedy logic to find the end of $ expressions without the {} pair:
 
-Note: the @${}@ notation does *not* escape the string value of expressions to make it html safe, like what Play! does. One can simply do:
+@It searches back from the end of the current line and matches the longest possible valid Java expression.@
+
+
+Note: the @${}@ notation does *not* escape the string value of expressions to make it HTML safe, like what Play! does. One can simply do:
 
 @${escape(expr)}@
 
@@ -1801,7 +1807,7 @@ Since all Japid templates are transformed to Java source files, debugging the vi
 
 I personally find it rare to need to debug the views, since usually it will work if the Java code compiles. That's compile-time error checking at work. You'll need to pay attention to the parameter list of the templates and make sure they match that in the actions that using *implicit template binding*.   
 
-Lastly, there is a handy command you can use to quickly log any data in your Japid templates. The command is natually called @`log@. 
+Lastly, there is a handy command you can use to quickly log any data in your Japid templates. The command is naturally called @`log@. 
 
 <pre>
 `args String a

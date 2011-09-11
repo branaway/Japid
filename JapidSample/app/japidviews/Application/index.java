@@ -87,7 +87,7 @@ p(lookup("hello", new Object[]{}));// line 9
 p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
 "	<li><a href=\"application/callTag\">using tags in a template</a></li>\n" + 
-"	<li><a href=\"renderJapidWith/templates/def.html\"><em>def</em>\n" + 
+"	<li><a href=\"go/templates/def.html\"><em>def</em>\n" + 
 "	tag: define a method that return a string that can be invoked from\n" + 
 "	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 9
 p("\n" + 
@@ -98,9 +98,9 @@ p("\n" +
 "	binding with <b>JapidController.renderJapid()</b> </a></li>\n" + 
 "	<li><a href=\"application/postList\">a template with template\n" + 
 "	and tags etc...</a></li>\n" + 
-"	<li><a href=\"renderJapidWith/templates/log.html\">use the log\n" + 
+"	<li><a href=\"go/templates/log.html\">use the log\n" + 
 "	macro in a template. watch the output in the console</a></li>\n" + 
-"	<li><a href=\"renderJapidWith/templates/Msg.html\">i18n, use\n" + 
+"	<li><a href=\"go/templates/Msg.html\">i18n, use\n" + 
 "	predefined messages</a></li>\n" + 
 "	<li><a href=\"application/postlist\">looping and tag calling</a></li>\n" + 
 "	<li><a href=\"application/each\">the \"open for\" loop and the now deprecated \"*Each* tag</a></li>\n" + 
@@ -118,7 +118,7 @@ p("\n" +
 "	</li>\n" + 
 "	<li><a href=\"application/invokeInLoop\">using invoke tag with\n" + 
 "	local variables requires final attribute</a></li>\n" + 
-"	<li><a href=\"renderJapidWith/templates/suppressNull.html\">suppressNull,\n" + 
+"	<li><a href=\"go/templates/suppressNull.html\">suppressNull,\n" + 
 "	a directive to allow safe navigation in expression, default off</a></li>\n" + 
 "	<li><a href=\"application/dumpPost\">show how to dump a post\n" + 
 "	detail with japid.dump.request spec in the application.conf. see\n" + 
@@ -129,7 +129,7 @@ p("\n" +
 "	annotation</a></li>\n" + 
 "	<li><a href=\"application/in\">action forwarding with\n" + 
 "	dontRedirect() from JapidController</a></li>\n" + 
-"	<li><a href=\"renderJapidWith/templates/openBrace.html\"> use\n" + 
+"	<li><a href=\"go/templates/openBrace.html\"> use\n" + 
 "	`{ in if and while </a></li>\n" + 
 "	<li><a href=\"application/escapedExpr\"> ");// line 19
 p("\n" + 
@@ -157,24 +157,29 @@ p("\">validation and errors</a></li>\n" +
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"application/flashgood\">flash with success</a></li>\n" + 
+"			<li><a href=\"");// line 79
+p(lookup("reverseUrl", new Object[]{}));// line 83
+p("\">flash with a message</a></li>\n" + 
 "			<li><a href=\"application/flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"application/flashmsg\">flash with a message</a></li>\n" + 
-"			<li><a href=\"");// line 79
-p(lookup("reverseUrl", new Object[]{}));// line 85
-p("\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
-"	   ");// line 85
+"	   ");// line 83
  SearchParams sp = new  SearchParams("key1, key2", "AND");// line 89
 p("	   <a href=\"");// line 89
 p(lookup("search", sp));// line 90
 p("\">reverse URL lookup with complex object</a>\n" + 
-"	</li>\n" + 
 "    ");// line 90
 p("\n" + 
+"	</li>\n" + 
 "</ul>\n" + 
-"\n");// line 93
+"\n" + 
+"<p>Reverse lookup is slow...</p>\n" + 
+"\n" + 
+"<p>app mode: \"");// line 92
+p(_play.mode);// line 98
+p("\"</p>\n");// line 98
 
 	}
 

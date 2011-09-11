@@ -9,7 +9,7 @@ source code.</p>
 	<li><a href="@{hello()}">Hello Japid, using an overridden
 	version of renderText()</a></li>
 	<li><a href="application/callTag">using tags in a template</a></li>
-	<li><a href="renderJapidWith/templates/def.html"><em>def</em>
+	<li><a href="go/templates/def.html"><em>def</em>
 	tag: define a method that return a string that can be invoked from
 	super template. Compare this to the <b>set</b> tag</a></li>
 *{ 
@@ -24,9 +24,9 @@ source code.</p>
 	binding with <b>JapidController.renderJapid()</b> </a></li>
 	<li><a href="application/postList">a template with template
 	and tags etc...</a></li>
-	<li><a href="renderJapidWith/templates/log.html">use the log
+	<li><a href="go/templates/log.html">use the log
 	macro in a template. watch the output in the console</a></li>
-	<li><a href="renderJapidWith/templates/Msg.html">i18n, use
+	<li><a href="go/templates/Msg.html">i18n, use
 	predefined messages</a></li>
 	<li><a href="application/postlist">looping and tag calling</a></li>
 	<li><a href="application/each">the "open for" loop and the now deprecated "*Each* tag</a></li>
@@ -44,7 +44,7 @@ source code.</p>
 	</li>
 	<li><a href="application/invokeInLoop">using invoke tag with
 	local variables requires final attribute</a></li>
-	<li><a href="renderJapidWith/templates/suppressNull.html">suppressNull,
+	<li><a href="go/templates/suppressNull.html">suppressNull,
 	a directive to allow safe navigation in expression, default off</a></li>
 	<li><a href="application/dumpPost">show how to dump a post
 	detail with japid.dump.request spec in the application.conf. see
@@ -55,7 +55,7 @@ source code.</p>
 	annotation</a></li>
 	<li><a href="application/in">action forwarding with
 	dontRedirect() from JapidController</a></li>
-	<li><a href="renderJapidWith/templates/openBrace.html"> use
+	<li><a href="go/templates/openBrace.html"> use
 	``{ in if and while </a></li>
 	<li><a href="application/escapedExpr"> `verbatim
 	raw expression with ${} and html-safe expression with ~{}
@@ -80,16 +80,19 @@ source code.</p>
     <li> using the <em>flash</em> object
 		<ul>
 			<li><a href="application/flashgood">flash with success</a></li>
+			<li><a href="@{reverseUrl()}">flash with a message</a></li>
 			<li><a href="application/flashbad">flash with errors</a></li>
 			<li><a href="application/flashmsg">flash with a message</a></li>
-			<li><a href="@{reverseUrl()}">flash with a message</a></li>
 		</ul>
     </li>
     <li>
 	   ` SearchParams sp = new  SearchParams("key1, key2", "AND");
 	   <a href="@{search(sp)}">reverse URL lookup with complex object</a>
-	</li>
     *{
     }*
+	</li>
 </ul>
 
+<p>Reverse lookup is slow...</p>
+
+<p>app mode: "${_play.mode}"</p>
