@@ -322,6 +322,19 @@ public class JapidParserTests {
 	}
 
 	@Test
+	public void testReverseStatic() {
+		String src = "@\n@{'/public/static/stuff'}";
+		JapidParser p = new JapidParser(src);
+		List<TokenPair> tokens = p.allTokens();
+		assertEquals(5, tokens.size());
+		assertEquals(Token.PLAIN, tokens.get(0).token);
+		assertEquals(Token.SCRIPT_LINE, tokens.get(1).token);
+		assertEquals(Token.PLAIN, tokens.get(2).token);
+		assertEquals(Token.ACTION, tokens.get(3).token);
+		assertEquals(Token.PLAIN, tokens.get(4).token);
+	}
+	
+	@Test
 	public void testLineScriptAt() {
 		String src = "@code\n\r\t@code2 \r\nhtml@code3\n\rhello `html@code4\nhello";
 		JapidParser p = new JapidParser(src);

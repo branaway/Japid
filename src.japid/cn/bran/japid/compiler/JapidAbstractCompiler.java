@@ -804,10 +804,13 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void action(String token, boolean absolute) {
 		String action = token.trim();
-		if (action.matches("^'.*'$") || action.matches("^\".*\"$")) {
+		if (action.matches("^'.*'$") || action.matches("^\".*\"$") || action.startsWith("/")) {
 			// static content like @{'my.css'}
 			action = action.replace('\'', '"');
-			// remove Play dependecy
+			if (action.startsWith("/")) {
+				action = '"' + action + '"';
+			}
+			// remove Play dependency
 			if (absolute) {
 				// print("p(request.getBase() + play.mvc.Router.reverseWithCheck("
 				// + action + ", play.Play.getVirtualFile(" + action + ")));");

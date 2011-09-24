@@ -173,13 +173,16 @@ p("\">reverse URL lookup with complex object</a>\n" +
 "    ");// line 90
 p("\n" + 
 "	</li>\n" + 
+"	<li><a href=\"");// line 92
+p(lookupStatic("/public/images/favicon.png"));// line 94
+p("\">reverse to a static  png</a></li>\n" + 
 "</ul>\n" + 
 "\n" + 
 "<p>Reverse lookup is slow...</p>\n" + 
 "\n" + 
-"<p>app mode: \"");// line 92
-p(_play.mode);// line 98
-p("\"</p>\n");// line 98
+"<p>app mode: \"");// line 94
+p(_play.mode);// line 99
+p("\"</p>\n");// line 99
 
 	}
 

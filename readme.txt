@@ -24,8 +24,10 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/8/26: V0.8.9.7
+	1. enhancement: when used to reverse to a static, @@{} now takes string without wrapping in quotation marks if the path starts with /. 
 2011/8/26: V0.8.9.6
-	1. bug fix: renderJapidWith("@mytemplate.html") led NPE. The reason was the request object in the JapidController was not mapped to the current request. Thanks Evan. 
+	1. bug fix: renderJapidWith("@mytemplate.html") led to NPE. The reason was the request object in the JapidController was not mapped to the current request. Thanks Evan. 
 2011/8/25: V0.8.9.5. Note: Japid regen is required for existing templates.
     1. critical bug fix: the JapidTemplateBaseWithoutPlay.getRenderMethod() picked up the shorter and wrong version of the render method.
     2. bug fix: open if detection missed the expression with leading (;

@@ -94,6 +94,22 @@ public class CompilerTests {
 	}
 	
 	@Test
+	public void testReverse() throws IOException {
+		String path = "tests/reverse.html";
+		String src = readFile(path);
+		JapidTemplate bt = new JapidTemplate(path, src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
+		cp.compile(bt);
+		String srccode = bt.javaSource;
+		System.out.println(srccode);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(srccode));
+		assertTrue(srccode.contains("p(lookupStatic(\"/x/y.html\"))"));
+		assertTrue(srccode.contains("p(lookupStatic(\"/a/b/c.html\"))"));
+		assertTrue(srccode.contains("p(lookup(\"com.action\", \"ad\"))"));
+	}
+	
+	
+	@Test
 	public void testAnotherLayout() throws IOException, ParseException {
 		String src = readFile("JapidSample/app/japidviews/_layouts/TagLayout.html");
 		JapidTemplate bt = new JapidTemplate("japidviews/_layouts/TagLayout.html", src);
