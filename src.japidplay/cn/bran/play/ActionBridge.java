@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.bran.japid.exceptions.JapidRuntimeException;
 import cn.bran.play.exceptions.ReverseRouteException;
 
 import play.data.binding.Unbinder;
@@ -108,6 +109,12 @@ public class ActionBridge {
 			if (e instanceof PlayException) {
 				throw (PlayException) e;
 			}
+			
+			if (e instanceof JapidRuntimeException) {
+				throw (JapidRuntimeException) e;
+			}
+			
+			
 			throw new UnexpectedException(e);
 		}
 	}

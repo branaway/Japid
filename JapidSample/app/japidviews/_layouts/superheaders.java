@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public abstract class superheaders extends cn.bran.japid.template.JapidTemplateBase
+public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_layouts/superheaders.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -50,16 +50,16 @@ putHeader("Cache-Control", "max-age=300");
 	}
 	@Override public void layout() {
 		;// line 1
-p("\n" + 
+		p("\n" + 
 "\n");// line 1
-p("\n" + 
+		p("\n" + 
 "<p> there is a special directive for the content-type header</p>\n");// line 4
-p("\n" + 
+		p("\n" + 
 "    `contentType    text/html; charset=utf-8\n");// line 7
-p("\n");// line 9
-	doLayout();// line 11
-;// line 11
-	}
+		p("\n");// line 9
+		doLayout();// line 11
+		;// line 11
+			}
 
 	protected abstract void doLayout();
 }

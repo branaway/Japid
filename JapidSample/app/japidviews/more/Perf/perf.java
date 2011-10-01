@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "DataModel.User", "ArrayList<DataModel.Entry>",  };
 public static final Object[] argDefaults= new Object[] {null,null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.Perf.perf.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -69,63 +72,63 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.user = user;
 		this.entries = entries;
 		long t = -1;
-		super.layout(user);
+		try {super.layout(user);} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n");// line 1
-p("\n");// line 3
-p("\n");// line 5
-p("\n");// line 7
-p("\n");// line 9
-if (entries.size() > 0 ) {// line 11
-p("	");// line 11
-for (DataModel.Entry entry : entries) {// line 12
-p("		<div id=\"entries\">\n" + 
+		p("\n");// line 1
+		p("\n");// line 3
+		p("\n");// line 5
+		p("\n");// line 7
+		p("\n");// line 9
+		if (entries.size() > 0 ) {// line 11
+		p("	");// line 11
+		for (DataModel.Entry entry : entries) {// line 12
+		p("		<div id=\"entries\">\n" + 
 "		    Entry Id: ");// line 12
-p(entry.getEntryId());// line 14
-p(", Date: ");// line 14
-p(entry.getEntryDate());// line 14
-p("\n" + 
+		p(entry.getEntryId());// line 14
+		p(", Date: ");// line 14
+		p(entry.getEntryDate());// line 14
+		p("\n" + 
 "		    <h2>");// line 14
-p(entry.getTitle());// line 15
-p("</h2>\n" + 
+		p(entry.getTitle());// line 15
+		p("</h2>\n" + 
 "		    <div>Submitted By: ");// line 15
-p(entry.getOwner().getUserName());// line 16
-p(" - ");// line 16
-p(entry.getOwner().getEmail());// line 16
-p("</div>\n" + 
+		p(entry.getOwner().getUserName());// line 16
+		p(" - ");// line 16
+		p(entry.getOwner().getEmail());// line 16
+		p("</div>\n" + 
 "		    <div>");// line 16
-p(entry.getBody());// line 17
-p("</div>\n" + 
+		p(entry.getBody());// line 17
+		p("</div>\n" + 
 "		    ");// line 17
-if(entry.getComments().size() > 0) {// line 18
+		if(entry.getComments().size() > 0) {// line 18
                 for (DataModel.Comment comment: entry.getComments()) {// line 19
-p("				    <div>\n" + 
+		p("				    <div>\n" + 
 "				        <div>Comment by: ");// line 19
-p(comment.getOwner().getUserName());// line 21
-p("</div>\n" + 
+		p(comment.getOwner().getUserName());// line 21
+		p("</div>\n" + 
 "				        <div>");// line 21
-p(comment.getCommentText());// line 22
-p("</div>\n" + 
+		p(comment.getCommentText());// line 22
+		p("</div>\n" + 
 "				    </div>\n" + 
 "                ");// line 22
-}// line 24
+		}// line 24
             } else {// line 25
-p("		      <div>No comments yet</div>\n" + 
+		p("		      <div>No comments yet</div>\n" + 
 "		    ");// line 25
-}// line 27
-p("		</div>\n" + 
+		}// line 27
+		p("		</div>\n" + 
 "	");// line 27
-}// line 29
+		}// line 29
 } else {// line 30
-p("	<div>\n" + 
+		p("	<div>\n" + 
 "	    <div>No Entries Found</div>\n" + 
 "	</div>\n");// line 30
-}// line 34
-
+		}// line 34
+		
 	}
 
 	@Override protected void title() {

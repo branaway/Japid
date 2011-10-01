@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class doBodyInDefTag extends cn.bran.japid.template.JapidTemplateBase
+public class doBodyInDefTag extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/MyController/doBodyInDefTag.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.MyController.doBodyInDefTag.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -85,12 +88,12 @@ public static interface DoBody<A,B> {
 	public cn.bran.japid.template.RenderResult render(DoBody body) {
 		this.body = body;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -103,32 +106,22 @@ final fooTag _fooTag1 = new fooTag(getOut());
 
 //------
 p("outside: ");// line 1
-if (body != null){
-	body.setBuffer(getOut());
-
-	body.render("taggy", 1);
-	body.resetBuffer();
-}
-p("\n" + 
+		if (body != null){ body.setBuffer(getOut()); body.render("taggy", 1); body.resetBuffer();}// line 1
+		p("\n" + 
 "ok, try to get the content as method call: \n" + 
 "   ");// line 1
-p(renderBody("taddy", 3));// line 5
-p("\n");// line 5
-// line 7
-p("call the def\n" + 
+		p(renderBody("taddy", 3));// line 5
+		p("\n");// line 5
+		// line 7
+		p("call the def\n" + 
 "\n");// line 9
-p(foo());// line 12
-p("\n");// line 12
-_fooTag1.setOut(getOut()); _fooTag1.render(new fooTag.DoBody(){
+		p(foo());// line 12
+		p("\n");// line 12
+		_fooTag1.setOut(getOut()); _fooTag1.render(new fooTag.DoBody(){
 public void render() {
 // line 14
-p("  -> called footag:  ");// line 14
-if (body != null){
-	body.setBuffer(getOut());
-
-	body.render("kaddy", 13);
-	body.resetBuffer();
-}
+		p("  -> called footag:  ");// line 14
+		if (body != null){ body.setBuffer(getOut()); body.render("kaddy", 13); body.resetBuffer();}// line 15
 
 }
 
@@ -145,10 +138,9 @@ public void resetBuffer() {
 }
 
 }
-);
-// line 14
-;// line 16
-
+);// line 14
+		;// line 16
+		
 	}
 
 public String foo() {
@@ -156,13 +148,8 @@ StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
 // line 7
-p("	hello ");// line 7
-if (body != null){
-	body.setBuffer(getOut());
-
-	body.render("saddy", 2);
-	body.resetBuffer();
-}
+		p("	hello ");// line 7
+		if (body != null){ body.setBuffer(getOut()); body.render("saddy", 2); body.resetBuffer();}// line 8
 
 this.setOut(ori);
 return sb.toString();

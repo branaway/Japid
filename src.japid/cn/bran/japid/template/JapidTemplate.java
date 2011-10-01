@@ -1,9 +1,7 @@
 package cn.bran.japid.template;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 
@@ -13,6 +11,9 @@ import java.util.UUID;
 public class JapidTemplate {
     public String name;
     public String source;
+    
+    // supposed to the mapping of the generated Java source code to the original template file
+    // but since lots of complex constructs are translated from simple syntax in the original, the mapping is not really useful
     public Map<Integer, Integer> linesMatrix = new HashMap<Integer, Integer>();
     public String compiledTemplateName;
     public Long timestamp = System.currentTimeMillis();
@@ -37,6 +38,6 @@ public class JapidTemplate {
         this.source = source;
     }
     public String javaSource;
-    public Class<JapidTemplateBase> compiledTemplate;
+    public Class<JapidTemplateBaseWithoutPlay> compiledTemplate;
 
 }

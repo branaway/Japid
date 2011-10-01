@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class callPicka extends cn.bran.japid.template.JapidTemplateBase
+public class callPicka extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/callPicka.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,17 +53,20 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.callPicka.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -102,22 +105,20 @@ p("<p>before...<p>\n" +
 "first define something in a Java code block. \n" + 
 "\n");// line 1
  List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};// line 10
-p("\n");// line 10
-_aTag0.setOut(getOut()); _aTag0.render(strings);
-// line 12
-p("\n" + 
+		p("\n");// line 10
+		_aTag0.setOut(getOut()); _aTag0.render(strings);// line 12
+		p("\n" + 
 "note: the picka tag is defined in the japidviews/_tags directory\n" + 
 "\n");// line 12
-_picka1.setOut(getOut()); _picka1.render("a", "b" + "c", new picka.DoBody<String>(){
+		_picka1.setOut(getOut()); _picka1.render("a", "b" + "c", new picka.DoBody<String>(){
 public void render(final String r) {
 // line 16
-p("    the tag chosed: ");// line 16
-p(r);// line 17
-p("\n" + 
+		p("    the tag chosed: ");// line 16
+		p(r);// line 17
+		p("\n" + 
 "    <p>and we can can call a tag recurive?</p>\n" + 
 "    ");// line 17
-_SampleTag2.setOut(getOut()); _SampleTag2.render(r);
-// line 19
+		_SampleTag2.setOut(getOut()); _SampleTag2.render(r);// line 19
 
 }
 
@@ -134,34 +135,29 @@ public void resetBuffer() {
 }
 
 }
-);
-// line 16
-p("</p>\n" + 
+);// line 16
+		p("</p>\n" + 
 "\n" + 
 "<p>\n" + 
 "we can call without the body part:\n" + 
 "\n");// line 20
-_picka3.setOut(getOut()); _picka3.render(named("a", "aa"), named("b", "bb"));
-// line 26
-p("\n" + 
+		_picka3.setOut(getOut()); _picka3.render(named("a", "aa"), named("b", "bb"));// line 26
+		p("\n" + 
 "or \n");// line 26
-_picka4.setOut(getOut()); _picka4.render("cc", "dd");
-// line 29
-p("\n" + 
+		_picka4.setOut(getOut()); _picka4.render("cc", "dd");// line 29
+		p("\n" + 
 "</p>\n" + 
 "<p>\n" + 
 "Or using the full path of the tag\n" + 
 "</p>\n" + 
 "\n");// line 29
-_japidviews_templates_aTag5.setOut(getOut()); _japidviews_templates_aTag5.render(strings);
-// line 36
-p("\n" + 
+		_japidviews_templates_aTag5.setOut(getOut()); _japidviews_templates_aTag5.render(strings);// line 36
+		p("\n" + 
 "<p>You can use \".\" instead of \"/\" in the path:</p>\n" + 
 "\n");// line 36
-_japidviews_templates_aTag6.setOut(getOut()); _japidviews_templates_aTag6.render(strings);
-// line 40
-;// line 40
-
+		_japidviews_templates_aTag6.setOut(getOut()); _japidviews_templates_aTag6.render(strings);// line 40
+		;// line 40
+		
 	}
 
 }

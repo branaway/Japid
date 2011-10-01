@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public abstract class scriptlineLayout extends cn.bran.japid.template.JapidTemplateBase
+public abstract class scriptlineLayout extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/MyController/scriptlineLayout.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -49,10 +49,10 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	}
 	@Override public void layout() {
 		p("the meta is  \"");// line 1
-	meta();p("\"\n" + 
+		meta();p("\"\n" + 
 "\n");// line 1
-	doLayout();
-	}
+		doLayout();// line 3
+			}
 	 protected void meta() {};
 
 	protected abstract void doLayout();

@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class dobodytest extends cn.bran.japid.template.JapidTemplateBase
+public class dobodytest extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/MyController/dobodytest.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,17 +53,20 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.MyController.dobodytest.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -79,11 +82,11 @@ final dummier _dummier1 = new dummier(getOut());
 
 //------
 ;// line 1
-_argtest0.setOut(getOut()); _argtest0.render(new argtest.DoBody(){
+		_argtest0.setOut(getOut()); _argtest0.render(new argtest.DoBody(){
 public void render() {
 // line 1
-p("  ok\n");// line 1
-
+		p("  ok\n");// line 1
+		
 }
 
 StringBuilder oriBuffer;
@@ -99,11 +102,9 @@ public void resetBuffer() {
 }
 
 }
-, named("arg", "test1"));
-// line 1
-_dummier1.setOut(getOut()); _dummier1.render(named("a", "hxxmmm"));
-// line 4
-
+, named("arg", "test1"));// line 1
+_dummier1.setOut(getOut()); _dummier1.render(named("a", "hxxmmm"));// line 4
+		
 	}
 
 }

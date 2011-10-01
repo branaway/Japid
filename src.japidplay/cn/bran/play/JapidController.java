@@ -11,6 +11,7 @@ import java.util.Map;
 import play.Play;
 import play.cache.Cache;
 import play.classloading.ApplicationClasses.ApplicationClass;
+import play.exceptions.TemplateExecutionException;
 import play.mvc.After;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -20,7 +21,7 @@ import play.mvc.results.RenderTemplate;
 import cn.bran.japid.compiler.NamedArg;
 import cn.bran.japid.compiler.NamedArgRuntime;
 import cn.bran.japid.template.ActionRunner;
-import cn.bran.japid.template.JapidTemplateBase;
+import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.RenderInvokerUtils;
 import cn.bran.japid.util.StackTraceUtils;
@@ -45,7 +46,7 @@ public class JapidController extends Controller {
 	 * @param args
 	 *            arguments
 	 */
-	public static <T extends JapidTemplateBase> void render(Class<T> c, Object... args) {
+	public static <T extends JapidTemplateBaseWithoutPlay> void render(Class<T> c, Object... args) {
 		try {
 			RenderResult rr = invokeRender(c, args);
 			throw new JapidResult(rr);
@@ -67,7 +68,7 @@ public class JapidController extends Controller {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	private static <T extends JapidTemplateBase> RenderResult invokeRender(Class<T> c, Object... args) {
+	private static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeRender(Class<T> c, Object... args) {
 		int modifiers = c.getModifiers();
 		if (Modifier.isAbstract(modifiers)) {
 			throw new RuntimeException("Cannot init the template class since it's an abstract class: " + c.getName());
@@ -87,8 +88,10 @@ public class JapidController extends Controller {
 			// e.printStackTrace();
 			throw new RuntimeException("Could not instantiate the template object. Abstract?");
 		} catch (InvocationTargetException e) {
-			 e.printStackTrace();
+//			 e.printStackTrace();
 			Throwable te = e.getTargetException();
+			if (te instanceof TemplateExecutionException)
+				throw (TemplateExecutionException)te;
 			Throwable cause = te.getCause();
 			if (cause != null )
 				if (cause instanceof RuntimeException)
@@ -109,7 +112,7 @@ public class JapidController extends Controller {
 		}
 	}
 
-	private static <T extends JapidTemplateBase> RenderResult invokeNamedArgsRender(Class<T> c, NamedArgRuntime[] args) {
+	private static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeNamedArgsRender(Class<T> c, NamedArgRuntime[] args) {
 		int modifiers = c.getModifiers();
 		if (Modifier.isAbstract(modifiers)) {
 			throw new RuntimeException("Cannot init the template class since it's an abstract class: " + c.getName());
@@ -118,7 +121,7 @@ public class JapidController extends Controller {
 			// String methodName = "render";
 			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
 			StringBuilder sb = new StringBuilder(8000);
-			T t = ctor.newInstance(sb);
+			JapidTemplateBaseWithoutPlay t = ctor.newInstance(sb);
 			RenderResult rr = (RenderResult) RenderInvokerUtils.renderWithNamedArgs(t, args);
 			// RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t,
 			// methodName, args);

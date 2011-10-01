@@ -23,7 +23,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class invokeInLoop extends cn.bran.japid.template.JapidTemplateBase
+public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/invokeInLoop.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -55,11 +55,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"List<Post>",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.invokeInLoop.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -67,45 +70,37 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render(List<Post> posts) {
 		this.posts = posts;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
 p("\n");// line 2
-p("\n" + 
+		p("\n" + 
 "\n");// line 7
-for (int i = 0; i < 3;i++) {// line 9
-p("	");// line 9
-final int j = i;// line 10
-p("	");// line 10
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", j) {
+		for (int i = 0; i < 3;i++) {// line 9
+		p("	");// line 9
+		final int j = i;// line 10
+		p("	");// line 10
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", j) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.echo(j); //
 			}
 		});
-
 // line 11
-p("\n");// line 11
-}// line 12
-p("<p/>\n");// line 12
-p("\n" + 
+		p("\n");// line 11
+		}// line 12
+		p("<p/>\n");// line 12
+		p("\n" + 
 "\n");// line 14
-for (final Post p : posts) {// line 16
-p("    another notation for invoking actions:  \n" + 
+		for (final Post p : posts) {// line 16
+		p("    another notation for invoking actions:  \n" + 
 "    ");// line 16
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echoPost", p) {
-			@Override
-			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echoPost(p); //
-			}
-		});
-
 }// line 19
-;// line 19
-
+		;// line 19
+		
 	}
 
 }

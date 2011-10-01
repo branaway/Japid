@@ -14,7 +14,7 @@
 
 package cn.bran.japid.tags;
 
-import cn.bran.japid.template.JapidTemplateBase;
+import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 
 /**
  * a parent for hand-written tags that don't have a layout, which is the most
@@ -32,7 +32,7 @@ import cn.bran.japid.template.JapidTemplateBase;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public abstract class SimpleTag extends JapidTemplateBase {
+public abstract class SimpleTag extends JapidTemplateBaseWithoutPlay {
 
 	public SimpleTag(StringBuilder out2) {
 		super(out2);

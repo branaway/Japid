@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class index extends cn.bran.japid.template.JapidTemplateBase
+public class index extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/ContentNegotiation/index.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,25 +53,28 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.ContentNegotiation.index.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 p("The content format: ");// line 1
-p(request.format);// line 1
-;// line 1
-
+		p(request.format);// line 1
+		;// line 1
+		
 	}
 
 }

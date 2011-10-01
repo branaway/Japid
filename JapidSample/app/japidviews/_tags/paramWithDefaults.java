@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class paramWithDefaults extends cn.bran.japid.template.JapidTemplateBase
+public class paramWithDefaults extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_tags/paramWithDefaults.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String", "Integer",  };
 public static final Object[] argDefaults= new Object[] {"message 1 default value",new String("m2message"),20, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.paramWithDefaults.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -69,24 +72,24 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.m2 = m2;
 		this.age = age;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "<span>");// line 5
-p(msg);// line 6
-p("</span>\n" + 
+		p(msg);// line 6
+		p("</span>\n" + 
 "<span>");// line 6
-p(m2);// line 7
-p("</span>\n" + 
+		p(m2);// line 7
+		p("</span>\n" + 
 "<span>");// line 7
-p(age);// line 8
-p("</span>\n" + 
+		p(age);// line 8
+		p("</span>\n" + 
 "\n");// line 8
-
+		
 	}
 
 }

@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class log extends cn.bran.japid.template.JapidTemplateBase
+public class log extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/log.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,17 +53,20 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.log.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -72,22 +75,22 @@ p("\n" +
 "log directives are used to print a line of information to the console. \n" + 
 "It can take an argument of String\n" + 
 "</p>\n");// line 1
-System.out.println("japidviews/templates/log.html(line 5): " + "");
-p("</p>\n" + 
+		System.out.println("japidviews/templates/log.html(line 5): " + "");
+		p("</p>\n" + 
 "\n" + 
 "hello world!\n" + 
 "</p>\n" + 
 "\n");// line 5
- String a = "a";// line 11
+		 String a = "a";// line 11
  int i = 10;// line 12
-p("now with argument\n");// line 12
-System.out.println("japidviews/templates/log.html(line 14): " + a + i);
-p("\n" + 
+		p("now with argument\n");// line 12
+		System.out.println("japidviews/templates/log.html(line 14): " + a + i);
+		p("\n" + 
 "</p>\n" + 
 "now with a message literal\n");// line 14
-System.out.println("japidviews/templates/log.html(line 18): " + "a message ");
-p("</p>");// line 18
-
+		System.out.println("japidviews/templates/log.html(line 18): " + "a message ");
+		p("</p>");// line 18
+		
 	}
 
 }

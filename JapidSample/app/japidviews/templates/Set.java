@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.Set.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -65,20 +68,20 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
 p("\n");// line 2
-p("\n" + 
+		p("\n" + 
 "\n");// line 11
-p("\n" + 
+		p("\n" + 
 "\n");// line 13
-p("\n");// line 15
-// line 17
-
+		p("\n");// line 15
+		// line 17
+		
 	}
 
 	@Override protected void footer() {
@@ -86,9 +89,8 @@ final dummyTag _dummyTag2 = new dummyTag(getOut());
 { _dummyTag2.setActionRunners(getActionRunners()); }
 
 		// line 17
-p("    great footer. Call a tag: ");// line 17
-_dummyTag2.setOut(getOut()); _dummyTag2.render("me");
-// line 18
+		p("    great footer. Call a tag: ");// line 17
+		_dummyTag2.setOut(getOut()); _dummyTag2.render("me");// line 18
 ;
 	}
 	@Override protected void title() {

@@ -54,17 +54,20 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.MyController.quickview.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -84,16 +87,14 @@ p("<p>\n" +
 "hello there\n" + 
 "</p>\n" + 
 "<p>\n");// line 2
-String s = "quick" ;// line 8
-;// line 8
-_japidviews_more_MyController__tags_taggy0.setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s);
-// line 9
-p("</p> \n" + 
+		String s = "quick" ;// line 8
+		;// line 8
+		_japidviews_more_MyController__tags_taggy0.setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s);// line 9
+		p("</p> \n" + 
 "<p>\n");// line 9
-_taggy21.setOut(getOut()); _taggy21.render(s);
-// line 12
-p("</p>");// line 12
-
+		_taggy21.setOut(getOut()); _taggy21.render(s);// line 12
+		p("</p>");// line 12
+		
 	}
 
 }

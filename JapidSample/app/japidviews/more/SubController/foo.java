@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class foo extends cn.bran.japid.template.JapidTemplateBase
+public class foo extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/SubController/foo.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.SubController.foo.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -65,7 +68,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -78,17 +81,16 @@ final bar _bar0 = new bar(getOut());
 
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "what is foo ");// line 1
-p(s);// line 3
-p("? \n" + 
+		p(s);// line 3
+		p("? \n" + 
 "\n");// line 3
-p("\n" + 
+		p("\n" + 
 "\n");// line 5
-_bar0.setOut(getOut()); _bar0.render();
-// line 7
-;// line 7
-
+		_bar0.setOut(getOut()); _bar0.render();// line 7
+		;// line 7
+		
 	}
 
 }

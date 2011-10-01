@@ -55,11 +55,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"models.japidsample.Post",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.composite.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -67,7 +70,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -85,66 +88,60 @@ p("\n" +
 "\n" + 
 "<p>This action won't be cached, unless the action has CacheFor annotation.</p>\n" + 
 "<div>");// line 3
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel", post.getAuthor()) {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.authorPanel(post.getAuthor()); //
 			}
 		});
-
 // line 8
-p("</div>\n" + 
+		p("</div>\n" + 
 "<div>Another one in sub package: ");// line 8
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", SubController.class, "foo", post.getAuthor().name) {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", SubController.class, "foo", post.getAuthor().name) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				SubController.foo(post.getAuthor().name); //
 			}
 		});
-
 // line 9
-p("</div>\n" + 
+		p("</div>\n" + 
 "\n" + 
 "<div>this one has full cache control</div>\n" + 
 "<div>");// line 9
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", Application.class, "authorPanel", post.getAuthor()) {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", Application.class, "authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.authorPanel(post.getAuthor()); //
 			}
 		});
-
 // line 12
-p("</div>\n" + 
+		p("</div>\n" + 
 "\n" + 
 "<div>This one invokes an action with two params. Note the twoPrams() result is cached since the action carries CacheFor annotation.</div>\n" + 
 "<div>");// line 12
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "twoParams", "hello", 10) {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "twoParams", "hello", 10) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.twoParams("hello", 10); //
 			}
 		});
-
 // line 15
-p("</div>\n" + 
+		p("</div>\n" + 
 "\n" + 
 "<p>Let's invoke a tag which invokes an action</p>\n" + 
 "\n");// line 15
-_invokeInTag4.setOut(getOut()); _invokeInTag4.render();
-// line 19
-p("\n" + 
+		_invokeInTag4.setOut(getOut()); _invokeInTag4.render();// line 19
+		p("\n" + 
 "<p>let's invoke an action that renders a template that contains another invoke: ");// line 19
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel2", post.getAuthor()) {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel2", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.authorPanel2(post.getAuthor()); //
 			}
 		});
-
 // line 21
-p("</p>\n");// line 21
-
+		p("</p>\n");// line 21
+		
 	}
 
 }

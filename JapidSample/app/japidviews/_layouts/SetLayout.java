@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public abstract class SetLayout extends cn.bran.japid.template.JapidTemplateBase
+public abstract class SetLayout extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_layouts/SetLayout.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -49,11 +49,11 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	}
 	@Override public void layout() {
 		;// line 1
-	title();// line 1
-p("\n" + 
+		title();// line 1
+		p("\n" + 
 "\n");// line 1
-	title();p("one more\n");// line 3
-	footer();	}
+		title();p("one more\n");// line 3
+		footer();	}
 	 protected void footer() {};
 	 protected void title() {};
 

@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class ifs2 extends cn.bran.japid.template.JapidTemplateBase
+public class ifs2 extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/Application/ifs2.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"int", "String[]",  };
 public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.ifs2.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -67,7 +70,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.i = i;
 		this.ss = ss;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -89,7 +92,7 @@ final Each _Each2 = new Each(getOut());
 
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "OK, the minimalism if-else statement, no parenthesis, no braces, like command \n" + 
 "<p>\n" + 
 "\n" + 
@@ -117,16 +120,15 @@ p("\n" +
 "</pre>\n" + 
 "\n" + 
 "<p/>\n");// line 1
-if(asBoolean(ss)) {// line 30
-p("    well got ss\n" + 
+		if(asBoolean(ss)) {// line 30
+		p("    well got ss\n" + 
 "    ");// line 30
-_Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
+		_Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 32
-p("        call a tag\n" + 
+		p("        call a tag\n" + 
 "        ");// line 32
-_SampleTag1.setOut(getOut()); _SampleTag1.render(s);
-// line 34
+		_SampleTag1.setOut(getOut()); _SampleTag1.render(s);// line 34
     
 }
 
@@ -143,20 +145,18 @@ public void resetBuffer() {
 }
 
 }
-);
-// line 32
+);// line 32
 } else if(asBoolean(ss)) {// line 36
-p("    finally got ");// line 36
-p(ss);// line 37
-p("\n" + 
+		p("    finally got ");// line 36
+		p(ss);// line 37
+		p("\n" + 
 "    ");// line 37
-_Each2.setOut(getOut()); _Each2.render(ss, new Each.DoBody<String>(){
+		_Each2.setOut(getOut()); _Each2.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 38
-p("        call a tag\n" + 
+		p("        call a tag\n" + 
 "        ");// line 38
-_SampleTag3.setOut(getOut()); _SampleTag3.render(s);
-// line 40
+		_SampleTag3.setOut(getOut()); _SampleTag3.render(s);// line 40
     
 }
 
@@ -173,20 +173,19 @@ public void resetBuffer() {
 }
 
 }
-);
-// line 38
+);// line 38
 } else {// line 42
     if(asBoolean("assd")) {// line 43
-p("        a true\n" + 
+		p("        a true\n" + 
 "    ");// line 43
-} else {// line 45
-p("        a false\n" + 
+		} else {// line 45
+		p("        a false\n" + 
 "    ");// line 45
-}// line 47
-p("    ss is empty\n");// line 47
-}// line 49
-p("\n");// line 49
-
+		}// line 47
+		p("    ss is empty\n");// line 47
+		}// line 49
+		p("\n");// line 49
+		
 	}
 
 }

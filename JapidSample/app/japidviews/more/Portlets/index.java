@@ -22,7 +22,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class index extends cn.bran.japid.template.JapidTemplateBase
+public class index extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/Portlets/index.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -54,11 +54,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String",  };
 public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.Portlets.index.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -68,54 +71,51 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.a = a;
 		this.b = b;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "<p>The outer most content is cached for 20 seconds, using the CacheFor annotation. ");// line 1
-p(new Date());// line 4
-p("</p>\n" + 
+		p(new Date());// line 4
+		p("</p>\n" + 
 "\n" + 
 "<div>\n" + 
 "	<p>this part is never cached.</p>\n" + 
 "	");// line 4
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.more.Portlets.class, "panel1", a) {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.more.Portlets.class, "panel1", a) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.more.Portlets.panel1(a); //
 			}
 		});
-
 p("</div>\n" + 
 "\n" + 
 "<div>\n" + 
 "    <p>this part is cached for 10 seconds. Note the timeout spec with invoke overrides CacheFor annotation. </p>\n" + 
 "    ");// line 8
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", controllers.more.Portlets.class, "panel2", b) {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", controllers.more.Portlets.class, "panel2", b) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.more.Portlets.panel2(b); //
 			}
 		});
-
 p("</div>\n" + 
 "\n" + 
 "<div>\n" + 
 "    <p>this part is cached for 4 seconds, \n" + 
 "    specified with CacheFor annotation in the controller. </p>\n" + 
 "    ");// line 13
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.more.Portlets.class, "panel3", a + b) {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.more.Portlets.class, "panel3", a + b) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.more.Portlets.panel3(a + b); //
 			}
 		});
-
 p("</div>\n");// line 19
-
+		
 	}
 
 }

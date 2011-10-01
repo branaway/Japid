@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.MyController.subview.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -65,7 +68,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -79,18 +82,17 @@ final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__ta
 //------
 ;// line 1
 ;// line 2
-// line 4
-;// line 4
-// line 5
-p("\n" + 
+		// line 4
+		;// line 4
+		// line 5
+		p("\n" + 
 "\n" + 
 "hello ");// line 5
-p(s);// line 8
-p("\n");// line 8
-_japidviews_more_MyController__tags_taggy2.setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s);
-// line 10
-p(" ");// line 10
-
+		p(s);// line 8
+		p("\n");// line 8
+		_japidviews_more_MyController__tags_taggy2.setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s);// line 10
+		p(" ");// line 10
+		
 	}
 
 	@Override protected void title() {

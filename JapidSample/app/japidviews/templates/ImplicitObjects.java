@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class ImplicitObjects extends cn.bran.japid.template.JapidTemplateBase
+public class ImplicitObjects extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/ImplicitObjects.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,17 +53,20 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.ImplicitObjects.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -71,33 +74,33 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 p("\n" + 
 "\n" + 
 "<p>request: ");// line 1
-p(request);// line 3
-p("</p>\n" + 
+		p(request);// line 3
+		p("</p>\n" + 
 "<p>response: ");// line 3
-p(response);// line 4
-p("</p>\n" + 
+		p(response);// line 4
+		p("</p>\n" + 
 "<p>flash: ");// line 4
-p(flash);// line 5
-p("</p>\n" + 
+		p(flash);// line 5
+		p("</p>\n" + 
 "<p>errors: ");// line 5
-p(errors);// line 6
-p("</p>\n" + 
+		p(errors);// line 6
+		p("</p>\n" + 
 "<p>session: ");// line 6
-p(session);// line 7
-p("</p>\n" + 
+		p(session);// line 7
+		p("</p>\n" + 
 "<p>renderArgs: ");// line 7
-p(renderArgs);// line 8
-p("</p>\n" + 
+		p(renderArgs);// line 8
+		p("</p>\n" + 
 "<p>params: ");// line 8
-p(params);// line 9
-p("</p>\n" + 
+		p(params);// line 9
+		p("</p>\n" + 
 "<p>validation: ");// line 9
-p(validation);// line 10
-p("</p>\n" + 
+		p(validation);// line 10
+		p("</p>\n" + 
 "<p>play: ");// line 10
-p(_play);// line 11
-p("</p>");// line 11
-
+		p(_play);// line 11
+		p("</p>");// line 11
+		
 	}
 
 }

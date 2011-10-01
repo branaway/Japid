@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class ifs extends cn.bran.japid.template.JapidTemplateBase
+public class ifs extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/Application/ifs.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "Collection", "boolean", "Object[]", "int[]", "int", "String",  };
 public static final Object[] argDefaults= new Object[] {null,null,null,null,null,null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.ifs.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -77,16 +80,16 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.i = i;
 		this.s2 = s2;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "<p>\n" + 
 "<pre>\n");// line 1
-p("\n" + 
+		p("\n" + 
 "    `if expr {\n" + 
 "        xxx\n" + 
 "    `} else if expr {\n" + 
@@ -94,14 +97,14 @@ p("\n" +
 "    `} else {\n" + 
 "        zzz\n" + 
 "    `}\n");// line 5
-p("</pre>\n" + 
+		p("</pre>\n" + 
 "</p>\n" + 
 "<p>\n" + 
 "    is equals to\n" + 
 "</p>\n" + 
 "<p>\n" + 
 "<pre>\n");// line 13
-p("\n" + 
+		p("\n" + 
 "    `if(cn.bran.play.WebUtils.asBoolean(expr)){\n" + 
 "        xxx\n" + 
 "    `} else if(cn.bran.play.WebUtils.asBoolean(expr)){\n" + 
@@ -109,84 +112,84 @@ p("\n" +
 "    `} else {\n" + 
 "        zzz\n" + 
 "    `}\n");// line 21
-p("<pre>\n" + 
+		p("<pre>\n" + 
 "\n" + 
 "<p/>\n");// line 29
-if(asBoolean(str)) {// line 33
-p("    Got ");// line 33
-p(str);// line 34
-p("\n");// line 34
-} else if(asBoolean(str )) {// line 35
-p("    finally got ");// line 35
-p(str);// line 36
-p("\n");// line 36
-} else {// line 37
-p("    str is empty\n");// line 37
-}// line 39
-p("<p/>\n" + 
+		if(asBoolean(str)) {// line 33
+		p("    Got ");// line 33
+		p(str);// line 34
+		p("\n");// line 34
+		} else if(asBoolean(str )) {// line 35
+		p("    finally got ");// line 35
+		p(str);// line 36
+		p("\n");// line 36
+		} else {// line 37
+		p("    str is empty\n");// line 37
+		}// line 39
+		p("<p/>\n" + 
 "\n");// line 39
-if(asBoolean(col)) {// line 42
-p("    Got data from col: ");// line 42
-p(col);// line 43
-p("\n");// line 43
-} else {// line 44
-p("    col is empty\n");// line 44
-}// line 46
-p("\n" + 
+		if(asBoolean(col)) {// line 42
+		p("    Got data from col: ");// line 42
+		p(col);// line 43
+		p("\n");// line 43
+		} else {// line 44
+		p("    col is empty\n");// line 44
+		}// line 46
+		p("\n" + 
 "<p/>\n");// line 46
-if(asBoolean(b)) {// line 49
-p("    right\n");// line 49
-} else {// line 51
-p("    wrong\n");// line 51
-}// line 53
-p("\n" + 
+		if(asBoolean(b)) {// line 49
+		p("    right\n");// line 49
+		} else {// line 51
+		p("    wrong\n");// line 51
+		}// line 53
+		p("\n" + 
 "<p/>\n");// line 53
-if(asBoolean(a1)) {// line 56
-p("    got a1: ");// line 56
-p(a1);// line 57
-p("\n");// line 57
-} else {// line 58
-p("    a1 is empty\n");// line 58
-}// line 60
-p("<p/>\n");// line 60
-if(asBoolean(a2)) {// line 62
-p("    got a2: ");// line 62
-p(a2);// line 63
-p("\n");// line 63
-} else {// line 64
-p("    a2 is empty\n");// line 64
-}// line 66
-p("<p/>\n");// line 66
-if(asBoolean(i)) {// line 68
-p("    got i: ");// line 68
-p(i);// line 69
-p("\n");// line 69
-} else {// line 70
-p("    i == 0\n");// line 70
-}// line 72
-p("<p/>\n");// line 72
-if(asBoolean(s2)) {// line 74
-p("    got s2: ");// line 74
-p(s2);// line 75
-p("\n");// line 75
-} else {// line 76
-p("    s2 is empty\n");// line 76
-}// line 78
-p("\n" + 
+		if(asBoolean(a1)) {// line 56
+		p("    got a1: ");// line 56
+		p(a1);// line 57
+		p("\n");// line 57
+		} else {// line 58
+		p("    a1 is empty\n");// line 58
+		}// line 60
+		p("<p/>\n");// line 60
+		if(asBoolean(a2)) {// line 62
+		p("    got a2: ");// line 62
+		p(a2);// line 63
+		p("\n");// line 63
+		} else {// line 64
+		p("    a2 is empty\n");// line 64
+		}// line 66
+		p("<p/>\n");// line 66
+		if(asBoolean(i)) {// line 68
+		p("    got i: ");// line 68
+		p(i);// line 69
+		p("\n");// line 69
+		} else {// line 70
+		p("    i == 0\n");// line 70
+		}// line 72
+		p("<p/>\n");// line 72
+		if(asBoolean(s2)) {// line 74
+		p("    got s2: ");// line 74
+		p(s2);// line 75
+		p("\n");// line 75
+		} else {// line 76
+		p("    s2 is empty\n");// line 76
+		}// line 78
+		p("\n" + 
 "<p>try the negation</p>\n");// line 78
-String ss = str;// line 81
+		String ss = str;// line 81
 if(!asBoolean(ss)) {// line 82
-p("    ss is empty\n");// line 82
-} else if(!asBoolean(ss)) {// line 84
-p("    again...\n");// line 84
-} else {// line 86
-p("    ss has something\n");// line 86
-}// line 88
-p("\n" + 
+		p("    ss is empty\n");// line 82
+		} else if(!asBoolean(ss)) {// line 84
+		p("    again...\n");// line 84
+		} else {// line 86
+		p("    ss has something\n");// line 86
+		}// line 88
+		p("\n" + 
 "\n" + 
 "\n" + 
 "\n");// line 88
-
+		
 	}
 
 }

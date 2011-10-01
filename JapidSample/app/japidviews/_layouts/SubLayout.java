@@ -49,11 +49,11 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	}
 	@Override public void layout() {
 		;// line 1
-p("\n");// line 1
-	title2();p("\n" + 
+		p("\n");// line 1
+		title2();p("\n" + 
 "\n" + 
 "\n");// line 3
-	}
+			}
 	 protected void title2() {};
 
 	protected abstract void doLayout();

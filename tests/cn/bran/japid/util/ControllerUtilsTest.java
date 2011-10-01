@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.play.JapidTemplateBase;
 
 public class ControllerUtilsTest {
 

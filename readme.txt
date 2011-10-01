@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/10/1: V0.8.10: breaking change, japid regen required.
+	1. Enhancement: generated source contains exception handling code to throw TemplateExecutionException to better display template runtime error.
 2011/10/1: V0.8.9.8
 	1. compatibility fix: the LocalVariableNamesEnhancer has been named to LVEnhancer in the latest head in Git(Since when?). Removed reference to it. 
 	2. enhancement: added ReverseRouteException to display useful information about reverse lookup failure. Still not showing the original japid view template thou.   

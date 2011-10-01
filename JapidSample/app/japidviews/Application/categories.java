@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class categories extends cn.bran.japid.template.JapidTemplateBase
+public class categories extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/Application/categories.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"List<Category>",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.categories.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -65,7 +68,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render(List<Category> categories) {
 		this.categories = categories;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -79,25 +82,24 @@ final categories _this0 = new categories(getOut());
 //------
 p(" ");// line 1
  if(asBoolean(categories)) {// line 2
-p("     <ul>\n" + 
+		p("     <ul>\n" + 
 "       ");// line 2
-for(Category cat: categories) {// line 4
-p("	       <li>\n" + 
+		for(Category cat: categories) {// line 4
+		p("	       <li>\n" + 
 "	           <a href=\"\">");// line 4
-p(cat.name);// line 6
-p("</a>\n" + 
+		p(cat.name);// line 6
+		p("</a>\n" + 
 "	           ");// line 6
-_this0.setOut(getOut()); _this0.render(cat.subCategories);
-// line 7
-p("	       </li>\n" + 
+		_this0.setOut(getOut()); _this0.render(cat.subCategories);// line 7
+		p("	       </li>\n" + 
 "       ");// line 7
-}// line 9
-p("     </ul>\n" + 
+		}// line 9
+		p("     </ul>\n" + 
 " ");// line 9
-}// line 11
-p(" \n" + 
+		}// line 11
+		p(" \n" + 
 " ");// line 11
-
+		
 	}
 
 }

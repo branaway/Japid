@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class doBodyInDef extends cn.bran.japid.template.JapidTemplateBase
+public class doBodyInDef extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/MyController/doBodyInDef.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,17 +53,20 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.MyController.doBodyInDef.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -76,15 +79,15 @@ final doBodyInDefTag _doBodyInDefTag0 = new doBodyInDefTag(getOut());
 
 //------
 p("\n");// line 1
-_doBodyInDefTag0.setOut(getOut()); _doBodyInDefTag0.render(new doBodyInDefTag.DoBody<String, Integer>(){
+		_doBodyInDefTag0.setOut(getOut()); _doBodyInDefTag0.render(new doBodyInDefTag.DoBody<String, Integer>(){
 public void render(final String c, final Integer i) {
 // line 2
-p("  my body plus ");// line 2
-p(c);// line 3
-p(", ");// line 3
-p(i);// line 3
-;// line 3
-
+		p("  my body plus ");// line 2
+		p(c);// line 3
+		p(", ");// line 3
+		p(i);// line 3
+		;// line 3
+		
 }
 
 StringBuilder oriBuffer;
@@ -100,9 +103,8 @@ public void resetBuffer() {
 }
 
 }
-);
-// line 2
-
+);// line 2
+		
 	}
 
 }
