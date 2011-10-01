@@ -7,7 +7,7 @@ import java.util.Map;
 // import org.apache.commons.lang.text.StrSubstitutor;
 
 import play.Play;
-import play.classloading.enhancers.LocalvariablesNamesEnhancer.LocalVariablesNamesTracer;
+//import play.classloading.enhancers.LocalvariablesNamesEnhancer.LocalVariablesNamesTracer;
 import play.exceptions.ActionNotFoundException;
 import play.exceptions.NoRouteFoundException;
 import play.exceptions.PlayException;
@@ -70,7 +70,6 @@ public class RouteAdapter implements UrlMapper {
 	@Override
 	public String lookup(String actionString, Object[] params) {
 		ActionBridge ab = new ActionBridge(false);
-
 		ActionDefinition ad = ab.invokeMethod(actionString, params);
 		return ad.toString();
 	}
@@ -90,115 +89,6 @@ public class RouteAdapter implements UrlMapper {
 	public String lookupStaticAbs(String resource) {
 //		return Request.current().getBase() + this.lookupStatic(resource);
 		return this.lookupStatic(resource, true);
-	}
-
-	/**
-	 * 
-	 * add cache check before passing to the heavy reverse check
-	 * 
-	 * @author Bing Ran<bing_ran@hotmail.com>
-	 * @param action
-	 * @param args
-	 * @return
-	 * @deprecated use the modified {@link ActionBridge}
-	 */
-	public static String reverseWithCache(String actionString, Object[] params) {
-		// compose the key:
-
-		try {
-			String controllerName = Request.current().controller;
-			// forms: Controller.action, action, package.Controller.action
-			String action = actionString;
-//			String methodName = actionString;
-			if (actionString.indexOf(".") > 0) {
-				int lastIndexOf = actionString.lastIndexOf('.');
-//				methodName = actionString.substring(lastIndexOf + 1);
-				controllerName = actionString.substring(0, lastIndexOf);
-				// fell spec with controller name
-			} else {
-				action = controllerName + "." + actionString;
-			}
-			if (action.endsWith(".call")) {
-				action = action.substring(0, action.length() - 5);
-			}
-			try {
-				// find out the param types
-				String[] targetParamNames = getActionParamCache().get(action);
-				if (targetParamNames == null) {
-					Method actionMethod = (Method) ActionInvoker.getActionMethod(action)[1];
-					Class<?> actionClass = actionMethod.getDeclaringClass();
-					Integer methodHash = LocalVariablesNamesTracer.computeMethodHash(actionMethod.getParameterTypes());
-					String synthFieldForMethod = "$" + actionMethod.getName() + methodHash;
-					targetParamNames = (String[]) actionClass.getDeclaredField(synthFieldForMethod).get(null);
-					getActionParamCache().put(action, targetParamNames);
-				}
-				// too many parameters versus action, possibly a developer
-				// error. we must warn him.
-				if (targetParamNames.length < params.length) {
-					throw new NoRouteFoundException(action, null);
-				}
-
-				String k = action;
-				for (String p : targetParamNames) {
-					k += "_" + p;
-				}
-
-				// assemble the named parameter hash
-				Map<String, Object> paramMap = new HashMap<String, Object>();
-				for (int i = 0; i < params.length; i++) {
-					String key = i < targetParamNames.length ? targetParamNames[i] : "";
-					String value = params[i] == null ? null : params[i].toString();
-					paramMap.put(key, value);
-				}
-
-				// check cache first before go the expensive result
-				String urlPattern = getActionCache().get(k);
-				// format /action/{id}/{tag} etc
-				// no cache for now to keep compatibility with Play code
-
-				if (false && urlPattern != null) {
-					/*
-					 * if ("/{controller}/{action}".equals(urlPattern)) { //
-					 * this is special // code copied from Router to compose the
-					 * query string String qs =
-					 * StringUtils.buildQuery(paramMap); return "/" +
-					 * controllerName + "/" + methodName + "?" + qs; } else {
-					 * StrSubstitutor sub = new StrSubstitutor(paramMap);
-					 * sub.setVariablePrefix("{"); sub.setVariableSuffix("}");
-					 * String url = sub.replace(urlPattern); return url; }
-					 */
-					return null;
-				} else {
-					ActionDefinition actionDef = Router.reverse(action, paramMap);
-					// was doing some hacking for caching. don't do it now for
-					// Compatibility with remote
-					// Route route = actionDef.route;
-					// // find is the route is cacheable. it's hard to cache
-					// path
-					// // with constrained parameter
-					// //
-					// String path = route.path;
-					// if (!path.contains("<")) {
-					// // cacheable
-					// if (path.endsWith("?"))
-					// path = path.substring(0, path.length() - 1);
-					// getActionCache().put(k, path);
-					// }
-					return actionDef.toString();
-				}
-			} catch (ActionNotFoundException e) {
-				throw new RuntimeException(e + ". No matching route in reverse lookup: " + actionString);
-//				throw new NoRouteFoundException(action, null);
-			}
-			catch(NoRouteFoundException e) {
-				throw new RuntimeException(e + ". No matching route in reverse lookup: " + actionString);
-			}
-		} catch (Exception e) {
-			if (e instanceof PlayException) {
-				throw (PlayException) e;
-			}
-			throw new UnexpectedException(e);
-		}
 	}
 
 	/**

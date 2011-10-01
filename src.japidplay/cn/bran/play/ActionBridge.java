@@ -5,15 +5,16 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import play.classloading.enhancers.LocalvariablesNamesEnhancer.LocalVariablesNamesTracer;
+import cn.bran.play.exceptions.ReverseRouteException;
+
 import play.data.binding.Unbinder;
 import play.exceptions.ActionNotFoundException;
 import play.exceptions.NoRouteFoundException;
 import play.exceptions.PlayException;
 import play.exceptions.UnexpectedException;
 import play.mvc.ActionInvoker;
-import play.mvc.Router;
 import play.mvc.Http.Request;
+import play.mvc.Router;
 import play.mvc.Router.ActionDefinition;
 
 /**
@@ -69,9 +70,7 @@ public class ActionBridge {
 				Method actionMethod = (Method) ActionInvoker.getActionMethod(action)[1];
 				String[] names = (String[]) actionMethod
 						.getDeclaringClass()
-						.getDeclaredField(
-								"$" + actionMethod.getName()
-										+ LocalVariablesNamesTracer.computeMethodHash(actionMethod.getParameterTypes())).get(null);
+						.getDeclaredField("$" + actionMethod.getName() + computeMethodHash(actionMethod.getParameterTypes())).get(null);
 				if (param instanceof Object[]) {
 					// too many parameters versus action, possibly a developer
 					// error. we must warn him.
@@ -102,7 +101,8 @@ public class ActionBridge {
 				// }
 				return def;
 			} catch (ActionNotFoundException e) {
-				throw new NoRouteFoundException(action, null);
+//				throw new NoRouteFoundException(action, null);
+				throw new ReverseRouteException(action);
 			}
 		} catch (Exception e) {
 			if (e instanceof PlayException) {
@@ -115,4 +115,44 @@ public class ActionBridge {
 	static boolean isSimpleParam(Class type) {
 		return Number.class.isAssignableFrom(type) || type.equals(String.class) || type.isPrimitive();
 	}
+	
+	/**
+	 * copied from LVEnhancer
+	 */
+    public static Integer computeMethodHash(String[] parameters) {
+        StringBuffer buffer = new StringBuffer();
+        for (String param : parameters) {
+            buffer.append(param);
+        }
+        Integer hash = buffer.toString().hashCode();
+        if (hash < 0) {
+            return -hash;
+        }
+        return hash;
+    }
+
+    public static Integer computeMethodHash(Class<?>[] parameters) {
+        String[] names = new String[parameters.length];
+        for (int i = 0; i < parameters.length; i++) {
+            Class<?> param = parameters[i];
+            names[i] = "";
+            if (param.isArray()) {
+                int level = 1;
+                param = param.getComponentType();
+                // Array of array
+                while (param.isArray()) {
+                    level++;
+                    param = param.getComponentType();
+                }
+                names[i] = param.getName();
+                for (int j = 0; j < level; j++) {
+                    names[i] += "[]";
+                }
+            } else {
+                names[i] = param.getName();
+            }
+        }
+        return computeMethodHash(names);
+    }
+
 }

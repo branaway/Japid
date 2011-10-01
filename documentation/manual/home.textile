@@ -232,7 +232,7 @@ Note: to escape the delimiter, please use a single back quote followed by the de
 ``this is normal text and so is `@
 </pre>
 
-The rest of the documents uses the single back quote as the delimiter in most of the cases. 
+The rest of this document uses the single back quote(`) as the delimiter in most of the cases. 
 
 h3. Views, Tags and Layout
 
@@ -710,7 +710,6 @@ Again, you might find the *Elvis* operator "?:" a lot more flexible in dealing w
 
 
 
-
 h3. Simple Tag Invocation: @`tag tagName arg1, arg2...`@
 
 Back to the view template:
@@ -727,7 +726,7 @@ Back to the view template:
 @}
 </code></pre>
 
-In the body of the for loop we are invoking a @tag@ called @showAge@. Think of a tag as a function defined in a separate file. Here is the tag file:
+In the body of the for loop we are invoking a @tag@ named @showAge@. Think of a tag as a function defined in a separate file. Here is the tag file:
 
 *showAge.html*
 
@@ -736,7 +735,7 @@ In the body of the for loop we are invoking a @tag@ called @showAge@. Think of a
 you are $age years old
 </code></pre>
 
-The above tag simply take an @int@ as the age and append "years old" to it. 
+The above tag simply takes an @int@ as the age and append "years old" to it. 
 
 The tag invocation has an alternative: 
 
@@ -744,20 +743,20 @@ The tag invocation has an alternative:
 
 which looks more like function calls.
 
-And the @`tag@ command can be further cut short as @`t@ as in:
+And the @`tag@ command can be further shorten to @`t@, as in:
 
 @`t tagName(arg1, arg2...)`@
 
-Note: the closing @`@ can be omitted if there is no other letters in the rest of the current line, for a new-line character is a valid tag closing symbol.
+Note: the closing @`@ can be omitted if there is no other letters in the rest of the current line, because a new-line character is a valid tag closing symbol.
 
 Since version 0.8.5, Japid also supports invoking tags with @named arguments@: 
 
 @`t tagName(argName1=arg1, argName2=arg2...)`@
 
-The caller side does not need to provides arguments for all the parameters. The missing ones default to null.  
+The caller side does not need to provides arguments for all the parameters. The missing ones default to null or default primitive values as defined by the Java specification.  
 
-Note: you cannot mix these two conventions. You either use arguments without any name prefix or all the arguments must the named format. 
- 
+Note: you cannot mix these two conventions. You either use arguments without any name prefix or all the arguments must use the named format. 
+
 
 h4. locating a tag file
 
@@ -770,7 +769,6 @@ Similar to locating a layout file, the tag name can take a few forms:
 Also please note that one can use "/" in lieu of "." but I prefer the dot syntax. 
 
 The default Play! templates assume that all tags are located in the @app/views/tags@ directory, just like the layouts which are assumed to be in the @app/views@. It will get too crowded when projects get bigger. Japid gives authors the flexibility to organize the layouts and tags in the whatever way the authors see fit, e.g., in the same directory as the view templates or sub-directories of it. 
-
 
 
 h3. Advanced Tag Invocation: @`tag tagName arg1, arg2... | type1 arg1, type2 arg2`@
@@ -880,6 +878,20 @@ New feature since 0.8.9.4: sometimes authors may want to store the doBody result
 $body
 <p>After body</p>
 </pre>
+
+h3. Use tags to include static content
+
+Some other template engines provides "include" directive to include static content in the templates. In Japid a tag without any parameters is effectively static content that can be "included" in other templates by the normal tag invocation syntax:
+
+<pre>
+`t header
+...
+`t footer
+`t disclaimer
+</pre>
+
+So basically you throw the static content in the same directory where the main templates reside, or simply in the @_tags@ directory, and invoke it with @`t@, then effectively you get static include. 
+
 
 
 h3. Verbatim text: @`verbatim@

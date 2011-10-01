@@ -31,7 +31,7 @@ Installation:
 
  
 
-- Just put the jar file in the dropins directory of the Eclipse installation and restart the IDE (withe -clean command line option if you don't see the JapidPlay menu in the IDE workbench window menu bar). 
+- Just put the jar file in the dropins directory of the Eclipse installation and restart the IDE (with -clean command line option if you don't see the JapidPlay menu in the IDE workbench window menu bar). 
 
 - Starting from version 0.6.0, the Japid module (http://www.playframework.org/modules/japid) bundles a distribution of this plugin in the eclipse plugin sub-directory in the module downloads. Please use the jar file in the bundle for best version match.
 
@@ -83,3 +83,5 @@ History:
 	2. put whatever error message during the code transform in the generated Java code to get the attention. 
 2011/2/22, v0.8.7
 	1. matched Japid 0.7.1.
+2011/9/22, v0.8.9.7
+	1. matched Japid 0.8.9.7

@@ -24,6 +24,9 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/10/1: V0.8.9.8
+	1. compatibility fix: the LocalVariableNamesEnhancer has been named to LVEnhancer in the latest head in Git(Since when?). Removed reference to it. 
+	2. enhancement: added ReverseRouteException to display useful information about reverse lookup failure. Still not showing the original japid view template thou.   
 2011/8/26: V0.8.9.7
 	1. enhancement: when used to reverse to a static, @@{} now takes string without wrapping in quotation marks if the path starts with /. 
 2011/8/26: V0.8.9.6
