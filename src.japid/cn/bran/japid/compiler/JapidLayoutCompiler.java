@@ -42,9 +42,9 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 			var = var.replace("'", "");
 			var = var.replace("\"", "");
 			this.cmd.get(var);
-			print("\t" + var + "();");
+			print(var + "();");
 		} else if (DO_LAYOUT.equals(tag.tagName)) {
-			print("\tdoLayout();");
+			print("doLayout();");
 		} else if (tag.tagName.equals("def")) {
 			def(tag);
 		} else {
@@ -66,7 +66,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	protected void scriptline(String token) {
 		String line = token; //.trim(); no trim. some tags are space sensitive
 		if (JapidAbstractCompiler.startsWithIgnoreSpace(line.trim(), DO_LAYOUT) || line.trim().equals(DO_LAYOUT)) {
-			println("\tdoLayout();");
+			printLine("doLayout();");
 			skipLineBreak = true;
 		}
 		else {

@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class tagBody extends cn.bran.japid.template.JapidTemplateBase
+public class tagBody extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/tagBody.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,17 +53,20 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.tagBody.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -88,36 +91,71 @@ p("\n" +
 "before\n" + 
 "\n" + 
 "<p/>\n");// line 1
-_fooTag0.setOut(getOut()); _fooTag0.render("hi", new fooTag.DoBody(){
+		_fooTag0.setOut(getOut()); _fooTag0.render("hi", new fooTag.DoBody(){
 public void render() {
 // line 8
     final String echo = "secret";// line 9
-p("\n" + 
+		p("\n" + 
 "    well ");// line 9
-p(echo);// line 11
-p("\n" + 
+		p(echo);// line 11
+		p("\n" + 
 "\n" + 
 "	");// line 11
-_anotherTag1.setOut(getOut()); _anotherTag1.render(echo, new anotherTag.DoBody<String>(){
+		_anotherTag1.setOut(getOut()); _anotherTag1.render(echo, new anotherTag.DoBody<String>(){
 public void render(final String what) {
 // line 13
-p("	    got ");// line 13
-p(what);// line 14
-p(" and ");// line 14
-p(echo);// line 14
-p("\n" + 
+		p("	    got ");// line 13
+		p(what);// line 14
+		p(" and ");// line 14
+		p(echo);// line 14
+		p("\n" + 
 "		");// line 14
-_moreTag2.setOut(getOut()); _moreTag2.render(echo, new moreTag.DoBody<String>(){
+		_moreTag2.setOut(getOut()); _moreTag2.render(echo, new moreTag.DoBody<String>(){
 public void render(final String more) {
 // line 15
-p("		   got ");// line 15
-p(what);// line 16
-p(" and ");// line 16
-p(echo);// line 16
-p(" and ");// line 16
-p(more);// line 16
-p("\n" + 
+		p("		   got ");// line 15
+		p(what);// line 16
+		p(" and ");// line 16
+		p(echo);// line 16
+		p(" and ");// line 16
+		p(more);// line 16
+		p("\n" + 
 "		");// line 16
+		
+}
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
+}
+);// line 15
+		p("	");// line 17
+		
+}
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
+}
+);// line 13
 
 }
 
@@ -134,48 +172,10 @@ public void resetBuffer() {
 }
 
 }
-);
-// line 15
-p("	");// line 17
-
-}
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);
-// line 13
-
-}
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);
-// line 8
-p("<p/>\n" + 
+);// line 8
+		p("<p/>\n" + 
 "after");// line 19
-
+		
 	}
 
 }

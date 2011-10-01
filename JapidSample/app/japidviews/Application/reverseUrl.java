@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class reverseUrl extends cn.bran.japid.template.JapidTemplateBase
+public class reverseUrl extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/Application/reverseUrl.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,46 +53,49 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.reverseUrl.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-String name = "bran";// line 1
-p("<a href=\"");// line 1
-p(lookup("validate", name));// line 2
-p("\">simple reverse lookup</a>\n" + 
+		String name = "bran";// line 1
+		p("<a href=\"");// line 1
+		p(lookup("validate", name));// line 2
+		p("\">simple reverse lookup</a>\n" + 
 "<p/>\n" + 
 "<a href=\"");// line 2
-p(lookupAbs("validate", name, 12));// line 4
-p("\">simple reverse lookup with absolute url</a>\n" + 
+		p(lookupAbs("validate", name, 12));// line 4
+		p("\">simple reverse lookup with absolute url</a>\n" + 
 "<p/>\n" + 
 "<form action=\"");// line 4
-p(lookup("validate", new Object[]{}));// line 6
-p("\">\n" + 
+		p(lookup("validate", new Object[]{}));// line 6
+		p("\">\n" + 
 "    <input type=\"hidden\" name=\"name\" value=\"bran\"/>\n" + 
 "    <input type=\"hidden\" name=\"age\" value=\"12\"/>\n" + 
 "    <input type=\"submit\"/>\n" + 
 "</form>\n" + 
 "<p/>\n" + 
 "<a href=\"");// line 6
-p(lookup("more.MyController.echo", name));// line 12
-p("\">simple reverse lookup</a>\n" + 
+		p(lookup("more.MyController.echo", name));// line 12
+		p("\">simple reverse lookup</a>\n" + 
 "<p/>\n" + 
 "\n" + 
 "\n");// line 12
-
+		
 	}
 
 }

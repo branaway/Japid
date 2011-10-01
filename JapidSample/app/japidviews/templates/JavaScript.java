@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class JavaScript extends cn.bran.japid.template.JapidTemplateBase
+public class JavaScript extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/JavaScript.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.JavaScript.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -65,13 +68,13 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render(String hello) {
 		this.hello = hello;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
 "<head>\n" + 
@@ -93,11 +96,11 @@ p("\n" +
 "        }\n" + 
 "    });\n" + 
 "</script>\n");// line 1
-p(hello);// line 24
-p("\n" + 
+		p(hello);// line 24
+		p("\n" + 
 "</body>\n" + 
 "</html>");// line 24
-
+		
 	}
 
 }

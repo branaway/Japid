@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class Actions extends cn.bran.japid.template.JapidTemplateBase
+public class Actions extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/Actions.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"models.japidsample.Post",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.Actions.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -65,30 +68,30 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "\n" + 
 "<form url=\"");// line 1
-p(lookup("showAll", new Object[]{}));// line 4
-p("\"></form>\n" + 
+		p(lookup("showAll", new Object[]{}));// line 4
+		p("\"></form>\n" + 
 "<form url=\"");// line 4
-p(lookup("Clients.showAccounts", post.title, post.title));// line 5
-p("\"></form>\n" + 
+		p(lookup("Clients.showAccounts", post.title, post.title));// line 5
+		p("\"></form>\n" + 
 "<form url=\"");// line 5
-p(lookupAbs("Clients.showAccounts", post.title.substring(1, 2)));// line 6
-p("\"></form>\n" + 
+		p(lookupAbs("Clients.showAccounts", post.title.substring(1, 2)));// line 6
+		p("\"></form>\n" + 
 "<form url='");// line 6
-p(lookupAbs("Clients.showAccounts", new String[]{"aa", "bb"}));// line 7
-p("'></form>\n" + 
+		p(lookupAbs("Clients.showAccounts", new String[]{"aa", "bb"}));// line 7
+		p("'></form>\n" + 
 "<form url=\"");// line 7
-p(lookupStatic("/public/stylesheets/main.css"));// line 8
-p("\"></form>\n");// line 8
-
+		p(lookupStatic("/public/stylesheets/main.css"));// line 8
+		p("\"></form>\n");// line 8
+		
 	}
 
 }

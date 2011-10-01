@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class argtest extends cn.bran.japid.template.JapidTemplateBase
+public class argtest extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_tags/argtest.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.argtest.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -87,13 +90,13 @@ public static interface DoBody {
 		this.body = body;
 		this.arg = arg;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	public cn.bran.japid.template.RenderResult render(String arg) {
 		this.arg = arg;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -106,20 +109,15 @@ final argtest1 _argtest10 = new argtest1(getOut());
 
 //------
 ;// line 1
-p("\n");// line 1
-_argtest10.setOut(getOut()); _argtest10.render(new argtest1.DoBody(){
+		p("\n");// line 1
+		_argtest10.setOut(getOut()); _argtest10.render(new argtest1.DoBody(){
 public void render() {
 // line 2
-  if (body != null){
-	body.setBuffer(getOut());
-
-	body.render();
-	body.resetBuffer();
-}
-p("  '");// line 3
-p(arg);// line 4
-p("'\n");// line 4
-
+  if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 3
+		p("  '");// line 3
+		p(arg);// line 4
+		p("'\n");// line 4
+		
 }
 
 StringBuilder oriBuffer;
@@ -135,10 +133,9 @@ public void resetBuffer() {
 }
 
 }
-);
-// line 2
-;// line 5
-
+);// line 2
+		;// line 5
+		
 	}
 
 }

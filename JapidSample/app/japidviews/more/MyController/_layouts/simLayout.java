@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public abstract class simLayout extends cn.bran.japid.template.JapidTemplateBase
+public abstract class simLayout extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/MyController/_layouts/simLayout.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -50,9 +50,9 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	@Override public void layout() {
 		p("The simplest layout\n" + 
 "\n");// line 1
-	doLayout();// line 3
-;// line 3
-	}
+		doLayout();// line 3
+		;// line 3
+			}
 
 	protected abstract void doLayout();
 }

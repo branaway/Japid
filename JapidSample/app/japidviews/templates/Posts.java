@@ -22,7 +22,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class Posts extends cn.bran.japid.template.JapidTemplateBase
+public class Posts extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/Posts.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -54,11 +54,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "List<Post>",  };
 public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.Posts.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -68,29 +71,29 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
 p("\n");// line 2
-for (Post post: allPost) { // line 4
-p("	- title: ");// line 4
-p(post.title);// line 5
-p("\n" + 
+		for (Post post: allPost) { // line 4
+		p("	- title: ");// line 4
+		p(post.title);// line 5
+		p("\n" + 
 "	- date: ");// line 5
-p(post.postedAt);// line 6
-p("\n" + 
+		p(post.postedAt);// line 6
+		p("\n" + 
 "	- author ");// line 6
-p(post.author.name);// line 7
-p(" ");// line 7
-p(post.author.gender);// line 7
-p("\n" + 
+		p(post.author.name);// line 7
+		p(" ");// line 7
+		p(post.author.gender);// line 7
+		p("\n" + 
 "	the real title: 你好\n");// line 7
-}// line 9
-p("\n");// line 9
-
+		}// line 9
+		p("\n");// line 9
+		
 	}
 
 }

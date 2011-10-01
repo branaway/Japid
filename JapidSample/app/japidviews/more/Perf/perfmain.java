@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public abstract class perfmain extends cn.bran.japid.template.JapidTemplateBase
+public abstract class perfmain extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/Perf/perfmain.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -51,32 +51,32 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	 public void layout(DataModel.User loggedInUser) {
 		this.loggedInUser = loggedInUser;
 		;// line 1
-p("\n" + 
+		p("\n" + 
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n" + 
 "        \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
 "<head>\n" + 
 "    <title>");// line 1
-	title();p("</title>\n" + 
+		title();p("</title>\n" + 
 "</head>\n" + 
 "<body>\n" + 
 "\n");// line 7
-if (loggedInUser != null) {// line 11
-p("	<div>\n" + 
+		if (loggedInUser != null) {// line 11
+		p("	<div>\n" + 
 "	    Hello ");// line 11
-p(loggedInUser.getUserName());// line 13
-p(", You have ");// line 13
-p(loggedInUser.getFriends().size());// line 13
-p(" friends\n" + 
+		p(loggedInUser.getUserName());// line 13
+		p(", You have ");// line 13
+		p(loggedInUser.getFriends().size());// line 13
+		p(" friends\n" + 
 "	</div>\n");// line 13
-}// line 15
-p("\n" + 
+		}// line 15
+		p("\n" + 
 "<h1>Entries</h1>\n" + 
 "    ");// line 15
-	doLayout();
-p("</body>\n" + 
+		doLayout();// line 18
+		p("</body>\n" + 
 "</html>\n");// line 18
-	}
+			}
 	 protected void title() {};
 
 	protected abstract void doLayout();

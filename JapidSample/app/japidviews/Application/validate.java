@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class validate extends cn.bran.japid.template.JapidTemplateBase
+public class validate extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/Application/validate.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "Integer",  };
 public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.validate.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -67,34 +70,34 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.name = name;
 		this.age = age;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "\n");// line 1
-if(asBoolean(hasErrors())) {// line 3
-p("    <p>Got some errors:</p>\n" + 
+		if(asBoolean(hasErrors())) {// line 3
+		p("    <p>Got some errors:</p>\n" + 
 "    ");// line 3
-for (Error e: errors()){// line 5
-p("        <p>");// line 5
-p(e.getKey());// line 6
-p(" : ");// line 6
-p(e);// line 6
-p("</p>\n" + 
+		for (Error e: errors()){// line 5
+		p("        <p>");// line 5
+		p(e.getKey());// line 6
+		p(" : ");// line 6
+		p(e);// line 6
+		p("</p>\n" + 
 "    ");// line 6
-}// line 7
+		}// line 7
 } else {// line 8
-p("	name is: ");// line 8
-p(name);// line 9
-p(", age is: ");// line 9
-p(age);// line 9
-;// line 9
-}// line 10
-;// line 10
-
+		p("	name is: ");// line 8
+		p(name);// line 9
+		p(", age is: ");// line 9
+		p(age);// line 9
+		;// line 9
+		}// line 10
+		;// line 10
+		
 	}
 
 }

@@ -15,14 +15,11 @@ package cn.bran.japid.classmeta;
 
 import japa.parser.ast.body.Parameter;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import cn.bran.japid.compiler.JavaSyntaxTool;
-import cn.bran.japid.template.JapidTemplateBase;
-import cn.bran.japid.template.JapidTemplateBaseStreaming;
 
 public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 

@@ -217,7 +217,7 @@ public abstract class JapidAbstractCompiler {
 			// print the static content directly
 			print("p(" + lines + ");");
 
-			markLine(parser.getLineNumber());
+			markLine();
 			println();
 		}
 	}
@@ -272,7 +272,7 @@ public abstract class JapidAbstractCompiler {
 	protected void println() {
 		// print(NEW_LINE);
 		Tag currentScope = this.tagsStack.peek();
-		currentScope.bodyTextList.add("");
+		currentScope.bodyTextList.add("\t\t");
 		currentLine++;
 	}
 
@@ -782,21 +782,24 @@ public abstract class JapidAbstractCompiler {
 		}
 	}
 
-	private void printLine(String string) {
+	protected void printLine(String string) {
 		print(string);
-		markLine(parser.getLineNumber());
+		markLine();
 		println();
+	}
+
+	protected void markLine() {
+		markLine(parser.getLineNumber());
 	}
 
 	protected void message(String token) {
 		String expr = token.trim().replace('\'', '"');
 		print(";p(getMessage(" + expr + "));");
-		markLine(parser.getLineNumber());
+		markLine();
 		println();
 	}
 
 	/**
-	 * TODO: remove all the dependency on the Play classes
 	 * 
 	 * @param token
 	 * 
@@ -810,14 +813,9 @@ public abstract class JapidAbstractCompiler {
 			if (action.startsWith("/")) {
 				action = '"' + action + '"';
 			}
-			// remove Play dependency
 			if (absolute) {
-				// print("p(request.getBase() + play.mvc.Router.reverseWithCheck("
-				// + action + ", play.Play.getVirtualFile(" + action + ")));");
 				print("p(lookupStaticAbs(" + action + "));");
 			} else {
-				// print("p(play.mvc.Router.reverseWithCheck(" + action +
-				// ", play.Play.getVirtualFile(" + action + ")));");
 				print("p(lookupStatic(" + action + "));");
 			}
 		} else {
@@ -845,7 +843,7 @@ public abstract class JapidAbstractCompiler {
 				print("p(lookup(\"" + actionPart + "\", " + params + "));");
 			}
 		}
-		markLine(parser.getLineNumber());
+		markLine();
 		println();
 	}
 
@@ -1002,7 +1000,7 @@ public abstract class JapidAbstractCompiler {
 	}
 
 	protected void printActionInvocation(String action) {
-		println(createActionRunner(action));
+		print(createActionRunner(action));
 	}
 
 	/**
@@ -1047,7 +1045,7 @@ public abstract class JapidAbstractCompiler {
 				// tag.args + ");";
 				// }
 
-				println(tagline);
+				print(tagline);
 			}
 		}
 	}
@@ -1110,7 +1108,7 @@ public abstract class JapidAbstractCompiler {
 			// tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args
 			// + ", " : "") + inner.getAnonymous() + ");";
 
-			println(tagline);
+			print(tagline);
 		} else {
 			// for simple tag call without call back:
 			this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex, null, null);

@@ -54,11 +54,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "List<Post>",  };
 public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.AllPost2.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -68,7 +71,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -85,21 +88,21 @@ final Tag2 _Tag22 = new Tag2(getOut());
 //------
 ;// line 1
 p("\n");// line 3
-p("\n" + 
+		p("\n" + 
 "\n");// line 5
-if (allPost.size() > 0 ) {// line 8
-p("	<p></p>\n" + 
+		if (allPost.size() > 0 ) {// line 8
+		p("	<p></p>\n" + 
 "	");// line 8
-for (Post p: allPost) {// line 10
-p("	    ");// line 10
-_Display1.setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
+		for (Post p: allPost) {// line 10
+		p("	    ");// line 10
+		_Display1.setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
 public void render(final String title) {
 // line 11
-p("			<p>The real title is: ");// line 11
-p(title);// line 12
-p(";</p>\n" + 
+		p("			<p>The real title is: ");// line 11
+		p(title);// line 12
+		p(";</p>\n" + 
 "	    ");// line 12
-
+		
 }
 
 StringBuilder oriBuffer;
@@ -115,19 +118,17 @@ public void resetBuffer() {
 }
 
 }
-, named("post", p), named("as", "home"));
-// line 11
-p("	");// line 13
-}// line 14
+, named("post", p), named("as", "home"));// line 11
+		p("	");// line 13
+		}// line 14
 } else {// line 15
-p("	<p>There is no post at this moment</p>\n");// line 15
-}// line 17
-p("\n");// line 17
-_Tag22.setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000));
-// line 19
-p("\n" + 
+		p("	<p>There is no post at this moment</p>\n");// line 15
+		}// line 17
+		p("\n");// line 17
+		_Tag22.setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000));// line 19
+		p("\n" + 
 "<p>end of it</p>");// line 19
-
+		
 	}
 
 	@Override protected void title() {

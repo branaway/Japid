@@ -26,16 +26,13 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.bran.japid.compiler.JavaSyntaxTool;
 import cn.bran.japid.compiler.Tag;
 import cn.bran.japid.compiler.Tag.TagDef;
 import cn.bran.japid.template.ActionRunner;
-import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.JapidTemplateBaseStreaming;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.template.RenderResultPartial;
-//import cn.bran.play.JapidPlayAdapter;
 
 /**
  * lots of the code block generation is done here
@@ -346,7 +343,7 @@ public abstract class AbstractTemplateClassMetaData {
 			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
 			pln(decl);
 
-			if (useWithPlay) {
+			if (useWithPlay && !tagClassName.equals("Each")) {
 				String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
 				pln(addRunner);
 			}
@@ -408,7 +405,9 @@ public abstract class AbstractTemplateClassMetaData {
 	private void classDeclare() {
 		if (superClass == null) {
 			if (useWithPlay) {
-				superClass = JapidTemplateBase.class.getName();
+//				superClass = JapidTemplateBase.class.getName();
+				superClass = "cn.bran.play.JapidTemplateBase";
+				
 				if (streaming)
 					superClass = JapidTemplateBaseStreaming.class.getName();
 			}

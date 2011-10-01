@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class picka extends cn.bran.japid.template.JapidTemplateBase
+public class picka extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_tags/picka.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String",  };
 public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.picka.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -89,43 +92,38 @@ public static interface DoBody<A> {
 		this.a = a;
 		this.b = b;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	public cn.bran.japid.template.RenderResult render(String a,String b) {
 		this.a = a;
 		this.b = b;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("<p>\n" + 
+		p("<p>\n" + 
 "some text: ");// line 1
-p(a);// line 3
-p(" \n" + 
+		p(a);// line 3
+		p(" \n" + 
 "</p>\n" + 
 "<p>\n");// line 3
-if (body != null){
-	body.setBuffer(getOut());
-
-	body.render(a + b);
-	body.resetBuffer();
-}
-p("</p>\n");// line 6
-String x = renderBody("xxx" );
-p("[");// line 8
-p(x);// line 9
-p("]\n" + 
+		if (body != null){ body.setBuffer(getOut()); body.render(a + b); body.resetBuffer();}// line 6
+		p("</p>\n");// line 6
+		String x = renderBody("xxx" );// line 8
+		p("[");// line 8
+		p(x);// line 9
+		p("]\n" + 
 "<p>\n" + 
 "more text: ");// line 9
-p(b);// line 11
-p("\n" + 
+		p(b);// line 11
+		p("\n" + 
 "</p>\n" + 
 " ");// line 11
-
+		
 	}
 
 }

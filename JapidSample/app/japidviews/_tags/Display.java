@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"models.japidsample.Post", "String",  };
 public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.Display.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -89,49 +92,44 @@ public static interface DoBody<A> {
 		this.post = post;
 		this.as = as;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as) {
 		this.post = post;
 		this.as = as;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-;// line 1
-p("\n" + 
+		;// line 1
+		p("\n" + 
 "\n" + 
 "<div class=\"divvy\">\n" + 
 "	<p>title: ");// line 2
-p(post.getTitle());// line 5
-p("</p>\n" + 
+		p(post.getTitle());// line 5
+		p("</p>\n" + 
 "	<p>at: ");// line 5
-p(format(post.getPostedAt(), ("yy-MMM-dd")));// line 6
-p("</p>\n" + 
+		p(format(post.getPostedAt(), ("yy-MMM-dd")));// line 6
+		p("</p>\n" + 
 "	<p>by: ");// line 6
-p(post.getAuthor().name);// line 7
-p(", ");// line 7
-p(post.getAuthor().gender);// line 7
-p("</p>\n" + 
+		p(post.getAuthor().name);// line 7
+		p(", ");// line 7
+		p(post.getAuthor().gender);// line 7
+		p("</p>\n" + 
 "	<p class=\"try again using a simple syntax\">\n" + 
 "        ");// line 7
-p("\n" + 
+		p("\n" + 
 "        ");// line 9
-p("\n" + 
+		p("\n" + 
 "	   ");// line 10
-if (body != null){
-	body.setBuffer(getOut());
-
-	body.render(post.getTitle() + "!");
-	body.resetBuffer();
-}
-p("	</p>\n" + 
+		if (body != null){ body.setBuffer(getOut()); body.render(post.getTitle() + "!"); body.resetBuffer();}// line 11
+		p("	</p>\n" + 
 "</div>");// line 11
-
+		
 	}
 
 }

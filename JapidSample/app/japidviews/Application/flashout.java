@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class flashout extends cn.bran.japid.template.JapidTemplateBase
+public class flashout extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/Application/flashout.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,43 +53,46 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.flashout.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n");// line 1
-if(asBoolean(flash.hasError())) {// line 3
-p("    ");// line 3
-p(flash.error());// line 4
-p("\n");// line 4
-} else if(asBoolean(flash.hasSuccess())) {// line 5
-p("    ");// line 5
-p(flash.success());// line 6
-p("\n");// line 6
-} else {// line 7
+		p("\n");// line 1
+		if(asBoolean(flash.hasError())) {// line 3
+		p("    ");// line 3
+		p(flash.error());// line 4
+		p("\n");// line 4
+		} else if(asBoolean(flash.hasSuccess())) {// line 5
+		p("    ");// line 5
+		p(flash.success());// line 6
+		p("\n");// line 6
+		} else {// line 7
     if(asBoolean(flash.contains("msg"))) {// line 8
-p("        the message: ");// line 8
-p(flash("msg"));// line 9
-p("\n" + 
+		p("        the message: ");// line 8
+		p(flash("msg"));// line 9
+		p("\n" + 
 "    ");// line 9
-} else {// line 10
-p("        oh well\n" + 
+		} else {// line 10
+		p("        oh well\n" + 
 "    ");// line 10
-}// line 12
+		}// line 12
 }// line 13
-
+		
 	}
 
 }

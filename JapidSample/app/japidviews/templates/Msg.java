@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class Msg extends cn.bran.japid.template.JapidTemplateBase
+public class Msg extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/templates/Msg.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,34 +53,37 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.Msg.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 p("login: ");// line 1
-;p(getMessage("login.name"));// line 1
-p(" or ");// line 1
-p(i18n("login.name"));// line 1
-p("\n" + 
+		;p(getMessage("login.name"));// line 1
+		p(" or ");// line 1
+		p(i18n("login.name"));// line 1
+		p("\n" + 
 "</p>\n" + 
 "customer name: ");// line 1
-;p(getMessage("cus.name", "冉兵冉兵"));// line 3
-p(" or ");// line 3
-p(i18n("cus.name", "Bing Ran"));// line 3
-p("\n" + 
+		;p(getMessage("cus.name", "冉兵冉兵"));// line 3
+		p(" or ");// line 3
+		p(i18n("cus.name", "Bing Ran"));// line 3
+		p("\n" + 
 "\n");// line 3
-
+		
 	}
 
 }

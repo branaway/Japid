@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase
+public abstract class TagLayout extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_layouts/TagLayout.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -56,19 +56,18 @@ final dummyTag _dummyTag0 = new dummyTag(getOut());
 // -- end of the tag objects
 
 		p("标签布局\n");// line 1
-p("\n");// line 2
-_dummyTag0.setOut(getOut()); _dummyTag0.render("me");
-// line 3
-p("<div>\n" + 
+		p("\n");// line 2
+		_dummyTag0.setOut(getOut()); _dummyTag0.render("me");// line 3
+		p("<div>\n" + 
 "\n");// line 3
-p("\n" + 
+		p("\n" + 
 "    \n");// line 6
-	doLayout();
-p("\n" + 
+		doLayout();// line 8
+		p("\n" + 
 "</div>\n" + 
 "\n" + 
 "\n");// line 8
-	}
+			}
 
 	protected abstract void doLayout();
 }

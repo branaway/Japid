@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class index extends cn.bran.japid.template.JapidTemplateBase
+public class index extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/Application/index.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,18 +53,21 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.index.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		 t = System.nanoTime();
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
      	String l = "" + (System.nanoTime() - t) / 100000;
 		int len = l.length();
 		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
@@ -75,7 +78,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "<h2>Some Samples that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
@@ -83,14 +86,14 @@ p("\n" +
 "\n" + 
 "<ul>\n" + 
 "	<li><a href=\"");// line 1
-p(lookup("hello", new Object[]{}));// line 9
-p("\">Hello Japid, using an overridden\n" + 
+		p(lookup("hello", new Object[]{}));// line 9
+		p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
 "	<li><a href=\"application/callTag\">using tags in a template</a></li>\n" + 
 "	<li><a href=\"go/templates/def.html\"><em>def</em>\n" + 
 "	tag: define a method that return a string that can be invoked from\n" + 
 "	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 9
-p("\n" + 
+		p("\n" + 
 "	<li><a href=\"more.Portlets/index\">demo how to composite a\n" + 
 "	page with independent segments with the <b>invoke</b> tag</a></li>\n" + 
 "\n" + 
@@ -132,10 +135,10 @@ p("\n" +
 "	<li><a href=\"go/templates/openBrace.html\"> use\n" + 
 "	`{ in if and while </a></li>\n" + 
 "	<li><a href=\"application/escapedExpr\"> ");// line 19
-p("\n" + 
+		p("\n" + 
 "	raw expression with ${} and html-safe expression with ~{}\n" + 
 "	");// line 60
-p("	</li>\n" + 
+		p("	</li>\n" + 
 "	<li><a href=\"more.ContentNegotiation/index\"> content\n" + 
 "	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
 "	<p>Content negotiation works with renderJapid(), which does\n" + 
@@ -149,41 +152,41 @@ p("	</li>\n" +
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
 "\n");// line 62
-String na = "bran";// line 77
+		String na = "bran";// line 77
 int ag = 123;// line 78
-p("	<li><a href=\"");// line 78
-p(lookup("validate", na, ag));// line 79
-p("\">validation and errors</a></li>\n" + 
+		p("	<li><a href=\"");// line 78
+		p(lookup("validate", na, ag));// line 79
+		p("\">validation and errors</a></li>\n" + 
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"application/flashgood\">flash with success</a></li>\n" + 
 "			<li><a href=\"");// line 79
-p(lookup("reverseUrl", new Object[]{}));// line 83
-p("\">flash with a message</a></li>\n" + 
+		p(lookup("reverseUrl", new Object[]{}));// line 83
+		p("\">flash with a message</a></li>\n" + 
 "			<li><a href=\"application/flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"application/flashmsg\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
 "	   ");// line 83
- SearchParams sp = new  SearchParams("key1, key2", "AND");// line 89
-p("	   <a href=\"");// line 89
-p(lookup("search", sp));// line 90
-p("\">reverse URL lookup with complex object</a>\n" + 
+		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 89
+		p("	   <a href=\"");// line 89
+		p(lookup("search", sp));// line 90
+		p("\">reverse URL lookup with complex object</a>\n" + 
 "    ");// line 90
-p("\n" + 
+		p("\n" + 
 "	</li>\n" + 
 "	<li><a href=\"");// line 92
-p(lookupStatic("/public/images/favicon.png"));// line 94
-p("\">reverse to a static  png</a></li>\n" + 
+		p(lookupStatic("/public/images/favicon.png"));// line 94
+		p("\">reverse to a static  png</a></li>\n" + 
 "</ul>\n" + 
 "\n" + 
 "<p>Reverse lookup is slow...</p>\n" + 
 "\n" + 
 "<p>app mode: \"");// line 94
-p(_play.mode);// line 99
-p("\"</p>\n");// line 99
-
+		p(_play.mode);// line 99
+		p("\"</p>\n");// line 99
+		
 	}
 
 }

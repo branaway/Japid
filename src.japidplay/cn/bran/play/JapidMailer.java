@@ -21,7 +21,6 @@ import play.Play;
 import play.exceptions.MailException;
 import play.exceptions.UnexpectedException;
 import play.libs.Mail;
-import cn.bran.japid.template.JapidTemplateBase;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.StackTraceUtils;
 import cn.bran.japid.util.StringUtils;

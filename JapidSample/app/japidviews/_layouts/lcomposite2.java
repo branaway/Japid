@@ -22,7 +22,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public abstract class lcomposite2 extends cn.bran.japid.template.JapidTemplateBase
+public abstract class lcomposite2 extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_layouts/lcomposite2.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -51,33 +51,31 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	@Override public void layout() {
 		p("<p>beginning: lcomposite</p>\n" + 
 "\n");// line 1
-p("\n" + 
+		p("\n" + 
 "\n");// line 3
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.Application.foo(); //
 			}
 		});
-
 p("\n");// line 5
-	doLayout();
-p("\n" + 
+		doLayout();// line 7
+		p("\n" + 
 "<p>back to layout</p>\n" + 
 "\n" + 
 "\n");// line 7
-		actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.Application.foo(); //
 			}
 		});
-
 p("\n" + 
 "<p>back to layout again</p>\n" + 
 "\n" + 
 "<p>end of lcomposite</p>\n");// line 12
-	}
+			}
 
 	protected abstract void doLayout();
 }

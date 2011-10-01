@@ -46,16 +46,13 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 			String[] argPartsAndVar = JavaSyntaxTool.breakArgParts(tag.args);
 			if (argPartsAndVar.length == 1){
 				tcmd.doBody(tag.args);
-				println("if (body != null){\n" + 
-						"	body.setBuffer(getOut());\n");
-				println("	body.render(" + tag.args + ");");
-				println("	body.resetBuffer();\n" + "}");
+				print("if (body != null){ body.setBuffer(getOut()); body.render(" + tag.args + "); body.resetBuffer();}");
 			}
 			else {
 				String args = argPartsAndVar[0];
 				tcmd.doBody(args);
 				String localVar = argPartsAndVar[1];
-				println("String " + localVar + " = renderBody(" + args + ");");
+				print("String " + localVar + " = renderBody(" + args + ");");
 			}
 			// print to the root space before move one stack up
 		} else if ("set".equals(tag.tagName)) {
@@ -93,7 +90,7 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 		}
 		
 		pushToStack(tag);
-		markLine(parser.getLineNumber());
+		markLine();
 		println();
 		skipLineBreak = true;
 
@@ -114,16 +111,13 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 			String[] argPartsAndVar = JavaSyntaxTool.breakArgParts(args);
 			if (argPartsAndVar.length == 1){
 				tcmd.doBody(args);
-				println("if (body != null){\n" + 
-						"	body.setBuffer(getOut());\n");
-				println("	body.render(" + args + ");");
-				println("	body.resetBuffer();\n" + "}");
+				printLine("if (body != null){ body.setBuffer(getOut()); body.render(" + args + "); body.resetBuffer();}");
 			}
 			else {
 				args = argPartsAndVar[0];
 				tcmd.doBody(args);
 				String localVar = argPartsAndVar[1];
-				println("String " + localVar + " = renderBody(" + args + ");");
+				printLine("String " + localVar + " = renderBody(" + args + ");");
 			}
 			
 			skipLineBreak = true;

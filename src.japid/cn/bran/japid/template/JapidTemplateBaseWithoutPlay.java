@@ -37,7 +37,7 @@ import cn.bran.japid.util.WebUtils;
  * 
  */
 public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
-
+	protected String sourceTemplate = "";
 	private StringBuilder out;
 	private Map<String, String> headers = new TreeMap<String, String>();
 	{
@@ -405,5 +405,13 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 			return 0d;
 
 		return null;
+	}
+
+	protected void handleException(RuntimeException e) {
+		throw e;
+	}
+	
+	protected void setSourceTemplate(String st){
+		this.sourceTemplate = st;
 	}
 }

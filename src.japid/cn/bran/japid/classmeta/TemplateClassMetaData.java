@@ -168,7 +168,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 				restOfRenderBody(resultType);
 			} 
 			
-			// a version without the body part to allow optinal body
+			// a version without the body part to allow optional body
 			pln("\tpublic " + resultType + " render(" + renderArgsWithoutAnnos + ") {");
 			// assign the params to fields
 			for (Parameter p : params) {
@@ -199,7 +199,8 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		if (stopWatch)
 			pln("\t\t t = System.nanoTime();");
 
-		pln("\t\tsuper.layout(" + superClassRenderArgs +  ");");
+//		pln("\t\tsuper.layout(" + superClassRenderArgs +  ");");
+		pln("\t\ttry {super.layout(" + superClassRenderArgs +  ");} catch (RuntimeException e) { super.handleException(e);}");
 		if (stopWatch) {
 			pln("     	String l = \"\" + (System.nanoTime() - t) / 100000;\n" + 
 					"		int len = l.length();\n" + 
@@ -291,12 +292,14 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			"public static final String[] argNames = new String[] {/* args of the template*/%s };\n" + 
 			"public static final String[] argTypes = new String[] {/* arg types of the template*/%s };\n" + 
 			"public static final Object[] argDefaults= new Object[] {%s };\n"  + 
-			"public static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\n" + 
+			"public static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\n\n" + 
 			"{\n" + 
 			"	setRenderMethod(renderMethod);\n" + 
 			"	setArgNames(argNames);\n" + 
 			"	setArgTypes(argTypes);\n" + 
-			"	setArgDefaults(argDefaults);\n" + 
+			"	setArgDefaults(argDefaults);\n" +
+			"	setSourceTemplate(sourceTemplate);\n" + 
+			"\n" + 
 			"}\n" +
 			"" + 
 			"////// end of named args stuff\n";

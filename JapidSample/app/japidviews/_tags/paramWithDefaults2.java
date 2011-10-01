@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class paramWithDefaults2 extends cn.bran.japid.template.JapidTemplateBase
+public class paramWithDefaults2 extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/_tags/paramWithDefaults2.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String", "String", "String", "String", "String", "String", "String", "String", "Boolean", "String",  };
 public static final Object[] argDefaults= new Object[] {null,null,null,null,null,"html",null,null,null,null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.paramWithDefaults2.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -85,22 +88,22 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.cache = cache;
 		this.event = event;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "   \n" + 
 "oh well...\n" + 
 "\n");// line 4
- String fancyname = "fancy: $[name]";// line 8
-p("\n" + 
+		 String fancyname = "fancy: $[name]";// line 8
+		p("\n" + 
 "The fancy name is ");// line 8
-p(fancyname);// line 10
-;// line 10
-
+		p(fancyname);// line 10
+		;// line 10
+		
 	}
 
 }

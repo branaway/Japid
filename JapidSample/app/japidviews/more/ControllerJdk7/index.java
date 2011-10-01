@@ -21,7 +21,7 @@ import japidviews._javatags.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class index extends cn.bran.japid.template.JapidTemplateBase
+public class index extends cn.bran.play.JapidTemplateBase
 {	public static final String sourceTemplate = "japidviews/more/ControllerJdk7/index.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.ControllerJdk7.index.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -65,22 +68,24 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render(String m) {
 		this.m = m;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "\n" + 
 "m: ");// line 1
-p(m);// line 3
-p("\n");// line 3
-p("\n" + 
-"reverse: ");// line 15
-p(lookupAbs("Pages.edit", new Object[]{}));// line 17
-;// line 17
-
+		p(m);// line 3
+		p("\n" + 
+"\n");// line 3
+		p("\n" + 
+"reverse: ");// line 16
+		p(lookupAbs("Pages.edit", new Object[]{}));// line 18
+		p("\n" + 
+"ok\n");// line 18
+		
 	}
 
 }

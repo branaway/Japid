@@ -53,11 +53,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "int",  };
 public static final Object[] argDefaults= new Object[] {null,null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.MyController.echo.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -67,19 +70,19 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.s = s;
 		this.i = i;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n");// line 1
+		p("\n");// line 1
 p("hello ");// line 6
-p(s);// line 8
-p(", ");// line 8
-p(i);// line 8
-p(".\n");// line 8
-
+		p(s);// line 8
+		p(", ");// line 8
+		p(i);// line 8
+		p(".\n");// line 8
+		
 	}
 
 	@Override protected void title() {
