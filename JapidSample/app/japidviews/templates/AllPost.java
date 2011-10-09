@@ -135,6 +135,6 @@ public void resetBuffer() {
 	}
 
 	@Override protected void title() {
-		p("Home");;
+		p( "Home: " + blogTitle);;
 	}
 }

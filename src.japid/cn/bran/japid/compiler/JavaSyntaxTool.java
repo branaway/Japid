@@ -48,7 +48,7 @@ public class JavaSyntaxTool {
 			CompilationUnit cu = parse(src);
 			return true;
 		} catch (ParseException e) {
-			String m = e.getMessage();
+			String m = e.getMessage() + "\n";
 			System.out.println(m.substring(0, m.indexOf('\n')));
 			return false;
 		}
@@ -84,7 +84,7 @@ public class JavaSyntaxTool {
 		if (line == null || line.trim().length() == 0)
 			return ret;
 
-		//make it tolerant of lowercase default
+		// make it tolerant of lowercase default
 		line = line.replace("@default(", "@Default(");
 		String cl = String.format(classTempForParams, line);
 		try {
@@ -97,7 +97,9 @@ public class JavaSyntaxTool {
 			};
 			cu.accept(visitor, null);
 		} catch (ParseException e) {
-			throw new RuntimeException("the line does not seem to be a valid param declaration list: " + line);
+			throw new RuntimeException(
+					"the line does not seem to be a valid param list declaration: "
+							+ line);
 		}
 		return ret;
 	}
@@ -114,7 +116,8 @@ public class JavaSyntaxTool {
 			if (line.endsWith(")"))
 				line = line.substring(1, line.length() - 1);
 			else
-				throw new RuntimeException("no closing ')' in arg expression: " + line);
+				throw new RuntimeException("no closing ')' in arg expression: "
+						+ line);
 		}
 
 		String cl = String.format(classTempForArgs, line);
@@ -133,7 +136,8 @@ public class JavaSyntaxTool {
 			};
 			cu.accept(visitor, null);
 		} catch (ParseException e) {
-			throw new RuntimeException("the line does not seem to be a valid arg list: " + line);
+			throw new RuntimeException(
+					"the line does not seem to be a valid arg list: " + line);
 		}
 		return ret;
 	}
@@ -141,8 +145,10 @@ public class JavaSyntaxTool {
 	/**
 	 * 
 	 * @param line
-	 * @return list of named args or an exception is thrown if the input is not
-	 *         a valid named arg list.
+	 * @return list of named args if all the args are named; empty list if none
+	 *         is named; or an exception is thrown if the arg list is not valid
+	 *         or named and un-named are mixed
+	 * 
 	 */
 	public static List<NamedArg> parseNamedArgs(String line) {
 		final List<NamedArg> ret = new ArrayList<NamedArg>();
@@ -154,43 +160,61 @@ public class JavaSyntaxTool {
 			if (line.endsWith(")"))
 				line = line.substring(1, line.length() - 1);
 			else
-				throw new RuntimeException("no closing ')' in arg expression: " + line);
+				throw new RuntimeException("no closing ')' in arg expression: "
+						+ line);
 		}
 
 		String cl = String.format(classTempForArgs, line);
+		final String finalLine = line;
 		try {
 			CompilationUnit cu = parse(cl);
 			VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+				boolean hasNamed = false;
+				boolean hasUnNamed = false;
+
 				@Override
 				public void visit(MethodCallExpr n, Object arg) {
 					List<Expression> args = n.getArgs();
 					// api issue: args can be null in case of empty arg list
 					if (args != null)
-						for (Expression e : args) {
-							if (e instanceof AssignExpr) {
-								AssignExpr ae = (AssignExpr) e;
-								NamedArg na = new NamedArg(ae.getTarget(), ae.getValue());
+						for (Expression expr : args) {
+							if (expr instanceof AssignExpr) {
+								if (hasUnNamed)
+									throw new RuntimeException(
+											"the line has mixed named and un-named arg list. It's not valid in Japid tag invocation. It must be all-or-none.: "
+													+ finalLine);
+								hasNamed = true;
+								AssignExpr ae = (AssignExpr) expr;
+								NamedArg na = new NamedArg(ae.getTarget(),
+										ae.getValue());
 								ret.add(na);
-							}
-							else {
-								throw new RuntimeException("the line does not seem to be a valid named arg list: not a named arg: " + e);
+							} else {
+								if (hasNamed)
+									throw new RuntimeException(
+											"the line has mixed named and un-named arg list. It's not valid in Japid tag invocation. It must be all-or-none.: "
+													+ finalLine);
+								hasUnNamed = true;
 							}
 						}
 				}
 			};
 			cu.accept(visitor, null);
 		} catch (ParseException e) {
-			throw new RuntimeException("the line does not seem to be a valid named arg list: " + line + ". " + e.getMessage());
+			throw new RuntimeException(
+					"the line does not seem to be a valid arg list: " + line
+							+ ". ");
 		}
 		return ret;
 	}
 
-	public static boolean hasMethod(String javaSource, String string) throws ParseException {
+	public static boolean hasMethod(String javaSource, String string)
+			throws ParseException {
 		CompilationUnit cu = parse(javaSource);
 		return hasMethod(cu, string);
 	}
 
-	public static boolean hasMethodInvocatioin(CompilationUnit cu, final String string) {
+	public static boolean hasMethodInvocatioin(CompilationUnit cu,
+			final String string) {
 		if (string == null || string.trim().length() == 0)
 			return false;
 
@@ -233,8 +257,8 @@ public class JavaSyntaxTool {
 			return true;
 	}
 
-	public static boolean hasMethod(CompilationUnit cu, final String name, final int modis,
-			final String returnType, String paramList) {
+	public static boolean hasMethod(CompilationUnit cu, final String name,
+			final int modis, final String returnType, String paramList) {
 		final StringBuilder sb = new StringBuilder();
 
 		if (paramList == null)
@@ -280,8 +304,8 @@ public class JavaSyntaxTool {
 	 *            , parameter type only: String, final int, etc
 	 * @return
 	 */
-	public static boolean hasMethod(CompilationUnit cu, final String name, final String modifiers,
-			final String returnType, String paramList) {
+	public static boolean hasMethod(CompilationUnit cu, final String name,
+			final String modifiers, final String returnType, String paramList) {
 		final int modis = parseModifiers(modifiers);
 		return hasMethod(cu, name, modis, returnType, paramList);
 	}
@@ -299,7 +323,8 @@ public class JavaSyntaxTool {
 		}
 
 		if (formalParamList.endsWith(","))
-			formalParamList = formalParamList.substring(0, formalParamList.length() - 1);
+			formalParamList = formalParamList.substring(0,
+					formalParamList.length() - 1);
 		return formalParamList;
 	}
 
@@ -319,7 +344,8 @@ public class JavaSyntaxTool {
 		return names;
 	}
 
-	protected static boolean paramsMatch(List<Parameter> params, List<Parameter> ps) {
+	protected static boolean paramsMatch(List<Parameter> params,
+			List<Parameter> ps) {
 		if (params == ps)
 			return true;
 
@@ -428,7 +454,7 @@ public class JavaSyntaxTool {
 			decl = cleanDeclPrimitive(decl);
 			s += decl + ", ";
 		}
-		
+
 		return s.substring(0, s.lastIndexOf(", "));
 	}
 
@@ -457,7 +483,8 @@ public class JavaSyntaxTool {
 			try {
 				parse(ss);
 				break;
-			} catch (ParseException e) { // TODO perhaps modify Japa to create a light weighted ParseException
+			} catch (ParseException e) { // TODO perhaps modify Japa to create a
+											// light weighted ParseException
 				expr = "";
 				continue;
 			}
@@ -483,12 +510,12 @@ public class JavaSyntaxTool {
 	}
 
 	/**
-	 * change all primitive data types to the object wrapper type in the parameter list
+	 * change all primitive data types to the object wrapper type in the
+	 * parameter list
 	 * 
 	 * @param decl
 	 *            int i, int[] ia, etc
-	 * @return
-	 * 	           the wrapper form
+	 * @return the wrapper form
 	 */
 	public static String cleanDeclPrimitive(String decl) {
 		decl = decl.trim();
@@ -520,91 +547,114 @@ public class JavaSyntaxTool {
 		} else if ("boolean".equals(type)) {
 			decl = "Boolean " + var;
 		}
-	
+
 		return decl;
 	}
 
-	public static final Pattern AS_PATTERN = Pattern.compile("(.*)->\\s*(\\w+)");
+	public static final Pattern AS_PATTERN = Pattern
+			.compile("(.*)->\\s*(\\w+)");
 
 	//
-//	static final String classTempForVarDef = "class T {  {   %s ; } }";
-//
-//	/**
-//	 * 
-//	 * @param s
-//	 *            something like: "int a = 1, int b"
-//	 * @return
-//	 */
-//	public static String getFirstVarDeclare(String src) {
-//		if (src == null || src.trim().length() == 0)
-//			return "";
-//
-//		src = src.trim();
-//		final String[] ra = new String[1];
-//
-//		VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
-//			public void visit(VariableDeclarationExpr n, Object arg) {
-////				Type type = n.getType();
-//				List<VariableDeclarator> vars = n.getVars();
-//				if (vars.size() > 1) {
-//					// not good yet
-//				}
-//				else {
-//					VariableDeclarator var = vars.get(0);
-//					VariableDeclaratorId id = var.getId();
-//					ra[0] = id.getName();
-//				}
-//			}
-//		};
-//
-//		String expr = "";
-//		int i = src.length();
-//		for (; i > 0; i--) {
-//			expr = src.substring(0, i);
-//			String ss = String.format(classTempForVarDef, expr);
-//			try {
-//				CompilationUnit cu = parse(ss);
-//				cu.accept(visitor, null);
-//				if (ra[0] != null)
-//					break;
-//				else 
-//					continue;
-//			} catch (ParseException e) {
-//				continue;
-//			}
-//		}
-//
-//		return expr.trim();
-//	}
+	// static final String classTempForVarDef = "class T {  {   %s ; } }";
+	//
+	// /**
+	// *
+	// * @param s
+	// * something like: "int a = 1, int b"
+	// * @return
+	// */
+	// public static String getFirstVarDeclare(String src) {
+	// if (src == null || src.trim().length() == 0)
+	// return "";
+	//
+	// src = src.trim();
+	// final String[] ra = new String[1];
+	//
+	// VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+	// public void visit(VariableDeclarationExpr n, Object arg) {
+	// // Type type = n.getType();
+	// List<VariableDeclarator> vars = n.getVars();
+	// if (vars.size() > 1) {
+	// // not good yet
+	// }
+	// else {
+	// VariableDeclarator var = vars.get(0);
+	// VariableDeclaratorId id = var.getId();
+	// ra[0] = id.getName();
+	// }
+	// }
+	// };
+	//
+	// String expr = "";
+	// int i = src.length();
+	// for (; i > 0; i--) {
+	// expr = src.substring(0, i);
+	// String ss = String.format(classTempForVarDef, expr);
+	// try {
+	// CompilationUnit cu = parse(ss);
+	// cu.accept(visitor, null);
+	// if (ra[0] != null)
+	// break;
+	// else
+	// continue;
+	// } catch (ParseException e) {
+	// continue;
+	// }
+	// }
+	//
+	// return expr.trim();
+	// }
 
 	/**
-	 * to extract the arg list part and optionally the local var part to take the result. Used in doBody to set the result to a local variable
-	 * Can also be used to catch the tag invocation result in a local variable.
-	 *  
+	 * to extract the arg list part and optionally the local var part to take
+	 * the result. Used in doBody to set the result to a local variable Can also
+	 * be used to catch the tag invocation result in a local variable.
 	 * 
-	 * @param s arg list: a, 1 -> var, (1, 2, 3, "as") -> var
-	 * @return an array of string, the first one being the arg list, the second one, if exists, being the local var name
+	 * 
+	 * @param s
+	 *            arg list: a, 1 -> var, (1, 2, 3, "as") -> var
+	 * @return an array of string, the first one being the arg list, the second
+	 *         one, if exists, being the local var name
 	 */
-	public static String[] breakArgParts(String s){
+	public static String[] breakArgParts(String s) {
 		Matcher m = AS_PATTERN.matcher(s);
-		if (m.matches()){
+		if (m.matches()) {
 			String[] r = new String[2];
 			r[0] = m.group(1);
 			r[1] = m.group(2);
 			return r;
-		}
-		else {
-			return new String[]{s};
+		} else {
+			return new String[] { s };
 		}
 	}
 
-	public static boolean isValidExpr(String condition) {
-		String ss = String.format(classTempForExpr, condition);
+	public static boolean isValidExpr(String expr) {
+		String ss = String.format(classTempForExpr, expr);
 		try {
 			parse(ss);
 			return true;
-		} catch (ParseException e) { 
+		} catch (ParseException e) {
 			return false;
 		}
+	}
+
+	/**
+	 * verify that line is a valid method declaration part, excluding method body and the {} 
+	 * @param line: something like foo(int a, String b)
+	 */
+	public static void isValidMeth(String line) {
+		final String classTempForMeth = "class T {  %s{} }";
+		String classString = String.format(classTempForMeth, line);
+		try {
+			CompilationUnit cu = parse(classString);
+			VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+			};
+			cu.accept(visitor, null);
+		} catch (ParseException e) {
+			throw new RuntimeException(
+					"the line does not seem to be a valid method declaration: "
+							+ line + ". Was expecting something like foo(int a, String b).");
+		}
+
 	}
 }

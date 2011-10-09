@@ -6,12 +6,12 @@
 )
 @stopwatch	on
 
-@set title:"Home"
+@set title = "Home: " + blogTitle
 
 @for (Post p: allPost) { 
         *{ now we call a tag, with a body content that take a parameter title of String type }*
 
-	    @tag Display(post=p, as="home2") | String title
+	    @tag Display (post=p, as="home2") | String title
 		   The real title iiiis: $title;
 	    @
 @}

@@ -77,14 +77,12 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		p("\n" + 
 "\n" + 
 "m: ");// line 1
-		p(m);// line 3
+		try { Object o = m ; if (o.toString().length() ==0) { p("nothing"); } else { p(o); } } catch (NullPointerException npe) { p("nothing"); }// line 3
 		p("\n" + 
 "\n");// line 3
-		p("\n" + 
-"reverse: ");// line 16
-		p(lookupAbs("Pages.edit", new Object[]{}));// line 18
-		p("\n" + 
-"ok\n");// line 18
+		p("\n");// line 15
+		//reverse: @@{Pages.edit()}// line 17
+		p("ok\n");// line 17
 		
 	}
 

@@ -144,7 +144,7 @@ public void resetBuffer() {
 		_picka3.setOut(getOut()); _picka3.render(named("a", "aa"), named("b", "bb"));// line 26
 		p("\n" + 
 "or \n");// line 26
-		_picka4.setOut(getOut()); _picka4.render("cc", "dd");// line 29
+		_picka4.setOut(getOut()); _picka4.render("cc","dd");// line 29
 		p("\n" + 
 "</p>\n" + 
 "<p>\n" + 

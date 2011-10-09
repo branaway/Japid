@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-
 public class TagInvocationLineParserTest {
 	TagInvocationLineParser p = new TagInvocationLineParser();
 
@@ -21,19 +20,19 @@ public class TagInvocationLineParserTest {
 		String src = "tag a, b";
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
-		assertEquals("a, b", t.args);
+		assertEquals("a,b", t.args);
 	}
 
 	@Test
 	public void testClosureParamError() {
 		String src = "tag a, b | c";
-		try {
-			Tag t = p.parse(src);
-		} catch (Exception e) {
-			return;
-		}
-//		fail("shoudl have reported syntax error");
-		// let the | be part of the tag args
+		Tag t = p.parse(src);
+	}
+
+	@Test
+	public void testOrString() {
+		String src = "tag a, b | \"string\"";
+		Tag t = p.parse(src);
 	}
 
 	@Test
@@ -41,9 +40,17 @@ public class TagInvocationLineParserTest {
 		String src = "tag(a, b)";
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
-		assertEquals("a, b", t.args);
+		assertEquals("a,b", t.args);
 	}
 
+	@Test
+	public void testParseSimple3() {
+		String src = "tag	 (a, b)";
+		Tag t = p.parse(src);
+		assertEquals("tag", t.tagName);
+		assertEquals("a,b", t.args);
+	}
+	
 	@Test
 	public void testParseWithClosure() {
 		String src = "tag(a, b) | String c";
@@ -89,16 +96,16 @@ public class TagInvocationLineParserTest {
 		String src = "tag(a, b)";
 		Tag t = p.parse(src);
 		assertEquals("tag", t.tagName);
-		assertEquals("a, b", t.args);
+		assertEquals("a,b", t.args);
 		assertNull(t.callbackArgs);
 	}
 
 	@Test
 	public void testStringLiteral() {
-		String src = "get 'title'";
+		String src = "get \"title\"";
 		Tag t = p.parse(src);
 		assertEquals("get", t.tagName);
-		assertEquals("'title'", t.args);
+		assertEquals("\"title\"", t.args);
 		assertNull(t.callbackArgs);
 	}
 
@@ -107,16 +114,16 @@ public class TagInvocationLineParserTest {
 		String src = "my.tag a, b";
 		Tag t = p.parse(src);
 		assertEquals("my.tag", t.tagName);
-		assertEquals("a, b", t.args);
+		assertEquals("a,b", t.args);
 		assertNull(t.callbackArgs);
 	}
-	
+
 	@Test
 	public void testTagWithPathSep() {
 		String src = "my/tag a, b";
 		Tag t = p.parse(src);
 		assertEquals("my.tag", t.tagName);
-		assertEquals("a, b", t.args);
+		assertEquals("a,b", t.args);
 		assertNull(t.callbackArgs);
 	}
 
@@ -125,7 +132,7 @@ public class TagInvocationLineParserTest {
 		String src = ".my.tag a, b";
 		Tag t = p.parse(src);
 		assertEquals(".my.tag", t.tagName);
-		assertEquals("a, b", t.args);
+		assertEquals("a,b", t.args);
 		assertNull(t.callbackArgs);
 	}
 
@@ -134,10 +141,10 @@ public class TagInvocationLineParserTest {
 		String src = "./my/tag a, b";
 		Tag t = p.parse(src);
 		assertEquals(".my.tag", t.tagName);
-		assertEquals("a, b", t.args);
+		assertEquals("a,b", t.args);
 		assertNull(t.callbackArgs);
 	}
-	
+
 	@Test
 	public void testNamedArgs() {
 		String src = "tag name=\"a\", age=b + 1";
@@ -145,7 +152,7 @@ public class TagInvocationLineParserTest {
 		assertEquals("tag", t.tagName);
 		assertEquals("named(\"name\", \"a\"), named(\"age\", b + 1)", t.args);
 	}
-	
+
 	@Test
 	public void testVerticalBars() {
 		String src = "tag name=\"|\", age=b + 1";
@@ -153,5 +160,16 @@ public class TagInvocationLineParserTest {
 		assertEquals("tag", t.tagName);
 		assertEquals("named(\"name\", \"|\"), named(\"age\", b + 1)", t.args);
 	}
-	
+
+	@Test
+	public void testClosureParams() {
+		String src = "tag |String a b";
+		try {
+			Tag t = p.parse(src);
+			fail("should have thrown an exception");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
 }

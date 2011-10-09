@@ -13,6 +13,8 @@
  */
 package cn.bran.japid.compiler;
 
+import japa.parser.ast.body.Parameter;
+
 import java.util.List;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -167,7 +169,7 @@ public abstract class JapidAbstractCompiler {
 			case END_TAG:
 				String tagName = token.trim();
 				if (tagsStack.isEmpty()) {
-					throw new JapidCompilationException(template, currentLine, "#{/" + tagName + "} is not opened.");
+					throw new JapidCompilationException(template, parser.getLineNumber(), "#{/" + tagName + "} is not opened.");
 				}
 				Tag tag = popStack();
 				endTag(tag);
@@ -365,16 +367,20 @@ public abstract class JapidAbstractCompiler {
 					layoutName = layoutName.replace('/', '.');
 					layoutName = removeEndingString(layoutName, HTML);
 
-					// due to similarity, let's borrow a tag parsing
-					Tag tag = new TagInvocationLineParser().parse(layoutName + layout.substring(p));
+					try {
+						// due to similarity, let's borrow a tag parsing
+						Tag tag = new TagInvocationLineParser().parse(layoutName + layout.substring(p));
 
-					if (tag.tagName.startsWith(".")) {
-						// partial path, use current package as the root and
-						// append the path to it
-						tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
+						if (tag.tagName.startsWith(".")) {
+							// partial path, use current package as the root and
+							// append the path to it
+							tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
+						}
+						getTemplateClassMetaData().superClass = tag.tagName;
+						getTemplateClassMetaData().superClassRenderArgs = tag.args;
+					} catch (RuntimeException e) {
+						throw new JapidCompilationException(template, parser.getLineNumber(), e.getMessage());
 					}
-					getTemplateClassMetaData().superClass = tag.tagName;
-					getTemplateClassMetaData().superClassRenderArgs = tag.args;
 				}
 			} else if (startsWithIgnoreSpace(line, "contentType")) {
 				// TODO: should also take standard tag name: Content-Type
@@ -386,15 +392,14 @@ public abstract class JapidAbstractCompiler {
 				String headerkv = line.trim().substring("setHeader".length()).trim();
 				String[] split = headerkv.split("[ |\t]");
 				if (split.length < 2) {
-					throw new RuntimeException("setHeaader must take a key and a value string");
+					throw new JapidCompilationException(template, parser.getLineNumber(), "setHeaader must take a key and a value string");
 				}
 				String name = split[0];
 				String value = headerkv.substring(name.length()).trim();
 				getTemplateClassMetaData().setHeader(name, value);
 			} else if (startsWithIgnoreSpace(line, ARGS)) {
 				String args = line.trim().substring(ARGS.length()).trim()/*.replace(";", "").replace("'", "").replace("\"", "")*/;
-				Tag currentTag = this.tagsStack.peek();
-				currentTag.callbackArgs = args;
+				templateArgs(args);
 			} else if (startsWithIgnoreSpace(line, "trim")) {
 				String sw = line.trim().substring("trim".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(sw) || "true".equals(sw)) {
@@ -442,7 +447,7 @@ public abstract class JapidAbstractCompiler {
 				startTag(tag);
 			} else if (startsWithIgnoreSpace(line, "set")) {
 				Tag set = buildTagDirective(line);
-				if (line.contains(":"))
+				if (line.contains(":") || line.contains("="))
 					set.hasBody = false;
 				else
 					set.hasBody = true;
@@ -554,7 +559,7 @@ public abstract class JapidAbstractCompiler {
 									markLine(parser.getLineNumber() + i);
 									println();
 								} else {
-									throw new RuntimeException("the open \"else if\" statement is not properly matched to a previous if");
+									throw new JapidCompilationException(template, parser.getLineNumber(), "the open \"else if\" statement is not properly matched to a previous if");
 								}
 							}
 							else {
@@ -581,7 +586,7 @@ public abstract class JapidAbstractCompiler {
 					Tag.TagIf iftag = new Tag.TagIf("", parser.getLineNumber());
 					pushToStack(iftag);
 				} else {
-					throw new RuntimeException("the open \"else\" statement is not properly matched to a previous if");
+					throw new JapidCompilationException(template, parser.getLineNumber(), "the open \"else\" statement is not properly matched to a previous if");
 				}
 			} else if (line.trim().matches(OPEN_FOR_PATTERN_STRING)) {
 				// simply replace it with a "each" tag call
@@ -655,7 +660,7 @@ public abstract class JapidAbstractCompiler {
 			markLine(parser.getLineNumber() + i);
 			println();
 		} else {
-			throw new RuntimeException("the open \"else if\" statement is not properly matched to a previous if");
+			throw new JapidCompilationException(template, parser.getLineNumber(), "the open \"else if\" statement is not properly matched to a previous if");
 		}
 	}
 
@@ -722,7 +727,7 @@ public abstract class JapidAbstractCompiler {
 	 */
 	private void doActionInvokeDirective(String args) {
 		if (!getTemplateClassMetaData().useWithPlay) {
-			throw new RuntimeException("action invocation is only supported in Play environment. ");
+			throw new JapidCompilationException(template, parser.getLineNumber(), "action invocation is only supported in Play environment. ");
 		} else {
 			this.getTemplateClassMetaData().setHasActionInvocation();
 			if (args.trim().length() == 0)
@@ -758,6 +763,10 @@ public abstract class JapidAbstractCompiler {
 //				substitute = substitute.substring(0, substitute.length() - 1);
 		}
 
+		if (!JavaSyntaxTool.isValidExpr(expr)) {
+			throw new JapidCompilationException(template, parser.getLineNumber(), "invalid Java expression: " + expr);
+		}
+		
 		if (escape) {
 			expr = "escape(" + expr + ")";
 		}
@@ -820,13 +829,23 @@ public abstract class JapidAbstractCompiler {
 			}
 		} else {
 			if (!action.endsWith(")")) {
-				action = action + "()";
+				throw new JapidCompilationException(template, parser.getLineNumber(), "action argument must be a method call. It was: " + action);
 			}
+			
+			try {
+				List<String> parseArgs = JavaSyntaxTool.parseArgs(action);
+				if (parseArgs.size() != 1) {
+					throw new JapidCompilationException(template, parser.getLineNumber(), "action argument must be a method call. It was: " + action);
+				}
+			} catch (RuntimeException e) {
+				throw new JapidCompilationException(template, parser.getLineNumber(), "action argument must be a method call. It was: " + action);
+			}
+			
+			
 			// extract params if any
 			int indexOfParam = action.indexOf("(");
 			if (indexOfParam < 1) {
-				throw new TemplateSyntaxException("action arguments must be enclosed in parenthesis.", template.name, action,
-						this.currentLine);
+				throw new JapidCompilationException(template, parser.getLineNumber(), "action arguments must be enclosed in parenthesis.");
 			}
 
 			String actionPart = action.substring(0, indexOfParam).trim();
@@ -894,7 +913,7 @@ public abstract class JapidAbstractCompiler {
 
 		Tag tag = popStack();
 		if (!tagsStack.empty())
-			throw new RuntimeException("There is(are) " + tagsStack.size() + " unclosed tag(s) in the template: " + this.template.name);
+			throw new JapidCompilationException(template, parser.getLineNumber(), "There is(are) " + tagsStack.size() + " unclosed tag(s) in the template: " + this.template.name);
 		// remove print nothing statement to save a few CPU cycles
 		this.getTemplateClassMetaData().body = tag.getBodyText().replace("p(\"\")", "").replace("pln(\"\")", "pln()");
 		postParsing(tag);
@@ -912,9 +931,15 @@ public abstract class JapidAbstractCompiler {
 	abstract protected AbstractTemplateClassMetaData getTemplateClassMetaData();
 
 	protected void templateArgs(String token) {
+		Integer lineNumber = parser.getLineNumber();
+		try {
+			JavaSyntaxTool.parseParams(token);
+		} catch (RuntimeException e) {
+			throw new JapidCompilationException(template, lineNumber, e.getMessage());
+		}
 		Tag currentTag = this.tagsStack.peek();
-		String args = token;
-		currentTag.callbackArgs = args;
+		currentTag.callbackArgs = token;
+		currentTag.startLine = lineNumber;
 	}
 
 	/**
@@ -925,19 +950,24 @@ public abstract class JapidAbstractCompiler {
 
 		boolean hasBody = !parser.checkNext().endsWith("/");
 
-		Tag tag = new TagInvocationLineParser().parse(tagText);
-		if (tag.tagName == null || tag.tagName.length() == 0)
-			throw new RuntimeException("tag name was empty: " + tagText);
+		Integer lineNumber = parser.getLineNumber();
+		try {
+			Tag tag = new TagInvocationLineParser().parse(tagText);
+			if (tag.tagName == null || tag.tagName.length() == 0)
+				throw new JapidCompilationException(template, lineNumber, "tag name was empty: " + tagText);
 
-		if (tag.tagName.startsWith(".")) {
-			// partial path, use current package as the root and append the path
-			// to it
-			tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
+			if (tag.tagName.startsWith(".")) {
+				// partial path, use current package as the root and append the path
+				// to it
+				tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
+			}
+			tag.startLine = lineNumber;
+			tag.hasBody = hasBody;
+			tag.tagIndex = tagIndex++;
+			return tag;
+		} catch (RuntimeException e) {
+			throw new JapidCompilationException(template, lineNumber, e.getMessage());
 		}
-		tag.startLine = parser.getLineNumber();
-		tag.hasBody = hasBody;
-		tag.tagIndex = tagIndex++;
-		return tag;
 	}
 
 	/**
@@ -952,30 +982,34 @@ public abstract class JapidAbstractCompiler {
 	protected Tag buildTagDirective(String token) {
 		String tagText = token.trim();
 
-		Tag tag = new TagInvocationLineParser().parse(tagText);
-		if (tag.tagName == null || tag.tagName.length() == 0)
-			throw new RuntimeException("tag name was empty: " + tagText);
+		try {
+			Tag tag = new TagInvocationLineParser().parse(tagText);
+			if (tag.tagName == null || tag.tagName.length() == 0)
+				throw new JapidCompilationException(template, tag.startLine, "tag name was empty: " + tagText);
 
-		if (tag.tagName.startsWith(".")) {
-			// partial path, use current package as the root and append the path
-			// to it
-			tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
+			if (tag.tagName.startsWith(".")) {
+				// partial path, use current package as the root and append the path
+				// to it
+				tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
+			}
+			tag.startLine = parser.getLineNumber();
+			tag.tagIndex = tagIndex++;
+			return tag;
+		} catch (RuntimeException e) {
+			throw new JapidCompilationException(template, parser.getLineNumber(), e.getMessage());
 		}
-		tag.startLine = parser.getLineNumber();
-		tag.tagIndex = tagIndex++;
-		return tag;
 	}
 
 	/**
-	 * @param actionInvocationWithCache
+	 * @param actionString
 	 */
-	protected static String createActionRunner(String actionInvocationWithCache) {
-		List<String> params = new TagArgsParser(actionInvocationWithCache).split();
+	protected String createActionRunner(String actionString) {
+		List<String> params = JavaSyntaxTool.parseArgs(actionString);
 		String action = params.get(0);
 		// remove the argument part to extract action string as key base
 		int left = action.indexOf('(');
 		if (left < 1) {
-			throw new RuntimeException("invoke: action arguments must be enclosed in parenthesis.");
+			throw new JapidCompilationException(template, parser.getLineNumber(), "invoke: action arguments must be enclosed in parenthesis.");
 		}
 		int right = action.lastIndexOf(')');
 		String actionPath = "\"" + action.substring(0, left) + "\"";
@@ -1000,7 +1034,11 @@ public abstract class JapidAbstractCompiler {
 	}
 
 	protected void printActionInvocation(String action) {
-		print(createActionRunner(action));
+		try {
+			print(createActionRunner(action));
+		} catch (RuntimeException e) {
+			throw new JapidCompilationException(template, parser.getLineNumber(), "invalid argument syntax to invoke an action: " + action);
+		}
 	}
 
 	/**
@@ -1055,7 +1093,7 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void invokeAction(Tag tag) {
 		if (tag.hasBody) {
-			throw new JapidCompilationException(template, currentLine, "invoke tag cannot have a body. Must be ended with /}");
+			throw new JapidCompilationException(template, parser.getLineNumber(), "invoke tag cannot have a body. Must be ended with /}");
 		}
 
 		this.getTemplateClassMetaData().setHasActionInvocation();
@@ -1179,7 +1217,7 @@ public abstract class JapidAbstractCompiler {
 		if (tag.hasBody) { // must always
 			this.getTemplateClassMetaData().addDefTag((TagDef) tag);
 		} else {
-			throw new RuntimeException("def tag must have a body");
+			throw new JapidCompilationException(template, tag.startLine, "def tag must have a body");
 		}
 	}
 
@@ -1313,7 +1351,7 @@ public abstract class JapidAbstractCompiler {
 		TagInTag tagtagf = getTagInTag();
 		if (tagtagf != null) {
 			if (tag instanceof TagInTag) {
-				throw new RuntimeException("Syntax error: def/set tag cannot be nested in another def/set tag.");
+				throw new JapidCompilationException(template, tag.startLine, "Syntax error: def/set tag cannot be nested in another def/set tag.");
 			}
 			
 			if (!(tag instanceof TagIf))

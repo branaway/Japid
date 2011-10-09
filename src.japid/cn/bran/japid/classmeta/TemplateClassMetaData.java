@@ -83,7 +83,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	 */
 	@Override
 	protected void getterSetter() {
-		// #{set "block name"} tags
+		// 	`set title = "something"
 		pln();
 		for (Entry<String, String> en : setMethods.entrySet()) {
 			String meth = en.getKey();

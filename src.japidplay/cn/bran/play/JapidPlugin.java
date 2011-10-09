@@ -14,10 +14,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
+
+import cn.bran.japid.compiler.JapidCompilationException;
+
 import play.Logger;
 import play.Play;
 import play.Play.Mode;
 import play.PlayPlugin;
+import play.exceptions.PlayException;
+import play.exceptions.TemplateExecutionException;
 import play.exceptions.UnexpectedException;
 import play.mvc.Http.Header;
 import play.mvc.Http.Request;
@@ -83,11 +89,22 @@ public class JapidPlugin extends PlayPlugin {
 		// have a delay in change detection.
 		if (System.currentTimeMillis() - lastTimeChecked.get() < 1000)
 			return;
-		List<File> changed = JapidCommands.reloadChanged();
-		if (changed.size() > 0) {
-			for (File f : changed) {
-				// System.out.println("pre-detect changed: " + f.getName());
+		try {
+			List<File> changed = JapidCommands.reloadChanged();
+			if (changed.size() > 0) {
+				for (File f : changed) {
+					// System.out.println("pre-detect changed: " + f.getName());
+				}
 			}
+		} catch (JapidCompilationException e) {
+			JapidPlayTemplate jpt = new JapidPlayTemplate();
+			jpt.name = e.getTemplateName();
+			jpt.source = e.getTemplateSrc();
+			throw new TemplateExecutionException(jpt, e.getLineNumber(), e.getMessage(), e);
+		} catch (RuntimeException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			throw e;
 		}
 
 		boolean hasRealOrphan = JapidCommands.rmOrphanJava();

@@ -22,11 +22,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.a1.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -34,7 +37,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public String render(String a) {
 		this.a = a;
 		long t = -1;
-		super.layout(a + "1");
+		try {super.layout(a + "1");} catch (RuntimeException e) { super.handleException(e);}
 		 if (t != -1) System.out.println("[a1] rendering time: " + t);
 		return getOut().toString();
 	}
@@ -42,12 +45,12 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 //------
 ;// line 1
 p("\n");// line 3
-p(foo(a));// line 5
-p("\n" + 
+		p(foo(a));// line 5
+		p("\n" + 
 "\n");// line 5
-// line 7
-;// line 9
-
+		// line 7
+		;// line 9
+		
 	}
 
 	@Override protected void title() {
@@ -60,9 +63,8 @@ this.setOut(sb);
 final taggy _taggy2 = new taggy(getOut());
 
 // line 7
-p("  -> a1-: ");// line 7
-_taggy2.setOut(getOut()); _taggy2.render(ar);
-// line 8
+		p("  -> a1-: ");// line 7
+		_taggy2.setOut(getOut()); _taggy2.render(ar);// line 8
 
 this.setOut(ori);
 return sb.toString();

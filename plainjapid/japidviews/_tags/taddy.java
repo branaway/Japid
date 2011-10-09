@@ -22,11 +22,14 @@ public static final String[] argNames = new String[] {/* args of the template*/ 
 public static final String[] argTypes = new String[] {/* arg types of the template*/ };
 public static final Object[] argDefaults= new Object[] { };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.taddy.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -54,13 +57,13 @@ public static interface DoBody<A> {
 	public String render(DoBody body) {
 		this.body = body;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		 if (t != -1) System.out.println("[taddy] rendering time: " + t);
 		return getOut().toString();
 	}
 	public String render() {
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		 if (t != -1) System.out.println("[taddy] rendering time: " + t);
 		return getOut().toString();
 	}
@@ -68,15 +71,10 @@ public static interface DoBody<A> {
 //------
 p("teddy bear\n" + 
 "\n");// line 1
-String[] ss = new String[]{"a", "add", "cd"};// line 3
-p("\n");// line 3
-if (body != null){
-	body.setBuffer(getOut());
-
-	body.render(ss);
-	body.resetBuffer();
-}
-
+		String[] ss = new String[]{"a", "add", "cd"};// line 3
+		p("\n");// line 3
+		if (body != null){ body.setBuffer(getOut()); body.render(ss); body.resetBuffer();}// line 5
+		
 	}
 
 }

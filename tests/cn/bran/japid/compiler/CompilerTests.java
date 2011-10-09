@@ -119,7 +119,7 @@ public class CompilerTests {
 		System.out.println(srccode);
 		CompilationUnit cu = JavaSyntaxTool.parse(srccode);
 		assertTrue(srccode.contains("package japidviews._layouts;"));
-		assertTrue(srccode.contains("public abstract class TagLayout extends cn.bran.japid.template.JapidTemplateBase"));
+		assertTrue(srccode.contains("public abstract class TagLayout extends cn.bran.play.JapidTemplateBase"));
 		assertTrue(srccode.contains("protected abstract void doLayout();"));
 		assertTrue(srccode.contains("@Override public void layout()"));
 		

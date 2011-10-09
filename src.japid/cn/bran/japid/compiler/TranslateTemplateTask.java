@@ -130,16 +130,19 @@ public class TranslateTemplateTask {
 			}
 
 			for (int i = 0; i < changedFiles.size(); i++) {
-				File pFile = changedFiles.get(i);
-				System.out.println("[Japid] Transforming template: " + pFile.getPath() + " to: " + DirUtil.mapSrcToJava(pFile.getName()));
+				File templateFile = changedFiles.get(i);
+				System.out.println("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
 				if (listFiles) {
-					System.out.println(pFile.getAbsolutePath());
+					System.out.println(templateFile.getAbsolutePath());
 				}
 
 				try {
-					String relativePath = JapidTemplateTransformer.getRelativePath(pFile, packageRoot);
+					String relativePath = JapidTemplateTransformer.getRelativePath(templateFile, packageRoot);
 					File generate = tran.generate(relativePath);
 					changedTargetFiles.add(generate);
+				} catch (JapidCompilationException e) {
+					// syntax error
+					throw e;
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new RuntimeException(e.getClass().getName() + ":" + e.getMessage());

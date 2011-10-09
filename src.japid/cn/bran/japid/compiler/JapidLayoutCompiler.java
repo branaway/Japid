@@ -36,7 +36,7 @@ public class JapidLayoutCompiler extends JapidAbstractCompiler {
 	protected void startTag(Tag tag) {
 		if ("get".equals(tag.tagName)) {
 			if (tag.hasBody) {
-				throw new RuntimeException("get tag cannot have a body. ");
+				throw new JapidCompilationException(template, parser.getLineNumber(), "get tag cannot have a body. ");
 			}
 			String var = tag.args;
 			var = var.replace("'", "");

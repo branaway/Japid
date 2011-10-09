@@ -15,4 +15,21 @@ public class JapidTemplateCompilerTest {
 		assertEquals("\"my great title\"", matcher.group(2));
 		
 	}
+	@Test
+	public void testSetPattern2() {
+		Matcher matcher = JapidTemplateCompiler.SET_ARG_PATTERN_ONELINER.matcher("title=a");
+		assertTrue(matcher.matches());
+		matcher = JapidTemplateCompiler.SET_ARG_PATTERN_ONELINER.matcher("title = \"home: \"");
+		assertTrue(matcher.matches());
+		matcher = JapidTemplateCompiler.SET_ARG_PATTERN_ONELINER.matcher("title: \"home: \"");
+		assertTrue(matcher.matches());
+	}
+
+	@Test
+	public void testSetPattern3() {
+		Matcher matcher = JapidTemplateCompiler.SET_ARG_PATTERN_ONELINER_COLON.matcher("title : a = b");
+		assertTrue(matcher.matches());
+		matcher = JapidTemplateCompiler.SET_ARG_PATTERN_ONELINER_COLON.matcher("title = \"home: \"");
+		assertFalse(matcher.matches());
+	}
 }

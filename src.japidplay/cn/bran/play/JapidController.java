@@ -295,6 +295,10 @@ public class JapidController extends Controller {
 			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
 		} else {
 			Class tClass = appClass.javaClass;
+			if (tClass == null) {
+				throw new RuntimeException("could not find the class for: " + templateClassName);
+			}
+
 			if (JapidTemplateBase.class.isAssignableFrom(tClass)) {
 				RenderResult rr;
 				// render(tClass, args);

@@ -8,8 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import play.Play;
 import play.data.validation.Validation;
 import play.templates.JavaExtensions;
+import cn.bran.japid.compiler.JapidCompilationException;
 import cn.bran.japid.compiler.TranslateTemplateTask;
 import cn.bran.japid.util.DirUtil;
 
@@ -226,7 +228,22 @@ public class JapidCommands {
 		for (String f : javatags) {
 			t.addImport("static " + f + ".*");
 		}
-		t.execute();
+		try {
+			t.execute();
+		} catch (JapidCompilationException e) {
+//			 remove the .class file from previous successful compilation if any
+//			String templateName = e.getTemplateName();
+//			String javaSrc = DirUtil.mapSrcToJava(templateName);
+//			// remove the java file
+//			String javaSrcPath = APP + File.separator + javaSrc;
+//			if (new File(javaSrcPath).delete()){
+//				System.out.println("[Japid] deleted: " + javaSrcPath);
+//			}
+//			String className = javaSrc.substring(0, javaSrc.length() - 5).replace('/', '.').replace('\\', '.');
+//			// remove the class file
+//			Play.classes.remove(className);
+			throw e;
+		}
 		List<File> changedFiles = t.getChangedFiles();
 		return changedFiles;
 	}
@@ -283,7 +300,7 @@ public class JapidCommands {
 
 		boolean hasRealOrphan = false;
 		try {
-			String pathname = "app" + File.separator + JapidPlugin.JAPIDVIEWS_ROOT;
+			String pathname = APP + File.separator + JapidPlugin.JAPIDVIEWS_ROOT;
 			File src = new File(pathname);
 			if (!src.exists()) {
 				log("Could not find required Japid package structure: " + pathname);

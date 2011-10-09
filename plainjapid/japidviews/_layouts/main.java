@@ -20,14 +20,14 @@ public abstract class main extends cn.bran.japid.template.JapidTemplateBaseWitho
 	 public void layout(String x) {
 		this.x = x;
 		;// line 1
-p("<head>");// line 1
-	title();p(" - ");// line 2
-p(x);// line 2
-p("</head>\n" + 
+		p("<head>");// line 1
+		title();p(" - ");// line 2
+		p(x);// line 2
+		p("</head>\n" + 
 "<body>");// line 2
-	doLayout();
-p("</body>\n");// line 3
-	}
+		doLayout();// line 3
+		p("</body>\n");// line 3
+			}
 	 protected void title() {};
 
 	protected abstract void doLayout();

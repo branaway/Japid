@@ -22,11 +22,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"cn.bran.japid.template.FooController.ModelUser",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.tee.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -34,18 +37,18 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public String render(cn.bran.japid.template.FooController.ModelUser u) {
 		this.u = u;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		 if (t != -1) System.out.println("[tee] rendering time: " + t);
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {
 //------
 ;// line 1
-p("\n" + 
+		p("\n" + 
 "Hi: ");// line 1
-p(u.what());// line 3
-p("\n");// line 3
-
+		p(u.what());// line 3
+		p("\n");// line 3
+		
 	}
 
 }

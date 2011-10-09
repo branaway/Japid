@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/10/1: V0.9.0: breaking change, japid regen required.
+	1. Enhancement: multiple changes to catch more syntax error in compiling Japid templates, a significant error reporting improvement. The JapidTemplateBase was moved to the play dependent package in the source;  
 2011/10/1: V0.8.10: breaking change, japid regen required.
 	1. Enhancement: generated source contains exception handling code to throw TemplateExecutionException to better display template runtime error.
 2011/10/1: V0.8.9.8

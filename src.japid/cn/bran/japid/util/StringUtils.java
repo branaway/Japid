@@ -22,6 +22,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -131,5 +133,26 @@ public class StringUtils {
 	public static boolean isEmpty(String charset) {
 		return WebUtils.asBoolean(charset);
 	}
+
+	// copied from Play's Utils.java
+
+    public static <T> String join(Iterable<T> values, String separator) {
+        if (values == null) {
+            return "";
+        }
+        Iterator<T> iter = values.iterator();
+        if (!iter.hasNext()) {
+            return "";
+        }
+        StringBuffer toReturn = new StringBuffer(String.valueOf(iter.next()));
+        while (iter.hasNext()) {
+            toReturn.append(separator + String.valueOf(iter.next()));
+        }
+        return toReturn.toString();
+    }
+
+    public static String join(String[] values, String separator) {
+        return (values == null) ? "" : join(Arrays.asList(values), separator);
+    }
 
 }

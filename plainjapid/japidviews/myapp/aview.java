@@ -22,11 +22,14 @@ public static final String[] argNames = new String[] {/* args of the template*/"
 public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static final Object[] argDefaults= new Object[] {null, };
 public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.myapp.aview.class);
+
 {
 	setRenderMethod(renderMethod);
 	setArgNames(argNames);
 	setArgTypes(argTypes);
 	setArgDefaults(argDefaults);
+	setSourceTemplate(sourceTemplate);
+
 }
 ////// end of named args stuff
 
@@ -34,7 +37,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public String render(String a) {
 		this.a = a;
 		long t = -1;
-		super.layout();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		 if (t != -1) System.out.println("[aview] rendering time: " + t);
 		return getOut().toString();
 	}
@@ -47,16 +50,15 @@ final taggy _taggy1 = new taggy(getOut());
 
 //------
 ;// line 1
-p("\n");// line 1
+		p("\n");// line 1
 p("\n" + 
 "escaped: ");// line 3
-p(escape(a));// line 5
-p("\n" + 
+		p(escape(a));// line 5
+		p("\n" + 
 "nice view: ");// line 5
-_taggy1.setOut(getOut()); _taggy1.render(a + "1");
-// line 6
-;// line 6
-
+		_taggy1.setOut(getOut()); _taggy1.render(a + "1");// line 6
+		;// line 6
+		
 	}
 
 	@Override protected void title() {

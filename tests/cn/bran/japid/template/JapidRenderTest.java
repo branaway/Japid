@@ -1,15 +1,12 @@
 package cn.bran.japid.template;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-
-import japidviews.myapp.aview;
 
 import org.junit.Test;
 
 import cn.bran.japid.compiler.OpMode;
-import cn.bran.japid.template.JapidRenderer;
 
 public class JapidRenderTest {
 
@@ -24,13 +21,13 @@ public class JapidRenderTest {
 		JapidRenderer.init(null, "plainjapid", 1);
 		JapidRenderer.regen();
 	}
-
-	@Test
-	public void testAview() {
-		JapidRenderer.init(OpMode.dev, "plainjapid", 1);
-		String render = new JapidRenderer().render(aview.class, "world");
-		System.out.println(render);
-	}
+//
+//	@Test
+//	public void testAview() {
+//		JapidRenderer.init(OpMode.dev, "plainjapid", 1);
+//		String render = new JapidRenderer().render(aview.class, "world");
+//		System.out.println(render);
+//	}
 
 	@Test
 	public void testSmartBindingWithRender() {

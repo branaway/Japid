@@ -1,9 +1,8 @@
 `(String m)
 
-m: ${m}
+m: ${m ?: "nothing"}
 
-*{
-
+*{ 
 `switch (m) {
 `case "a":
 			hey, I got the "a"! 
@@ -15,6 +14,6 @@ m: ${m}
 
 }*
 
-reverse: @@{Pages.edit()}
+`//reverse: @@{Pages.edit()}
 
 ok

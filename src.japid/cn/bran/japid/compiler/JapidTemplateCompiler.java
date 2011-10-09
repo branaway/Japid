@@ -56,22 +56,25 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 			}
 			// print to the root space before move one stack up
 		} else if ("set".equals(tag.tagName)) {
-			// only support value as tag content as opposed to as attribute:
-			// #{set key}value#{/}
-			if (tag.args.contains(":")) {
+			if (SET_ARG_PATTERN_ONELINER.matcher(tag.args).matches()) {
 				if (tag.hasBody) {
-					throw new JapidCompilationException(template, currentLine, "set tag cannot have value in tag and in body");
+					throw new JapidCompilationException(template, parser.getLineNumber(), "set tag cannot have value both in tag and in body: " + tag + " " + tag.args);
 				} else {
-					int i = tag.args.indexOf(":");
+					int i = 0;
+					
+					if (SET_ARG_PATTERN_ONELINER_COLON.matcher(tag.args).matches()) {
+						i = tag.args.indexOf(":");
+					}
+					else {
+						i = tag.args.indexOf("=");
+					}
 
 					String key = tag.args.substring(0, i).trim().replace("\"", "").replace("'", "");
-					String value = tag.args.substring(i + 1);//.replace('\'', '"');
-					// cannot assume the data is string! 
-//					if (!value.startsWith("\""))
-//						value = "\"" + value;
-//					if (!value.endsWith("\""))
-//						value = value + "\"";
-					this.tcmd.addSetTag(key, "p(" + value + ");", (TagSet) tag);
+					String value = tag.args.substring(i + 1);
+					if (JavaSyntaxTool.isValidExpr(value))
+						this.tcmd.addSetTag(key, "p(" + value + ");", (TagSet) tag);
+					else
+						throw new JapidCompilationException(template, parser.getLineNumber(), "The value part in the set tag is not a valid expression: " + value + ". " + "The grammar is: set var_name = java_expression.");
 				}
 			}
 			else {
@@ -97,6 +100,9 @@ public class JapidTemplateCompiler extends JapidAbstractCompiler {
 	}
 	
 	static Pattern setPattern = Pattern.compile("(\\w+)\\s+(.*)");
+	static Pattern SET_ARG_PATTERN_ONELINER_COLON = Pattern.compile("\\w+\\s*:.*");
+	static Pattern SET_ARG_PATTERN_ONELINER_EQUAL = Pattern.compile("\\w+\\s*=.*");
+	static Pattern SET_ARG_PATTERN_ONELINER = Pattern.compile("\\w+\\s*[:=].*");
 	
 	@Override
 	protected AbstractTemplateClassMetaData getTemplateClassMetaData() {
