@@ -263,7 +263,7 @@ public class JavaSyntaxToolTest {
 	@Test
 	public void testValidMethDecl() {
 		String src = "foo(int i, String s)";
-		JavaSyntaxTool.isValidMeth(src);
+		JavaSyntaxTool.isValidMethDecl(src);
 		
 	}
 	
@@ -273,9 +273,51 @@ public class JavaSyntaxToolTest {
 	public void testInvalidMethDecl() {
 		String src = "foo(i,  s)";
 		try {
-			JavaSyntaxTool.isValidMeth(src);
+			JavaSyntaxTool.isValidMethDecl(src);
 			fail("should have thrown exception");
 		} catch (RuntimeException e) {
+			System.out.println(e);
+		}
+		
+	}
+	
+	@Test
+	public void testMethCall() {
+		String src = "foo(i,  s)";
+		JavaSyntaxTool.isValidMethodCall(src);
+
+		src = "a.b$.foo (i,  s)";
+		JavaSyntaxTool.isValidMethodCall(src);
+
+		src = "foo(i,  String s)";
+		try {
+			JavaSyntaxTool.isValidMethodCall(src);
+			fail("should have thrown an exception");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		try {
+			src = "a.b$.fo o(i,  s)";
+			JavaSyntaxTool.isValidMethodCall(src);
+			fail("should have thrown an exception");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		src = "a.b";
+		try {
+			JavaSyntaxTool.isValidMethodCall(src);
+			fail("should have thrown an exception");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		src = "a = b()";
+		try {
+			JavaSyntaxTool.isValidMethodCall(src);
+			fail("should have thrown an exception");
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 		

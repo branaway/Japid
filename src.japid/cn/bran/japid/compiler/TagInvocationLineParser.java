@@ -55,7 +55,7 @@ public class TagInvocationLineParser {
 			tag = new Tag.TagDef();
 			if (!line.endsWith(")"))
 				line += "()";
-			JavaSyntaxTool.isValidMeth(line);
+			JavaSyntaxTool.isValidMethDecl(line);
 			tag.args = line;
 			return tag;
 		} else if (tag.tagName.equals("set")) {

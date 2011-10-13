@@ -1,5 +1,6 @@
 package cn.bran.japid.compiler;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
@@ -157,6 +158,20 @@ public class CompilerTests {
 		String src = readFile("JapidSample/app/japidviews/templates/AllPost.html");
 
 		JapidTemplate bt = new JapidTemplate("japidviews/templates/AllPost.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		CompilationUnit cu = JavaSyntaxTool.parse(bt.javaSource);
+		System.out.println(cu);
+//		assertTrue("invalid java code", JavaSyntaxValidator.isValid(bt.javaSource));
+		
+	}
+	
+	@Test
+	public void testOpenForInDef() throws IOException, ParseException {
+		String src = readFile("tests/openForInDef.html");
+		
+		JapidTemplate bt = new JapidTemplate("tests/openForInDef.html", src);
 		JapidAbstractCompiler cp = new JapidTemplateCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
@@ -351,7 +366,7 @@ public class CompilerTests {
 		cp.compile(bt);
 		System.out.println(bt.javaSource);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
-//		assertTrue(bt.javaSource.contains("((Each)(new Each(getOut())).setActionRunners(getActionRunners())).render(sa, new Each.DoBody<String>(){"));
+		assertFalse(bt.javaSource.contains("setActionRunners"));
 	}
 
 	@Test

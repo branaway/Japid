@@ -554,10 +554,10 @@ public class JavaSyntaxTool {
 	public static final Pattern AS_PATTERN = Pattern
 			.compile("(.*)->\\s*(\\w+)");
 
-	//
-	// static final String classTempForVarDef = "class T {  {   %s ; } }";
-	//
-	// /**
+	 static final String classTempForStmt = "class T {  {   %s ; } }";
+	
+
+	 // /**
 	// *
 	// * @param s
 	// * something like: "int a = 1, int b"
@@ -642,7 +642,7 @@ public class JavaSyntaxTool {
 	 * verify that line is a valid method declaration part, excluding method body and the {} 
 	 * @param line: something like foo(int a, String b)
 	 */
-	public static void isValidMeth(String line) {
+	public static void isValidMethDecl(String line) {
 		final String classTempForMeth = "class T {  %s{} }";
 		String classString = String.format(classTempForMeth, line);
 		try {
@@ -656,5 +656,52 @@ public class JavaSyntaxTool {
 							+ line + ". Was expecting something like foo(int a, String b).");
 		}
 
+	}
+
+	public static void isValidMethodCall(String src) {
+		String classString = String.format(classTempForStmt, src);
+		try {
+			CompilationUnit cu = parse(classString);
+			final boolean[] good = new boolean[1];
+			good[0] = false;
+			VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+				@Override
+				public void visit(MethodCallExpr n, Object arg) {
+					good[0] = true;
+				}
+				
+				// TODO: should detect that the top most expression is a method call
+			};
+			cu.accept(visitor, null);
+			
+			if (!good[0])
+				throw new RuntimeException(
+						"the line does not seem to be a valid method invocation expression: "
+								+ src + ". Was expecting something like x.foo(a, b).");
+			else 
+				if (!methPattern.matcher(src).matches())
+					throw new RuntimeException(
+							"the line does not seem to be a valid method invocation expression: "
+									+ src + ". Was expecting something like x.foo(a, b).");
+				
+		} catch (ParseException e) {
+			throw new RuntimeException(
+					"the line does not seem to be a valid method invocation expression: "
+							+ src + ". Was expecting something like foo(a, b).");
+		}
+	}
+	
+	public final static Pattern methPattern = Pattern.compile("[\\w\\.\\$\\s]+\\(.*\\)");
+	
+	public static boolean isValidMethodCallSimple(String src) {
+		if (src == null )
+			return false;
+		src = src.trim();
+		if (src.length() < 3)
+			return false;
+		if (!methPattern.matcher(src).matches())
+			return false;
+		
+		return true;
 	}
 }

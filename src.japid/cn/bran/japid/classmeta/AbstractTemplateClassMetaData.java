@@ -605,7 +605,7 @@ public abstract class AbstractTemplateClassMetaData {
 		String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
 		pln(decl);
 
-		if (useWithPlay) {
+		if (useWithPlay  && !tagClassName.equals("Each")) {
 			String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
 			pln(addRunner);
 		}
