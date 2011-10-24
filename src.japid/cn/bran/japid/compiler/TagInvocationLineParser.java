@@ -7,7 +7,7 @@ import java.util.List;
 import cn.bran.japid.util.StringUtils;
 
 /**
- * parse #{tag (t, v) | U u }
+ * parse `tag (t, v) | U u
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
@@ -71,6 +71,7 @@ public class TagInvocationLineParser {
 		try {
 			List<String> args = JavaSyntaxTool.parseArgs(line);
 			tag.args = StringUtils.join(args, ",");
+			// XXX
 			// // might miss a wrong calling syntax: a, b|c, where the user
 			// might intend a, b | String c
 			// // let's check that
@@ -121,6 +122,11 @@ public class TagInvocationLineParser {
 
 		}
 
+		if ("Each".equals(tag.tagName) || "each".equals(tag.tagName)) {
+			if (!tag.hasBody) {
+				throw new RuntimeException("The Each tag must have a body. Invalid statement: " + line);
+			}
+		}
 		return tag;
 	}
 

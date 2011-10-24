@@ -8,14 +8,18 @@ import java.util.regex.Pattern;
 
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
+import japa.parser.ast.Node;
 import japa.parser.ast.body.Parameter;
 import japa.parser.ast.body.VariableDeclarator;
 import japa.parser.ast.expr.AnnotationExpr;
+import japa.parser.ast.expr.MethodCallExpr;
 import japa.parser.ast.expr.VariableDeclarationExpr;
 import japa.parser.ast.type.Type;
 import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 import org.junit.Test;
+
+import cn.bran.japid.compiler.JavaSyntaxTool.CodeNode;
 
 public class JavaSyntaxToolTest {
 	@Test
@@ -154,6 +158,15 @@ public class JavaSyntaxToolTest {
 		String src = "String a, int b, long[] c, long d";
 		String res = JavaSyntaxTool.boxPrimitiveTypesInParams(src);
 		assertEquals("String a, Integer b, long[] c, Long d", res);
+		
+		try {
+			src = "d";
+			res = JavaSyntaxTool.boxPrimitiveTypesInParams(src);
+			fail("should have an exception");
+		} catch (RuntimeException e) {
+			System.out.println(e);
+		}
+		
 	}
 
 	/**
@@ -298,6 +311,34 @@ public class JavaSyntaxToolTest {
 		}
 		
 		try {
+			JavaSyntaxTool.isValidMethodCall("int i");
+			fail("should have thrown an exception");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		try {
+			JavaSyntaxTool.isValidMethodCall("foo(); bar()");
+			fail("should have thrown an exception");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		try {
+			JavaSyntaxTool.isValidMethodCall("xxx yyy");
+			fail("should have thrown an exception");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		try {
+			JavaSyntaxTool.isValidMethodCall("int i = 0");
+			fail("should have thrown an exception");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		try {
 			src = "a.b$.fo o(i,  s)";
 			JavaSyntaxTool.isValidMethodCall(src);
 			fail("should have thrown an exception");
@@ -323,5 +364,68 @@ public class JavaSyntaxToolTest {
 		
 	}
 	
+
+	@Test
+	public void testVarDecl() {
+		assertTrue(JavaSyntaxTool.isValidSingleVarDecl("int a"));
+		assertTrue(JavaSyntaxTool.isValidSingleVarDecl("String as "));
+		assertTrue(JavaSyntaxTool.isValidSingleVarDecl("MyObject[] asd"));
+
+		assertFalse(JavaSyntaxTool.isValidSingleVarDecl("a"));
+		assertFalse(JavaSyntaxTool.isValidSingleVarDecl("a b c"));
+		assertFalse(JavaSyntaxTool.isValidSingleVarDecl("a, b"));
+		assertFalse(JavaSyntaxTool.isValidSingleVarDecl("int a; int b"));
+	}
 	
+	@Test
+	public void testForPredicates(){
+		String s = "MyType v : myCollection";
+		boolean good = JavaSyntaxTool.isValidForLoopPredicate(s);
+		assertTrue(good);
+
+		s = "MyType v : myCollection.a.b(\"name: myname\")";
+		good = JavaSyntaxTool.isValidForLoopPredicate(s);
+		assertTrue(good);
+
+		s = "MyType v  myCollection.a.b";
+		good = JavaSyntaxTool.isValidForLoopPredicate(s);
+		assertFalse(good);
+
+		s = "v:  myCollection";
+		good = JavaSyntaxTool.isValidForLoopPredicate(s);
+		assertFalse(good);
+	}
+	
+	@Test
+	public void testParseCode(){
+		String code = "class A {{for (Type i : ii.a.foo()){}}}";
+		List<CodeNode> nodes = JavaSyntaxTool.parseCode(code);
+		for (CodeNode n : nodes) {
+			System.out.println(n.nestLevel + ":" + n.node.getClass().getName() + ": " + n.node.toString());
+		}
+	
+		code = "class A {{a.foo(); bar(); int i;}}";
+		nodes = JavaSyntaxTool.parseCode(code);
+		listNodes(nodes);
+	}
+
+	private void listNodes(List<CodeNode> nodes) {
+		for (CodeNode n : nodes) {
+			System.out.println(n.nestLevel + ":" + n.node.getClass().getName() + ": " + n.node.toString());
+		}
+	}
+
+	@Test
+	public void testSingleMethCall(){
+		String code = "class A {{a.foo(bar());}}";
+		List<CodeNode> nodes = JavaSyntaxTool.parseCode(code);
+		assertTrue(nodes.get(5).node instanceof MethodCallExpr);
+	}
+	
+	@Test
+	public void testOrExpression(){
+		String code = "class A {{foo(a, b |c);}}";
+		List<CodeNode> nodes = JavaSyntaxTool.parseCode(code);
+		listNodes(nodes);
+	}
 }

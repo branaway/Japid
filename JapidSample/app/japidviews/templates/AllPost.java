@@ -97,7 +97,7 @@ final Tag2 _Tag22 = new Tag2(getOut());
 		p("\n");// line 6
 		p("\n");// line 7
 		p("\n");// line 9
-		for (Post p: allPost) { // line 11
+		for (Post p: allPost) {// line 11
 		p("        ");// line 11
 		p("\n" + 
 "\n" + 

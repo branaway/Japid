@@ -214,7 +214,7 @@ public abstract class JapidAbstractCompiler {
 		String lines = composeValidMultiLines(text);
 		String ref = this.getTemplateClassMetaData().addStaticText(lines, text);
 		if (ref != null) {
-			// print the static content via the varaible
+			// print the static content via the variable
 			// print("p(" + ref + ");");
 			// print the static content directly
 			print("p(" + lines + ");");
@@ -521,15 +521,13 @@ public abstract class JapidAbstractCompiler {
 					boolean negative = expr.startsWith("!");
 					if (negative)
 						expr = expr.substring(1).trim();
-					expr = "} else if(" + (negative ? "!" : "") + "asBoolean(" + removeEndingString(expr, "{") + ")) {";
-					print(expr);
-					markLine(parser.getLineNumber() + i);
-					println();
-				} else {
-					print(expr);
-					markLine(parser.getLineNumber() + i);
-					println();
+					String cleanExpr = removeEndingString(expr, "{");
+					verifyExpr(cleanExpr);
+					expr = "} else if(" + (negative ? "!" : "") + "asBoolean(" + cleanExpr + ")) {";
 				}
+				print(expr);
+				markLine(parser.getLineNumber() + i);
+				println();
 			} else if (line.matches(OPEN_ELSE_IF_PATTERN_STRING)) {
 				// open
 				String expr = line.trim();
@@ -559,7 +557,7 @@ public abstract class JapidAbstractCompiler {
 									markLine(parser.getLineNumber() + i);
 									println();
 								} else {
-									throw new JapidCompilationException(template, parser.getLineNumber(), "the open \"else if\" statement is not properly matched to a previous if");
+									throw new JapidCompilationException(template, parser.getLineNumber() + i, "the open \"else if\" statement is not properly matched to a previous if");
 								}
 							}
 							else {
@@ -586,7 +584,7 @@ public abstract class JapidAbstractCompiler {
 					Tag.TagIf iftag = new Tag.TagIf("", parser.getLineNumber());
 					pushToStack(iftag);
 				} else {
-					throw new JapidCompilationException(template, parser.getLineNumber(), "the open \"else\" statement is not properly matched to a previous if");
+					throw new JapidCompilationException(template, parser.getLineNumber() + i, "the open \"else\" statement is not properly matched to a previous if");
 				}
 			} else if (line.trim().matches(OPEN_FOR_PATTERN_STRING)) {
 				// simply replace it with a "each" tag call
@@ -594,8 +592,14 @@ public abstract class JapidAbstractCompiler {
 				Matcher matcher = OPEN_FOR_PATTERN.matcher(expr);
 				if (matcher.matches()) {
 					String instanceDecl = matcher.group(1);
+					if (!JavaSyntaxTool.isValidSingleVarDecl(instanceDecl))
+						throw new JapidCompilationException(template, parser.getLineNumber() + i, "loop variable declaration error: " + instanceDecl);
 					instanceDecl = JavaSyntaxTool.cleanDeclPrimitive(instanceDecl);
+					
 					String collection = matcher.group(2);
+					if (!JavaSyntaxTool.isValidExpr(collection))
+						throw new JapidCompilationException(template, parser.getLineNumber() + i, "syntax error: " + collection);
+
 					expr = "each " + collection + " | " + instanceDecl;
 					Tag tag = buildTagDirective(expr);
 					tag.tagName = "Each";
@@ -648,6 +652,7 @@ public abstract class JapidAbstractCompiler {
 	private void handleOpenElseIf(int i, String expr, boolean negative) {
 //		expr = expr.substring(1).trim();
 		// end previous if shadow and star a new one
+		verifyExpr(expr);
 		Tag tagShadow = tagsStackShadow.peek();
 		if (tagShadow instanceof TagIf) {
 			tagsStackShadow.pop();
@@ -676,17 +681,15 @@ public abstract class JapidAbstractCompiler {
 		if (negative)
 			ex = ex.substring(1).trim();
 		
-		if (ex.endsWith("{")) {
-			// semi-open
-			ex = removeEndingString(ex, "{").trim();
-			ex = "if(" + (negative ? "!" : "") + "asBoolean(" + ex + ")) {";
-		} else {
+		if (!ex.endsWith("{")) {
 			// true open. out a shadow tag, since we want reuse the
 			// ` as the end delimiter
 			Tag.TagIf iftag = new Tag.TagIf(ex, parser.getLineNumber());
 			pushToStack(iftag);
-			ex = "if(" + (negative ? "!" : "") + "asBoolean(" + ex + ")) {";
 		}
+		ex = removeEndingString(ex, "{").trim();
+		verifyExpr(ex);
+		ex = "if(" + (negative ? "!" : "") + "asBoolean(" + ex + ")) {";
 		print(ex);
 		markLine(parser.getLineNumber() + i);
 		println();
@@ -763,9 +766,7 @@ public abstract class JapidAbstractCompiler {
 //				substitute = substitute.substring(0, substitute.length() - 1);
 		}
 
-		if (!JavaSyntaxTool.isValidExpr(expr)) {
-			throw new JapidCompilationException(template, parser.getLineNumber(), "invalid Java expression: " + expr);
-		}
+		verifyExpr(expr);
 		
 		if (escape) {
 			expr = "escape(" + expr + ")";
@@ -791,6 +792,12 @@ public abstract class JapidAbstractCompiler {
 		}
 	}
 
+	private void verifyExpr(String expr) {
+		if (!JavaSyntaxTool.isValidExpr(expr)) {
+			throw new JapidCompilationException(template, parser.getLineNumber(), "invalid Java expression: " + expr);
+		}
+	}
+
 	protected void printLine(String string) {
 		print(string);
 		markLine();
@@ -802,10 +809,43 @@ public abstract class JapidAbstractCompiler {
 	}
 
 	protected void message(String token) {
-		String expr = token.trim().replace('\'', '"');
+		token = token.trim();
+		List<String> args = null;
+		try {
+			args = JavaSyntaxTool.parseArgs(token);
+		} catch (RuntimeException e) {
+			throw new JapidCompilationException(
+					template,
+					parser.getLineNumber(),
+					"Message lookup commmand takes arguments like in a Java method call. Don't use single quotation marks to quote a message name for instance. "
+							+ token);
+		}
+
+		String expr = "";
+		if (args.size() == 1) {
+			expr = decorQuote(args.get(0));
+		} else if (args.size() == 2) {
+			expr = decorQuote(args.get(0)) + ", " + args.get(1);
+		} else {
+			throw new JapidCompilationException(
+					template,
+					parser.getLineNumber(),
+					"Message lookup commmand can only take either one or two arguments. Bad number of args: "
+							+ token);
+		}
+
 		print(";p(getMessage(" + expr + "));");
 		markLine();
 		println();
+	}
+
+	private String decorQuote(String token) {
+		String expr = token.replace('\'', '"');
+		if (!expr.startsWith("\""))
+			expr = "\"" + expr;
+		if (!expr.endsWith("\""))
+			expr += "\"";
+		return expr;
 	}
 
 	/**
@@ -996,7 +1036,10 @@ public abstract class JapidAbstractCompiler {
 			tag.tagIndex = tagIndex++;
 			return tag;
 		} catch (RuntimeException e) {
-			throw new JapidCompilationException(template, parser.getLineNumber(), e.getMessage());
+			if (e instanceof JapidCompilationException)
+				throw e;
+			else
+				throw new JapidCompilationException(template, parser.getLineNumber(), e.getMessage());
 		}
 	}
 
@@ -1124,28 +1167,6 @@ public abstract class JapidAbstractCompiler {
 				tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + bodyInner.getAnonymous() + ");";
 			}
 
-			// String tagVar = "_" + tag.getTagVarName() + tag.tagIndex;
-			// String tagLine = tagVar + ".setOut(getOut()); "; // make sure
-			// to
-			// use the current string builder
-			// String tagClassName = tag.tagName;
-			// String tagClassName = tag.tagName;
-			// if (tagClassName.equals("this")) {
-			// tagClassName = getTemplateClassMetaData().getClassName();
-			// }
-			//
-			// String tagline = "";
-
-			// if (getTemplateClassMetaData().useWithPlay) {
-			// tagline = "((" + tagClassName + ")(new " + tagClassName +
-			// "(getOut()))";
-			// tagline += ".setActionRunners(getActionRunners()))";
-			// } else {
-			// tagline = "new " + tagClassName + "(getOut())";
-			// }
-			// tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args
-			// + ", " : "") + inner.getAnonymous() + ");";
-
 			print(tagline);
 		} else {
 			// for simple tag call without call back:
@@ -1159,36 +1180,6 @@ public abstract class JapidAbstractCompiler {
 			this.getTemplateClassMetaData().removeLastCallTagBodyInnerClass();
 		}
 	}
-//
-//	private TagDef getDefTag() {
-//		// recursively search the stack for def
-//		Tag t;
-//		try {
-//			for (int i = tagsStack.size(); i > 0; i--) {
-//				t = tagsStack.get(i - 1);
-//				if (t instanceof TagDef) {
-//					return (TagDef) t;
-//				}
-//			}
-//		} catch (Exception e) {
-//		}
-//		return null;
-//	}
-//
-//	private TagSet getSetTag() {
-//		// recursively search the stack for set
-//		Tag t;
-//		try {
-//			for (int i = tagsStack.size(); i > 0; i--) {
-//				t = tagsStack.get(i - 1);
-//				if (t instanceof TagSet) {
-//					return (TagSet) t;
-//				}
-//			}
-//		} catch (Exception e) {
-//		}
-//		return null;
-//	}
 
 	private TagInTag getTagInTag() {
 		// recursively search the stack for TagInTag

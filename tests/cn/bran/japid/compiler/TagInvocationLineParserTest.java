@@ -28,6 +28,20 @@ public class TagInvocationLineParserTest {
 		String src = "tag a, b | c";
 		Tag t = p.parse(src);
 	}
+	
+	@Test
+	public void testEachClosureParamError() {
+		String src = "Each a, b | c";
+		try {
+			Tag t = p.parse(src);
+			fail("should have thrown an exception");
+		} catch (RuntimeException e) {
+			System.out.println(e);
+		}
+		
+		src = "Each a | int c";
+		Tag t = p.parse(src);
+	}
 
 	@Test
 	public void testOrString() {

@@ -73,16 +73,22 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 //------
 p("login: ");// line 1
 		;p(getMessage("login.name"));// line 1
-		p(" or ");// line 1
+		p(", ");// line 1
+		;p(getMessage("login.name"));// line 1
+		p("  or ");// line 1
 		p(i18n("login.name"));// line 1
 		p("\n" + 
 "</p>\n" + 
-"customer name: ");// line 1
-		;p(getMessage("cus.name", "冉兵冉兵"));// line 3
-		p(" or ");// line 3
-		p(i18n("cus.name", "Bing Ran"));// line 3
+"\n");// line 1
+		 String sub = "bran";// line 4
+		p("customer name: ");// line 4
+		;p(getMessage("cus.name", sub));// line 5
+		p(", ");// line 5
+		;p(getMessage("cus.name", "冉兵冉兵"));// line 5
+		p("  or ");// line 5
+		p(i18n("cus.name", "Bing Ran"));// line 5
 		p("\n" + 
-"\n");// line 3
+"\n");// line 5
 		
 	}
 

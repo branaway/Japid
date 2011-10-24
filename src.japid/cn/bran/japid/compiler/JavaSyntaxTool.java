@@ -3,23 +3,99 @@ package cn.bran.japid.compiler;
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
 import japa.parser.TokenMgrError;
+import japa.parser.ast.BlockComment;
 import japa.parser.ast.CompilationUnit;
+import japa.parser.ast.ImportDeclaration;
+import japa.parser.ast.LineComment;
+import japa.parser.ast.Node;
+import japa.parser.ast.PackageDeclaration;
+import japa.parser.ast.TypeParameter;
+import japa.parser.ast.body.AnnotationDeclaration;
+import japa.parser.ast.body.AnnotationMemberDeclaration;
+import japa.parser.ast.body.ClassOrInterfaceDeclaration;
+import japa.parser.ast.body.ConstructorDeclaration;
+import japa.parser.ast.body.EmptyMemberDeclaration;
+import japa.parser.ast.body.EmptyTypeDeclaration;
+import japa.parser.ast.body.EnumConstantDeclaration;
+import japa.parser.ast.body.EnumDeclaration;
+import japa.parser.ast.body.FieldDeclaration;
+import japa.parser.ast.body.InitializerDeclaration;
+import japa.parser.ast.body.JavadocComment;
 import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.body.ModifierSet;
 import japa.parser.ast.body.Parameter;
 import japa.parser.ast.body.VariableDeclarator;
 import japa.parser.ast.body.VariableDeclaratorId;
 import japa.parser.ast.expr.AnnotationExpr;
+import japa.parser.ast.expr.ArrayAccessExpr;
+import japa.parser.ast.expr.ArrayCreationExpr;
+import japa.parser.ast.expr.ArrayInitializerExpr;
 import japa.parser.ast.expr.AssignExpr;
+import japa.parser.ast.expr.BinaryExpr;
+import japa.parser.ast.expr.BinaryExpr.Operator;
+import japa.parser.ast.expr.BooleanLiteralExpr;
+import japa.parser.ast.expr.CastExpr;
+import japa.parser.ast.expr.CharLiteralExpr;
+import japa.parser.ast.expr.ClassExpr;
+import japa.parser.ast.expr.ConditionalExpr;
+import japa.parser.ast.expr.DoubleLiteralExpr;
+import japa.parser.ast.expr.EnclosedExpr;
 import japa.parser.ast.expr.Expression;
+import japa.parser.ast.expr.FieldAccessExpr;
+import japa.parser.ast.expr.InstanceOfExpr;
+import japa.parser.ast.expr.IntegerLiteralExpr;
+import japa.parser.ast.expr.IntegerLiteralMinValueExpr;
+import japa.parser.ast.expr.LongLiteralExpr;
+import japa.parser.ast.expr.LongLiteralMinValueExpr;
+import japa.parser.ast.expr.MarkerAnnotationExpr;
+import japa.parser.ast.expr.MemberValuePair;
 import japa.parser.ast.expr.MethodCallExpr;
+import japa.parser.ast.expr.NameExpr;
+import japa.parser.ast.expr.NormalAnnotationExpr;
+import japa.parser.ast.expr.NullLiteralExpr;
+import japa.parser.ast.expr.ObjectCreationExpr;
+import japa.parser.ast.expr.QualifiedNameExpr;
+import japa.parser.ast.expr.SingleMemberAnnotationExpr;
+import japa.parser.ast.expr.StringLiteralExpr;
+import japa.parser.ast.expr.SuperExpr;
+import japa.parser.ast.expr.ThisExpr;
+import japa.parser.ast.expr.UnaryExpr;
 import japa.parser.ast.expr.VariableDeclarationExpr;
+import japa.parser.ast.stmt.AssertStmt;
+import japa.parser.ast.stmt.BlockStmt;
+import japa.parser.ast.stmt.BreakStmt;
+import japa.parser.ast.stmt.CatchClause;
+import japa.parser.ast.stmt.ContinueStmt;
+import japa.parser.ast.stmt.DoStmt;
+import japa.parser.ast.stmt.EmptyStmt;
+import japa.parser.ast.stmt.ExplicitConstructorInvocationStmt;
+import japa.parser.ast.stmt.ExpressionStmt;
+import japa.parser.ast.stmt.ForStmt;
+import japa.parser.ast.stmt.ForeachStmt;
+import japa.parser.ast.stmt.IfStmt;
+import japa.parser.ast.stmt.LabeledStmt;
+import japa.parser.ast.stmt.ReturnStmt;
+import japa.parser.ast.stmt.SwitchEntryStmt;
+import japa.parser.ast.stmt.SwitchStmt;
+import japa.parser.ast.stmt.SynchronizedStmt;
+import japa.parser.ast.stmt.ThrowStmt;
+import japa.parser.ast.stmt.TryStmt;
+import japa.parser.ast.stmt.TypeDeclarationStmt;
+import japa.parser.ast.stmt.WhileStmt;
+import japa.parser.ast.type.ClassOrInterfaceType;
+import japa.parser.ast.type.PrimitiveType;
+import japa.parser.ast.type.ReferenceType;
 import japa.parser.ast.type.Type;
+import japa.parser.ast.type.VoidType;
+import japa.parser.ast.type.WildcardType;
+import japa.parser.ast.visitor.GenericVisitor;
+import japa.parser.ast.visitor.VoidVisitor;
 import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -555,6 +631,7 @@ public class JavaSyntaxTool {
 			.compile("(.*)->\\s*(\\w+)");
 
 	 static final String classTempForStmt = "class T {  {   %s ; } }";
+	 static final String varDeclTemp = "class T {  {  for (%s : collection){} } }";
 	
 
 	 // /**
@@ -661,33 +738,69 @@ public class JavaSyntaxTool {
 	public static void isValidMethodCall(String src) {
 		String classString = String.format(classTempForStmt, src);
 		try {
-			CompilationUnit cu = parse(classString);
-			final boolean[] good = new boolean[1];
-			good[0] = false;
-			VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
-				@Override
-				public void visit(MethodCallExpr n, Object arg) {
-					good[0] = true;
+			List<CodeNode> nodes = parseCode(classString);
+			if (tyepMatch(nodes, 5, MethodCallExpr.class)) {
+				// make sure there is only one statement at indentation level 4
+				if (getIndentatioCount(nodes, 4) == 1) {
+					return;
 				}
-				
-				// TODO: should detect that the top most expression is a method call
-			};
-			cu.accept(visitor, null);
-			
-			if (!good[0])
-				throw new RuntimeException(
-						"the line does not seem to be a valid method invocation expression: "
-								+ src + ". Was expecting something like x.foo(a, b).");
-			else 
-				if (!methPattern.matcher(src).matches())
-					throw new RuntimeException(
-							"the line does not seem to be a valid method invocation expression: "
-									+ src + ". Was expecting something like x.foo(a, b).");
-				
-		} catch (ParseException e) {
+			}
+
+			throw new RuntimeException(
+					"the line does not seem to be a valid method invocation expression: "
+							+ src + ". Was expecting something like x.foo(a, b).");
+//			
+//			CompilationUnit cu = parse(classString);
+//			final boolean[] good = new boolean[1];
+//			good[0] = false;
+//			VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+//				@Override
+//				public void visit(MethodCallExpr n, Object arg) {
+//					good[0] = true;
+//				}
+//				
+//				// TODO: should detect that the top most expression is a method call
+//			};
+//			cu.accept(visitor, null);
+//			
+//			if (!good[0])
+//				throw new RuntimeException(
+//						"the line does not seem to be a valid method invocation expression: "
+//								+ src + ". Was expecting something like x.foo(a, b).");
+//			else 
+//				if (!methPattern.matcher(src).matches())
+//					throw new RuntimeException(
+//							"the line does not seem to be a valid method invocation expression: "
+//									+ src + ". Was expecting something like x.foo(a, b).");
+//				
+		} catch (RuntimeException e) {
 			throw new RuntimeException(
 					"the line does not seem to be a valid method invocation expression: "
 							+ src + ". Was expecting something like foo(a, b).");
+		}
+	}
+
+	private static int getIndentatioCount(List<CodeNode> nodes, int i) {
+		int c = 0;
+		for (CodeNode n : nodes) {
+			if (n.nestLevel == i)
+				c++;
+		}
+		return c;
+	}
+
+	private static boolean tyepMatch(List<CodeNode> nodes, int pos,
+			Class<? extends Node> targetClass) {
+		return nodes.size() > pos && nodes.get(pos).node.getClass() == targetClass;
+	}
+
+	public static boolean isValidSingleVarDecl(String src) {
+		String classString = String.format(varDeclTemp, src);
+		try {
+			CompilationUnit cu = parse(classString);
+			return true;
+		} catch (ParseException e) {
+			return false;
 		}
 	}
 	
@@ -703,5 +816,550 @@ public class JavaSyntaxTool {
 			return false;
 		
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @param part the part in a for(%s) {}
+	 * @return true if the input is a valid part in the for java 5 for loop predicative
+	 */
+	public static boolean isValidForLoopPredicate(String part){
+		String classString = String.format(TEMP_FOR_HEADER, part);
+		try {
+			CompilationUnit cu = parse(classString);
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
+
+	}
+	
+	public static final String TEMP_FOR_HEADER =  "class T {  {  for (%s){} } }";
+	
+	public static class CodeNode{
+		public int nestLevel;
+		public Node node;
+		public CodeNode(int nestLevel, Node node) {
+			this.nestLevel = nestLevel;
+			this.node = node;
+		}
+		
+	}
+	
+	public static class BinaryOrExpr extends Expression {
+		BinaryExpr expr;
+		
+		
+		public BinaryOrExpr(BinaryExpr expr) {
+			this.expr = expr;
+		}
+
+		@Override
+		public <R, A> R accept(GenericVisitor<R, A> arg0, A arg1) {
+			return null;
+		}
+
+		@Override
+		public <A> void accept(VoidVisitor<A> arg0, A arg1) {
+		}
+		
+	}
+	
+	
+	public static List<CodeNode> parseCode(String code) {
+		try{
+			final List<CodeNode> nodes = new LinkedList();
+			CompilationUnit cu = parse(code);
+			VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+				int nested = 0;
+				@Override
+				public void visit(AnnotationDeclaration n, Object arg) {
+					
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(AnnotationMemberDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ArrayAccessExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ArrayCreationExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ArrayInitializerExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(AssertStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(AssignExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(BinaryExpr n, Object arg) {
+					if (n.getOperator() == Operator.binOr) {
+						nodes.add(new CodeNode(nested++, new BinaryOrExpr(n)));
+					}
+					else {
+						nodes.add(new CodeNode(nested++, n));
+					}
+					super.visit(n, arg); 
+					nested--;
+				}
+
+				@Override
+				public void visit(BlockComment n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(BlockStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(BooleanLiteralExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(BreakStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(CastExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(CatchClause n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(CharLiteralExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ClassExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ClassOrInterfaceDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ClassOrInterfaceType n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(CompilationUnit n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ConditionalExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ConstructorDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ContinueStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(DoStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(DoubleLiteralExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(EmptyMemberDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(EmptyStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(EmptyTypeDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(EnclosedExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(EnumConstantDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(EnumDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ExplicitConstructorInvocationStmt n,
+						Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ExpressionStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(FieldAccessExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(FieldDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ForeachStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ForStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(IfStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ImportDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(InitializerDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(InstanceOfExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(IntegerLiteralExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(IntegerLiteralMinValueExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(JavadocComment n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(LabeledStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(LineComment n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(LongLiteralExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(LongLiteralMinValueExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(MarkerAnnotationExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(MemberValuePair n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(MethodCallExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(MethodDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(NameExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(NormalAnnotationExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(NullLiteralExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ObjectCreationExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(PackageDeclaration n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(Parameter n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(PrimitiveType n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(QualifiedNameExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ReferenceType n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ReturnStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(SingleMemberAnnotationExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(StringLiteralExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(SuperExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(SwitchEntryStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(SwitchStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(SynchronizedStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ThisExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(ThrowStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(TryStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(TypeDeclarationStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(TypeParameter n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(UnaryExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(VariableDeclarationExpr n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(VariableDeclarator n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(VariableDeclaratorId n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(VoidType n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(WhileStmt n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+
+				@Override
+				public void visit(WildcardType n, Object arg) {
+
+					nodes.add(new CodeNode(nested++, n)); super.visit(n, arg); nested--;
+				}
+				
+			};
+			cu.accept(visitor, null);
+			return nodes;
+		} catch (ParseException e) {
+			throw new RuntimeException(
+					"invalid Java code: " + code + ". " + e);
+		}
+
 	}
 }

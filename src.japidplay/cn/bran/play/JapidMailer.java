@@ -35,10 +35,10 @@ import cn.bran.japid.util.StringUtils;
 public class JapidMailer  {
 
     private static final String TEXT_HTML = "text/html";
-	private static final String TEXT_PLAIN = "text/plain";
-	private static final String CONTROLLERS = "controllers.";
-	private static final String NOTIFIERS = "notifiers.";
-	private static final String METHOD = "method";
+//	private static final String TEXT_PLAIN = "text/plain";
+//	private static final String CONTROLLERS = "controllers.";
+//	private static final String NOTIFIERS = "notifiers.";
+//	private static final String METHOD = "method";
 	private static final String HEADERS = "headers";
 	private static final String SUBJECT = "subject";
 	private static final String CHARSET = "charset";

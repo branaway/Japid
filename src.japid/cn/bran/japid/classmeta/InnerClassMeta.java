@@ -38,12 +38,10 @@ public class InnerClassMeta {
 	String renderBody;
 //	private String interfaceName;
 	public InnerClassMeta(String tagName, int counter, String callbackArgs, String renderBody) {
-		super();
 		this.tagName = tagName.replace('/', '.');
 		this.counter = counter;
 		this.renderParams = JavaSyntaxTool.boxPrimitiveTypesInParams(callbackArgs);
 		this.renderBody = renderBody;
-//		this.interfaceName = interfaceName;
 	}
 //
 //	/**

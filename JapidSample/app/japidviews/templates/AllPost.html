@@ -8,7 +8,7 @@
 
 @set title = "Home: " + blogTitle
 
-@for (Post p: allPost) { 
+@for (Post p: allPost) {
         *{ now we call a tag, with a body content that take a parameter title of String type }*
 
 	    @tag Display (post=p, as="home2") | String title

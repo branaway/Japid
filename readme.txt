@@ -24,7 +24,12 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
-2011/10/1: V0.9.1: breaking changes, japid regen required.
+2011/10/23: V0.9.2: breaking changes, japid regen required.
+	1. syntax change: using single quote in a "message lookup" command is not valid anymore. Use double quotes or no quotes at all. e.g.:
+		&{msg.one}, &{"message.2"}. 
+		The Japid compiler will throw an exception on the old syntax. 
+	2. bug fix: JapidMailer would blow out if no charset is set. The real problem was the StringUtil.isEmpty() was wrong in interpreting the asBoolean(). 
+2011/10/12: V0.9.1: breaking changes, japid regen required.
 	1. bug fix: code generation error in compiling Each and "open for" loop in def block. Thanks Evan.  
 2011/10/1: V0.9.0: breaking changes, japid regen required.
 	1. Enhancement: multiple changes to catch more syntax error in compiling Japid templates, a significant error reporting improvement. The JapidTemplateBase was moved to the play dependent package in the source;  

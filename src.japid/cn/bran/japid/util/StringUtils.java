@@ -131,7 +131,7 @@ public class StringUtils {
 	}
 
 	public static boolean isEmpty(String charset) {
-		return WebUtils.asBoolean(charset);
+		return !WebUtils.asBoolean(charset);
 	}
 
 	// copied from Play's Utils.java
