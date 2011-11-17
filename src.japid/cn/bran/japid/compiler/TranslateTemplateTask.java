@@ -1,4 +1,5 @@
 /**
+
  * Copyright 2010 Bing Ran<bing_ran@hotmail.com> 
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not 
@@ -21,6 +22,7 @@ import java.util.List;
 
 import cn.bran.japid.classmeta.AbstractTemplateClassMetaData;
 import cn.bran.japid.util.DirUtil;
+import cn.bran.japid.util.JapidFlags;
 
 /**
  * modeled after the JamonTask in the <a url = "http://www.jamon.org/>Jamon
@@ -47,7 +49,7 @@ import cn.bran.japid.util.DirUtil;
  * 
  */
 public class TranslateTemplateTask {
-
+	
 	private List<Class<?>> staticImports = new ArrayList<Class<?>>();
 	private List<String> imports = new ArrayList<String>();
 	// changed html source files
@@ -115,7 +117,7 @@ public class TranslateTemplateTask {
 		changedFiles = DirUtil.findChangedSrcFiles(include);
 
 		if (changedFiles.size() > 0) {
-			System.out.println("[Japid] Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " in directory tree: " + destDir);
+			if (JapidFlags.verbose) System.out.println("[Japid] Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " in directory tree: " + destDir);
 
 			JapidTemplateTransformer tran = new JapidTemplateTransformer(packageRoot.getPath(), null);
 			tran.usePlay(this.usePlay);
@@ -131,8 +133,8 @@ public class TranslateTemplateTask {
 
 			for (int i = 0; i < changedFiles.size(); i++) {
 				File templateFile = changedFiles.get(i);
-				System.out.println("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
-				if (listFiles) {
+				if (JapidFlags.verbose) System.out.println("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
+				if (JapidFlags.verbose && listFiles) {
 					System.out.println(templateFile.getAbsolutePath());
 				}
 

@@ -21,6 +21,7 @@ import cn.bran.japid.rendererloader.RendererClass;
 import cn.bran.japid.rendererloader.RendererCompiler;
 import cn.bran.japid.rendererloader.TemplateClassLoader;
 import cn.bran.japid.util.DirUtil;
+import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.StackTraceUtils;
 
 public class JapidRenderer {
@@ -229,7 +230,7 @@ public class JapidRenderer {
 	}
 
 	static void howlong(String string, long t) {
-		System.out.println(string + ":" + (System.currentTimeMillis() - t) + "ms");
+		if (JapidFlags.verbose) System.out.println(string + ":" + (System.currentTimeMillis() - t) + "ms");
 	}
 
 	/**
@@ -529,7 +530,7 @@ public class JapidRenderer {
 	}
 
 	static void log(String m) {
-		System.out.println("[JapidRender]: " + m);
+		if (JapidFlags.verbose) System.out.println("[JapidRender]: " + m);
 	}
 
 	static void gen() {
