@@ -22,6 +22,8 @@ import org.eclipse.jdt.internal.compiler.env.NameEnvironmentAnswer;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 
+import cn.bran.japid.util.JapidFlags;
+
 
 /**
  * Java compiler (uses eclipse JDT)
@@ -267,7 +269,7 @@ public class RendererCompiler {
                         clazzName.append(compoundName[j]);
                     }
                     byte[] bytes = clazzFile.getBytes();
-                    System.out.println("[RenderCompiler]Compiled " + clazzName);
+                    if (JapidFlags.verbose) System.out.println("[RenderCompiler]Compiled " + clazzName);
                     // XXX address anonymous inner class issue!! ....$1...
                     String cname = clazzName.toString();
 					RendererClass rc = classes.get(cname);

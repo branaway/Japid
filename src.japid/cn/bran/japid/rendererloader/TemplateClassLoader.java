@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import cn.bran.japid.template.JapidRenderer;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.RenderInvokerUtils;
 
 /**
@@ -69,7 +70,7 @@ public class TemplateClassLoader extends ClassLoader {
 		rc.setClz(cl);
 		localClasses.put(name, cl);
 		rc.lastUpdated = 1;// System.currentTimeMillis();
-		System.out.println(oid + " reloaded from bytecode: " + name);
+		if (JapidFlags.verbose) System.out.println(oid + " reloaded from bytecode: " + name);
 		return cl;
 
 	}
