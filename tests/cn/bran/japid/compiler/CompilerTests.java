@@ -246,6 +246,21 @@ public class CompilerTests {
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 	}
 	
+	
+	@Test
+	public void testActionInvocation() throws IOException {
+		String src = readFile("tests/actions.html");
+		
+		JapidTemplate bt = new JapidTemplate("tests/actions.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		String source = bt.javaSource;
+		System.out.println(source);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(source));
+		assertTrue(source.contains("MyController.foo()"));
+		assertTrue(source.contains("MyController.bar()"));
+	}
+	
 	@Test
 	public void testOpenBrace() throws IOException {
 		String srcFile = "tests/openBrace.html";

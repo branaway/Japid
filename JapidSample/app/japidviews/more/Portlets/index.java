@@ -88,10 +88,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.more.Portlets.class, "panel1", a) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.more.Portlets.panel1(a); //
+				controllers.more.Portlets.panel1(a); // line 8
 			}
-		});
-p("</div>\n" + 
+		});// line 8
+		p("</div>\n" + 
 "\n" + 
 "<div>\n" + 
 "    <p>this part is cached for 10 seconds. Note the timeout spec with invoke overrides CacheFor annotation. </p>\n" + 
@@ -99,10 +99,10 @@ p("</div>\n" +
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", controllers.more.Portlets.class, "panel2", b) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.more.Portlets.panel2(b); //
+				controllers.more.Portlets.panel2(b); // line 13
 			}
-		});
-p("</div>\n" + 
+		});// line 13
+		p("</div>\n" + 
 "\n" + 
 "<div>\n" + 
 "    <p>this part is cached for 4 seconds, \n" + 
@@ -111,10 +111,10 @@ p("</div>\n" +
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.more.Portlets.class, "panel3", a + b) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.more.Portlets.panel3(a + b); //
+				controllers.more.Portlets.panel3(a + b); // line 19
 			}
-		});
-p("</div>\n");// line 19
+		});// line 19
+		p("</div>\n");// line 19
 		
 	}
 

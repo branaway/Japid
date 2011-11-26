@@ -86,10 +86,9 @@ p("\n");// line 2
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", j) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echo(j); //
+				Application.echo(j); // line 11
 			}
-		});
-// line 11
+		});// line 11
 		p("\n");// line 11
 		}// line 12
 		p("<p/>\n");// line 12
@@ -98,6 +97,12 @@ p("\n");// line 2
 		for (final Post p : posts) {// line 16
 		p("    another notation for invoking actions:  \n" + 
 "    ");// line 16
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echoPost", p) {
+			@Override
+			public void runPlayAction() throws cn.bran.play.JapidResult {
+				Application.echoPost(p); // line 18
+			}
+		});// line 18
 }// line 19
 		;// line 19
 		

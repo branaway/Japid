@@ -80,10 +80,9 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "decorateName", a.name) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.decorateName(a.name); //
+				Application.decorateName(a.name); // line 3
 			}
-		});
-// line 3
+		});// line 3
 		p("</p>\n");// line 3
 		
 	}

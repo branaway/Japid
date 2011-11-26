@@ -91,19 +91,17 @@ p("\n" +
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.authorPanel(post.getAuthor()); //
+				Application.authorPanel(post.getAuthor()); // line 8
 			}
-		});
-// line 8
+		});// line 8
 		p("</div>\n" + 
 "<div>Another one in sub package: ");// line 8
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", SubController.class, "foo", post.getAuthor().name) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				SubController.foo(post.getAuthor().name); //
+				SubController.foo(post.getAuthor().name); // line 9
 			}
-		});
-// line 9
+		});// line 9
 		p("</div>\n" + 
 "\n" + 
 "<div>this one has full cache control</div>\n" + 
@@ -111,10 +109,9 @@ p("\n" +
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", Application.class, "authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.authorPanel(post.getAuthor()); //
+				Application.authorPanel(post.getAuthor()); // line 12
 			}
-		});
-// line 12
+		});// line 12
 		p("</div>\n" + 
 "\n" + 
 "<div>This one invokes an action with two params. Note the twoPrams() result is cached since the action carries CacheFor annotation.</div>\n" + 
@@ -122,10 +119,9 @@ p("\n" +
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "twoParams", "hello", 10) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.twoParams("hello", 10); //
+				Application.twoParams("hello", 10); // line 15
 			}
-		});
-// line 15
+		});// line 15
 		p("</div>\n" + 
 "\n" + 
 "<p>Let's invoke a tag which invokes an action</p>\n" + 
@@ -136,10 +132,9 @@ p("\n" +
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel2", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.authorPanel2(post.getAuthor()); //
+				Application.authorPanel2(post.getAuthor()); // line 21
 			}
-		});
-// line 21
+		});// line 21
 		p("</p>\n");// line 21
 		
 	}

@@ -421,11 +421,15 @@ public abstract class JapidAbstractCompiler {
 			} else if (startsWithIgnoreSpace(line, "invoke")) {
 				String args = line.trim().substring("invoke".length()).trim().replace(";", "");
 				doActionInvokeDirective(args);
+				markLine(parser.getLineNumber() + i);
+				println();
 			} else if (startsWith(line, "a")) { // `a == `invoke, the a must be
 												// the first char to avoid
 												// collision
 				String args = line.substring(2).trim().replace(";", "");
 				doActionInvokeDirective(args);
+				markLine(parser.getLineNumber() + i);
+				println();
 			} else if (startsWithIgnoreSpace(line, "suppressNull") || line.trim().equals("suppressNull")) {
 				String npe = line.trim().substring("suppressNull".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(npe) || "yes".equals(npe) || "".equals(npe))
@@ -641,9 +645,11 @@ public abstract class JapidAbstractCompiler {
 				}
 			} else {
 				// OK plain Java code
-				print(line);
-				markLine(parser.getLineNumber() + i);
-				println();
+				if (line.length() > 0) {
+					print(line);
+					markLine(parser.getLineNumber() + i);
+					println();
+				}
 			}
 		}
 		skipLineBreak = true;
@@ -737,6 +743,7 @@ public abstract class JapidAbstractCompiler {
 				args = "whatyouwantoinvoke()";
 			printActionInvocation(args);
 		}
+		
 	}
 
 	/**
@@ -1253,7 +1260,7 @@ public abstract class JapidAbstractCompiler {
 		return false;
 	}
 
-	static String createActionRunner(String action, String ttl, String base, String keys) {
+	String createActionRunner(String action, String ttl, String base, String keys) {
 		String actionEscaped = action.replace("\"", "\\\"");
 		String controllerActionPart = action.substring(0, action.indexOf('('));
 		int lastDot = controllerActionPart.lastIndexOf('.');
@@ -1282,18 +1289,17 @@ public abstract class JapidAbstractCompiler {
 					JAPID_RESULT,
 					actionEscaped);
 		} else {
-			// hardcode the cache action runner name to avoid dependency on the
-			// Play jar
-
 			String template =
-					"		%s.put(getOut().length(), new %s(%s, %s, %s, %s) {\r\n" +
+					"		%s.put(getOut().length(), new %s(%s, %s, %s, %s) {\n" +
 							"			@Override\r\n" +
-							"			public void runPlayAction() throws %s {\r\n" +
+							"			public void runPlayAction() throws %s {\n" +
 							// "				super.checkActionCacheFor(%s.class, \"%s\");\n"
 							// +
-							"				%s; //\r\n" +
-							"			}\r\n" +
-							"		});\r\n";
+							"				%s; // line " + parser.getLineNumber() + "\n" +
+							"			}\n" +
+							"		});";
+			// hard-code the cache action runner name to avoid dependency on the
+			// Play jar
 			return String.format(template,
 					AbstractTemplateClassMetaData.ACTION_RUNNERS,
 					"cn.bran.play.CacheablePlayActionRunner",

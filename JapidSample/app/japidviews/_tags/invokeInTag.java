@@ -79,10 +79,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.Application.foo(); //
+				controllers.Application.foo(); // line 4
 			}
-		});
-p("<p>end of invoke in tag</p>\n");// line 4
+		});// line 4
+		p("<p>end of invoke in tag</p>\n");// line 4
 		
 	}
 

@@ -82,10 +82,9 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "seconds", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.seconds(); //
+				Application.seconds(); // line 3
 			}
-		});
-// line 3
+		});// line 3
 		p("\n");// line 3
 		
 	}

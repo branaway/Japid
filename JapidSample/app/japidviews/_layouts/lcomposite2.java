@@ -56,10 +56,10 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.Application.foo(); //
+				controllers.Application.foo(); // line 5
 			}
-		});
-p("\n");// line 5
+		});// line 5
+		p("\n");// line 5
 		doLayout();// line 7
 		p("\n" + 
 "<p>back to layout</p>\n" + 
@@ -68,10 +68,10 @@ p("\n");// line 5
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.Application.foo(); //
+				controllers.Application.foo(); // line 12
 			}
-		});
-p("\n" + 
+		});// line 12
+		p("\n" + 
 "<p>back to layout again</p>\n" + 
 "\n" + 
 "<p>end of lcomposite</p>\n");// line 12
