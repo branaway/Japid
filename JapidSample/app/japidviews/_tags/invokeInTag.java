@@ -81,7 +81,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.Application.foo(); // line 4
 			}
-		});// line 4
+		}); p("\n");// line 4
 		p("<p>end of invoke in tag</p>\n");// line 4
 		
 	}

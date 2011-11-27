@@ -82,7 +82,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.decorateName(a.name); // line 3
 			}
-		});// line 3
+		}); p("\n");// line 3
 		p("</p>\n");// line 3
 		
 	}

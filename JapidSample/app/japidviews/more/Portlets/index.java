@@ -90,7 +90,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.more.Portlets.panel1(a); // line 8
 			}
-		});// line 8
+		}); p("\n");// line 8
 		p("</div>\n" + 
 "\n" + 
 "<div>\n" + 
@@ -101,7 +101,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.more.Portlets.panel2(b); // line 13
 			}
-		});// line 13
+		}); p("\n");// line 13
 		p("</div>\n" + 
 "\n" + 
 "<div>\n" + 
@@ -113,7 +113,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.more.Portlets.panel3(a + b); // line 19
 			}
-		});// line 19
+		}); p("\n");// line 19
 		p("</div>\n");// line 19
 		
 	}

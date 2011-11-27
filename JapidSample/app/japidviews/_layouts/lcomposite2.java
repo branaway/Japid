@@ -58,7 +58,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.Application.foo(); // line 5
 			}
-		});// line 5
+		}); p("\n");// line 5
 		p("\n");// line 5
 		doLayout();// line 7
 		p("\n" + 
@@ -70,7 +70,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				controllers.Application.foo(); // line 12
 			}
-		});// line 12
+		}); p("\n");// line 12
 		p("\n" + 
 "<p>back to layout again</p>\n" + 
 "\n" + 

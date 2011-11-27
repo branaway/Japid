@@ -88,7 +88,7 @@ p("\n");// line 2
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.echo(j); // line 11
 			}
-		});// line 11
+		}); p("\n");// line 11
 		p("\n");// line 11
 		}// line 12
 		p("<p/>\n");// line 12
@@ -102,7 +102,7 @@ p("\n");// line 2
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.echoPost(p); // line 18
 			}
-		});// line 18
+		}); p("\n");// line 18
 }// line 19
 		;// line 19
 		

@@ -87,7 +87,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.seconds(); // line 6
 			}
-		});// line 6
+		}); p("\n");// line 6
 		p("\n" + 
 "</body>\n" + 
 "</html>");// line 6

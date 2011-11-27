@@ -89,7 +89,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.every3(); // line 8
 			}
-		});// line 8
+		}); p("\n");// line 8
 		p(",</p> \n" + 
 "	<p>directly, now seconds is ");// line 8
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "seconds", "") {
@@ -97,7 +97,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.seconds(); // line 9
 			}
-		});// line 9
+		}); p("\n");// line 9
 		p("</p>\n" + 
 "\n" + 
 "</body>\n" + 

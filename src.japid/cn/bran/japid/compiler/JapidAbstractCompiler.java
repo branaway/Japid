@@ -1080,7 +1080,7 @@ public abstract class JapidAbstractCompiler {
 					args = args.substring(0, args.length() - 1);
 			}
 		}
-		return (createActionRunner(action, ttl, actionPath, args));
+		return createActionRunner(action, ttl, actionPath, args);
 	}
 
 	protected void printActionInvocation(String action) {
@@ -1297,7 +1297,9 @@ public abstract class JapidAbstractCompiler {
 							// +
 							"				%s; // line " + parser.getLineNumber() + "\n" +
 							"			}\n" +
-							"		});";
+							"		}); p(\"\\n\");"; // hack: a new line char to stand for the action position.
+			// Should really change the action runner collection to <int, List<ActionRunner>> 
+			
 			// hard-code the cache action runner name to avoid dependency on the
 			// Play jar
 			return String.format(template,

@@ -24,8 +24,10 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/11/27: V0.9.2.2: 
+	1. bug fix: two action calls could not be used one after another because action runner did not gave a place holder in the output buffer. 
 2011/11/26: V0.9.2.1: 
-	1. bug fix: `action command could not be followed by a script line or the action line would be swollowed.
+	1. bug fix: `action command could not be followed by a script line or the action line would be swallowed.
 2011/10/23: V0.9.2: breaking changes, japid regen required.
 	1. syntax change: using single quote in a "message lookup" command is not valid anymore. Use double quotes or no quotes at all. e.g.:
 		&{msg.one}, &{"message.2"}. 
