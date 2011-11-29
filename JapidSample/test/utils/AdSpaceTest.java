@@ -10,6 +10,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import play.templates.JavaExtensions;
+
 public class AdSpaceTest {
 	@Test
 	public void testAllPosibilities() {
@@ -162,4 +164,14 @@ public class AdSpaceTest {
 		t = System.currentTimeMillis()  - t;
 		System.out.println("took/ms: " + t);
 	}
+	
+	@Test
+	public void testEscape() {
+		String str = "<div>\"hello\"</div>";
+		String esc = JavaExtensions.escapeJavaScript(str);
+		System.out.println(esc);
+		
+	}
+	
+	
 }

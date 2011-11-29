@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -577,6 +578,7 @@ public abstract class AbstractTemplateClassMetaData {
 			pln("StringBuilder sb = new StringBuilder();");
 			pln("StringBuilder ori = getOut();");
 			pln("this.setOut(sb);");
+			pln("TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();" );
 			
 			// define local tag instance
 			for(Tag t: tag.tags) {
@@ -585,7 +587,21 @@ public abstract class AbstractTemplateClassMetaData {
 			
 			pln(tag.getBodyText());
 			pln("this.setOut(ori);");
-			pln("return sb.toString();");
+			pln("if (actionRunners.size() > 0) {\n" + 
+					"	StringBuilder sb2 = new StringBuilder();\n" + 
+					"	int segStart = 0;\n" + 
+					"	for (Map.Entry<Integer, ActionRunner> arEntry : actionRunners.entrySet()) {\n" + 
+					"		int pos = arEntry.getKey();\n" + 
+					"		sb2.append(sb.substring(segStart, pos));\n" + 
+					"		segStart = pos;\n" + 
+					"		ActionRunner a = arEntry.getValue();\n" + 
+					"		sb2.append(a.run().getContent().toString());\n" + 
+					"	}\n" + 
+					"	sb2.append(sb.substring(segStart));\n" + 
+					"	return sb2.toString();\n" + 
+					"} else {\n" + 
+					"	return sb.toString();\n" + 
+					"}");
 			pln("}");
 		}
 	}
