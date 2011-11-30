@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/11/27: V0.9.2.4: code regen is required 
+	1. bug fix: the previous fix had an import problem. 
 2011/11/27: V0.9.2.3: 
 	1. bug fix: actions could not be used within a def tag. 
 2011/11/27: V0.9.2.2: 

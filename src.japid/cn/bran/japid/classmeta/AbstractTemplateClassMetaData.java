@@ -590,11 +590,11 @@ public abstract class AbstractTemplateClassMetaData {
 			pln("if (actionRunners.size() > 0) {\n" + 
 					"	StringBuilder sb2 = new StringBuilder();\n" + 
 					"	int segStart = 0;\n" + 
-					"	for (Map.Entry<Integer, ActionRunner> arEntry : actionRunners.entrySet()) {\n" + 
+					"	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> arEntry : actionRunners.entrySet()) {\n" + 
 					"		int pos = arEntry.getKey();\n" + 
 					"		sb2.append(sb.substring(segStart, pos));\n" + 
 					"		segStart = pos;\n" + 
-					"		ActionRunner a = arEntry.getValue();\n" + 
+					"		cn.bran.japid.template.ActionRunner a = arEntry.getValue();\n" + 
 					"		sb2.append(a.run().getContent().toString());\n" + 
 					"	}\n" + 
 					"	sb2.append(sb.substring(segStart));\n" + 
