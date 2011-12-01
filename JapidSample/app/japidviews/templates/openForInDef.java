@@ -80,6 +80,8 @@ public String content() {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
+TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
+actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 final Each _Each1 = new Each(getOut());
 
 // line 2
@@ -109,6 +111,22 @@ public void resetBuffer() {
 );// line 3
 
 this.setOut(ori);
-return sb.toString();
+if (actionRunners.size() > 0) {
+	StringBuilder sb2 = new StringBuilder();
+	int segStart = 0;
+	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> arEntry : actionRunners.entrySet()) {
+		int pos = arEntry.getKey();
+		sb2.append(sb.substring(segStart, pos));
+		segStart = pos;
+		cn.bran.japid.template.ActionRunner a = arEntry.getValue();
+		sb2.append(a.run().getContent().toString());
+	}
+	sb2.append(sb.substring(segStart));
+	actionRunners = parentActionRunners;
+	return sb2.toString();
+} else {
+	actionRunners = parentActionRunners;
+	return sb.toString();
+}
 }
 }

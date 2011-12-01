@@ -75,7 +75,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final bar _bar0 = new bar(getOut());
-{ _bar0.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -88,7 +87,7 @@ final bar _bar0 = new bar(getOut());
 "\n");// line 3
 		p("\n" + 
 "\n");// line 5
-		_bar0.setOut(getOut()); _bar0.render();// line 7
+		_bar0.setActionRunners(getActionRunners()).setOut(getOut()); _bar0.render();// line 7
 		;// line 7
 		
 	}

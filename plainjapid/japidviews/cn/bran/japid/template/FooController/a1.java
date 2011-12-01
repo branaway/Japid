@@ -67,6 +67,6 @@ final taggy _taggy2 = new taggy(getOut());
 		_taggy2.setOut(getOut()); _taggy2.render(ar);// line 8
 
 this.setOut(ori);
-return sb.toString();
+	return sb.toString();
 }
 }

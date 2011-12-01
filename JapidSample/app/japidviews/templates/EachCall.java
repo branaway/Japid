@@ -75,15 +75,12 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final SampleTag _SampleTag1 = new SampleTag(getOut());
-{ _SampleTag1.setActionRunners(getActionRunners()); }
 
 final Each _Each0 = new Each(getOut());
 
 final SampleTag _SampleTag2 = new SampleTag(getOut());
-{ _SampleTag2.setActionRunners(getActionRunners()); }
 
 final SampleTag _SampleTag4 = new SampleTag(getOut());
-{ _SampleTag4.setActionRunners(getActionRunners()); }
 
 final Each _Each3 = new Each(getOut());
 
@@ -119,7 +116,7 @@ public void render(final String p, final int _size, final int _index, final bool
 		p(_size);// line 12
 		p(" </p>\n" + 
 "    call a tag:  ");// line 12
-		_SampleTag1.setOut(getOut()); _SampleTag1.render(p);// line 13
+		_SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(p);// line 13
 
 }
 
@@ -138,7 +135,7 @@ public void resetBuffer() {
 }
 );// line 11
 		p("\n");// line 14
-		_SampleTag2.setOut(getOut()); _SampleTag2.render("end");// line 16
+		_SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render("end");// line 16
 		p("\n" + 
 "<p> now we have an enhanced for loop (the \"open for loop\") that also makes all the loop properties available</p>\n" + 
 "\n");// line 16
@@ -160,7 +157,7 @@ public void render(final String p, final int _size, final int _index, final bool
 		p(_size);// line 22
 		p(" </p>\n" + 
 "    call a tag:  ");// line 22
-		_SampleTag4.setOut(getOut()); _SampleTag4.render(p);// line 23
+		_SampleTag4.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag4.render(p);// line 23
 
 }
 

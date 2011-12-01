@@ -28,6 +28,7 @@ import cn.bran.japid.compiler.Tag.TagDef;
 import cn.bran.japid.compiler.Tag.TagIf;
 import cn.bran.japid.compiler.Tag.TagInTag;
 import cn.bran.japid.compiler.Tag.TagSet;
+import cn.bran.japid.tags.Each;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplate;
 import cn.bran.japid.template.RenderResult;
@@ -472,7 +473,7 @@ public abstract class JapidAbstractCompiler {
 				startTag(get);
 			} else if (line.trim().startsWith("noplay")) {
 				// template is play independent
-				getTemplateClassMetaData().useWithPlay = false;
+				getTemplateClassMetaData().useWithPlay = this.useWithPlay = false;
 			} else if (line.trim().equalsIgnoreCase("xml")) {
 				// template is play independent
 				getTemplateClassMetaData().setContentType(MimeTypeEnum.xml.header);
@@ -1113,7 +1114,11 @@ public abstract class JapidAbstractCompiler {
 			String tagVar = tag.getTagVarName();
 
 			if (!tag.hasBody) {
-				String tagline = tagVar + ".setOut(getOut()); " + tagVar + ".render(" + tag.args + ");";
+				String tagline = tagVar;
+				if (useWithPlay && !tag.tagName.equals(Each.class.getSimpleName())) {
+					tagline += ".setActionRunners(getActionRunners())";
+				}
+				tagline +=".setOut(getOut()); " + tagVar + ".render(" + tag.args + ");";
 
 				// String tagClassName = tag.tagName;
 				// if (tagClassName.equals("this")) {
@@ -1166,6 +1171,9 @@ public abstract class JapidAbstractCompiler {
 			
 			String tagline = tagVar; 
 			// make sure the tag always use the current output buffer;
+			if (useWithPlay && !tag.tagName.equals(Each.class.getSimpleName())) {
+				tagline += ".setActionRunners(getActionRunners())";
+			}
 			tagline += ".setOut(getOut()); " + tagVar;
 			if (tag.argsNamed()) {
 				tagline += ".render(" + bodyInner.getAnonymous() + ", " + (WebUtils.asBoolean(tag.args) ? tag.args: "") +");";

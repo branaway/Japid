@@ -344,10 +344,11 @@ public abstract class AbstractTemplateClassMetaData {
 			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
 			pln(decl);
 
-			if (useWithPlay && !tagClassName.equals("Each")) {
-				String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
-				pln(addRunner);
-			}
+			// changed to wait until tag invocation to set the runners
+//			if (useWithPlay && !tagClassName.equals("Each")) {
+//				String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
+//				pln(addRunner);
+//			}
 			pln();
 		}
 		if (hasTags)
@@ -578,7 +579,9 @@ public abstract class AbstractTemplateClassMetaData {
 			pln("StringBuilder sb = new StringBuilder();");
 			pln("StringBuilder ori = getOut();");
 			pln("this.setOut(sb);");
-			pln("TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();" );
+			if (useWithPlay)
+				pln("TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;\n" + 
+						"actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();" );
 			
 			// define local tag instance
 			for(Tag t: tag.tags) {
@@ -587,21 +590,26 @@ public abstract class AbstractTemplateClassMetaData {
 			
 			pln(tag.getBodyText());
 			pln("this.setOut(ori);");
-			pln("if (actionRunners.size() > 0) {\n" + 
-					"	StringBuilder sb2 = new StringBuilder();\n" + 
-					"	int segStart = 0;\n" + 
-					"	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> arEntry : actionRunners.entrySet()) {\n" + 
-					"		int pos = arEntry.getKey();\n" + 
-					"		sb2.append(sb.substring(segStart, pos));\n" + 
-					"		segStart = pos;\n" + 
-					"		cn.bran.japid.template.ActionRunner a = arEntry.getValue();\n" + 
-					"		sb2.append(a.run().getContent().toString());\n" + 
-					"	}\n" + 
-					"	sb2.append(sb.substring(segStart));\n" + 
-					"	return sb2.toString();\n" + 
-					"} else {\n" + 
-					"	return sb.toString();\n" + 
-					"}");
+			if (useWithPlay)
+				pln("if (actionRunners.size() > 0) {\n" + 
+						"	StringBuilder sb2 = new StringBuilder();\n" + 
+						"	int segStart = 0;\n" + 
+						"	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> arEntry : actionRunners.entrySet()) {\n" + 
+						"		int pos = arEntry.getKey();\n" + 
+						"		sb2.append(sb.substring(segStart, pos));\n" + 
+						"		segStart = pos;\n" + 
+						"		cn.bran.japid.template.ActionRunner a = arEntry.getValue();\n" + 
+						"		sb2.append(a.run().getContent().toString());\n" + 
+						"	}\n" + 
+						"	sb2.append(sb.substring(segStart));\n" + 
+						"	actionRunners = parentActionRunners;\n" + 
+						"	return sb2.toString();\n" + 
+						"} else {\n" + 
+						"	actionRunners = parentActionRunners;\n" + 
+						"	return sb.toString();\n" + 
+						"}");
+			else 
+				pln("	return sb.toString();" );
 			pln("}");
 		}
 	}
@@ -621,10 +629,11 @@ public abstract class AbstractTemplateClassMetaData {
 		String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
 		pln(decl);
 
-		if (useWithPlay  && !tagClassName.equals("Each")) {
-			String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
-			pln(addRunner);
-		}
+		// commented out. now runners are set just before use;
+//		if (useWithPlay  && !tagClassName.equals("Each")) {
+//			String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
+//			pln(addRunner);
+//		}
 		pln();
 	}
 

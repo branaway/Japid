@@ -75,7 +75,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final SampleTag _SampleTag0 = new SampleTag(getOut());
-{ _SampleTag0.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -92,7 +91,7 @@ final SampleTag _SampleTag0 = new SampleTag(getOut());
 		p(a.getGender());// line 5
 		p("'</p>\n" + 
 "    ");// line 5
-		_SampleTag0.setOut(getOut()); _SampleTag0.render("end");// line 6
+		_SampleTag0.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag0.render("end");// line 6
 		p("    ");// line 6
 		
 	}

@@ -77,12 +77,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final SampleTag _SampleTag1 = new SampleTag(getOut());
-{ _SampleTag1.setActionRunners(getActionRunners()); }
 
 final Each _Each0 = new Each(getOut());
 
 final SampleTag _SampleTag3 = new SampleTag(getOut());
-{ _SampleTag3.setActionRunners(getActionRunners()); }
 
 final Each _Each2 = new Each(getOut());
 
@@ -127,7 +125,7 @@ public void render(final String s, final int _size, final int _index, final bool
 // line 33
 		p("        call a tag\n" + 
 "        ");// line 33
-		_SampleTag1.setOut(getOut()); _SampleTag1.render(s);// line 35
+		_SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s);// line 35
     
 }
 
@@ -155,7 +153,7 @@ public void render(final String s, final int _size, final int _index, final bool
 // line 39
 		p("        call a tag\n" + 
 "        ");// line 39
-		_SampleTag3.setOut(getOut()); _SampleTag3.render(s);// line 41
+		_SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s);// line 41
     
 }
 

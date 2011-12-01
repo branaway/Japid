@@ -73,13 +73,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final moreTag _moreTag2 = new moreTag(getOut());
-{ _moreTag2.setActionRunners(getActionRunners()); }
 
 final anotherTag _anotherTag1 = new anotherTag(getOut());
-{ _anotherTag1.setActionRunners(getActionRunners()); }
 
 final fooTag _fooTag0 = new fooTag(getOut());
-{ _fooTag0.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -91,7 +88,7 @@ p("\n" +
 "before\n" + 
 "\n" + 
 "<p/>\n");// line 1
-		_fooTag0.setOut(getOut()); _fooTag0.render("hi", new fooTag.DoBody(){
+		_fooTag0.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag0.render("hi", new fooTag.DoBody(){
 public void render() {
 // line 8
     final String echo = "secret";// line 9
@@ -101,7 +98,7 @@ public void render() {
 		p("\n" + 
 "\n" + 
 "	");// line 11
-		_anotherTag1.setOut(getOut()); _anotherTag1.render(echo, new anotherTag.DoBody<String>(){
+		_anotherTag1.setActionRunners(getActionRunners()).setOut(getOut()); _anotherTag1.render(echo, new anotherTag.DoBody<String>(){
 public void render(final String what) {
 // line 13
 		p("	    got ");// line 13
@@ -110,7 +107,7 @@ public void render(final String what) {
 		p(echo);// line 14
 		p("\n" + 
 "		");// line 14
-		_moreTag2.setOut(getOut()); _moreTag2.render(echo, new moreTag.DoBody<String>(){
+		_moreTag2.setActionRunners(getActionRunners()).setOut(getOut()); _moreTag2.render(echo, new moreTag.DoBody<String>(){
 public void render(final String more) {
 // line 15
 		p("		   got ");// line 15

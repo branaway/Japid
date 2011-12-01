@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/12/1: V0.9.2.5: "play japid:regen" is required 
+	1. bug fix: action runners are now set along with the string buffer. Fixed issues nesting actions calls in tags in defs. 
 2011/11/27: V0.9.2.4: code regen is required 
 	1. bug fix: the previous fix had an import problem. 
 2011/11/27: V0.9.2.3: 

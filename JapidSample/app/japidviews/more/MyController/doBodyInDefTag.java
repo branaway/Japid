@@ -100,7 +100,6 @@ public static interface DoBody<A,B> {
 
 // -- set up the tag objects
 final fooTag _fooTag1 = new fooTag(getOut());
-{ _fooTag1.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -117,7 +116,7 @@ p("outside: ");// line 1
 "\n");// line 9
 		p(foo());// line 12
 		p("\n");// line 12
-		_fooTag1.setOut(getOut()); _fooTag1.render(new fooTag.DoBody(){
+		_fooTag1.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag1.render(new fooTag.DoBody(){
 public void render() {
 // line 14
 		p("  -> called footag:  ");// line 14
@@ -147,11 +146,29 @@ public String foo() {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
+TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
+actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 // line 7
 		p("	hello ");// line 7
 		if (body != null){ body.setBuffer(getOut()); body.render("saddy", 2); body.resetBuffer();}// line 8
 
 this.setOut(ori);
-return sb.toString();
+if (actionRunners.size() > 0) {
+	StringBuilder sb2 = new StringBuilder();
+	int segStart = 0;
+	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> arEntry : actionRunners.entrySet()) {
+		int pos = arEntry.getKey();
+		sb2.append(sb.substring(segStart, pos));
+		segStart = pos;
+		cn.bran.japid.template.ActionRunner a = arEntry.getValue();
+		sb2.append(a.run().getContent().toString());
+	}
+	sb2.append(sb.substring(segStart));
+	actionRunners = parentActionRunners;
+	return sb2.toString();
+} else {
+	actionRunners = parentActionRunners;
+	return sb.toString();
+}
 }
 }

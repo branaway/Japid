@@ -78,10 +78,8 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final Display _Display1 = new Display(getOut());
-{ _Display1.setActionRunners(getActionRunners()); }
 
 final Tag2 _Tag22 = new Tag2(getOut());
-{ _Tag22.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -95,7 +93,7 @@ p("\n");// line 3
 "	");// line 8
 		for (Post p: allPost) {// line 10
 		p("	    ");// line 10
-		_Display1.setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
+		_Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
 public void render(final String title) {
 // line 11
 		p("			<p>The real title is: ");// line 11
@@ -125,7 +123,7 @@ public void resetBuffer() {
 		p("	<p>There is no post at this moment</p>\n");// line 15
 		}// line 17
 		p("\n");// line 17
-		_Tag22.setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000));// line 19
+		_Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000));// line 19
 		p("\n" + 
 "<p>end of it</p>");// line 19
 		

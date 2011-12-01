@@ -103,14 +103,13 @@ public static interface DoBody {
 
 // -- set up the tag objects
 final argtest1 _argtest10 = new argtest1(getOut());
-{ _argtest10.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
 //------
 ;// line 1
 		p("\n");// line 1
-		_argtest10.setOut(getOut()); _argtest10.render(new argtest1.DoBody(){
+		_argtest10.setActionRunners(getActionRunners()).setOut(getOut()); _argtest10.render(new argtest1.DoBody(){
 public void render() {
 // line 2
   if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 3

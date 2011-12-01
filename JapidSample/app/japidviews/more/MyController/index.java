@@ -77,7 +77,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final SampleTag _SampleTag1 = new SampleTag(getOut());
-{ _SampleTag1.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -94,7 +93,7 @@ final SampleTag _SampleTag1 = new SampleTag(getOut());
 		p(".\n" + 
 "Here goes your Japid template content.\n" + 
 "call a tag: \n");// line 7
-		_SampleTag1.setOut(getOut()); _SampleTag1.render("world");// line 10
+		_SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render("world");// line 10
 		;// line 10
 		
 	}

@@ -84,10 +84,8 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final Display _Display1 = new Display(getOut());
-{ _Display1.setActionRunners(getActionRunners()); }
 
 final Tag2 _Tag22 = new Tag2(getOut());
-{ _Tag22.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -102,7 +100,7 @@ final Tag2 _Tag22 = new Tag2(getOut());
 		p("\n" + 
 "\n" + 
 "	    ");// line 12
-		_Display1.setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
+		_Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
 public void render(final String title) {
 // line 14
 		p("		   The real title iiiis: ");// line 14
@@ -128,7 +126,7 @@ public void resetBuffer() {
 , named("post", p), named("as", "home2"));// line 14
 }// line 17
 		p("\n");// line 17
-		_Tag22.setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 10000));// line 19
+		_Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 10000));// line 19
 		p("\n" + 
 "<p>cool</p>");// line 19
 		

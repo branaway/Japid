@@ -73,10 +73,8 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final Tag2 _Tag21 = new Tag2(getOut());
-{ _Tag21.setActionRunners(getActionRunners()); }
 
 final Tag2 _Tag22 = new Tag2(getOut());
-{ _Tag22.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -84,9 +82,9 @@ final Tag2 _Tag22 = new Tag2(getOut());
 ;// line 1
 p("\n" + 
 "hello ");// line 2
-		_Tag21.setOut(getOut()); _Tag21.render(named("msg", "123"));// line 4
+		_Tag21.setActionRunners(getActionRunners()).setOut(getOut()); _Tag21.render(named("msg", "123"));// line 4
 		p(" a  ");// line 4
-		_Tag22.setOut(getOut()); _Tag22.render(named("msg", "456"));// line 4
+		_Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", "456"));// line 4
 		p("!\n" + 
 "this is how to print a single back quote: ");// line 4
 		p('`');// line 5

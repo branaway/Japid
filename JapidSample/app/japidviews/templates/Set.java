@@ -86,11 +86,10 @@ p("\n");// line 2
 
 	@Override protected void footer() {
 final dummyTag _dummyTag2 = new dummyTag(getOut());
-{ _dummyTag2.setActionRunners(getActionRunners()); }
 
 		// line 17
 		p("    great footer. Call a tag: ");// line 17
-		_dummyTag2.setOut(getOut()); _dummyTag2.render("me");// line 18
+		_dummyTag2.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag2.render("me");// line 18
 ;
 	}
 	@Override protected void title() {

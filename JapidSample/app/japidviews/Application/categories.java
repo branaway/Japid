@@ -75,7 +75,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 // -- set up the tag objects
 final categories _this0 = new categories(getOut());
-{ _this0.setActionRunners(getActionRunners()); }
 
 // -- end of the tag objects
 
@@ -90,7 +89,7 @@ p(" ");// line 1
 		p(cat.name);// line 6
 		p("</a>\n" + 
 "	           ");// line 6
-		_this0.setOut(getOut()); _this0.render(cat.subCategories);// line 7
+		_this0.setActionRunners(getActionRunners()).setOut(getOut()); _this0.render(cat.subCategories);// line 7
 		p("	       </li>\n" + 
 "       ");// line 7
 		}// line 9

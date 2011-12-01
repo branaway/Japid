@@ -57,7 +57,7 @@ final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(
 p("\n" + 
 "hello ");// line 2
 		_japidviews__tags_Tag20.setOut(getOut()); _japidviews__tags_Tag20.render(named("msg", s));// line 4
-		p(" !\n" + 
+		p(" !!!!\n" + 
 "\n");// line 4
 		
 	}
