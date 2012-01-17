@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/12/1: V0.9.2.6: "play japid:regen" is required 
+	1. bug fix: removed dubious semi colon at the end of the chunk of JavaScript created by the jsAction method in the JapidPlayAdapter. Thanks Mike from AgileConsulting.
 2011/12/1: V0.9.2.5: "play japid:regen" is required 
 	1. bug fix: action runners are now set along with the string buffer. Fixed issues nesting actions calls in tags in defs. 
 2011/11/27: V0.9.2.4: code regen is required 

@@ -1,5 +1,6 @@
 package cn.bran.japid.template;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class JapidRenderTest {
 	@Test
 	public void testSmartBindingWithRender() {
 		final String UNI = "universe";
-		JapidRenderer.init(OpMode.prod, "plainjapid", 1);
+		JapidRenderer.init(OpMode.dev, "plainjapid", 1);
 		String r = new FooControllerBare().a1(UNI);
 		System.out.println(r);;
 		assertEquals(">" + UNI, r);
@@ -43,8 +44,9 @@ public class JapidRenderTest {
 		final String UNI = "universe";
 		JapidRenderer.init(OpMode.dev, "plainjapid", 1);
 		String r = new FooController().a1(UNI);
-		System.out.println(r);;
-//		assertEquals(">" + UNI, r);
+		System.out.println(r);
+		assertTrue(r.contains("<head>my view - universe1</head>"));
+		assertTrue(r.contains("-> a1-: [universe]-->"));
 	}
 
 	@Test
