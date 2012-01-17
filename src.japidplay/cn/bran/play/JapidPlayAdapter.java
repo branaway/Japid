@@ -121,7 +121,7 @@ public class JapidPlayAdapter {
 				"		pattern = pattern.replace(':'+key, options[key]); \n" + 
 				"	} \n" + 
 				"	return pattern; \n" + 
-				"};";
+				"}";
 		
 		return String.format(funcPattern, lookup(name, (Object[])args).replace("&amp;", "&"));
 	}
