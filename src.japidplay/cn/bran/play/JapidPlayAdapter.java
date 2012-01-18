@@ -8,6 +8,7 @@ import play.data.validation.Error;
 import play.data.validation.Validation;
 import play.i18n.Lang;
 import play.i18n.Messages;
+import play.mvc.Router.ActionDefinition;
 import play.mvc.Scope.Flash;
 import play.mvc.Scope.RenderArgs;
 import play.mvc.Scope.Session;
@@ -125,6 +126,26 @@ public class JapidPlayAdapter {
 		
 		return String.format(funcPattern, lookup(name, (Object[])args).replace("&amp;", "&"));
 	}
+	
+	/**
+	 * create a js object that contains both a reverse lookup method and the action method of the current action
+	 * @param name
+	 * @param args
+	 * @return
+	 */
+	public static String jsRoute(String name, String... args) {
+        final ActionDefinition action = urlMapper.lookupActionDefinition(name, args);
+        StringBuffer sb = new StringBuffer();
+        sb.append("{");
+        if (action.args.isEmpty()) {
+        	sb.append("url: function() { return '" + action.url.replace("&amp;", "&") + "'; },");
+        } else {
+        	sb.append("url: function(args) { var pattern = '" + action.url.replace("&amp;", "&") + "'; for (var key in args) { pattern = pattern.replace(':'+key, args[key]); } return pattern; },");
+        }
+        sb.append("method: '" + action.method + "'");
+        sb.append("}");
+        return sb.toString();
+    }
 	
 	public static String or(Object o , String substitude) {
 		try {

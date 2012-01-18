@@ -24,7 +24,9 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
-2011/12/1: V0.9.2.6: "play japid:regen" is required 
+2011/12/18: V0.9.2.7: "play japid:regen" is required 
+	1. new feature: added jsRoute in the JapidPlayAdapter to get the same effect as the jsRoute tag in Play 1.2.4. Suggested by Mike from Agile Consulting.
+2011/12/16: V0.9.2.6: "play japid:regen" is required 
 	1. bug fix: removed dubious semi colon at the end of the chunk of JavaScript created by the jsAction method in the JapidPlayAdapter. Thanks Mike from AgileConsulting.
 2011/12/1: V0.9.2.5: "play japid:regen" is required 
 	1. bug fix: action runners are now set along with the string buffer. Fixed issues nesting actions calls in tags in defs. 

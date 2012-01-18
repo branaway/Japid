@@ -69,9 +69,14 @@ public class RouteAdapter implements UrlMapper {
 	 */
 	@Override
 	public String lookup(String actionString, Object[] params) {
-		ActionBridge ab = new ActionBridge(false);
-		ActionDefinition ad = ab.invokeMethod(actionString, params);
+		ActionDefinition ad = lookupActionDefinition(actionString, params);
 		return ad.toString();
+	}
+
+	public ActionDefinition lookupActionDefinition(String actionString,
+			Object[] params) {
+		ActionDefinition ad = new ActionBridge(false).invokeMethod(actionString, params);
+		return ad;
 	}
 
 	@Override
