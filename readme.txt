@@ -24,6 +24,8 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2011/12/19: V0.9.2.8:  
+	1. new minor feature: added JapidController.isInvokedfromJapidView() for telling if the current action call is caused by `invoke tag in a Japid view. 
 2011/12/18: V0.9.2.7: "play japid:regen" is required 
 	1. new feature: added jsRoute in the JapidPlayAdapter to get the same effect as the jsRoute tag in Play 1.2.4. Suggested by Mike from Agile Consulting.
 2011/12/16: V0.9.2.6: "play japid:regen" is required 

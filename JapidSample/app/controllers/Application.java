@@ -33,6 +33,8 @@ public class Application extends JapidController {
 		renderJapid(); // 
 	}
 	public static void authorPanel(final Author a) {
+		boolean calledFromView = isInvokedfromJapidView();
+		System.out.println("calledFromView: " + calledFromView);
 		CacheableRunner r = new CacheableRunner("10s", genCacheKey()) {
 			@Override
 			protected RenderResult render() {
