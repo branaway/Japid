@@ -5,12 +5,14 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import play.Play;
 import play.data.validation.Validation;
 import play.templates.JavaExtensions;
+import play.vfs.VirtualFile;
 import cn.bran.japid.compiler.JapidCompilationException;
 import cn.bran.japid.compiler.TranslateTemplateTask;
 import cn.bran.japid.util.DirUtil;
@@ -18,12 +20,12 @@ import cn.bran.japid.util.DirUtil;
 public class JapidCommands {
 	private static final String APP = "app";
 
-//	private static final String JapidWebUtil = "package japidviews._javatags;\n" + "\n" + "/**\n"
-//			+ " * a well-know place to add all the static method you want to use in your\n" + " * templates.\n" + " * \n"
-//			+ " * All the public static methods will be automatically \"import static \" to the\n"
-//			+ " * generated Java classes by the Japid compiler.\n" + " * \n" + " */\n" + "public class JapidWebUtil {\n"
-//			+ "	public static String hi() {\n" + "		return \"Hi\";\n" + "	}\n" + "	// your utility methods...\n" + "	\n" + "}\n" + "";
-//
+	/**
+	 * TODO: perhaps I can parse the depended modules and apply the commands to them as well.
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		String arg0 = args[0];
 
@@ -97,15 +99,19 @@ public class JapidCommands {
 
 //		log("JapidCommands: check default template packages for controllers.");
 		try {
-			File[] controllers = getAllJavaFilesInDir(root + sep + "controllers");
-			for (File f : controllers) {
-				String cp = japidViews + f.getPath();
-				File ff = new File(cp);
-				if (!ff.exists()) {
-					boolean mkdirs = ff.mkdirs();
-					assert mkdirs == true;
-					res.add(ff);
-					log("created: " + cp);
+			
+			String controllerPath = root + sep + "controllers";
+			if (new File(controllerPath).exists()) {
+				File[] controllers = getAllJavaFilesInDir(controllerPath);
+				for (File f : controllers) {
+					String cp = japidViews + f.getPath();
+					File ff = new File(cp);
+					if (!ff.exists()) {
+						boolean mkdirs = ff.mkdirs();
+						assert mkdirs == true;
+						res.add(ff);
+						log("created: " + cp);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -292,15 +298,38 @@ public class JapidCommands {
 	}
 
 	/**
-	 * delete orphaned java artifacts from the japidviews directory
+	 * delete orphaned java artifacts from the japidviews directory of the current app and all the depended modules
 	 * 
 	 * @return
 	 */
 	public static boolean rmOrphanJava() {
+		boolean hasOrphan = false;
+		hasOrphan = removeOrphanedJavaFrom(APP);
+		
+		Collection<VirtualFile> modules = Play.modules.values();
+		for (VirtualFile module: modules) {
+			try {
+				VirtualFile root = module.child(APP);
+				VirtualFile japidViewDir = root.child(JapidPlugin.JAPIDVIEWS_ROOT);
+				File japidFile = japidViewDir.getRealFile();
+				if (japidFile.exists()) {
+					String absoluteRootPath = root.getRealFile().getAbsolutePath();
+					if( removeOrphanedJavaFrom(absoluteRootPath))
+						hasOrphan = true;
+				}
+			}
+			catch(Throwable t) {
+				
+			}
+			
+		}
+		return hasOrphan;
+	}
 
+	private static boolean removeOrphanedJavaFrom(String root) {
 		boolean hasRealOrphan = false;
 		try {
-			String pathname = APP + File.separator + JapidPlugin.JAPIDVIEWS_ROOT;
+			String pathname = root + File.separator + JapidPlugin.JAPIDVIEWS_ROOT;
 			File src = new File(pathname);
 			if (!src.exists()) {
 				log("Could not find required Japid package structure: " + pathname);
@@ -333,8 +362,29 @@ public class JapidCommands {
 		return hasRealOrphan;
 	}
 
+	/**
+	 * check the current app and dependencies for changed templates
+	 * @return
+	 */
 	public static List<File> reloadChanged() {
-		return reloadChanged(APP);
+		List<File> reloadChanged = reloadChanged(APP);
+		Collection<VirtualFile> modules = Play.modules.values();
+		for (VirtualFile module: modules) {
+			try {
+				VirtualFile root = module.child(APP);
+				VirtualFile japidViewDir = root.child(JapidPlugin.JAPIDVIEWS_ROOT);
+				File japidFile = japidViewDir.getRealFile();
+				if (japidFile.exists()) {
+					String absoluteRootPath = root.getRealFile().getAbsolutePath();
+					reloadChanged.addAll(reloadChanged(absoluteRootPath));
+				}
+			}
+			catch(Throwable t) {
+				
+			}
+			
+		}
+		return reloadChanged;
 	}
 	
 	private static void log(String m) {

@@ -27,6 +27,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.bran.japid.compiler.JapidAbstractCompiler;
 import cn.bran.japid.compiler.Tag;
 import cn.bran.japid.compiler.Tag.TagDef;
 import cn.bran.japid.template.ActionRunner;
@@ -327,32 +328,39 @@ public abstract class AbstractTemplateClassMetaData {
 //	}
 
 	// can be used to create local variables too!
+	/**
+	 * commented out
+	 * 
+	 * 
+		// don't declare in the front. always declare where it is used for safety
+		// see JapidAbstractCompiler#regularTagInvoke
+	 */
 	protected void setupTagObjectsAsFields() {
-		boolean hasTags = this.innersforTagCalls.size() > 0;
-		if (hasTags)
-			pln("\n// -- set up the tag objects");
-		for (InnerClassMeta inner : this.innersforTagCalls) {
-			// create a reusable instance _tagName_indexand a instance
-			// initializer
-			String tagClassName = inner.tagName;
-			String var = "_" + inner.getVarRoot() + inner.counter;
-			
-			if (tagClassName.equals("this")) {
-				tagClassName = this.className;
-			}
-
-			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
-			pln(decl);
-
-			// changed to wait until tag invocation to set the runners
-//			if (useWithPlay && !tagClassName.equals("Each")) {
-//				String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
-//				pln(addRunner);
+//		boolean hasTags = this.innersforTagCalls.size() > 0;
+//		if (hasTags)
+//			pln("\n// -- set up the tag objects");
+//		for (InnerClassMeta inner : this.innersforTagCalls) {
+//			// create a reusable instance _tagName_indexand a instance
+//			// initializer
+//			String tagClassName = inner.tagName;
+//			String var = "_" + inner.getVarRoot() + inner.counter;
+//			
+//			if (tagClassName.equals("this")) {
+//				tagClassName = this.className;
 //			}
-			pln();
-		}
-		if (hasTags)
-			pln("// -- end of the tag objects\n");
+//
+//			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
+//			pln(decl);
+//
+//			// changed to wait until tag invocation to set the runners
+////			if (useWithPlay && !tagClassName.equals("Each")) {
+////				String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
+////				pln(addRunner);
+////			}
+//			pln();
+//		}
+//		if (hasTags)
+//			pln("// -- end of the tag objects\n");
 	}
 
 	protected void printAnnotations() {
@@ -508,6 +516,7 @@ public abstract class AbstractTemplateClassMetaData {
 	public String renderArgs;
 	// to support extends layout (arg1, arg2)
 	public String superClassRenderArgs = "";
+	protected int argsLineNum;
 
 	public void turnOnStopwatch() {
 		this.stopWatch = true;
@@ -583,11 +592,6 @@ public abstract class AbstractTemplateClassMetaData {
 				pln("TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;\n" + 
 						"actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();" );
 			
-			// define local tag instance
-			for(Tag t: tag.tags) {
-				declareTagInstance(t);
-			}
-			
 			pln(tag.getBodyText());
 			pln("this.setOut(ori);");
 			if (useWithPlay)
@@ -614,28 +618,28 @@ public abstract class AbstractTemplateClassMetaData {
 		}
 	}
 
-	/**
-	 * @param t
-	 */
-	protected void declareTagInstance(Tag t) {
-		String tagClassName = t.tagName;
-		String var = t.getTagVarName();
-		
-		
-		if (tagClassName.equals("this")) {
-			tagClassName = this.getClassName();
-		}
-		
-		String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
-		pln(decl);
-
-		// commented out. now runners are set just before use;
-//		if (useWithPlay  && !tagClassName.equals("Each")) {
-//			String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
-//			pln(addRunner);
+//	/**
+//	 * @param t
+//	 */
+//	protected void declareTagInstance(Tag t) {
+//		String tagClassName = t.tagName;
+//		String var = t.getTagVarName();
+//		
+//		
+//		if (tagClassName.equals("this")) {
+//			tagClassName = this.getClassName();
 //		}
-		pln();
-	}
+//		
+//		String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
+//		pln(decl);
+//
+//		// commented out. now runners are set just before use;
+////		if (useWithPlay  && !tagClassName.equals("Each")) {
+////			String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
+////			pln(addRunner);
+////		}
+//		pln();
+//	}
 
 	/**
 	 * added field declarations such as request, response, errors
@@ -745,12 +749,16 @@ public abstract class AbstractTemplateClassMetaData {
 	protected void addField(Parameter p) {
 		// no need 
 		String defaultVal = "=" /*+ JavaSyntaxTool.getDefault(p)*/;
-		pln(TAB + "private " + p.getType() + " " + p.getId() + (defaultVal.equals("=") ? "":defaultVal) + ";");
+		pln(TAB + "private " + p.getType() + " " + p.getId() + (defaultVal.equals("=") ? "":defaultVal) + "; " +JapidAbstractCompiler.makeLineMarker(argsLineNum));
 	}
 
 	public static void clearImports() {
 		globalImports.clear();
 		globalStaticImports.clear();
+	}
+
+	public void setArgsLineNum(int startLine) {
+		this.argsLineNum = startLine;
 	}
 
 }

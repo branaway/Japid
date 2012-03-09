@@ -308,10 +308,14 @@ public abstract class JapidAbstractCompiler {
 
 	protected void markLine(int line) {
 		if (!this.getTemplateClassMetaData().getTrimStaticContent()) {
-			print("// line " + line);
+			print(makeLineMarker(line));
 		}
 
 		template.linesMatrix.put(currentLine, line);
+	}
+
+	public static String makeLineMarker(int line) {
+		return "// line " + line;
 	}
 
 	protected void scriptline(String token) {
@@ -974,6 +978,8 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void postParsing(Tag tag) {
 		this.getTemplateClassMetaData().renderArgs = tag.callbackArgs;
+		this.getTemplateClassMetaData().setArgsLineNum(tag.startLine);
+		
 	}
 
 	abstract protected AbstractTemplateClassMetaData getTemplateClassMetaData();
@@ -1111,10 +1117,18 @@ public abstract class JapidAbstractCompiler {
 			// class
 			// this however comes at a performance cost
 
+			String tagClassName = tag.tagName;
+			if (tagClassName.equals("this")) {
+				// call itself
+				tagClassName = this.getTemplateClassMetaData().getClassName();
+			}
+			
 			String tagVar = tag.getTagVarName();
+			String tagline = "final " + tagClassName + " " + tagVar + " = new " + tagClassName + "(getOut()); ";
+			tagline += tagVar;
+			
 
 			if (!tag.hasBody) {
-				String tagline = tagVar;
 				if (useWithPlay && !tag.tagName.equals(Each.class.getSimpleName())) {
 					tagline += ".setActionRunners(getActionRunners())";
 				}
@@ -1168,8 +1182,14 @@ public abstract class JapidAbstractCompiler {
 			if (bodyInner == null)
 				throw new RuntimeException("compiler bug? " + tag.tagName + " not allowed to have instance of this tag");
 			String tagVar = tag.getTagVarName();
+			String tagClassName = tag.tagName;
+			if (tagClassName.equals("this")) {
+				// call itself
+				tagClassName = this.getTemplateClassMetaData().getClassName();
+			}
 			
-			String tagline = tagVar; 
+			String tagline = "final " + tagClassName + " " + tagVar + " = new " + tagClassName + "(getOut()); " + tagVar ;
+						
 			// make sure the tag always use the current output buffer;
 			if (useWithPlay && !tag.tagName.equals(Each.class.getSimpleName())) {
 				tagline += ".setActionRunners(getActionRunners())";
@@ -1303,7 +1323,7 @@ public abstract class JapidAbstractCompiler {
 							"			public void runPlayAction() throws %s {\n" +
 							// "				super.checkActionCacheFor(%s.class, \"%s\");\n"
 							// +
-							"				%s; // line " + parser.getLineNumber() + "\n" +
+							"				%s; " + makeLineMarker(parser.getLineNumber()) + "\n" +
 							"			}\n" +
 							"		}); p(\"\\n\");"; // hack: a new line char to stand for the action position.
 			// Should really change the action runner collection to <int, List<ActionRunner>> 

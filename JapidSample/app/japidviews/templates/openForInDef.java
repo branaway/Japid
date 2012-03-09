@@ -82,10 +82,8 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
-final Each _Each1 = new Each(getOut());
-
 // line 2
-    _Each1.setOut(getOut()); _Each1.render(new String[]{"aaa","bbb","ccc"}, new Each.DoBody<String>(){
+    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(new String[]{"aaa","bbb","ccc"}, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 3
 		p("      alert('");// line 3

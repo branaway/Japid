@@ -70,15 +70,9 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final doBodyInDefTag _doBodyInDefTag0 = new doBodyInDefTag(getOut());
-
-// -- end of the tag objects
-
 //------
 p("\n");// line 1
-		_doBodyInDefTag0.setActionRunners(getActionRunners()).setOut(getOut()); _doBodyInDefTag0.render(new doBodyInDefTag.DoBody<String, Integer>(){
+		final doBodyInDefTag _doBodyInDefTag0 = new doBodyInDefTag(getOut()); _doBodyInDefTag0.setActionRunners(getActionRunners()).setOut(getOut()); _doBodyInDefTag0.render(new doBodyInDefTag.DoBody<String, Integer>(){
 public void render(final String c, final Integer i) {
 // line 2
 		p("  my body plus ");// line 2

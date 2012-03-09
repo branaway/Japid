@@ -2079,7 +2079,7 @@ Now let's look at some of the Play! syntax and how similar things are done in Ja
 Japid has adopted most of the notations in the classic Play! templates.  
 
 * @*{ }*@: the server side comment block. Sometimes I use @`//@ to make a one line comment. 
-* @%{ }%@: the code block. Most of the time I like the ` leading code line though.  
+* @%{ }%@: the code block. Most of the time I like the ` lead code line though.  
 * @${ }@: the Java expression. Japid allows one to drop the curlies if won't cause any confusion. 
 * @&{ }@: the message block.
 * @#{ }@: the tag block. Note that named parameters are not supported. Many of the buidt-in tags has corresponding @command@ form that use the back quote, such as @extends@, @set@, @get@, etc. 

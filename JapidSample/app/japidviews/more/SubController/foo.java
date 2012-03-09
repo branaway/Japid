@@ -72,12 +72,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final bar _bar0 = new bar(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 		p("\n" + 
@@ -87,7 +81,7 @@ final bar _bar0 = new bar(getOut());
 "\n");// line 3
 		p("\n" + 
 "\n");// line 5
-		_bar0.setActionRunners(getActionRunners()).setOut(getOut()); _bar0.render();// line 7
+		final bar _bar0 = new bar(getOut()); _bar0.setActionRunners(getActionRunners()).setOut(getOut()); _bar0.render();// line 7
 		;// line 7
 		
 	}

@@ -42,12 +42,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final taggy _taggy1 = new taggy(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 		p("\n");// line 1
@@ -56,7 +50,7 @@ p("\n" +
 		p(escape(a));// line 5
 		p("\n" + 
 "nice view: ");// line 5
-		_taggy1.setOut(getOut()); _taggy1.render(a + "1");// line 6
+		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1");// line 6
 		;// line 6
 		
 	}

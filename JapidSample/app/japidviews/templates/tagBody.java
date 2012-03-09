@@ -70,16 +70,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final moreTag _moreTag2 = new moreTag(getOut());
-
-final anotherTag _anotherTag1 = new anotherTag(getOut());
-
-final fooTag _fooTag0 = new fooTag(getOut());
-
-// -- end of the tag objects
-
 //------
 p("\n" + 
 "Note: the last | is the separator for the tag arguments and the call back parameters. \n" + 
@@ -88,7 +78,7 @@ p("\n" +
 "before\n" + 
 "\n" + 
 "<p/>\n");// line 1
-		_fooTag0.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag0.render("hi", new fooTag.DoBody(){
+		final fooTag _fooTag0 = new fooTag(getOut()); _fooTag0.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag0.render("hi", new fooTag.DoBody(){
 public void render() {
 // line 8
     final String echo = "secret";// line 9
@@ -98,7 +88,7 @@ public void render() {
 		p("\n" + 
 "\n" + 
 "	");// line 11
-		_anotherTag1.setActionRunners(getActionRunners()).setOut(getOut()); _anotherTag1.render(echo, new anotherTag.DoBody<String>(){
+		final anotherTag _anotherTag1 = new anotherTag(getOut()); _anotherTag1.setActionRunners(getActionRunners()).setOut(getOut()); _anotherTag1.render(echo, new anotherTag.DoBody<String>(){
 public void render(final String what) {
 // line 13
 		p("	    got ");// line 13
@@ -107,7 +97,7 @@ public void render(final String what) {
 		p(echo);// line 14
 		p("\n" + 
 "		");// line 14
-		_moreTag2.setActionRunners(getActionRunners()).setOut(getOut()); _moreTag2.render(echo, new moreTag.DoBody<String>(){
+		final moreTag _moreTag2 = new moreTag(getOut()); _moreTag2.setActionRunners(getActionRunners()).setOut(getOut()); _moreTag2.render(echo, new moreTag.DoBody<String>(){
 public void render(final String more) {
 // line 15
 		p("		   got ");// line 15

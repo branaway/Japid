@@ -74,12 +74,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final SampleTag _SampleTag1 = new SampleTag(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 		;// line 1
@@ -93,7 +87,7 @@ final SampleTag _SampleTag1 = new SampleTag(getOut());
 		p(".\n" + 
 "Here goes your Japid template content.\n" + 
 "call a tag: \n");// line 7
-		_SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render("world");// line 10
+		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render("world");// line 10
 		;// line 10
 		
 	}

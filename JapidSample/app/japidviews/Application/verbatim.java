@@ -70,12 +70,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final Each _Each0 = new Each(getOut());
-
-// -- end of the tag objects
-
 //------
 p("\n" + 
 "<p>\n" + 
@@ -95,7 +89,7 @@ p("\n" +
 "<p>got it?</p>\n" + 
 "\n");// line 15
 		String[] ss = new String[]{"a", "b"};// line 18
-_Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
+final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 19
 		p("    <p>loop: ");// line 19

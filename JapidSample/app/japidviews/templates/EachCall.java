@@ -72,22 +72,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final SampleTag _SampleTag1 = new SampleTag(getOut());
-
-final Each _Each0 = new Each(getOut());
-
-final SampleTag _SampleTag2 = new SampleTag(getOut());
-
-final SampleTag _SampleTag4 = new SampleTag(getOut());
-
-final Each _Each3 = new Each(getOut());
-
-final Each _Each5 = new Each(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 		p("\n" + 
@@ -99,7 +83,7 @@ final Each _Each5 = new Each(getOut());
 "The instance variable is defined after the | line, the same way as any tag render-back\n" + 
 "</p>\n" + 
 "\n");// line 1
-		_Each0.setOut(getOut()); _Each0.render(posts, new Each.DoBody<String>(){
+		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(posts, new Each.DoBody<String>(){
 public void render(final String p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 11
 		p("    <p>index: ");// line 11
@@ -116,7 +100,7 @@ public void render(final String p, final int _size, final int _index, final bool
 		p(_size);// line 12
 		p(" </p>\n" + 
 "    call a tag:  ");// line 12
-		_SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(p);// line 13
+		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(p);// line 13
 
 }
 
@@ -135,12 +119,12 @@ public void resetBuffer() {
 }
 );// line 11
 		p("\n");// line 14
-		_SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render("end");// line 16
+		final SampleTag _SampleTag2 = new SampleTag(getOut()); _SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render("end");// line 16
 		p("\n" + 
 "<p> now we have an enhanced for loop (the \"open for loop\") that also makes all the loop properties available</p>\n" + 
 "\n");// line 16
 		 int k = 1;// line 20
-_Each3.setOut(getOut()); _Each3.render(posts, new Each.DoBody<String>(){
+final Each _Each3 = new Each(getOut()); _Each3.setOut(getOut()); _Each3.render(posts, new Each.DoBody<String>(){
 public void render(final String p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 21
 		p("    <p>index: ");// line 21
@@ -157,7 +141,7 @@ public void render(final String p, final int _size, final int _index, final bool
 		p(_size);// line 22
 		p(" </p>\n" + 
 "    call a tag:  ");// line 22
-		_SampleTag4.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag4.render(p);// line 23
+		final SampleTag _SampleTag4 = new SampleTag(getOut()); _SampleTag4.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag4.render(p);// line 23
 
 }
 
@@ -178,7 +162,7 @@ public void resetBuffer() {
 		p("\n" + 
 "\n");// line 24
 		int[] ints = {1, 2,3};// line 27
-_Each5.setOut(getOut()); _Each5.render(ints, new Each.DoBody<Integer>(){
+final Each _Each5 = new Each(getOut()); _Each5.setOut(getOut()); _Each5.render(ints, new Each.DoBody<Integer>(){
 public void render(final Integer i, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 28
 		p("    --> ");// line 28

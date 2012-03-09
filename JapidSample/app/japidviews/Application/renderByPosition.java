@@ -81,12 +81,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 		;// line 1
@@ -108,7 +102,7 @@ final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut());
 "\n" + 
 "<p>Lets call a tag by name:</p>\n" + 
 "\n");// line 6
-		_tagPrimitives0.setActionRunners(getActionRunners()).setOut(getOut()); _tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6));// line 10
+		final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut()); _tagPrimitives0.setActionRunners(getActionRunners()).setOut(getOut()); _tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6));// line 10
 		
 	}
 

@@ -6,30 +6,18 @@ import japidviews.templates.Posts;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
-import javassist.CtBehavior;
-import javassist.CtClass;
-import javassist.CtField;
-import javassist.Modifier;
 
 import models.japidsample.Author;
 import models.japidsample.Post;
 
 import org.junit.Test;
 
-import play.Logger;
-import bytecodeparser.analysis.stack.StackAnalyzer;
-import bytecodeparser.utils.Utils;
-
 import cn.bran.japid.template.RenderResult;
-import cn.bran.play.ActionBridge;
 
 public class PerfTests {
 	/**

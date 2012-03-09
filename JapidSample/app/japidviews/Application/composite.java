@@ -74,12 +74,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final invokeInTag _invokeInTag4 = new invokeInTag(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 p("\n" + 
@@ -125,7 +119,7 @@ p("\n" +
 "\n" + 
 "<p>Let's invoke a tag which invokes an action</p>\n" + 
 "\n");// line 15
-		_invokeInTag4.setActionRunners(getActionRunners()).setOut(getOut()); _invokeInTag4.render();// line 19
+		final invokeInTag _invokeInTag4 = new invokeInTag(getOut()); _invokeInTag4.setActionRunners(getActionRunners()).setOut(getOut()); _invokeInTag4.render();// line 19
 		p("\n" + 
 "<p>let's invoke an action that renders a template that contains another invoke: ");// line 19
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel2", post.getAuthor()) {

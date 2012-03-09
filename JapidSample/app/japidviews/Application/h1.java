@@ -2,6 +2,7 @@ package japidviews.Application;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
+import cn.bran.japid.template.ActionRunner;
 import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
@@ -17,12 +18,12 @@ import play.mvc.Http.*;
 import controllers.*;
 import japidviews._javatags.*;
 //
-// NOTE: This file was generated from: japidviews/Application/authorPanel.html
+// NOTE: This file was generated from: japidviews/Application/h1.html
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public class authorPanel extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/Application/authorPanel.html";
+public class h1 extends cn.bran.play.JapidTemplateBase
+{	public static final String sourceTemplate = "japidviews/Application/h1.html";
 {
 putHeader("Content-Type", "text/html; charset=utf-8");
 }
@@ -41,18 +42,18 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 // - end of implicit fields with Play 
 
 
-	public authorPanel() {
+	public h1() {
 		super(null);
 	}
-	public authorPanel(StringBuilder out) {
+	public h1(StringBuilder out) {
 		super(out);
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/"a",  };
-public static final String[] argTypes = new String[] {/* arg types of the template*/"models.japidsample.Author",  };
+public static final String[] argNames = new String[] {/* args of the template*/"s",  };
+public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
 public static final Object[] argDefaults= new Object[] {null, };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.authorPanel.class);
+public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.h1.class);
 
 {
 	setRenderMethod(renderMethod);
@@ -64,9 +65,9 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private models.japidsample.Author a;
-	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
-		this.a = a;
+	private String s;
+	public cn.bran.japid.template.RenderResult render(String s) {
+		this.s = s;
 		long t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
@@ -75,18 +76,28 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 //------
 ;// line 1
 		p("\n" + 
-"<p>author name: ");// line 1
-		p(a.name);// line 3
-		p("</p>\n" + 
-"<p>his birthdate: ");// line 3
-		p(a.birthDate);// line 4
-		p("</p>\n" + 
-"<p>and his is a '");// line 4
-		p(a.getGender());// line 5
-		p("'</p>\n" + 
-"    ");// line 5
-		final SampleTag _SampleTag0 = new SampleTag(getOut()); _SampleTag0.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag0.render("end");// line 6
-		p("    ");// line 6
+"\n" + 
+"h1: got ");// line 1
+		p(s);// line 3
+		p("\n" + 
+"\n" + 
+"\n" + 
+"	");// line 3
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", 1) {
+			@Override
+			public void runPlayAction() throws cn.bran.play.JapidResult {
+				Application.echo(1); // line 6
+			}
+		}); p("\n");// line 6
+		p("	");// line 6
+				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", 2) {
+			@Override
+			public void runPlayAction() throws cn.bran.play.JapidResult {
+				Application.echo(2); // line 7
+			}
+		}); p("\n");// line 7
+		;// line 7
+		;// line 9
 		
 	}
 

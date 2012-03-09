@@ -76,7 +76,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 ;// line 1
 		p("\n" + 
 "<p>hi: ");// line 1
-		p("hi:" + join(strings, "|"));// line 3
+		p("hiiii:" + join(strings, "|"));// line 3
 		p("</p>\n" + 
 "\n" + 
 "<p>hi2: ");// line 3

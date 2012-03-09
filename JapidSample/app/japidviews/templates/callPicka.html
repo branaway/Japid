@@ -1,4 +1,4 @@
-<p>before...<p>
+<p>beginning...<p>
 <p>
 <p>call a simple tag</p>
 
@@ -6,17 +6,20 @@ Another simple tag aTag, which locates in the same directory as this template:
 
 first define something in a Java code block. 
 
-` // java.util.* is automatically imported
-` List<String> strings = new ArrayList<String>(){{add("you");add("me");add("them");}};
+*{
+java.util.* is automatically imported
+}*
 
-`tag aTag strings
+` List<String> strings = new ArrayList<String>(){{add("you");add("me");add("everyone");}};
+
+`t aTag(strings)
 
 note: the picka tag is defined in the japidviews/_tags directory
 
-`tag picka("a", "b" + "c") | String r
-    the tag chosed: $r
-    <p>and we can can call a tag recurive?</p>
-    `tag SampleTag(r)
+`tag picka("a", "b" + "c") | String rr
+    the tag chosed: $rr
+    <p>and we can can call a tag recursively?</p>
+    `tag SampleTag(rr)
 `
 </p>
 
@@ -35,6 +38,6 @@ Or using the full path of the tag
 
 `tag japidviews/templates/aTag(strings)
 
-<p>You can use "." instead of "/" in the path:</p>
+<p>You can use "." instead of "/" on the path:</p>
 
-`tag japidviews.templates.aTag strings
+`tag japidviews.templates.aTag(strings)

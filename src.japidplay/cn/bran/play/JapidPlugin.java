@@ -14,15 +14,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FileUtils;
-
-import cn.bran.japid.compiler.JapidCompilationException;
-
 import play.Logger;
 import play.Play;
 import play.Play.Mode;
 import play.PlayPlugin;
-import play.exceptions.PlayException;
+import play.exceptions.CompilationException;
 import play.exceptions.TemplateExecutionException;
 import play.exceptions.UnexpectedException;
 import play.mvc.Http.Header;
@@ -30,6 +26,8 @@ import play.mvc.Http.Request;
 import play.mvc.Http.Response;
 import play.mvc.Scope.Flash;
 import play.mvc.results.Result;
+import play.vfs.VirtualFile;
+import cn.bran.japid.compiler.JapidCompilationException;
 
 /**
  * 
@@ -97,10 +95,13 @@ public class JapidPlugin extends PlayPlugin {
 				}
 			}
 		} catch (JapidCompilationException e) {
+			// turn japid compilation error to Play's template error to get better error reporting
 			JapidPlayTemplate jpt = new JapidPlayTemplate();
 			jpt.name = e.getTemplateName();
 			jpt.source = e.getTemplateSrc();
-			throw new TemplateExecutionException(jpt, e.getLineNumber(), e.getMessage(), e);
+//			throw new TemplateExecutionException(jpt, e.getLineNumber(), e.getMessage(), e);
+			VirtualFile vf = VirtualFile.fromRelativePath("/app/" + e.getTemplateName());
+			throw new CompilationException(vf, "\"" + e.getMessage() + "\"", e.getLineNumber(), 0, 0);
 		} catch (RuntimeException e) {
 			// TODO Auto-generated catch block
 //			e.printStackTrace();

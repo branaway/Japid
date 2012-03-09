@@ -24,6 +24,11 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2012/3/7: V0.9.3.1:  breaking changes. Japid views Java code must be regenerated.  
+	1. enhancement: JavaSyntaxTool.parseArgs now takes arg list either with or without parenthesis 
+	2. bug fix: action call in a tag which is in turn in a loop in the invoker would use the last value. Now tag object is declared where it is used. 
+2011/12/23: V0.9.3:  
+	1. bug fix: could not use forced type conversion in tag invocation arguments.  
 2011/12/19: V0.9.2.8:  
 	1. new minor feature: added JapidController.isInvokedfromJapidView() for telling if the current action call is caused by `invoke tag in a Japid view. 
 2011/12/18: V0.9.2.7: "play japid:regen" is required 

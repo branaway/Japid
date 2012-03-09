@@ -15,5 +15,5 @@
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="play.server.Server"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JapidContact"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dplay.debug=yes -Dplay.id= -Dapplication.path=&quot;${project_loc:JapidContact}&quot; -Djava.endorsed.dirs=&quot;D:\home\bran\projects\play/framework/endorsed&quot; -javaagent:&quot;D:\home\bran\projects\play/framework/lib/PlayAgent.jar&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dplay.debug=yes -Dplay.id= -Dapplication.path=&quot;${project_loc:JapidContact}&quot; -Djava.endorsed.dirs=&quot;D:\home\bran\projects\play/framework/endorsed&quot; -javaagent:&quot;D:\home\bran\projects\play/framework/PlayAgent.jar&quot;"/>
 </launchConfiguration>

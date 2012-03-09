@@ -117,11 +117,14 @@ public class Application extends JapidController {
 	
 	public static void hello() {
 		String m = "hi there and..";
-		String am = m + "!!";
+		String am = m + "!";
 //		renderText("hello，Japid Play!");
 		renderText(am);
 	}
 	
+	public static void h1() {
+		renderJapid("h1");
+	}
 	/**
 	 * this method shows how to render arguments to a japid template by naming and positional convention with the 
 	 * renderJapid().
@@ -368,4 +371,10 @@ public class Application extends JapidController {
 	public static void special() {
 		renderJapid();
 	}
+	
+	public static void hellohello() {
+		renderJapid();
+	}
+
+	
 }

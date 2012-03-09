@@ -134,6 +134,37 @@ public class JavaSyntaxValidatorTest {
 		assertEquals("a", args.get(0));
 		assertEquals("b + 123", args.get(1));
 		assertEquals("foo('d', \"hello\")", args.get(2));
+
+		src = "(a, b + 123, foo('d', \"hello\"))";
+		args = JavaSyntaxTool.parseArgs(src);
+		
+		for (String a: args) {
+			System.out.println(a);
+		}
+		
+		assertEquals(3, args.size());
+		assertEquals("a", args.get(0));
+		assertEquals("b + 123", args.get(1));
+		assertEquals("foo('d', \"hello\")", args.get(2));
+
+		src = "(int)a, b + 123, foo('d', \"hello\")";
+		args = JavaSyntaxTool.parseArgs(src);
+		
+		for (String a: args) {
+			System.out.println(a);
+		}
+		
+		assertEquals(3, args.size());
+		assertEquals("(int) a", args.get(0));
+		assertEquals("b + 123", args.get(1));
+		assertEquals("foo('d', \"hello\")", args.get(2));
+
+		src = "(inta, b + 123, foo('d', \"hello\")";
+		try {
+			args = JavaSyntaxTool.parseArgs(src);
+			fail("should tell a bad grammar");
+		} catch (Exception e) {
+		}
 	}
 
 	@Test

@@ -72,12 +72,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy2 = new japidviews.more.MyController._tags.taggy(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 ;// line 2
@@ -89,7 +83,7 @@ final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__ta
 "hello ");// line 5
 		p(s);// line 8
 		p("\n");// line 8
-		_japidviews_more_MyController__tags_taggy2.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s);// line 10
+		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy2 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy2.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s);// line 10
 		p(" ");// line 10
 		
 	}

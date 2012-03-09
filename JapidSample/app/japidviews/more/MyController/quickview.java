@@ -71,14 +71,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy0 = new japidviews.more.MyController._tags.taggy(getOut());
-
-final taggy2 _taggy21 = new taggy2(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 p("<p>\n" + 
@@ -87,10 +79,10 @@ p("<p>\n" +
 "<p>\n");// line 2
 		String s = "quick" ;// line 8
 		;// line 8
-		_japidviews_more_MyController__tags_taggy0.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s);// line 9
+		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy0 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy0.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s);// line 9
 		p("</p> \n" + 
 "<p>\n");// line 9
-		_taggy21.setActionRunners(getActionRunners()).setOut(getOut()); _taggy21.render(s);// line 12
+		final taggy2 _taggy21 = new taggy2(getOut()); _taggy21.setActionRunners(getActionRunners()).setOut(getOut()); _taggy21.render(s);// line 12
 		p("</p>");// line 12
 		
 	}

@@ -70,17 +70,9 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final argtest _argtest0 = new argtest(getOut());
-
-final dummier _dummier1 = new dummier(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
-		_argtest0.setActionRunners(getActionRunners()).setOut(getOut()); _argtest0.render(new argtest.DoBody(){
+		final argtest _argtest0 = new argtest(getOut()); _argtest0.setActionRunners(getActionRunners()).setOut(getOut()); _argtest0.render(new argtest.DoBody(){
 public void render() {
 // line 1
 		p("  ok\n");// line 1
@@ -101,7 +93,7 @@ public void resetBuffer() {
 
 }
 , named("arg", "test1"));// line 1
-_dummier1.setActionRunners(getActionRunners()).setOut(getOut()); _dummier1.render(named("a", "hxxmmm"));// line 4
+final dummier _dummier1 = new dummier(getOut()); _dummier1.setActionRunners(getActionRunners()).setOut(getOut()); _dummier1.render(named("a", "hxxmmm"));// line 4
 		
 	}
 

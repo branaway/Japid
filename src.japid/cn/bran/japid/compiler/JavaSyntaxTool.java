@@ -181,35 +181,42 @@ public class JavaSyntaxTool {
 	}
 
 	private static final String classTempForArgs = "class T {  {  foo(%s); } }";
+	private static final String classTempForArgsNoParenthesis = "class T {  {  foo%s; } }";
 
 	public static List<String> parseArgs(String line) {
 		final List<String> ret = new ArrayList<String>();
 		if (line == null || line.trim().length() == 0)
 			return ret;
 
-		line = line.trim();
-		if (line.startsWith("(")) {
-			if (line.endsWith(")"))
-				line = line.substring(1, line.length() - 1);
-			else
-				throw new RuntimeException("no closing ')' in arg expression: "
-						+ line);
-		}
 
+		VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
+			@Override
+			public void visit(MethodCallExpr n, Object arg) {
+				List<Expression> args = n.getArgs();
+				// api issue: args can be null in case of empty arg list
+				if (args != null)
+					for (Expression e : args) {
+						ret.add(e.toString());
+					}
+			}
+		};
+
+		line = line.trim();
+		if (line.startsWith("(")){
+			// perhaps it's in the form of (...)
+			String cl = String.format(classTempForArgsNoParenthesis, line);
+			try {
+				CompilationUnit cu = parse(cl);
+				cu.accept(visitor, null);
+				return ret;
+			} catch (ParseException e) {
+				// perhaps not really (...). fall through
+			}
+		}
+		
 		String cl = String.format(classTempForArgs, line);
 		try {
 			CompilationUnit cu = parse(cl);
-			VoidVisitorAdapter visitor = new VoidVisitorAdapter() {
-				@Override
-				public void visit(MethodCallExpr n, Object arg) {
-					List<Expression> args = n.getArgs();
-					// api issue: args can be null in case of empty arg list
-					if (args != null)
-						for (Expression e : args) {
-							ret.add(e.toString());
-						}
-				}
-			};
 			cu.accept(visitor, null);
 		} catch (ParseException e) {
 			throw new RuntimeException(
@@ -232,13 +239,13 @@ public class JavaSyntaxTool {
 			return ret;
 
 		line = line.trim();
-		if (line.startsWith("(")) {
-			if (line.endsWith(")"))
-				line = line.substring(1, line.length() - 1);
-			else
-				throw new RuntimeException("no closing ')' in arg expression: "
-						+ line);
-		}
+//		if (line.startsWith("(")) {
+//			if (line.endsWith(")"))
+//				line = line.substring(1, line.length() - 1);
+//			else
+//				throw new RuntimeException("no closing ')' in arg expression: "
+//						+ line);
+//		}
 
 		String cl = String.format(classTempForArgs, line);
 		final String finalLine = line;

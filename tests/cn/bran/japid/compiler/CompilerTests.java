@@ -285,9 +285,9 @@ public class CompilerTests {
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 		System.out.println(code);
 //		assertTrue(code.contains("((tag)(new tag(getOut()).setActionRunners(getActionRunners()))).render(a)"));
-		assertTrue(code.contains("final tag _tag0 = new tag(getOut());"));
+		assertTrue(code.contains("final tag _tag0 = new tag(getOut()); _tag0.setActionRunners"));
 //		assertTrue(code.contains("((my.tag)(new my.tag(getOut())).setActionRunners(getActionRunners())).render(a, new my.tag.DoBody<String>(){"));
-		assertTrue(code.contains("final my.tag _my_tag1 = new my.tag(getOut());"));
+		assertTrue(code.contains("final my.tag _my_tag1 = new my.tag(getOut()); _my_tag1.setActionRunners"));
 		
 	}
 	@Test

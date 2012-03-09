@@ -42,23 +42,15 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final Each _Each1 = new Each(getOut());
-
-final taddy _taddy0 = new taddy(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 		p("[");// line 1
 		p(a);// line 2
 		p("]-->\n");// line 2
-		_taddy0.setOut(getOut()); _taddy0.render(new taddy.DoBody<String[]>(){
+		final taddy _taddy0 = new taddy(getOut()); _taddy0.setOut(getOut()); _taddy0.render(new taddy.DoBody<String[]>(){
 public void render(final String[] ss) {
 // line 3
-    _Each1.setOut(getOut()); _Each1.render(ss, new Each.DoBody<String>(){
+    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 4
 		p("    -> ");// line 4

@@ -72,12 +72,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final categories _this0 = new categories(getOut());
-
-// -- end of the tag objects
-
 //------
 p(" ");// line 1
  if(asBoolean(categories)) {// line 2
@@ -89,7 +83,7 @@ p(" ");// line 1
 		p(cat.name);// line 6
 		p("</a>\n" + 
 "	           ");// line 6
-		_this0.setActionRunners(getActionRunners()).setOut(getOut()); _this0.render(cat.subCategories);// line 7
+		final categories _this0 = new categories(getOut()); _this0.setActionRunners(getActionRunners()).setOut(getOut()); _this0.render(cat.subCategories);// line 7
 		p("	       </li>\n" + 
 "       ");// line 7
 		}// line 9

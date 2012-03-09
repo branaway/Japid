@@ -27,7 +27,7 @@ import cn.bran.japid.classmeta.MimeTypeEnum;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 
 /**
- * a java based template suing StringBuilder as the content buffer
+ * a java based template using StringBuilder as the content buffer
  * 
  * @author bran
  * 
@@ -57,6 +57,9 @@ public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
 		return this;
 	}
 
+	/**
+	 * translate japid runtime exception to Play's TemplateExecutionException for formated error reporting
+	 */
 	@Override
 	protected void handleException(RuntimeException e) {
 		if (Play.mode == Mode.PROD)

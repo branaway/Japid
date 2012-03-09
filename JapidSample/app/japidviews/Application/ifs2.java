@@ -74,18 +74,6 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final SampleTag _SampleTag1 = new SampleTag(getOut());
-
-final Each _Each0 = new Each(getOut());
-
-final SampleTag _SampleTag3 = new SampleTag(getOut());
-
-final Each _Each2 = new Each(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 		p("\n" + 
@@ -120,12 +108,12 @@ final Each _Each2 = new Each(getOut());
 		if(asBoolean(ss)) {// line 31
 		p("    well got ss\n" + 
 "    ");// line 31
-		_Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
+		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 33
 		p("        call a tag\n" + 
 "        ");// line 33
-		_SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s);// line 35
+		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s);// line 35
     
 }
 
@@ -148,12 +136,12 @@ public void resetBuffer() {
 		p(ss);// line 38
 		p("\n" + 
 "    ");// line 38
-		_Each2.setOut(getOut()); _Each2.render(ss, new Each.DoBody<String>(){
+		final Each _Each2 = new Each(getOut()); _Each2.setOut(getOut()); _Each2.render(ss, new Each.DoBody<String>(){
 public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
 // line 39
 		p("        call a tag\n" + 
 "        ");// line 39
-		_SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s);// line 41
+		final SampleTag _SampleTag3 = new SampleTag(getOut()); _SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s);// line 41
     
 }
 

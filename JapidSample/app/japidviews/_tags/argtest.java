@@ -100,16 +100,10 @@ public static interface DoBody {
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
-
-// -- set up the tag objects
-final argtest1 _argtest10 = new argtest1(getOut());
-
-// -- end of the tag objects
-
 //------
 ;// line 1
 		p("\n");// line 1
-		_argtest10.setActionRunners(getActionRunners()).setOut(getOut()); _argtest10.render(new argtest1.DoBody(){
+		final argtest1 _argtest10 = new argtest1(getOut()); _argtest10.setActionRunners(getActionRunners()).setOut(getOut()); _argtest10.render(new argtest1.DoBody(){
 public void render() {
 // line 2
   if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 3

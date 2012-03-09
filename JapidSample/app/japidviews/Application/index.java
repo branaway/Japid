@@ -99,8 +99,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 "\n" + 
 "	<li><a href=\"application/renderByPosition\">implicit template\n" + 
 "	binding with <b>JapidController.renderJapid()</b> </a></li>\n" + 
+"	\n" + 
 "	<li><a href=\"application/postList\">a template with template\n" + 
 "	and tags etc...</a></li>\n" + 
+"	\n" + 
 "	<li><a href=\"go/templates/log.html\">use the log\n" + 
 "	macro in a template. watch the output in the console</a></li>\n" + 
 "	<li><a href=\"go/templates/Msg.html\">i18n, use\n" + 
@@ -137,7 +139,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 "	<li><a href=\"application/escapedExpr\"> ");// line 19
 		p("\n" + 
 "	raw expression with ${} and html-safe expression with ~{}\n" + 
-"	");// line 60
+"	");// line 62
 		p("	</li>\n" + 
 "	<li><a href=\"more.ContentNegotiation/index\"> content\n" + 
 "	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
@@ -151,41 +153,41 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 "	in layout spec and tags</a>: prefix the layout name or the tag name with a\n" + 
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
-"\n");// line 62
-		String na = "bran";// line 77
-int ag = 123;// line 78
-		p("	<li><a href=\"");// line 78
-		p(lookup("validate", na, ag));// line 79
+"\n");// line 64
+		String na = "bran";// line 79
+int ag = 123;// line 80
+		p("	<li><a href=\"");// line 80
+		p(lookup("validate", na, ag));// line 81
 		p("\">validation and errors</a></li>\n" + 
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"application/flashgood\">flash with success</a></li>\n" + 
-"			<li><a href=\"");// line 79
-		p(lookup("reverseUrl", new Object[]{}));// line 83
+"			<li><a href=\"");// line 81
+		p(lookup("reverseUrl", new Object[]{}));// line 85
 		p("\">flash with a message</a></li>\n" + 
 "			<li><a href=\"application/flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"application/flashmsg\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
-"	   ");// line 83
-		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 89
-		p("	   <a href=\"");// line 89
-		p(lookup("search", sp));// line 90
+"	   ");// line 85
+		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 91
+		p("	   <a href=\"");// line 91
+		p(lookup("search", sp));// line 92
 		p("\">reverse URL lookup with complex object</a>\n" + 
-"    ");// line 90
+"    ");// line 92
 		p("\n" + 
 "	</li>\n" + 
-"	<li><a href=\"");// line 92
-		p(lookupStatic("/public/images/favicon.png"));// line 94
+"	<li><a href=\"");// line 94
+		p(lookupStatic("/public/images/favicon.png"));// line 96
 		p("\">reverse to a static  png</a></li>\n" + 
 "</ul>\n" + 
 "\n" + 
 "<p>Reverse lookup is slow...</p>\n" + 
 "\n" + 
-"<p>app mode: \"");// line 94
-		p(_play.mode);// line 99
-		p("\"</p>\n");// line 99
+"<p>app mode: \"");// line 96
+		p(_play.mode);// line 101
+		p("\"</p>\n");// line 101
 		
 	}
 

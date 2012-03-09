@@ -91,9 +91,9 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t@Override protected void " + meth + "() {");
 			// local tag defs
 			TagSet set = setTags.get(meth);
-			for (Tag t: set.tags) {
-				declareTagInstance(t);
-			}
+//			for (Tag t: set.tags) {
+//				declareTagInstance(t);
+//			}
 			pln("\t\t" + setBody + ";");
 			pln("\t}");
 		}

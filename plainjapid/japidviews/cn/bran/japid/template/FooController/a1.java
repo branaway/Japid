@@ -60,11 +60,9 @@ public String foo(String ar) {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
-final taggy _taggy2 = new taggy(getOut());
-
 // line 7
 		p("  -> a1-: ");// line 7
-		_taggy2.setOut(getOut()); _taggy2.render(ar);// line 8
+		final taggy _taggy2 = new taggy(getOut()); _taggy2.setOut(getOut()); _taggy2.render(ar);// line 8
 
 this.setOut(ori);
 	return sb.toString();
