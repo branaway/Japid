@@ -33,11 +33,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String a;
+	private String a; // line 1
 	public String render(String a) {
 		this.a = a;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		 if (t != -1) System.out.println("[taggy] rendering time: " + t);
 		return getOut().toString();
 	}
@@ -47,11 +47,13 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		p("[");// line 1
 		p(a);// line 2
 		p("]-->\n");// line 2
-		final taddy _taddy0 = new taddy(getOut()); _taddy0.setOut(getOut()); _taddy0.render(new taddy.DoBody<String[]>(){
-public void render(final String[] ss) {
+		final taddy _taddy0 = new taddy(getOut()); _taddy0.setOut(getOut()); _taddy0.render(// line 3
+new taddy.DoBody<String[]>(){ // line 3
+public void render(final String[] ss) { // line 3
 // line 3
-    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(ss, new Each.DoBody<String>(){
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
+    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 4
+ss, new Each.DoBody<String>(){ // line 4
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 4
 // line 4
 		p("    -> ");// line 4
 		p(s);// line 5

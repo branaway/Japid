@@ -64,15 +64,15 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String title;
-	private DataModel.User user;
-	private ArrayList<DataModel.Entry> entries;
+	private String title; // line 1
+	private DataModel.User user; // line 1
+	private ArrayList<DataModel.Entry> entries; // line 1
 	public cn.bran.japid.template.RenderResult render(String title,DataModel.User user,ArrayList<DataModel.Entry> entries) {
 		this.title = title;
 		this.user = user;
 		this.entries = entries;
 		long t = -1;
-		try {super.layout(user);} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout(user);} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {

@@ -66,7 +66,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -74,7 +74,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 ;// line 1
 		for (int i = 1; i < 3; i++) {// line 1
 		p("	");// line 1
-		final hellohelloTag _hellohelloTag0 = new hellohelloTag(getOut()); _hellohelloTag0.setActionRunners(getActionRunners()).setOut(getOut()); _hellohelloTag0.render(i);// line 2
+		final hellohelloTag _hellohelloTag0 = new hellohelloTag(getOut()); _hellohelloTag0.setActionRunners(getActionRunners()).setOut(getOut()); _hellohelloTag0.render(i); // line 2// line 2
 }// line 3
 		;// line 3
 		

@@ -33,11 +33,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String a;
+	private String a; // line 1
 	public String render(String a) {
 		this.a = a;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		 if (t != -1) System.out.println("[a1] rendering time: " + t);
 		return getOut().toString();
 	}

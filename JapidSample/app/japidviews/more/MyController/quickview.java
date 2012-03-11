@@ -67,7 +67,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -79,10 +79,10 @@ p("<p>\n" +
 "<p>\n");// line 2
 		String s = "quick" ;// line 8
 		;// line 8
-		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy0 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy0.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s);// line 9
+		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy0 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy0.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s); // line 9// line 9
 		p("</p> \n" + 
 "<p>\n");// line 9
-		final taggy2 _taggy21 = new taggy2(getOut()); _taggy21.setActionRunners(getActionRunners()).setOut(getOut()); _taggy21.render(s);// line 12
+		final taggy2 _taggy21 = new taggy2(getOut()); _taggy21.setActionRunners(getActionRunners()).setOut(getOut()); _taggy21.render(s); // line 12// line 12
 		p("</p>");// line 12
 		
 	}

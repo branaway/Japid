@@ -36,7 +36,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	{ setHasDoBody(); }
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    return runRenderer(args);
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} 
 }
 
 	DoBody body;
@@ -57,13 +57,13 @@ public static interface DoBody<A> {
 	public String render(DoBody body) {
 		this.body = body;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		 if (t != -1) System.out.println("[taddy] rendering time: " + t);
 		return getOut().toString();
 	}
 	public String render() {
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		 if (t != -1) System.out.println("[taddy] rendering time: " + t);
 		return getOut().toString();
 	}

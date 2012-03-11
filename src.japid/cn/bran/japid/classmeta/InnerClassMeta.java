@@ -116,7 +116,7 @@ public class InnerClassMeta {
 	 * </pre>
 	 * @return
 	 */
-	public String getAnonymous() {
+	public String getAnonymous(String lineMarker) {
 		List<Parameter> params = JavaSyntaxTool.parseParams(this.renderParams);
 		
 		String[] argTypes = new String[params.size()];
@@ -138,8 +138,8 @@ public class InnerClassMeta {
 		String renderArgsWithFinal = JavaSyntaxTool.addFinalToAllParams(paramList);
 		
 		StringBuilder sb = new StringBuilder();
-		line(sb, "new " + tagName + ".DoBody" +  generics + "(){");
-		line(sb, "public void render(" + renderArgsWithFinal  + ") {");
+		line(sb, "new " + tagName + ".DoBody" +  generics + "(){ " + lineMarker);
+		line(sb, "public void render(" + renderArgsWithFinal  + ") { " + lineMarker);
 		line(sb, renderBody);
 		line(sb, "}");
 		String bufferString = "\r\n" + 

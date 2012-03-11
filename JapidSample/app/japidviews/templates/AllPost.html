@@ -1,21 +1,22 @@
 @extends 	Layout
 @import	 	models.japidsample.Post
 @(
-    String blogTitle, 
-    List <Post> allPost
+    String blogTitle,
+    List<Post> allPost
 )
-@stopwatch	on
+
+@stopwatch on
 
 @set title = "Home: " + blogTitle
 
-@for (Post p: allPost) {
+@for Post p: allPost
         *{ now we call a tag, with a body content that take a parameter title of String type }*
 
-	    @tag Display (post=p, as="home2") | String title
-		   The real title iiiis: $title;
+	    @t Display(post=p, as="home2") | String title
+		   The real title iiiis: $title
 	    @
-@}
+@
 
-@tag Tag2(msg = blogTitle, age = 10000)
+@t Tag2(msg=blogTitle, age = 100)
 
 <p>cool</p>

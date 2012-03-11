@@ -1,6 +1,7 @@
 @extends  TagLayout
 @(models.japidsample.Post post,	String as)
 
+
 <div class="divvy">
 	<p>title: $post.getTitle()</p>
 	<p>at: ${format(post.getPostedAt(), ("yy-MMM-dd"))}</p>

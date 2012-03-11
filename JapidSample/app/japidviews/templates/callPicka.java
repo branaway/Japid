@@ -66,7 +66,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -83,19 +83,20 @@ p("<p>beginning...<p>\n" +
 "\n");// line 11
 		 List<String> strings = new ArrayList<String>(){{add("you");add("me");add("everyone");}};// line 13
 		p("\n");// line 13
-		final aTag _aTag0 = new aTag(getOut()); _aTag0.setActionRunners(getActionRunners()).setOut(getOut()); _aTag0.render(strings);// line 15
+		final aTag _aTag0 = new aTag(getOut()); _aTag0.setActionRunners(getActionRunners()).setOut(getOut()); _aTag0.render(strings); // line 15// line 15
 		p("\n" + 
 "note: the picka tag is defined in the japidviews/_tags directory\n" + 
 "\n");// line 15
-		final picka _picka1 = new picka(getOut()); _picka1.setActionRunners(getActionRunners()).setOut(getOut()); _picka1.render("a", "b" + "c", new picka.DoBody<String>(){
-public void render(final String rr) {
+		final picka _picka1 = new picka(getOut()); _picka1.setActionRunners(getActionRunners()).setOut(getOut()); _picka1.render(// line 19
+"a", "b" + "c", new picka.DoBody<String>(){ // line 19
+public void render(final String rr) { // line 19
 // line 19
 		p("    the tag chosed: ");// line 19
 		p(rr);// line 20
 		p("\n" + 
 "    <p>and we can can call a tag recursively?</p>\n" + 
 "    ");// line 20
-		final SampleTag _SampleTag2 = new SampleTag(getOut()); _SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render(rr);// line 22
+		final SampleTag _SampleTag2 = new SampleTag(getOut()); _SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render(rr); // line 22// line 22
 
 }
 
@@ -118,21 +119,21 @@ public void resetBuffer() {
 "<p>\n" + 
 "we can call without the body part:\n" + 
 "\n");// line 23
-		final picka _picka3 = new picka(getOut()); _picka3.setActionRunners(getActionRunners()).setOut(getOut()); _picka3.render(named("a", "aa"), named("b", "bb"));// line 29
+		final picka _picka3 = new picka(getOut()); _picka3.setActionRunners(getActionRunners()).setOut(getOut()); _picka3.render(named("a", "aa"), named("b", "bb")); // line 29// line 29
 		p("\n" + 
 "or \n");// line 29
-		final picka _picka4 = new picka(getOut()); _picka4.setActionRunners(getActionRunners()).setOut(getOut()); _picka4.render("cc","dd");// line 32
+		final picka _picka4 = new picka(getOut()); _picka4.setActionRunners(getActionRunners()).setOut(getOut()); _picka4.render("cc","dd"); // line 32// line 32
 		p("\n" + 
 "</p>\n" + 
 "<p>\n" + 
 "Or using the full path of the tag\n" + 
 "</p>\n" + 
 "\n");// line 32
-		final japidviews.templates.aTag _japidviews_templates_aTag5 = new japidviews.templates.aTag(getOut()); _japidviews_templates_aTag5.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_templates_aTag5.render(strings);// line 39
+		final japidviews.templates.aTag _japidviews_templates_aTag5 = new japidviews.templates.aTag(getOut()); _japidviews_templates_aTag5.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_templates_aTag5.render(strings); // line 39// line 39
 		p("\n" + 
 "<p>You can use \".\" instead of \"/\" on the path:</p>\n" + 
 "\n");// line 39
-		final japidviews.templates.aTag _japidviews_templates_aTag6 = new japidviews.templates.aTag(getOut()); _japidviews_templates_aTag6.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_templates_aTag6.render(strings);// line 43
+		final japidviews.templates.aTag _japidviews_templates_aTag6 = new japidviews.templates.aTag(getOut()); _japidviews_templates_aTag6.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_templates_aTag6.render(strings); // line 43// line 43
 		;// line 43
 		
 	}

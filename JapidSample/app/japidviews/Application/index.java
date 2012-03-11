@@ -67,7 +67,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		 t = System.nanoTime();
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
      	String l = "" + (System.nanoTime() - t) / 100000;
 		int len = l.length();
 		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);

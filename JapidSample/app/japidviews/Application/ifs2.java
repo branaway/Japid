@@ -64,13 +64,13 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private int i;
-	private String[] ss;
+	private int i; // line 1
+	private String[] ss; // line 1
 	public cn.bran.japid.template.RenderResult render(int i,String[] ss) {
 		this.i = i;
 		this.ss = ss;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -108,12 +108,13 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		if(asBoolean(ss)) {// line 31
 		p("    well got ss\n" + 
 "    ");// line 31
-		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
+		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 33
+ss, new Each.DoBody<String>(){ // line 33
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 33
 // line 33
 		p("        call a tag\n" + 
 "        ");// line 33
-		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s);// line 35
+		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s); // line 35// line 35
     
 }
 
@@ -136,12 +137,13 @@ public void resetBuffer() {
 		p(ss);// line 38
 		p("\n" + 
 "    ");// line 38
-		final Each _Each2 = new Each(getOut()); _Each2.setOut(getOut()); _Each2.render(ss, new Each.DoBody<String>(){
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
+		final Each _Each2 = new Each(getOut()); _Each2.setOut(getOut()); _Each2.render(// line 39
+ss, new Each.DoBody<String>(){ // line 39
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 39
 // line 39
 		p("        call a tag\n" + 
 "        ");// line 39
-		final SampleTag _SampleTag3 = new SampleTag(getOut()); _SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s);// line 41
+		final SampleTag _SampleTag3 = new SampleTag(getOut()); _SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s); // line 41// line 41
     
 }
 

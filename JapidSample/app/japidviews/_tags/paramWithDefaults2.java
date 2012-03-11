@@ -64,17 +64,17 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String name;
-	private String url;
-	private String type;
-	private String data;
-	private String reRender;
-	private String dataType;
-	private String beforeSend;
-	private String success;
-	private String jsData;
-	private Boolean cache;
-	private String event;
+	private String name; // line 1
+	private String url; // line 1
+	private String type; // line 1
+	private String data; // line 1
+	private String reRender; // line 1
+	private String dataType; // line 1
+	private String beforeSend; // line 1
+	private String success; // line 1
+	private String jsData; // line 1
+	private Boolean cache; // line 1
+	private String event; // line 1
 	public cn.bran.japid.template.RenderResult render(String name,String url,String type,String data,String reRender,String dataType,String beforeSend,String success,String jsData,Boolean cache,String event) {
 		this.name = name;
 		this.url = url;
@@ -88,7 +88,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.cache = cache;
 		this.event = event;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {

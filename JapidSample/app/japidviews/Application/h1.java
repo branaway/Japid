@@ -65,11 +65,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String s;
+	private String s; // line 1
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -81,23 +81,23 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		p(s);// line 3
 		p("\n" + 
 "\n" + 
-"\n" + 
 "	");// line 3
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", 1) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echo(1); // line 6
+				Application.echo(1); // line 5
 			}
-		}); p("\n");// line 6
-		p("	");// line 6
+		}); p("\n");// line 5
+		p("	");// line 5
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", 2) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echo(2); // line 7
+				Application.echo(2); // line 6
 			}
-		}); p("\n");// line 7
-		;// line 7
-		;// line 9
+		}); p("\n");// line 6
+		;// line 6
+		p(" \n" + 
+"\n");// line 8
 		
 	}
 

@@ -47,7 +47,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	public perfmain(StringBuilder out) {
 		super(out);
 	}
-	private DataModel.User loggedInUser;
+	private DataModel.User loggedInUser; // line 1
 	 public void layout(DataModel.User loggedInUser) {
 		this.loggedInUser = loggedInUser;
 		;// line 1

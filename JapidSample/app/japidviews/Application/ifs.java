@@ -64,13 +64,13 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String str;
-	private Collection col;
-	private boolean b;
-	private Object[] a1;
-	private int[] a2;
-	private int i;
-	private String s2;
+	private String str; // line 1
+	private Collection col; // line 1
+	private boolean b; // line 1
+	private Object[] a1; // line 1
+	private int[] a2; // line 1
+	private int i; // line 1
+	private String s2; // line 1
 	public cn.bran.japid.template.RenderResult render(String str,Collection col,boolean b,Object[] a1,int[] a2,int i,String s2) {
 		this.str = str;
 		this.col = col;
@@ -80,7 +80,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.i = i;
 		this.s2 = s2;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {

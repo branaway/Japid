@@ -65,14 +65,14 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String blogTitle;
-	private List<Post> allPost;
+	private String blogTitle; // line 3
+	private List<Post> allPost; // line 3
 	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long t = -1;
 		 t = System.nanoTime();
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 3
      	String l = "" + (System.nanoTime() - t) / 100000;
 		int len = l.length();
 		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
@@ -84,21 +84,26 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 //------
 ;// line 1
 ;// line 2
-		p("\n");// line 6
-		p("\n");// line 7
-		p("\n");// line 9
-		for (Post p: allPost) {// line 11
-		p("        ");// line 11
+		p("\n" + 
+"\n");// line 6
+		p("\n");// line 8
+		p("\n");// line 10
+		final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 12
+allPost, new Each.DoBody<Post>(){ // line 12
+public void render(final Post p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 12
+// line 12
+		p("        ");// line 12
 		p("\n" + 
 "\n" + 
-"	    ");// line 12
-		final Display _Display1 = new Display(getOut()); _Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
-public void render(final String title) {
-// line 14
-		p("		   The real title iiiis: ");// line 14
-		p(title);// line 15
-		p(";\n" + 
-"	    ");// line 15
+"	    ");// line 13
+		final Display _Display2 = new Display(getOut()); _Display2.setActionRunners(getActionRunners()).setOut(getOut()); _Display2.render( // line 15
+new Display.DoBody<String>(){ // line 15
+public void render(final String title) { // line 15
+// line 15
+		p("		   The real title iiiis: ");// line 15
+		p(title);// line 16
+		p("\n" + 
+"	    ");// line 16
 		
 }
 
@@ -115,12 +120,28 @@ public void resetBuffer() {
 }
 
 }
-, named("post", p), named("as", "home2"));// line 14
-}// line 17
-		p("\n");// line 17
-		final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 10000));// line 19
+, named("post", p), named("as", "home2"));// line 15
+
+}
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
+}
+);// line 12
+		p("\n");// line 18
+		final Tag2 _Tag23 = new Tag2(getOut()); _Tag23.setActionRunners(getActionRunners()).setOut(getOut()); _Tag23.render(named("msg", blogTitle), named("age", 100)); // line 20// line 20
 		p("\n" + 
-"<p>cool</p>");// line 19
+"<p>cool</p>");// line 20
 		
 	}
 

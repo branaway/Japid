@@ -64,11 +64,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String s;
+	private String s; // line 1
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -81,7 +81,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 "\n");// line 3
 		p("\n" + 
 "\n");// line 5
-		final bar _bar0 = new bar(getOut()); _bar0.setActionRunners(getActionRunners()).setOut(getOut()); _bar0.render();// line 7
+		final bar _bar0 = new bar(getOut()); _bar0.setActionRunners(getActionRunners()).setOut(getOut()); _bar0.render(); // line 7// line 7
 		;// line 7
 		
 	}

@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import cn.bran.japid.util.StringUtils;
+
 /**
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
@@ -27,15 +29,9 @@ public class JapidModelMap {
 		}
 		if (map.size() > 0) {
 			Set<String> keys = map.keySet();
-			String ks = "";
-			for(String k : keys) {
-				ks += k + " ";
-			}
-			String vs = "[";
-			for (String n : argNames) {
-				vs += n + " ";
-			}
-			vs +="]";
+			String sep = ", ";
+			String ks = "[" + StringUtils.join(keys, sep) + "]";
+			String vs = "[" + StringUtils.join(argNames, sep) + "]";
 			throw new RuntimeException("One or more argument names are not valid: " + ks + ". Valid argument names are: " + vs);
 		}
 		return ret;

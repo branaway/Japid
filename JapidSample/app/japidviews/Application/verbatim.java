@@ -66,7 +66,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -89,8 +89,9 @@ p("\n" +
 "<p>got it?</p>\n" + 
 "\n");// line 15
 		String[] ss = new String[]{"a", "b"};// line 18
-final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(ss, new Each.DoBody<String>(){
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
+final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 19
+ss, new Each.DoBody<String>(){ // line 19
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 19
 // line 19
 		p("    <p>loop: ");// line 19
 		p(s);// line 20

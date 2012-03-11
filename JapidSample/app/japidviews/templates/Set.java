@@ -64,11 +64,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String a;
+	private String a; // line 2
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -87,7 +87,7 @@ p("\n");// line 2
 	@Override protected void footer() {
 		// line 17
 		p("    great footer. Call a tag: ");// line 17
-		final dummyTag _dummyTag2 = new dummyTag(getOut()); _dummyTag2.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag2.render("me");// line 18
+		final dummyTag _dummyTag2 = new dummyTag(getOut()); _dummyTag2.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag2.render("me"); // line 18// line 18
 ;
 	}
 	@Override protected void title() {

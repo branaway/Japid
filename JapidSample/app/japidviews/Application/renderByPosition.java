@@ -65,11 +65,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String ss;
-	private int ii;
-	private Author au1;
-	private Author au2;
-	private Author2 au22;
+	private String ss; // line 2
+	private int ii; // line 2
+	private Author au1; // line 2
+	private Author au2; // line 2
+	private Author2 au22; // line 2
 	public cn.bran.japid.template.RenderResult render(String ss,int ii,Author au1,Author au2,Author2 au22) {
 		this.ss = ss;
 		this.ii = ii;
@@ -77,7 +77,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.au2 = au2;
 		this.au22 = au22;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -102,7 +102,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 "\n" + 
 "<p>Lets call a tag by name:</p>\n" + 
 "\n");// line 6
-		final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut()); _tagPrimitives0.setActionRunners(getActionRunners()).setOut(getOut()); _tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6));// line 10
+		final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut()); _tagPrimitives0.setActionRunners(getActionRunners()).setOut(getOut()); _tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6)); // line 10// line 10
 		
 	}
 

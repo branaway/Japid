@@ -315,6 +315,8 @@ public abstract class JapidAbstractCompiler {
 	}
 
 	public static String makeLineMarker(int line) {
+		if (line <= 0)
+			return "";
 		return "// line " + line;
 	}
 
@@ -1132,7 +1134,7 @@ public abstract class JapidAbstractCompiler {
 				if (useWithPlay && !tag.tagName.equals(Each.class.getSimpleName())) {
 					tagline += ".setActionRunners(getActionRunners())";
 				}
-				tagline +=".setOut(getOut()); " + tagVar + ".render(" + tag.args + ");";
+				tagline +=".setOut(getOut()); " + tagVar + ".render(" + tag.args + "); " + makeLineMarker(tag.startLine);
 
 				// String tagClassName = tag.tagName;
 				// if (tagClassName.equals("this")) {
@@ -1196,12 +1198,13 @@ public abstract class JapidAbstractCompiler {
 			}
 			tagline += ".setOut(getOut()); " + tagVar;
 			if (tag.argsNamed()) {
-				tagline += ".render(" + bodyInner.getAnonymous() + ", " + (WebUtils.asBoolean(tag.args) ? tag.args: "") +");";
+				tagline += ".render( " + makeLineMarker(tag.startLine) + "\n" +  bodyInner.getAnonymous(makeLineMarker(tag.startLine)) + ", " + (WebUtils.asBoolean(tag.args) ? tag.args: "") +");";
 			}
 			else {
-				tagline += ".render(" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + bodyInner.getAnonymous() + ");";
+				tagline += ".render("  + makeLineMarker(tag.startLine) + "\n" + (WebUtils.asBoolean(tag.args) ? tag.args + ", " : "") + bodyInner.getAnonymous(makeLineMarker(tag.startLine)) + ");";
 			}
-
+			
+//			tagline += makeLineMarker(tag.startLine);
 			print(tagline);
 		} else {
 			// for simple tag call without call back:

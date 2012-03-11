@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import cn.bran.japid.util.StringUtils;
+
 import cn.bran.japid.compiler.NamedArg;
 import cn.bran.japid.compiler.NamedArgRuntime;
 import cn.bran.japid.util.HTMLUtils;
@@ -361,15 +363,9 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		}
 		if (map.size() > 0) {
 			Set<String> keys = map.keySet();
-			String ks = "";
-			for (String k : keys) {
-				ks += k + " ";
-			}
-			String vs = "[";
-			for (String n : argNamesInstance) {
-				vs += n + " ";
-			}
-			vs += "]";
+			String sep = ", ";
+			String ks = "[" + StringUtils.join(keys, sep) + "]";
+			String vs = "[" + StringUtils.join(argNamesInstance, sep) + "]";
 			throw new RuntimeException("One or more argument names are not valid: " + ks + ". Valid argument names are: " + vs);
 		}
 		return ret;

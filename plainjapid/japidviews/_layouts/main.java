@@ -16,7 +16,7 @@ public abstract class main extends cn.bran.japid.template.JapidTemplateBaseWitho
 	public main(StringBuilder out) {
 		super(out);
 	}
-	private String x;
+	private String x; // line 1
 	 public void layout(String x) {
 		this.x = x;
 		;// line 1

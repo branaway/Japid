@@ -24,6 +24,10 @@ Whenever you upgrade the Japid module,
 
 * Version History:
 
+2012/3/10: V0.9.3.2:  breaking changes. Japid views Java code must be regenerated.  
+	1. enhancement: named tag invocation exception mapping to TemplateExecutionExcetion
+	2. bug fix:  TemplateExecutionExcetion will be thrown out right away in the handleExcetions, so not to display wrong file in the dev error page.
+	3. improvement: added line marker to the lines in the generated code that map to tag invocation. Error reporting for tags is a lot better with line marker
 2012/3/7: V0.9.3.1:  breaking changes. Japid views Java code must be regenerated.  
 	1. enhancement: JavaSyntaxTool.parseArgs now takes arg list either with or without parenthesis 
 	2. bug fix: action call in a tag which is in turn in a loop in the invoker would use the last value. Now tag object is declared where it is used. 

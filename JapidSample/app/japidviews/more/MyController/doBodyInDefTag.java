@@ -67,7 +67,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 	{ setHasDoBody(); }
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    return runRenderer(args);
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} 
 }
 
 	DoBody body;
@@ -88,33 +88,33 @@ public static interface DoBody<A,B> {
 	public cn.bran.japid.template.RenderResult render(DoBody body) {
 		this.body = body;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
 //------
 p("outside: ");// line 1
 		if (body != null){ body.setBuffer(getOut()); body.render("taggy", 1); body.resetBuffer();}// line 1
-		p("\n" + 
-"ok, try to get the content as method call: \n" + 
+		p("ok, try to get the content as method call: \n" + 
 "   ");// line 1
-		p(renderBody("taddy", 3));// line 5
-		p("\n");// line 5
-		// line 7
+		p(renderBody("taddy", 3));// line 4
+		p("\n");// line 4
+		// line 6
 		p("call the def\n" + 
-"\n");// line 9
-		p(foo());// line 12
-		p("\n");// line 12
-		final fooTag _fooTag1 = new fooTag(getOut()); _fooTag1.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag1.render(new fooTag.DoBody(){
-public void render() {
-// line 14
-		p("  -> called footag:  ");// line 14
-		if (body != null){ body.setBuffer(getOut()); body.render("kaddy", 13); body.resetBuffer();}// line 15
+"\n");// line 8
+		p(foo());// line 11
+		p("\n");// line 11
+		final fooTag _fooTag1 = new fooTag(getOut()); _fooTag1.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag1.render(// line 13
+new fooTag.DoBody(){ // line 13
+public void render() { // line 13
+// line 13
+		p("  -> called footag:  ");// line 13
+		if (body != null){ body.setBuffer(getOut()); body.render("kaddy", 13); body.resetBuffer();}// line 14
 
 }
 
@@ -131,8 +131,8 @@ public void resetBuffer() {
 }
 
 }
-);// line 14
-		;// line 16
+);// line 13
+		;// line 15
 		
 	}
 
@@ -142,9 +142,9 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
-// line 7
-		p("	hello ");// line 7
-		if (body != null){ body.setBuffer(getOut()); body.render("saddy", 2); body.resetBuffer();}// line 8
+// line 6
+		p("	hello ");// line 6
+		if (body != null){ body.setBuffer(getOut()); body.render("saddy", 2); body.resetBuffer();}// line 7
 
 this.setOut(ori);
 if (actionRunners.size() > 0) {

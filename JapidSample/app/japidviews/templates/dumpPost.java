@@ -64,15 +64,15 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String f1;
-	private String f2;
-	private String body;
+	private String f1; // line 2
+	private String f2; // line 2
+	private String body; // line 2
 	public cn.bran.japid.template.RenderResult render(String f1,String f2,String body) {
 		this.f1 = f1;
 		this.f2 = f2;
 		this.body = body;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {

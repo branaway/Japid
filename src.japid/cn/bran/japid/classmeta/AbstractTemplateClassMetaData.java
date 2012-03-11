@@ -749,7 +749,11 @@ public abstract class AbstractTemplateClassMetaData {
 	protected void addField(Parameter p) {
 		// no need 
 		String defaultVal = "=" /*+ JavaSyntaxTool.getDefault(p)*/;
-		pln(TAB + "private " + p.getType() + " " + p.getId() + (defaultVal.equals("=") ? "":defaultVal) + "; " +JapidAbstractCompiler.makeLineMarker(argsLineNum));
+		pln(TAB + "private " + p.getType() + " " + p.getId() + (defaultVal.equals("=") ? "":defaultVal) + "; " +getLineMarker());
+	}
+
+	protected String getLineMarker() {
+		return JapidAbstractCompiler.makeLineMarker(argsLineNum);
 	}
 
 	public static void clearImports() {

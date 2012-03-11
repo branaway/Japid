@@ -64,11 +64,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private List<Category> categories;
+	private List<Category> categories; // line 1
 	public cn.bran.japid.template.RenderResult render(List<Category> categories) {
 		this.categories = categories;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -83,7 +83,7 @@ p(" ");// line 1
 		p(cat.name);// line 6
 		p("</a>\n" + 
 "	           ");// line 6
-		final categories _this0 = new categories(getOut()); _this0.setActionRunners(getActionRunners()).setOut(getOut()); _this0.render(cat.subCategories);// line 7
+		final categories _this0 = new categories(getOut()); _this0.setActionRunners(getActionRunners()).setOut(getOut()); _this0.render(cat.subCategories); // line 7// line 7
 		p("	       </li>\n" + 
 "       ");// line 7
 		}// line 9

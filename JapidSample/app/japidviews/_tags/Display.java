@@ -65,11 +65,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
-	private models.japidsample.Post post;
-	private String as;
+	private models.japidsample.Post post; // line 2
+	private String as; // line 2
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    return runRenderer(args);
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 2
 }
 
 	private DoBody body;
@@ -92,14 +92,14 @@ public static interface DoBody<A> {
 		this.post = post;
 		this.as = as;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as) {
 		this.post = post;
 		this.as = as;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -108,27 +108,28 @@ public static interface DoBody<A> {
 		;// line 1
 		p("\n" + 
 "\n" + 
+"\n" + 
 "<div class=\"divvy\">\n" + 
 "	<p>title: ");// line 2
-		p(post.getTitle());// line 5
+		p(post.getTitle());// line 6
 		p("</p>\n" + 
-"	<p>at: ");// line 5
-		p(format(post.getPostedAt(), ("yy-MMM-dd")));// line 6
+"	<p>at: ");// line 6
+		p(format(post.getPostedAt(), ("yy-MMM-dd")));// line 7
 		p("</p>\n" + 
-"	<p>by: ");// line 6
-		p(post.getAuthor().name);// line 7
-		p(", ");// line 7
-		p(post.getAuthor().gender);// line 7
+"	<p>by: ");// line 7
+		p(post.getAuthor().name);// line 8
+		p(", ");// line 8
+		p(post.getAuthor().gender);// line 8
 		p("</p>\n" + 
 "	<p class=\"try again using a simple syntax\">\n" + 
-"        ");// line 7
+"        ");// line 8
 		p("\n" + 
-"        ");// line 9
+"        ");// line 10
 		p("\n" + 
-"	   ");// line 10
-		if (body != null){ body.setBuffer(getOut()); body.render(post.getTitle() + "!"); body.resetBuffer();}// line 11
+"	   ");// line 11
+		if (body != null){ body.setBuffer(getOut()); body.render(post.getTitle() + "!"); body.resetBuffer();}// line 12
 		p("	</p>\n" + 
-"</div>");// line 11
+"</div>");// line 12
 		
 	}
 

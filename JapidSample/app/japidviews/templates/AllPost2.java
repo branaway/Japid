@@ -65,13 +65,13 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String blogTitle;
-	private List<Post> allPost;
+	private String blogTitle; // line 3
+	private List<Post> allPost; // line 3
 	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 3
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -85,8 +85,9 @@ p("\n");// line 3
 "	");// line 8
 		for (Post p: allPost) {// line 10
 		p("	    ");// line 10
-		final Display _Display1 = new Display(getOut()); _Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render(new Display.DoBody<String>(){
-public void render(final String title) {
+		final Display _Display1 = new Display(getOut()); _Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render( // line 11
+new Display.DoBody<String>(){ // line 11
+public void render(final String title) { // line 11
 // line 11
 		p("			<p>The real title is: ");// line 11
 		p(title);// line 12
@@ -115,7 +116,7 @@ public void resetBuffer() {
 		p("	<p>There is no post at this moment</p>\n");// line 15
 		}// line 17
 		p("\n");// line 17
-		final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000));// line 19
+		final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000)); // line 19// line 19
 		p("\n" + 
 "<p>end of it</p>");// line 19
 		

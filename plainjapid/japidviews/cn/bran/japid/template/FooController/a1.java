@@ -33,11 +33,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String a;
+	private String a; // line 1
 	public String render(String a) {
 		this.a = a;
 		long t = -1;
-		try {super.layout(a + "1");} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout(a + "1");} catch (RuntimeException e) { super.handleException(e);} // line 1
 		 if (t != -1) System.out.println("[a1] rendering time: " + t);
 		return getOut().toString();
 	}
@@ -62,7 +62,7 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 // line 7
 		p("  -> a1-: ");// line 7
-		final taggy _taggy2 = new taggy(getOut()); _taggy2.setOut(getOut()); _taggy2.render(ar);// line 8
+		final taggy _taggy2 = new taggy(getOut()); _taggy2.setOut(getOut()); _taggy2.render(ar); // line 8// line 8
 
 this.setOut(ori);
 	return sb.toString();

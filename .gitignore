@@ -6,4 +6,5 @@ JapidSample/tmp/*
 *~
 .DS_Store
 .settings/
+.pydevproject
 JapidSample/test-result/

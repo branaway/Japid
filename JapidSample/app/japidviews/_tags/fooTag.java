@@ -65,10 +65,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
-	private String well;
+	private String well; // line 1
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    return runRenderer(args);
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1
 }
 
 	private DoBody body;
@@ -90,13 +90,13 @@ public static interface DoBody {
 		this.body = body;
 		this.well = well;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	public cn.bran.japid.template.RenderResult render(String well) {
 		this.well = well;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {

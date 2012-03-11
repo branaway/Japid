@@ -66,7 +66,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -83,8 +83,9 @@ this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 // line 2
-    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(new String[]{"aaa","bbb","ccc"}, new Each.DoBody<String>(){
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) {
+    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 3
+new String[]{"aaa","bbb","ccc"}, new Each.DoBody<String>(){ // line 3
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 3
 // line 3
 		p("      alert('");// line 3
 		p(s);// line 4

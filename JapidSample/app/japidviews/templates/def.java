@@ -66,7 +66,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -89,7 +89,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		p("\n" + 
 "\n" + 
 "<p>check 4</p>\n");// line 26
-		final dummyTag _dummyTag4 = new dummyTag(getOut()); _dummyTag4.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag4.render(get("bar"));// line 29
+		final dummyTag _dummyTag4 = new dummyTag(getOut()); _dummyTag4.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag4.render(get("bar")); // line 29// line 29
 		p("\n" + 
 "\n");// line 29
 		p("<p>check 5</p>\n" + 
@@ -124,7 +124,7 @@ actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 		p("</p>\n" + 
 "	<p>OK you can call a tag:</p>\n" + 
 "	");// line 9
-		final dummyTag _dummyTag1 = new dummyTag(getOut()); _dummyTag1.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag1.render(p);// line 11
+		final dummyTag _dummyTag1 = new dummyTag(getOut()); _dummyTag1.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag1.render(p); // line 11// line 11
 
 this.setOut(ori);
 if (actionRunners.size() > 0) {

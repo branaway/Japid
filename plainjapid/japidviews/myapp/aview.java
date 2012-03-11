@@ -33,11 +33,11 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String a;
+	private String a; // line 1
 	public String render(String a) {
 		this.a = a;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		 if (t != -1) System.out.println("[aview] rendering time: " + t);
 		return getOut().toString();
 	}
@@ -50,7 +50,7 @@ p("\n" +
 		p(escape(a));// line 5
 		p("\n" + 
 "nice view: ");// line 5
-		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1");// line 6
+		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1"); // line 6// line 6
 		;// line 6
 		
 	}

@@ -65,6 +65,9 @@ public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
 		if (Play.mode == Mode.PROD)
 			throw e;
 		
+		if (e instanceof TemplateExecutionException)
+			throw e;
+		
 		// find the latest japidviews exception
 		StackTraceElement[] stackTrace = e.getStackTrace();
 		for (StackTraceElement ele : stackTrace){

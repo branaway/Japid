@@ -66,7 +66,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {
@@ -78,8 +78,9 @@ p("\n" +
 "before\n" + 
 "\n" + 
 "<p/>\n");// line 1
-		final fooTag _fooTag0 = new fooTag(getOut()); _fooTag0.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag0.render("hi", new fooTag.DoBody(){
-public void render() {
+		final fooTag _fooTag0 = new fooTag(getOut()); _fooTag0.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag0.render(// line 8
+"hi", new fooTag.DoBody(){ // line 8
+public void render() { // line 8
 // line 8
     final String echo = "secret";// line 9
 		p("\n" + 
@@ -88,8 +89,9 @@ public void render() {
 		p("\n" + 
 "\n" + 
 "	");// line 11
-		final anotherTag _anotherTag1 = new anotherTag(getOut()); _anotherTag1.setActionRunners(getActionRunners()).setOut(getOut()); _anotherTag1.render(echo, new anotherTag.DoBody<String>(){
-public void render(final String what) {
+		final anotherTag _anotherTag1 = new anotherTag(getOut()); _anotherTag1.setActionRunners(getActionRunners()).setOut(getOut()); _anotherTag1.render(// line 13
+echo, new anotherTag.DoBody<String>(){ // line 13
+public void render(final String what) { // line 13
 // line 13
 		p("	    got ");// line 13
 		p(what);// line 14
@@ -97,8 +99,9 @@ public void render(final String what) {
 		p(echo);// line 14
 		p("\n" + 
 "		");// line 14
-		final moreTag _moreTag2 = new moreTag(getOut()); _moreTag2.setActionRunners(getActionRunners()).setOut(getOut()); _moreTag2.render(echo, new moreTag.DoBody<String>(){
-public void render(final String more) {
+		final moreTag _moreTag2 = new moreTag(getOut()); _moreTag2.setActionRunners(getActionRunners()).setOut(getOut()); _moreTag2.render(// line 15
+echo, new moreTag.DoBody<String>(){ // line 15
+public void render(final String more) { // line 15
 // line 15
 		p("		   got ");// line 15
 		p(what);// line 16

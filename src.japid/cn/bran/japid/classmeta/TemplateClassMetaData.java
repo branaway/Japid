@@ -90,7 +90,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			String setBody = en.getValue();
 			pln("\t@Override protected void " + meth + "() {");
 			// local tag defs
-			TagSet set = setTags.get(meth);
+//			TagSet set = setTags.get(meth);
 //			for (Tag t: set.tags) {
 //				declareTagInstance(t);
 //			}
@@ -152,7 +152,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
 			// set the render(xxx)
 			if (doBodyArgsString != null) {
-				pln(NAMED_PARAM_WITH_BODY);
+				pln(String.format(NAMED_PARAM_WITH_BODY, getLineMarker()));
 				// the template can be called with a callback body
 				// the field
 				pln(TAB + "private DoBody body;");
@@ -177,7 +177,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			restOfRenderBody(resultType);
 		} else {
 			if (doBodyArgsString != null) {
-				pln(NAMED_PARAM_WITH_BODY);
+				pln(String.format(NAMED_PARAM_WITH_BODY, getLineMarker()));
 				// the field
 				pln(TAB + "DoBody body;");
 				doBodyInterface();
@@ -200,7 +200,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t\t t = System.nanoTime();");
 
 //		pln("\t\tsuper.layout(" + superClassRenderArgs +  ");");
-		pln("\t\ttry {super.layout(" + superClassRenderArgs +  ");} catch (RuntimeException e) { super.handleException(e);}");
+		pln("\t\ttry {super.layout(" + superClassRenderArgs +  ");} catch (RuntimeException e) { super.handleException(e);} " + getLineMarker());
 		if (stopWatch) {
 			pln("     	String l = \"\" + (System.nanoTime() - t) / 100000;\n" + 
 					"		int len = l.length();\n" + 
@@ -307,7 +307,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	protected static final String NAMED_PARAM_WITH_BODY = 
 		"public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {\n" + 
 		"    Object[] args = buildArgs(named, body);\n" + 
-		"    return runRenderer(args);\n" + 
+		"    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} %s\n" + 
 		"}\n"; 
 
 }

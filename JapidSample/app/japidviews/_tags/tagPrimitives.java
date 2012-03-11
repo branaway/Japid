@@ -64,15 +64,15 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 }
 ////// end of named args stuff
 
-	private String s;
-	private int i;
-	private Integer ii;
-	private double d;
-	private Double dd;
-	private boolean b;
-	private Boolean bb;
-	private Map<Object, String> map;
-	private float f;
+	private String s; // line 1
+	private int i; // line 1
+	private Integer ii; // line 1
+	private double d; // line 1
+	private Double dd; // line 1
+	private boolean b; // line 1
+	private Boolean bb; // line 1
+	private Map<Object, String> map; // line 1
+	private float f; // line 1
 	public cn.bran.japid.template.RenderResult render(String s,int i,Integer ii,double d,Double dd,boolean b,Boolean bb,Map<Object, String> map,float f) {
 		this.s = s;
 		this.i = i;
@@ -84,7 +84,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.map = map;
 		this.f = f;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);}
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
 	}
 	@Override protected void doLayout() {

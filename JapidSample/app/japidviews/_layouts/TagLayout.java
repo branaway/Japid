@@ -50,7 +50,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	@Override public void layout() {
 		p("标签布局\n");// line 1
 		p("\n");// line 2
-		final dummyTag _dummyTag0 = new dummyTag(getOut()); _dummyTag0.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag0.render("me");// line 3
+		final dummyTag _dummyTag0 = new dummyTag(getOut()); _dummyTag0.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag0.render("me"); // line 3// line 3
 		p("<div>\n" + 
 "\n");// line 3
 		p("\n" + 
