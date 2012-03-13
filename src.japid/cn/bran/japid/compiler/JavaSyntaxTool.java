@@ -825,6 +825,50 @@ public class JavaSyntaxTool {
 		return true;
 	}
 	
+	public static String IF_PREDICATE = "class T {  {  if %s {} } }";
+	public static String IF_PREDICATE_BRACE = "class T {  {  if %s } } }";
+	public static String IF_PREDICATE_OPEN = "class T {  {  if(%s) {} } }";
+	public static String IF_PREDICATE_OPEN_BRACE = "class T {  {  if (%s) } } }";
+	
+
+	/**
+	 * tell if the input is a regular if predicate with () and optionally a {
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @param part
+	 * @return
+	 */
+	public static boolean isIf(String part) {
+		String classString = String.format(IF_PREDICATE, part);
+		try {
+			CompilationUnit cu = parse(classString);
+			return true;
+		} catch (ParseException e) {
+			classString = String.format(IF_PREDICATE_BRACE, part);
+			try {
+				CompilationUnit cu = parse(classString);
+				return true;
+			} catch (ParseException e1) {
+				return false;
+			}
+		}
+		
+	}
+	
+	
+	public static boolean isOpenIf(String part) {
+		part = part.trim();
+		if (part.endsWith("{"))
+			part = part.substring(0, part.length() - 1);
+		String classString = String.format(IF_PREDICATE_OPEN, part);
+		try {
+			CompilationUnit cu = parse(classString);
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
+	}
+	
+	
 	/**
 	 * 
 	 * @param part the part in a for(%s) {}

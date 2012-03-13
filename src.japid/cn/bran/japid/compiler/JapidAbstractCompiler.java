@@ -65,6 +65,7 @@ public abstract class JapidAbstractCompiler {
 	static final Pattern OPEN_FOR_PATTERN = Pattern.compile(OPEN_FOR_PATTERN_STRING);
 
 	// pattern: if xxx {
+	// should really use java parser
 	static final String OPEN_IF_PATTERN1 = "if\\s+[^\\(].*";
 	static final String IF_PATTERN_STRING = "if\\s*\\((.*)\\).*";
 	static final Pattern IF_PATTERN = Pattern.compile(IF_PATTERN_STRING);
@@ -503,26 +504,37 @@ public abstract class JapidAbstractCompiler {
 			} else if (startsWithIgnoreSpace(line, "if")) {
 				// `if expr {, the last { is optional
 				String expr = line.trim();
-				if (expr.matches(OPEN_IF_PATTERN1)) {
-					handleOpenIf(i, expr);
-				} else {
-					// plain Java if
-					// wait! but may be open due to regex limitation. 
-					Matcher m = IF_PATTERN.matcher(expr);
-					if (m.matches()){
-						String condition = m.group(1);
-						if (JavaSyntaxTool.isValidExpr(condition)){
-							// true classic if
-							print(expr);
-							markLine(parser.getLineNumber() + i);
-							println();
-						}
-						else {
-							// is actually open if
-							handleOpenIf(i, expr);
-						}
-					}
+				String clause = expr.substring(2);
+				if (JavaSyntaxTool.isIf(clause)) {
+					print(expr);
+					markLine(parser.getLineNumber() + i);
+					println();
 				}
+				else if (JavaSyntaxTool.isOpenIf(clause)) {
+					handleOpenIf(i, expr);
+				}
+
+//				String expr = line.trim();
+//				if (expr.matches(OPEN_IF_PATTERN1)) {
+//					handleOpenIf(i, expr);
+//				} else {
+//					// plain Java if
+//					// wait! but may be open due to regex limitation. 
+//					Matcher m = IF_PATTERN.matcher(expr);
+//					if (m.matches()){
+//						String condition = m.group(1);
+//						if (JavaSyntaxTool.isValidExpr(condition)){
+//							// true classic if
+//							print(expr);
+//							markLine(parser.getLineNumber() + i);
+//							println();
+//						}
+//						else {
+//							// is actually open if
+//							handleOpenIf(i, expr);
+//						}
+//					}
+//				}
 			} else if (line.matches(ELSE_IF_PATTERN_STRING)) {
 				// semi open
 				String expr = line.trim();

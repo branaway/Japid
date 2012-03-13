@@ -14,15 +14,21 @@
 -- The Japid Plugin for Eclipse:
     https://github.com/branaway/playclipse
     
-* Note:
+* Note 1:
 
 Whenever you upgrade the Japid module, 
 
 1. do a "play japid:regen" to regenerate all the derived Java files.
 2. Or if you're using the Japid Plugin for Eclipse, re-enable the "Play nature", or do a "Project -> clean"
 
+* Note 2:
+
+I have made a patched version of the original Play 1.2.x stream which is hosted here: https://github.com/branaway/play. It works very well with Japid to give developers a very short turn-around time in DEV mode. Please check it out.
 
 * Version History:
+
+2012/3/10: V0.9.3.3:  breaking changes. Japid views Java code must be regenerated.  
+	1. bug fix: "(foo).bar" not interpreted as "open if" predicate
 
 2012/3/10: V0.9.3.2:  breaking changes. Japid views Java code must be regenerated.  
 	1. enhancement: named tag invocation exception mapping to TemplateExecutionExcetion

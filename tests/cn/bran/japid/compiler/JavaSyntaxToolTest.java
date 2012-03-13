@@ -428,4 +428,44 @@ public class JavaSyntaxToolTest {
 		List<CodeNode> nodes = JavaSyntaxTool.parseCode(code);
 		listNodes(nodes);
 	}
+	
+	@Test
+	public void testIf() {
+		String 
+		s = "(foo().bar)";
+		assertTrue(JavaSyntaxTool.isIf(s));
+		
+		s = "(foo().bar) {";
+		assertTrue(JavaSyntaxTool.isIf(s));
+
+		s = "(\"sdfsdf\") {";
+		assertTrue(JavaSyntaxTool.isIf(s));
+
+		s = "foo().bar ";
+		assertFalse(JavaSyntaxTool.isIf(s));
+
+		s = "foo().bar() ";
+		assertFalse(JavaSyntaxTool.isIf(s));
+		
+	}
+
+	@Test
+	public void testOpenIf() {
+		String 
+		s = "foo().bar";
+		assertTrue(JavaSyntaxTool.isOpenIf(s));
+		
+		s = "foo().bar {";
+		assertTrue(JavaSyntaxTool.isOpenIf(s));
+
+		s = "(foo).bar() {";
+		assertTrue(JavaSyntaxTool.isOpenIf(s));
+		
+		s = "(foo).bar() ";
+		assertTrue(JavaSyntaxTool.isOpenIf(s));
+		
+		s = "foo().bar++ ";
+		assertTrue(JavaSyntaxTool.isOpenIf(s));
+		
+	}
 }
