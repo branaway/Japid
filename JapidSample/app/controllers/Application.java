@@ -376,5 +376,7 @@ public class Application extends JapidController {
 		renderJapid();
 	}
 
-	
+	public static void js() {
+		renderJapid();
+	}
 }

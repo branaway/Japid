@@ -93,7 +93,9 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 		super.setupTagObjectsAsFields();
 
 		// the code to render things.
+		p("\t\tbeginDoLayout(sourceTemplate);");
 		p("\t\t" + body);
+		p("\t\tendDoLayout(sourceTemplate);");
 		p("\t}");
 	}
 

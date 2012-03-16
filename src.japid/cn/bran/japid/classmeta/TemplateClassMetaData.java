@@ -105,10 +105,13 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	protected void layoutMethod() {
 		// doLayout body
 		pln(TAB + "@Override protected void doLayout() {");
+		pln(TAB + "\tbeginDoLayout(sourceTemplate);");
+		
 		super.setupTagObjectsAsFields();
 //		super.addImplicitVariables(); // move to fields
 		pln("//------");
 		pln(super.body);
+		pln(TAB + "\tendDoLayout(sourceTemplate);");
 		pln("\t}");
 	}
 
@@ -227,7 +230,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		} else {
 			if (useWithPlay) {
 				if (hasActionInvocation) 
-					pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(getHeaders(), getOut(), t, " + ACTION_RUNNERS + ");");
+					pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(getHeaders(), getOut(), t, " + ACTION_RUNNERS + ", sourceTemplate);");
 				else
 					pln("\t\treturn new " + resultType + "(getHeaders(), getOut(), t);");
 			}

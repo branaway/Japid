@@ -33,11 +33,11 @@ import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
  * 
  */ 
 public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
-	public static final String CONTENT_TYPE_JSON = MimeTypeEnum.json.header;
-	public static final String CONTENT_TYPE_HTML = MimeTypeEnum.html.header;
-	public static final String CONTENT_TYPE_XML = MimeTypeEnum.xml.header;
-	public static final String CONTENT_TYPE_TXT = MimeTypeEnum.txt.header;
-	public static final String CONTENT_TYPE_CSS = MimeTypeEnum.css.header;
+//	public static final String CONTENT_TYPE_JSON = MimeTypeEnum.json.header;
+//	public static final String CONTENT_TYPE_HTML = MimeTypeEnum.html.header;
+//	public static final String CONTENT_TYPE_XML = MimeTypeEnum.xml.header;
+//	public static final String CONTENT_TYPE_TXT = MimeTypeEnum.txt.header;
+//	public static final String CONTENT_TYPE_CSS = MimeTypeEnum.css.header;
 	
 	public JapidTemplateBase(StringBuilder out) {
 		super(out);

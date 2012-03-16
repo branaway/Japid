@@ -34,6 +34,7 @@ public class RenderResult implements Externalizable {
 	private StringBuilder content; // bran can this
 	long renderTime; // in ms, for recording the time to render.
 	private Map<String, String> headers = new HashMap<String, String>();
+	public static boolean injectTemplateBorder = false;
 
 	public RenderResult(Map<String, String> headers , StringBuilder content, long renderTime) {
 		this.content = content;
@@ -44,6 +45,8 @@ public class RenderResult implements Externalizable {
 	public RenderResult() {
 	}
 	
+
+
 	/**
 	 * get the interpolated content in StringBuilder. In case of nested action
 	 * calls, all the content tiles are generated and interpolated

@@ -28,6 +28,7 @@ import play.mvc.Scope.Flash;
 import play.mvc.results.Result;
 import play.vfs.VirtualFile;
 import cn.bran.japid.compiler.JapidCompilationException;
+import cn.bran.japid.template.RenderResult;
 
 /**
  * 
@@ -63,6 +64,15 @@ public class JapidPlugin extends PlayPlugin {
 			 }
 		 }
 		 getDumpRequest();
+		 setupInjectTemplateBorder();
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 */
+	private void setupInjectTemplateBorder() {
+		String property = Play.configuration.getProperty("japid.inject.template.border", "false");
+		RenderResult.injectTemplateBorder = new Boolean(property);
 	}
 
 	@Override
@@ -348,6 +358,7 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void afterApplicationStart() {
 		getDumpRequest();
+		setupInjectTemplateBorder();
 	}
 
 	@Override

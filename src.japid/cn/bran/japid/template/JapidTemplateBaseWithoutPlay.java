@@ -241,7 +241,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	/*
 	 * based on https://github.com/branaway/Japid/issues/12 This static mapping
 	 * will be later user in method renderModel to construct an proper Object[]
-	 * arraywhich is needed to invoke the method render(Object... args) over
+	 * array which is needed to invoke the method render(Object... args) over
 	 * reflection.
 	 */
 
@@ -409,5 +409,59 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	
 	protected void setSourceTemplate(String st){
 		this.sourceTemplate = st;
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @return
+	 */
+	protected String makeBeginBorder(String viewSource) {
+		String contentTypeString=getHeaders().get("Content-Type");
+		if (StringUtils.isEmpty(contentTypeString))
+			return null;
+		
+		String formatter = JapidTemplateBaseWithoutPlay.getContentCommentFormatter(contentTypeString);
+		if (formatter == null)
+			return "";
+	
+		return String.format(formatter, "begin: \"" + viewSource + "\"");
+		
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @return
+	 */
+	protected String makeEndBorder(String viewSource) {
+		String contentTypeString=getHeaders().get("Content-Type");
+		if (StringUtils.isEmpty(contentTypeString))
+			return null;
+		
+		String formatter = JapidTemplateBaseWithoutPlay.getContentCommentFormatter(contentTypeString);
+		if (formatter == null)
+			return "";
+		
+		return String.format(formatter, "end: \"" + viewSource + "\"");
+		
+	}
+
+	protected void beginDoLayout(String viewSource) {
+		if (RenderResult.injectTemplateBorder ) 
+			p(makeBeginBorder(viewSource));
+	}
+
+	protected void endDoLayout(String viewSource) {
+		if (RenderResult.injectTemplateBorder ) 
+			p(makeEndBorder(viewSource));
+	}
+
+	public static String getContentCommentFormatter(String contentTypeString) {
+		if (contentTypeString.contains("xml") || contentTypeString.contains("html"))
+			return "<!--%s-->";
+		
+		if (contentTypeString.contains("json") || contentTypeString.contains("javascript")
+				|| contentTypeString.contains("css"))
+			return "/*%s*/";
+		return null;
 	}
 }

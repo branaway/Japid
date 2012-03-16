@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import cn.bran.japid.util.StringUtils;
+
 
 /**
  * Represented a partially rendered result at the top level. Pre-rendered
@@ -24,6 +26,7 @@ import java.util.TreeMap;
  */
 public class RenderResultPartial extends RenderResult {
 	Map<Integer, ActionRunner> actionRunners;
+	private String viewName;
 
 	public Map<Integer, ActionRunner> getActionRunners() {
 		return actionRunners;
@@ -34,16 +37,25 @@ public class RenderResultPartial extends RenderResult {
 		this.actionRunners = actions;
 	}
 	
+	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime, Map<Integer, ActionRunner> actions, String viewName) {
+		super(headers, content, renderTime);
+		this.actionRunners = actions;
+		this.viewName = viewName;
+	}
+	
 	public RenderResultPartial() {
 	}
 
 	@Override
 	public StringBuilder getContent() {
 		// let's interpolate the static content with the result from the actions
-
+		
+		// wrap the output in a pair of content type safe markers for better displaying output 
+		// view composition in the output for debugging
 		StringBuilder superContent = super.getContent();
+			
+		StringBuilder sb = new StringBuilder();
 		if (actionRunners != null && actionRunners.size() > 0) {
-			StringBuilder sb = new StringBuilder();
 			int segStart = 0;
 			for (Map.Entry<Integer, ActionRunner> arEntry : actionRunners.entrySet()) {
 				int pos = arEntry.getKey();
@@ -53,11 +65,22 @@ public class RenderResultPartial extends RenderResult {
 				sb.append(a.run().getContent().toString());
 			}
 			sb.append(superContent.substring(segStart));
+//			if (injectTemplateBorder ) {
+//				sb.insert(0,  makeBeginBorder());
+//				sb.append(makeEndBorder());
+//			}
+
 			return sb;
 		} else {
-			return superContent;
+			sb.append(superContent.toString());
+//			if (injectTemplateBorder ) {
+//				sb.insert(0,  makeBeginBorder());
+//				sb.append(makeEndBorder());
+//			}
+			return sb;
 		}
 	}
+	
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
