@@ -27,6 +27,13 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2012/3/17: V0.9.3.4:  breaking changes. Japid views Java code must be regenerated.  
+	1. new feature: added a per file directive to turn on/off printing template file names in the output:
+	   e.g.,  `tracefile on/off
+	2. new feature: added a Japid setting in the application.conf to control global trace file status. 
+	   e.g.,  japid.trace.file=on
+	   Note: the per file setting override the global setting
+
 2012/3/10: V0.9.3.3:  breaking changes. Japid views Java code must be regenerated.  
 	1. bug fix: "(foo).bar" not interpreted as "open if" predicate
 

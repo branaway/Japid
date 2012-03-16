@@ -415,8 +415,14 @@ public abstract class JapidAbstractCompiler {
 				}
 			} else if (startsWithIgnoreSpace(line, "stopwatch")) {
 				String sw = line.trim().substring("stopwatch".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
-				if ("on".equals(sw))
+				if ("on".equals(sw) || "yes".equals(sw) || "true".equals(sw))
 					getTemplateClassMetaData().turnOnStopwatch();
+			} else if (startsWithIgnoreSpace(line, "tracefile")) {
+				String sw = line.trim().substring("tracefile".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
+				if ("on".equals(sw) || "yes".equals(sw) || "true".equals(sw))
+					getTemplateClassMetaData().turnOnTraceFile();
+				else
+					getTemplateClassMetaData().turnOffTraceFile();
 				// Tag currentTag = this.tagsStack.peek();
 				// currentTag.bodyArgsString = contentType;
 			} else if (startsWithIgnoreSpace(line, "log") || line.trim().equals("log")) {

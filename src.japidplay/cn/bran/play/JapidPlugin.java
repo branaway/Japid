@@ -28,7 +28,7 @@ import play.mvc.Scope.Flash;
 import play.mvc.results.Result;
 import play.vfs.VirtualFile;
 import cn.bran.japid.compiler.JapidCompilationException;
-import cn.bran.japid.template.RenderResult;
+import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 
 /**
  * 
@@ -71,8 +71,8 @@ public class JapidPlugin extends PlayPlugin {
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 */
 	private void setupInjectTemplateBorder() {
-		String property = Play.configuration.getProperty("japid.inject.template.border", "false");
-		RenderResult.injectTemplateBorder = new Boolean(property);
+		String property = Play.configuration.getProperty("japid.trace.file", "false");
+		JapidTemplateBaseWithoutPlay.injectTemplateBorder = new Boolean(property);
 	}
 
 	@Override

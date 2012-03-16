@@ -292,18 +292,17 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 	protected static final String NAMED_PARAM_CODE = "" +
 			"/* based on https://github.com/branaway/Japid/issues/12\n" + 
 			" */\n" +
-			"public static final String[] argNames = new String[] {/* args of the template*/%s };\n" + 
-			"public static final String[] argTypes = new String[] {/* arg types of the template*/%s };\n" + 
-			"public static final Object[] argDefaults= new Object[] {%s };\n"  + 
-			"public static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\n\n" + 
-			"{\n" + 
-			"	setRenderMethod(renderMethod);\n" + 
-			"	setArgNames(argNames);\n" + 
-			"	setArgTypes(argTypes);\n" + 
-			"	setArgDefaults(argDefaults);\n" +
-			"	setSourceTemplate(sourceTemplate);\n" + 
-			"\n" + 
-			"}\n" +
+			"\tpublic static final String[] argNames = new String[] {/* args of the template*/%s };\n" + 
+			"\tpublic static final String[] argTypes = new String[] {/* arg types of the template*/%s };\n" + 
+			"\tpublic static final Object[] argDefaults= new Object[] {%s };\n"  + 
+			"\tpublic static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\n\n" + 
+			"\t{\n" + 
+			"\t\tsetRenderMethod(renderMethod);\n" + 
+			"\t\tsetArgNames(argNames);\n" + 
+			"\t\tsetArgTypes(argTypes);\n" + 
+			"\t\tsetArgDefaults(argDefaults);\n" +
+			"\t\tsetSourceTemplate(sourceTemplate);\n" + 
+			"\t}\n" +
 			"" + 
 			"////// end of named args stuff\n";
 	

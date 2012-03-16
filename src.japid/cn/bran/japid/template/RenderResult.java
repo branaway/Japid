@@ -34,8 +34,7 @@ public class RenderResult implements Externalizable {
 	private StringBuilder content; // bran can this
 	long renderTime; // in ms, for recording the time to render.
 	private Map<String, String> headers = new HashMap<String, String>();
-	public static boolean injectTemplateBorder = false;
-
+	
 	public RenderResult(Map<String, String> headers , StringBuilder content, long renderTime) {
 		this.content = content;
 		this.renderTime = renderTime;

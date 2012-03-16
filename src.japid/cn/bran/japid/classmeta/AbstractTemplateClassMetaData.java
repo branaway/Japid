@@ -470,6 +470,7 @@ public abstract class AbstractTemplateClassMetaData {
 
 	private static Set<String> globalImports = new HashSet<String>();
 	private Set<String> imports = new HashSet<String>();
+	private String contentType = "";
 
 	/**
 	 * 
@@ -504,8 +505,10 @@ public abstract class AbstractTemplateClassMetaData {
 	static Set<Class<? extends Annotation>> typeAnnotations = new HashSet<Class<? extends Annotation>>();
 
 	public void setContentType(String contentType) {
-		if (contentType != null)
+		if (contentType != null) {
 			this.headers.put(CONTENT_TYPE, contentType);
+			this.contentType = contentType;
+		}
 	}
 
 	// String contentType;
@@ -517,6 +520,7 @@ public abstract class AbstractTemplateClassMetaData {
 	// to support extends layout (arg1, arg2)
 	public String superClassRenderArgs = "";
 	protected int argsLineNum;
+	private Boolean traceFile = null;
 
 	public void turnOnStopwatch() {
 		this.stopWatch = true;
@@ -558,18 +562,25 @@ public abstract class AbstractTemplateClassMetaData {
 		this.headers.put(name, value);
 	}
 
-	public void printHttpHeaderMap() {
+	public void printInitializer() {
 		// now we use the headers var the template base, for slightly
 		// performance penalty
 		// pln("	private static final Map<String, String> headers = new HashMap<String, String>();");
 		if (useWithPlay && headers.size() > 0) {
 			// pln("	static {");
-			pln("{");
+			pln("\t{");
 			for (String k : headers.keySet()) {
 				String v = headers.get(k);
-				pln("putHeader(\"" + k + "\", \"" + v + "\");");
+				pln("\t\tputHeader(\"" + k + "\", \"" + v + "\");");
 			}
-			pln("}");
+			pln("\t\tsetContentType(\"" + contentType + "\");");
+			if (traceFile != null)
+				if (traceFile)
+					pln("\t\tsetTraceFile(true);");
+				else
+					pln("\t\tsetTraceFile(false);");
+					
+			pln("\t}");
 		}
 	}
 
@@ -702,9 +713,9 @@ public abstract class AbstractTemplateClassMetaData {
 		printHeaders();
 		printAnnotations();
 		classDeclare();
-		p("{");
+		pln("{");
 		embedSourceTemplateName();
-		printHttpHeaderMap();
+		printInitializer();
 		// buildStatics();
 		if (useWithPlay) {
 			addImplicitFields();
@@ -763,6 +774,20 @@ public abstract class AbstractTemplateClassMetaData {
 
 	public void setArgsLineNum(int startLine) {
 		this.argsLineNum = startLine;
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 */
+	public void turnOnTraceFile() {
+		this.traceFile = true;
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 */
+	public void turnOffTraceFile() {
+		this.traceFile = false;
 	}
 
 }

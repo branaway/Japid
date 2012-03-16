@@ -46,6 +46,11 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		headers.put("Content-Type", "text/html; charset=utf-8");
 	}
 
+	// directive for tracing templates navigation
+	private Boolean traceFile = null;
+	
+	private String contentType = "";
+	
 	public void setOut(StringBuilder out) {
 		this.out = out;
 	}
@@ -272,6 +277,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	}
 
 	public Object[] argDefaultsInstance = null;
+	public static boolean injectTemplateBorder = false;
 
 	protected void setArgDefaults(Object[] argDefaults) {
 		// System.out.println("-> set args names: " + argNames);
@@ -416,11 +422,10 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	 * @return
 	 */
 	protected String makeBeginBorder(String viewSource) {
-		String contentTypeString=getHeaders().get("Content-Type");
-		if (StringUtils.isEmpty(contentTypeString))
+		if (StringUtils.isEmpty(contentType))
 			return null;
 		
-		String formatter = JapidTemplateBaseWithoutPlay.getContentCommentFormatter(contentTypeString);
+		String formatter = JapidTemplateBaseWithoutPlay.getContentCommentFormatter(contentType);
 		if (formatter == null)
 			return "";
 	
@@ -433,11 +438,10 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	 * @return
 	 */
 	protected String makeEndBorder(String viewSource) {
-		String contentTypeString=getHeaders().get("Content-Type");
-		if (StringUtils.isEmpty(contentTypeString))
+		if (StringUtils.isEmpty(contentType))
 			return null;
 		
-		String formatter = JapidTemplateBaseWithoutPlay.getContentCommentFormatter(contentTypeString);
+		String formatter = JapidTemplateBaseWithoutPlay.getContentCommentFormatter(contentType);
 		if (formatter == null)
 			return "";
 		
@@ -445,23 +449,66 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		
 	}
 
+
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @return
+	 */
+	private boolean shouldTraceFile() {
+		if (traceFile != null)
+			if (traceFile) 
+				return true;
+			else 
+				return false;
+		else
+			return injectTemplateBorder; 
+	}
+
 	protected void beginDoLayout(String viewSource) {
-		if (RenderResult.injectTemplateBorder ) 
+		if (shouldTraceFile())
 			p(makeBeginBorder(viewSource));
 	}
 
 	protected void endDoLayout(String viewSource) {
-		if (RenderResult.injectTemplateBorder ) 
+		if (shouldTraceFile())
 			p(makeEndBorder(viewSource));
 	}
 
 	public static String getContentCommentFormatter(String contentTypeString) {
 		if (contentTypeString.contains("xml") || contentTypeString.contains("html"))
-			return "<!--%s-->";
+			return "\n<!--%s-->\n";
 		
 		if (contentTypeString.contains("json") || contentTypeString.contains("javascript")
 				|| contentTypeString.contains("css"))
-			return "/*%s*/";
+			return "\n/*%s*/\n";
 		return null;
+	}
+
+	/**
+	 * @return the contentType
+	 */
+	public String getContentType() {
+		return contentType;
+	}
+
+	/**
+	 * @param contentType the contentType to set
+	 */
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	/**
+	 * @return the traceFile
+	 */
+	public Boolean getTraceFile() {
+		return traceFile;
+	}
+
+	/**
+	 * @param traceFile the traceFile to set
+	 */
+	public void setTraceFile(Boolean traceFile) {
+		this.traceFile = traceFile;
 	}
 }
