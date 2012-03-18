@@ -23,10 +23,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public class renderByPosition extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/Application/renderByPosition.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/Application/renderByPosition.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -50,19 +52,18 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/"ss", "ii", "au1", "au2", "au22",  };
-public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "int", "Author", "Author", "Author2",  };
-public static final Object[] argDefaults= new Object[] {null,null,null,null,null, };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.renderByPosition.class);
+	public static final String[] argNames = new String[] {/* args of the template*/"ss", "ii", "au1", "au2", "au22",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "int", "Author", "Author", "Author2",  };
+	public static final Object[] argDefaults= new Object[] {null,null,null,null,null, };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.renderByPosition.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	private String ss; // line 2
@@ -78,9 +79,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.au22 = au22;
 		long t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 		;// line 1
@@ -104,6 +106,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 "\n");// line 6
 		final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut()); _tagPrimitives0.setActionRunners(getActionRunners()).setOut(getOut()); _tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6)); // line 10// line 10
 		
+		endDoLayout(sourceTemplate);
 	}
 
 }

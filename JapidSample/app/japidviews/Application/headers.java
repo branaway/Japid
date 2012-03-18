@@ -22,15 +22,17 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public class headers extends superheaders
-{	public static final String sourceTemplate = "japidviews/Application/headers.html";
 {
-putHeader("Date", "Tue, 23 Feb 2010 13:42:34 GMT");
-putHeader("Expires", "Tue, 23 Feb 2010 13:47:34 GMT");
-putHeader("Last-Modified", "Tue, 23 Feb 2010 13:40:01 GMT");
-putHeader("Content-Type", "text/html; charset=utf-8");
-putHeader("Server", "nginx/0.8.26");
-putHeader("Cache-Control", "max-age=600");
-}
+	public static final String sourceTemplate = "japidviews/Application/headers.html";
+	{
+		putHeader("Date", "Tue, 23 Feb 2010 13:42:34 GMT");
+		putHeader("Expires", "Tue, 23 Feb 2010 13:47:34 GMT");
+		putHeader("Last-Modified", "Tue, 23 Feb 2010 13:40:01 GMT");
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		putHeader("Server", "nginx/0.8.26");
+		putHeader("Cache-Control", "max-age=600");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -54,27 +56,27 @@ putHeader("Cache-Control", "max-age=600");
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/ };
-public static final String[] argTypes = new String[] {/* arg types of the template*/ };
-public static final Object[] argDefaults= new Object[] { };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.headers.class);
+	public static final String[] argNames = new String[] {/* args of the template*/ };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/ };
+	public static final Object[] argDefaults= new Object[] { };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.headers.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 p("\n" + 
@@ -92,6 +94,7 @@ p("\n" +
 "\n" + 
 "\n");// line 6
 		
+		endDoLayout(sourceTemplate);
 	}
 
 }

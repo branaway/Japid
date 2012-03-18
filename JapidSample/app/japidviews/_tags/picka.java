@@ -22,10 +22,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public class picka extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/_tags/picka.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/_tags/picka.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -49,19 +51,18 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/"a", "b",  };
-public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String",  };
-public static final Object[] argDefaults= new Object[] {null,null, };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.picka.class);
+	public static final String[] argNames = new String[] {/* args of the template*/"a", "b",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String",  };
+	public static final Object[] argDefaults= new Object[] {null,null, };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.picka.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
@@ -93,16 +94,17 @@ public static interface DoBody<A> {
 		this.b = b;
 		long t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(String a,String b) {
 		this.a = a;
 		this.b = b;
 		long t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 		p("<p>\n" + 
@@ -124,6 +126,7 @@ public static interface DoBody<A> {
 "</p>\n" + 
 " ");// line 11
 		
+		endDoLayout(sourceTemplate);
 	}
 
 }

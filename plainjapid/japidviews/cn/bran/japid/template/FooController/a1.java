@@ -9,7 +9,8 @@ import japidviews ._layouts.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 public class a1 extends main
-{	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/a1.html";
+{
+	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/a1.html";
 	public a1() {
 		super(null);
 	}
@@ -18,19 +19,18 @@ public class a1 extends main
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/"a",  };
-public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
-public static final Object[] argDefaults= new Object[] {null, };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.a1.class);
+	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
+	public static final Object[] argDefaults= new Object[] {null, };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.a1.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	private String a; // line 1
@@ -42,6 +42,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 p("\n");// line 3
@@ -51,6 +52,7 @@ p("\n");// line 3
 		// line 7
 		;// line 9
 		
+		endDoLayout(sourceTemplate);
 	}
 
 	@Override protected void title() {

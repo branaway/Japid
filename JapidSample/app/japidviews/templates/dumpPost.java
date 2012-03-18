@@ -22,10 +22,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public class dumpPost extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/templates/dumpPost.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/templates/dumpPost.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -49,19 +51,18 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/"f1", "f2", "body",  };
-public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String", "String",  };
-public static final Object[] argDefaults= new Object[] {null,null,null, };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.dumpPost.class);
+	public static final String[] argNames = new String[] {/* args of the template*/"f1", "f2", "body",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "String", "String",  };
+	public static final Object[] argDefaults= new Object[] {null,null,null, };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.dumpPost.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	private String f1; // line 2
@@ -73,9 +74,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.body = body;
 		long t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 p("\n");// line 1
 p("\n" + 
@@ -102,6 +104,7 @@ p("\n" +
 "</body>\n" + 
 "</html>");// line 15
 		
+		endDoLayout(sourceTemplate);
 	}
 
 }

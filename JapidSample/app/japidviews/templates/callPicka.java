@@ -22,10 +22,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public class callPicka extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/templates/callPicka.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/templates/callPicka.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -49,27 +51,27 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/ };
-public static final String[] argTypes = new String[] {/* arg types of the template*/ };
-public static final Object[] argDefaults= new Object[] { };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.callPicka.class);
+	public static final String[] argNames = new String[] {/* args of the template*/ };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/ };
+	public static final Object[] argDefaults= new Object[] { };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.callPicka.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 p("<p>beginning...<p>\n" + 
 "<p>\n" + 
@@ -136,6 +138,7 @@ public void resetBuffer() {
 		final japidviews.templates.aTag _japidviews_templates_aTag6 = new japidviews.templates.aTag(getOut()); _japidviews_templates_aTag6.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_templates_aTag6.render(strings); // line 43// line 43
 		;// line 43
 		
+		endDoLayout(sourceTemplate);
 	}
 
 }

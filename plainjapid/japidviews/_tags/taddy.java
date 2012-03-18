@@ -9,7 +9,8 @@ import japidviews ._layouts.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 public class taddy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
-{	public static final String sourceTemplate = "japidviews/_tags/taddy.html";
+{
+	public static final String sourceTemplate = "japidviews/_tags/taddy.html";
 	public taddy() {
 		super(null);
 	}
@@ -18,19 +19,18 @@ public class taddy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/ };
-public static final String[] argTypes = new String[] {/* arg types of the template*/ };
-public static final Object[] argDefaults= new Object[] { };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.taddy.class);
+	public static final String[] argNames = new String[] {/* args of the template*/ };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/ };
+	public static final Object[] argDefaults= new Object[] { };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews._tags.taddy.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
@@ -68,6 +68,7 @@ public static interface DoBody<A> {
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 p("teddy bear\n" + 
 "\n");// line 1
@@ -75,6 +76,7 @@ p("teddy bear\n" +
 		p("\n");// line 3
 		if (body != null){ body.setBuffer(getOut()); body.render(ss); body.resetBuffer();}// line 5
 		
+		endDoLayout(sourceTemplate);
 	}
 
 }

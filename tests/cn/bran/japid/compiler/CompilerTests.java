@@ -481,7 +481,6 @@ public class CompilerTests {
 		System.out.println(code);
 		assertTrue(code.contains("actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner(\"\", MyController.class, \"action\", s + \"2\") {"));
 		assertTrue(code.contains("MyController.action(s);"));
-		assertTrue(code.contains("return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);"));
 		assertTrue(code.contains("MyController.action(s + \"2\");"));
 		
 	}

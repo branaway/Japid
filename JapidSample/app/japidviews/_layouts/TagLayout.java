@@ -22,10 +22,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public abstract class TagLayout extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/_layouts/TagLayout.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/_layouts/TagLayout.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -48,7 +50,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 		super(out);
 	}
 	@Override public void layout() {
-		p("标签布局\n");// line 1
+		beginDoLayout(sourceTemplate);		p("标签布局\n");// line 1
 		p("\n");// line 2
 		final dummyTag _dummyTag0 = new dummyTag(getOut()); _dummyTag0.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag0.render("me"); // line 3// line 3
 		p("<div>\n" + 
@@ -60,7 +62,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 "</div>\n" + 
 "\n" + 
 "\n");// line 8
-			}
+				endDoLayout(sourceTemplate);	}
 
 	protected abstract void doLayout();
 }

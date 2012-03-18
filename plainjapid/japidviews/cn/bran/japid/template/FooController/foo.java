@@ -9,7 +9,8 @@ import japidviews ._layouts.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 public class foo extends main
-{	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/foo.html";
+{
+	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/foo.html";
 	public foo() {
 		super(null);
 	}
@@ -18,19 +19,18 @@ public class foo extends main
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/"a",  };
-public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
-public static final Object[] argDefaults= new Object[] {null, };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.foo.class);
+	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"String",  };
+	public static final Object[] argDefaults= new Object[] {null, };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.cn.bran.japid.template.FooController.foo.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	private String a; // line 1
@@ -42,12 +42,14 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		return getOut().toString();
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 p("foo: ");// line 3
 		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1"); // line 4// line 4
 		;// line 4
 		
+		endDoLayout(sourceTemplate);
 	}
 
 	@Override protected void title() {

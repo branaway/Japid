@@ -23,10 +23,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public class AllPost extends Layout
-{	public static final String sourceTemplate = "japidviews/templates/AllPost.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/templates/AllPost.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -50,19 +52,18 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/"blogTitle", "allPost",  };
-public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "List<Post>",  };
-public static final Object[] argDefaults= new Object[] {null,null, };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.AllPost.class);
+	public static final String[] argNames = new String[] {/* args of the template*/"blogTitle", "allPost",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "List<Post>",  };
+	public static final Object[] argDefaults= new Object[] {null,null, };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.templates.AllPost.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	private String blogTitle; // line 3
@@ -78,9 +79,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
 
 		System.out.println("[AllPost] rendering time(ms): " + l);
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 ;// line 2
@@ -143,6 +145,7 @@ public void resetBuffer() {
 		p("\n" + 
 "<p>cool</p>");// line 20
 		
+		endDoLayout(sourceTemplate);
 	}
 
 	@Override protected void title() {

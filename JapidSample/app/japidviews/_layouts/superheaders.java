@@ -22,11 +22,13 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public abstract class superheaders extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/_layouts/superheaders.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-putHeader("Cache-Control", "max-age=300");
-}
+	public static final String sourceTemplate = "japidviews/_layouts/superheaders.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		putHeader("Cache-Control", "max-age=300");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -49,7 +51,7 @@ putHeader("Cache-Control", "max-age=300");
 		super(out);
 	}
 	@Override public void layout() {
-		;// line 1
+		beginDoLayout(sourceTemplate);		;// line 1
 		p("\n" + 
 "\n");// line 1
 		p("\n" + 
@@ -59,7 +61,7 @@ putHeader("Cache-Control", "max-age=300");
 		p("\n");// line 9
 		doLayout();// line 11
 		;// line 11
-			}
+				endDoLayout(sourceTemplate);	}
 
 	protected abstract void doLayout();
 }

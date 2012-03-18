@@ -22,10 +22,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public abstract class myLayout extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/more/MyController/myLayout.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/more/MyController/myLayout.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -48,7 +50,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 		super(out);
 	}
 	@Override public void layout() {
-		p("<p>");// line 1
+		beginDoLayout(sourceTemplate);		p("<p>");// line 1
 		title();// line 1
 		p("</p>\n" + 
 "<p>");// line 1
@@ -57,7 +59,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 "<p>\n");// line 2
 		doLayout();// line 4
 		p("</p>");// line 4
-			}
+				endDoLayout(sourceTemplate);	}
 	 protected void title() {};
 	 protected void side() {};
 

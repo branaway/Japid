@@ -148,7 +148,7 @@ Notes:
 # the @_notifiers@ sub-directory contains email templates coded in Japid. There is a section for this later in this document. 
 # The other nodes of the tree are created to match the structure of the controller and actions therein. For each controller there is a directory created which contains a bunch of template files named after the action method in the controller. The Japid converter translates the html template files to java files in the same directory. Please note though, the layouts of the template files are required only if we are going to use *implicit template binding*. A template can be placed anywhere in the case of *explicit template invocation*. There is a section of document for this later. 
 
-h2. Japid Syntax by Examples 
+h2. Japid Syntax
 
 The original version of Japid (around version 0.3) copied a lot of the "syntax from the Play! framework":http://www.playframework.org/documentation/1.1.1/templates. The idea was to help the Play! users to pick up the engine quickly. New and simpler syntax has been introduced over the course of one year use in real-world projects. This documents tries to compare the syntax of different flavors. 
 
@@ -1819,7 +1819,11 @@ Since all Japid templates are transformed to Java source files, debugging the vi
 
 I personally find it rare to need to debug the views, since usually it will work if the Java code compiles. That's compile-time error checking at work. You'll need to pay attention to the parameter list of the templates and make sure they match that in the actions that using *implicit template binding*.   
 
-Lastly, there is a handy command you can use to quickly log any data in your Japid templates. The command is naturally called @`log@. 
+If you need to output more monitoring information to the console or to the generated content, please read on.
+
+h3. Logging variables to the console
+
+There is a handy command you can use to quickly log any data in your Japid templates. The command is naturally called @`log@. 
 
 <pre>
 `args String a
@@ -1840,6 +1844,31 @@ japidviews/templates/log.html(line 7): 3
 
 By the way, you can use the @log@ command without any arguments. You end up with just the template name and line number in the console, useful if you want to know where you are. 
 
+h3. Traceing template nestings in the output
+
+A page of any complexity may have comlicated nestings: the layout, lots of tag use, and tag use in tags, nested action invocation, etc. As the template size grows, it gets harder and harder to easily follow what part of and html/json source code has been generated from what japid view file. 
+
+Since Japid 0.9.3.3, there are a few more application.conf settings and a new template directive to help you trace the template nestings. 
+
+h4. japid.trace.file = on/off
+
+Used in the "application.conf" file, when the value is "on", a line of comment text is printed to the rendered content:
+    for html/xml content types:  <pre><!-- enter: "japidviews/..." --></pre> at the point of rendering a view and <pre><!-- exit: "japidviews/..." --></pre> after the view has been rendered.
+    for javascript/json content types: <pre>/*enter "japidviews/..."*/</pre> at the beginning of the template and <pre>exit: "japidviews/..."</pre> at the end. 
+
+h4. japid.trace.file.html = on/off
+
+The switch controls the tracing of html/xml rendering templates specifically. It overrides the @japid.trace.file@ setting. 
+
+h4. japid.trace.file.json = on/off
+
+This switch controls the tracing of the templates that generate jons/javascript mime types. Note, you can use @`json@ or @`javascript@ directive to force the content type of any templates. 
+
+h4. @`tracefile@
+
+This a directive for use in template and control the per-file tracing. When @`tracefile on|yes|true@ is present in a template file, the tracing of this file is enabled, otherwise the tracing is turned off. 
+
+This directive overrides any settings in the application.conf file. 
 
 h2. Use the Sample Application in the Module
 

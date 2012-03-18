@@ -26,6 +26,7 @@ import java.util.TreeMap;
 
 import cn.bran.japid.util.StringUtils;
 
+import cn.bran.japid.classmeta.MimeTypeEnum;
 import cn.bran.japid.compiler.NamedArg;
 import cn.bran.japid.compiler.NamedArgRuntime;
 import cn.bran.japid.util.HTMLUtils;
@@ -277,7 +278,10 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	}
 
 	public Object[] argDefaultsInstance = null;
-	public static boolean injectTemplateBorder = false;
+	private MimeTypeEnum mimeType;
+	public static boolean globalTraceFile = false;
+	public static Boolean globalTraceFileHtml = null;
+	public static Boolean globalTraceFileJson = null;
 
 	protected void setArgDefaults(Object[] argDefaults) {
 		// System.out.println("-> set args names: " + argNames);
@@ -429,7 +433,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		if (formatter == null)
 			return "";
 	
-		return String.format(formatter, "begin: \"" + viewSource + "\"");
+		return String.format(formatter, "enter: \"" + viewSource + "\"");
 		
 	}
 
@@ -445,23 +449,34 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		if (formatter == null)
 			return "";
 		
-		return String.format(formatter, "end: \"" + viewSource + "\"");
+		return String.format(formatter, "exit: \"" + viewSource + "\"");
 		
 	}
 
 
 	/**
+	 * determine if the current template should mark the entrance and the exit in the output
+	 * 
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 * @return
 	 */
 	private boolean shouldTraceFile() {
 		if (traceFile != null)
-			if (traceFile) 
-				return true;
-			else 
-				return false;
+			return traceFile;
 		else
-			return injectTemplateBorder; 
+			if (this.mimeType == MimeTypeEnum.xml || this.mimeType == MimeTypeEnum.html) 
+				if (globalTraceFileHtml != null) 
+					return globalTraceFileHtml; 
+				else
+					return globalTraceFile;
+			else if (this.mimeType == MimeTypeEnum.js || this.mimeType == MimeTypeEnum.json)
+				if (globalTraceFileJson != null) 
+					return globalTraceFileJson; 
+				else 
+					return globalTraceFile; 
+				
+		return false;
+				
 	}
 
 	protected void beginDoLayout(String viewSource) {
@@ -496,6 +511,16 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	 */
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+		if(contentType.contains("xml"))
+			this.mimeType = MimeTypeEnum.xml;
+		else if (contentType.contains("html"))
+			this.mimeType = MimeTypeEnum.html;
+		else if (contentType.contains("javascript"))
+			this.mimeType = MimeTypeEnum.js;
+		else if (contentType.contains("json"))
+			this.mimeType = MimeTypeEnum.json;
+		else if (contentType.contains("css"))
+			this.mimeType = MimeTypeEnum.css;
 	}
 
 	/**

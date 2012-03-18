@@ -423,8 +423,6 @@ public abstract class JapidAbstractCompiler {
 					getTemplateClassMetaData().turnOnTraceFile();
 				else
 					getTemplateClassMetaData().turnOffTraceFile();
-				// Tag currentTag = this.tagsStack.peek();
-				// currentTag.bodyArgsString = contentType;
 			} else if (startsWithIgnoreSpace(line, "log") || line.trim().equals("log")) {
 				String args = line.trim().substring("log".length()).trim().replace(";", "");
 				if (args.trim().length() == 0)

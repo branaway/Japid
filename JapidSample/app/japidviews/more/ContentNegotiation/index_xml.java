@@ -22,10 +22,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public class index_xml extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/more/ContentNegotiation/index.xml";
 {
-putHeader("Content-Type", "text/xml; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/more/ContentNegotiation/index.xml";
+	{
+		putHeader("Content-Type", "text/xml; charset=utf-8");
+		setContentType("text/xml; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -49,33 +51,34 @@ putHeader("Content-Type", "text/xml; charset=utf-8");
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/ };
-public static final String[] argTypes = new String[] {/* arg types of the template*/ };
-public static final Object[] argDefaults= new Object[] { };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.ContentNegotiation.index_xml.class);
+	public static final String[] argNames = new String[] {/* args of the template*/ };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/ };
+	public static final Object[] argDefaults= new Object[] { };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.more.ContentNegotiation.index_xml.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
 		long t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 p("<format>\n");// line 1
 		p(request.format);// line 2
 		p("\n" + 
 "</format>");// line 2
 		
+		endDoLayout(sourceTemplate);
 	}
 
 }

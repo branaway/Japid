@@ -71,8 +71,21 @@ public class JapidPlugin extends PlayPlugin {
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 */
 	private void setupInjectTemplateBorder() {
-		String property = Play.configuration.getProperty("japid.trace.file", "false");
-		JapidTemplateBaseWithoutPlay.injectTemplateBorder = new Boolean(property);
+		String 
+		property = Play.configuration.getProperty("japid.trace.file", "false");
+		if ("on".equalsIgnoreCase(property) || "yes".equalsIgnoreCase(property))
+			property = "true";
+		JapidTemplateBaseWithoutPlay.globalTraceFile = new Boolean(property);
+
+		property = Play.configuration.getProperty("japid.trace.file.html", "false");
+		if ("on".equalsIgnoreCase(property) || "yes".equalsIgnoreCase(property))
+			property = "true";
+		JapidTemplateBaseWithoutPlay.globalTraceFileHtml = new Boolean(property);
+
+		property = Play.configuration.getProperty("japid.trace.file.json", "false");
+		if ("on".equalsIgnoreCase(property) || "yes".equalsIgnoreCase(property))
+			property = "true";
+		JapidTemplateBaseWithoutPlay.globalTraceFileJson = new Boolean(property);
 	}
 
 	@Override

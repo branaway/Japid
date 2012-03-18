@@ -23,10 +23,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public abstract class lcomposite2 extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/_layouts/lcomposite2.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/_layouts/lcomposite2.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -49,7 +51,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 		super(out);
 	}
 	@Override public void layout() {
-		p("<p>beginning: lcomposite</p>\n" + 
+		beginDoLayout(sourceTemplate);		p("<p>beginning: lcomposite</p>\n" + 
 "\n");// line 1
 		p("\n" + 
 "\n");// line 3
@@ -75,7 +77,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 "<p>back to layout again</p>\n" + 
 "\n" + 
 "<p>end of lcomposite</p>\n");// line 12
-			}
+				endDoLayout(sourceTemplate);	}
 
 	protected abstract void doLayout();
 }

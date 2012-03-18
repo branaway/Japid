@@ -22,10 +22,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public abstract class perfmain extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/more/Perf/perfmain.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/more/Perf/perfmain.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -50,7 +52,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	private DataModel.User loggedInUser; // line 1
 	 public void layout(DataModel.User loggedInUser) {
 		this.loggedInUser = loggedInUser;
-		;// line 1
+		beginDoLayout(sourceTemplate);		;// line 1
 		p("\n" + 
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n" + 
 "        \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
@@ -76,7 +78,7 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 		doLayout();// line 18
 		p("</body>\n" + 
 "</html>\n");// line 18
-			}
+				endDoLayout(sourceTemplate);	}
 	 protected void title() {};
 
 	protected abstract void doLayout();

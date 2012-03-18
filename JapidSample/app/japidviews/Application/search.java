@@ -22,10 +22,12 @@ import japidviews._javatags.*;
 //
 @cn.bran.play.NoEnhance
 public class search extends cn.bran.play.JapidTemplateBase
-{	public static final String sourceTemplate = "japidviews/Application/search.html";
 {
-putHeader("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/Application/search.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
@@ -49,19 +51,18 @@ putHeader("Content-Type", "text/html; charset=utf-8");
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-public static final String[] argNames = new String[] {/* args of the template*/"sp",  };
-public static final String[] argTypes = new String[] {/* arg types of the template*/"SearchParams",  };
-public static final Object[] argDefaults= new Object[] {null, };
-public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.search.class);
+	public static final String[] argNames = new String[] {/* args of the template*/"sp",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"SearchParams",  };
+	public static final Object[] argDefaults= new Object[] {null, };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.search.class);
 
-{
-	setRenderMethod(renderMethod);
-	setArgNames(argNames);
-	setArgTypes(argTypes);
-	setArgDefaults(argDefaults);
-	setSourceTemplate(sourceTemplate);
-
-}
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
 ////// end of named args stuff
 
 	private SearchParams sp; // line 1
@@ -69,9 +70,10 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		this.sp = sp;
 		long t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 		p("\n" + 
@@ -86,6 +88,7 @@ public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews
 		p(true?"class=\"someclass\"":"");// line 7
 		;// line 7
 		
+		endDoLayout(sourceTemplate);
 	}
 
 }
