@@ -37,15 +37,25 @@ import cn.bran.japid.util.RenderInvokerUtils;
 public class TemplateClassLoader extends ClassLoader {
 	// the per classloader class cache
 	private Map<String, Class<?>> localClasses = new ConcurrentHashMap<String, Class<?>>();
+	private ClassLoader parentClassLoader;
 
-	public TemplateClassLoader() {
+	public TemplateClassLoader(ClassLoader cl) {
 		super(TemplateClassLoader.class.getClassLoader());
+		this.parentClassLoader = cl;
 	}
 
 	@Override
 	public Class<?> loadClass(String name) throws ClassNotFoundException {
-		if (!name.startsWith(JapidRenderer.JAPIDVIEWS))
-			return super.loadClass(name);
+		if (!name.startsWith(JapidRenderer.JAPIDVIEWS)) {
+			try {
+				Class<?> cls = parentClassLoader.loadClass(name);
+				return cls;
+			}
+			catch (ClassNotFoundException e) {
+				return super.loadClass(name);
+			}
+		}
+		
 		String oid = "[TemplateClassLoader@" + Integer.toHexString(hashCode()) + "]";
 
 		Class<?> cla = localClasses.get(name);

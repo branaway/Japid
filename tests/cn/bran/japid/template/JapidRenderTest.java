@@ -13,13 +13,13 @@ public class JapidRenderTest {
 
 	@Test
 	public void testGen() {
-		JapidRenderer.init(null, "plainjapid", 1);
+		JapidRenderer.init(null, "plainjapid", 1, null);
 		JapidRenderer.gen();
 	}
 
 	@Test
 	public void testReGen() throws IOException {
-		JapidRenderer.init(null, "plainjapid", 1);
+		JapidRenderer.init(null, "plainjapid", 1, null);
 		JapidRenderer.regen();
 	}
 //
@@ -33,7 +33,7 @@ public class JapidRenderTest {
 	@Test
 	public void testSmartBindingWithRender() {
 		final String UNI = "universe";
-		JapidRenderer.init(OpMode.dev, "plainjapid", 1);
+		JapidRenderer.init(OpMode.dev, "plainjapid", 1, null);
 		String r = new FooControllerBare().a1(UNI);
 		System.out.println(r);;
 		assertEquals(">" + UNI, r);
@@ -42,7 +42,7 @@ public class JapidRenderTest {
 	@Test
 	public void testRenderSuperMethod() {
 		final String UNI = "universe";
-		JapidRenderer.init(OpMode.dev, "plainjapid", 1);
+		JapidRenderer.init(OpMode.dev, "plainjapid", 1, null);
 		String r = new FooController().a1(UNI);
 		System.out.println(r);
 		assertTrue(r.contains("<head>my view - universe1</head>"));
@@ -52,7 +52,7 @@ public class JapidRenderTest {
 	@Test
 	public void testExplicit() {
 		final String UNI = "universe";
-		JapidRenderer.init(OpMode.prod, "plainjapid", 1);
+		JapidRenderer.init(OpMode.prod, "plainjapid", 1, null);
 		String r = new FooControllerBare().a2(UNI);
 		System.out.println(r);;
 		assertEquals(">" + UNI, r);

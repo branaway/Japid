@@ -27,6 +27,9 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2012/3/27: V0.9.3.5:  breaking changes. Japid views Java code must be regenerated.  
+	1. improvement: Changed the JapidRenderer.init() to take an extra ClassLoader argument for the parent class loader. 
+	
 2012/3/19: V0.9.3.4:  breaking changes. Japid views Java code must be regenerated.  
 	1. new feature: added a per file directive to turn on/off printing template file names in the output:
 	   e.g.,  `tracefile on/off

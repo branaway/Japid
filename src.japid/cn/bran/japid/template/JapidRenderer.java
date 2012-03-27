@@ -64,7 +64,10 @@ public class JapidRenderer {
 			RendererClass rendererClass = classes.get(c);
 			rendererClass.setLastUpdated(0);
 		}
-		TemplateClassLoader classReloader = new TemplateClassLoader();
+		
+		ClassLoader cl = _parentClassLoader == null ? JapidRenderer.class.getClassLoader() : _parentClassLoader;
+		// do I need to new instance of TemplateClassLoader for each invocation? likely...
+		TemplateClassLoader classReloader = new TemplateClassLoader(cl);
 		try {
 			Class<JapidTemplateBaseWithoutPlay> loadClass = (Class<JapidTemplateBaseWithoutPlay>) classReloader.loadClass(name);
 			rc.setClz(loadClass);
@@ -202,13 +205,13 @@ public class JapidRenderer {
 
 	// <classname RendererClass>
 	public final static Map<String, RendererClass> classes = new ConcurrentHashMap<String, RendererClass>();
-	public static TemplateClassLoader crlr = new TemplateClassLoader();
+	public static TemplateClassLoader crlr;
 
 	public static TemplateClassLoader getCrlr() {
 		return crlr;
 	}
 
-	public static RendererCompiler compiler = new RendererCompiler(classes, crlr);
+	public static RendererCompiler compiler;
 	public static String templateRoot = "plainjapid";
 	public static final String JAPIDVIEWS = "japidviews";
 	public static String sep = File.separator;
@@ -643,13 +646,20 @@ public class JapidRenderer {
 	 *            the minimal time, in second, that must elapse before trying to
 	 *            detect any changes in the file system.
 	 */
-	public static void init(OpMode opMode, String templateRoot, int refreshInterval) {
+	public static void init(OpMode opMode, String templateRoot, int refreshInterval, ClassLoader parentClassLoader) {
 		inited = true;
 		JapidRenderer.opMode = opMode;
 		setTemplateRoot(templateRoot);
 		setRefreshInterval(refreshInterval);
+		_parentClassLoader = parentClassLoader;
+		if (_parentClassLoader == null) {
+			_parentClassLoader = JapidRenderer.class.getClassLoader();
+		}
+		crlr = new TemplateClassLoader(parentClassLoader);
+		new RendererCompiler(classes, crlr);
 	}
 
+	private static ClassLoader _parentClassLoader = null;
 	/**
 	 * a facet method to wrap implicit template binding. The default template is
 	 * named as the class and method that immediately invoke this method. e.g.

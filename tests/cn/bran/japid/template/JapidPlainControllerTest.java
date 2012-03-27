@@ -26,7 +26,7 @@ public class JapidPlainControllerTest {
 	 */
 	@Test
 	public void testRun() {
-		JapidRenderer.init(OpMode.dev, "plainjapid", 1);
+		JapidRenderer.init(OpMode.dev, "plainjapid", 1, null);
 		String p = "worldy ";
 		long t = System.currentTimeMillis();
 		String a1 = new FooController().a1(p);
