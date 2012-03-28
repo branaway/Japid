@@ -5,6 +5,8 @@
 
 * Links:
 
+-- Japid for Play 2: 
+    https://github.com/branaway/japid42
 -- The Japid/Play User Manual:   
     https://github.com/branaway/Japid/wiki/Japid-User-Guide
 -- Use Japid as a Generic Template Engine:
