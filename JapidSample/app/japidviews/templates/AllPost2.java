@@ -16,7 +16,6 @@ import play.i18n.Lang;
 import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
-import japidviews._javatags.*;
 //
 // NOTE: This file was generated from: japidviews/templates/AllPost2.html
 // Change to this file will be lost next time the template file is compiled.

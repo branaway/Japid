@@ -29,6 +29,14 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2012/6/12: V0.9.3.7:  breaking changes. All Japid views Java code must be regenerated.  
+	1. fix: smart import of _tags, _layouts, etc in the Eclipse plugin.  
+	2. fix: the build dependency was broken in the previous release.
+
+2012/5/19: V0.9.3.6:  breaking changes. Japid views Java code must be regenerated.  
+	1. fix: regression in JapidRenderer.init() to fail to initialize the compiler 
+	1. improvement: added imports for layouts, tags and javatags conditionally only when template files present in the above dirs. 
+
 2012/3/27: V0.9.3.5:  breaking changes. Japid views Java code must be regenerated.  
 	1. improvement: Changed the JapidRenderer.init() to take an extra ClassLoader argument for the parent class loader. 
 	

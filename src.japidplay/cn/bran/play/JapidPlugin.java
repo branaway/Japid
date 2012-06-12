@@ -167,11 +167,6 @@ public class JapidPlugin extends PlayPlugin {
 	// t.setOwningTarget(new Target());
 	// }
 
-	public static final String JAPIDVIEWS_ROOT = "japidviews";
-	public static final String JAVATAGS = "_javatags";
-	public static final String LAYOUTDIR = "_layouts";
-	public static final String TAGSDIR = "_tags";
-
 	@Override
 	public void onApplicationStop() {
 		try {

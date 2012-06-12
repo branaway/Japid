@@ -431,9 +431,9 @@ public class JapidRenderer {
 		// moved to reloadChanged
 		List<File> changedFiles = reloadChanged(packageRoot);
 		if (changedFiles.size() > 0) {
-			for (File f : changedFiles) {
-				// log("updated: " + f.getName().replace("html", "java"));
-			}
+//			for (File f : changedFiles) {
+//				// log("updated: " + f.getName().replace("html", "java"));
+//			}
 		} else {
 			log("All java files are up to date.");
 		}
@@ -459,9 +459,12 @@ public class JapidRenderer {
 		File rootDir = new File(root);
 		t.setPackageRoot(rootDir);
 		t.setInclude(new File(japidviews));
-		t.addImport("japidviews ._layouts.*");
-		// t.addImport(root + "/" + "._javatags.*");
-		t.addImport("japidviews ._tags.*");
+		if (DirUtil.hasLayouts(root))
+			t.addImport("japidviews._layouts.*");
+		if (DirUtil.hasJavaTags(root))
+			t.addImport("japidviews._javatags.*");
+		if (DirUtil.hasTags(root))
+			t.addImport("japidviews._tags.*");
 
 		for (String imp : importlines) {
 			t.addImport(imp);
@@ -656,7 +659,7 @@ public class JapidRenderer {
 			_parentClassLoader = JapidRenderer.class.getClassLoader();
 		}
 		crlr = new TemplateClassLoader(parentClassLoader);
-		new RendererCompiler(classes, crlr);
+		compiler = new RendererCompiler(classes, crlr);
 	}
 
 	private static ClassLoader _parentClassLoader = null;

@@ -15,7 +15,6 @@ import play.i18n.Lang;
 import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
-import japidviews._javatags.*;
 //
 // NOTE: This file was generated from: japidviews/templates/EachCall.html
 // Change to this file will be lost next time the template file is compiled.
@@ -165,15 +164,22 @@ public void resetBuffer() {
 );// line 21
 		p("\n" + 
 "\n");// line 24
-		int[] ints = {1, 2,3};// line 27
+		int[] ints = {1, 2, 3, 4};// line 27
 final Each _Each5 = new Each(getOut()); _Each5.setOut(getOut()); _Each5.render(// line 28
 ints, new Each.DoBody<Integer>(){ // line 28
 public void render(final Integer i, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 28
 // line 28
 		p("    --> ");// line 28
 		p(escape(i));// line 29
-		p("\n");// line 29
-		
+		p("\n" + 
+"    ");// line 29
+		if (i == 2) {// line 30
+        return; // this will work as continue// line 31
+    } else {// line 32
+		p("         :--\n" + 
+"    ");// line 32
+		}// line 34
+
 }
 
 StringBuilder oriBuffer;
@@ -190,7 +196,7 @@ public void resetBuffer() {
 
 }
 );// line 28
-		;// line 30
+		;// line 35
 		
 		endDoLayout(sourceTemplate);
 	}

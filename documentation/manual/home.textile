@@ -1,17 +1,8 @@
 h1. The Quick Manual of Japid Engine with Play Framework
 
-V0.8
+V0.9.3.4
 
 Bing Ran<bing_ran@hotmail.com>
-
-h4. Document History
-
-# 2011/2/16, first draft
-# 2011/2/20, added a section for the enhanced @if@ statement 
-# 2011/2/22, edited; added "open for" 
-# 2011/2/24, the Elvis operator: ?: 
-# lots of other stuff
-# 2011/6/10, confirmed working with GAE
 
 h4. Reference
 
@@ -73,7 +64,7 @@ And the section for Japid is like:
 ~ [japid]
 ~   Japid template engine
 ~   http://www.playframework.org/modules/japid
-~   Versions: 0.2, 0.3.1, 0.5.1, 0.6.0, head
+~   Versions: 0.2, 0.3.1, 0.5.1, 0.9.0, head
 </pre>
 
 Then you can pick the version to install, usually the head version, which is also the default version. 
@@ -81,7 +72,7 @@ Then you can pick the version to install, usually the head version, which is als
 To install the Japid module:
 
 <pre>
-$ play install japid-0.6.0
+$ play install japid-0.9.3.4
 </pre>
   
 or, 
@@ -108,7 +99,7 @@ The module goes to the @modules@ directory of the Play!'s installation root. The
 Now add a reference to Japid module in the @application.conf@ file in your application:
 
 <pre>
-module.japid=${play.path}/modules/japid-head
+module.japid=${play.path}/modules/japid-0.9.3.4  // or whatever the version number is
 </pre>
 
 The next thing to do is to create the default directory structure required by Japid. From the app root:
@@ -119,7 +110,7 @@ $ play japid:gen
 
 The @japidviews@ tree is now created in the @app@ directory
 
-Now you're ready to code your models, controllers and Japid views! Every time you add a new controller you can @play japid:gen@ to create a new sub-directory to match the controller or you can create the directory manually if you're confident of your typing. 
+Now you're ready to code your models, controllers and Japid views! Every time you add a new controller you can @play japid:gen@ to create a new sub-directory to match the controller or you can create the directory manually if you're confident about your typing skill. 
 
 h2. Runtime Directory Structure of Japid in Play! applications
 
@@ -588,6 +579,7 @@ Notes:
 `}
 </pre>
 * there is @_isOdd@ but there is no @_isEven@
+* @continue@ does not in open for loops, neither does @break@
 
 
 h3. Enhanced looping: @`each@

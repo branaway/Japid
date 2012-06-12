@@ -27,7 +27,7 @@ public class JapidCommandsTest {
 	@Test
 	public void testDelete() {
 		String root = ROOT;
-		String pathname = root + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT;
+		String pathname = root + File.separatorChar + DirUtil.JAPIDVIEWS_ROOT;
 		JapidCommands.delAllGeneratedJava(pathname);
 		String[] fs = DirUtil.getAllFileNames(new File(pathname), new String[]{".java"});
 		for (String s : fs) {

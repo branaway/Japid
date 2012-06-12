@@ -1,0 +1,203 @@
+[0m[[0mdebug[0m] [0m[0m
+[0m[[0mdebug[0m] [0mInitial source changes: [0m
+[0m[[0mdebug[0m] [0m	removed:Set()[0m
+[0m[[0mdebug[0m] [0m	added: Set(/Users/bran/projects/japid/src/main/java/cn/bran/japid/exceptions/JapidRuntimeException.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CachedRenderResult.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/SimpleTag.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/JapidDateFormat.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidTemplateCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidPlainController.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/AltCacheSimpleImpl.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/InnerClassMeta.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/Tag.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StringUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/UseJapid.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/JapidTemplateBase.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TagInvocationLineParser.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/RendererCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JavaSyntaxTool.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StackTraceUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/Each.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidParser.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/FlashWrapper.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/FieldErrors.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/LayoutClassMetaData.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/MimeTypeEnum.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/NamedArgRuntime.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/DirUtil.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/FlashScopeGeneric.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/TemplateClassMetaData.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/RenderResultCache.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/OpMode.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/RunAction.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidCompilationException.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/NoEnhance.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/WebUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CachedItemStatus.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/AnInterface.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/FlashScope.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/TemplateClassLoader.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/exceptions/ReverseRouteException.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/NamedArg.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CacheablePlayActionRunnerImpl1.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/JapidFlags.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidRenderer.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TokenPair.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseStreaming.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/AbstractTemplateClassMetaData.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResultPartial.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/tags/Include.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseWithStringBundler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TranslateTemplateTask.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/JapidController.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CacheableRunner.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/ActionRunner.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResultBundler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/MessageProvider.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CacheablePlayActionRunner.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/JapidResult.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidTemplateTransformer.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/DummyUrlMapper.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidAbstractCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/tags/CacheBlock.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TemplateClass.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidLayoutCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/streaming/Each.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplate.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseWithoutPlay.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/AltCache.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/HTMLUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/RendererClass.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResult.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/ShouldRefreshException.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidModelMap.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StringBundler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/RenderInvokerUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/UrlMapper.java)[0m
+[0m[[0mdebug[0m] [0m	modified: Set()[0m
+[0m[[0mdebug[0m] [0mRemoved products: Set()[0m
+[0m[[0mdebug[0m] [0mModified external sources: Set()[0m
+[0m[[0mdebug[0m] [0mModified binary dependencies: Set()[0m
+[0m[[0mdebug[0m] [0mInitial directly invalidated sources: Set(/Users/bran/projects/japid/src/main/java/cn/bran/japid/exceptions/JapidRuntimeException.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CachedRenderResult.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/SimpleTag.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/JapidDateFormat.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidTemplateCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidPlainController.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/AltCacheSimpleImpl.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/InnerClassMeta.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/Tag.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StringUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/UseJapid.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/JapidTemplateBase.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TagInvocationLineParser.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/RendererCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JavaSyntaxTool.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StackTraceUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/Each.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidParser.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/FlashWrapper.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/FieldErrors.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/LayoutClassMetaData.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/MimeTypeEnum.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/NamedArgRuntime.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/DirUtil.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/FlashScopeGeneric.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/TemplateClassMetaData.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/RenderResultCache.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/OpMode.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/RunAction.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidCompilationException.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/NoEnhance.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/WebUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CachedItemStatus.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/AnInterface.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/FlashScope.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/TemplateClassLoader.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/exceptions/ReverseRouteException.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/NamedArg.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CacheablePlayActionRunnerImpl1.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/JapidFlags.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidRenderer.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TokenPair.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseStreaming.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/AbstractTemplateClassMetaData.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResultPartial.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/tags/Include.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseWithStringBundler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TranslateTemplateTask.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/JapidController.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CacheableRunner.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/ActionRunner.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResultBundler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/MessageProvider.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CacheablePlayActionRunner.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/JapidResult.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidTemplateTransformer.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/DummyUrlMapper.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidAbstractCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/tags/CacheBlock.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TemplateClass.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidLayoutCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/streaming/Each.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplate.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseWithoutPlay.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/AltCache.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/HTMLUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/RendererClass.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResult.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/ShouldRefreshException.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidModelMap.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StringBundler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/RenderInvokerUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/UrlMapper.java)[0m
+[0m[[0mdebug[0m] [0m[0m
+[0m[[0mdebug[0m] [0mSources indirectly invalidated by:[0m
+[0m[[0mdebug[0m] [0m	product: Set()[0m
+[0m[[0mdebug[0m] [0m	binary dep: Set()[0m
+[0m[[0mdebug[0m] [0m	external source: Set()[0m
+[0m[[0mdebug[0m] [0mInitially invalidated: Set(/Users/bran/projects/japid/src/main/java/cn/bran/japid/exceptions/JapidRuntimeException.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CachedRenderResult.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/SimpleTag.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/JapidDateFormat.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidTemplateCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidPlainController.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/AltCacheSimpleImpl.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/InnerClassMeta.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/Tag.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StringUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/UseJapid.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/JapidTemplateBase.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TagInvocationLineParser.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/RendererCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JavaSyntaxTool.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StackTraceUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/Each.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidParser.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/FlashWrapper.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/FieldErrors.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/LayoutClassMetaData.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/MimeTypeEnum.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/NamedArgRuntime.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/DirUtil.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/FlashScopeGeneric.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/TemplateClassMetaData.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/RenderResultCache.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/OpMode.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/RunAction.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidCompilationException.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/NoEnhance.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/WebUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CachedItemStatus.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/AnInterface.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/FlashScope.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/TemplateClassLoader.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/exceptions/ReverseRouteException.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/NamedArg.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CacheablePlayActionRunnerImpl1.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/JapidFlags.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidRenderer.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TokenPair.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseStreaming.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/AbstractTemplateClassMetaData.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResultPartial.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/tags/Include.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseWithStringBundler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TranslateTemplateTask.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/JapidController.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CacheableRunner.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/ActionRunner.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResultBundler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/MessageProvider.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/CacheablePlayActionRunner.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/JapidResult.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidTemplateTransformer.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/DummyUrlMapper.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidAbstractCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/tags/CacheBlock.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TemplateClass.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidLayoutCompiler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/streaming/Each.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplate.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseWithoutPlay.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/AltCache.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/HTMLUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/RendererClass.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResult.java, /Users/bran/projects/japid/src/main/java/cn/bran/play/ShouldRefreshException.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidModelMap.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StringBundler.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/RenderInvokerUtils.java, /Users/bran/projects/japid/src/main/java/cn/bran/japid/util/UrlMapper.java)[0m
+[0m[[0minfo[0m] [0mCompiling 74 Java sources to /Users/bran/projects/japid/target/scala-2.9.1/classes...[0m
+[0m[[0mdebug[0m] [0mrunning javac with arguments:[0m
+[0m[[0mdebug[0m] [0m	-d[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/target/scala-2.9.1/classes[0m
+[0m[[0mdebug[0m] [0m	-classpath[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/target/scala-2.9.1/classes:/Users/bran/projects/japid/lib/javaparser-1.0.8.jar:/Users/bran/projects/japid/lib/org.eclipse.jdt.core-3.8.0.v_C18.jar:/Users/bran/.sbt/boot/scala-2.9.1/lib/scala-library.jar:/Users/bran/.sbt/boot/scala-2.9.1/lib/scala-library.jar[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/AbstractTemplateClassMetaData.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/InnerClassMeta.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/LayoutClassMetaData.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/MimeTypeEnum.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/classmeta/TemplateClassMetaData.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidAbstractCompiler.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidCompilationException.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidLayoutCompiler.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidParser.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidTemplateCompiler.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidTemplateTransformer.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JavaSyntaxTool.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/NamedArg.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/NamedArgRuntime.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/OpMode.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/Tag.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TagInvocationLineParser.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TemplateClass.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TokenPair.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/TranslateTemplateTask.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/exceptions/JapidRuntimeException.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/AnInterface.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/RendererClass.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/RendererCompiler.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/rendererloader/TemplateClassLoader.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/Each.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/SimpleTag.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/tags/streaming/Each.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/ActionRunner.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidModelMap.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidPlainController.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidRenderer.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplate.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseStreaming.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseWithStringBundler.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/JapidTemplateBaseWithoutPlay.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResult.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResultBundler.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/RenderResultPartial.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/template/UseJapid.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/DirUtil.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/DummyUrlMapper.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/FlashScope.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/FlashScopeGeneric.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/HTMLUtils.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/JapidDateFormat.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/JapidFlags.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/MessageProvider.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/RenderInvokerUtils.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StackTraceUtils.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StringBundler.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/StringUtils.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/UrlMapper.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/WebUtils.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/AltCache.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/AltCacheSimpleImpl.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/CacheablePlayActionRunner.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/CacheablePlayActionRunnerImpl1.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/CacheableRunner.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/CachedItemStatus.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/CachedRenderResult.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/FieldErrors.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/FlashWrapper.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/JapidController.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/JapidResult.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/JapidTemplateBase.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/NoEnhance.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/RenderResultCache.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/RunAction.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/ShouldRefreshException.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/exceptions/ReverseRouteException.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/tags/CacheBlock.java[0m
+[0m[[0mdebug[0m] [0m	/Users/bran/projects/japid/src/main/java/cn/bran/play/tags/Include.java[0m
+[0m[[0mdebug[0m] [0mCalling javac directly.[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidLayoutCompiler.java:79: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m		// should allow set in layout锛�	}[0m
+[0m[[31merror[0m] [0m		                              ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/compiler/JapidLayoutCompiler.java:81: 进行语法解析时已到达文件结尾[0m
+[0m[[31merror[0m] [0m}            [0m
+[0m[[31merror[0m] [0m ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                     ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                      ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                        ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                         ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                          ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                           ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                            ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                             ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:26: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("cus.name", "�ㄦ���� %s");[0m
+[0m[[31merror[0m] [0m			                 ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:26: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("cus.name", "�ㄦ���� %s");[0m
+[0m[[31merror[0m] [0m			                   ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:26: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("cus.name", "�ㄦ���� %s");[0m
+[0m[[31merror[0m] [0m			                    ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:26: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("cus.name", "�ㄦ���� %s");[0m
+[0m[[31merror[0m] [0m			                     ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:26: 警告：编码 EUC_CN 的不可映射字符[0m
+[0m[[31merror[0m] [0m			put("cus.name", "�ㄦ���� %s");[0m
+[0m[[31merror[0m] [0m			                      ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 未结束的字符串字面值[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                  ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:25: 需要 ';'[0m
+[0m[[31merror[0m] [0m			put("login.name", "璇疯��ヤ������);[0m
+[0m[[31merror[0m] [0m			                                ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:26: 需要 ')'[0m
+[0m[[31merror[0m] [0m			put("cus.name", "�ㄦ���� %s");[0m
+[0m[[31merror[0m] [0m			              ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:26: 不是语句[0m
+[0m[[31merror[0m] [0m			put("cus.name", "�ㄦ���� %s");[0m
+[0m[[31merror[0m] [0m			   ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:26: 不是语句[0m
+[0m[[31merror[0m] [0m			put("cus.name", "�ㄦ���� %s");[0m
+[0m[[31merror[0m] [0m			                ^[0m
+[0m[[31merror[0m] [0m/Users/bran/projects/japid/src/main/java/cn/bran/japid/util/SimpleMessageProvider.java:26: 需要 ';'[0m
+[0m[[31merror[0m] [0m			put("cus.name", "�ㄦ���� %s");[0m
+[0m[[31merror[0m] [0m			                           ^[0m
+[0m[[31merror[0m] [0m7 错误[0m
+[0m[[31merror[0m] [0m14 警告[0m
+[0m[[0mdebug[0m] [0mjavac returned exit code: 1[0m
+javac returned nonzero exit code
+	at sbt.compiler.JavaCompiler$$anon$1.apply(JavaCompiler.scala:26)
+	at sbt.AggressiveCompile$$anonfun$5$$anonfun$compileJava$1$1.apply$mcV$sp(AggressiveCompile.scala:76)
+	at sbt.classfile.Analyze$.apply(Analyze.scala:93)
+	at sbt.AggressiveCompile$$anonfun$5.compileJava$1(AggressiveCompile.scala:75)
+	at sbt.AggressiveCompile$$anonfun$5.apply(AggressiveCompile.scala:79)
+	at sbt.AggressiveCompile$$anonfun$5.apply(AggressiveCompile.scala:57)
+	at sbt.inc.IncrementalCompile$$anonfun$doCompile$1.apply(Compile.scala:21)
+	at sbt.inc.IncrementalCompile$$anonfun$doCompile$1.apply(Compile.scala:19)
+	at sbt.inc.Incremental$.cycle(Incremental.scala:33)
+	at sbt.inc.Incremental$.compile(Incremental.scala:20)
+	at sbt.inc.IncrementalCompile$.apply(Compile.scala:17)
+	at sbt.AggressiveCompile.compile2(AggressiveCompile.scala:87)
+	at sbt.AggressiveCompile.compile1(AggressiveCompile.scala:41)
+	at sbt.AggressiveCompile.apply(AggressiveCompile.scala:28)
+	at sbt.Compiler$.apply(Compiler.scala:107)
+	at sbt.Defaults$$anonfun$compileTask$1.apply(Defaults.scala:479)
+	at sbt.Defaults$$anonfun$compileTask$1.apply(Defaults.scala:479)
+	at sbt.Scoped$$anonfun$hf2$1.apply(Structure.scala:473)
+	at sbt.Scoped$$anonfun$hf2$1.apply(Structure.scala:473)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:41)
+	at sbt.Scoped$Reduced$$anonfun$combine$1$$anonfun$apply$11.apply(Structure.scala:295)
+	at sbt.Scoped$Reduced$$anonfun$combine$1$$anonfun$apply$11.apply(Structure.scala:295)
+	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:40)
+	at sbt.std.Transform$$anon$5.work(System.scala:67)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:221)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:221)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:18)
+	at sbt.Execute.work(Execute.scala:227)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:221)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:221)
+	at sbt.CompletionService$$anon$1$$anon$2.call(CompletionService.scala:26)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:680)
+[0m[[31merror[0m] [0m{file:/Users/bran/projects/japid/}default-4efce8/compile:[31mcompile[0m: javac returned nonzero exit code[0m

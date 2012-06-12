@@ -22,6 +22,7 @@ import play.exceptions.MailException;
 import play.exceptions.UnexpectedException;
 import play.libs.Mail;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.japid.util.DirUtil;
 import cn.bran.japid.util.StackTraceUtils;
 import cn.bran.japid.util.StringUtils;
 
@@ -206,7 +207,7 @@ public class JapidMailer  {
 //                }
 //            }
 
-            String templateClassName = JapidPlugin.JAPIDVIEWS_ROOT + "._" + templateNameBase;
+            String templateClassName = DirUtil.JAPIDVIEWS_ROOT + "._" + templateNameBase;
             
             String bodyHtml = null;
     		Class tClass = Play.classloader.getClassIgnoreCase(templateClassName);

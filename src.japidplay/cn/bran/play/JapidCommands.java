@@ -34,7 +34,7 @@ public class JapidCommands {
 		} else if ("regen".equals(arg0)) {
 			regen(APP);
 		} else if ("clean".equals(arg0)) {
-			delAllGeneratedJava(APP + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT);
+			delAllGeneratedJava(APP + File.separatorChar + DirUtil.JAPIDVIEWS_ROOT);
 		} else if ("mkdir".equals(arg0)) {
 			mkdir(APP);
 		} else {
@@ -53,8 +53,8 @@ public class JapidCommands {
 	 */
 	public static List<File> mkdir(String root) throws IOException {
 		String sep = File.separator;
-		String japidViews = root + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep;
-		File javatags = new File(japidViews + JapidPlugin.JAVATAGS);
+		String japidViews = root + sep + DirUtil.JAPIDVIEWS_ROOT + sep;
+		File javatags = new File(japidViews + DirUtil.JAVATAGS);
 		if (!javatags.exists()) {
 			boolean mkdirs = javatags.mkdirs();
 			assert mkdirs == true;
@@ -68,14 +68,14 @@ public class JapidCommands {
 //		}
 		// add the place-holder for utility class for use in templates
 
-		File layouts = new File(japidViews + JapidPlugin.LAYOUTDIR);
+		File layouts = new File(japidViews + DirUtil.LAYOUTDIR);
 		if (!layouts.exists()) {
 			boolean mkdirs = layouts.mkdirs();
 			assert mkdirs == true;
 			log("created: " + layouts.getPath());
 		}
 
-		File tags = new File(japidViews + JapidPlugin.TAGSDIR);
+		File tags = new File(japidViews + DirUtil.TAGSDIR);
 		if (!tags.exists()) {
 			boolean mkdirs = tags.mkdirs();
 			assert mkdirs == true;
@@ -157,7 +157,7 @@ public class JapidCommands {
 
 	public static void regen(String root) throws IOException {
 		// TODO Auto-generated method stub
-		String pathname = root + File.separatorChar + JapidPlugin.JAPIDVIEWS_ROOT;
+		String pathname = root + File.separatorChar + DirUtil.JAPIDVIEWS_ROOT;
 		delAllGeneratedJava(pathname);
 		gen(root);
 	}
@@ -166,7 +166,7 @@ public class JapidCommands {
 		String[] javas = DirUtil.getAllFileNames(new File(pathname), new String[] { "java" });
 
 		for (String j : javas) {
-			if (!j.contains(JapidPlugin.JAVATAGS)) {
+			if (!j.contains(DirUtil.JAVATAGS)) {
 				log("removed: " + j);
 				boolean delete = new File(pathname + File.separatorChar + j).delete();
 				if (!delete)
@@ -212,15 +212,18 @@ public class JapidCommands {
 
 		File rootDir = new File(root);
 		t.setPackageRoot(rootDir);
-		t.setInclude(new File(rootDir, JapidPlugin.JAPIDVIEWS_ROOT));
+		t.setInclude(new File(rootDir, DirUtil.JAPIDVIEWS_ROOT));
 		t.clearImports();
 		t.importStatic(JapidPlayAdapter.class);
 		t.importStatic(Validation.class);
 		t.importStatic(JavaExtensions.class);
 		t.addAnnotation(NoEnhance.class);
-		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._layouts.*");
-		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._javatags.*");
-		t.addImport(JapidPlugin.JAPIDVIEWS_ROOT + "._tags.*");
+		if (DirUtil.hasLayouts(root))
+			t.addImport(DirUtil.JAPIDVIEWS_ROOT + "._layouts.*");
+		if (DirUtil.hasJavaTags(root))
+			t.addImport(DirUtil.JAPIDVIEWS_ROOT + "._javatags.*");
+		if (DirUtil.hasTags(root))
+			t.addImport(DirUtil.JAPIDVIEWS_ROOT + "._tags.*");
 		t.addImport("models.*");
 		t.addImport("controllers.*");
 		t.addImport(play.mvc.Scope.class.getName() + ".*");
@@ -256,8 +259,8 @@ public class JapidCommands {
 
 	public static List<String> scanJavaTags(String root) {
 		String sep = File.separator;
-		String japidViews = root + sep + JapidPlugin.JAPIDVIEWS_ROOT + sep;
-		File javatags = new File(japidViews + JapidPlugin.JAVATAGS);
+		String japidViews = root + sep + DirUtil.JAPIDVIEWS_ROOT + sep;
+		File javatags = new File(japidViews + DirUtil.JAVATAGS);
 		if (!javatags.exists()) {
 			boolean mkdirs = javatags.mkdirs();
 			assert mkdirs == true;
@@ -276,7 +279,7 @@ public class JapidCommands {
 		List<String> files = new ArrayList<String>();
 		for (File f : javafiles) {
 			String fname = f.getName();
-			files.add(JapidPlugin.JAPIDVIEWS_ROOT + "." + JapidPlugin.JAVATAGS + "." + fname.substring(0, fname.lastIndexOf(".java")));
+			files.add(DirUtil.JAPIDVIEWS_ROOT + "." + DirUtil.JAVATAGS + "." + fname.substring(0, fname.lastIndexOf(".java")));
 		}
 		return files;
 	}
@@ -310,7 +313,7 @@ public class JapidCommands {
 		for (VirtualFile module: modules) {
 			try {
 				VirtualFile root = module.child(APP);
-				VirtualFile japidViewDir = root.child(JapidPlugin.JAPIDVIEWS_ROOT);
+				VirtualFile japidViewDir = root.child(DirUtil.JAPIDVIEWS_ROOT);
 				File japidFile = japidViewDir.getRealFile();
 				if (japidFile.exists()) {
 					String absoluteRootPath = root.getRealFile().getAbsolutePath();
@@ -329,7 +332,7 @@ public class JapidCommands {
 	private static boolean removeOrphanedJavaFrom(String root) {
 		boolean hasRealOrphan = false;
 		try {
-			String pathname = root + File.separator + JapidPlugin.JAPIDVIEWS_ROOT;
+			String pathname = root + File.separator + DirUtil.JAPIDVIEWS_ROOT;
 			File src = new File(pathname);
 			if (!src.exists()) {
 				log("Could not find required Japid package structure: " + pathname);
@@ -341,7 +344,7 @@ public class JapidCommands {
 			for (File j : oj) {
 				String path = j.getPath();
 				// log("found: " + path);
-				if (path.contains(JapidPlugin.JAVATAGS)) {
+				if (path.contains(DirUtil.JAVATAGS)) {
 
 					// java tags, don't touch
 				} else {
@@ -372,7 +375,7 @@ public class JapidCommands {
 		for (VirtualFile module: modules) {
 			try {
 				VirtualFile root = module.child(APP);
-				VirtualFile japidViewDir = root.child(JapidPlugin.JAPIDVIEWS_ROOT);
+				VirtualFile japidViewDir = root.child(DirUtil.JAPIDVIEWS_ROOT);
 				File japidFile = japidViewDir.getRealFile();
 				if (japidFile.exists()) {
 					String absoluteRootPath = root.getRealFile().getAbsolutePath();

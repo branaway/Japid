@@ -24,7 +24,12 @@ The instance variable is defined after the | line, the same way as any tag rende
 `
 
 
-`int[] ints = {1, 2,3};
+`int[] ints = {1, 2, 3, 4};
 `for int i : ints
     --> ~i
+    `if (i == 2) {
+        `return; // this will work as continue
+    `} else {
+         :--
+    `}
 `

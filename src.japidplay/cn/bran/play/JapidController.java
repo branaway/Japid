@@ -23,6 +23,7 @@ import cn.bran.japid.compiler.NamedArgRuntime;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.japid.util.DirUtil;
 import cn.bran.japid.util.RenderInvokerUtils;
 import cn.bran.japid.util.StackTraceUtils;
 
@@ -245,7 +246,7 @@ public class JapidController extends Controller {
 							if (appClass != null)
 								return expr_format;
 							else {
-								// fallback
+								// fall back
 								return expr;
 							}
 						}
@@ -381,8 +382,8 @@ public class JapidController extends Controller {
 			template = template.substring(template.indexOf(DOT) + 1);
 		}
 		String templateClassName = template
-				.startsWith(JapidPlugin.JAPIDVIEWS_ROOT) ? template
-				: JapidPlugin.JAPIDVIEWS_ROOT + File.separator + template;
+				.startsWith(DirUtil.JAPIDVIEWS_ROOT) ? template
+				: DirUtil.JAPIDVIEWS_ROOT + File.separator + template;
 
 		templateClassName = templateClassName.replace('/', DOT).replace('\\',
 				DOT);

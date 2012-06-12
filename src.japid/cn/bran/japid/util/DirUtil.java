@@ -115,7 +115,7 @@ public class DirUtil {
 //			target = src;
 //		String srcPath = src.getPath();
 		Set<File> allSrc  = new HashSet<File>();
-		allSrc = getAllFiles(srcDir, new String[] { ".java", ".html", ".txt", ".json", ".xml" }, allSrc);
+		allSrc = getAllFiles(srcDir, new String[] { ".java", ".html", ".txt", ".json", ".xml", ".js" }, allSrc);
 		Map<String, Long> javas = new HashMap<String, Long>();
 		Map<String, Long> srcFiles = new HashMap<String, Long>();
 		
@@ -227,4 +227,45 @@ public class DirUtil {
 	public static void touch(File newer) throws IOException {
 		writeStringToFile(newer, "");
 	}
+
+	public static boolean containsTemplateFiles(String root, String dirName) {
+		String sep = File.separator;
+		String japidViews = root + sep + JAPIDVIEWS_ROOT + sep;
+		String dir = japidViews + dirName;
+		return containsTemplatesInDir(dir);
+	}
+
+	public static boolean containsTemplatesInDir(String dirName) {
+		File dir = new File(dirName);
+		
+		if (dir.exists()) {
+			String[] temps = getAllFileNames(dir, new String[]{".html", ".js", ".txt", ".css", ".xml", ".json"});
+			if (temps.length > 0) 
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+	}
+
+	public static boolean hasTags(String root) {
+		String dirName = DirUtil.TAGSDIR;
+		return containsTemplateFiles(root, dirName);
+	}
+
+	public static boolean hasJavaTags(String root) {
+		String dirName = DirUtil.JAVATAGS;
+		return containsTemplateFiles(root, dirName);
+	}
+
+	public static boolean hasLayouts(String root) {
+		String dirName = DirUtil.LAYOUTDIR;
+		return containsTemplateFiles(root, dirName);
+	}
+
+	public static final String JAVATAGS = "_javatags";
+	public static final String LAYOUTDIR = "_layouts";
+	public static final String TAGSDIR = "_tags";
+	public static final String JAPIDVIEWS_ROOT = "japidviews";
 }
