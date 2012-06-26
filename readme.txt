@@ -29,6 +29,20 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2012/6/13: V0.9.4.1:   
+	1. bug fix: tab chars between two consecutive script lines would interfere with the merge of the two lines. 
+	2. bug fix: reverse action URL lookup might fail in template rendering in a job detached from an action call.
+
+2012/6/13: V0.9.4:   
+	1. new feature: the "open for" loops now allow you to call breakLoop() and continueLoop() to break/continue the current loop. e.g.
+	   `for String name : names
+	       `if cond1...
+	           `breakLoop();
+	       `else
+	           `continueLoop();
+	       `
+	   `
+
 2012/6/12: V0.9.3.7:  breaking changes. All Japid views Java code must be regenerated.  
 	1. fix: smart import of _tags, _layouts, etc in the Eclipse plugin.  
 	2. fix: the build dependency was broken in the previous release.

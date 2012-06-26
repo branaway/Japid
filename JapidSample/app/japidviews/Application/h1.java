@@ -89,8 +89,7 @@ public class h1 extends cn.bran.play.JapidTemplateBase
 				Application.echo(1); // line 5
 			}
 		}); p("\n");// line 5
-		p("	");// line 5
-				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", 2) {
+			actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", 2) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
 				Application.echo(2); // line 6

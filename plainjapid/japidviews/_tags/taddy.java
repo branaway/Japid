@@ -2,8 +2,8 @@ package japidviews._tags;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import japidviews ._tags.*;
-import japidviews ._layouts.*;
+import japidviews._layouts.*;
+import japidviews._tags.*;
 //
 // NOTE: This file was generated from: japidviews/_tags/taddy.html
 // Change to this file will be lost next time the template file is compiled.
@@ -73,8 +73,8 @@ public static interface DoBody<A> {
 p("teddy bear\n" + 
 "\n");// line 1
 		String[] ss = new String[]{"a", "add", "cd"};// line 3
-		p("\n");// line 3
-		if (body != null){ body.setBuffer(getOut()); body.render(ss); body.resetBuffer();}// line 5
+
+if (body != null){ body.setBuffer(getOut()); body.render(ss); body.resetBuffer();}// line 5
 		
 		endDoLayout(sourceTemplate);
 	}

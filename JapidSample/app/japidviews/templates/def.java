@@ -154,8 +154,7 @@ this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 // line 15
-		p("	");// line 15
-		String s = "hi there";// line 16
+	String s = "hi there";// line 16
 		p("	<p>foo hello ");// line 16
 		p(foo2(s));// line 17
 		p("</p>\n");// line 17

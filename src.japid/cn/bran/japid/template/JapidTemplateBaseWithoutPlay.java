@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import cn.bran.japid.tags.Each;
+import cn.bran.japid.tags.Each.BreakLoop;
+import cn.bran.japid.tags.Each.ContinueLoop;
 import cn.bran.japid.util.StringUtils;
 
 import cn.bran.japid.classmeta.MimeTypeEnum;
@@ -535,5 +538,19 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	 */
 	public void setTraceFile(Boolean traceFile) {
 		this.traceFile = traceFile;
+	}
+	
+	/**
+	 * 
+	 */
+	protected void breakLoop() {
+		throw new BreakLoop();
+	}
+
+	/**
+	 * 
+	 */
+	protected void continueLoop() {
+		throw new ContinueLoop();
 	}
 }

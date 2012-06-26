@@ -83,8 +83,8 @@ p("<p>beginning...<p>\n" +
 		p("\n" + 
 "\n");// line 11
 		 List<String> strings = new ArrayList<String>(){{add("you");add("me");add("everyone");}};// line 13
-		p("\n");// line 13
-		final aTag _aTag0 = new aTag(getOut()); _aTag0.setActionRunners(getActionRunners()).setOut(getOut()); _aTag0.render(strings); // line 15// line 15
+
+final aTag _aTag0 = new aTag(getOut()); _aTag0.setActionRunners(getActionRunners()).setOut(getOut()); _aTag0.render(strings); // line 15// line 15
 		p("\n" + 
 "note: the picka tag is defined in the japidviews/_tags directory\n" + 
 "\n");// line 15

@@ -2,8 +2,8 @@ package japidviews.cn.bran.japid.template.FooController;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import japidviews ._tags.*;
-import japidviews ._layouts.*;
+import japidviews._layouts.*;
+import japidviews._tags.*;
 //
 // NOTE: This file was generated from: japidviews/cn/bran/japid/template/FooController/foo.html
 // Change to this file will be lost next time the template file is compiled.

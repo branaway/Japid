@@ -81,8 +81,7 @@ p("\n");// line 2
 		p("\n" + 
 "\n");// line 7
 		for (int i = 0; i < 3;i++) {// line 9
-		p("	");// line 9
-		final int j = i;// line 10
+	final int j = i;// line 10
 		p("	");// line 10
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", j) {
 			@Override

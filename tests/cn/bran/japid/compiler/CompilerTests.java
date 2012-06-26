@@ -234,6 +234,17 @@ public class CompilerTests {
 		CompilationUnit cu = JavaSyntaxTool.parse(srcCode);
 	}
 	
+	@Test
+	public void testSwitch() throws IOException, ParseException {
+		String src = readFile("tests/switchCase.html");
+		JapidTemplate bt = new JapidTemplate("tests/switchCase.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
+		cp.compile(bt);
+		String srcCode = bt.javaSource;
+		System.out.println(srcCode);
+		CompilationUnit cu = JavaSyntaxTool.parse(srcCode);
+	}
+	
 
 	@Test
 	public void testActionNotation() throws IOException {

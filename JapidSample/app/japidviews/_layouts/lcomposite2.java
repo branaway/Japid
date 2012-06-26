@@ -60,8 +60,8 @@ public abstract class lcomposite2 extends cn.bran.play.JapidTemplateBase
 				controllers.Application.foo(); // line 5
 			}
 		}); p("\n");// line 5
-		p("\n");// line 5
-		doLayout();// line 7
+
+doLayout();// line 7
 		p("\n" + 
 "<p>back to layout</p>\n" + 
 "\n" + 

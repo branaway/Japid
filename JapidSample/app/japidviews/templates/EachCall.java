@@ -120,8 +120,8 @@ public void resetBuffer() {
 
 }
 );// line 11
-		p("\n");// line 14
-		final SampleTag _SampleTag2 = new SampleTag(getOut()); _SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render("end"); // line 16// line 16
+
+final SampleTag _SampleTag2 = new SampleTag(getOut()); _SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render("end"); // line 16// line 16
 		p("\n" + 
 "<p> now we have an enhanced for loop (the \"open for loop\") that also makes all the loop properties available</p>\n" + 
 "\n");// line 16

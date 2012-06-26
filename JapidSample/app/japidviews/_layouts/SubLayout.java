@@ -50,8 +50,8 @@ public abstract class SubLayout extends Layout
 	}
 	@Override public void layout() {
 		beginDoLayout(sourceTemplate);		;// line 1
-		p("\n");// line 1
-		title2();p("\n" + 
+
+title2();p("\n" + 
 "\n" + 
 "\n");// line 3
 				endDoLayout(sourceTemplate);	}

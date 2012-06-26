@@ -87,9 +87,8 @@ public class AllPost extends Layout
 ;// line 2
 		p("\n" + 
 "\n");// line 6
-		p("\n");// line 8
-		p("\n");// line 10
-		final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 12
+
+final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 12
 allPost, new Each.DoBody<Post>(){ // line 12
 public void render(final Post p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 12
 // line 12
@@ -139,8 +138,8 @@ public void resetBuffer() {
 
 }
 );// line 12
-		p("\n");// line 18
-		final Tag2 _Tag23 = new Tag2(getOut()); _Tag23.setActionRunners(getActionRunners()).setOut(getOut()); _Tag23.render(named("msg", blogTitle), named("age", 100)); // line 20// line 20
+
+final Tag2 _Tag23 = new Tag2(getOut()); _Tag23.setActionRunners(getActionRunners()).setOut(getOut()); _Tag23.render(named("msg", blogTitle), named("age", 100)); // line 20// line 20
 		p("\n" + 
 "<p>cool</p>");// line 20
 		

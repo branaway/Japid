@@ -74,8 +74,7 @@ public class hellohello extends cn.bran.play.JapidTemplateBase
 //------
 ;// line 1
 		for (int i = 1; i < 3; i++) {// line 1
-		p("	");// line 1
-		final hellohelloTag _hellohelloTag0 = new hellohelloTag(getOut()); _hellohelloTag0.setActionRunners(getActionRunners()).setOut(getOut()); _hellohelloTag0.render(i); // line 2// line 2
+	final hellohelloTag _hellohelloTag0 = new hellohelloTag(getOut()); _hellohelloTag0.setActionRunners(getActionRunners()).setOut(getOut()); _hellohelloTag0.render(i); // line 2// line 2
 }// line 3
 		;// line 3
 		

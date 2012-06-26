@@ -561,6 +561,7 @@ public abstract class JapidAbstractCompiler {
 				Matcher matcher = OPEN_ELSE_IF_PATTERN.matcher(line);
 				if (matcher.matches()) {
 					expr = matcher.group(1).trim();
+//					boolean negative = expr.startsWith("! ") || expr.startsWith("!\t");
 					boolean negative = expr.startsWith("!");
 					if (negative) {
 						handleOpenElseIf(i, expr.substring(1), negative);
@@ -699,6 +700,10 @@ public abstract class JapidAbstractCompiler {
 	}
 
 	/**
+	 * if ! cond == if (!asBoolean(cond))
+	 * if !cond == if (asBoolean(!cond))
+	 * well the above changed was rolled back since I want backward compatibility
+	 * Use regular "if" if one wants to fine tune the negative position.
 	 * 
 	 * @param i
 	 * @param expr the open if statement: if my_condition...
@@ -706,6 +711,7 @@ public abstract class JapidAbstractCompiler {
 	private void handleOpenIf(int i, String expr) {
 		// get the expression
 		String ex = expr.substring(2).trim();
+//		boolean negative = ex.startsWith("! ") || ex.startsWith("!\t");
 		boolean negative = ex.startsWith("!");
 		if (negative)
 			ex = ex.substring(1).trim();

@@ -79,14 +79,9 @@ public class perf extends perfmain
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n");// line 1
-		p("\n");// line 3
-		p("\n");// line 5
-		p("\n");// line 7
-		p("\n");// line 9
-		if (entries.size() > 0 ) {// line 11
-		p("	");// line 11
-		for (DataModel.Entry entry : entries) {// line 12
+
+if (entries.size() > 0 ) {// line 11
+	for (DataModel.Entry entry : entries) {// line 12
 		p("		<div id=\"entries\">\n" + 
 "		    Entry Id: ");// line 12
 		p(entry.getEntryId());// line 14

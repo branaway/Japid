@@ -78,15 +78,14 @@ public class AllPost2 extends Layout
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-p("\n");// line 3
-		p("\n" + 
+
+p("\n" + 
 "\n");// line 5
 		if (allPost.size() > 0 ) {// line 8
 		p("	<p></p>\n" + 
 "	");// line 8
 		for (Post p: allPost) {// line 10
-		p("	    ");// line 10
-		final Display _Display1 = new Display(getOut()); _Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render( // line 11
+	    final Display _Display1 = new Display(getOut()); _Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render( // line 11
 new Display.DoBody<String>(){ // line 11
 public void render(final String title) { // line 11
 // line 11
@@ -111,13 +110,12 @@ public void resetBuffer() {
 
 }
 , named("post", p), named("as", "home"));// line 11
-		p("	");// line 13
-		}// line 14
+	}// line 14
 } else {// line 15
 		p("	<p>There is no post at this moment</p>\n");// line 15
 		}// line 17
-		p("\n");// line 17
-		final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000)); // line 19// line 19
+
+final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000)); // line 19// line 19
 		p("\n" + 
 "<p>end of it</p>");// line 19
 		

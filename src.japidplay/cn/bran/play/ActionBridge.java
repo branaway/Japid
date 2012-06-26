@@ -53,17 +53,19 @@ public class ActionBridge {
 	public ActionDefinition invokeMethod(String actionString, Object param) {
 		try {
 
-			String controllerName = Request.current().controller;
 			// forms: Controller.action, action, package.Controller.action
 			String action = actionString;
 //			String methodName = actionString;
 			if (actionString.indexOf(".") > 0) {
-				int lastIndexOf = actionString.lastIndexOf('.');
-//				methodName = actionString.substring(lastIndexOf + 1);
-				controllerName = actionString.substring(0, lastIndexOf);
-				// fell spec with controller name
+//				int lastIndexOf = actionString.lastIndexOf('.');
+////				methodName = actionString.substring(lastIndexOf + 1);
+//				controllerName = actionString.substring(0, lastIndexOf);
+//				// fell spec with controller name
 			} else {
-				action = controllerName + "." + actionString;
+				Request req = Request.current();
+				if (req != null) {
+					action = req.controller + "." + actionString;
+				}
 			}
 			
 			try {

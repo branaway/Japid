@@ -73,8 +73,8 @@ public class flashout extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n");// line 1
-		if(asBoolean(flash.hasError())) {// line 3
+
+if(asBoolean(flash.hasError())) {// line 3
 		p("    ");// line 3
 		p(flash.error());// line 4
 		p("\n");// line 4

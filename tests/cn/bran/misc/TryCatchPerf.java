@@ -31,18 +31,18 @@ public class TryCatchPerf {
 	
 	@Test
 	public void baseline() {
-		long t0 = System.currentTimeMillis();
+		long t0 = System.nanoTime();
 		long cl = 0;
 		for (int c = 0; c < count; c++) {
 			cl += a.b.c.p.length();
 		}
-		System.out.println("baseline time cost/ms: " + (System.currentTimeMillis() - t0));
+		System.out.println("baseline time cost/ms: " + (System.nanoTime() - t0)/1000.0/1000.0);
 		System.out.println(cl);
 	}
 	
 	@Test
 	public void trycatch() {
-		long t0 = System.currentTimeMillis();
+		long t0 = System.nanoTime();
 		long cl = 0;
 		for (int c = 0; c < count; c++) {
 			try {
@@ -51,7 +51,7 @@ public class TryCatchPerf {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("try/catch time cost/ms: " + (System.currentTimeMillis() - t0));
+		System.out.println("try/catch time cost/ms: " + (System.nanoTime() - t0)/1000.0/1000.0);
 		System.out.println(cl);
 	}
 	

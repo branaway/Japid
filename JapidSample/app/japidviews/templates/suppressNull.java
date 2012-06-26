@@ -74,8 +74,8 @@ public class suppressNull extends cn.bran.play.JapidTemplateBase
 //------
 ;// line 1
 		p("\n");// line 1
-		p("\n");// line 2
-		 String a = "a";// line 4
+
+ String a = "a";// line 4
 		p("safe to do a.something: ");// line 4
 		try { p(a.length()); } catch (NullPointerException npe) {}// line 5
 		p("\n" + 

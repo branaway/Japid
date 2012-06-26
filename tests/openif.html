@@ -43,5 +43,14 @@
 `if ((foo)f).bar
     foobar
 `
-
+*{nebative in open if}*
+`if ! foo
+    no foo
+`else if !foo
+    real no foo
+`else
+  `if !foo.bar
+    oh well
+  `
+`
 

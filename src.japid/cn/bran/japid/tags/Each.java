@@ -55,7 +55,15 @@ public class Each extends SimpleTag {
 		for (Object o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			try {
+				body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			} 
+			catch (BreakLoop e) {
+				break;
+			}
+			catch (ContinueLoop e) {
+				continue;
+			}
 		}
 	}
 
@@ -65,7 +73,15 @@ public class Each extends SimpleTag {
 		for (int  o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			try {
+				body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			} 
+			catch (BreakLoop e) {
+				break;
+			}
+			catch (ContinueLoop e) {
+				continue;
+			}
 		}
 	}
 	
@@ -75,7 +91,15 @@ public class Each extends SimpleTag {
 		for (float o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			try {
+				body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			} 
+			catch (BreakLoop e) {
+				break;
+			}
+			catch (ContinueLoop e) {
+				continue;
+			}
 		}
 	}
 	
@@ -85,7 +109,15 @@ public class Each extends SimpleTag {
 		for (long o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			try {
+				body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			} 
+			catch (BreakLoop e) {
+				break;
+			}
+			catch (ContinueLoop e) {
+				continue;
+			}
 		}
 	}
 	
@@ -95,7 +127,15 @@ public class Each extends SimpleTag {
 		for (double o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			try {
+				body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			} 
+			catch (BreakLoop e) {
+				break;
+			}
+			catch (ContinueLoop e) {
+				continue;
+			}
 		}
 	}
 	
@@ -105,7 +145,15 @@ public class Each extends SimpleTag {
 		for (char o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			try {
+				body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			} 
+			catch (BreakLoop e) {
+				break;
+			}
+			catch (ContinueLoop e) {
+				continue;
+			}
 		}
 	}
 	
@@ -115,7 +163,15 @@ public class Each extends SimpleTag {
 		for (boolean o : it) {
 			i++;
 			boolean isOdd = i % 2 == 1;
-			body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			try {
+				body.render(o, it.length, i, isOdd, isOdd ? "odd" : "even", i == start + 1, i == it.length);
+			} 
+			catch (BreakLoop e) {
+				break;
+			}
+			catch (ContinueLoop e) {
+				continue;
+			}
 		}
 	}
 	
@@ -133,7 +189,15 @@ public class Each extends SimpleTag {
 			i++;
 			Object o = it.next();
 			boolean isOdd = i % 2 == 1;
-			body.render(o, size, i, isOdd, isOdd ? "odd" : "even", i == start + 1, !it.hasNext());
+			try {
+				body.render(o, size, i, isOdd, isOdd ? "odd" : "even", i == start + 1, !it.hasNext());
+			} 
+			catch (BreakLoop e) {
+				break;
+			}
+			catch (ContinueLoop e) {
+				continue;
+			}
 		}
 	}
 
@@ -145,4 +209,18 @@ public class Each extends SimpleTag {
 		void resetBuffer();
 
 	}
+	
+	/**
+	 * used to signal to break from the each loop
+	 * @author bran
+	 *
+	 */
+	public static class BreakLoop extends RuntimeException {}
+	
+	/**
+	 * used to signal to continue wit the next iteration of the loop 
+	 * @author bran
+	 *
+	 */
+	public static class ContinueLoop extends RuntimeException {}
 }

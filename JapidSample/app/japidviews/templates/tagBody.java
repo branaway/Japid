@@ -129,8 +129,7 @@ public void resetBuffer() {
 
 }
 );// line 15
-		p("	");// line 17
-		
+	
 }
 
 StringBuilder oriBuffer;

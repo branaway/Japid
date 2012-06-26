@@ -78,8 +78,8 @@ public class Posts extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-p("\n");// line 2
-		for (Post post: allPost) { // line 4
+
+for (Post post: allPost) { // line 4
 		p("	- title: ");// line 4
 		p(post.title);// line 5
 		p("\n" + 
