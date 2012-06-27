@@ -22,6 +22,7 @@ import cn.bran.japid.util.StringUtils;
 import cn.bran.japid.util.UrlMapper;
 
 /**
+ * 
  * the logic is modeled after the the Play!'s {@code Template.ActionBridge.}
  * 
  * 
@@ -81,9 +82,25 @@ public class RouteAdapter implements UrlMapper {
 
 	@Override
 	public String lookupAbs(String action, Object[] args) {
-		return Request.current().getBase() + this.lookup(action, args);
+		return getBaseUrl() + this.lookup(action, args);
 	}
 
+	  // Gets baseUrl from current request or application.baseUrl in application.conf
+	// copied from Play code
+    protected static String getBaseUrl() {
+        if (Request.current() == null) {
+            // No current request is present - must get baseUrl from config
+            String appBaseUrl = Play.configuration.getProperty("application.baseUrl", "application.baseUrl");
+            if (appBaseUrl.endsWith("/")) {
+                // remove the trailing slash
+                appBaseUrl = appBaseUrl.substring(0, appBaseUrl.length()-1);
+            }
+            return appBaseUrl;
+        } else {
+            return Request.current().getBase();
+        }
+    }
+    
 	public String lookupStatic(String resource, boolean isAbs) {
 		return reverseStaticLookup(resource, isAbs);
 		// return Router.reverseWithCheck(resource,

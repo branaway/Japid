@@ -29,6 +29,10 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2012/6/26: V0.9.4.1:   
+	1. bug fix: tab chars between two consecutive script lines would interfere with the merge of the two lines. 
+	2. bug fix: reverse action URL lookup might fail in template rendering in a job detached from an action call.
+
 2012/6/13: V0.9.4.1:   
 	1. bug fix: tab chars between two consecutive script lines would interfere with the merge of the two lines. 
 	2. bug fix: reverse action URL lookup might fail in template rendering in a job detached from an action call.
