@@ -1,7 +1,8 @@
 package cn.bran.play;
 
-import java.sql.Time;
-
+import play.cache.Cache;
+import play.libs.Time;
+import play.mvc.Scope.Flash;
 import cn.bran.japid.template.RenderResult;
 
 /**
@@ -34,7 +35,7 @@ public class RenderResultCache {
 	private static ThreadLocal<Boolean> ignoreCache = new ThreadLocal<Boolean>() {
 		@Override
 		protected Boolean initialValue() {
-			// System.out.println("init ignoreCache");
+//			 System.out.println("init ignoreCache");
 			return false;
 		}
 	};
@@ -72,16 +73,15 @@ public class RenderResultCache {
 	public static void setIgnoreCacheInCurrentAndNextReq(boolean b) {
 		ignoreCache.set(b);
 		ignoreCacheFlash.set(b);
-
+	
 	}
 
 	public static boolean shouldIgnoreCache() {
 		Boolean should = ignoreCache.get();
 		if (should == null) {
 			return false;
-		} else {
+		} else
 			return should;
-		}
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class RenderResultCache {
 	 * @param ttl
 	 */
 	public static void set(String key, RenderResult rr, String ttl) {
-		long tl = Time.parseDuration(ttl) * 1000;
+		int tl = Time.parseDuration(ttl) * 1000;
 		CachedItemStatus cachedItemStatus = new CachedItemStatus(tl);
 		cacheset(key, ttl, new CachedRenderResult(cachedItemStatus, rr));
 		// cacheTacker.put(key, cachedItemStatus);
@@ -123,16 +123,14 @@ public class RenderResultCache {
 	 * @exception ShouldRefreshException
 	 */
 	public static RenderResult get(String key) throws ShouldRefreshException {
-		if (shouldIgnoreCache()) {
+		if (shouldIgnoreCache())
 			return null;
-		}
 
 		// CachedItemStatus status = cacheTacker.get(key);
 		CachedRenderResult renderResult = cacheget(key);
 
-		if (renderResult == null) {
+		if (renderResult == null)
 			return null;
-		}
 
 		if (renderResult.status.shouldRefresh()) {
 			throw new ShouldRefreshException(renderResult);
