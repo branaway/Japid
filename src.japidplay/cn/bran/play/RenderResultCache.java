@@ -92,7 +92,7 @@ public class RenderResultCache {
 	 * @param ttl
 	 */
 	public static void set(String key, RenderResult rr, String ttl) {
-		long tl = Time.parseDuration(ttl) * 1000;
+		long tl = Time.parseDuration(ttl) * 1000L;
 		CachedItemStatus cachedItemStatus = new CachedItemStatus(tl);
 		cacheset(key, ttl, new CachedRenderResult(cachedItemStatus, rr));
 		// cacheTacker.put(key, cachedItemStatus);
