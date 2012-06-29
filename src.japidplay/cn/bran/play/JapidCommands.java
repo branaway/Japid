@@ -29,6 +29,11 @@ public class JapidCommands {
 	public static void main(String[] args) throws IOException {
 		String arg0 = args[0];
 
+		String applicationPath = System.getProperty("user.dir");
+		if (args.length > 1) {
+			applicationPath = args[1];
+		}
+		Play.applicationPath = new File(applicationPath);
 		if ("gen".equals(arg0)) {
 			gen(APP);
 		} else if ("regen".equals(arg0)) {
@@ -54,7 +59,7 @@ public class JapidCommands {
 	public static List<File> mkdir(String root) throws IOException {
 		String sep = File.separator;
 		String japidViews = root + sep + DirUtil.JAPIDVIEWS_ROOT + sep;
-		File javatags = new File(japidViews + DirUtil.JAVATAGS);
+		File javatags = new File(Play.applicationPath, japidViews + DirUtil.JAVATAGS);
 		if (!javatags.exists()) {
 			boolean mkdirs = javatags.mkdirs();
 			assert mkdirs == true;
@@ -68,14 +73,14 @@ public class JapidCommands {
 //		}
 		// add the place-holder for utility class for use in templates
 
-		File layouts = new File(japidViews + DirUtil.LAYOUTDIR);
+		File layouts = new File(Play.applicationPath, japidViews + DirUtil.LAYOUTDIR);
 		if (!layouts.exists()) {
 			boolean mkdirs = layouts.mkdirs();
 			assert mkdirs == true;
 			log("created: " + layouts.getPath());
 		}
 
-		File tags = new File(japidViews + DirUtil.TAGSDIR);
+		File tags = new File(Play.applicationPath, japidViews + DirUtil.TAGSDIR);
 		if (!tags.exists()) {
 			boolean mkdirs = tags.mkdirs();
 			assert mkdirs == true;
@@ -83,7 +88,7 @@ public class JapidCommands {
 		}
 		
 		// email notifiers
-		File notifiers = new File(japidViews + "_notifiers");
+		File notifiers = new File(Play.applicationPath, japidViews + "_notifiers");
 		if (!notifiers.exists()) {
 			boolean mkdirs = notifiers.mkdirs();
 			assert mkdirs == true;
@@ -121,7 +126,7 @@ public class JapidCommands {
 //		log("JapidCommands:  check default template packages for email notifiers.");
 		try {
 			String notifiersDir = root + sep + "notifiers";
-			File notifiersDirFile = new File(notifiersDir);
+			File notifiersDirFile = new File(Play.applicationPath, notifiersDir);
 			if (!notifiersDirFile.exists()) {
 				if (notifiersDirFile.mkdir()) {
 					log("created the email notifiers directory. ");
@@ -163,12 +168,12 @@ public class JapidCommands {
 	}
 
 	public static void delAllGeneratedJava(String pathname) {
-		String[] javas = DirUtil.getAllFileNames(new File(pathname), new String[] { "java" });
+		String[] javas = DirUtil.getAllFileNames(new File(Play.applicationPath, pathname), new String[] { "java" });
 
 		for (String j : javas) {
 			if (!j.contains(DirUtil.JAVATAGS)) {
 				log("removed: " + j);
-				boolean delete = new File(pathname + File.separatorChar + j).delete();
+				boolean delete = new File(Play.applicationPath, pathname + File.separatorChar + j).delete();
 				if (!delete)
 					throw new RuntimeException("file was not deleted: " + j);
 			}
@@ -290,7 +295,7 @@ public class JapidCommands {
 	 */
 	public static File[] getAllJavaFilesInDir(String root) {
 		// from source files only
-		String[] allFiles = DirUtil.getAllFileNames(new File(root), new String[] { ".java" });
+		String[] allFiles = DirUtil.getAllFileNames(new File(Play.applicationPath, root), new String[] { ".java" });
 		File[] fs = new File[allFiles.length];
 		int i = 0;
 		for (String f : allFiles) {
