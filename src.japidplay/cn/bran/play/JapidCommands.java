@@ -29,14 +29,20 @@ public class JapidCommands {
 	public static void main(String[] args) throws IOException {
 		String arg0 = args[0];
 
+		String applicationPath = System.getProperty("user.dir");
+		if (args.length > 1) {
+			applicationPath = args[1];
+		}
+		Play.applicationPath = new File(applicationPath);
+		File applicationAppPath = new File(Play.applicationPath, APP);
 		if ("gen".equals(arg0)) {
-			gen(APP);
+			gen(applicationAppPath.getAbsolutePath());
 		} else if ("regen".equals(arg0)) {
-			regen(APP);
+			regen(applicationAppPath.getAbsolutePath());
 		} else if ("clean".equals(arg0)) {
-			delAllGeneratedJava(APP + File.separatorChar + DirUtil.JAPIDVIEWS_ROOT);
+			delAllGeneratedJava(new File(applicationAppPath, DirUtil.JAPIDVIEWS_ROOT).getAbsolutePath());
 		} else if ("mkdir".equals(arg0)) {
-			mkdir(APP);
+			mkdir(applicationAppPath.getAbsolutePath());
 		} else {
 			log("not known: " + arg0);
 		}
@@ -370,7 +376,7 @@ public class JapidCommands {
 	 * @return
 	 */
 	public static List<File> reloadChanged() {
-		List<File> reloadChanged = reloadChanged(APP);
+		List<File> reloadChanged = reloadChanged(new File(Play.applicationPath, APP).getAbsolutePath());
 		Collection<VirtualFile> modules = Play.modules.values();
 		for (VirtualFile module: modules) {
 			try {
