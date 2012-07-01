@@ -34,7 +34,17 @@ def execute(**kargs):
 
 def run(app, cmd):
     app.check()
-    java_cmd = app.java_cmd(['-Xmx64m'], className='cn.bran.play.JapidCommands', args=[cmd])
+
+    application_path = None
+    if len(sys.argv) == 2:
+        application_path = os.getcwd()
+    if len(sys.argv) > 2:
+        if sys.argv[2].startswith('-'):
+            application_path = os.getcwd()
+        else:
+            application_path = os.path.normpath(os.path.abspath(sys.argv[2]))
+
+    java_cmd = app.java_cmd(['-Xmx64m'], className='cn.bran.play.JapidCommands', args=[cmd, application_path])
 #    print java_cmd                                                                                              
     subprocess.call(java_cmd, env=os.environ)
     print
@@ -48,10 +58,21 @@ def run(app, cmd):
 
 def run10(cmd):
     check_application()
+
+    application_path = None
+    if len(sys.argv) == 2:
+        application_path = os.getcwd()
+    if len(sys.argv) > 2:
+        if sys.argv[2].startswith('-'):
+            application_path = os.getcwd()
+        else:
+            application_path = os.path.normpath(os.path.abspath(sys.argv[2]))
+
     do_classpath()
     do_java('cn.bran.play.JapidCommands')
     print "~ Ctrl+C to stop"
     java_cmd.append(cmd)
+    java_cmd.append(application_path)
     subprocess.call(java_cmd, env=os.environ)
     print
     sys.exit(0)
