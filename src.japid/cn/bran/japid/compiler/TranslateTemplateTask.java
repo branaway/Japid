@@ -133,13 +133,13 @@ public class TranslateTemplateTask {
 
 			for (int i = 0; i < changedFiles.size(); i++) {
 				File templateFile = changedFiles.get(i);
-				if (JapidFlags.verbose) System.out.println("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
-				if (JapidFlags.verbose && listFiles) {
-					System.out.println(templateFile.getAbsolutePath());
-				}
-
 				try {
 					String relativePath = JapidTemplateTransformer.getRelativePath(templateFile, packageRoot);
+					if (JapidFlags.verbose) System.out.println("[Japid] Transforming template: " + relativePath + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
+					if (JapidFlags.verbose && listFiles) {
+						System.out.println(templateFile.getAbsolutePath());
+					}
+
 					File generate = tran.generate(relativePath);
 					changedTargetFiles.add(generate);
 				} catch (JapidCompilationException e) {
