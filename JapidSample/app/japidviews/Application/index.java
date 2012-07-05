@@ -80,7 +80,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 //------
 ;// line 1
 		p("\n" + 
-"<h2>Some Samples that demonstrate Japid features.</h2>\n" + 
+"<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
 "source code.</p>\n" + 

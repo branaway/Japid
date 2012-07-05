@@ -29,6 +29,13 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2012/7/5: V0.9.4.3:   
+	1. improvement: "play japid:xxx" commands now take additional path, thanks to Słowikowski:
+			"play japid:regen path_to_an_application"
+
+2012/6/26: V0.9.4.2:   
+	1. bug fix: upgraded a variable to represent a value in seconds of CacheFor from int to long. Thanks Ma Yan.
+	
 2012/6/26: V0.9.4.1:   
 	1. bug fix: tab chars between two consecutive script lines would interfere with the merge of the two lines. 
 	2. bug fix: reverse action URL lookup might fail in template rendering in a job detached from an action call.
