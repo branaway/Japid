@@ -560,6 +560,20 @@ public class JapidController extends Controller {
 	}
 
 	/**
+	 * Evict a cached Japid result resulted from a Japid directive <em>invoke<em/>. 
+	 * Can be used in a controller action to invalidate a cached result after a relevant state has been changed. 
+	 *  
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @param controllerClass the controller class
+	 * @param actionName action name
+	 * @param args the arguments to the action method.
+	 */
+	public static <C extends JapidController> void evictJapidResultCache(Class<C> controllerClass, String actionName, Object... args) {
+		Object[] fullArgs = CacheablePlayActionRunner.buildCacheKeyParts(controllerClass, actionName, args);
+		CacheablePlayActionRunner.deleteCache(fullArgs);
+	}
+
+	/**
 	 * this will set a flag so calling another action won't trigger a redirect
 	 */
 	protected static void dontRedirect() {

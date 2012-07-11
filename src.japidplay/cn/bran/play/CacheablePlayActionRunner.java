@@ -44,11 +44,18 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 	public CacheablePlayActionRunner(String ttl, Class<? extends JapidController> controllerClass, String actionName, Object... args) {
 		this.controllerClass = controllerClass;
 		this.actionName = actionName;
+		Object[] fullArgs = buildCacheKeyParts(controllerClass, actionName, args);
+		super.init(ttl, fullArgs);
+	}
+
+	public static Object[] buildCacheKeyParts(
+			Class<? extends JapidController> controllerClass,
+			String actionName, Object... args) {
 		Object[] fullArgs = new Object[args.length + 2];
 		System.arraycopy(args, 0, fullArgs, 0, args.length);
 		fullArgs[args.length] = controllerClass.getName();
 		fullArgs[args.length + 1] = actionName;
-		super.init(ttl, fullArgs);
+		return fullArgs;
 	}
 	
 

@@ -140,6 +140,7 @@ public abstract class CacheableRunner extends ActionRunner /*implements External
 	 * @return
 	 */
 	protected abstract RenderResult render();
+	
 	public static void deleteCache(Object...objects) {
 		RenderResultCache.delete(buildKey(objects));
 	}

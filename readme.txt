@@ -29,6 +29,9 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2012/7/11: V0.9.4.4:   
+	1. new feature: added evictJapidResultCache() in JapidController for invalidate a cached result of a Japid invoke action. 
+
 2012/7/5: V0.9.4.3:   
 	1. improvement: "play japid:xxx" commands now take additional path, thanks to Słowikowski:
 			"play japid:regen path_to_an_application"

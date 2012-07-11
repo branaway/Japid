@@ -1527,7 +1527,7 @@ public class Portlets extends JapidController {
 
 Note: The timeout spec in the @`invoke@ command overrides any @CacheFor@ annotation. 
 
-Now on to the "advance" part, *nested caching*. 
+Now on to the "advanced" part, *nested caching*. 
 
 What if the first level cached content is from a template that contains another cached @`invoke@? Will the outer cache "annihilate" the inner cache? The answer is "no".
 
