@@ -29,8 +29,15 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
-2012/7/11: V0.9.4.4:   
-	1. new feature: added evictJapidResultCache() in JapidController for invalidate a cached result of a Japid invoke action. 
+2012/7/12: V0.9.5:
+	1. new feature: added evictJapidResultCache() in JapidController for invalidate a cached result of a Japid invoke action. See the Portlets.java in the JapidSample application for an example. The below is a few passages from the documentation:
+		Since version 0.9.4.4, programmer have a couple of APIs in the *JapidController* to control the use of a cached JapidResult that is resulted from the use invoke in the Japid templates. 
+
+		1. *public static void ignoreCache()*: use this method to tell Japid not to use any cached JapidResult in the current request processing cycle. 
+		2. *public static void ignoreCacheNowAndNext()*: use this method to tell Japid not to use any cached JapidResult in the current request processing cycle and the next cycle. The idea is to ensure a redirect after change will see the latest state in the database rather than the stale rendered results from previous rendering. 
+		3. *public static <C extends JapidController> void evictJapidResultCache(Class<C> controllerClass, String actionName, Object... args)*: use this method to evict a cached Japid result resulted from a Japid directive *invoke*. It can be used in a controller action to invalidate a cached result from calling the controller action with the specified arguments. 
+
+		Currently all cached *invoke* results are stored with keys synthesized with the controller name, action name and the arguments. The id attribute of the *CacheFor* annotation is not yet supported. 
 
 2012/7/5: V0.9.4.3:   
 	1. improvement: "play japid:xxx" commands now take additional path, thanks to Słowikowski:

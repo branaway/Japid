@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import play.Play;
+
 import cn.bran.japid.util.DirUtil;
 
 public class JapidCommandsTest {
@@ -39,12 +41,14 @@ public class JapidCommandsTest {
 	@Test
 	public void testGen() throws IOException {
 		String root = ROOT;
+		Play.applicationPath = new File("JapidSample");
 		JapidCommands.gen(root);
 	}
 	
 	@Test
 	public void testregen() throws IOException {
 		String root = ROOT;
+		Play.applicationPath = new File("JapidSample");
 		JapidCommands.regen(root);
 	}
 	

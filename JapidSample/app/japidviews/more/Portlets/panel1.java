@@ -77,9 +77,9 @@ public class panel1 extends cn.bran.play.JapidTemplateBase
 ;// line 1
 		p("<p>panel-1 ");// line 1
 		p(s);// line 3
-		p(" : ");// line 3
+		p(" : <em>");// line 3
 		p(new Date());// line 3
-		p("</p>\n");// line 3
+		p("</em></p>\n");// line 3
 		
 		endDoLayout(sourceTemplate);
 	}

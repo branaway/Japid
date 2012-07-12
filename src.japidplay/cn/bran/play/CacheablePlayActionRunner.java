@@ -22,7 +22,7 @@ import cn.bran.japid.template.RenderResult;
 public abstract class CacheablePlayActionRunner extends CacheableRunner {
 //	String controllerActionString;
 //	private CacheFor cacheFor;
-	private boolean gotFromCacheForCache;
+//	private boolean gotFromCacheForCache;
 //	private String cacheForVal;
 	private Class<? extends JapidController> controllerClass;
 	private String actionName;
@@ -47,17 +47,6 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 		Object[] fullArgs = buildCacheKeyParts(controllerClass, actionName, args);
 		super.init(ttl, fullArgs);
 	}
-
-	public static Object[] buildCacheKeyParts(
-			Class<? extends JapidController> controllerClass,
-			String actionName, Object... args) {
-		Object[] fullArgs = new Object[args.length + 2];
-		System.arraycopy(args, 0, fullArgs, 0, args.length);
-		fullArgs[args.length] = controllerClass.getName();
-		fullArgs[args.length + 1] = actionName;
-		return fullArgs;
-	}
-	
 
 	public CacheablePlayActionRunner(String ttl) {
 		super(ttl);
@@ -146,6 +135,8 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 //	}
 
 	/**
+	 * Keep a cache of the TTL spec of a CacheFor annotation on a controller action
+	 * 
 	 * @param class1
 	 * @param actionName
 	 */

@@ -8,4 +8,4 @@ JapidSample/tmp/*
 .settings/
 .pydevproject
 JapidSample/test-result/
-commands.py
+commands.pyc

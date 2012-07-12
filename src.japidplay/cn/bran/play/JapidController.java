@@ -569,8 +569,11 @@ public class JapidController extends Controller {
 	 * @param args the arguments to the action method.
 	 */
 	public static <C extends JapidController> void evictJapidResultCache(Class<C> controllerClass, String actionName, Object... args) {
-		Object[] fullArgs = CacheablePlayActionRunner.buildCacheKeyParts(controllerClass, actionName, args);
-		CacheablePlayActionRunner.deleteCache(fullArgs);
+		CacheablePlayActionRunner.deleteCache(controllerClass, actionName, args);
+	}
+
+	public static void evictJapidResultCache(String key) {
+		CacheablePlayActionRunner.deleteCache(key);
 	}
 
 	/**

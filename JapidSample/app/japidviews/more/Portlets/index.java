@@ -27,6 +27,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 	{
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+		setTraceFile(true);
 	}
 
 // - add implicit fields with Play
@@ -78,10 +79,9 @@ public class index extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n" + 
-"<p>The outer most content is cached for 20 seconds, using the CacheFor annotation. ");// line 1
+p("<p>The outer most content is cached for 20 seconds, using the CacheFor annotation. <em>");// line 2
 		p(new Date());// line 4
-		p("</p>\n" + 
+		p("</em></p>\n" + 
 "\n" + 
 "<div>\n" + 
 "	<p>this part is never cached.</p>\n" + 
@@ -104,6 +104,9 @@ public class index extends cn.bran.play.JapidTemplateBase
 			}
 		}); p("\n");// line 13
 		p("</div>\n" + 
+"<div>\n" + 
+" <a href=\"evict2\">Let's evict the panel2 cache!</a>\n" + 
+"</div>\n" + 
 "\n" + 
 "<div>\n" + 
 "    <p>this part is cached for 4 seconds, \n" + 
@@ -112,10 +115,14 @@ public class index extends cn.bran.play.JapidTemplateBase
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.more.Portlets.class, "panel3", a + b) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.more.Portlets.panel3(a + b); // line 19
+				controllers.more.Portlets.panel3(a + b); // line 22
 			}
-		}); p("\n");// line 19
-		p("</div>\n");// line 19
+		}); p("\n");// line 22
+		p("</div>\n" + 
+"<div>\n" + 
+" <a href=\"evict3\">Let's evict the panel3 cache!</a>\n" + 
+"</div>\n");// line 22
+		System.out.println("japidviews/more/Portlets/index.html(line 27): " + "-- is this cool?");
 		
 		endDoLayout(sourceTemplate);
 	}
