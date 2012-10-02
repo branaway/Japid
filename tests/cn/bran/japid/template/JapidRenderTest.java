@@ -22,6 +22,12 @@ public class JapidRenderTest {
 		JapidRenderer.init(null, "plainjapid", 1, null);
 		JapidRenderer.regen();
 	}
+
+	@Test
+	public void testReGenWithPlay() throws IOException {
+		JapidRenderer.init(null, "plainjapid", 1, null, true);
+		JapidRenderer.regen();
+	}
 //
 //	@Test
 //	public void testAview() {

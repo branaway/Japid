@@ -282,6 +282,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 
 	public Object[] argDefaultsInstance = null;
 	private MimeTypeEnum mimeType;
+	private Boolean traceFileExit = null;
 	public static boolean globalTraceFile = false;
 	public static Boolean globalTraceFileHtml = null;
 	public static Boolean globalTraceFileJson = null;
@@ -423,6 +424,19 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	protected void setSourceTemplate(String st){
 		this.sourceTemplate = st;
 	}
+	
+	/**
+	 * templates call this method to insert the current template name in a mine-type sensitive comment.
+	 * It does not respect the `tracefile directive. 
+	 * It's useful to mark template files that generate xml/xhtml that requires doctype tag in the first line
+	 * of the output. It's a convenient substitute of the `tracefile directive in such cases. 
+	 * 
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 */
+	protected void traceFile() {
+		this.traceFileExit = true;
+		p(makeBeginBorder(this.sourceTemplate));
+	}
 
 	/**
 	 * @author Bing Ran (bing.ran@hotmail.com)
@@ -432,7 +446,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		if (StringUtils.isEmpty(contentType))
 			return null;
 		
-		String formatter = JapidTemplateBaseWithoutPlay.getContentCommentFormatter(contentType);
+		String formatter = getContentCommentFormatter(contentType);
 		if (formatter == null)
 			return "";
 	
@@ -448,7 +462,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		if (StringUtils.isEmpty(contentType))
 			return null;
 		
-		String formatter = JapidTemplateBaseWithoutPlay.getContentCommentFormatter(contentType);
+		String formatter = getContentCommentFormatter(contentType);
 		if (formatter == null)
 			return "";
 		
@@ -490,15 +504,18 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	protected void endDoLayout(String viewSource) {
 		if (shouldTraceFile())
 			p(makeEndBorder(viewSource));
+		else if (traceFileExit != null && traceFileExit)
+			p(makeEndBorder(viewSource));
+			
 	}
 
 	public static String getContentCommentFormatter(String contentTypeString) {
 		if (contentTypeString.contains("xml") || contentTypeString.contains("html"))
-			return "\n<!--%s-->\n";
+			return "<!-- %s -->";
 		
 		if (contentTypeString.contains("json") || contentTypeString.contains("javascript")
 				|| contentTypeString.contains("css"))
-			return "\n/*%s*/\n";
+			return "/* %s */";
 		return null;
 	}
 

@@ -227,6 +227,7 @@ public class JapidRenderer {
 	}
 
 	private static OpMode opMode;
+	private static boolean usePlay;
 
 	public static OpMode getOpMode() {
 		return opMode;
@@ -455,7 +456,7 @@ public class JapidRenderer {
 		}
 
 		TranslateTemplateTask t = new TranslateTemplateTask();
-		t.setUsePlay(false);
+		t.setUsePlay(usePlay);
 		File rootDir = new File(root);
 		t.setPackageRoot(rootDir);
 		t.setInclude(new File(japidviews));
@@ -648,8 +649,11 @@ public class JapidRenderer {
 	 * @param refreshInterval
 	 *            the minimal time, in second, that must elapse before trying to
 	 *            detect any changes in the file system.
+	 * @param usePlay
+	 * 	           to indicate if the generated template classes are to be used with play.
+	 *            if true, Play's implicit objects are available in the japid script.  
 	 */
-	public static void init(OpMode opMode, String templateRoot, int refreshInterval, ClassLoader parentClassLoader) {
+	public static void init(OpMode opMode, String templateRoot, int refreshInterval, ClassLoader parentClassLoader, boolean usePlay) {
 		inited = true;
 		JapidRenderer.opMode = opMode;
 		setTemplateRoot(templateRoot);
@@ -660,8 +664,21 @@ public class JapidRenderer {
 		}
 		crlr = new TemplateClassLoader(parentClassLoader);
 		compiler = new RendererCompiler(classes, crlr);
+		JapidRenderer.usePlay = usePlay;
 	}
 
+	/**
+	 * see the other init method
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @param opMode
+	 * @param templateRoot
+	 * @param refreshInterval
+	 * @param parentClassLoader
+	 */
+	public static void init(OpMode opMode, String templateRoot, int refreshInterval, ClassLoader parentClassLoader) {
+		init(opMode, templateRoot, refreshInterval, parentClassLoader, false);
+	}
+	
 	private static ClassLoader _parentClassLoader = null;
 	/**
 	 * a facet method to wrap implicit template binding. The default template is

@@ -26,6 +26,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 	{
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+		setTraceFile(false);
 	}
 
 // - add implicit fields with Play
@@ -79,14 +80,13 @@ public class index extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n" + 
-"<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
+p("<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
 "source code.</p>\n" + 
 "\n" + 
 "<ul>\n" + 
-"	<li><a href=\"");// line 1
+"	<li><a href=\"");// line 2
 		p(lookup("hello", new Object[]{}));// line 9
 		p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
@@ -188,7 +188,7 @@ int ag = 123;// line 80
 "\n" + 
 "<p>app mode: \"");// line 96
 		p(_play.mode);// line 101
-		p("\"</p>\n");// line 101
+		p("\"</p>");// line 101
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -126,8 +128,14 @@ public class DirUtil {
 //			System.out.println("file: " + path + ":" + modi);
 			if (path.endsWith(".java")) {
 				javas.put(path, modi);
-			} else /*if (path.endsWith(".html"))*/ {
-				srcFiles.put(path, modi);
+			} else  {
+				// validate file name to filter out dubious files such as temporary files
+				String fname = s.getName();
+				if (fname.startsWith("."))
+					continue;
+				fname = fname.substring(0, fname.lastIndexOf(".")).replace('.', '_');
+				if (isClassname(fname))
+					srcFiles.put(path, modi);
 			}
 		}
 
@@ -263,6 +271,23 @@ public class DirUtil {
 		String dirName = DirUtil.LAYOUTDIR;
 		return containsTemplateFiles(root, dirName);
 	}
+	
+	 public static boolean isClassname( String classname ) {
+	      if (classname == null || classname.length() ==0) return false;
+
+          CharacterIterator iter = new StringCharacterIterator(classname);
+          // Check first character (there should at least be one character for each part) ...
+          char c = iter.first();
+          if (c == CharacterIterator.DONE) return false;
+          if (!Character.isJavaIdentifierStart(c) && !Character.isIdentifierIgnorable(c)) return false;
+          c = iter.next();
+          // Check the remaining characters, if there are any ...
+          while (c != CharacterIterator.DONE) {
+              if (!Character.isJavaIdentifierPart(c) && !Character.isIdentifierIgnorable(c)) return false;
+              c = iter.next();
+          }
+	      return true;
+	  }
 
 	public static final String JAVATAGS = "_javatags";
 	public static final String LAYOUTDIR = "_layouts";

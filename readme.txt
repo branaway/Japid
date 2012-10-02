@@ -29,6 +29,12 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2012/10/2: V0.9.6.1:
+	1. minor issue: validate file names when detecting file changes t filter out files with special chars in name. 
+2012/7/19: V0.9.6:
+	1. minor issue: removed extra line breaks around the "enter" and "exit" marker in the output when "tracefile" directive is on
+	2. new feature: added a method named traceFile() in the base class for Java classes comppiled from Japid templates to precisely put the "enter" file comment in tracing template.
+		usage: just call the method from the template files like any Java methods: `traceFile();   
 2012/7/12: V0.9.5:
 	1. new feature: added evictJapidResultCache() in JapidController for invalidate a cached result of a Japid invoke action. See the Portlets.java in the JapidSample application for an example. The below is a few passages from the documentation:
 		Since version 0.9.4.4, programmer have a couple of APIs in the *JapidController* to control the use of a cached JapidResult that is resulted from the use invoke in the Japid templates. 

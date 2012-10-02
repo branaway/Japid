@@ -661,12 +661,12 @@ public abstract class AbstractTemplateClassMetaData {
 		
 		if (useWithPlay) {
 			pln("\n// - add implicit fields with Play\n");
-			pln("	final Request request = Request.current(); \n" +
-					"	final Response response = Response.current(); \n" +
-					"	final Session session = Session.current();\n" +
-					"	final RenderArgs renderArgs = RenderArgs.current();\n" +
-					"	final Params params = Params.current();\n" +
-					"	final Validation validation = Validation.current();\n" +
+			pln("	final play.mvc.Http.Request request = play.mvc.Http.Request.current(); \n" + 
+					"	final play.mvc.Http.Response response = play.mvc.Http.Response.current(); \n" + 
+					"	final play.mvc.Scope.Session session = play.mvc.Scope.Session.current();\n" + 
+					"	final play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();\n" + 
+					"	final play.mvc.Scope.Params params = play.mvc.Scope.Params.current();\r\n" + 
+					"	final play.data.validation.Validation validation = play.data.validation.Validation.current();\n" + 
 					"	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);\n" +
 					"	final play.Play _play = new play.Play(); \n");
 			pln("// - end of implicit fields with Play \n\n");

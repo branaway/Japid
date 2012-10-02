@@ -71,7 +71,24 @@ public class DirUtilTest {
 			System.out.println(f.getPath());
 		}
 		assertEquals(3, fs.size());
-		
+
+		File bad = new File ("tests/testdir/#A.html");
+		DirUtil.touch(bad);
+		fs = DirUtil.findChangedSrcFiles(src);
+		assertEquals(3, fs.size());
+		bad.delete();
+
+		bad = new File ("tests/testdir/.A.html");
+		DirUtil.touch(bad);
+		fs = DirUtil.findChangedSrcFiles(src);
+		assertEquals(3, fs.size());
+		bad.delete();
+
+		File good = new File ("tests/testdir/A.B.html");
+		DirUtil.touch(good);
+		fs = DirUtil.findChangedSrcFiles(src);
+		assertEquals(4, fs.size());
+		good.delete();
 	}
 	
 	@Test
