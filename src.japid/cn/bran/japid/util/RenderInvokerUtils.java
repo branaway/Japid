@@ -1,19 +1,14 @@
 package cn.bran.japid.util;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import play.exceptions.TemplateExecutionException;
-import play.mvc.Http.Request;
-
 import cn.bran.japid.compiler.NamedArg;
 import cn.bran.japid.compiler.NamedArgRuntime;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
-import cn.bran.play.JapidController2;
 
 public class RenderInvokerUtils {
 	// private static final String RENDER_METHOD = "render";
@@ -91,8 +86,8 @@ public class RenderInvokerUtils {
 		} catch (InvocationTargetException e) {
 			// e.printStackTrace();
 			Throwable te = e.getTargetException();
-			if (te instanceof TemplateExecutionException)
-				throw (TemplateExecutionException) te;
+//			if (te instanceof TemplateExecutionException)
+//				throw (TemplateExecutionException) te;
 			Throwable cause = te.getCause();
 			if (cause != null)
 				if (cause instanceof RuntimeException)
@@ -153,42 +148,5 @@ public class RenderInvokerUtils {
 						"Could not invoke the template object: ", e);
 			// throw new RuntimeException(e);
 		}
-	}
-
-	/**
-	 * @param template
-	 * @return
-	 */
-	public static String getTemapletClassName(String template) {
-		//
-		if (template == null || template.length() == 0) {
-			template = JapidController2.template();
-		}
-	
-		if (template.endsWith(JapidController2.HTML)) {
-			template = template.substring(0, template.length() - JapidController2.HTML.length());
-		}
-	
-		// String action = StackTraceUtils.getCaller(); // too tricky to use
-		// stacktrace to track the caller action name
-		// something like controllers.japid.SampleController.testFindAction
-	
-		if (template.startsWith("@")) {
-			// a template in the current directory
-			template = Request.current().controller + "/"
-					+ template.substring(1);
-		}
-	
-		// map to default japid view
-		if (template.startsWith("controllers.")) {
-			template = template.substring(template.indexOf(JapidController2.DOT) + 1);
-		}
-		String templateClassName = template
-				.startsWith(DirUtil.JAPIDVIEWS_ROOT) ? template
-				: DirUtil.JAPIDVIEWS_ROOT + File.separator + template;
-	
-		templateClassName = templateClassName.replace('/', JapidController2.DOT).replace('\\',
-				JapidController2.DOT);
-		return templateClassName;
 	}
 }

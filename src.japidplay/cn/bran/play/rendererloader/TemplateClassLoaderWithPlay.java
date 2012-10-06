@@ -1,4 +1,4 @@
-package cn.bran.japid.rendererloader;
+package cn.bran.play.rendererloader;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cn.bran.japid.rendererloader.RendererClass;
+import cn.bran.japid.rendererloader.TemplateClassLoader;
 import cn.bran.japid.template.JapidRenderer;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;

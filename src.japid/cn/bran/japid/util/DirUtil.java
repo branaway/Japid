@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cn.bran.play.JapidCommands;
-
 public class DirUtil {
 	public static Set<File> findOrphanJava(File src, File target) {
 		if (target == null)
@@ -315,7 +313,7 @@ public class DirUtil {
 		if (!javatags.exists()) {
 			boolean mkdirs = javatags.mkdirs();
 			assert mkdirs == true;
-			JapidCommands.log("created: " + japidViews + JAVATAGS);
+			JapidFlags.log("created: " + japidViews + JAVATAGS);
 		}
 	
 		File[] javafiles = javatags.listFiles(new FilenameFilter() {

@@ -25,13 +25,13 @@ import cn.bran.japid.compiler.JapidCompilationException;
 import cn.bran.japid.compiler.TranslateTemplateTask;
 import cn.bran.japid.rendererloader.RendererClass;
 import cn.bran.japid.rendererloader.RendererCompiler;
-import cn.bran.japid.rendererloader.TemplateClassLoaderWithPlay;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.DirUtil;
 import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.RenderInvokerUtils;
 import cn.bran.japid.util.StackTraceUtils;
+import cn.bran.play.rendererloader.TemplateClassLoaderWithPlay;
 
 /**
  * 

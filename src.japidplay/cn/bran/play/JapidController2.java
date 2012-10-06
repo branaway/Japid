@@ -26,6 +26,7 @@ import cn.bran.japid.rendererloader.RendererClass;
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
+import cn.bran.japid.util.DirUtil;
 import cn.bran.japid.util.RenderInvokerUtils;
 import cn.bran.japid.util.StackTraceUtils;
 
@@ -271,7 +272,7 @@ public class JapidController2 extends Controller {
 
 	public static RenderResult getRenderResultWith(String template,
 			NamedArgRuntime[] args) {
-		String templateClassName = RenderInvokerUtils.getTemapletClassName(template);
+		String templateClassName = getTemapletClassName(template);
 		Class<? extends JapidTemplateBaseWithoutPlay> tClass = getRenderClass(templateClassName); 
 		return RenderInvokerUtils.invokeNamedArgsRender(tClass, args);
 
@@ -301,7 +302,7 @@ public class JapidController2 extends Controller {
 	 */
 	public static RenderResult getRenderResultWith(String template,
 			Object... args) {
-		String templateClassName = RenderInvokerUtils.getTemapletClassName(template);
+		String templateClassName = JapidController2.getTemapletClassName(template);
 		Class<? extends JapidTemplateBaseWithoutPlay> tClass = getRenderClass(templateClassName);
 		return invokeRender(tClass, args);
 	}
@@ -616,5 +617,42 @@ public class JapidController2 extends Controller {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @param template
+	 * @return
+	 */
+	public static String getTemapletClassName(String template) {
+		//
+		if (template == null || template.length() == 0) {
+			template = template();
+		}
+	
+		if (template.endsWith(HTML)) {
+			template = template.substring(0, template.length() - HTML.length());
+		}
+	
+		// String action = StackTraceUtils.getCaller(); // too tricky to use
+		// stacktrace to track the caller action name
+		// something like controllers.japid.SampleController.testFindAction
+	
+		if (template.startsWith("@")) {
+			// a template in the current directory
+			template = Request.current().controller + "/"
+					+ template.substring(1);
+		}
+	
+		// map to default japid view
+		if (template.startsWith("controllers.")) {
+			template = template.substring(template.indexOf(DOT) + 1);
+		}
+		String templateClassName = template
+				.startsWith(DirUtil.JAPIDVIEWS_ROOT) ? template
+				: DirUtil.JAPIDVIEWS_ROOT + File.separator + template;
+	
+		templateClassName = templateClassName.replace('/', DOT).replace('\\',
+				DOT);
+		return templateClassName;
 	}
 }
