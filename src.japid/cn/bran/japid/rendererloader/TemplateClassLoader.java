@@ -44,11 +44,16 @@ public class TemplateClassLoader extends ClassLoader {
 		this.parentClassLoader = cl;
 	}
 
+	protected ClassLoader getParentClassLoader() {
+		return parentClassLoader;
+	}
+	
 	@Override
 	public Class<?> loadClass(String name) throws ClassNotFoundException {
+//		System.out.println("TemplateClassLoader.loadClass(): " + name);
 		if (!name.startsWith(JapidRenderer.JAPIDVIEWS)) {
 			try {
-				Class<?> cls = parentClassLoader.loadClass(name);
+				Class<?> cls = getParentClassLoader().loadClass(name);
 				return cls;
 			}
 			catch (ClassNotFoundException e) {
@@ -65,7 +70,7 @@ public class TemplateClassLoader extends ClassLoader {
 		}
 			
 		// System.out.println("[TemplateClassLoader] loading: " + name);
-		RendererClass rc = JapidRenderer.classes.get(name);
+		RendererClass rc = getJapidRendererClassWrapper(name);
 
 		byte[] bytecode = rc.bytecode;
 
@@ -80,18 +85,27 @@ public class TemplateClassLoader extends ClassLoader {
 		rc.setClz(cl);
 		localClasses.put(name, cl);
 		rc.lastUpdated = 1;// System.currentTimeMillis();
-		if (JapidFlags.verbose) System.out.println(oid + " reloaded from bytecode: " + name);
+		if (JapidFlags.verbose) 
+			System.out.println(oid + "class redefined from bytecode: " + name);
 		return cl;
 
 	}
 
+	protected RendererClass getJapidRendererClassWrapper(String name) {
+		return JapidRenderer.classes.get(name);
+	}
+
 	/**
 	 * Search for the byte code of the given class.
+	 * XXX is this correct? shall we get the bytecode from the global class wrappers in the JapidRenderer?
 	 */
 	protected byte[] getClassDefinition(String name) {
+//		System.out.println("TemplateClassLoader.getClassDefinition(): " + name);
+//		throw new RuntimeException("xxx: I'm not sure this is the right logic. Fix me please! -- " + name);
 		name = name.replace(".", "/") + ".class";
 		InputStream is = getResourceAsStream(name);
 		if (is == null) {
+//			System.out.println("TemplateClassLoader.getClassDefinition()--nothing: " + name);
 			return null;
 		}
 		try {
@@ -101,8 +115,10 @@ public class TemplateClassLoader extends ClassLoader {
 			while ((count = is.read(buffer, 0, buffer.length)) > 0) {
 				os.write(buffer, 0, count);
 			}
+//			System.out.println("TemplateClassLoader.getClassDefinition()==got byte code: " + name);
 			return os.toByteArray();
 		} catch (Exception e) {
+			System.out.println("TemplateClassLoader.getClassDefinition(): exception: " + e);
 			throw new RuntimeException(e);
 		} finally {
 			try {

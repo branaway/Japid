@@ -19,8 +19,8 @@ public class JapidCompilationException extends RuntimeException {
 	JapidTemplate template;
 	int startLine;
 	
-	public JapidCompilationException(JapidTemplate template, int startLine, String string) {
-		super(template.name + " (line " + startLine + "): " + string);
+	public JapidCompilationException(JapidTemplate template, int startLine, String msg) {
+		super(template.name + " (line " + startLine + "): " + msg);
 		this.template = template;
 		this.startLine = startLine;
 	}

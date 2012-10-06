@@ -1,7 +1,6 @@
 package cn.bran.play;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -243,7 +242,7 @@ public class JapidCommands {
 		t.addImport(Validation.class.getName());
 		t.addImport(play.data.validation.Error.class.getName());
 //		t.addImport("static  japidviews._javatags.JapidWebUtil.*");
-		List<String> javatags = scanJavaTags(root);
+		List<String> javatags = DirUtil.scanJavaTags(root);
 		for (String f : javatags) {
 			t.addImport("static " + f + ".*");
 		}
@@ -267,32 +266,6 @@ public class JapidCommands {
 		return changedFiles;
 	}
 
-	public static List<String> scanJavaTags(String root) {
-		String sep = File.separator;
-		String japidViews = root + sep + DirUtil.JAPIDVIEWS_ROOT + sep;
-		File javatags = new File(japidViews + DirUtil.JAVATAGS);
-		if (!javatags.exists()) {
-			boolean mkdirs = javatags.mkdirs();
-			assert mkdirs == true;
-			log("created: " + japidViews + DirUtil.JAVATAGS);
-		}
-
-		File[] javafiles = javatags.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				if (name.endsWith(".java"))
-					return true;
-				return false;
-			}
-		});
-		
-		List<String> files = new ArrayList<String>();
-		for (File f : javafiles) {
-			String fname = f.getName();
-			files.add(DirUtil.JAPIDVIEWS_ROOT + "." + DirUtil.JAVATAGS + "." + fname.substring(0, fname.lastIndexOf(".java")));
-		}
-		return files;
-	}
 	/**
 	 * get all the java files in a dir with the "java" removed
 	 * 
@@ -398,7 +371,7 @@ public class JapidCommands {
 		return reloadChanged;
 	}
 	
-	private static void log(String m) {
+	public static void log(String m) {
 		System.out.println("[JapidCommands]: " + m);
 	}
 }

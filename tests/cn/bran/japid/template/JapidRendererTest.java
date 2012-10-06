@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import cn.bran.japid.compiler.OpMode;
 
-public class JapidRenderTest {
+public class JapidRendererTest {
 
 	@Test
 	public void testGen() {

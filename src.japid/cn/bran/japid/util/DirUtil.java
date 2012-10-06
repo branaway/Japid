@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -15,6 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import cn.bran.play.JapidCommands;
 
 public class DirUtil {
 	public static Set<File> findOrphanJava(File src, File target) {
@@ -40,6 +43,7 @@ public class DirUtil {
 		return re;
 	}
 
+	
 	/**
 	 * 
 	 */
@@ -53,6 +57,7 @@ public class DirUtil {
 	public static String[] getAllTemplateHtmlFiles(File dir) {
 		List<String> files = new ArrayList<String>();
 		getAllFileNames("", dir, files, new String[] {".html"});
+		// should filter out bad named files
 		String[] ret = new String[files.size()];
 		return files.toArray(ret);
 	}
@@ -107,7 +112,8 @@ public class DirUtil {
 	static boolean match(File f, String[] exts) {
 		for (String ext : exts) {
 			if (f.getName().endsWith(ext))
-				return true;
+				if (fileNameIsValidClassName(f))
+					return true;
 		}
 		return false;
 	}
@@ -122,19 +128,15 @@ public class DirUtil {
 		Map<String, Long> srcFiles = new HashMap<String, Long>();
 		
 
-		for (File s : allSrc) {
-			String path = s.getPath();
-			long modi = s.lastModified();
+		for (File f : allSrc) {
+			String path = f.getPath();
+			long modi = f.lastModified();
 //			System.out.println("file: " + path + ":" + modi);
 			if (path.endsWith(".java")) {
 				javas.put(path, modi);
 			} else  {
 				// validate file name to filter out dubious files such as temporary files
-				String fname = s.getName();
-				if (fname.startsWith("."))
-					continue;
-				fname = fname.substring(0, fname.lastIndexOf(".")).replace('.', '_');
-				if (isClassname(fname))
+				if (fileNameIsValidClassName(f))
 					srcFiles.put(path, modi);
 			}
 		}
@@ -159,6 +161,19 @@ public class DirUtil {
 			}
 		}
 		return rs;
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @param f
+	 * @return
+	 */
+	private static boolean fileNameIsValidClassName(File f) {
+		String fname = f.getName();
+		if (fname.startsWith("."))
+			return false;
+		fname = fname.substring(0, fname.lastIndexOf(".")).replace('.', '_');
+		return isClassname(fname);
 	}
 
 	/**
@@ -293,4 +308,62 @@ public class DirUtil {
 	public static final String LAYOUTDIR = "_layouts";
 	public static final String TAGSDIR = "_tags";
 	public static final String JAPIDVIEWS_ROOT = "japidviews";
+	public static List<String> scanJavaTags(String root) {
+		String sep = File.separator;
+		String japidViews = root + sep + JAPIDVIEWS_ROOT + sep;
+		File javatags = new File(japidViews + JAVATAGS);
+		if (!javatags.exists()) {
+			boolean mkdirs = javatags.mkdirs();
+			assert mkdirs == true;
+			JapidCommands.log("created: " + japidViews + JAVATAGS);
+		}
+	
+		File[] javafiles = javatags.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				if (name.endsWith(".java"))
+					return true;
+				return false;
+			}
+		});
+		
+		List<String> files = new ArrayList<String>();
+		for (File f : javafiles) {
+			String fname = f.getName();
+			files.add(JAPIDVIEWS_ROOT + "." + JAVATAGS + "." + fname.substring(0, fname.lastIndexOf(".java")));
+		}
+		return files;
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @param f the java file
+	 * @return the original template file
+	 */
+	public static File mapJavatoSrc(File f) {
+		File parent = f.getParentFile();
+		String fname = mapJavaToSrc(f.getName());
+		return new File(parent, fname);
+	}
+	
+	/**
+	 * 
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @param sourceCode
+	 * @param lineNum 1-based line number in Java file
+	 * @return 1-based line number in the original source template
+	 */
+	public static int mapJavaLineToSrcLine(String sourceCode, int lineNum) {
+		String[] codeLines = sourceCode.split("\n");
+		String line = codeLines[lineNum - 1];
+	
+		int lineMarker = line.lastIndexOf("// line ");
+		if (lineMarker < 1) {
+			return 0;
+		}
+		int oriLineNumber = Integer.parseInt(line.substring(lineMarker + 8)
+				.trim());
+		return oriLineNumber;
+	}
+
 }

@@ -35,7 +35,7 @@ public class Application extends JapidController {
 	public static void authorPanel(final Author a) {
 		boolean calledFromView = isInvokedfromJapidView();
 		System.out.println("calledFromView: " + calledFromView);
-		CacheableRunner r = new CacheableRunner("10s", genCacheKey()) {
+		CacheableRunner r = new CacheableRunner("10s", CacheableRunner.genCacheKey()) {
 			@Override
 			protected RenderResult render() {
 				return new authorPanel().render(a);

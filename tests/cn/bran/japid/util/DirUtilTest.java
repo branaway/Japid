@@ -124,4 +124,15 @@ public class DirUtilTest {
 		has  = DirUtil.hasLayouts(root);
 		assertFalse(has);
 	}
+	
+	@Test
+	public void testMapJavaFileToSrcFile() {
+		File j = new File("c:\\tmp\\abc.java");
+		File s = DirUtil.mapJavatoSrc(j);
+		assertEquals("c:\\tmp\\abc.html", s.getPath());
+
+		j = new File("/tmp/a/abc_xml.java");
+		s = DirUtil.mapJavatoSrc(j);
+		assertEquals("/tmp/a/abc.xml", s.getPath());
+	}
 }

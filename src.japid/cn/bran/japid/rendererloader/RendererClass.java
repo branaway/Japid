@@ -1,16 +1,20 @@
 package cn.bran.japid.rendererloader;
 
+import java.io.File;
 import java.util.Date;
 
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 
 public class RendererClass {
 	String className;
-	String sourceCode;
+	String sourceCode; // the java file
+	String oriSourceCode;
+	
 	long lastUpdated;
 	byte[] bytecode;
 	Class<? extends JapidTemplateBaseWithoutPlay> clz;
 	ClassLoader cl;
+	private File srcFile; // the original template source file
 	
 	public ClassLoader getCl() {
 		return cl;
@@ -51,5 +55,36 @@ public class RendererClass {
 	
 	public void clear() {
 		this.bytecode = null;
+	}
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @param srcFile
+	 */
+	public void setSrcFile(File srcFile) {
+		this.srcFile = srcFile;
+	}
+	/**
+	 * @return the srcFile
+	 */
+	public File getSrcFile() {
+		return srcFile;
+	}
+	/**
+	 * @return the javaSourceCode
+	 */
+	public String getOriSourceCode() {
+		return oriSourceCode;
+	}
+	/**
+	 * @param javaSourceCode the javaSourceCode to set
+	 */
+	public void setOriSourceCode(String oriSourceCode) {
+		this.oriSourceCode = oriSourceCode;
+	}
+	/**
+	 * @return the lastUpdated
+	 */
+	public long getLastUpdated() {
+		return lastUpdated;
 	}
 }

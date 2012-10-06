@@ -65,6 +65,7 @@ public class JapidRenderer {
 			rendererClass.setLastUpdated(0);
 		}
 		
+		// the template may refer to model classes etc available only from the parent class loader
 		ClassLoader cl = _parentClassLoader == null ? JapidRenderer.class.getClassLoader() : _parentClassLoader;
 		// do I need to new instance of TemplateClassLoader for each invocation? likely...
 		TemplateClassLoader classReloader = new TemplateClassLoader(cl);

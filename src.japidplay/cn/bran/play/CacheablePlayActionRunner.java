@@ -7,6 +7,7 @@ import play.cache.CacheFor;
 import play.mvc.ActionInvoker;
 import play.mvc.After;
 import play.mvc.Before;
+import play.mvc.Controller;
 import play.mvc.Finally;
 import cn.bran.japid.template.RenderResult;
 
@@ -24,7 +25,7 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 //	private CacheFor cacheFor;
 //	private boolean gotFromCacheForCache;
 //	private String cacheForVal;
-	private Class<? extends JapidController> controllerClass;
+	private Class<? extends Controller> controllerClass;
 	private String actionName;
 	
 	/**
@@ -33,7 +34,7 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 	 * @param args
 	 * @deprecated use the other constructor that allow for better integration with CacheFor annotation
 	 */
-	public CacheablePlayActionRunner(String ttl, Object... args) {
+	private CacheablePlayActionRunner(String ttl, Object... args) {
 		super(ttl, args);
 //		if (args != null && args.length > 0) {
 //			// the first argument is the methodInvocation string, like myController.myMethod
@@ -41,7 +42,7 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 //		}
 	}
 	
-	public CacheablePlayActionRunner(String ttl, Class<? extends JapidController> controllerClass, String actionName, Object... args) {
+	public CacheablePlayActionRunner(String ttl, Class<? extends Controller> controllerClass, String actionName, Object... args) {
 		this.controllerClass = controllerClass;
 		this.actionName = actionName;
 		Object[] fullArgs = buildCacheKeyParts(controllerClass, actionName, args);
@@ -140,7 +141,7 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 	 * @param class1
 	 * @param actionName
 	 */
-	private void fillCacheFor(Class<? extends JapidController> class1, String actionName) {
+	private void fillCacheFor(Class<?> class1, String actionName) {
 		String className = class1.getName();
 		String cacheForKey = className + "_" + actionName;
 		String cacheForVal = (String) JapidPlugin.getCache().get(cacheForKey);

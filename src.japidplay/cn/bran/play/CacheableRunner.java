@@ -6,6 +6,9 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
 
+import play.mvc.Controller;
+import play.mvc.Http.Request;
+
 import cn.bran.japid.template.ActionRunner;
 import cn.bran.japid.template.RenderResult;
 
@@ -68,7 +71,7 @@ public abstract class CacheableRunner extends ActionRunner /*implements External
 	 * @param ttl
 	 */
 	public CacheableRunner(String ttl) {
-		this(ttl, JapidController.genCacheKey());
+		this(ttl, genCacheKey());
 	}
 	
 	/**
@@ -157,12 +160,12 @@ public abstract class CacheableRunner extends ActionRunner /*implements External
 	 * @param actionName
 	 * @param args the arguments to the action
 	 */
-	public static <C extends JapidController> void deleteCache(Class<C> controllerClass, String actionName, Object... args) {
+	public static <C extends Controller> void deleteCache(Class<C> controllerClass, String actionName, Object... args) {
 		Object[] fullArgs = buildCacheKeyParts(controllerClass, actionName, args);
 		deleteCache(fullArgs);
 	}
 	
-	public static Object[] buildCacheKeyParts(Class<? extends JapidController> controllerClass, String actionName,
+	public static Object[] buildCacheKeyParts(Class<? extends Controller> controllerClass, String actionName,
 			Object... args) {
 		// shall we support the id attribute of id of CacheFor?
 				Object[] fullArgs = new Object[args.length + 2];
@@ -200,6 +203,16 @@ public abstract class CacheableRunner extends ActionRunner /*implements External
 	 */
 	public void setKeyString(String keyString) {
 		this.keyString = keyString;
+	}
+
+	/**
+	 * can be used to generate a key based on the query
+	 * 
+	 * @return
+	 */
+	public static String genCacheKey() {
+		return "japidcache:" + Request.current().action + ":"
+				+ Request.current().querystring;
 	}
 	
 	

@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="tests"/>
 	<classpathentry kind="src" path="plainjapid"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/javaparser-1.0.8.jar" sourcepath="/javaparser"/>
+	<classpathentry exported="true" kind="lib" path="lib/javaparser-1.0.8.jar" sourcepath="/javaparser"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/play-git"/>
 	<classpathentry kind="lib" path="lib.plain/org.eclipse.jdt.core-3.8.0.v_C18.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

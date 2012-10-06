@@ -33,12 +33,6 @@ import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
  * 
  */ 
 public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
-//	public static final String CONTENT_TYPE_JSON = MimeTypeEnum.json.header;
-//	public static final String CONTENT_TYPE_HTML = MimeTypeEnum.html.header;
-//	public static final String CONTENT_TYPE_XML = MimeTypeEnum.xml.header;
-//	public static final String CONTENT_TYPE_TXT = MimeTypeEnum.txt.header;
-//	public static final String CONTENT_TYPE_CSS = MimeTypeEnum.css.header;
-	
 	public JapidTemplateBase(StringBuilder out) {
 		super(out);
 	}
@@ -56,55 +50,4 @@ public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
 		this.actionRunners = actionRunners;
 		return this;
 	}
-
-	/**
-	 * translate japid runtime exception to Play's TemplateExecutionException for formated error reporting
-	 */
-	@Override
-	protected void handleException(RuntimeException e) {
-		if (Play.mode == Mode.PROD)
-			throw e;
-		
-		if (e instanceof TemplateExecutionException)
-			throw e;
-		
-		// find the latest japidviews exception
-		StackTraceElement[] stackTrace = e.getStackTrace();
-		for (StackTraceElement ele : stackTrace){
-			String className = ele.getClassName();
-			if (className.startsWith("japidviews")){
-				int lineNumber = ele.getLineNumber();
-				// TODO: should really remove the Play reference.  Shall we jump to the file system for the source?
-				ApplicationClass applicationClass = Play.classes.getApplicationClass(className);
-				if (applicationClass != null){
-					// let's get the line of problem
-					String jsrc = applicationClass.javaSource;
-					String[] splitSrc = jsrc.split("\n");
-					String line = splitSrc[lineNumber - 1];
-					// can we have a line marker?
-					int lineMarker = line.lastIndexOf("// line ");
-					if (lineMarker > 0) {
-						int oriLineNumber = Integer.parseInt(line.substring(lineMarker + 8).trim());
-						StackTraceElement[] newStack = new StackTraceElement[stackTrace.length + 1];
-						newStack[0] = new StackTraceElement(sourceTemplate, "", sourceTemplate, oriLineNumber);
-						System.arraycopy(stackTrace, 0, newStack, 1, stackTrace.length);
-						e.setStackTrace(newStack);
-
-						File file = new File("app/" + sourceTemplate);
-//			
-						JapidPlayTemplate jpt = new JapidPlayTemplate();
-						jpt.name = sourceTemplate;
-						try {
-							jpt.source = FileUtils.readFileToString(file);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						throw new TemplateExecutionException(jpt, oriLineNumber, e.getMessage(), e);
-					}
-				}
-			}
-		}
-		throw e;
-	}
-
 }

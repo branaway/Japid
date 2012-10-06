@@ -17,7 +17,7 @@ package cn.bran.japid.util;
 public class DummyUrlMapper implements UrlMapper{
 	
 	/**
-	 * must be multi-threaded safe
+	 * must be multi-thread safe
 	 */
 	@Override
 	public String lookup(String action, Object[] args) {

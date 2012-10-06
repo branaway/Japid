@@ -1,10 +1,13 @@
 package cn.bran.japid.rendererloader;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.eclipse.jdt.core.compiler.CategorizedProblem;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.internal.compiler.ClassFile;
 import org.eclipse.jdt.internal.compiler.CompilationResult;
@@ -22,6 +25,9 @@ import org.eclipse.jdt.internal.compiler.env.NameEnvironmentAnswer;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 
+import cn.bran.japid.compiler.JapidCompilationException;
+import cn.bran.japid.template.JapidTemplate;
+import cn.bran.japid.util.DirUtil;
 import cn.bran.japid.util.JapidFlags;
 
 
@@ -33,7 +39,7 @@ import cn.bran.japid.util.JapidFlags;
 public class RendererCompiler {
 
     Map<String, Boolean> packagesCache = new HashMap<String, Boolean>();
-    Map<String, RendererClass> classes ;//= new HashMap<String, RendererClass>();
+    Map<String, RendererClass> japidClasses ;//= new HashMap<String, RendererClass>();
     
     TemplateClassLoader crlr;
     
@@ -60,11 +66,11 @@ public class RendererCompiler {
     /**
      * supposed to have a single instance for the entire application
      * 
-     * @param classes
+     * @param classes the Japid template class container
      * @param cl
      */
     public RendererCompiler(Map<String, RendererClass> classes, TemplateClassLoader cl ) {
-        this.classes = classes;
+        this.japidClasses = classes;
         this.crlr = cl;
     }
 
@@ -104,7 +110,7 @@ public class RendererCompiler {
 
         @Override
 		public char[] getContents() {
-            return classes.get(clazzName).getSourceCode().toCharArray();
+            return japidClasses.get(clazzName).getSourceCode().toCharArray();
         }
 
         @Override
@@ -172,7 +178,7 @@ public class RendererCompiler {
                     }
 
                     char[] fileName = name.toCharArray();
-                    RendererClass applicationClass = classes.get(name);
+                    RendererClass applicationClass = japidClasses.get(name);
 
                     // ApplicationClass exists
                     if (applicationClass != null) {
@@ -222,7 +228,7 @@ public class RendererCompiler {
                     packagesCache.put(name, false);
                     return false;
                 }
-                if (classes.get(name) != null) {
+                if (japidClasses.get(name) != null) {
                     packagesCache.put(name, false);
                     return false;
                 }
@@ -244,7 +250,16 @@ public class RendererCompiler {
 			public void acceptResult(CompilationResult result) {
                 // If error
                 if (result.hasErrors()) {
-                    for (IProblem problem: result.getErrors()) {
+                	// bran: sort the problems and report the first one
+                    CategorizedProblem[] errors = result.getErrors();
+                    Arrays.sort(errors, new Comparator<CategorizedProblem>() {
+						@Override
+						public int compare(CategorizedProblem o1, CategorizedProblem o2) {
+							return o1.getSourceLineNumber() - o2.getSourceLineNumber();
+						}
+                    });
+                    
+                    for (IProblem problem: errors) {
                         String className = new String(problem.getOriginatingFileName()).replace("/", ".");
                         className = className.substring(0, className.length() - 5);
                         String message = problem.getMessage();
@@ -252,8 +267,19 @@ public class RendererCompiler {
                             // Non sense !
                             message = problem.getArguments()[0] + " cannot be resolved";
                         }
-                        throw new RuntimeException(className + ": " + message);
-//                        throw new RuntimeException(className + message +  problem);
+                        RendererClass rc = japidClasses.get(className);
+                        if (rc.getSrcFile() == null)
+                        	throw new RuntimeException("no source file for compiling " + className);
+                        
+                        if (rc.getOriSourceCode() == null)
+                        	throw new RuntimeException("no original source code for compiling " + className);
+                        
+                        JapidTemplate tmpl = new JapidTemplate(rc.getSrcFile().getPath(), rc.getOriSourceCode());
+                        throw new JapidCompilationException(
+                        		tmpl, 
+                        		DirUtil.mapJavaLineToSrcLine(rc.getSourceCode(), problem.getSourceLineNumber()), 
+                        		message
+                        		);
                     }
                 }
                 // Something has been compiled
@@ -272,13 +298,13 @@ public class RendererCompiler {
                     if (JapidFlags.verbose) System.out.println("[RenderCompiler]Compiled " + clazzName);
                     // XXX address anonymous inner class issue!! ....$1...
                     String cname = clazzName.toString();
-					RendererClass rc = classes.get(cname);
+					RendererClass rc = japidClasses.get(cname);
                     if (rc == null) {
                     	if (cname.contains("$")) {
                     		// inner class
                     		rc = new RendererClass();
                     		rc.className = cname;
-                    		classes.put(cname, rc);
+                    		japidClasses.put(cname, rc);
                     	}
                     	else {
                     		throw new RuntimeException("name not in the classes container: " + cname);

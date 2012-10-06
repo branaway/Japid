@@ -11,7 +11,6 @@ import java.util.Map;
 import play.Play;
 import play.cache.Cache;
 import play.classloading.ApplicationClasses.ApplicationClass;
-import play.exceptions.TemplateExecutionException;
 import play.mvc.After;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -50,7 +49,7 @@ public class JapidController extends Controller {
 	public static <T extends JapidTemplateBaseWithoutPlay> void render(
 			Class<T> c, Object... args) {
 		try {
-			RenderResult rr = invokeRender(c, args);
+			RenderResult rr = RenderInvokerUtils.invokeRender(c, args);
 			throw new JapidResult(rr);
 		} catch (Exception e) {
 			if (e instanceof JapidResult)
@@ -70,96 +69,14 @@ public class JapidController extends Controller {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	private static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeRender(
+	protected static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeRender(
 			Class<T> c, Object... args) {
-		int modifiers = c.getModifiers();
-		if (Modifier.isAbstract(modifiers)) {
-			throw new RuntimeException(
-					"Cannot init the template class since it's an abstract class: "
-							+ c.getName());
-		}
-		try {
-			// String methodName = "render";
-			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
-			StringBuilder sb = new StringBuilder(8000);
-			T t = ctor.newInstance(sb);
-			RenderResult rr = (RenderResult) RenderInvokerUtils.render(t, args);
-			// RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t,
-			// methodName, args);
-			return rr;
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(
-					"Could not match the arguments with the template args.");
-		} catch (InstantiationException e) {
-			// e.printStackTrace();
-			throw new RuntimeException(
-					"Could not instantiate the template object. Abstract?");
-		} catch (InvocationTargetException e) {
-			// e.printStackTrace();
-			Throwable te = e.getTargetException();
-			if (te instanceof TemplateExecutionException)
-				throw (TemplateExecutionException) te;
-			Throwable cause = te.getCause();
-			if (cause != null)
-				if (cause instanceof RuntimeException)
-					throw (RuntimeException) cause;
-				else
-					throw new RuntimeException(
-							"error in running the renderer: "
-									+ cause.getMessage(), cause);
-			else if (te instanceof RuntimeException)
-				throw (RuntimeException) te;
-			else
-				throw new RuntimeException("error in running the renderer: "
-						+ te.getMessage(), te);
-		} catch (Exception e) {
-			if (e instanceof RuntimeException)
-				throw (RuntimeException) e;
-			else
-				throw new RuntimeException(
-						"Could not invoke the template object: ", e);
-			// throw new RuntimeException(e);
-		}
-	}
+				return RenderInvokerUtils.invokeRender(c, args);
+			}
 
-	private static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeNamedArgsRender(
+	protected static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeNamedArgsRender(
 			Class<T> c, NamedArgRuntime[] args) {
-		int modifiers = c.getModifiers();
-		if (Modifier.isAbstract(modifiers)) {
-			throw new RuntimeException(
-					"Cannot init the template class since it's an abstract class: "
-							+ c.getName());
-		}
-		try {
-			// String methodName = "render";
-			Constructor<T> ctor = c.getConstructor(StringBuilder.class);
-			StringBuilder sb = new StringBuilder(8000);
-			JapidTemplateBaseWithoutPlay t = ctor.newInstance(sb);
-			RenderResult rr = (RenderResult) RenderInvokerUtils
-					.renderWithNamedArgs(t, args);
-			// RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t,
-			// methodName, args);
-			return rr;
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(
-					"Could not match the arguments with the template args.");
-		} catch (InstantiationException e) {
-			// e.printStackTrace();
-			throw new RuntimeException(
-					"Could not instantiate the template object. Abstract?");
-		} catch (InvocationTargetException e) {
-			// e.printStackTrace();
-			Throwable e1 = e.getTargetException();
-			throw new RuntimeException(
-					"Could not invoke the template object:  ", e1);
-		} catch (Exception e) {
-			if (e instanceof RuntimeException)
-				throw (RuntimeException) e;
-			else
-				throw new RuntimeException(
-						"Could not invoke the template object: ", e);
-			// throw new RuntimeException(e);
-		}
+		return RenderInvokerUtils.invokeNamedArgsRender(c, args);
 	}
 
 	/**
@@ -343,7 +260,7 @@ public class JapidController extends Controller {
 			if (JapidTemplateBase.class.isAssignableFrom(tClass)) {
 				RenderResult rr;
 				// render(tClass, args);
-				rr = invokeRender(tClass, args);
+				rr = RenderInvokerUtils.invokeRender(tClass, args);
 				return (rr);
 			} else {
 				throw new RuntimeException(
@@ -357,7 +274,7 @@ public class JapidController extends Controller {
 	 * @param template
 	 * @return
 	 */
-	private static String getTemapletClassName(String template) {
+	protected static String getTemapletClassName(String template) {
 		//
 		if (template == null || template.length() == 0) {
 			template = template();
@@ -665,16 +582,6 @@ public class JapidController extends Controller {
 		return getResultFromAction(runnable);
 	}
 
-	/**
-	 * can be used to generate a key based on the query
-	 * 
-	 * @return
-	 */
-	public static String genCacheKey() {
-		return "japidcache:" + Request.current().action + ":"
-				+ Request.current().querystring;
-	}
-
 	protected static NamedArgRuntime named(String name, Object val) {
 		return new NamedArgRuntime(name, val);
 	}
@@ -690,7 +597,7 @@ public class JapidController extends Controller {
 	 */
 	public static boolean isInvokedfromJapidView() {
 		Throwable t = new Throwable();
-		t.printStackTrace();
+//		t.printStackTrace();
 		final StackTraceElement[] ste = t.getStackTrace();
 		for (int i = 0; i < ste.length; i++) {
 			StackTraceElement st = ste[i];

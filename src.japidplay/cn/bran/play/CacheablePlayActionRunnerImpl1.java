@@ -15,9 +15,9 @@ public class CacheablePlayActionRunnerImpl1 extends CacheablePlayActionRunner{
 		super(ttl);
 	}
 	
-	public CacheablePlayActionRunnerImpl1(String ttl, Object... args) {
-		super(ttl, args);
-	}
+//	public CacheablePlayActionRunnerImpl1(String ttl, Object... args) {
+//		super(ttl, args);
+//	}
 
 	@Override
 	protected void runPlayAction() throws JapidResult {
