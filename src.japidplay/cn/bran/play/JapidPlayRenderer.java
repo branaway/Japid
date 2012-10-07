@@ -32,6 +32,7 @@ import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.RenderInvokerUtils;
 import cn.bran.japid.util.StackTraceUtils;
 import cn.bran.play.rendererloader.TemplateClassLoaderWithPlay;
+import cn.bran.play.util.PlayDirUtil;
 
 /**
  * 
@@ -133,6 +134,7 @@ public class JapidPlayRenderer {
 			return;
 
 		try {
+//			PlayDirUtil.mkdir(templateRoot);
 			// find out all removed classes
 			// XXX  just html? not xml, css, js?
 			// XXX need to add other files as well. The old code is for plain text rendering only
@@ -276,7 +278,7 @@ public class JapidPlayRenderer {
 	}
 
 	public static RendererCompiler compiler;
-	public static String templateRoot = "plainjapid";
+	public static String templateRoot = "japidroot";
 	public static final String JAPIDVIEWS = "japidviews";
 	public static String sep = File.separator;
 	public static String japidviews = templateRoot + sep + JAPIDVIEWS + sep;
@@ -434,27 +436,7 @@ public class JapidPlayRenderer {
 	 * 
 	 */
 	static List<File> mkdir(String root) throws IOException {
-		String japidviewsDir = getJapidviewsDir(root);
-		File layouts = new File(japidviewsDir + "_layouts");
-		if (!layouts.exists()) {
-			boolean mkdirs = layouts.mkdirs();
-			assert mkdirs == true;
-			log("created: " + layouts.getPath());
-		}
-
-		File tags = new File(japidviewsDir + "_tags");
-		if (!tags.exists()) {
-			boolean mkdirs = tags.mkdirs();
-			assert mkdirs == true;
-			log("created: " + tags.getPath());
-		}
-
-		File[] dirs = new File[] { layouts, tags };
-		List<File> res = new ArrayList<File>();
-		res.addAll(Arrays.asList(dirs));
-
-		return res;
-
+		return PlayDirUtil.mkdir(root);
 	}
 
 	/**
@@ -493,8 +475,6 @@ public class JapidPlayRenderer {
 	 * @throws IOException
 	 */
 	static List<File> gen(String packageRoot) throws IOException {
-		// mkdir(packageRoot);
-		// moved to reloadChanged
 		List<File> changedFiles = reloadChanged(packageRoot);
 		if (changedFiles.size() > 0) {
 //			for (File f : changedFiles) {

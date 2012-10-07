@@ -2,8 +2,6 @@ package cn.bran.play;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +14,8 @@ import cn.bran.japid.compiler.JapidCompilationException;
 import cn.bran.japid.compiler.JapidTemplateTransformer;
 import cn.bran.japid.compiler.TranslateTemplateTask;
 import cn.bran.japid.util.DirUtil;
+import cn.bran.japid.util.JapidFlags;
+import cn.bran.play.util.PlayDirUtil;
 
 public class JapidCommands {
 	private static final String APP = "app";
@@ -43,121 +43,12 @@ public class JapidCommands {
 		} else if ("clean".equals(arg0)) {
 			delAllGeneratedJava(appPath + APP + File.separator + DirUtil.JAPIDVIEWS_ROOT);
 		} else if ("mkdir".equals(arg0)) {
-			mkdir(appPath + APP);
+			PlayDirUtil.mkdir(appPath + APP);
 		} else {
-			log("not known: " + arg0);
+			JapidFlags.log("not known: " + arg0);
 		}
 	}
 
-	/**
-	 * create the basic layout: app/japidviews/_javatags app/japidviews/_layouts
-	 * app/japidviews/_tags
-	 * 
-	 * then create a dir for each controller. //TODO
-	 * 
-	 * @throws IOException
-	 * 
-	 */
-	public static List<File> mkdir(String root) throws IOException {
-		String sep = File.separator;
-		String japidViews = root + sep + DirUtil.JAPIDVIEWS_ROOT + sep;
-		File javatags = new File(japidViews + DirUtil.JAVATAGS);
-		if (!javatags.exists()) {
-			boolean mkdirs = javatags.mkdirs();
-			assert mkdirs;
-			log("created: " + japidViews + DirUtil.JAVATAGS);
-		}
-
-//		File webutil = new File(javatags, "JapidWebUtil.java");
-//		if (!webutil.exists()) {
-//			DirUtil.writeStringToFile(webutil, JapidWebUtil);
-//			log("created JapidWebUtil.java.");
-//		}
-		// add the place-holder for utility class for use in templates
-
-		File layouts = new File(japidViews + DirUtil.LAYOUTDIR);
-		if (!layouts.exists()) {
-			boolean mkdirs = layouts.mkdirs();
-			assert mkdirs;
-			log("created: " + japidViews + DirUtil.LAYOUTDIR);
-		}
-
-		File tags = new File(japidViews + DirUtil.TAGSDIR);
-		if (!tags.exists()) {
-			boolean mkdirs = tags.mkdirs();
-			assert mkdirs;
-			log("created: " + japidViews + DirUtil.TAGSDIR);
-		}
-		
-		// email notifiers
-		File notifiers = new File(japidViews + "_notifiers");
-		if (!notifiers.exists()) {
-			boolean mkdirs = notifiers.mkdirs();
-			assert mkdirs;
-			log("created: " + japidViews + "_notifiers");
-		}
-		
-		
-		File[] dirs = new File[] { javatags, layouts, tags };
-		List<File> res = new ArrayList<File>();
-		res.addAll(Arrays.asList(dirs));
-
-		// create dirs for controllers
-
-//		log("JapidCommands: check default template packages for controllers.");
-		try {
-			String controllerPath = root + sep + "controllers";
-			File controllerPathFile = new File(controllerPath);
-			if (controllerPathFile.exists()) {
-				String[] controllers = getAllJavaFilesInDir(controllerPathFile);
-				for (String f : controllers) {
-					String cp = japidViews + f;
-					File ff = new File(cp);
-					if (!ff.exists()) {
-						boolean mkdirs = ff.mkdirs();
-						assert mkdirs == true;
-						res.add(ff);
-						log("created: " + cp);
-					}
-				}
-			}
-		} catch (Exception e) {
-			log(e.toString());
-		}
-
-//		log("JapidCommands:  check default template packages for email notifiers.");
-		try {
-			String notifiersDir = root + sep + "notifiers";
-			File notifiersDirFile = new File(notifiersDir);
-			if (!notifiersDirFile.exists()) {
-				if (notifiersDirFile.mkdir()) {
-					log("created the email notifiers directory. ");
-				}
-				else {
-					log("email notifiers directory did not exist and could not be created for unknow reason. ");
-				}
-			}
-			
-			String[] controllers = getAllJavaFilesInDir(notifiersDirFile);
-			for (String f : controllers) {
-				// note: we keep the notifiers dir to differentiate those from the controller
-				// however this means we cannot have a controller with package like "controllers.notifiers"
-				// so we now use "_notifiers"
-				String cp = japidViews + "_notifiers" + sep + f;
-				File ff = new File(cp);
-				if (!ff.exists()) {
-					boolean mkdirs = ff.mkdirs();
-					assert mkdirs == true;
-					res.add(ff);
-					log("created: " + cp);
-				}
-			}
-		} catch (Exception e) {
-			log(e.toString());
-		}
-		return res;
-	}
-	
 	public static void regen() throws IOException {
 		regen(APP);
 	}
@@ -175,13 +66,13 @@ public class JapidCommands {
 		for (String j : javas) {
 			if (!j.contains(DirUtil.JAVATAGS)) {
 				String filePath = pathname + File.separatorChar + j;
-				log("removed: " + filePath);
+				JapidFlags.log("removed: " + filePath);
 				boolean delete = new File(filePath).delete();
 				if (!delete)
 					throw new RuntimeException("file was not deleted: " + j);
 			}
 		}
-		// log("removed: all none java tag java files in " +
+		// JapidFlags.log("removed: all none java tag java files in " +
 		// JapidPlugin.JAPIDVIEWS_ROOT);
 	}
 
@@ -190,16 +81,15 @@ public class JapidCommands {
 	 * @throws IOException 
 	 */
 	public static void gen(String packageRoot) throws IOException {
-//		mkdir(packageRoot);
 		// moved to reloadChanged
 		List<File> changedFiles = reloadChanged(packageRoot);
 		if (changedFiles.size() > 0) {
 			for (File f : changedFiles) {
 				String relativePath = JapidTemplateTransformer.getRelativePath(f, Play.applicationPath);
-				log("updated: " + relativePath.replace("html", "java"));
+				JapidFlags.log("updated: " + relativePath.replace("html", "java"));
 			}
 		} else {
-			log("No java files need to be updated.");
+			JapidFlags.log("No java files need to be updated.");
 		}
 
 		rmOrphanJava();
@@ -212,7 +102,7 @@ public class JapidCommands {
 	 */
 	public static List<File> reloadChanged(String root) {
 		try {
-			mkdir(root);
+			DirUtil.mkdir(root);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -316,15 +206,15 @@ public class JapidCommands {
 			String pathname = root + File.separator + DirUtil.JAPIDVIEWS_ROOT;
 			File src = new File(pathname);
 			if (!src.exists()) {
-				log("Could not find required Japid package structure: " + pathname);
-				log("Please use \"play japid:mkdir\" command to create the Japid view structure.");
+				JapidFlags.log("Could not find required Japid package structure: " + pathname);
+				JapidFlags.log("Please use \"play japid:mkdir\" command to create the Japid view structure.");
 				return hasRealOrphan;
 			}
 
 			Set<File> oj = DirUtil.findOrphanJava(src, null);
 			for (File j : oj) {
 				String path = j.getPath();
-				// log("found: " + path);
+				// JapidFlags.log("found: " + path);
 				if (path.contains(DirUtil.JAVATAGS)) {
 
 					// java tags, don't touch
@@ -334,9 +224,9 @@ public class JapidCommands {
 					File file = new File(realfile);
 					boolean r = file.delete();
 					if (r)
-						log("deleted orphan " + realfile);
+						JapidFlags.log("deleted orphan " + realfile);
 					else
-						log("failed to delete: " + realfile);
+						JapidFlags.log("failed to delete: " + realfile);
 				}
 			}
 
@@ -371,7 +261,4 @@ public class JapidCommands {
 		return reloadChanged;
 	}
 	
-	public static void log(String m) {
-		System.out.println("[JapidCommands]: " + m);
-	}
 }

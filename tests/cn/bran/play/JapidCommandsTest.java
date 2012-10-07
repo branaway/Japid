@@ -19,7 +19,7 @@ public class JapidCommandsTest {
 
 	@Test
 	public void testMkdir() throws IOException {
-		List<File> mkdir = JapidCommands.mkdir("tests/testmkdir");
+		List<File> mkdir = DirUtil.mkdir("tests/testmkdir");
 		for (File f : mkdir) {
 			System.out.println("verify existence: " + f.getPath());
 			assertTrue(f.exists());

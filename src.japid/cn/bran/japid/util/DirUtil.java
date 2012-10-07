@@ -11,11 +11,14 @@ import java.io.Writer;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import cn.bran.play.JapidCommands;
 
 public class DirUtil {
 	public static Set<File> findOrphanJava(File src, File target) {
@@ -94,9 +97,11 @@ public class DirUtil {
 	}
 	
 	private static void getAllFileNames(String leadingPath, File dir, List<String> files, String[] exts) {
+		if (!dir.exists())
+			return;
+//			throw new RuntimeException("directory exists? " +  dir.getPath());
+		
 		File[] flist = dir.listFiles();
-		if (flist == null)
-			throw new RuntimeException("directory exists? " +  dir.getPath());
 		for (File f : flist) {
 			if (f.isDirectory())
 				getAllFileNames(leadingPath + f.getName() + File.separatorChar, f, files, exts);
@@ -363,5 +368,115 @@ public class DirUtil {
 				.trim());
 		return oriLineNumber;
 	}
+
+
+	/**
+		 * create the basic layout: app/japidviews/_javatags app/japidviews/_layouts
+		 * app/japidviews/_tags
+		 * 
+		 * then create a dir for each controller. //TODO
+		 * 
+		 * @throws IOException
+		 * 
+		 */
+		public static List<File> mkdir(String root) throws IOException {
+			String sep = File.separator;
+			String japidViews = root + sep + JAPIDVIEWS_ROOT + sep;
+			File javatags = new File(japidViews + JAVATAGS);
+			if (!javatags.exists()) {
+				boolean mkdirs = javatags.mkdirs();
+				assert mkdirs;
+				JapidFlags.log("created: " + japidViews + JAVATAGS);
+			}
+	
+	//		File webutil = new File(javatags, "JapidWebUtil.java");
+	//		if (!webutil.exists()) {
+	//			DirUtil.writeStringToFile(webutil, JapidWebUtil);
+	//			JapidFlags.log("created JapidWebUtil.java.");
+	//		}
+			// add the place-holder for utility class for use in templates
+	
+			File layouts = new File(japidViews + LAYOUTDIR);
+			if (!layouts.exists()) {
+				boolean mkdirs = layouts.mkdirs();
+				assert mkdirs;
+				JapidFlags.log("created: " + japidViews + LAYOUTDIR);
+			}
+	
+			File tags = new File(japidViews + TAGSDIR);
+			if (!tags.exists()) {
+				boolean mkdirs = tags.mkdirs();
+				assert mkdirs;
+				JapidFlags.log("created: " + japidViews + TAGSDIR);
+			}
+			
+			// email notifiers
+			File notifiers = new File(japidViews + "_notifiers");
+			if (!notifiers.exists()) {
+				boolean mkdirs = notifiers.mkdirs();
+				assert mkdirs;
+				JapidFlags.log("created: " + japidViews + "_notifiers");
+			}
+			
+			
+			File[] dirs = new File[] { javatags, layouts, tags };
+			List<File> res = new ArrayList<File>();
+			res.addAll(Arrays.asList(dirs));
+	
+			// create dirs for controllers
+	
+	//		JapidFlags.log("JapidCommands: check default template packages for controllers.");
+			try {
+				String controllerPath = root + sep + "controllers";
+				File controllerPathFile = new File(controllerPath);
+				if (controllerPathFile.exists()) {
+					String[] controllers = JapidCommands.getAllJavaFilesInDir(controllerPathFile);
+					for (String f : controllers) {
+						String cp = japidViews + f;
+						File ff = new File(cp);
+						if (!ff.exists()) {
+							boolean mkdirs = ff.mkdirs();
+							assert mkdirs == true;
+							res.add(ff);
+							JapidFlags.log("created: " + cp);
+						}
+					}
+				}
+			} catch (Exception e) {
+				JapidFlags.log(e.toString());
+			}
+	
+	//		JapidFlags.log("JapidCommands:  check default template packages for email notifiers.");
+			try {
+				String notifiersDir = root + sep + "notifiers";
+				File notifiersDirFile = new File(notifiersDir);
+				if (!notifiersDirFile.exists()) {
+					if (notifiersDirFile.mkdir()) {
+						JapidFlags.log("created the email notifiers directory. ");
+					}
+					else {
+						JapidFlags.log("email notifiers directory did not exist and could not be created for unknow reason. ");
+					}
+				}
+				
+				String[] controllers = JapidCommands.getAllJavaFilesInDir(notifiersDirFile);
+				for (String f : controllers) {
+					// note: we keep the notifiers dir to differentiate those from the controller
+					// however this means we cannot have a controller with package like "controllers.notifiers"
+					// so we now use "_notifiers"
+					String cp = japidViews + "_notifiers" + sep + f;
+					File ff = new File(cp);
+					if (!ff.exists()) {
+						boolean mkdirs = ff.mkdirs();
+						assert mkdirs == true;
+						res.add(ff);
+						JapidFlags.log("created: " + cp);
+					}
+				}
+			} catch (Exception e) {
+				JapidFlags.log(e.toString());
+			}
+			return res;
+		}
 
 }
