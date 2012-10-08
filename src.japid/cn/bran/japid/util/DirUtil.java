@@ -21,10 +21,19 @@ import java.util.Set;
 import cn.bran.play.JapidCommands;
 
 public class DirUtil {
+	/**
+	 * 
+	 */
+	private static final String[] ALL_EXTS = new String[] { ".java", ".html", ".js", ".txt", ".css", ".json", ".xml" };
+	/**
+	 * 
+	 */
+	private static final String[] TEMPLATE_EXTS = new String[]{".html", ".js", ".txt", ".css", ".xml", ".json"};
+	
 	public static Set<File> findOrphanJava(File src, File target) {
 		if (target == null)
 			target = src;
-		String[] allSrc = getAllFileNames(src, new String[] { ".java", ".html", ".txt", ".json", ".xml" });
+		String[] allSrc = getAllFileNames(src, ALL_EXTS);
 		Set<String> javas = new HashSet<String>();
 		Set<String> srcFiles = new HashSet<String>();
 
@@ -58,6 +67,14 @@ public class DirUtil {
 	public static String[] getAllTemplateHtmlFiles(File dir) {
 		List<String> files = new ArrayList<String>();
 		getAllFileNames("", dir, files, new String[] {".html"});
+		// should filter out bad named files
+		String[] ret = new String[files.size()];
+		return files.toArray(ret);
+	}
+	
+	public static String[] getAllTemplateFiles(File dir) {
+		List<String> files = new ArrayList<String>();
+		getAllFileNames("", dir, files, TEMPLATE_EXTS);
 		// should filter out bad named files
 		String[] ret = new String[files.size()];
 		return files.toArray(ret);
@@ -126,7 +143,7 @@ public class DirUtil {
 //			target = src;
 //		String srcPath = src.getPath();
 		Set<File> allSrc  = new HashSet<File>();
-		allSrc = getAllFiles(srcDir, new String[] { ".java", ".html", ".txt", ".json", ".xml", ".js" }, allSrc);
+		allSrc = getAllFiles(srcDir, ALL_EXTS, allSrc);
 		Map<String, Long> javas = new HashMap<String, Long>();
 		Map<String, Long> srcFiles = new HashMap<String, Long>();
 		
@@ -265,7 +282,7 @@ public class DirUtil {
 		File dir = new File(dirName);
 		
 		if (dir.exists()) {
-			String[] temps = getAllFileNames(dir, new String[]{".html", ".js", ".txt", ".css", ".xml", ".json"});
+			String[] temps = getAllFileNames(dir, TEMPLATE_EXTS);
 			if (temps.length > 0) 
 				return true;
 			else

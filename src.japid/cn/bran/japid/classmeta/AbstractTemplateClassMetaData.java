@@ -607,18 +607,18 @@ public abstract class AbstractTemplateClassMetaData {
 			pln("this.setOut(ori);");
 			if (useWithPlay)
 				pln("if (actionRunners.size() > 0) {\n" + 
-						"	StringBuilder sb2 = new StringBuilder();\n" + 
+						"	StringBuilder _sb2 = new StringBuilder();\n" + 
 						"	int segStart = 0;\n" + 
-						"	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> arEntry : actionRunners.entrySet()) {\n" + 
-						"		int pos = arEntry.getKey();\n" + 
-						"		sb2.append(sb.substring(segStart, pos));\n" + 
+						"	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> _arEntry : actionRunners.entrySet()) {\n" + 
+						"		int pos = _arEntry.getKey();\n" + 
+						"		_sb2.append(sb.substring(segStart, pos));\n" + 
 						"		segStart = pos;\n" + 
-						"		cn.bran.japid.template.ActionRunner a = arEntry.getValue();\n" + 
-						"		sb2.append(a.run().getContent().toString());\n" + 
+						"		cn.bran.japid.template.ActionRunner _a_ = _arEntry.getValue();\n" + 
+						"		_sb2.append(_a_.run().getContent().toString());\n" + 
 						"	}\n" + 
-						"	sb2.append(sb.substring(segStart));\n" + 
+						"	_sb2.append(sb.substring(segStart));\n" + 
 						"	actionRunners = parentActionRunners;\n" + 
-						"	return sb2.toString();\n" + 
+						"	return _sb2.toString();\n" + 
 						"} else {\n" + 
 						"	actionRunners = parentActionRunners;\n" + 
 						"	return sb.toString();\n" + 

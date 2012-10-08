@@ -34,13 +34,13 @@ import cn.bran.japid.util.RenderInvokerUtils;
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
  */
-public class TemplateClassLoader extends ClassLoader {
+public class TemplateClassLoaderWithPlay extends ClassLoader {
 	// the per classloader class cache
 	private Map<String, Class<?>> localClasses = new ConcurrentHashMap<String, Class<?>>();
 	private ClassLoader parentClassLoader;
 
-	public TemplateClassLoader(ClassLoader cl) {
-		super(TemplateClassLoader.class.getClassLoader());
+	public TemplateClassLoaderWithPlay(ClassLoader cl) {
+		super(TemplateClassLoaderWithPlay.class.getClassLoader());
 		this.parentClassLoader = cl;
 	}
 
@@ -96,7 +96,8 @@ public class TemplateClassLoader extends ClassLoader {
 	}
 
 	/**
-	 * Search for the byte code of the given class from the current classpath
+	 * Search for the byte code of the given class.
+	 * XXX is this correct? shall we get the bytecode from the global class wrappers in the JapidRenderer?
 	 */
 	protected byte[] getClassDefinition(String name) {
 //		System.out.println("TemplateClassLoader.getClassDefinition(): " + name);

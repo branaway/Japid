@@ -41,7 +41,7 @@ public class RendererCompiler {
     Map<String, Boolean> packagesCache = new HashMap<String, Boolean>();
     Map<String, RendererClass> japidClasses ;//= new HashMap<String, RendererClass>();
     
-    TemplateClassLoader crlr;
+    public TemplateClassLoader crlr;
     
     Map<String, String> settings;
     {

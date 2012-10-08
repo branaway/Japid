@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import play.classloading.ApplicationClasses.ApplicationClass;
+
 import cn.bran.japid.rendererloader.RendererClass;
 import cn.bran.japid.rendererloader.TemplateClassLoader;
 import cn.bran.japid.template.JapidRenderer;
@@ -56,4 +58,14 @@ public class TemplateClassLoaderWithPlay extends TemplateClassLoader {
 		return JapidPlayRenderer.japidClasses.get(name);
 	}
 
+	@Override
+	protected byte[] getClassDefinition(String name) {
+		ApplicationClass applicationClass = play.Play.classes.getApplicationClass(name);
+		if (applicationClass != null && applicationClass.javaByteCode != null) {
+//			System.out.println("TemplateClassLoaderWithPlay: got byte code: " + name);
+			return applicationClass.javaByteCode;
+		} else {
+			return super.getClassDefinition(name);
+		}
+	}
 }

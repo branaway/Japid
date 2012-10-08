@@ -51,7 +51,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"c",  };
-	public static final String[] argTypes = new String[] {/* arg types of the template*/"Category",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"models.Category",  };
 	public static final Object[] argDefaults= new Object[] {null, };
 	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.index.class);
 
@@ -64,8 +64,8 @@ public class index extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private Category c; // line 3
-	public cn.bran.japid.template.RenderResult render(Category c) {
+	private models.Category c; // line 3
+	public cn.bran.japid.template.RenderResult render(models.Category c) {
 		this.c = c;
 		long t = -1;
 		 t = System.nanoTime();
@@ -83,7 +83,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 ;// line 1
 ;// line 2
 		p("\n" + 
-"<h2>Sample Templates that demonstrate Japid features.</h2>\n" + 
+"<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
 "source code.</p>\n" + 

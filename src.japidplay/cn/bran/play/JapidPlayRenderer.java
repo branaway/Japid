@@ -58,7 +58,6 @@ public class JapidPlayRenderer {
 	 * @return
 	 */
 	public static Class<? extends JapidTemplateBaseWithoutPlay> getTemplateClass(String name) {
-
 		refreshClasses(/*name*/);
 
 		RendererClass rc = japidClasses.get(name);
@@ -138,12 +137,12 @@ public class JapidPlayRenderer {
 			// find out all removed classes
 			// XXX  just html? not xml, css, js?
 			// XXX need to add other files as well. The old code is for plain text rendering only
-			String[] allHtml = DirUtil.getAllTemplateHtmlFiles(new File(templateRoot));
-			Set<String> currentClassesOnDir = createNameSet(allHtml);
+			String[] allTemps = DirUtil.getAllTemplateFiles(new File(templateRoot));
+			Set<String> currentClassesOnDir = createNameSet(allTemps);
 			Set<String> allNames = new HashSet<String>(currentClassesOnDir);
 
 			Set<String> keySet = japidClasses.keySet();
-			allNames.removeAll(keySet); // added html
+			allNames.removeAll(keySet); // got new templates
 
 			removeRemoved(currentClassesOnDir, keySet);
 
@@ -363,10 +362,11 @@ public class JapidPlayRenderer {
 		String path = f.getPath();
 		String substring = path.substring(path.indexOf(JAPIDVIEWS));
 		substring = substring.replace('/', '.').replace('\\', '.');
+		substring = DirUtil.mapSrcToJava(substring);
 		if (substring.endsWith(".java")) {
 			substring = substring.substring(0, substring.length() - 5);
-		} else if (substring.endsWith(".html")) {
-			substring = substring.substring(0, substring.length() - 5);
+		} else {
+			substring = DirUtil.mapSrcToJava(substring);
 		}
 		return substring;
 	}

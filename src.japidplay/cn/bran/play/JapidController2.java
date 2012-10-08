@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
+import com.sun.tools.internal.jxc.gen.config.Classes;
+
 import play.Play;
 import play.Play.Mode;
 import play.cache.Cache;
@@ -224,9 +226,8 @@ public class JapidController2 extends Controller {
 										+ expr_format.substring(expr_format
 												.indexOf('.'));
 							}
-							ApplicationClass appClass = Play.classes
-									.getApplicationClass(expr_format);
-							if (appClass != null)
+							RendererClass rc = JapidPlayRenderer.japidClasses.get(expr_format);
+							if (rc != null)
 								return expr_format;
 							else {
 								// fall back
