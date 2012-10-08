@@ -37,9 +37,9 @@ public class FooController extends JapidRenderer {
 		return JapidRenderer.renderWith(foo.class, p);
 	}
 
-	public String bar2(String p) {
-		return new foo().render(p);
-	}
+//	public String bar2(String p) {
+//		return new foo().render(p);
+//	}
 
 	public String tee(ModelUser u) {
 		return JapidRenderer.render(u);
