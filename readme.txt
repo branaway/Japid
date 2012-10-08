@@ -29,9 +29,8 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
-2012/10/6: V0.9.10:
-	1. major feature: introduced JapidController2 and JapidPlayRenderer which employed independent view class loading and reloading to further decouple the view layer and the rest of Play. It should offer better turn-around time in DEV mode. See JapidSampleDecoupled for an example.
-		The new feature is currently in the decoupled_classloading branch, to be merged back to the master once it gets more rigorous testing. 
+2012/10/8: V0.9.10:
+	1. major feature: introduced JapidController2 and JapidPlayRenderer which employed independent view class loading and reloading to further decouple the view layer and the rest of Play. It should offer better turn-around time in DEV mode. See JapidSampleDecoupled for an example. The module doc was updated too. 
 2012/10/2: V0.9.6.1:
 	1. minor issue: validate file names when detecting file changes t filter out files with special chars in name. 
 2012/7/19: V0.9.6:
