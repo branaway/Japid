@@ -30,12 +30,12 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 
 // - add implicit fields with Play
 
-	final Request request = Request.current(); 
-	final Response response = Response.current(); 
-	final Session session = Session.current();
-	final RenderArgs renderArgs = RenderArgs.current();
-	final Params params = Params.current();
-	final Validation validation = Validation.current();
+	final play.mvc.Http.Request request = play.mvc.Http.Request.current(); 
+	final play.mvc.Http.Response response = play.mvc.Http.Response.current(); 
+	final play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
+	final play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
+	final play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
+	final play.data.validation.Validation validation = play.data.validation.Validation.current();
 	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
 	final play.Play _play = new play.Play(); 
 

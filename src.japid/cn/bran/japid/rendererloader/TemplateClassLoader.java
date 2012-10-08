@@ -65,7 +65,7 @@ public class TemplateClassLoader extends ClassLoader {
 
 		Class<?> cla = localClasses.get(name);
 		if (cla != null) {
-			System.out.println(oid + " loaded from local cache : " + name);
+//			System.out.println(oid + " loaded from local cache : " + name);
 			return cla;
 		}
 			
@@ -85,8 +85,8 @@ public class TemplateClassLoader extends ClassLoader {
 		rc.setClz(cl);
 		localClasses.put(name, cl);
 		rc.lastUpdated = 1;// System.currentTimeMillis();
-		if (JapidFlags.verbose) 
-			System.out.println(oid + "class redefined from bytecode: " + name);
+//		if (JapidFlags.verbose) 
+//			System.out.println(oid + "class redefined from bytecode: " + name);
 		return cl;
 
 	}

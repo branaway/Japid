@@ -30,12 +30,12 @@ public class def extends defLayout
 
 // - add implicit fields with Play
 
-	final Request request = Request.current(); 
-	final Response response = Response.current(); 
-	final Session session = Session.current();
-	final RenderArgs renderArgs = RenderArgs.current();
-	final Params params = Params.current();
-	final Validation validation = Validation.current();
+	final play.mvc.Http.Request request = play.mvc.Http.Request.current(); 
+	final play.mvc.Http.Response response = play.mvc.Http.Response.current(); 
+	final play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
+	final play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
+	final play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
+	final play.data.validation.Validation validation = play.data.validation.Validation.current();
 	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
 	final play.Play _play = new play.Play(); 
 
@@ -130,18 +130,18 @@ actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 
 this.setOut(ori);
 if (actionRunners.size() > 0) {
-	StringBuilder sb2 = new StringBuilder();
+	StringBuilder _sb2 = new StringBuilder();
 	int segStart = 0;
-	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> arEntry : actionRunners.entrySet()) {
-		int pos = arEntry.getKey();
-		sb2.append(sb.substring(segStart, pos));
+	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> _arEntry : actionRunners.entrySet()) {
+		int pos = _arEntry.getKey();
+		_sb2.append(sb.substring(segStart, pos));
 		segStart = pos;
-		cn.bran.japid.template.ActionRunner a = arEntry.getValue();
-		sb2.append(a.run().getContent().toString());
+		cn.bran.japid.template.ActionRunner _a_ = _arEntry.getValue();
+		_sb2.append(_a_.run().getContent().toString());
 	}
-	sb2.append(sb.substring(segStart));
+	_sb2.append(sb.substring(segStart));
 	actionRunners = parentActionRunners;
-	return sb2.toString();
+	return _sb2.toString();
 } else {
 	actionRunners = parentActionRunners;
 	return sb.toString();
@@ -161,18 +161,18 @@ actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 		
 this.setOut(ori);
 if (actionRunners.size() > 0) {
-	StringBuilder sb2 = new StringBuilder();
+	StringBuilder _sb2 = new StringBuilder();
 	int segStart = 0;
-	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> arEntry : actionRunners.entrySet()) {
-		int pos = arEntry.getKey();
-		sb2.append(sb.substring(segStart, pos));
+	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> _arEntry : actionRunners.entrySet()) {
+		int pos = _arEntry.getKey();
+		_sb2.append(sb.substring(segStart, pos));
 		segStart = pos;
-		cn.bran.japid.template.ActionRunner a = arEntry.getValue();
-		sb2.append(a.run().getContent().toString());
+		cn.bran.japid.template.ActionRunner _a_ = _arEntry.getValue();
+		_sb2.append(_a_.run().getContent().toString());
 	}
-	sb2.append(sb.substring(segStart));
+	_sb2.append(sb.substring(segStart));
 	actionRunners = parentActionRunners;
-	return sb2.toString();
+	return _sb2.toString();
 } else {
 	actionRunners = parentActionRunners;
 	return sb.toString();
@@ -194,18 +194,18 @@ actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 		
 this.setOut(ori);
 if (actionRunners.size() > 0) {
-	StringBuilder sb2 = new StringBuilder();
+	StringBuilder _sb2 = new StringBuilder();
 	int segStart = 0;
-	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> arEntry : actionRunners.entrySet()) {
-		int pos = arEntry.getKey();
-		sb2.append(sb.substring(segStart, pos));
+	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> _arEntry : actionRunners.entrySet()) {
+		int pos = _arEntry.getKey();
+		_sb2.append(sb.substring(segStart, pos));
 		segStart = pos;
-		cn.bran.japid.template.ActionRunner a = arEntry.getValue();
-		sb2.append(a.run().getContent().toString());
+		cn.bran.japid.template.ActionRunner _a_ = _arEntry.getValue();
+		_sb2.append(_a_.run().getContent().toString());
 	}
-	sb2.append(sb.substring(segStart));
+	_sb2.append(sb.substring(segStart));
 	actionRunners = parentActionRunners;
-	return sb2.toString();
+	return _sb2.toString();
 } else {
 	actionRunners = parentActionRunners;
 	return sb.toString();

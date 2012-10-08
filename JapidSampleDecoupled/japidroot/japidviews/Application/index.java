@@ -83,20 +83,21 @@ public class index extends cn.bran.play.JapidTemplateBase
 ;// line 1
 ;// line 2
 		p("\n" + 
-"<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
+"\n" + 
+"<h2>Some Sample Templates that Demonstrate Japid Features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
 "source code.</p>\n" + 
 "\n" + 
 "<ul>\n" + 
 "	<li><a href=\"");// line 3
-		p(lookup("hello", new Object[]{}));// line 10
+		p(lookup("hello", new Object[]{}));// line 11
 		p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
 "	<li><a href=\"application/callTag\">using tags in a template</a></li>\n" + 
 "	<li><a href=\"go/templates/def.html\"><em>def</em>\n" + 
 "	tag: define a method that return a string that can be invoked from\n" + 
-"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 10
+"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 11
 		p("\n" + 
 "	<li><a href=\"more.Portlets/index\">demo how to composite a\n" + 
 "	page with independent segments with the <b>invoke</b> tag</a></li>\n" + 
@@ -140,10 +141,10 @@ public class index extends cn.bran.play.JapidTemplateBase
 "	dontRedirect() from JapidController</a></li>\n" + 
 "	<li><a href=\"go/templates/openBrace.html\"> use\n" + 
 "	`{ in if and while </a></li>\n" + 
-"	<li><a href=\"application/escapedExpr\"> ");// line 20
+"	<li><a href=\"application/escapedExpr\"> ");// line 21
 		p("\n" + 
 "	raw expression with ${} and html-safe expression with ~{}\n" + 
-"	");// line 63
+"	");// line 64
 		p("	</li>\n" + 
 "	<li><a href=\"more.ContentNegotiation/index\"> content\n" + 
 "	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
@@ -157,49 +158,49 @@ public class index extends cn.bran.play.JapidTemplateBase
 "	in layout spec and tags</a>: prefix the layout name or the tag name with a\n" + 
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
-"\n");// line 65
-		String na = "bran";// line 80
-int ag = 123;// line 81
-		p("	<li><a href=\"");// line 81
-		p(lookup("validate", na, ag));// line 82
+"\n");// line 66
+		String na = "bran";// line 81
+int ag = 123;// line 82
+		p("	<li><a href=\"");// line 82
+		p(lookup("validate", na, ag));// line 83
 		p("\">validation and errors</a></li>\n" + 
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"application/flashgood\">flash with success</a></li>\n" + 
-"			<li><a href=\"");// line 82
-		p(lookup("reverseUrl", new Object[]{}));// line 86
+"			<li><a href=\"");// line 83
+		p(lookup("reverseUrl", new Object[]{}));// line 87
 		p("\">flash with a message</a></li>\n" + 
 "			<li><a href=\"application/flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"application/flashmsg\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
-"	   ");// line 86
-		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 92
-		p("	   <a href=\"");// line 92
-		p(lookup("search", sp));// line 93
+"	   ");// line 87
+		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 93
+		p("	   <a href=\"");// line 93
+		p(lookup("search", sp));// line 94
 		p("\">reverse URL lookup with complex object</a>\n" + 
-"    ");// line 93
+"    ");// line 94
 		p("\n" + 
 "	</li>\n" + 
-"	<li><a href=\"");// line 95
-		p(lookupStatic("/public/images/favicon.png"));// line 97
+"	<li><a href=\"");// line 96
+		p(lookupStatic("/public/images/favicon.png"));// line 98
 		p("\">reverse to a static  png</a></li>\n" + 
 "</ul>\n" + 
 "\n" + 
 "<p>Reverse lookup is slow...</p>\n" + 
 "\n" + 
-"<p>app mode: \"");// line 97
-		p(_play.mode);// line 102
+"<p>app mode: \"");// line 98
+		p(_play.mode);// line 103
 		p("\"</p>\n" + 
 "\n" + 
-"-->\"");// line 102
-		p(c.name);// line 104
+"-->\"");// line 103
+		p(c.name);// line 105
 		p("\" , \n" + 
-"\"");// line 104
-		p(c.subname);// line 105
-		p("\"\n");// line 105
-		p("\n");// line 107
+"\"");// line 105
+		p(c.subname);// line 106
+		p("\"\n");// line 106
+		p("\n");// line 108
 		
 		endDoLayout(sourceTemplate);
 	}

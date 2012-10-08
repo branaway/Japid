@@ -1,8 +1,8 @@
 h1. The Quick Manual of Japid Engine with Play Framework
 
-V0.9.3.4
+V0.9.10
 
-Bing Ran<bing_ran@hotmail.com>
+Bing Ran<bing.ran@gmail.com>
 
 h4. Reference
 
@@ -15,7 +15,7 @@ Japid is a Java-based statically typed text rendering templates system that aims
 
 It's a generic template engine that can be used by any Java applications to render any Java objects. It also provides adapters specifically for the Play! Framework. 
 
-The main goal of Japid is for use in large, high-traffic and highly dynamic Play! bases web applications. To reach that goal, Japid transforms templates files to clean Java source code thus the rendering can run at the raw Java speed. 
+The main goal of Japid is for use in large, high-traffic and highly dynamic Play! bases web applications. To reach that goal, Japid transforms templates files to clean Java source code so that the rendering can run at the raw Java speed. 
 
 Due to its fast performance and low memory usage, Japid is a very good rendering system for Play applications targeting the Google App Engine runtime, which is very resource-constrained. 
 
@@ -42,15 +42,37 @@ I don't want:
 
 h2. Mechanism
 
-* Japid engine is wrapped as a Play! module which must be configured in the *application.conf* file. 
+There are two ways Japid can be integrated with Play 1.2.x and later. In the classic way, Japid is participates in Play's class loading and reloading process. All the controllers, models and Japid views are managed by the same Play's class loader. This integration mechanism is called "pre-controller integration". Since version 0.9.10, Japid provides it's own class loading mechanism that is decoupled from Play's class loading. Since the class-loading does not take place until the controllers pass control to the Japid view layer, the newer mechanism is called "post-controller integration". 
+
+h3. Pre-Controller Integration
+
+* Japid engine is wrapped as a Play! module which must be configured in the *application.conf* file or the *dependencies.yml* file in the *conf* folder. 
 * Japid Templates are transformed to Java source files, automatically in a running Play! instance in *DEV (development)* mode, which then are picked up by the Play! runtime in the code change detection process. 
 * The Java classes that encapsulate all the layout logic can be invoked as plain java classes to generate text output, or they can be used reflectively with conventions in naming and location.  
 * A few command-line tools are also provided to generate Java source files from the templates. 
 * Master layouts are translated to abstract super classes, which is to be inherited by views. 
 
+h3. Post-Controller Integration
+
+In this mode, 
+* Technically Japid engine does not need to be configured to a Play's instance. It is used in a way that's very similar to how rendering engines such as Velocity and Freemarker are used in web applications. 
+* Japid is a simple, self managing layer that sits after the controllers. Japid manages its own template compiling to Java classes and class loading. 
+* File change detection and class reloading takes place after the code in the controller has been executed.   
+* The Java intermediaries are not supposed to be invoked directly from within the controllers. They are wrapped in a special controller super class named "JapidController2". 
+
+The post-controller Japid decouples the view layer from the controller and model layer at class loading level. It further avoids cross interference when hot swapping new code in DEV mode. This can translate to further time saving in quickly making changes in DEV mode. 
+
+Another great advantage in using this model is that errors in compiling or running Japid views will be picked up by the Play's nice error displaying page, another great debugging tool and time saver. 
+
+  
 h2. Japid Module
 
-First you need to get yourself familiar with the "Play! module concept":http://www.playframework.org/documentation/1.1.1/modules. 
+First you need to get yourself familiar with the "Play! module concept":
+
+- http://www.playframework.org/documentation/1.2.2/modules 
+- http://www.playframework.org/documentation/1.2.2/dependency
+
+The following is a sample session. 
 
 To show all the version of Japid module, from the command-line:
 
@@ -72,7 +94,7 @@ Then you can pick the version to install, usually the head version, which is als
 To install the Japid module:
 
 <pre>
-$ play install japid-0.9.3.4
+$ play install japid-0.9.10
 </pre>
   
 or, 
@@ -99,10 +121,17 @@ The module goes to the @modules@ directory of the Play!'s installation root. The
 Now add a reference to Japid module in the @application.conf@ file in your application:
 
 <pre>
-module.japid=${play.path}/modules/japid-0.9.3.4  // or whatever the version number is
+module.japid=${play.path}/modules/japid-0.9.10  // or whatever the version number is
 </pre>
 
-The next thing to do is to create the default directory structure required by Japid. From the app root:
+Since some versions ago, it's recommended that developers use *dependencies.yml* to configure modules or "dependencies". In case of Japid, add this line to the dependencies file:
+
+<pre>
+    - play -> japid 0.9.10
+</pre>
+
+
+The next thing to do is to create the default directory structure required by Japid, if you want to use the "pre-controller integration" model. From the app root:
 
 <pre>
 $ play japid:gen
@@ -110,9 +139,13 @@ $ play japid:gen
 
 The @japidviews@ tree is now created in the @app@ directory
 
+If you're using the so called "post-controller integration" model, do nothing at this stage.  
+
 Now you're ready to code your models, controllers and Japid views! Every time you add a new controller you can @play japid:gen@ to create a new sub-directory to match the controller or you can create the directory manually if you're confident about your typing skill. 
 
 h2. Runtime Directory Structure of Japid in Play! applications
+
+h3. Pre-Controller Intagration
 
 All template files are located in @app/japidviews@ directory tree, as illustrated here:
 
@@ -139,6 +172,11 @@ Notes:
 # the @_notifiers@ sub-directory contains email templates coded in Japid. There is a section for this later in this document. 
 # The other nodes of the tree are created to match the structure of the controller and actions therein. For each controller there is a directory created which contains a bunch of template files named after the action method in the controller. The Japid converter translates the html template files to java files in the same directory. Please note though, the layouts of the template files are required only if we are going to use *implicit template binding*. A template can be placed anywhere in the case of *explicit template invocation*. There is a section of document for this later. 
 
+h3. Post-Controller Integration Japid File Structure
+
+The post-controller japid model assumes a folder named "japidroot" as the root of the "japidviews" tree. The japidroot is located directly in the application root, rather than the app folder. This means it's NOT on the application classpath hence the application's class loader does not see any of those Java classes derived from the japid view files. 
+
+
 h2. Japid Syntax
 
 The original version of Japid (around version 0.3) copied a lot of the "syntax from the Play! framework":http://www.playframework.org/documentation/1.1.1/templates. The idea was to help the Play! users to pick up the engine quickly. New and simpler syntax has been introduced over the course of one year use in real-world projects. This documents tries to compare the syntax of different flavors. 
@@ -158,7 +196,7 @@ Note:
 ~* for *
 </pre>
 
-2. To join lines, please use back slash "\" immediately followed by a new line. Effective anywhere in the template. The back slash and the new line symbol will be simply swollen by the parser. 
+2. To join lines, please use a back slash "\" immediately followed by a new line. The back slash and the new line symbol will be simply swollen by the parser. 
 
 <pre>
 @ Str\
@@ -366,12 +404,12 @@ import play.mvc.Http.*;
 </pre>
 
 
-Note: One advantage of using `() is it can span multiple lines, useful when the argument list is long. Of course you can use the @`args@ and the line continuator "\" to simulate multi-line paramters too. 
+Note: One advantage of using `() is it can span multiple lines, useful when the argument list is long. Of course you can use the @`args@ and the line continuator "\" to simulate multi-line argument list too. 
 
 <pre>
 *{here I'm using the alternate marker @ instead of the default `}*
 @(
-    my.Objecy o,
+    my.Object o,
     int i,
     String s
 )
@@ -1248,9 +1286,10 @@ h2. Invoking templates in Controllers
 
 Japid templates are compiled java classes which can be invoked statically or reflectively. 
 
-Note: to use Japid in a controller, one must let the controller to @extends@ a special Japid controller super class named @cn.bran.play.JapidController@, instead of the Play!'s default @Controller@ class.
+Note: to use Japid in a controller, one must let the controller to @extends@ a special Japid controller super class named @cn.bran.play.JapidController@, instead of the Play!'s default @Controller@ class. If you intend to use post-controller Japid integration. Please use the @cn.bran.play.JapidController2@ as the super controller class instead. 
 
-h3. Explicit Template Binding
+
+h3. Explicit Template Binding (Pre-Controller Integration only)
 
 Since all Japid templates are compiled to Java classes, one can use them directly anywhere, of course including in the controller actions. Given a template @japidviews/MyController/foo.html@, Japid will generate a Java class named @japidviews.MyController.foo@. The entry point of using this class is:
 
@@ -1281,7 +1320,7 @@ h4. How and when are the template files translated to Java source code?
 
 Three ways and timing.
 
-h5. Conversion method 1: command-line tools
+h5. Conversion method 1: command-line tools (pre-controller integration)
 
 There are four Japid command-line commands that one can use in the application root:
 
@@ -1341,7 +1380,7 @@ Now the artifacts of Japid transforming process will be displayed instantaneousl
 
 
 
-h5. Conversion method 3: using the Japid plugin for Eclipse
+h5. Conversion method 3: using the Japid plugin for Eclipse (pre-controller integration for now)
 
 There is a plugin for Eclipse that takes care of templates/Java synchronization at compile time. One don't need to run the app in DEV mode to get the templates automatically translated. The detail is explained in a later section of this document.  
 
@@ -1356,9 +1395,9 @@ In conclusoin, there are good and bad sides of using a template explicitly as a 
 
 h3. Implicit Template Binding
 
-To decouple an action and the template it defaults to render, the @JapidController@ provides a method @renderJapid(...)@ to hide the process of invoking the renderer. The method depends on the parallel package structure of the @controllers@ tree and the @japidviews@ tree to locate the right template to render with. 
+To decouple an action and the template it defaults to render, the @JapidController@ or @JapidController2@ provides a method @renderJapid(...)@ to hide the process of invoking the renderer. The method depends on the parallel package structure of the @controllers@ tree and the @japidviews@ tree to locate the right template to render with. 
 
-For an example, given the action method @controllers.p1.MyController.foo(...)@, the default template name is @japidviews/p1/MyController/foo.html@.
+For an example, given the action method @controllers.p1.MyController.foo(...)@, the default template name is @[app/japidroot]/japidviews/p1/MyController/foo.html@.
 
 The @renderJapid@ makes binding to the default template a lot easier as shown below:
 
@@ -1462,9 +1501,9 @@ In a controller:
 
 <pre><code>
 package controllers.more;
-import cn.bran.play.JapidController;
+import cn.bran.play.*;
 
-public class Portlets extends JapidController {
+public class Portlets extends JapidController /*or JapidController2*/ {
     public static void index() {
         renderJapid("a", "b");
     }
@@ -1542,9 +1581,9 @@ package controllers.more;
 import java.util.Date;
 
 import play.cache.CacheFor;
-import cn.bran.play.JapidController;
+import cn.bran.play.*;
 
-public class Portlets extends JapidController {
+public class Portlets extends JapidController /*or JapidController2*/ {
     @CacheFor("20s")
     public static void index() {
         renderJapid("a", "b");
@@ -1602,7 +1641,7 @@ Since version 0.9.4.4, programmer have a couple of APIs in the *JapidController*
 
 Currently all cached Japid *invoke* results are stored with keys synthesized with the controller name, action name and the arguments. The id attribute of the *CacheFor* annotation is not yet supported. 
 
-h2. Use Japid to Render Email Content.
+h2. Use Japid to Render Email Content (Pre-Controller Integration Only).
 
 Japid has a replacement for Play!'s email rendering engine. The mechanism is very similar to the "Play!'s email rendering flow":http://www.playframework.org/documentation/1.1.1/emails, but takes full advantage of Japid templates. 
 
@@ -1671,7 +1710,7 @@ Note:
 
 
 
-h2. Using the Japid Eclipse Plugin
+h2. Using the Japid Eclipse Plugin (Pre-Controller Integration Only)
 
 First of all, the plugin is based on the PlayClipse project for Play! In fact the new plugin still keeps the name and tries to keep itself compatible with the default rendering engine. 
 
@@ -1872,6 +1911,8 @@ h2. Use the Sample Application in the Module
 
 There is a sample application distributed with the japid module in the @JapidSample@ directory. It does not serve any real world purpose other than as a demo of Japid features.  
 
+The same app has been ported to using Post-Controller model, as in the @JapidSampleDecoupled@ folder. 
+
 This is how to run the sample:
 
 # open the @application.conf@ to make sure it has a proper reference to the japid module.
@@ -1881,7 +1922,7 @@ This is how to run the sample:
 # follow those links to see how each features are used in the demo code. 
 
 
-h2. Use Japid in Modules (version 0.8.7 and up)
+h2. Use Japid in Modules (version 0.8.7 or later)
 
 Play modules are used for 
 
@@ -1902,7 +1943,7 @@ self: play -> mymodule 0.1
 
 require:
     - play
-    - play -> japid 0.8.7
+    - play -> japid 0.8.10
 </pre>
 
 Then run
