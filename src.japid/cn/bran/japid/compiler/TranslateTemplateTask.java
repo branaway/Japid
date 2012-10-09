@@ -135,7 +135,7 @@ public class TranslateTemplateTask {
 				File templateFile = changedFiles.get(i);
 				try {
 					String relativePath = JapidTemplateTransformer.getRelativePath(templateFile, packageRoot);
-					if (JapidFlags.verbose) System.out.println("[Japid] Transforming template: " + relativePath + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
+					if (JapidFlags.verbose) System.out.println("[Japid] Transforming template: " + packageRoot + "/" + relativePath + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
 					if (JapidFlags.verbose && listFiles) {
 						System.out.println(templateFile.getAbsolutePath());
 					}

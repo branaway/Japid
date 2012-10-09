@@ -481,8 +481,9 @@ public class JapidPlayRenderer {
 //				// log("updated: " + f.getName().replace("html", "java"));
 //			}
 		} else {
-			log("All Japid template files are up to date.");
-		}
+//			log("All Japid template files are synchronized.");
+			if (JapidFlags.verbose) System.out.print(":");
+		} 
 
 		rmOrphanJava(packageRoot);
 		return changedFiles;
@@ -577,15 +578,21 @@ public class JapidPlayRenderer {
 			Set<File> oj = DirUtil.findOrphanJava(src, null);
 			for (File j : oj) {
 				String path = j.getPath();
-				// log("found: " + path);
-				hasRealOrphan = true;
-				String realfile = pathname + File.separator + path;
-				File file = new File(realfile);
-				boolean r = file.delete();
-				if (r)
-					log("deleted orphan " + realfile);
-				else
-					log("failed to delete: " + realfile);
+				// JapidFlags.log("found: " + path);
+				if (path.contains(DirUtil.JAVATAGS)) {
+					JapidFlags.log("using util classes in _javatags folder is deprecated and will not take effect in post-controller Japid mode. " +
+							"Please use Play app's standard app/utils folder and import the classes accordingly");
+					// java tags, don't touch
+				} else {
+					hasRealOrphan = true;
+					String realfile = pathname + File.separator + path;
+					File file = new File(realfile);
+					boolean r = file.delete();
+					if (r)
+						JapidFlags.log("deleted orphan " + realfile);
+					else
+						JapidFlags.log("failed to delete: " + realfile);
+				}
 			}
 
 		} catch (Exception e) {

@@ -237,6 +237,7 @@ public class JapidPlugin extends PlayPlugin {
 			if (path.endsWith("_japidgen")) {
 				try {
 					beforeDetectingChanges();
+					JapidPlayRenderer.gen();
 				} catch (Exception e) {
 				}
 				response.out.write("OK".getBytes());
@@ -244,6 +245,7 @@ public class JapidPlugin extends PlayPlugin {
 			} else if (path.endsWith("_japidregen")) {
 				try {
 					JapidCommands.regen();
+					JapidPlayRenderer.regen();
 				} catch (Exception e) {
 				}
 				response.out.write("OK".getBytes());

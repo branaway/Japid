@@ -99,7 +99,7 @@ public class PlayDirUtil {
 	
 	//		JapidFlags.log("JapidCommands:  check default template packages for email notifiers.");
 			try {
-				String notifiersDir = root + sep + "notifiers";
+				String notifiersDir = Play.applicationPath  + sep + "app" + sep + "notifiers";
 				File notifiersDirFile = new File(notifiersDir);
 				if (!notifiersDirFile.exists()) {
 					if (notifiersDirFile.mkdir()) {

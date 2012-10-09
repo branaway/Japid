@@ -50,9 +50,9 @@ public class list extends cn.bran.play.JapidTemplateBase
 	}
 /* based on https://github.com/branaway/Japid/issues/12
  */
-	public static final String[] argNames = new String[] {/* args of the template*/ };
-	public static final String[] argTypes = new String[] {/* arg types of the template*/ };
-	public static final Object[] argDefaults= new Object[] { };
+	public static final String[] argNames = new String[] {/* args of the template*/"s", "i",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"String", "int",  };
+	public static final Object[] argDefaults= new Object[] {null,null, };
 	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.etc.MyController.list.class);
 
 	{
@@ -64,15 +64,25 @@ public class list extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	public cn.bran.japid.template.RenderResult render() {
+	private String s; // line 1
+	private int i; // line 1
+	public cn.bran.japid.template.RenderResult render(String s,int i) {
+		this.s = s;
+		this.i = i;
 		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("hello...");// line 1
+;// line 1
+		p("\n" + 
+"hello... ");// line 1
+		p(s);// line 2
+		p(", ");// line 2
+		p(i);// line 2
+		p("\n");// line 2
 		
 		endDoLayout(sourceTemplate);
 	}
