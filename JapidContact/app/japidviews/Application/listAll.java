@@ -7,35 +7,35 @@ import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
 import japidviews._layouts.*;
 import play.i18n.Messages;
-import static  japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
+import static japidviews._javatags.JapidWebUtil.*;
 import play.data.validation.Error;
 import play.i18n.Lang;
-import japidviews._tags.*;
-import controllers.*;
 import play.mvc.Http.*;
-import japidviews._javatags.*;
+import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/listAll.html
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
 public class listAll extends main
-{	public static final String sourceTemplate = "japidviews/Application/listAll.html";
 {
-	headers.put("Content-Type", "text/html; charset=utf-8");
-}
+	public static final String sourceTemplate = "japidviews/Application/listAll.html";
+	{
+		putHeader("Content-Type", "text/html; charset=utf-8");
+		setContentType("text/html; charset=utf-8");
+	}
 
 // - add implicit fields with Play
 
-	final Request request = Request.current(); 
-	final Response response = Response.current(); 
-	final Session session = Session.current();
-	final RenderArgs renderArgs = RenderArgs.current();
-	final Params params = Params.current();
-	final Validation validation = Validation.current();
+	final play.mvc.Http.Request request = play.mvc.Http.Request.current(); 
+	final play.mvc.Http.Response response = play.mvc.Http.Response.current(); 
+	final play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
+	final play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
+	final play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
+	final play.data.validation.Validation validation = play.data.validation.Validation.current();
 	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
 	final play.Play _play = new play.Play(); 
 
@@ -48,14 +48,31 @@ public class listAll extends main
 	public listAll(StringBuilder out) {
 		super(out);
 	}
-	private List<Contact> contacts;
+/* based on https://github.com/branaway/Japid/issues/12
+ */
+	public static final String[] argNames = new String[] {/* args of the template*/"contacts",  };
+	public static final String[] argTypes = new String[] {/* arg types of the template*/"List<Contact>",  };
+	public static final Object[] argDefaults= new Object[] {null, };
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.Application.listAll.class);
+
+	{
+		setRenderMethod(renderMethod);
+		setArgNames(argNames);
+		setArgTypes(argTypes);
+		setArgDefaults(argDefaults);
+		setSourceTemplate(sourceTemplate);
+	}
+////// end of named args stuff
+
+	private List<Contact> contacts; // line 1
 	public cn.bran.japid.template.RenderResult render(List<Contact> contacts) {
 		this.contacts = contacts;
 		long t = -1;
-		super.layout();
-		return new cn.bran.japid.template.RenderResult(this.headers, getOut(), t);
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
 	}
 	@Override protected void doLayout() {
+		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 p("\n" + 
@@ -71,43 +88,43 @@ p("\n" +
 "    </thead>\n" + 
 "    <tbody>\n" + 
 "        ");// line 3
-for (Contact contact : contacts) {// line 16
-p("	        <tr class=\"contact\" contactId=\"");// line 16
-p(contact.id);// line 17
-p("\" draggable=\"true\">\n" + 
+		for (Contact contact : contacts) {// line 16
+		p("	        <tr class=\"contact\" contactId=\"");// line 16
+		p(contact.id);// line 17
+		p("\" draggable=\"true\">\n" + 
 "	            <td id=\"name-");// line 17
-p(contact.id);// line 18
-p("\">");// line 18
-p(contact.name);// line 18
-p("</td>\n" + 
+		p(contact.id);// line 18
+		p("\">");// line 18
+		p(contact.name);// line 18
+		p("</td>\n" + 
 "	            <td id=\"firstname-");// line 18
-p(contact.id);// line 19
-p("\">");// line 19
-p(contact.firstname);// line 19
-p("</td>\n" + 
+		p(contact.id);// line 19
+		p("\">");// line 19
+		p(contact.firstname);// line 19
+		p("</td>\n" + 
 "	            <td id=\"birthdate-");// line 19
-p(contact.id);// line 20
-p("\">");// line 20
-try { Object o = format(contact.birthdate, "yyyy-MM-dd") ; if (o.toString().length() ==0) { ; } else { p(o); } } catch (NullPointerException npe) { ; }// line 20
-p("</td>\n" + 
+		p(contact.id);// line 20
+		p("\">");// line 20
+		try { Object o = format(contact.birthdate, "yyyy-MM-dd") ; if (o.toString().length() ==0) { ; } else { p(o); } } catch (NullPointerException npe) { ; }// line 20
+		p("</td>\n" + 
 "	            <td id=\"email-");// line 20
-p(contact.id);// line 21
-p("\">");// line 21
-p(contact.email);// line 21
-p("</td>\n" + 
+		p(contact.id);// line 21
+		p("\">");// line 21
+		p(contact.email);// line 21
+		p("</td>\n" + 
 "	            <td><a href=\"");// line 21
-p(lookup("form", contact.id));// line 22
-p("\">&gt;</a></td>\n" + 
+		p(lookup("form", contact.id));// line 22
+		p("\">&gt;</a></td>\n" + 
 "	        </tr>\n" + 
 "        ");// line 22
-}// line 24
-p("        <tr>\n" + 
+		}// line 24
+		p("        <tr>\n" + 
 "            <form action=\"");// line 24
-p(lookup("save", new Object[]{}));// line 26
-p("\" method=\"POST\">\n" + 
+		p(lookup("save", new Object[]{}));// line 26
+		p("\" method=\"POST\">\n" + 
 "            	");// line 26
-p(authenticityToken());// line 27
-p("\n" + 
+		p(authenticityToken());// line 27
+		p("\n" + 
 "	            <td><input type=\"text\" name=\"contact.name\"></td>\n" + 
 "	            <td><input type=\"text\" name=\"contact.firstname\"></td>\n" + 
 "	            <td><input type=\"text\" name=\"contact.birthdate\"></td>\n" + 
@@ -130,8 +147,8 @@ p("\n" +
 "            // Save result\n" + 
 "            $.ajax({\n" + 
 "                url: '");// line 27
-p(lookup("save", new Object[]{}));// line 49
-p("',\n" + 
+		p(lookup("save", new Object[]{}));// line 49
+		p("',\n" + 
 "                type: 'POST',\n" + 
 "                data: data,\n" + 
 "                success: function() {$('#' + el).html(n)},\n" + 
@@ -144,15 +161,15 @@ p("',\n" +
 "\n" + 
 "    	\n" + 
 "    ");// line 49
-p("\n" + 
+		p("\n" + 
 "    // Drag & Drop\n" + 
 "    var dragIcon = document.createElement('img')\n" + 
 "    dragIcon.src = '");// line 62
-p(lookupStatic("public/images/avatar.png"));// line 65
-p("'  \n" + 
+		p(lookupStatic("public/images/avatar.png"));// line 65
+		p("'  \n" + 
 "    var action = ");// line 65
-p(jsAction("form", ":id"));// line 66
-p("\n" + 
+		p(jsAction("form", ":id"));// line 66
+		p("\n" + 
 "    var cancel = function cancel(e) {e.preventDefault()}\n" + 
 "    \n" + 
 "    $('#new')\n" + 
@@ -168,7 +185,8 @@ p("\n" +
 "    })\n" + 
 "    \n" + 
 "</script>");// line 66
-
+		
+		endDoLayout(sourceTemplate);
 	}
 
 	@Override protected void title() {
