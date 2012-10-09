@@ -8,7 +8,7 @@
 -- Japid for Play 2: 
     https://github.com/branaway/japid42
 -- The Japid/Play User Manual:   
-    https://github.com/branaway/Japid/wiki/Japid-User-Guide
+    http://www.playframework.org/modules/japid-0.9.10/home
 -- Use Japid as a Generic Template Engine:
     https://github.com/branaway/Japid/wiki/Japid-Generic-Template-Engine-Guide
 -- Porting to Japid:        
