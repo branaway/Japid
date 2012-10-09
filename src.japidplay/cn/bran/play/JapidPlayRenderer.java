@@ -704,7 +704,7 @@ public class JapidPlayRenderer {
 	}
 
 	/**
-	 * The <em>required</em> initialization step in using the JapidRender.
+	 * The <em>optional</em> initialization step in using the JapidRender.
 	 * 
 	 * Users do not need to call this method to initialize this class. It takes
 	 * "japidroot" as the default template root, which is relative to the application
@@ -725,9 +725,6 @@ public class JapidPlayRenderer {
 	 * @param refreshInterval
 	 *            the minimal time, in second, that must elapse before trying to
 	 *            detect any changes in the file system.
-	 * @param usePlay
-	 * 	           to indicate if the generated template classes are to be used with play.
-	 *            if true, Play's implicit objects are available in the japid script.  
 	 */
 	public static void init(Mode opMode, String templateRoot, int refreshInterval) {
 		mode = opMode;

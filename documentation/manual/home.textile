@@ -1641,15 +1641,15 @@ Since version 0.9.4.4, programmer have a couple of APIs in the *JapidController*
 
 Currently all cached Japid *invoke* results are stored with keys synthesized with the controller name, action name and the arguments. The id attribute of the *CacheFor* annotation is not yet supported. 
 
-h2. Use Japid to Render Email Content (Pre-Controller Integration Only).
+h2. Use Japid to Render Email Content
 
 Japid has a replacement for Play!'s email rendering engine. The mechanism is very similar to the "Play!'s email rendering flow":http://www.playframework.org/documentation/1.1.1/emails, but takes full advantage of Japid templates. 
 
 This is how:
-1. Create a @mail controller@ (a.k.a. @mailer@) in @app/notifiers@ or any sub-directory of it. A @mailer@ is conceptually equivalent to an action controllers except it must extend @cn.bran.play.JapidMailer@. Here is a sample mailer:
+1. Create a @mail controller@ (a.k.a. @mailer@) in @app/notifiers@ or any sub-directory of it. A @mailer@ is conceptually equivalent to an action controllers except it must extend @cn.bran.play.JapidMailer@ or @cn.bran.play.JapidMailer2@ if you're using JapidController2. Here is a sample mailer:
 
 <pre>
-public class CouponJapidMailer extends JapidMailer {
+public class CouponJapidMailer extends JapidMailer /* or JapidMailer2 */ {
     public static void sendEditorEmail(String title, String content) {
         setSubject(title);
         addRecipient("bing_ran@hotmail.com");
@@ -1675,7 +1675,7 @@ app/notifiers/MyNoti.java
 The @send()@ action's default template is:
 
 <pre>
-app/japidviews/_notifiers/MyNoti/sendNote.html
+{japid root}/japidviews/_notifiers/MyNoti/sendNote.html
 </pre>
 
 If the mailer is 
@@ -1687,7 +1687,7 @@ app/notifiers/org/MyNoti.java
 then the default template is:
 
 <pre>
-app/japidviews/_notifiers/org/MyNoti/sendNote.html
+{japid root}/japidviews/_notifiers/org/MyNoti/sendNote.html
 </pre>
 
 2. Create the email content renderer as you would do for any regular Japid view templates. You can use the full capacity of Japid of course, including layouts, tags, etc.
@@ -2230,5 +2230,55 @@ A line like the following will be printed to the console:
 </pre>
 
 The unit of measurement is "ms". 
+
+h2. Migrating from Pre-controller Model to Post-Controller Model
+
+The future direction of Japid is the Post-Controller Model where the view layer is less coupled with the rest of the application. The benefit is better performance and flexibility of manipulating the view layers such as the location of the template root, the internval to detect file system changes (or not at all) independent of Play's mode (DEV or PROD). The API is provided by a method:
+
+<pre>
+	/**
+	 * The <em>optional</em> initialization step in using the JapidRender.
+	 * 
+	 * Users do not need to call this method to initialize this class. It takes
+	 * "japidroot" as the default template root, which is relative to the application
+	 * root. 
+	 * 
+	 * @param opMode
+	 *            the operational mode of Japid. When set to OpMode.prod, it's
+	 *            assumed that all Java derivatives are already been generated
+	 *            and used directly. When set to OpMode.dev, and using
+	 *            none-static linking to using the renderer, file system changes
+	 *            are detected for every rendering request given the refresh
+	 *            interval is respected. New Java files are generated and
+	 *            compiled and new classes are loaded to serve the request.
+	 * @param templateRoot
+	 *            the root directory to contain the "japidviews" directory tree. It must
+	 *            be out of the "app" directory, or it will interfere with Play's class
+	 *            loading. 
+	 * @param refreshInterval
+	 *            the minimal time, in second, that must elapse before trying to
+	 *            detect any changes in the file system.
+	 */
+
+JapidPlayRenderer.init(Mode opMode, String templateRoot, int refreshInterval)
+</pre>
+
+
+Note: 
+
+1. Call this method in a bootstrap method. 
+2. Using the API is optional. If it's not used, Japid runs in the same @Mode@ as the current Play app. The default root to host japidviews is named "japidroot" relative to the app root. The default change detecting interval is two seconds. 
+
+
+Migrating from Pre-Controller mode to Post-controller mode is easy:
+
+1. Move the entire @japidview@ directory to the "japidroot" folder (or a folder configured with the above function). 
+2. Change all the controllers from extending from @JapidController@ to @JapicControler2@.
+3. Change all mailers to extending from JapidMailer2. 
+4. The _javatags folder in the japidviews folder is deprecated. Move all the static methods to utility classes in any of the app folder, such as the utils folder.  
+
+That'll be it. 
+
+Note: JapidController and JapidController2 might co-exist in the same application. Some part of the app might be using the old Japid integration model while others suing the new "indi" model. 
 
 ::eof

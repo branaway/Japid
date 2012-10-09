@@ -35,21 +35,21 @@ import cn.bran.japid.util.StringUtils;
  */
 public class JapidMailer  {
 
-    private static final String TEXT_HTML = "text/html";
+    protected static final String TEXT_HTML = "text/html";
 //	private static final String TEXT_PLAIN = "text/plain";
 //	private static final String CONTROLLERS = "controllers.";
 //	private static final String NOTIFIERS = "notifiers.";
 //	private static final String METHOD = "method";
-	private static final String HEADERS = "headers";
-	private static final String SUBJECT = "subject";
-	private static final String CHARSET = "charset";
-	private static final String REPLY_TO = "replyTo";
-	private static final String FROM = "from";
-	private static final String CONTENT_TYPE = "contentType";
-	private static final String ATTACHMENTS = "attachments";
-	private static final String CCS = "ccs";
-	private static final String BCCS = "bccs";
-	private static final String RECIPIENTS = "recipients";
+	protected static final String HEADERS = "headers";
+	protected static final String SUBJECT = "subject";
+	protected static final String CHARSET = "charset";
+	protected static final String REPLY_TO = "replyTo";
+	protected static final String FROM = "from";
+	protected static final String CONTENT_TYPE = "contentType";
+	protected static final String ATTACHMENTS = "attachments";
+	protected static final String CCS = "ccs";
+	protected static final String BCCS = "bccs";
+	protected static final String RECIPIENTS = "recipients";
 	protected static ThreadLocal<HashMap<String, Object>> infos = new ThreadLocal<HashMap<String, Object>>() {
 		@Override
 		protected HashMap<String, Object> initialValue() {
@@ -66,7 +66,7 @@ public class JapidMailer  {
 	/**
 	 * @return
 	 */
-	private static HashMap<String, Object> getInfoMap() {
+	protected static HashMap<String, Object> getInfoMap() {
 		HashMap<String, Object> map = infos.get();
         if (map == null) {
             throw new UnexpectedException("Mailer not instrumented ?");
