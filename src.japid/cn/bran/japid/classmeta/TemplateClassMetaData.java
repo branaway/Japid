@@ -194,35 +194,51 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\tpublic " + resultType + " render() {");
 			restOfRenderBody(resultType);
 		}
+		// the static apply method
+		String args = "";
+		for (Parameter p: params) {
+			args += p.getId() + COMMA;
+		}
+		if (args.endsWith(COMMA)) {
+			args = args.substring(0, args.lastIndexOf(COMMA));
+		}
+		String applyMethod = String.format(APPLY_METHOD, resultType, renderArgsWithoutAnnos, this.className, args);
+		pln("\n" + applyMethod);
 	
 	}
 
+	private static final String COMMA = ", ";
+	static final String APPLY_METHOD = 
+			"	public static %s apply(%s) {\n" + 
+			"		return new %s().render(%s);\n" + 
+			"	}\n" ;
+
 	private void restOfRenderBody(String resultType) {
-		pln("\t\tlong t = -1;");
+		pln("\t\tlong __t = -1;");
 		if (stopWatch)
-			pln("\t\t t = System.nanoTime();");
+			pln("\t\t __t = System.nanoTime();");
 
 //		pln("\t\tsuper.layout(" + superClassRenderArgs +  ");");
 		pln("\t\ttry {super.layout(" + superClassRenderArgs +  ");} catch (RuntimeException e) { super.handleException(e);} " + getLineMarker());
 		if (stopWatch) {
-			pln("     	String l = \"\" + (System.nanoTime() - t) / 100000;\n" + 
-					"		int len = l.length();\n" + 
-					"		l = l.substring(0, len - 1) + \".\" +  l.substring(len - 1);\n" + 
+			pln("     	String __l = \"\" + (System.nanoTime() - __t) / 100000;\n" + 
+					"		int __len = __l.length();\n" + 
+					"		__l = __l.substring(0, __len - 1) + \".\" +  __l.substring(__len - 1);\n" + 
 					"");
-			pln("\t\tSystem.out.println(\"[" + super.className + "] rendering time(ms): \" + l);");
+			pln("\t\tSystem.out.println(\"[" + super.className + "] rendering time(ms): \" + __l);");
 		}
 		// bug fix: always assume there is action invocation in the super class or it won't get rendered!
 		hasActionInvocation = true;
 		
 		if (streaming) {
 			if (useWithPlay && hasActionInvocation)
-				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(getHeaders(), null, t, " + ACTION_RUNNERS + ");");
+				pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(getHeaders(), null, __t, " + ACTION_RUNNERS + ");");
 			else {
 				if (useWithPlay) {
-					pln("\t\treturn new " + resultType + "(getHeaders(), null, t);");
+					pln("\t\treturn new " + resultType + "(getHeaders(), null, __t);");
 				}
 				else {
-					pln("\t\t if (t != -1) System.out.println(\"[" + super.className + "] rendering time: \" + t);");
+					pln("\t\t if (__t != -1) System.out.println(\"[" + super.className + "] rendering time: \" + __t);");
 					pln("\t\treturn getOut().toString();");
 				}
 			}
@@ -230,12 +246,12 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		} else {
 			if (useWithPlay) {
 				if (hasActionInvocation) 
-					pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(getHeaders(), getOut(), t, " + ACTION_RUNNERS + ", sourceTemplate);");
+					pln("\t\treturn new " + RENDER_RESULT_PARTIAL + "(getHeaders(), getOut(), __t, " + ACTION_RUNNERS + ", sourceTemplate);");
 				else
-					pln("\t\treturn new " + resultType + "(getHeaders(), getOut(), t);");
+					pln("\t\treturn new " + resultType + "(getHeaders(), getOut(), __t);");
 			}
 			else {
-				pln("\t\t if (t != -1) System.out.println(\"[" + super.className + "] rendering time: \" + t);");
+				pln("\t\t if (__t != -1) System.out.println(\"[" + super.className + "] rendering time: \" + __t);");
 				pln("\t\treturn getOut().toString();");
 			}
 		}

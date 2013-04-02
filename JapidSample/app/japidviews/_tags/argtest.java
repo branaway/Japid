@@ -89,21 +89,26 @@ public static interface DoBody {
 	public cn.bran.japid.template.RenderResult render(String arg, DoBody body) {
 		this.body = body;
 		this.arg = arg;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(String arg) {
 		this.arg = arg;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String arg) {
+		return new argtest().render(arg);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n");// line 1
+		;// line 1
 		final argtest1 _argtest10 = new argtest1(getOut()); _argtest10.setActionRunners(getActionRunners()).setOut(getOut()); _argtest10.render(// line 2
 new argtest1.DoBody(){ // line 2
 public void render() { // line 2

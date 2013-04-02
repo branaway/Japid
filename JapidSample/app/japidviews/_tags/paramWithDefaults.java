@@ -71,16 +71,20 @@ public class paramWithDefaults extends cn.bran.play.JapidTemplateBase
 		this.msg = msg;
 		this.m2 = m2;
 		this.age = age;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String msg,String m2,Integer age) {
+		return new paramWithDefaults().render(msg, m2, age);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n" + 
-"<span>");// line 5
+		p("<span>");// line 5
 		p(msg);// line 6
 		p("</span>\n" + 
 "<span>");// line 6

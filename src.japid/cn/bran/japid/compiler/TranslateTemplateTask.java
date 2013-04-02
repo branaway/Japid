@@ -62,9 +62,9 @@ public class TranslateTemplateTask {
 
 	private boolean usePlay = true;
 
-	public boolean isUsePlay() {
-		return usePlay;
-	}
+//	public boolean isUsePlay() {
+//		return usePlay;
+//	}
 
 	public void setUsePlay(boolean usePlay) {
 		this.usePlay = usePlay;

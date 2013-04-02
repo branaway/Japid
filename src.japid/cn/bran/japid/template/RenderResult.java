@@ -74,12 +74,11 @@ public class RenderResult implements Externalizable {
 
 	@Override
 	public String toString() {
-		if (content != null) {
-			return content.toString();
-		}
-		else {
-			return "RenderResult: null";
-		}
+		StringBuilder c = getContent();
+		if (c == null)
+			return "";
+		else
+			return c.toString();
 	}
 
 	public Map<String, String> getHeaders() {

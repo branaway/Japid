@@ -71,10 +71,15 @@ public class perf extends perfmain
 		this.title = title;
 		this.user = user;
 		this.entries = entries;
-		long t = -1;
+		long __t = -1;
 		try {super.layout(user);} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String title,DataModel.User user,ArrayList<DataModel.Entry> entries) {
+		return new perf().render(title, user, entries);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------

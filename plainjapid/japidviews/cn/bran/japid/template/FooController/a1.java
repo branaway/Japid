@@ -11,25 +11,6 @@ import japidviews._tags.*;
 public class a1 extends main
 {
 	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/a1.html";
-	{
-		putHeader("Content-Type", "text/html; charset=utf-8");
-		setContentType("text/html; charset=utf-8");
-	}
-
-// - add implicit fields with Play
-
-	final play.mvc.Http.Request request = play.mvc.Http.Request.current(); 
-	final play.mvc.Http.Response response = play.mvc.Http.Response.current(); 
-	final play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
-	final play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
-	final play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
-	final play.data.validation.Validation validation = play.data.validation.Validation.current();
-	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
-	final play.Play _play = new play.Play(); 
-
-// - end of implicit fields with Play 
-
-
 	public a1() {
 		super(null);
 	}
@@ -53,12 +34,18 @@ public class a1 extends main
 ////// end of named args stuff
 
 	private String a; // line 1
-	public cn.bran.japid.template.RenderResult render(String a) {
+	public String render(String a) {
 		this.a = a;
-		long t = -1;
+		long __t = -1;
 		try {super.layout(a + "1");} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		 if (__t != -1) System.out.println("[a1] rendering time: " + __t);
+		return getOut().toString();
 	}
+
+	public static String apply(String a) {
+		return new a1().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
@@ -80,29 +67,11 @@ public String foo(String ar) {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
-TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
-actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 // line 7
 		p("  -> a1-: ");// line 7
-		final taggy _taggy2 = new taggy(getOut()); _taggy2.setActionRunners(getActionRunners()).setOut(getOut()); _taggy2.render(ar); // line 8// line 8
+		final taggy _taggy2 = new taggy(getOut()); _taggy2.setOut(getOut()); _taggy2.render(ar); // line 8// line 8
 
 this.setOut(ori);
-if (actionRunners.size() > 0) {
-	StringBuilder _sb2 = new StringBuilder();
-	int segStart = 0;
-	for (Map.Entry<Integer, cn.bran.japid.template.ActionRunner> _arEntry : actionRunners.entrySet()) {
-		int pos = _arEntry.getKey();
-		_sb2.append(sb.substring(segStart, pos));
-		segStart = pos;
-		cn.bran.japid.template.ActionRunner _a_ = _arEntry.getValue();
-		_sb2.append(_a_.run().getContent().toString());
-	}
-	_sb2.append(sb.substring(segStart));
-	actionRunners = parentActionRunners;
-	return _sb2.toString();
-} else {
-	actionRunners = parentActionRunners;
 	return sb.toString();
-}
 }
 }

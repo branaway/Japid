@@ -20,7 +20,7 @@ import controllers.*;
 // Change to this file will be lost next time the template file is compiled.
 //
 @cn.bran.play.NoEnhance
-public abstract class superview extends myLayout
+public class superview extends myLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/superview.html";
 	{
@@ -65,17 +65,22 @@ public abstract class superview extends myLayout
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new superview().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-;// line 2
-		// line 4
-		;// line 4
+		;// line 1
+		// line 3
+		;// line 3
 		
 		endDoLayout(sourceTemplate);
 	}

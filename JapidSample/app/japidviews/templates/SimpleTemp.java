@@ -67,10 +67,15 @@ public class SimpleTemp extends cn.bran.play.JapidTemplateBase
 	private String blogTitle; // line 1
 	public cn.bran.japid.template.RenderResult render(String blogTitle) {
 		this.blogTitle = blogTitle;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String blogTitle) {
+		return new SimpleTemp().render(blogTitle);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------

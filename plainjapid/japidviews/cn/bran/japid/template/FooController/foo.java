@@ -11,25 +11,6 @@ import japidviews._tags.*;
 public class foo extends main
 {
 	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/foo.html";
-	{
-		putHeader("Content-Type", "text/html; charset=utf-8");
-		setContentType("text/html; charset=utf-8");
-	}
-
-// - add implicit fields with Play
-
-	final play.mvc.Http.Request request = play.mvc.Http.Request.current(); 
-	final play.mvc.Http.Response response = play.mvc.Http.Response.current(); 
-	final play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
-	final play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
-	final play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
-	final play.data.validation.Validation validation = play.data.validation.Validation.current();
-	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
-	final play.Play _play = new play.Play(); 
-
-// - end of implicit fields with Play 
-
-
 	public foo() {
 		super(null);
 	}
@@ -53,18 +34,24 @@ public class foo extends main
 ////// end of named args stuff
 
 	private String a; // line 1
-	public cn.bran.japid.template.RenderResult render(String a) {
+	public String render(String a) {
 		this.a = a;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		 if (__t != -1) System.out.println("[foo] rendering time: " + __t);
+		return getOut().toString();
 	}
+
+	public static String apply(String a) {
+		return new foo().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 p("foo: ");// line 3
-		final taggy _taggy1 = new taggy(getOut()); _taggy1.setActionRunners(getActionRunners()).setOut(getOut()); _taggy1.render(a + "1"); // line 4// line 4
+		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1"); // line 4// line 4
 		;// line 4
 		
 		endDoLayout(sourceTemplate);

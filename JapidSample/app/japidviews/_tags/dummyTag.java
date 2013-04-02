@@ -67,16 +67,21 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 	private String a; // line 1
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
-		long t = -1;
-		 t = System.nanoTime();
+		long __t = -1;
+		 __t = System.nanoTime();
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-     	String l = "" + (System.nanoTime() - t) / 100000;
-		int len = l.length();
-		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
+     	String __l = "" + (System.nanoTime() - __t) / 100000;
+		int __len = __l.length();
+		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
 
-		System.out.println("[dummyTag] rendering time(ms): " + l);
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		System.out.println("[dummyTag] rendering time(ms): " + __l);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String a) {
+		return new dummyTag().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------

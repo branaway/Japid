@@ -2233,7 +2233,11 @@ The unit of measurement is "ms".
 
 h2. Migrating from Pre-controller Model to Post-Controller Model
 
-The future direction of Japid is the Post-Controller Model where the view layer is less coupled with the rest of the application. The benefit is better performance and flexibility of manipulating the view layers such as the location of the template root, the internval to detect file system changes (or not at all) independent of Play's mode (DEV or PROD). The API is provided by a method:
+The future direction of Japid is the Post-Controller Model where the view layer is less coupled with the rest of the application. The benefits are:
+
+1. Better performance. Reloading of controllers, models won't lead to recompiling of all the Japidscript. And reloading of Japid script usually takes a blink to complete. 
+2. Much nicer error reporting. Japid compilation errors are displayed in the nicely formatted error page provided by Play engine. The errors are mapped to the exact lines in the original Japid script. 
+3. flexibility of manipulating the view layers such as the location of the template root, the internval to detect file system changes (or not at all) independent of Play's mode (DEV or PROD). The API is provided by a method:
 
 <pre>
 	/**

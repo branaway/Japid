@@ -29,6 +29,13 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2012/10/15: V0.9.12:
+	1. bug: Any html files sitting directly in the {Japid Root} folder would lead to an exception. Now those files are ignored.  
+	2. enhancement: view files now have an apply() method to match the naming convention in Play 2 views, sort of.
+2012/10/15: V0.9.11:
+	1. bug: %{}% code block cannot have a leading new_line character 
+2012/10/15: V0.9.10.1:
+	1. bug: forgot to check op mode in JapidPlayRender.refreshClasses(); 
 2012/10/8: V0.9.10:
 	1. major feature: introduced JapidController2 and JapidPlayRenderer which employed independent view class loading and reloading to further decouple the view layer and the rest of Play. It should offer better turn-around time in DEV mode. See JapidSampleDecoupled for an example. The module doc was updated too. 
 2012/10/2: V0.9.6.1:

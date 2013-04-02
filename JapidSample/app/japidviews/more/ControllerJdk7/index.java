@@ -67,17 +67,20 @@ public class index extends cn.bran.play.JapidTemplateBase
 	private String m; // line 1
 	public cn.bran.japid.template.RenderResult render(String m) {
 		this.m = m;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String m) {
+		return new index().render(m);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n" + 
-"\n" + 
-"m: ");// line 1
+		p("m: ");// line 1
 		try { Object o = m ; if (o.toString().length() ==0) { p("nothing"); } else { p(o); } } catch (NullPointerException npe) { p("nothing"); }// line 3
 		p("\n" + 
 "\n");// line 3

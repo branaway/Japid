@@ -76,18 +76,21 @@ public class renderByPosition extends cn.bran.play.JapidTemplateBase
 		this.au1 = au1;
 		this.au2 = au2;
 		this.au22 = au22;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String ss,int ii,Author au1,Author au2,Author2 au22) {
+		return new renderByPosition().render(ss, ii, au1, au2, au22);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 		;// line 1
-		p("\n" + 
-"\n" + 
-"got: ");// line 2
+		p("got: ");// line 3
 		p(ss);// line 4
 		p("\n" + 
 "got: ");// line 4

@@ -67,27 +67,32 @@ public class authorPanel extends cn.bran.play.JapidTemplateBase
 	private models.japidsample.Author a; // line 1
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
 		this.a = a;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Author a) {
+		return new authorPanel().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n" + 
-"<p>author name: ");// line 1
-		p(a.name);// line 3
+		p("<p>author name: ");// line 1
+		p(a.name);// line 2
 		p("</p>\n" + 
-"<p>his birthdate: ");// line 3
-		p(a.birthDate);// line 4
+"<p>his birth date: ");// line 2
+		p(a.birthDate);// line 3
 		p("</p>\n" + 
-"<p>and his is a '");// line 4
-		p(a.getGender());// line 5
+"<p>and his is a '");// line 3
+		p(a.getGender());// line 4
 		p("'</p>\n" + 
-"    ");// line 5
+"<div>\n");// line 4
 		final SampleTag _SampleTag0 = new SampleTag(getOut()); _SampleTag0.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag0.render("end"); // line 6// line 6
-		p("    ");// line 6
+		p("</div>\n" + 
+"    ");// line 6
 		
 		endDoLayout(sourceTemplate);
 	}

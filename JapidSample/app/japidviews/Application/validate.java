@@ -69,16 +69,20 @@ public class validate extends cn.bran.play.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render(String name,Integer age) {
 		this.name = name;
 		this.age = age;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String name,Integer age) {
+		return new validate().render(name, age);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n" + 
-"\n");// line 1
+		;// line 1
 		if(asBoolean(hasErrors())) {// line 3
 		p("    <p>Got some errors:</p>\n" + 
 "    ");// line 3

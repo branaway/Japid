@@ -157,20 +157,6 @@ public class JapidCommands {
 	}
 
 	/**
-	 * get all the java files in a dir with the "java" removed
-	 * 
-	 * @return
-	 */
-	public static String[] getAllJavaFilesInDir(File root) {
-		// from source files only
-		String[] allFiles = DirUtil.getAllFileNames(root, new String[] { ".java" });
-		for (int i=0; i< allFiles.length; i++) {
-			allFiles[i] = allFiles[i].replace(".java", "");
-		}
-		return allFiles;
-	}
-
-	/**
 	 * delete orphaned java artifacts from the japidviews directory of the current app and all the depended modules
 	 * 
 	 * @return

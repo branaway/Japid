@@ -83,17 +83,20 @@ public class tagPrimitives extends cn.bran.play.JapidTemplateBase
 		this.bb = bb;
 		this.map = map;
 		this.f = f;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String s,int i,Integer ii,double d,Double dd,boolean b,Boolean bb,Map<Object, String> map,float f) {
+		return new tagPrimitives().render(s, i, ii, d, dd, b, bb, map, f);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n" + 
-"\n" + 
-"<div>");// line 12
+		p("<div>");// line 13
 		p(s);// line 14
 		p("</div>\n" + 
 "<div>");// line 14

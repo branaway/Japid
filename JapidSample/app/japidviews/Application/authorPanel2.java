@@ -68,23 +68,27 @@ public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 	private models.japidsample.Author a; // line 1
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
 		this.a = a;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Author a) {
+		return new authorPanel2().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n" + 
-"<p>decorated name: ");// line 1
+		p("<p>decorated name: ");// line 1
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "decorateName", a.name) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.decorateName(a.name); // line 3
+				Application.decorateName(a.name); // line 2
 			}
-		}); p("\n");// line 3
-		p("</p>\n");// line 3
+		}); p("\n");// line 2
+		p("</p>\n");// line 2
 		
 		endDoLayout(sourceTemplate);
 	}

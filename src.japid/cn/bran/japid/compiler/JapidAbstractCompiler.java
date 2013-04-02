@@ -335,6 +335,9 @@ public abstract class JapidAbstractCompiler {
 
 		for (int i = 0; i < lines.length; i++) {
 			String line = lines[i];// .trim();
+			if (lines.length > 1 && line.trim().length() == 0)
+				line = "//japid compiler: artificial line to avoid being treated as a terminating line";
+
 			if (startsWithIgnoreSpace(line, "import")) {
 				getTemplateClassMetaData().addImportLine(line);
 			} else if (startsWithIgnoreSpace(line, "//")) {

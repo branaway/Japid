@@ -119,6 +119,9 @@ public class JapidPlayRenderer {
 	}
 
 	static boolean timeToRefresh() {
+		if (!isDevMode())
+			return false;
+		
 		long now = System.currentTimeMillis();
 		if (now - lastRefreshed > refreshInterval) {
 			lastRefreshed = now;
@@ -137,7 +140,7 @@ public class JapidPlayRenderer {
 			// find out all removed classes
 			// XXX  just html? not xml, css, js?
 			// XXX need to add other files as well. The old code is for plain text rendering only
-			String[] allTemps = DirUtil.getAllTemplateFiles(new File(templateRoot));
+			List<String> allTemps = DirUtil.getAllTemplateFiles(new File(templateRoot));
 			Set<String> currentClassesOnDir = createNameSet(allTemps);
 			Set<String> allNames = new HashSet<String>(currentClassesOnDir);
 
@@ -312,7 +315,7 @@ public class JapidPlayRenderer {
 		rendererClass.setLastUpdated(0);
 	}
 
-	static Set<String> createNameSet(String[] allHtml) {
+	static Set<String> createNameSet(List<String> allHtml) {
 		// the names start with template root
 		Set<String> names = new HashSet<String>();
 		for (String f : allHtml) {

@@ -65,10 +65,15 @@ public class def extends defLayout
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new def().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
@@ -100,6 +105,7 @@ public class def extends defLayout
 "\n" + 
 "<p>check 6</p>\n" + 
 "\n");// line 34
+		//japid compiler: artificial line to avoid being treated as a terminating line// line 38
 		    String a = "";// line 39
 		    a += "bssdfsdf";// line 40
 		p("\n");// line 41

@@ -8,28 +8,9 @@ import japidviews._tags.*;
 // NOTE: This file was generated from: japidviews/_tags/taggy.html
 // Change to this file will be lost next time the template file is compiled.
 //
-public class taggy extends cn.bran.play.JapidTemplateBase
+public class taggy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/_tags/taggy.html";
-	{
-		putHeader("Content-Type", "text/html; charset=utf-8");
-		setContentType("text/html; charset=utf-8");
-	}
-
-// - add implicit fields with Play
-
-	final play.mvc.Http.Request request = play.mvc.Http.Request.current(); 
-	final play.mvc.Http.Response response = play.mvc.Http.Response.current(); 
-	final play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
-	final play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
-	final play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
-	final play.data.validation.Validation validation = play.data.validation.Validation.current();
-	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
-	final play.Play _play = new play.Play(); 
-
-// - end of implicit fields with Play 
-
-
 	public taggy() {
 		super(null);
 	}
@@ -53,12 +34,18 @@ public class taggy extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	private String a; // line 1
-	public cn.bran.japid.template.RenderResult render(String a) {
+	public String render(String a) {
 		this.a = a;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		 if (__t != -1) System.out.println("[taggy] rendering time: " + __t);
+		return getOut().toString();
 	}
+
+	public static String apply(String a) {
+		return new taggy().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
@@ -66,7 +53,7 @@ public class taggy extends cn.bran.play.JapidTemplateBase
 		p("[");// line 1
 		p(a);// line 2
 		p("]-->\n");// line 2
-		final taddy _taddy0 = new taddy(getOut()); _taddy0.setActionRunners(getActionRunners()).setOut(getOut()); _taddy0.render(// line 3
+		final taddy _taddy0 = new taddy(getOut()); _taddy0.setOut(getOut()); _taddy0.render(// line 3
 new taddy.DoBody<String[]>(){ // line 3
 public void render(final String[] ss) { // line 3
 // line 3

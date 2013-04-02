@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cn.bran.play.JapidCommands;
 
 public class DirUtil {
 	/**
@@ -64,20 +64,27 @@ public class DirUtil {
 		return files.toArray(ret);
 	}
 	
-	public static String[] getAllTemplateHtmlFiles(File dir) {
+	public static List<String> getAllTemplateHtmlFiles(File dir) {
 		List<String> files = new ArrayList<String>();
 		getAllFileNames("", dir, files, new String[] {".html"});
-		// should filter out bad named files
-		String[] ret = new String[files.size()];
-		return files.toArray(ret);
+		keepJapidFiles(files);
+		return files;
+	}
+
+
+	private static void keepJapidFiles(List<String> files) {
+		for (Iterator<String> it = files.iterator(); it.hasNext();) {
+			if (!it.next().startsWith(JAPIDVIEWS_ROOT)) {
+				it.remove();
+			}
+		}
 	}
 	
-	public static String[] getAllTemplateFiles(File dir) {
+	public static List<String> getAllTemplateFiles(File dir) {
 		List<String> files = new ArrayList<String>();
 		getAllFileNames("", dir, files, TEMPLATE_EXTS);
-		// should filter out bad named files
-		String[] ret = new String[files.size()];
-		return files.toArray(ret);
+		keepJapidFiles(files);
+		return files;
 	}
 	
 	
@@ -113,7 +120,7 @@ public class DirUtil {
 		return fs;
 	}
 	
-	private static void getAllFileNames(String leadingPath, File dir, List<String> files, String[] exts) {
+	private static void getAllFileNames(final String leadingPath, final File dir, final List<String> files, final String[] exts) {
 		if (!dir.exists())
 			return;
 //			throw new RuntimeException("directory exists? " +  dir.getPath());
@@ -447,7 +454,7 @@ public class DirUtil {
 				String controllerPath = root + sep + "controllers";
 				File controllerPathFile = new File(controllerPath);
 				if (controllerPathFile.exists()) {
-					String[] controllers = JapidCommands.getAllJavaFilesInDir(controllerPathFile);
+					String[] controllers = DirUtil.getAllJavaFilesInDir(controllerPathFile);
 					for (String f : controllers) {
 						String cp = japidViews + f;
 						File ff = new File(cp);
@@ -476,7 +483,7 @@ public class DirUtil {
 					}
 				}
 				
-				String[] controllers = JapidCommands.getAllJavaFilesInDir(notifiersDirFile);
+				String[] controllers = DirUtil.getAllJavaFilesInDir(notifiersDirFile);
 				for (String f : controllers) {
 					// note: we keep the notifiers dir to differentiate those from the controller
 					// however this means we cannot have a controller with package like "controllers.notifiers"
@@ -495,5 +502,20 @@ public class DirUtil {
 			}
 			return res;
 		}
+
+
+	/**
+	 * get all the java files in a dir with the "java" removed
+	 * 
+	 * @return
+	 */
+	public static String[] getAllJavaFilesInDir(File root) {
+		// from source files only
+		String[] allFiles = getAllFileNames(root, new String[] { ".java" });
+		for (int i=0; i< allFiles.length; i++) {
+			allFiles[i] = allFiles[i].replace(".java", "");
+		}
+		return allFiles;
+	}
 
 }

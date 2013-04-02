@@ -67,10 +67,15 @@ public class EachCall extends cn.bran.play.JapidTemplateBase
 	private List<String> posts; // line 1
 	public cn.bran.japid.template.RenderResult render(List<String> posts) {
 		this.posts = posts;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(List<String> posts) {
+		return new EachCall().render(posts);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------

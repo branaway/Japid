@@ -8,28 +8,9 @@ import japidviews._tags.*;
 // NOTE: This file was generated from: japidviews/_tags/taddy.html
 // Change to this file will be lost next time the template file is compiled.
 //
-public class taddy extends cn.bran.play.JapidTemplateBase
+public class taddy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/_tags/taddy.html";
-	{
-		putHeader("Content-Type", "text/html; charset=utf-8");
-		setContentType("text/html; charset=utf-8");
-	}
-
-// - add implicit fields with Play
-
-	final play.mvc.Http.Request request = play.mvc.Http.Request.current(); 
-	final play.mvc.Http.Response response = play.mvc.Http.Response.current(); 
-	final play.mvc.Scope.Session session = play.mvc.Scope.Session.current();
-	final play.mvc.Scope.RenderArgs renderArgs = play.mvc.Scope.RenderArgs.current();
-	final play.mvc.Scope.Params params = play.mvc.Scope.Params.current();
-	final play.data.validation.Validation validation = play.data.validation.Validation.current();
-	final cn.bran.play.FieldErrors errors = new cn.bran.play.FieldErrors(validation);
-	final play.Play _play = new play.Play(); 
-
-// - end of implicit fields with Play 
-
-
 	public taddy() {
 		super(null);
 	}
@@ -73,17 +54,24 @@ public static interface DoBody<A> {
 		}
 		return sb.toString();
 	}
-	public cn.bran.japid.template.RenderResult render(DoBody body) {
+	public String render(DoBody body) {
 		this.body = body;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		 if (__t != -1) System.out.println("[taddy] rendering time: " + __t);
+		return getOut().toString();
 	}
-	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
+	public String render() {
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		 if (__t != -1) System.out.println("[taddy] rendering time: " + __t);
+		return getOut().toString();
 	}
+
+	public static String apply() {
+		return new taddy().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------

@@ -64,7 +64,7 @@ public class DirUtilTest {
 		for (File f: fs) {
 			System.out.println(f.getPath());
 		}
-		assertEquals(4, fs.size());
+		assertEquals(3, fs.size());
 		DirUtil.touch(new File("tests/testdir/A.java"));
 		fs = DirUtil.findChangedSrcFiles(src);
 		for (File f: fs) {
@@ -87,7 +87,7 @@ public class DirUtilTest {
 		File good = new File ("tests/testdir/A.B.html");
 		DirUtil.touch(good);
 		fs = DirUtil.findChangedSrcFiles(src);
-		assertEquals(4, fs.size());
+		assertEquals(3, fs.size());
 		good.delete();
 	}
 	

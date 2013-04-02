@@ -95,7 +95,7 @@ public class JapidRenderer {
 
 		try {
 			// find out all removed classes
-			String[] allHtml = DirUtil.getAllTemplateHtmlFiles(new File(templateRoot));
+			List<String> allHtml = DirUtil.getAllTemplateHtmlFiles(new File(templateRoot));
 			Set<String> currentClassesOnDir = createNameSet(allHtml);
 			Set<String> tmp = new HashSet<String>(currentClassesOnDir);
 
@@ -248,6 +248,15 @@ public class JapidRenderer {
 	}
 
 	static Set<String> createNameSet(String[] allHtml) {
+		// the names start with template root
+		Set<String> names = new HashSet<String>();
+		for (String f : allHtml) {
+			names.add(getClassName(new File(f)));
+		}
+		return names;
+	}
+
+	static Set<String> createNameSet(List<String> allHtml) {
 		// the names start with template root
 		Set<String> names = new HashSet<String>();
 		for (String f : allHtml) {

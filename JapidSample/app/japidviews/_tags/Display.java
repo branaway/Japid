@@ -91,27 +91,29 @@ public static interface DoBody<A> {
 		this.body = body;
 		this.post = post;
 		this.as = as;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as) {
 		this.post = post;
 		this.as = as;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Post post,String as) {
+		return new Display().render(post, as);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
 		;// line 1
-		p("\n" + 
-"\n" + 
-"\n" + 
-"<div class=\"divvy\">\n" + 
-"	<p>title: ");// line 2
+		p("<div class=\"divvy\">\n" + 
+"	<p>title: ");// line 4
 		p(post.getTitle());// line 6
 		p("</p>\n" + 
 "	<p>at: ");// line 6

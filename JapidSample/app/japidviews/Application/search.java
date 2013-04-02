@@ -67,16 +67,20 @@ public class search extends cn.bran.play.JapidTemplateBase
 	private SearchParams sp; // line 1
 	public cn.bran.japid.template.RenderResult render(SearchParams sp) {
 		this.sp = sp;
-		long t = -1;
+		long __t = -1;
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(SearchParams sp) {
+		return new search().render(sp);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
-		p("\n" + 
-"\n");// line 1
+		;// line 1
 		String nomode = "no mode";// line 3
 		p("keys: ");// line 3
 		try { Object o = sp.keywords ; if (o.toString().length() ==0) { p("没有 keywords"); } else { p(o); } } catch (NullPointerException npe) { p("没有 keywords"); }// line 5

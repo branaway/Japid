@@ -22,7 +22,6 @@ import play.Play;
 
 import cn.bran.japid.util.DirUtil;
 import cn.bran.japid.util.JapidFlags;
-import cn.bran.play.JapidCommands;
 
 public class PlayDirUtil {
 
@@ -81,7 +80,7 @@ public class PlayDirUtil {
 				File controllerPathFile = new File(controllerPath);
 //				JapidFlags.log("PlayDirUtil: controller path: " + controllerPathFile.getAbsolutePath());
 				if (controllerPathFile.exists()) {
-					String[] controllers = JapidCommands.getAllJavaFilesInDir(controllerPathFile);
+					String[] controllers = DirUtil.getAllJavaFilesInDir(controllerPathFile);
 					for (String f : controllers) {
 						String cp = japidViews + f;
 						File ff = new File(cp);
@@ -110,7 +109,7 @@ public class PlayDirUtil {
 					}
 				}
 				
-				String[] controllers = JapidCommands.getAllJavaFilesInDir(notifiersDirFile);
+				String[] controllers = DirUtil.getAllJavaFilesInDir(notifiersDirFile);
 				for (String f : controllers) {
 					// note: we keep the notifiers dir to differentiate those from the controller
 					// however this means we cannot have a controller with package like "controllers.notifiers"

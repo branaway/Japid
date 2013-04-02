@@ -66,16 +66,21 @@ public class index extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		 t = System.nanoTime();
+		long __t = -1;
+		 __t = System.nanoTime();
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-     	String l = "" + (System.nanoTime() - t) / 100000;
-		int len = l.length();
-		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
+     	String __l = "" + (System.nanoTime() - __t) / 100000;
+		int __len = __l.length();
+		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
 
-		System.out.println("[index] rendering time(ms): " + l);
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		System.out.println("[index] rendering time(ms): " + __l);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new index().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
