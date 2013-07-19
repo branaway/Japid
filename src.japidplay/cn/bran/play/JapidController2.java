@@ -9,8 +9,6 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
-import com.sun.tools.internal.jxc.gen.config.Classes;
-
 import play.Play;
 import play.Play.Mode;
 import play.cache.Cache;
