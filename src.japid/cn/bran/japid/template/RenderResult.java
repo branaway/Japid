@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
+import java.lang.String;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,14 +90,19 @@ public class RenderResult implements Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
 		String contentString = content == null? _NULL : content.toString();
-		out.writeUTF(contentString);
+        byte[] bytes = contentString.getBytes("utf-8");
+        out.write(bytes.length);
+        out.write(bytes);
 		out.writeLong(renderTime);
 		out.writeObject(headers);
 	}
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		String contentString = in.readUTF();
+        int contentLenght = in.readInt();
+        byte[] bytes = new byte[contentLenght];
+        in.read(bytes, 0, contentLenght);
+        String contentString = new String(bytes, "utf-8");
 		if (_NULL.equals(contentString)) {
 			this.content = null;
 		}
