@@ -44,20 +44,6 @@ public class RouteAdapter implements UrlMapper {
 	}
 
 	/**
-	 * Some sample form of action: CRUD.index(), blank(), attachment(_id, _name)
-	 * this one has method call inside of controller param list
-	 * 
-	 * @{Application.show(post.previous().id)
-	 * 
-	 *                                        this is a super long one: *
-	 * 
-	 * @{list( ).remove('page').add('search', params.search).add('order',
-	 *         (_caller.order == 'DESC' ? 'ASC' : 'DESC'))} in the table.html in
-	 * 
-	 *         the CRUD module
-	 * 
-	 *         this one has property access in the param list:
-	 * @{show(_caller.object.id)
 	 * 
 	 * @param actionString
 	 *            the leasing part of the whole expression, e.g.

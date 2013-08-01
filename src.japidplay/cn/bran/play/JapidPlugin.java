@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,17 +20,22 @@ import play.Logger;
 import play.Play;
 import play.Play.Mode;
 import play.PlayPlugin;
+import play.classloading.ApplicationClassloaderState;
 import play.exceptions.CompilationException;
-import play.exceptions.TemplateExecutionException;
 import play.exceptions.UnexpectedException;
 import play.mvc.Http.Header;
 import play.mvc.Http.Request;
 import play.mvc.Http.Response;
+import play.mvc.Router;
+import play.mvc.Router.Route;
 import play.mvc.Scope.Flash;
 import play.mvc.results.Result;
 import play.vfs.VirtualFile;
 import cn.bran.japid.compiler.JapidCompilationException;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
+import cn.bran.japid.util.JapidFlags;
+import cn.bran.play.routing.AutoPath;
+import cn.bran.play.routing.RouterClass;
 
 /**
  * 
@@ -37,11 +44,13 @@ import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
  * 
  */
 public class JapidPlugin extends PlayPlugin {
+	public static final String ACTION_METHOD = "__actionMethod";
 	private static final String RENDER_JAPID_WITH = "/renderJapidWith";
 	private static final String NO_CACHE = "no-cache";
 	private static AtomicLong lastTimeChecked = new AtomicLong(0);
-	// can be used to cache a plugin scoped valules
+	// can be used to cache a plugin scoped values
 	private static Map<String, Object> japidCache = new ConcurrentHashMap<String, Object>();
+	private String appPath;
 
 	/**
 	 * pre-compile the templates so PROD mode would work
@@ -90,7 +99,7 @@ public class JapidPlugin extends PlayPlugin {
 
 	@Override
 	public void onConfigurationRead() {
-//		System.out.println("JapidPlugin.onConfigurationRead().");
+		appPath = Play.configuration.getProperty("context", "/");
 	}
 
 	public static Map<String, Object> getCache() {
@@ -181,6 +190,9 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void beforeActionInvocation(Method actionMethod) {
+		final String actionName = actionMethod.getDeclaringClass().getName() + "." + actionMethod.getName();
+		JapidController.threadData.get().put(ACTION_METHOD, actionName);
+
 		String property = Play.configuration.getProperty("japid.dump.request");
 		if (property != null && property.length() > 0) {
 			if (!"false".equals(property) && !"no".equals(property)) {
@@ -351,6 +363,7 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void afterActionInvocation() {
+		JapidController.threadData.get().remove(ACTION_METHOD);
 	}
 
 	@Override
@@ -375,6 +388,7 @@ public class JapidPlugin extends PlayPlugin {
 	public void onApplicationStart() {
 		System.out.println("JapidPlugin: clean japidCache");
 		japidCache.clear();
+		buildRoutesFromAnnotations();
 	}
 
 	@Override
@@ -398,9 +412,50 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void routeRequest(Request request) {
-
+		if (Play.mode == Mode.DEV) {
+			buildRoutesFromAnnotations();
+		}
 	}
 
+	/**
+	 * auto routes gave higher priority in the route table.
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 */
+	private void buildRoutesFromAnnotations() {
+		ApplicationClassloaderState applicationClassloaderState = Play.classloader.currentState;
+		if (!applicationClassloaderState.equals(lastApplicationClassloaderState)) {
+			List<Route> oldRoutes = Router.routes;
+			List<Route> newRoutes = new ArrayList<Route>(oldRoutes.size());
+			
+			// classes changed. rebuild the dynamic route table
+			List<Class> allClasses = Play.classloader.getAllClasses();
+			for (Class<?> c : allClasses) {
+				String cname = c.getName();
+				if (cname.startsWith("controllers.")) {
+					if (c.getAnnotation(AutoPath.class) != null) {
+						RouterClass rc = new RouterClass(c, appPath);
+						List<Route> rs = rc.buildRoutes();
+						for(Route r : rs) {
+							JapidFlags.log("added route: " + r);
+							newRoutes.add(r);
+						}
+					}
+				}
+			}
+			// copy fixed routes from the old route
+			for (Iterator<Route> iterator = oldRoutes.iterator(); iterator.hasNext();) {
+				Route r = iterator.next();
+				if (r.routesFileLine !=0) { // special marker from autopath
+					newRoutes.add(r);
+				}
+			}
+			Router.routes = newRoutes;
+			lastApplicationClassloaderState = applicationClassloaderState;
+		}
+	}
+
+	ApplicationClassloaderState lastApplicationClassloaderState = null;
+	
 	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");
 
 }

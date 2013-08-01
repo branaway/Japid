@@ -2,6 +2,7 @@ package cn.bran.play;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Map;
 
 import play.cache.CacheFor;
 import play.mvc.ActionInvoker;
@@ -63,18 +64,17 @@ public abstract class CacheablePlayActionRunner extends CacheableRunner {
 
 	@Override
 	protected RenderResult render() {
+		Map<String, String> threadData = JapidController.threadData.get();
 		try {
 			play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
+			threadData.put(JapidPlugin.ACTION_METHOD, controllerClass.getName() + "." + actionName);
 			runPlayAction();
-			throw new RuntimeException("No render result from running play action. Probably the action was not using Japid templates.");
+			throw new RuntimeException(
+					"No render result from running play action. Probably the action was not using Japid templates.");
 		} catch (JapidResult jr) {
-			RenderResult rr = jr.getRenderResult();
-//			if (shouldCache()) {
-////				play.cache.Cache.set(keyString, jr, cacheForVal);
-//				System.out.println("put in result cache");
-//				RenderResultCache.set(keyString, rr, cacheForVal);
-//			}
-			return rr;
+			return jr.getRenderResult();
+		} finally {
+			threadData.remove(JapidPlugin.ACTION_METHOD);
 		}
 	}
 

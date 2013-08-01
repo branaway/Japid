@@ -10,7 +10,7 @@ public class JapidFlags {
 	 */
 	public static void log(String string) {
 		if (verbose)
-			System.out.println(string);
+			System.out.println("[Japid] " + string);
 	}
 
 }

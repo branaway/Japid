@@ -29,6 +29,48 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2013/08/01: V0.9.20:
+	1. new feature: added annotation and convention based route rule generation. Here is an example:
+
+package controllers.t3;
+import cn.bran.play.JapidController;
+import cn.bran.play.JapidPlayAdapter;
+import cn.bran.play.routing.AutoPath;
+import cn.bran.play.routing.HttpMethod.GET;
+import cn.bran.play.routing.HttpMethod.POST;
+import cn.bran.play.routing.EndWith;
+
+@AutoPath // == @AutoPath("/t3.App")
+public class App extends JapidController {
+	
+	// effective path -> * /t3.App.foo
+	public static void foo() {
+		renderText("hi foo  ");
+	}
+
+	// effective rule: *  /t3.App.tee/{a}/{b}
+	public static void tee(int a, String b) {
+		renderText("tee: " + a +"::" + b);
+	}
+
+	// effective rule: * /t3.App.ff.  
+	// The param s will be taken from query string
+	@AutoPath(".ff") 
+	public static void fff(String s) {
+		renderText("hi fff: " + s);
+	}
+	
+	// effective rule: GET|POST  /t3.App.bb/{a}/{b}.html
+	@GET
+	@POST
+	@EndWith // ".html" by default
+	public static void bb(int a, String b) {
+		renderText("hi: " + a +":" + b + "... reverse: " + JapidPlayAdapter.lookup("t3.App.bb", new Object[] {a, b}));
+	}
+}
+
+Please see the "effective" line to get the idea how the routing rule is generated. In theory what I call "Auto-rounting" has nothing to do with the rendering engine. I have rolled them together for convenience. 
+
 2012/10/15: V0.9.12:
 	1. bug: Any html files sitting directly in the {Japid Root} folder would lead to an exception. Now those files are ignored.  
 	2. enhancement: view files now have an apply() method to match the naming convention in Play 2 views, sort of.
@@ -651,7 +693,7 @@ engine is shamefully adapted from the Play code. The Jamon template engine prove
 transforming templates to Java source code is possible and has inspired me to start this
 project.
 
-6. Quick build
+6. Quick ®
 
 To build this module from source:
 

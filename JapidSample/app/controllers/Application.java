@@ -24,6 +24,7 @@ import cn.bran.play.JapidResult;
  * @author Bing Ran<bing_ran@hotmail.com>
  *
  */
+
 public class Application extends JapidController {
 	public static void index() {
 		renderJapid(); // use the default index.html in the japidviews/SampleController directory

@@ -33,6 +33,13 @@ import cn.bran.japid.util.StackTraceUtils;
  * @author Bing Ran<bing_ran@hotmail.com>
  */
 public class JapidController extends Controller {
+	public static ThreadLocal<Map<String, String>> threadData = new ThreadLocal<Map<String, String>>() {
+		@Override
+		protected Map<String, String> initialValue() {
+			return new HashMap<String, String>();
+		}
+	};
+	
 	private static final char DOT = '.';
 	private static final String HTML = ".html";
 
@@ -127,12 +134,19 @@ public class JapidController extends Controller {
 	}
 
 	protected static String template() {
+//		String japidControllerInvoker = threadData.get().remove(JapidPlugin.ACTION_METHOD);
+//		if (japidControllerInvoker != null) {
+//			return japidControllerInvoker;
+//		}
+//		System.out.println("[japid] still using stacktrace to determine caller?");
+
 		// the super.template() class uses current request object to determine
 		// the caller and method to find the matching template
 		// this won't work if the current method is called from another action.
 		// let's fall back to use the stack trace to deduce the template.
 		// String caller2 = StackTraceUtils.getCaller2();
 
+		
 		final StackTraceElement[] stes = new Throwable().getStackTrace();
 		// let's iterate back in the stacktrace to find the recent action calls.
 		for (StackTraceElement st : stes) {

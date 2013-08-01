@@ -17,6 +17,7 @@ import play.mvc.ActionInvoker;
 import play.mvc.Http.Request;
 import play.mvc.Router;
 import play.mvc.Router.ActionDefinition;
+import play.utils.Java;
 
 /**
  * this file is copied from the the the following code is copied from the
@@ -69,11 +70,12 @@ public class ActionBridge {
 			}
 			
 			try {
-				Map<String, Object> r = new HashMap<String, Object>();
+				Map<String, Object> args = new HashMap<String, Object>();
 				Method actionMethod = (Method) ActionInvoker.getActionMethod(action)[1];
-				String[] names = (String[]) actionMethod
-						.getDeclaringClass()
-						.getDeclaredField("$" + actionMethod.getName() + computeMethodHash(actionMethod.getParameterTypes())).get(null);
+//				String[] names = (String[]) actionMethod
+//						.getDeclaringClass()
+//						.getDeclaredField("$" + actionMethod.getName() + computeMethodHash(actionMethod.getParameterTypes())).get(null);
+				String[] names = Java.parameterNames(actionMethod);
 				if (param instanceof Object[]) {
 					// too many parameters versus action, possibly a developer
 					// error. we must warn him.
@@ -83,17 +85,17 @@ public class ActionBridge {
 					Annotation[] annos = actionMethod.getAnnotations();
 					for (int i = 0; i < ((Object[]) param).length; i++) {
 						if (((Object[]) param)[i] instanceof Router.ActionDefinition && ((Object[]) param)[i] != null) {
-							Unbinder.unBind(r, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "", annos);
+							Unbinder.unBind(args, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "", annos);
 						} else if (isSimpleParam(actionMethod.getParameterTypes()[i])) {
 							if (((Object[]) param)[i] != null) {
-								Unbinder.unBind(r, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "", annos);
+								Unbinder.unBind(args, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "", annos);
 							}
 						} else {
-							Unbinder.unBind(r, ((Object[]) param)[i], i < names.length ? names[i] : "", annos);
+							Unbinder.unBind(args, ((Object[]) param)[i], i < names.length ? names[i] : "", annos);
 						}
 					}
 				}
-				Router.ActionDefinition def = Router.reverse(action, r);
+				Router.ActionDefinition def = Router.reverse(action, args);
 				if (absolute) {
 					def.absolute();
 				}

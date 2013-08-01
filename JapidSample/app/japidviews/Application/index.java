@@ -67,13 +67,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		 __t = System.nanoTime();
 		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-     	String __l = "" + (System.nanoTime() - __t) / 100000;
-		int __len = __l.length();
-		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
-
-		System.out.println("[index] rendering time(ms): " + __l);
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -85,6 +79,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1
+		//stopwatch on// line 1
 p("<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
