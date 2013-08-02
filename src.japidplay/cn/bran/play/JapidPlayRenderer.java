@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import play.Play;
 import play.Play.Mode;
 import play.classloading.ApplicationClassloader;
 import play.data.validation.Validation;
@@ -140,7 +141,7 @@ public class JapidPlayRenderer {
 			// find out all removed classes
 			// XXX  just html? not xml, css, js?
 			// XXX need to add other files as well. The old code is for plain text rendering only
-			List<String> allTemps = DirUtil.getAllTemplateFiles(new File(templateRoot));
+			List<String> allTemps = DirUtil.getAllTemplateFiles(new File(defaultTemplateRoot));
 			Set<String> currentClassesOnDir = createNameSet(allTemps);
 			Set<String> allNames = new HashSet<String>(currentClassesOnDir);
 
@@ -156,7 +157,7 @@ public class JapidPlayRenderer {
 			// now all the class set size is up to date
 
 			// now update any Java source code
-			List<File> gen = gen(templateRoot);
+			List<File> gen = gen(defaultTemplateRoot);
 
 			// this would include both new and updated java
 			Set<String> updatedClasses = new HashSet<String>();
@@ -184,7 +185,7 @@ public class JapidPlayRenderer {
 				RendererClass rc = japidClasses.get(k);
 				if (rc.getSourceCode() == null) {
 					if (!rc.getClassName().contains("$")) {
-						String pathname = templateRoot + sep + k;
+						String pathname = defaultTemplateRoot + sep + k;
 						pathname = pathname.replace(".", sep);
 						File f = new File(pathname + ".java");
 						setSources(rc, f);
@@ -222,9 +223,9 @@ public class JapidPlayRenderer {
 		} 
 		catch (JapidCompilationException e) {
 			String tempName = e.getTemplateName();
-			if (tempName.startsWith(templateRoot)) {
+			if (tempName.startsWith(defaultTemplateRoot)) {
 			}else {
-				tempName = templateRoot + File.separator + tempName;
+				tempName = defaultTemplateRoot + File.separator + tempName;
 			}
 			VirtualFile vf = VirtualFile.fromRelativePath(tempName);
 			CompilationException ce = new CompilationException(vf, "\"" + e.getMessage() + "\"", e.getLineNumber(), 0, 0);
@@ -280,10 +281,10 @@ public class JapidPlayRenderer {
 	}
 
 	public static RendererCompiler compiler;
-	public static String templateRoot = "japidroot";
+	public static String defaultTemplateRoot = "japidroot";
 	public static final String JAPIDVIEWS = "japidviews";
 	public static String sep = File.separator;
-	public static String japidviews = templateRoot + sep + JAPIDVIEWS + sep;
+	public static String japidviews = defaultTemplateRoot + sep + JAPIDVIEWS + sep;
 	// such as java.utils.*
 	public static List<String> importlines = new ArrayList<String>();
 	public static int refreshInterval;
@@ -325,7 +326,7 @@ public class JapidPlayRenderer {
 	}
 
 	static String getSourceCode(String k) {
-		String pathname = templateRoot + sep + k;
+		String pathname = defaultTemplateRoot + sep + k;
 		pathname = pathname.replace(".", sep);
 		File f = new File(pathname + ".java");
 		return readSource(f);
@@ -385,9 +386,13 @@ public class JapidPlayRenderer {
 		refreshInterval = i * 1000;
 	}
 
-	static void setTemplateRoot(String root) {
-		templateRoot = root;
-		japidviews = templateRoot + sep + JAPIDVIEWS + sep;
+	static public void setTemplateRoot(String root) {
+		if (new File(root).isAbsolute())
+			defaultTemplateRoot = root;
+		else
+			defaultTemplateRoot = Play.applicationPath + sep + root;
+		japidviews = defaultTemplateRoot + sep + JAPIDVIEWS + sep;
+		JapidFlags.log("japid root is set to: " + defaultTemplateRoot);
 	}
 
 	/**
@@ -404,13 +409,13 @@ public class JapidPlayRenderer {
 
 			setTemplateRoot(".");
 			if ("gen".equals(arg0)) {
-				gen(templateRoot);
+				gen(defaultTemplateRoot);
 			} else if ("regen".equals(arg0)) {
-				regen(templateRoot);
+				regen(defaultTemplateRoot);
 			} else if ("clean".equals(arg0)) {
-				delAllGeneratedJava(getJapidviewsDir(templateRoot));
+				delAllGeneratedJava(getJapidviewsDir(defaultTemplateRoot));
 			} else if ("mkdir".equals(arg0)) {
-				mkdir(templateRoot);
+				mkdir(defaultTemplateRoot);
 			} else if ("changed".equals(arg0)) {
 				changed(japidviews);
 			} else {
@@ -451,7 +456,7 @@ public class JapidPlayRenderer {
 	}
 
 	static void regen() throws IOException {
-		regen(templateRoot);
+		regen(defaultTemplateRoot);
 	}
 
 	public static void regen(String root) throws IOException {
@@ -605,7 +610,7 @@ public class JapidPlayRenderer {
 	}
 
 	static List<File> reloadChanged() {
-		return reloadChanged(templateRoot);
+		return reloadChanged(defaultTemplateRoot);
 	}
 
 	static void log(String m) {
@@ -613,11 +618,11 @@ public class JapidPlayRenderer {
 	}
 
 	static void gen() {
-		if (templateRoot == null) {
+		if (defaultTemplateRoot == null) {
 			throw new RuntimeException("the template root directory must be set");
 		} else {
 			try {
-				gen(templateRoot);
+				gen(defaultTemplateRoot);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -738,7 +743,7 @@ public class JapidPlayRenderer {
 	}
 
 	static {
-		init(null, "japidroot", 2);
+		init(null, defaultTemplateRoot, 2);
 	}
 	
 	/**

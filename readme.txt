@@ -29,6 +29,9 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
+2013/08/02: V0.9.21:
+	1. enhancement: set the template root path in relative to the Play.applicationRoot unless it's an absolute value. This also solves compatibility issue with running in servlet containers. 
+
 2013/08/01: V0.9.20:
 	1. new feature: added annotation and convention based route rule generation. Here is an example:
 

@@ -422,39 +422,50 @@ public class JapidPlugin extends PlayPlugin {
 	 * @author Bing Ran (bing.ran@gmail.com)
 	 */
 	private void buildRoutesFromAnnotations() {
-		ApplicationClassloaderState applicationClassloaderState = Play.classloader.currentState;
-		if (!applicationClassloaderState.equals(lastApplicationClassloaderState)) {
-			List<Route> oldRoutes = Router.routes;
-			List<Route> newRoutes = new ArrayList<Route>(oldRoutes.size());
-			
-			// classes changed. rebuild the dynamic route table
-			List<Class> allClasses = Play.classloader.getAllClasses();
-			for (Class<?> c : allClasses) {
-				String cname = c.getName();
-				if (cname.startsWith("controllers.")) {
-					if (c.getAnnotation(AutoPath.class) != null) {
-						RouterClass rc = new RouterClass(c, appPath);
-						List<Route> rs = rc.buildRoutes();
-						for(Route r : rs) {
-							JapidFlags.log("added route: " + r);
-							newRoutes.add(r);
-						}
-					}
-				}
-			}
-			// copy fixed routes from the old route
-			for (Iterator<Route> iterator = oldRoutes.iterator(); iterator.hasNext();) {
-				Route r = iterator.next();
-				if (r.routesFileLine !=0) { // special marker from autopath
-					newRoutes.add(r);
-				}
-			}
-			Router.routes = newRoutes;
-			lastApplicationClassloaderState = applicationClassloaderState;
+		if (!Play.classloader.currentState.equals(lastApplicationClassloaderState)) {
+			System.out.println("reload auto route due to classloader state change");
+			buildRoutes();
+			lastApplicationClassloaderState = Play.classloader.currentState;
+			routesLoadingTime = Router.lastLoading;
+		}
+		else if (Router.lastLoading != routesLoadingTime) {
+			System.out.println("reload auto route due to router timestamp");
+			buildRoutes();
+			routesLoadingTime = Router.lastLoading;
 		}
 	}
 
-	ApplicationClassloaderState lastApplicationClassloaderState = null;
+	private void buildRoutes() {
+		List<Route> oldRoutes = Router.routes;
+		List<Route> newRoutes = new ArrayList<Route>(oldRoutes.size());
+		
+		// classes changed. rebuild the dynamic route table
+		List<Class> allClasses = Play.classloader.getAllClasses();
+		for (Class<?> c : allClasses) {
+			String cname = c.getName();
+			if (cname.startsWith("controllers.")) {
+				if (c.getAnnotation(AutoPath.class) != null) {
+					RouterClass rc = new RouterClass(c, appPath);
+					List<Route> rs = rc.buildRoutes();
+					for(Route r : rs) {
+						JapidFlags.log("added route: " + r);
+						newRoutes.add(r);
+					}
+				}
+			}
+		}
+		// copy fixed routes from the old route
+		for (Iterator<Route> iterator = oldRoutes.iterator(); iterator.hasNext();) {
+			Route r = iterator.next();
+			if (r.routesFileLine !=0) { // special marker from autopath
+				newRoutes.add(r);
+			}
+		}
+		Router.routes = newRoutes;
+	}
+
+	private ApplicationClassloaderState lastApplicationClassloaderState = null;
+	private long routesLoadingTime = 0;
 	
 	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");
 

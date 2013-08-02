@@ -6,7 +6,7 @@ import cn.bran.play.routing.HttpMethod.GET;
 import cn.bran.play.routing.HttpMethod.POST;
 import cn.bran.play.routing.EndWith;
 
-@AutoPath // == @AutoPath("/t3.App")
+@AutoPath // effectively == @AutoPath("/t3.App")
 public class App extends JapidController {
 	
 	// effective path -> * /t3.App.foo

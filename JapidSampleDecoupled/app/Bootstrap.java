@@ -1,17 +1,16 @@
 import java.io.IOException;
 
+import cn.bran.play.JapidPlayRenderer;
+
+import play.Play;
+import play.Play.Mode;
 import play.jobs.Job;
+import play.jobs.OnApplicationStart;
  
-//@OnApplicationStart
+@OnApplicationStart
 public class Bootstrap extends Job {
  
     public void doJob() {
-    	try {
-//			MyMemClient.init();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	System.out.println("bootstrap called");
     }
- 
 }
