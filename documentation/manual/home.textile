@@ -1,6 +1,6 @@
 h1. The Quick Manual of Japid Engine with Play Framework
 
-V0.9.10
+V0.9.21
 
 Bing Ran<bing.ran@gmail.com>
 
@@ -60,7 +60,7 @@ In this mode,
 * File change detection and class reloading takes place after the code in the controller has been executed.   
 * The Java intermediaries are not supposed to be invoked directly from within the controllers. They are wrapped in a special controller super class named "JapidController2". 
 
-The post-controller Japid decouples the view layer from the controller and model layer at class loading level. It further avoids cross interference when hot swapping new code in DEV mode. This can translate to further time saving in quickly making changes in DEV mode. 
+The post-controller Japid decouples the view layer from the controller and model layer at class loading level. In this way it further avoids cross interference when hot swapping new code in DEV mode, translating to further time saving in quickly making changes in DEV mode. 
 
 Another great advantage in using this model is that errors in compiling or running Japid views will be picked up by the Play's nice error displaying page, another great debugging tool and time saver. 
 
@@ -72,8 +72,12 @@ First you need to get yourself familiar with the "Play! module concept":
 - http://www.playframework.org/documentation/1.2.2/modules 
 - http://www.playframework.org/documentation/1.2.2/dependency
 
-The following is a sample session. 
+Since Play2.0, github has become the official home of Japid at: *https://github.com/branaway/Japid*. The source code and distributions are  all there. 
 
+
+The following is a sample "classic" session for reference only. It's onnly good until version 0.9.12. Skip ahead and use dependencies.yml to manage the Japid dependencies. 
+
+h4. "Old" and deprecated way of referencing Japid
 To show all the version of Japid module, from the command-line:
 
 <pre>
@@ -124,14 +128,38 @@ Now add a reference to Japid module in the @application.conf@ file in your appli
 module.japid=${play.path}/modules/japid-0.9.10  // or whatever the version number is
 </pre>
 
-Since some versions ago, it's recommended that developers use *dependencies.yml* to configure modules or "dependencies". In case of Japid, add this line to the dependencies file:
+h4. Using dependencies.yml to manage Japid references. 
+
+Since some versions ago, it's recommended that developers use *dependencies.yml* to configure modules or "dependencies". 
+
+Note: because the Play web site does not take module update since the introduction of Play2, I have stored the distribution with the source code in the github. Here is a sample *dependencies.yml* file:
+
+<pre><code>
+require:
+    - cn.bran -> japid 0.9.21
+    - cn.bran -> japidplay 0.9.21
+    - org.eclipse.tycho -> org.eclipse.jdt.core 3.8.2.v20120814-155456
+    - com.google.code.javaparser -> javaparser 1.0.8
+  
+# My custom repositories
+repositories:
+    - bran:
+        type:       http
+        artifact:   "https://raw.github.com/branaway/Japid/master/lib/[module]-[revision].[ext]"
+        contains:
+            - cn.bran -> *
+
+</code></pre>
+
+Once the dependencies.yml file is ready, install the dependencies by running command:
 
 <pre>
-    - play -> japid 0.9.10
+play dependencies
 </pre>
 
+You'll find that all the Japid artifiacts are installed to the lib folder of your app. 
 
-The next thing to do is to create the default directory structure required by Japid, if you want to use the "pre-controller integration" model. From the app root:
+The next thing to do is to create the default directory structure required by Japid, *if you want to use the "pre-controller integration" model*. From the app root:
 
 <pre>
 $ play japid:gen
@@ -1709,7 +1737,6 @@ Note:
  
 
 
-
 h2. Using the Japid Eclipse Plugin (Pre-Controller Integration Only)
 
 First of all, the plugin is based on the PlayClipse project for Play! In fact the new plugin still keeps the name and tries to keep itself compatible with the default rendering engine. 
@@ -1996,8 +2023,83 @@ customer name: &{'cus.name', "冉兵"}
 The method @i18n()@ basically calls the @Messages.get(...)@.
 
 
+h2. Annotation-based http routing
 
+The mapping of HTTP requests to controller actions are managed by the route file in the conf directory. It has three issues:
 
+1. It's not type-safe. The controller and actions names are verbatim text. 
+2. It's one more additional file to maintain manually. 
+3. The merging with route files from modules are messy.  
+
+Japid introduces an annotation-based routing mechanism called "Auto-routing". There is only one Annotation one must use to get started with it. Check out this sample controller:
+
+<pre><code>
+
+package controllers.t3;
+import cn.bran.play.JapidController;
+import cn.bran.play.JapidPlayAdapter;
+import cn.bran.play.routing.AutoPath;
+import cn.bran.play.routing.HttpMethod.GET;
+import cn.bran.play.routing.HttpMethod.POST;
+import cn.bran.play.routing.EndWith;
+
+@AutoPath // effectively == @AutoPath("/t3.App")
+public class App extends JapidController {
+	
+	// effective path -> * /t3.App.foo
+	public static void foo() {
+		renderText("hi foo  ");
+	}
+
+	// effectively -> * /t3.App.ff.  
+	// The param s will be taken from query string
+	@AutoPath(".ff") 
+	public static void fff(String s) {
+		renderText("hi fff: " + s);
+	}
+	
+	// effectively -> GET|POST  /t3.App.bb/{a}/{b}.html
+	@GET
+	@POST
+	@EndWith // ".html" by default
+	public static void bb(int a, String b) {
+		renderText("hi: " + a +":" + b + "... reverse: " + JapidPlayAdapter.lookup("t3.App.bb", new Object[] {a, b}));
+	}
+
+	// effectively -> *  /t3.App.tee/{a}/{b}
+	public static void tee(int a, String b) {
+		renderText("tee: " + a +"::" + b);
+	}
+}
+
+</code></pre>
+
+As an absolute minimum, *@AutoPath* is used to indicate that the controller with this annotation will be mapped to HTTP request in the following pattern:
+
+<pre>
+/{app context}/{controller name}.{action name}/{argument 1}/{argument 2}/...
+</pre>
+
+The whole url looks like a method invocation:
+
+# the app context is taken from the *context* property in app configuration. 
+# the controller name and action name make up as if calling a static method using the fully qualified name of the method. The leading "controllers." must not present though. 
+# the rest of the url is the argument list separated by a slash. 
+
+Note:
+
+# Without AutoPath annotation, the URL pattern follows strictly the rule above. 
+# AutoPath can be used on methods to create custom path pattern. The pattern is exactly like what been used in a standard route file. 
+# A bunch of HTTP method annotations are to define what HTTP method are permitted to an action. 
+# @EndWith annotation is to append an arbitrate string to the generated pather pattern. It's useful to make search engine friendly URLs. 
+
+In case you want to compare the "Auto-routing" to the catch-all expression in route files: 
+
+<pre>
+*       /{controller}/{action}                  {controller}.{action}
+</pre>
+
+It creates ugly and search engine unfriendly URLs since all arguments must be passed as query strings.
 
 h2. Reverse URL Lookup
 
