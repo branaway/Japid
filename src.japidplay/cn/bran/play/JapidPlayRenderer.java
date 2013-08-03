@@ -52,6 +52,7 @@ public class JapidPlayRenderer {
 	}
 
 	private static ApplicationClassloader playClassloader;
+	private static boolean classesInited;
 	/**
 	 * Get a newly loaded class for the template renderer
 	 * 
@@ -133,7 +134,7 @@ public class JapidPlayRenderer {
 	}
 
 	static synchronized void refreshClasses() {
-		if (!timeToRefresh())
+		if (classesInited && !timeToRefresh())
 			return;
 
 		try {
@@ -185,8 +186,7 @@ public class JapidPlayRenderer {
 				RendererClass rc = japidClasses.get(k);
 				if (rc.getSourceCode() == null) {
 					if (!rc.getClassName().contains("$")) {
-						String pathname = defaultTemplateRoot + sep + k;
-						pathname = pathname.replace(".", sep);
+						String pathname = defaultTemplateRoot + sep + k.replace(".", sep);
 						File f = new File(pathname + ".java");
 						setSources(rc, f);
 						cleanClassHolder(rc);
@@ -219,6 +219,7 @@ public class JapidPlayRenderer {
 					RendererClass rc = japidClasses.get(k);
 					rc.setClz(null);
 				}
+				classesInited = true;
 			}
 		} 
 		catch (JapidCompilationException e) {
@@ -326,8 +327,7 @@ public class JapidPlayRenderer {
 	}
 
 	static String getSourceCode(String k) {
-		String pathname = defaultTemplateRoot + sep + k;
-		pathname = pathname.replace(".", sep);
+		String pathname = defaultTemplateRoot + sep + k.replace(".", sep);
 		File f = new File(pathname + ".java");
 		return readSource(f);
 	}
@@ -740,6 +740,13 @@ public class JapidPlayRenderer {
 		setRefreshInterval(refreshInterval);
 		crlr = new TemplateClassLoaderWithPlay();
 		compiler = new RendererCompiler(japidClasses, crlr);
+		try {
+			refreshClasses();
+		} catch (Exception e) {
+			JapidFlags
+					.log("There was an error in refreshing the japid classes. Will show the error in detail in processing a request: "
+							+ e);
+		}
 	}
 
 	static {

@@ -29,7 +29,10 @@ I have made a patched version of the original Play 1.2.x stream which is hosted 
 
 * Version History:
 
-2013/08/02: V0.9.21:
+2013/08/02: V0.9.23:
+	1. bug fix: dealt with root path starting with "."
+	2. enhancement: TemplateClassLoaderWithPlay now deals with pre-compiled classes. May help with Tomcat deployment using the post-controller mode.  
+2013/08/02: V0.9.22:
 	1. enhancement: set the template root path in relative to the Play.applicationRoot unless it's an absolute value. This also solves compatibility issue with running in servlet containers. 
 
 2013/08/01: V0.9.20:
