@@ -27,6 +27,25 @@ Whenever you upgrade the Japid module,
 
 I have made a patched version of the original Play 1.2.x stream which is hosted here: https://github.com/branaway/play. It works very well with Japid to give developers a very short turn-around time in DEV mode. Please check it out.
 
+* Note 3:
+Use this dependencies.yml to reference the latest distribution, adjusting the version number accordingly:
+
+<code>
+require:
+    - cn.bran -> japid 0.9.23
+    - cn.bran -> japidplay 0.9.23
+    - org.eclipse.tycho -> org.eclipse.jdt.core 3.8.2.v20120814-155456
+    - com.google.code.javaparser -> javaparser 1.0.8
+  
+# My custom repositories
+repositories:
+    - bran:
+        type:       http
+        artifact:   "https://raw.github.com/branaway/Japid/master/lib/[module]-[revision].[ext]"
+        contains:
+            - cn.bran -> *
+</code>
+
 * Version History:
 
 2013/08/02: V0.9.23:
