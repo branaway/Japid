@@ -52,7 +52,7 @@ public class JapidPlayRenderer {
 	}
 
 	private static ApplicationClassloader playClassloader;
-	private static boolean classesInited;
+	private static boolean classesInited = false;
 	/**
 	 * Get a newly loaded class for the template renderer
 	 * 
@@ -134,9 +134,14 @@ public class JapidPlayRenderer {
 	}
 
 	static synchronized void refreshClasses() {
-		if (classesInited && !timeToRefresh())
-			return;
-
+		if (classesInited) {
+			if (!timeToRefresh())
+				return;
+		}
+		else {
+			JapidFlags.log("Japid classes not inited. Initializing  them...");
+		}
+		
 		try {
 //			PlayDirUtil.mkdir(templateRoot);
 			// find out all removed classes
@@ -289,7 +294,7 @@ public class JapidPlayRenderer {
 	// such as java.utils.*
 	public static List<String> importlines = new ArrayList<String>();
 	public static int refreshInterval;
-	public static long lastRefreshed;
+	public static long lastRefreshed = 0;
 //	private static boolean inited;
 
 	private static boolean usePlay = true;
@@ -735,6 +740,7 @@ public class JapidPlayRenderer {
 	 *            detect any changes in the file system.
 	 */
 	public static void init(Mode opMode, String templateRoot, int refreshInterval) {
+		JapidFlags.log("JapidPlayRenderer initializing");
 		mode = opMode;
 		setTemplateRoot(templateRoot);
 		setRefreshInterval(refreshInterval);
@@ -747,6 +753,7 @@ public class JapidPlayRenderer {
 					.log("There was an error in refreshing the japid classes. Will show the error in detail in processing a request: "
 							+ e);
 		}
+		JapidFlags.log("JapidPlayRenderer inited");
 	}
 
 	static {

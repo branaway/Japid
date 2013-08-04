@@ -68,12 +68,12 @@ public class TemplateClassLoaderWithPlay extends TemplateClassLoader {
 			if (applicationClass.javaByteCode != null) {
 				return applicationClass.javaByteCode;
 			} else {
-				JapidFlags.log("Warning: no bytecode found for the applicationClass: " + name );
+//				JapidFlags.log("Warning: no bytecode found for the applicationClass: " + name );
 				// some hack. Due to a bug in Play, the bytecode of pre-compiled
 				// classes are not set on the application class.
 				// let's see if we can recover it.
 				if (Play.usePrecompiled) {
-					JapidFlags.log("in pre-compiled mode. try to recover it.");
+//					JapidFlags.log("in pre-compiled mode. try to recover it.");
 					try {
 						File file = Play.getFile("precompiled/java/" + name.replace(".", "/") + ".class");
 						if (!file.exists()) {

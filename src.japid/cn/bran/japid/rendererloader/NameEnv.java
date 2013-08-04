@@ -52,7 +52,6 @@ final class NameEnv implements INameEnvironment {
 	}
 
 	private NameEnvironmentAnswer findType(final String name) {
-		JapidFlags.log("find: " + name);
 		try {
 			if (!name.startsWith("japidviews.")) {
 				// let super class loader to load the bytecode
