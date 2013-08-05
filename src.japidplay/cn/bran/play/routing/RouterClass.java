@@ -35,6 +35,8 @@ public class RouterClass {
 	 * @param cl
 	 */
 	public RouterClass(Class<?> cl, String appPath) {
+		if (appPath == null)
+			appPath = "";
 		clz = cl;
 		path = cl.getAnnotation(AutoPath.class).value();
 		if (path.length() == 0) {

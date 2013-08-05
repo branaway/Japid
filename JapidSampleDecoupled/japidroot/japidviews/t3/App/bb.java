@@ -85,7 +85,9 @@ public class bb extends cn.bran.play.JapidTemplateBase
 		p(a);// line 2
 		p(" & b ... reverse: \"");// line 2
 		p(lookup("t3.App.bb", a, b));// line 2
-		p("\" or the path manually: \"/t3.App.bb/");// line 2
+		p("\" or the path manually: \"");// line 2
+		p(_play.ctxPath);// line 2
+		p("/t3.App.bb/");// line 2
 		p(a);// line 2
 		p("/");// line 2
 		p(b);// line 2

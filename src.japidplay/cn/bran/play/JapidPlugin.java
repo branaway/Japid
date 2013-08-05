@@ -99,7 +99,7 @@ public class JapidPlugin extends PlayPlugin {
 
 	@Override
 	public void onConfigurationRead() {
-		appPath = Play.configuration.getProperty("context", "/");
+//		appPath = Play.configuration.getProperty("context", "/");
 	}
 
 	public static Map<String, Object> getCache() {
@@ -176,6 +176,14 @@ public class JapidPlugin extends PlayPlugin {
 	// t.setOwningTarget(new Target());
 	// }
 
+	@Override
+	public void onApplicationReady() {
+	//	appPath = Play.ctxPath; // won't work due to a bug in the servlet wrapper. see onRoutesLoaded()
+	}
+	
+	
+	
+	
 	@Override
 	public void onApplicationStop() {
 		try {
@@ -415,6 +423,13 @@ public class JapidPlugin extends PlayPlugin {
 		if (Play.mode == Mode.DEV) {
 			buildRoutesFromAnnotations();
 		}
+		
+		if (request.path.endsWith("_listroutes")){
+			List<Route> routes = Router.routes;
+			for (Route r: routes) {
+				JapidFlags.log(r.toString());
+			}
+		}
 	}
 
 	/**
@@ -469,4 +484,14 @@ public class JapidPlugin extends PlayPlugin {
 	
 	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");
 
+	/* (non-Javadoc)
+	 * @see play.PlayPlugin#onRoutesLoaded()
+	 */
+	@Override
+	public void onRoutesLoaded() {
+		appPath = Play.ctxPath;
+		System.out.println("reload auto route due to system route loaded.");
+		buildRoutes();
+		lastApplicationClassloaderState = Play.classloader.currentState;
+		routesLoadingTime = Router.lastLoading;	}
 }

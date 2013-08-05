@@ -48,6 +48,8 @@ repositories:
 
 * Version History:
 
+2013/08/02: V0.9.24:
+	1. bug fix: also rebuild auto routes at onRouteLoaded event. a workaround to the servletwrapper defect, or deployment with a context in Tomcat won't work. 
 2013/08/02: V0.9.23:
 	1. bug fix: dealt with root path starting with "."
 	2. enhancement: TemplateClassLoaderWithPlay now deals with pre-compiled classes. May help with Tomcat deployment using the post-controller mode.  
