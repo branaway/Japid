@@ -58,30 +58,27 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void onLoad() {
 		Logger.info("JapidPlugin.onload().");
-		 if (Play.mode == Mode.DEV) {
-			 Logger.info("[Japid] play in DEV mode. Detecting changes...");
-			 beforeDetectingChanges();
-		 }
-		 else {
-			 String isPrecompiling = System.getProperty("precompile");
-			 if (isPrecompiling != null && (isPrecompiling.equals("yes") || isPrecompiling.equals("true"))) {
-				 Logger.info("[Japid] Running in PROD mode with precompiling: detect japid template changes.");
-				 beforeDetectingChanges();
-			 }
-			 else { // PROD mode and not pre-compile
+		if (Play.mode == Mode.DEV) {
+			Logger.info("[Japid] play in DEV mode. Detecting changes...");
+			beforeDetectingChanges();
+		} else {
+			String isPrecompiling = System.getProperty("precompile");
+			if (isPrecompiling != null && (isPrecompiling.equals("yes") || isPrecompiling.equals("true"))) {
+				Logger.info("[Japid] Running in PROD mode with precompiling: detect japid template changes.");
+				beforeDetectingChanges();
+			} else { // PROD mode and not pre-compile
 				Logger.info("[Japid] Running in PROD mode without pre-compiling. If the Japid templates have not been compiled to Java code, please run 'play japid:gen' before starting the application.");
-			 }
-		 }
-		 getDumpRequest();
-		 setupInjectTemplateBorder();
+			}
+		}
+		getDumpRequest();
+		setupInjectTemplateBorder();
 	}
 
 	/**
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 */
 	private void setupInjectTemplateBorder() {
-		String 
-		property = Play.configuration.getProperty("japid.trace.file", "false");
+		String property = Play.configuration.getProperty("japid.trace.file", "false");
 		if ("on".equalsIgnoreCase(property) || "yes".equalsIgnoreCase(property))
 			property = "true";
 		JapidTemplateBaseWithoutPlay.globalTraceFile = new Boolean(property);
@@ -99,7 +96,7 @@ public class JapidPlugin extends PlayPlugin {
 
 	@Override
 	public void onConfigurationRead() {
-//		appPath = Play.configuration.getProperty("context", "/");
+		// appPath = Play.configuration.getProperty("context", "/");
 	}
 
 	public static Map<String, Object> getCache() {
@@ -127,16 +124,18 @@ public class JapidPlugin extends PlayPlugin {
 				}
 			}
 		} catch (JapidCompilationException e) {
-			// turn japid compilation error to Play's template error to get better error reporting
+			// turn japid compilation error to Play's template error to get
+			// better error reporting
 			JapidPlayTemplate jpt = new JapidPlayTemplate();
 			jpt.name = e.getTemplateName();
 			jpt.source = e.getTemplateSrc();
-//			throw new TemplateExecutionException(jpt, e.getLineNumber(), e.getMessage(), e);
+			// throw new TemplateExecutionException(jpt, e.getLineNumber(),
+			// e.getMessage(), e);
 			VirtualFile vf = VirtualFile.fromRelativePath("/app/" + e.getTemplateName());
 			throw new CompilationException(vf, "\"" + e.getMessage() + "\"", e.getLineNumber(), 0, 0);
 		} catch (RuntimeException e) {
 			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			// e.printStackTrace();
 			throw e;
 		}
 
@@ -178,12 +177,13 @@ public class JapidPlugin extends PlayPlugin {
 
 	@Override
 	public void onApplicationReady() {
-	//	appPath = Play.ctxPath; // won't work due to a bug in the servlet wrapper. see onRoutesLoaded()
+		// appPath = Play.ctxPath; // won't work due to a bug in the servlet
+		// wrapper. see onRoutesLoaded()
+		if(Play.mode == Mode.PROD) {
+			JapidPlayRenderer.init();
+		}
 	}
-	
-	
-	
-	
+
 	@Override
 	public void onApplicationStop() {
 		try {
@@ -423,10 +423,10 @@ public class JapidPlugin extends PlayPlugin {
 		if (Play.mode == Mode.DEV) {
 			buildRoutesFromAnnotations();
 		}
-		
-		if (request.path.endsWith("_listroutes")){
+
+		if (request.path.endsWith("_listroutes")) {
 			List<Route> routes = Router.routes;
-			for (Route r: routes) {
+			for (Route r : routes) {
 				JapidFlags.log(r.toString());
 			}
 		}
@@ -434,6 +434,7 @@ public class JapidPlugin extends PlayPlugin {
 
 	/**
 	 * auto routes gave higher priority in the route table.
+	 * 
 	 * @author Bing Ran (bing.ran@gmail.com)
 	 */
 	private void buildRoutesFromAnnotations() {
@@ -442,8 +443,7 @@ public class JapidPlugin extends PlayPlugin {
 			buildRoutes();
 			lastApplicationClassloaderState = Play.classloader.currentState;
 			routesLoadingTime = Router.lastLoading;
-		}
-		else if (Router.lastLoading != routesLoadingTime) {
+		} else if (Router.lastLoading != routesLoadingTime) {
 			System.out.println("reload auto route due to router timestamp");
 			buildRoutes();
 			routesLoadingTime = Router.lastLoading;
@@ -453,7 +453,7 @@ public class JapidPlugin extends PlayPlugin {
 	private void buildRoutes() {
 		List<Route> oldRoutes = Router.routes;
 		List<Route> newRoutes = new ArrayList<Route>(oldRoutes.size());
-		
+
 		// classes changed. rebuild the dynamic route table
 		List<Class> allClasses = Play.classloader.getAllClasses();
 		for (Class<?> c : allClasses) {
@@ -462,7 +462,7 @@ public class JapidPlugin extends PlayPlugin {
 				if (c.getAnnotation(AutoPath.class) != null) {
 					RouterClass rc = new RouterClass(c, appPath);
 					List<Route> rs = rc.buildRoutes();
-					for(Route r : rs) {
+					for (Route r : rs) {
 						JapidFlags.log("added route: " + r);
 						newRoutes.add(r);
 					}
@@ -472,7 +472,7 @@ public class JapidPlugin extends PlayPlugin {
 		// copy fixed routes from the old route
 		for (Iterator<Route> iterator = oldRoutes.iterator(); iterator.hasNext();) {
 			Route r = iterator.next();
-			if (r.routesFileLine !=0) { // special marker from autopath
+			if (r.routesFileLine != 0) { // special marker from autopath
 				newRoutes.add(r);
 			}
 		}
@@ -481,17 +481,20 @@ public class JapidPlugin extends PlayPlugin {
 
 	private ApplicationClassloaderState lastApplicationClassloaderState = null;
 	private long routesLoadingTime = 0;
-	
+
 	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");
 
-	/* (non-Javadoc)
-	 * @see play.PlayPlugin#onRoutesLoaded()
+	/**
+	 * on tomcat this is the sure way to get the ctxPath from Play. The servlet wrapper is the culprit. 
 	 */
 	@Override
 	public void onRoutesLoaded() {
-		appPath = Play.ctxPath;
-		System.out.println("reload auto route due to system route loaded.");
-		buildRoutes();
-		lastApplicationClassloaderState = Play.classloader.currentState;
-		routesLoadingTime = Router.lastLoading;	}
+//		if (!Play.standalonePlayServer) {
+			appPath = Play.ctxPath;
+			System.out.println("reload auto route due to system route loaded.");
+			buildRoutes();
+			lastApplicationClassloaderState = Play.classloader.currentState;
+			routesLoadingTime = Router.lastLoading;
+//		}
+	}
 }

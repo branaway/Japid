@@ -48,6 +48,8 @@ repositories:
 
 * Version History:
 
+2013/08/02: V0.9.25:
+	1. new feature: added nice error reporting for isolated Japid mode.  
 2013/08/02: V0.9.24:
 	1. bug fix: also rebuild auto routes at onRouteLoaded event. a workaround to the servletwrapper defect, or deployment with a context in Tomcat won't work. 
 2013/08/02: V0.9.23:

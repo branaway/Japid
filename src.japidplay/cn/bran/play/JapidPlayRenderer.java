@@ -24,6 +24,7 @@ import play.templates.JavaExtensions;
 import play.vfs.VirtualFile;
 import cn.bran.japid.compiler.JapidCompilationException;
 import cn.bran.japid.compiler.TranslateTemplateTask;
+import cn.bran.japid.exceptions.JapidTemplateException;
 import cn.bran.japid.rendererloader.RendererClass;
 import cn.bran.japid.rendererloader.RendererCompiler;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
@@ -228,6 +229,9 @@ public class JapidPlayRenderer {
 			}
 		} 
 		catch (JapidCompilationException e) {
+			if (presentErrorInHtml)
+				throw e;
+			
 			String tempName = e.getTemplateName();
 			if (tempName.startsWith(defaultTemplateRoot)) {
 			}else {
@@ -301,6 +305,7 @@ public class JapidPlayRenderer {
 	
 	// to override Play's mode when set
 	private static Mode mode;
+	private static boolean presentErrorInHtml = true;
 	
 	public static Mode getMode() {
 		if (mode == null)
@@ -756,8 +761,12 @@ public class JapidPlayRenderer {
 		JapidFlags.log("JapidPlayRenderer inited");
 	}
 
-	static {
+	public static void init() {
 		init(null, defaultTemplateRoot, 2);
+	}
+	
+	static {
+		init();
 	}
 	
 	/**
@@ -806,4 +815,80 @@ public class JapidPlayRenderer {
 		return japidRenderInvoker;
 	}
 
+	public static RenderResult handleException(Throwable e) throws RuntimeException {
+		if (!presentErrorInHtml )
+			if (e instanceof RuntimeException)
+				throw (RuntimeException) e;
+			else
+				throw new RuntimeException(e);
+
+		// if (Play.mode == Mode.PROD)
+		// throw new RuntimeException(e);
+		//
+		Class<? extends JapidTemplateBaseWithoutPlay> rendererClass = getErrorRendererClass();
+
+		if (e instanceof JapidTemplateException) {
+			RenderResult rr = RenderInvokerUtils.invokeRender(rendererClass, (JapidTemplateException) e);
+			return (rr);
+		}
+
+		if (e instanceof RuntimeException && e.getCause() != null)
+			e = e.getCause();
+
+		if (e instanceof JapidCompilationException) {
+			JapidCompilationException jce = (JapidCompilationException) e;
+			JapidTemplateException te = JapidTemplateException.from(jce);
+			RenderResult rr = RenderInvokerUtils.invokeRender(rendererClass, te);
+			return (rr);
+		}
+
+		e.printStackTrace();
+
+		// find the latest japidviews exception or the controller that caused
+		// the exception
+		StackTraceElement[] stackTrace = e.getStackTrace();
+		for (StackTraceElement ele : stackTrace) {
+			String className = ele.getClassName();
+			if (className.startsWith("japidviews")) {
+				int lineNumber = ele.getLineNumber();
+				RendererClass applicationClass = japidClasses.get(className);
+				if (applicationClass != null) {
+					// let's get the line of problem
+					int oriLineNumber = applicationClass.mapJavaLineToJapidScriptLine(lineNumber);
+					if (oriLineNumber > 0) {
+						if (rendererClass != null) {
+							String path = applicationClass.getOriSourceCode();
+							JapidTemplateException te = new JapidTemplateException("Japid Error", path + "("
+									+ oriLineNumber + "): " + e.getClass().getName() + ": " + e.getMessage(),
+									oriLineNumber, path, applicationClass.getOriSourceCode());
+							RenderResult rr = RenderInvokerUtils.invokeRender(rendererClass, te);
+							return (rr);
+						}
+					}
+				}
+			} else if (className.startsWith("controllers.")) {
+				if (e instanceof RuntimeException)
+					throw (RuntimeException) e;
+				else
+					throw new RuntimeException(e);
+			}
+		}
+
+		JapidTemplateException te = new JapidTemplateException(e);
+		RenderResult rr = RenderInvokerUtils.invokeRender(rendererClass, te);
+		return rr;
+		// if (e instanceof RuntimeException)
+		// throw (RuntimeException) e;
+		// else
+		// throw new RuntimeException(e);
+	}
+	
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @return
+	 */
+	public static Class<? extends JapidTemplateBaseWithoutPlay> getErrorRendererClass() {
+//		return devErrorClass;
+		return japidviews.devError.class;
+	}
 }

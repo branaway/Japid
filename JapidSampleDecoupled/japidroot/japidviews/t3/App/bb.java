@@ -83,17 +83,18 @@ public class bb extends cn.bran.play.JapidTemplateBase
 ;// line 1
 		p("hi: ");// line 1
 		p(a);// line 2
-		p(" & b ... reverse: \"");// line 2
+		p(" & b ... reversed:: \"");// line 2
 		p(lookup("t3.App.bb", a, b));// line 2
-		p("\" or the path manually: \"");// line 2
-		p(_play.ctxPath);// line 2
-		p("/t3.App.bb/");// line 2
-		p(a);// line 2
-		p("/");// line 2
-		p(b);// line 2
-		p(".html\"\n" + 
+		p("\" \n" + 
 "\n" + 
-"\n");// line 2
+"or the path manually: \"");// line 2
+		p(play.Play.ctxPath);// line 4
+		p("/t3.App.bb/");// line 4
+		p(a);// line 4
+		p("/");// line 4
+		p(b);// line 4
+		p(".html\"\n" + 
+"\n");// line 4
 		
 		endDoLayout(sourceTemplate);
 	}

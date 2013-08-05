@@ -34,11 +34,13 @@ import cn.bran.japid.util.StackTraceUtils;
  * a helper class. for hiding the template API from user eyes. not really needed
  * since the template invocation API is simple enough.
  * 
- * In comparison to JapidController, JapidController2 utilizes JapidRenderer to load 
- * template classes, which is independent of Play's class loading mechanism. 
+ * In comparison to JapidController, JapidController2 utilizes JapidRenderer to
+ * load template classes, which is independent of Play's class loading
+ * mechanism.
  * 
- * Decoupling of template class loading from Play's class loading potentially results in
- * clean and faster class loading and reloading when Play refreshes the classes. 
+ * Decoupling of template class loading from Play's class loading potentially
+ * results in clean and faster class loading and reloading when Play refreshes
+ * the classes.
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
  */
@@ -56,8 +58,7 @@ public class JapidController2 extends Controller {
 	 * @param args
 	 *            arguments
 	 */
-	public static <T extends JapidTemplateBaseWithoutPlay> void render(
-			Class<T> c, Object... args) {
+	public static <T extends JapidTemplateBaseWithoutPlay> void render(Class<T> c, Object... args) {
 		try {
 			RenderResult rr = invokeRender(c, args);
 			throw new JapidResult(rr);
@@ -79,8 +80,7 @@ public class JapidController2 extends Controller {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	private static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeRender(
-			Class<T> c, Object... args) {
+	private static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeRender(Class<T> c, Object... args) {
 		try {
 			return RenderInvokerUtils.invokeRender(c, args);
 		} catch (Throwable e) {
@@ -89,8 +89,8 @@ public class JapidController2 extends Controller {
 		}
 	}
 
-	protected static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeNamedArgsRender(
-	Class<T> c, NamedArgRuntime[] args) {
+	protected static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeNamedArgsRender(Class<T> c,
+			NamedArgRuntime[] args) {
 		try {
 			return RenderInvokerUtils.invokeNamedArgsRender(c, args);
 		} catch (Throwable e) {
@@ -99,28 +99,29 @@ public class JapidController2 extends Controller {
 		}
 	}
 
-	
 	/**
-	 * translate japid runtime exception to Play's TemplateExecutionException for formated error reporting
+	 * translate japid runtime exception to Play's TemplateExecutionException
+	 * for formated error reporting
 	 */
 	static void handleException(Throwable e) throws RuntimeException {
 		if (Play.mode == Mode.PROD)
 			throw new RuntimeException(e);
-		
+
 		if (e instanceof TemplateExecutionException)
-			throw (TemplateExecutionException)e;
-		
+			throw (TemplateExecutionException) e;
+
 		if (e instanceof RuntimeException && e.getCause() != null)
 			e = e.getCause();
 		// find the latest japidviews exception
 		StackTraceElement[] stackTrace = e.getStackTrace();
-		for (StackTraceElement ele : stackTrace){
+		for (StackTraceElement ele : stackTrace) {
 			String className = ele.getClassName();
-			if (className.startsWith("japidviews")){
+			if (className.startsWith("japidviews")) {
 				int lineNumber = ele.getLineNumber();
 				RendererClass applicationClass = JapidPlayRenderer.japidClasses.get(className);
-//				ApplicationClass applicationClass = Play.classes.getApplicationClass(className);
-				if (applicationClass != null){
+				// ApplicationClass applicationClass =
+				// Play.classes.getApplicationClass(className);
+				if (applicationClass != null) {
 					// let's get the line of problem
 					String jsrc = applicationClass.getSourceCode();
 					String[] splitSrc = jsrc.split("\n");
@@ -130,7 +131,8 @@ public class JapidController2 extends Controller {
 					if (lineMarker > 0) {
 						int oriLineNumber = Integer.parseInt(line.substring(lineMarker + 8).trim());
 						StackTraceElement[] newStack = new StackTraceElement[stackTrace.length + 1];
-						newStack[0] = new StackTraceElement(className, "", applicationClass.getSrcFile().getPath(), oriLineNumber);
+						newStack[0] = new StackTraceElement(className, "", applicationClass.getSrcFile().getPath(),
+								oriLineNumber);
 						System.arraycopy(stackTrace, 0, newStack, 1, stackTrace.length);
 						e.setStackTrace(newStack);
 
@@ -183,8 +185,7 @@ public class JapidController2 extends Controller {
 		throw new JapidResult(getRenderResultWith(template, args));
 	}
 
-	public static void renderJapidWith(String template,
-			NamedArgRuntime[] namedArgs) {
+	public static void renderJapidWith(String template, NamedArgRuntime[] namedArgs) {
 		throw new JapidResult(getRenderResultWith(template, namedArgs));
 	}
 
@@ -204,13 +205,11 @@ public class JapidController2 extends Controller {
 		for (StackTraceElement st : stes) {
 			String controller = st.getClassName();
 			String action = st.getMethodName();
-			ApplicationClass conAppClass = Play.classes
-					.getApplicationClass(controller);
+			ApplicationClass conAppClass = Play.classes.getApplicationClass(controller);
 			if (conAppClass != null) {
 				Class controllerClass = conAppClass.javaClass;
 				if (JapidController2.class.isAssignableFrom(controllerClass)) {
-					Method actionMethod = /* Java. */findActionMethod(action,
-							controllerClass);
+					Method actionMethod = /* Java. */findActionMethod(action, controllerClass);
 					if (actionMethod != null) {
 						String expr = controller + "." + action;
 						// content negotiation
@@ -220,9 +219,7 @@ public class JapidController2 extends Controller {
 						} else {
 							String expr_format = expr + "_" + format;
 							if (expr_format.startsWith("controllers.")) {
-								expr_format = "japidviews"
-										+ expr_format.substring(expr_format
-												.indexOf('.'));
+								expr_format = "japidviews" + expr_format.substring(expr_format.indexOf('.'));
 							}
 							RendererClass rc = JapidPlayRenderer.japidClasses.get(expr_format);
 							if (rc != null)
@@ -257,8 +254,7 @@ public class JapidController2 extends Controller {
 														 * .getModifiers())
 														 */) {
 					// Check that it is not an intercepter
-					if (!m.isAnnotationPresent(Before.class)
-							&& !m.isAnnotationPresent(After.class)
+					if (!m.isAnnotationPresent(Before.class) && !m.isAnnotationPresent(After.class)
 							&& !m.isAnnotationPresent(Finally.class)) {
 						return m;
 					}
@@ -269,24 +265,23 @@ public class JapidController2 extends Controller {
 		return null;
 	}
 
-	public static RenderResult getRenderResultWith(String template,
-			NamedArgRuntime[] args) {
-		String templateClassName = getTemapletClassName(template);
-		Class<? extends JapidTemplateBaseWithoutPlay> tClass = getRenderClass(templateClassName); 
-		return RenderInvokerUtils.invokeNamedArgsRender(tClass, args);
+	public static RenderResult getRenderResultWith(String template, NamedArgRuntime[] args) {
+		try {
+			String templateClassName = getTemapletClassName(template);
+			Class<? extends JapidTemplateBaseWithoutPlay> tClass = getRenderClass(templateClassName);
+			return RenderInvokerUtils.invokeNamedArgsRender(tClass, args);
+		} catch (Throwable e) {
+			return JapidPlayRenderer.handleException(e);
+		}
 
 	}
 
-	private static Class<? extends JapidTemplateBaseWithoutPlay> getRenderClass(
-			String templateClassName) {
+	private static Class<? extends JapidTemplateBaseWithoutPlay> getRenderClass(String templateClassName) {
 		Class<? extends JapidTemplateBaseWithoutPlay> tClass = JapidPlayRenderer.getTemplateClass(templateClassName);
 
 		if (tClass == null) {
-			String templateFileName = templateClassName.replace(DOT, '/')
-					+ HTML;
-			throw new RuntimeException(
-					"Could not find a Japid template with the name of: "
-							+ templateFileName);
+			String templateFileName = templateClassName.replace(DOT, '/') + HTML;
+			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
 		}
 		return tClass;
 	}
@@ -299,11 +294,14 @@ public class JapidController2 extends Controller {
 	 *            naming pattern to match the template
 	 * @param args
 	 */
-	public static RenderResult getRenderResultWith(String template,
-			Object... args) {
-		String templateClassName = JapidController2.getTemapletClassName(template);
-		Class<? extends JapidTemplateBaseWithoutPlay> tClass = getRenderClass(templateClassName);
-		return invokeRender(tClass, args);
+	public static RenderResult getRenderResultWith(String template, Object... args) {
+		try {
+			String templateClassName = JapidController2.getTemapletClassName(template);
+			Class<? extends JapidTemplateBaseWithoutPlay> tClass = getRenderClass(templateClassName);
+			return invokeRender(tClass, args);
+		} catch (Throwable e) {
+			return JapidPlayRenderer.handleException(e);
+		}
 	}
 
 	// protected static String caller() {
@@ -342,8 +340,7 @@ public class JapidController2 extends Controller {
 	 * @param keyBase
 	 * @param objs
 	 */
-	protected static void cache(RenderResult rr, String ttl, String keyBase,
-			Object... objs) {
+	protected static void cache(RenderResult rr, String ttl, String keyBase, Object... objs) {
 		String caller = buildKey(keyBase, objs);
 		Cache.set(caller, rr, ttl);
 	}
@@ -416,8 +413,7 @@ public class JapidController2 extends Controller {
 	 * 
 	 * @deprecated use CacheableRunner directly in actions
 	 */
-	protected static void runWithCache(ActionRunner runner, String ttl,
-			Object... objects) {
+	protected static void runWithCache(ActionRunner runner, String ttl, Object... objects) {
 		if (ttl == null || ttl.trim().length() == 0)
 			throw new RuntimeException("Cache expiration time must be defined.");
 
@@ -476,15 +472,20 @@ public class JapidController2 extends Controller {
 	}
 
 	/**
-	 * Evict a cached Japid result resulted from a Japid directive <em>invoke<em/>. 
-	 * Can be used in a controller action to invalidate a cached result after a relevant state has been changed. 
-	 *  
+	 * Evict a cached Japid result resulted from a Japid directive
+	 * <em>invoke<em/>. 
+	 * Can be used in a controller action to invalidate a cached result after a relevant state has been changed.
+	 * 
 	 * @author Bing Ran (bing.ran@hotmail.com)
-	 * @param controllerClass the controller class
-	 * @param actionName action name
-	 * @param args the arguments to the action method.
+	 * @param controllerClass
+	 *            the controller class
+	 * @param actionName
+	 *            action name
+	 * @param args
+	 *            the arguments to the action method.
 	 */
-	public static <C extends JapidController2> void evictJapidResultCache(Class<C> controllerClass, String actionName, Object... args) {
+	public static <C extends JapidController2> void evictJapidResultCache(Class<C> controllerClass, String actionName,
+			Object... args) {
 		CacheablePlayActionRunner.deleteCache(controllerClass, actionName, args);
 	}
 
@@ -496,8 +497,7 @@ public class JapidController2 extends Controller {
 	 * this will set a flag so calling another action won't trigger a redirect
 	 */
 	protected static void dontRedirect() {
-		play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation
-				.initActionCall();
+		play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();
 	}
 
 	/**
@@ -587,8 +587,7 @@ public class JapidController2 extends Controller {
 	 * @return
 	 */
 	public static String genCacheKey() {
-		return "japidcache:" + Request.current().action + ":"
-				+ Request.current().querystring;
+		return "japidcache:" + Request.current().action + ":" + Request.current().querystring;
 	}
 
 	protected static NamedArgRuntime named(String name, Object val) {
@@ -606,7 +605,7 @@ public class JapidController2 extends Controller {
 	 */
 	public static boolean isInvokedfromJapidView() {
 		Throwable t = new Throwable();
-//		t.printStackTrace();
+		// t.printStackTrace();
 		final StackTraceElement[] ste = t.getStackTrace();
 		for (int i = 0; i < ste.length; i++) {
 			StackTraceElement st = ste[i];
@@ -627,31 +626,28 @@ public class JapidController2 extends Controller {
 		if (template == null || template.length() == 0) {
 			template = template();
 		}
-	
+
 		if (template.endsWith(HTML)) {
 			template = template.substring(0, template.length() - HTML.length());
 		}
-	
+
 		// String action = StackTraceUtils.getCaller(); // too tricky to use
 		// stacktrace to track the caller action name
 		// something like controllers.japid.SampleController.testFindAction
-	
+
 		if (template.startsWith("@")) {
 			// a template in the current directory
-			template = Request.current().controller + "/"
-					+ template.substring(1);
+			template = Request.current().controller + "/" + template.substring(1);
 		}
-	
+
 		// map to default japid view
 		if (template.startsWith("controllers.")) {
 			template = template.substring(template.indexOf(DOT) + 1);
 		}
-		String templateClassName = template
-				.startsWith(DirUtil.JAPIDVIEWS_ROOT) ? template
-				: DirUtil.JAPIDVIEWS_ROOT + File.separator + template;
-	
-		templateClassName = templateClassName.replace('/', DOT).replace('\\',
-				DOT);
+		String templateClassName = template.startsWith(DirUtil.JAPIDVIEWS_ROOT) ? template : DirUtil.JAPIDVIEWS_ROOT
+				+ File.separator + template;
+
+		templateClassName = templateClassName.replace('/', DOT).replace('\\', DOT);
 		return templateClassName;
 	}
 }

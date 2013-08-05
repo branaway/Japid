@@ -31,6 +31,6 @@ public class App extends JapidController {
 
 	// effectively -> *  /t3.App.tee/{a}/{b}
 	public static void tee(int a, String b) {
-		renderText("tee: " + a +"::" + b);
+		renderJapid(a, b);
 	}
 }

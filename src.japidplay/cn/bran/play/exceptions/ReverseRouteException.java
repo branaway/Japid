@@ -6,7 +6,7 @@ public class ReverseRouteException extends JapidRuntimeException{
 	String action;
 
 	public ReverseRouteException(String action) {
-		super("action not found: " + action);
+		super("Reverse Route Exception", "action not found: " + action);
 		this.action = action;
 	}
 	

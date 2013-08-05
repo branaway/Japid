@@ -8,7 +8,7 @@ import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 public class RendererClass {
 	String className;
 	String sourceCode; // the java file
-	String oriSourceCode;
+	String oriSourceCode; // japid source
 	
 	long lastUpdated;
 	byte[] bytecode;
@@ -69,15 +69,11 @@ public class RendererClass {
 	public File getSrcFile() {
 		return srcFile;
 	}
-	/**
-	 * @return the javaSourceCode
-	 */
+
 	public String getOriSourceCode() {
 		return oriSourceCode;
 	}
-	/**
-	 * @param javaSourceCode the javaSourceCode to set
-	 */
+
 	public void setOriSourceCode(String oriSourceCode) {
 		this.oriSourceCode = oriSourceCode;
 	}
@@ -86,5 +82,23 @@ public class RendererClass {
 	 */
 	public long getLastUpdated() {
 		return lastUpdated;
+	}
+	
+	/**
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 * @param lineNumber
+	 * @return
+	 */
+	public int mapJavaLineToJapidScriptLine(int lineNumber) {
+		String jsrc = getSourceCode();
+		String[] splitSrc = jsrc.split("\n");
+		String line = splitSrc[lineNumber - 1];
+		// can we have a line marker?
+		int lineMarker = line.lastIndexOf("// line ");
+		if (lineMarker > 0) 
+			return Integer.parseInt(line.substring(lineMarker + 8).trim());
+		else
+			return -1;	
+
 	}
 }
