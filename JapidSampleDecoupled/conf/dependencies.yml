@@ -1,6 +1,6 @@
 require:
-    - cn.bran -> japid 0.9.25
-    - cn.bran -> japidplay 0.9.25
+    - cn.bran -> japid 0.9.26
+    - cn.bran -> japidplay 0.9.26
     - org.eclipse.tycho -> org.eclipse.jdt.core 3.8.2.v20120814-155456
     - com.google.code.javaparser -> javaparser 1.0.8
   

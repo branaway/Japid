@@ -250,6 +250,7 @@ public class JapidPlugin extends PlayPlugin {
 
 	String dumpRequest = null;
 	private ArrayList<Route> recentAddedRoutes;
+	private String ctxPath;
 
 	@Override
 	public boolean rawInvocation(Request req, Response response) throws Exception {
@@ -443,13 +444,13 @@ public class JapidPlugin extends PlayPlugin {
 		if (!Play.classloader.currentState.equals(lastApplicationClassloaderState)) {
 			System.out.println("reload auto route due to classloader state change");
 			buildRoutes();
-			lastApplicationClassloaderState = Play.classloader.currentState;
-			routesLoadingTime = Router.lastLoading;
 		} else if (Router.lastLoading != routesLoadingTime) {
 			System.out.println("reload auto route due to router timestamp");
 			buildRoutes();
-			routesLoadingTime = Router.lastLoading;
 		}
+		this.ctxPath = Play.ctxPath;
+		lastApplicationClassloaderState = Play.classloader.currentState;
+		routesLoadingTime = Router.lastLoading;
 	}
 
 	private void buildRoutes() {
@@ -457,7 +458,7 @@ public class JapidPlugin extends PlayPlugin {
 		List<Route> oldRoutes = Router.routes;
 		List<Route> newRoutes = new ArrayList<Route>(oldRoutes.size());
 
-		if (this.lastApplicationClassloaderState == Play.classloader.currentState && recentAddedRoutes != null) {
+		if (this.lastApplicationClassloaderState == Play.classloader.currentState && recentAddedRoutes != null && this.ctxPath == Play.ctxPath) {
 			JapidFlags.log("classloader state not changed. Use cached auto-routes.");
 			newRoutes = new ArrayList<Route>(recentAddedRoutes);
 		} else {
