@@ -1,7 +1,7 @@
 package controllers;
 
 import cn.bran.play.JapidController2;
-
+import cn.bran.play.routing.AutoPath;
 
 
 public class DummyController extends JapidController2{

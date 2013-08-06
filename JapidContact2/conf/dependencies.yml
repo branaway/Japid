@@ -1,4 +1,16 @@
 # Application dependencies
 
 require:
-    - play
+    - cn.bran -> japid 0.9.25
+    - cn.bran -> japidplay 0.9.25
+    - org.eclipse.tycho -> org.eclipse.jdt.core 3.8.2.v20120814-155456
+    - com.google.code.javaparser -> javaparser 1.0.8
+    - org.hibernate -> hibernate-validator 5.0.1.Final
+
+# My custom repositories
+repositories:
+    - bran:
+        type:       http
+        artifact:   "https://raw.github.com/branaway/Japid/master/lib/[module]-[revision].[ext]"
+        contains:
+            - cn.bran -> *
