@@ -36,6 +36,7 @@ import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.util.JapidFlags;
 import cn.bran.play.routing.AutoPath;
 import cn.bran.play.routing.RouterClass;
+import cn.bran.play.routing.RouterMethod;
 
 /**
  * 
@@ -179,7 +180,7 @@ public class JapidPlugin extends PlayPlugin {
 	public void onApplicationReady() {
 		// appPath = Play.ctxPath; // won't work due to a bug in the servlet
 		// wrapper. see onRoutesLoaded()
-		if(Play.mode == Mode.PROD) {
+		if (Play.mode == Mode.PROD) {
 			JapidPlayRenderer.init();
 		}
 	}
@@ -248,6 +249,7 @@ public class JapidPlugin extends PlayPlugin {
 	}
 
 	String dumpRequest = null;
+	private ArrayList<Route> recentAddedRoutes;
 
 	@Override
 	public boolean rawInvocation(Request req, Response response) throws Exception {
@@ -451,28 +453,38 @@ public class JapidPlugin extends PlayPlugin {
 	}
 
 	private void buildRoutes() {
+
 		List<Route> oldRoutes = Router.routes;
 		List<Route> newRoutes = new ArrayList<Route>(oldRoutes.size());
 
-		// classes changed. rebuild the dynamic route table
-		List<Class> allClasses = Play.classloader.getAllClasses();
-		for (Class<?> c : allClasses) {
-			String cname = c.getName();
-			if (cname.startsWith("controllers.")) {
-				if (c.getAnnotation(AutoPath.class) != null) {
-					RouterClass rc = new RouterClass(c, appPath);
-					List<Route> rs = rc.buildRoutes();
-					for (Route r : rs) {
-						JapidFlags.log("added route: " + r);
-						newRoutes.add(r);
+		if (this.lastApplicationClassloaderState == Play.classloader.currentState && recentAddedRoutes != null) {
+			JapidFlags.log("classloader state not changed. Use cached auto-routes.");
+			newRoutes = new ArrayList<Route>(recentAddedRoutes);
+		} else {
+			// classes changed. rebuild the dynamic route table
+			List<Class> allClasses = Play.classloader.getAllClasses();
+			for (Class<?> c : allClasses) {
+				String cname = c.getName();
+				if (cname.startsWith("controllers.")) {
+					if (c.getAnnotation(AutoPath.class) != null) {
+						RouterClass rc = new RouterClass(c, appPath);
+						List<Route> rs = rc.buildRoutes();
+						for (Route r : rs) {
+							JapidFlags.log("generated route: " + r);
+							newRoutes.add(r);
+						}
 					}
 				}
 			}
+
+			this.recentAddedRoutes = new ArrayList<Route>(newRoutes);
+			this.lastApplicationClassloaderState = Play.classloader.currentState;
 		}
+		
 		// copy fixed routes from the old route
 		for (Iterator<Route> iterator = oldRoutes.iterator(); iterator.hasNext();) {
 			Route r = iterator.next();
-			if (r.routesFileLine != 0) { // special marker from autopath
+			if (r.routesFileLine != RouterMethod.AUTO_ROUTE_LINE) { 
 				newRoutes.add(r);
 			}
 		}
@@ -485,16 +497,27 @@ public class JapidPlugin extends PlayPlugin {
 	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");
 
 	/**
-	 * on tomcat this is the sure way to get the ctxPath from Play. The servlet wrapper is the culprit. 
+	 * on tomcat this is the sure way to get the ctxPath from Play. The servlet
+	 * wrapper is the culprit.
 	 */
 	@Override
 	public void onRoutesLoaded() {
-//		if (!Play.standalonePlayServer) {
-			appPath = Play.ctxPath;
-			System.out.println("reload auto route due to system route loaded.");
-			buildRoutes();
-			lastApplicationClassloaderState = Play.classloader.currentState;
-			routesLoadingTime = Router.lastLoading;
-//		}
+		// if (!Play.standalonePlayServer) {
+		appPath = Play.ctxPath;
+		//System.out.println("reload auto route due to system route loaded.");
+		buildRoutes();
+		lastApplicationClassloaderState = Play.classloader.currentState;
+		routesLoadingTime = Router.lastLoading;
+		// }
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see play.PlayPlugin#onInvocationException(java.lang.Throwable)
+	 */
+	@Override
+	public void onInvocationException(Throwable e) {
+
 	}
 }

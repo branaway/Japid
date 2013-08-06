@@ -48,6 +48,9 @@ repositories:
 
 * Version History:
 
+2013/08/06: V0.9.26:
+	1. enhancement: added file name to the line marker of Java artifacts
+	2. enhancement: detected classloader state change and cached generated routes.  
 2013/08/02: V0.9.25:
 	1. new feature: added nice error reporting for isolated Japid mode.  
 2013/08/02: V0.9.24:

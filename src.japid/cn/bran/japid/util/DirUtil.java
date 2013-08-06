@@ -21,6 +21,9 @@ import java.util.Set;
 
 
 public class DirUtil {
+	public static final String OF = ", ";
+	public static final String LINE_MARKER = "// line ";
+
 	/**
 	 * 
 	 */
@@ -384,13 +387,16 @@ public class DirUtil {
 		String[] codeLines = sourceCode.split("\n");
 		String line = codeLines[lineNum - 1];
 	
-		int lineMarker = line.lastIndexOf("// line ");
+		int lineMarker = line.lastIndexOf(LINE_MARKER);
 		if (lineMarker < 1) {
-			return 0;
+			return -1;
 		}
-		int oriLineNumber = Integer.parseInt(line.substring(lineMarker + 8)
-				.trim());
-		return oriLineNumber;
+		String linenum = line.substring(lineMarker + LINE_MARKER.length()).trim();
+		int indexOf = linenum.indexOf(OF);
+		if (indexOf > 0) {
+			linenum = linenum.substring(0, indexOf);
+		}
+		return Integer.parseInt(linenum);
 	}
 
 

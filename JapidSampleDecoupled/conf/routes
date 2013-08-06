@@ -11,5 +11,6 @@ GET		/go/{<.+>template}             Application.go
 
 # the staticFile is only available from 1.1.x trunk. Not in the 1.1 release.
 GET /favicon.ico                                staticFile:/public/images/favicon.png
+
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

@@ -124,12 +124,8 @@ public class JapidController2 extends Controller {
 				if (applicationClass != null) {
 					// let's get the line of problem
 					String jsrc = applicationClass.getSourceCode();
-					String[] splitSrc = jsrc.split("\n");
-					String line = splitSrc[lineNumber - 1];
-					// can we have a line marker?
-					int lineMarker = line.lastIndexOf("// line ");
-					if (lineMarker > 0) {
-						int oriLineNumber = Integer.parseInt(line.substring(lineMarker + 8).trim());
+					int oriLineNumber = DirUtil.mapJavaLineToSrcLine(jsrc, lineNumber);
+					if (oriLineNumber > 0) {
 						StackTraceElement[] newStack = new StackTraceElement[stackTrace.length + 1];
 						newStack[0] = new StackTraceElement(className, "", applicationClass.getSrcFile().getPath(),
 								oriLineNumber);

@@ -91,9 +91,17 @@ public abstract class JapidAbstractCompiler {
 	protected int tagIndex;
 	protected boolean skipLineBreak;
 	protected boolean useWithPlay = true;
+	private String templateShortName;
 
 	public void compile(JapidTemplate t) {
 		template = t;
+		String tname = t.name;
+		int lastSlash = tname.lastIndexOf("/");
+		if (lastSlash >= 0) {
+			tname = tname.substring(lastSlash + 1);
+		}
+		this.templateShortName = tname;
+		
 		getTemplateClassMetaData().setOriginalTemplate(t.name);
 		getTemplateClassMetaData().useWithPlay = this.useWithPlay;
 		hop();
@@ -315,10 +323,11 @@ public abstract class JapidAbstractCompiler {
 		template.linesMatrix.put(currentLine, line);
 	}
 
-	public static String makeLineMarker(int line) {
+	public String makeLineMarker(int line) {
 		if (line <= 0)
 			return "";
-		return "// line " + line;
+		
+		return DirUtil.LINE_MARKER + line + DirUtil.OF  + templateShortName ;
 	}
 
 	protected void scriptline(String token) {

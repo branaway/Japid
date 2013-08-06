@@ -35,6 +35,7 @@ import cn.bran.japid.template.JapidTemplateBaseStreaming;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.template.RenderResultPartial;
+import cn.bran.japid.util.DirUtil;
 
 /**
  * lots of the code block generation is done here
@@ -764,7 +765,8 @@ public abstract class AbstractTemplateClassMetaData {
 	}
 
 	protected String getLineMarker() {
-		return JapidAbstractCompiler.makeLineMarker(argsLineNum);
+//		return JapidAbstractCompiler.makeLineMarker(argsLineNum);
+		return DirUtil.LINE_MARKER + argsLineNum + DirUtil.OF + originalTemplate;
 	}
 
 	public static void clearImports() {

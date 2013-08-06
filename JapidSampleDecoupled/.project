@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>JapidSampleDecoupled</name>
+	<name>JapidSample</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -13,12 +13,13 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
 	<linkedResources>
 		<link>
-			<name>conf/japid-head</name>
+			<name>public/docviewer</name>
 			<type>2</type>
-			<location>/Applications/eclipse3.7/Eclipse.app/Contents/MacOS/D::/home/bran/projects/play/modules/japid-head/conf</location>
+			<location>/Users/bran/projects/playversions/play1/modules/docviewer/public</location>
 		</link>
 	</linkedResources>
 </projectDescription>

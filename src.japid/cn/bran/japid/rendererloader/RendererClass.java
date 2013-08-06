@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
+import cn.bran.japid.util.DirUtil;
 
 public class RendererClass {
 	String className;
@@ -91,14 +92,14 @@ public class RendererClass {
 	 */
 	public int mapJavaLineToJapidScriptLine(int lineNumber) {
 		String jsrc = getSourceCode();
-		String[] splitSrc = jsrc.split("\n");
-		String line = splitSrc[lineNumber - 1];
-		// can we have a line marker?
-		int lineMarker = line.lastIndexOf("// line ");
-		if (lineMarker > 0) 
-			return Integer.parseInt(line.substring(lineMarker + 8).trim());
-		else
-			return -1;	
-
+//		String[] splitSrc = jsrc.split("\n");
+//		String line = splitSrc[lineNumber - 1];
+//		// can we have a line marker?
+//		int lineMarker = line.lastIndexOf("// line ");
+//		if (lineMarker > 0) 
+//			return Integer.parseInt(line.substring(lineMarker + 8).trim());
+//		else
+//			return -1;	
+		return DirUtil.mapJavaLineToSrcLine(jsrc, lineNumber);
 	}
 }

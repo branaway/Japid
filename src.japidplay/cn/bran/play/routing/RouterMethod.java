@@ -19,6 +19,10 @@ import cn.bran.play.routing.HttpMethod.POST;
 import cn.bran.play.routing.HttpMethod.PUT;
 
 public class RouterMethod {
+	/**
+	 * 
+	 */
+	public static final int AUTO_ROUTE_LINE = -1;
 	private boolean autoRouting;
 	private String withExtension = ""; // the artificial url extension such as
 										// .html
@@ -85,7 +89,7 @@ public class RouterMethod {
 				act = act.substring("controllers.".length());
 			r.action = act;
 			r.routesFile = "_autopath";
-			r.routesFileLine = 0;
+			r.routesFileLine = AUTO_ROUTE_LINE;
 			r.compute();
 			routes.add(r);
 		} else {

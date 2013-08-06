@@ -11,4 +11,8 @@ public class AutoPather extends JapidController{
 		renderJapid(a, b);
 	}
 	
+	public static void bar(String a, int b) {
+		renderText("bar");
+	}
+	
 }
