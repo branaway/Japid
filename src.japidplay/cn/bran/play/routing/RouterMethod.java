@@ -23,9 +23,11 @@ public class RouterMethod {
 	 * 
 	 */
 	public static final int AUTO_ROUTE_LINE = -1;
-	private boolean autoRouting;
-	private String withExtension = ""; // the artificial url extension such as
-										// .html
+	// false when an explicit AuthPath specified to action
+	private boolean autoRouting = false;
+	// the artificial url extension such as .html
+	private String withExtension = "";
+
 	private String pathPrefix;
 	private List<Route> routes;
 	private String pathEnding = "";
@@ -67,55 +69,63 @@ public class RouterMethod {
 			this.autoRouting = true;
 			pathSpec = pathPrefix + "." + m.getName();
 
-			// if GET and others, create a parameter list for the rest of the
-			// path
-			// if POST presents, no parameter placeholder is added to the path
-			boolean containPOST = false;
-			for (Annotation a : httpMethodAnnotations) {
-				if (a instanceof POST) {
-					containPOST = true;
-					break;
-				}
-			}
-
-			if (!containPOST) {
-				try {
-					String[] paramNames = Java.parameterNames(m);
-					pathSpec += join(paramNames);
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException(e);
-				}
-			}
 		}
 
-		if (pathEnding != null) {
-			pathSpec += pathEnding;
-		}
+		// if GET and others, create a parameter list for the rest of the path
+		// if POST presents, no parameter placeholder is added to the path
+		// boolean containPOST = false;
+
+		String paramNames = join(getMethodParamNames(m));
+
+		String act = m.getDeclaringClass().getName() + "." + m.getName();
+		if (act.startsWith("controllers."))
+			act = act.substring("controllers.".length());
 
 		if (httpMethodAnnotations.size() == 0) {
-			Route r = new Route();
-			r.method = "*";
-			r.path = pathSpec;
-			String act = m.getDeclaringClass().getName() + "." + m.getName();
-			if (act.startsWith("controllers."))
-				act = act.substring("controllers.".length());
-			r.action = act;
-			r.routesFile = "_autopath";
-			r.routesFileLine = AUTO_ROUTE_LINE;
-			r.compute();
-			routes.add(r);
+			if (autoRouting) {
+				// automatically added a special post for POST
+				// no params on path
+				if (paramNames.length() > 0) {
+					Route r = new Route();
+					r.method = "POST";
+					r.path = pathSpec; // no params, no post-fix.
+					r.action = act;
+					r.routesFile = "_autopath";
+					r.routesFileLine = AUTO_ROUTE_LINE;
+					r.compute();
+					routes.add(r);
+				}
+				// the catch other
+				Route r = new Route();
+				r.method = "*";
+				r.path = pathSpec + paramNames + pathEnding;
+				r.action = act;
+				r.routesFile = "_autopath";
+				r.routesFileLine = AUTO_ROUTE_LINE;
+				r.compute();
+				routes.add(r);
+			} else {
+				Route r = new Route();
+				r.method = "*";
+				r.path = pathSpec;
+				r.action = act;
+				r.routesFile = "_autopath";
+				r.routesFileLine = AUTO_ROUTE_LINE;
+				r.compute();
+				routes.add(r);
+			}
 		} else {
 			for (Annotation an : httpMethodAnnotations) {
 				Route r = new Route();
 				r.method = an.annotationType().getSimpleName();
-				r.path = pathSpec;
-				String act = m.getDeclaringClass().getName() + "." + m.getName();
-				if (act.startsWith("controllers."))
-					act = act.substring("controllers.".length());
 				r.action = act;
 				r.routesFile = "_autopath";
-				r.routesFileLine = 0;
+				r.routesFileLine = AUTO_ROUTE_LINE;
+				if (!autoRouting || an instanceof POST) {
+					r.path = pathSpec;
+				} else {
+					r.path = pathSpec + paramNames + pathEnding;
+				}
 				r.compute();
 				routes.add(r);
 			}
@@ -124,6 +134,14 @@ public class RouterMethod {
 		pathSpecPattern = Pattern.compile(pathSpec.replaceAll(RouterClass.urlParamCapture, "\\\\{(.*)\\\\}"));
 
 		this.routes = routes;
+	}
+
+	private String[] getMethodParamNames(Method m) {
+		try {
+			return Java.parameterNames(m);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**

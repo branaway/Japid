@@ -1,13 +1,12 @@
 package controllers.t3;
-import cn.bran.play.JapidController2;
-import cn.bran.play.JapidPlayAdapter;
+import cn.bran.play.JapidController;
 import cn.bran.play.routing.AutoPath;
 import cn.bran.play.routing.EndWith;
 import cn.bran.play.routing.HttpMethod.GET;
 import cn.bran.play.routing.HttpMethod.POST;
 
 @AutoPath // effectively == @AutoPath("/t3.App")
-public class App extends JapidController2 {
+public class App extends JapidController {
 	
 	// effective path -> * /t3.App.foo
 	public static void foo() {
@@ -15,7 +14,7 @@ public class App extends JapidController2 {
 	}
 
 	// effectively -> * /t3.App.ff. 
-	// The param s will be taken from query string
+	// The param s will be taken from query string 
 	@AutoPath(".ff") 
 	public static void fff(String s) {
 		renderText("hi fff: " + s);
@@ -23,6 +22,7 @@ public class App extends JapidController2 {
 	
 	// effectively -> GET|POST  /t3.App.bb/{a}/{b}.html
 	@GET
+	@POST
 	@EndWith // ".html" by default
 	public static void bb(int a, String b) {
 		renderJapid(a, b);

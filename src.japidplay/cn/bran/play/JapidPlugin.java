@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import play.Logger;
 import play.Play;
 import play.Play.Mode;
 import play.PlayPlugin;
+import play.classloading.ApplicationClasses.ApplicationClass;
 import play.classloading.ApplicationClassloaderState;
 import play.exceptions.CompilationException;
 import play.exceptions.UnexpectedException;
@@ -458,34 +460,49 @@ public class JapidPlugin extends PlayPlugin {
 		List<Route> oldRoutes = Router.routes;
 		List<Route> newRoutes = new ArrayList<Route>(oldRoutes.size());
 
-		if (this.lastApplicationClassloaderState == Play.classloader.currentState && recentAddedRoutes != null && this.ctxPath == Play.ctxPath) {
+		if (this.lastApplicationClassloaderState == Play.classloader.currentState && recentAddedRoutes != null
+				&& this.ctxPath == Play.ctxPath) {
 			JapidFlags.log("classloader state not changed. Use cached auto-routes.");
 			newRoutes = new ArrayList<Route>(recentAddedRoutes);
 		} else {
-			// classes changed. rebuild the dynamic route table
-			List<Class> allClasses = Play.classloader.getAllClasses();
-			for (Class<?> c : allClasses) {
-				String cname = c.getName();
-				if (cname.startsWith("controllers.")) {
-					if (c.getAnnotation(AutoPath.class) != null) {
-						RouterClass rc = new RouterClass(c, appPath);
-						List<Route> rs = rc.buildRoutes();
-						for (Route r : rs) {
-							JapidFlags.debug("generated route: " + r);
-							newRoutes.add(r);
-						}
-					}
+			// rebuild the dynamic route table
+			long __t = System.nanoTime();
+			boolean ctxChanged = this.ctxPath != Play.ctxPath;
+
+			for (ApplicationClass ac : Play.classes.all()) {
+				// check cache
+				RouterClass r = routerCache.get(ac.name);
+				if (r != null && !ctxChanged && r.matchHash(ac.sigChecksum)) {
+					// no change
+//					JapidFlags.debug(ac.name + " has not changed. ");
+				} else {
+					Class<?> javaClass = ac.javaClass;
+					if (javaClass.getName().startsWith("controllers.")
+							&& javaClass.getAnnotation(AutoPath.class) != null) {
+						JapidFlags.debug("generate route for: " + ac.name);
+						r = new RouterClass(javaClass, appPath, ac.sigChecksum);
+					} else
+						continue;
 				}
+
+				this.routerCache.put(ac.name, r);
+				newRoutes.addAll(r.buildRoutes());
 			}
+			//
+			String t1 = "" + (System.nanoTime() - __t) / 100000;
+			int __len = t1.length();
+			t1 = t1.substring(0, __len - 1) + "." + t1.substring(__len - 1);
+
+			JapidFlags.debug("rebuilding auto paths took(/ms): " + t1);
 
 			this.recentAddedRoutes = new ArrayList<Route>(newRoutes);
 			this.lastApplicationClassloaderState = Play.classloader.currentState;
 		}
-		
+
 		// copy fixed routes from the old route
 		for (Iterator<Route> iterator = oldRoutes.iterator(); iterator.hasNext();) {
 			Route r = iterator.next();
-			if (r.routesFileLine != RouterMethod.AUTO_ROUTE_LINE) { 
+			if (r.routesFileLine != RouterMethod.AUTO_ROUTE_LINE) {
 				newRoutes.add(r);
 			}
 		}
@@ -494,6 +511,7 @@ public class JapidPlugin extends PlayPlugin {
 
 	private ApplicationClassloaderState lastApplicationClassloaderState = null;
 	private long routesLoadingTime = 0;
+	private Map<String, RouterClass> routerCache = new HashMap<String, RouterClass>();
 
 	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");
 
@@ -505,7 +523,7 @@ public class JapidPlugin extends PlayPlugin {
 	public void onRoutesLoaded() {
 		// if (!Play.standalonePlayServer) {
 		appPath = Play.ctxPath;
-		//System.out.println("reload auto route due to system route loaded.");
+		// System.out.println("reload auto route due to system route loaded.");
 		buildRoutes();
 		lastApplicationClassloaderState = Play.classloader.currentState;
 		routesLoadingTime = Router.lastLoading;

@@ -3,14 +3,14 @@ import java.util.Date;
 
 import play.cache.CacheFor;
 import cn.bran.play.JapidController;
-import cn.bran.play.JapidController2;
+import cn.bran.play.routing.AutoPath;
 
-public class Portlets extends JapidController2 {
-	/**
-	 * 
-	 */
-	private static final String MY_CACHE_KEY = "my_cache_key";
-	@CacheFor("20s")
+//
+
+@AutoPath
+public class Portlets extends JapidController {
+
+	@CacheFor("21s")
 	public static void index() {
 		renderJapid("a", "b");
 	}

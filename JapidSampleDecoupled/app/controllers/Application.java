@@ -15,14 +15,15 @@ import play.cache.CacheFor;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.play.CacheableRunner;
 import cn.bran.play.JapidController;
-import cn.bran.play.JapidController2;
 import cn.bran.play.JapidResult;
+import cn.bran.play.routing.AutoPath;
 /**
  *  A sample controller that demos Japid features
  *  
  * @author Bing Ran<bing_ran@hotmail.com>
  *
  */
+@AutoPath
 public class Application extends JapidController {
 	public static void index() {
 		models.Category c = new Category();
@@ -57,7 +58,6 @@ public class Application extends JapidController {
 	}
 	
 	public static void cacheWithRenderJapid(final String a) {
-//			CacheableRunner r = new CacheableRunner("5s", genCacheKey()) {
 		CacheableRunner r = new CacheableRunner("5s") {
 			@Override
 			protected RenderResult render() {
@@ -67,7 +67,6 @@ public class Application extends JapidController {
 			}
 		};
 		
-//		throw new JapidResult(r.run()).eval(); // eval effectively cancel nested finer cache control
 		render(r);
 	}
 	

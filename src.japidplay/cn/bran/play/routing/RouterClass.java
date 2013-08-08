@@ -29,16 +29,24 @@ public class RouterClass {
 	
 	static String urlParamCapture = "\\{(.*?)\\}";
 	static Pattern urlParamCaptureP = Pattern.compile(urlParamCapture);
-
+	
+	// the signature hash of the application class this class has been derived from. 
+	private int applicationClassHash = 0; 
 	
 	/**
 	 * @param cl
 	 */
-	public RouterClass(Class<?> cl, String appPath) {
+	public RouterClass(Class<?> cl, String appPath, int sigHash) {
+		this.applicationClassHash = sigHash;
 		if (appPath == null)
 			appPath = "";
 		clz = cl;
-		path = cl.getAnnotation(AutoPath.class).value();
+		AutoPath anno = cl.getAnnotation(AutoPath.class);
+		if (anno == null)
+			path = "";
+		else
+			path = anno.value();
+		
 		if (path.length() == 0) {
 			// auto-routing. using the class full name minus the "controller." part as the path
 			String cname = cl.getName();
@@ -94,5 +102,15 @@ public class RouterClass {
 			list.addAll(rm.buildRoutes());
 		}
 		return list;
+	}
+
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param sigChecksum
+	 * @return
+	 */
+	public boolean matchHash(int sigChecksum) {
+		return sigChecksum == applicationClassHash;
 	}
 }
