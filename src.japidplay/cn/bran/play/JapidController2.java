@@ -13,7 +13,6 @@ import play.Play;
 import play.Play.Mode;
 import play.cache.Cache;
 import play.classloading.ApplicationClasses.ApplicationClass;
-import play.exceptions.TemplateExecutionException;
 import play.mvc.After;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -43,7 +42,9 @@ import cn.bran.japid.util.StackTraceUtils;
  * the classes.
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
+ * @deprecated responsibility has been integrated in JapidController. 
  */
+@Deprecated
 public class JapidController2 extends Controller {
 	public static final char DOT = '.';
 	public static final String HTML = ".html";
@@ -84,7 +85,7 @@ public class JapidController2 extends Controller {
 		try {
 			return RenderInvokerUtils.invokeRender(c, args);
 		} catch (Throwable e) {
-			handleException(e);
+			JapidPlayRenderer.handleException(e);
 			return null;
 		}
 	}
@@ -94,53 +95,9 @@ public class JapidController2 extends Controller {
 		try {
 			return RenderInvokerUtils.invokeNamedArgsRender(c, args);
 		} catch (Throwable e) {
-			handleException(e);
+			JapidPlayRenderer.handleException(e);
 			return null;
 		}
-	}
-
-	/**
-	 * translate japid runtime exception to Play's TemplateExecutionException
-	 * for formated error reporting
-	 */
-	static void handleException(Throwable e) throws RuntimeException {
-		if (Play.mode == Mode.PROD)
-			throw new RuntimeException(e);
-
-		if (e instanceof TemplateExecutionException)
-			throw (TemplateExecutionException) e;
-
-		if (e instanceof RuntimeException && e.getCause() != null)
-			e = e.getCause();
-		// find the latest japidviews exception
-		StackTraceElement[] stackTrace = e.getStackTrace();
-		for (StackTraceElement ele : stackTrace) {
-			String className = ele.getClassName();
-			if (className.startsWith("japidviews")) {
-				int lineNumber = ele.getLineNumber();
-				RendererClass applicationClass = JapidPlayRenderer.japidClasses.get(className);
-				// ApplicationClass applicationClass =
-				// Play.classes.getApplicationClass(className);
-				if (applicationClass != null) {
-					// let's get the line of problem
-					String jsrc = applicationClass.getSourceCode();
-					int oriLineNumber = DirUtil.mapJavaLineToSrcLine(jsrc, lineNumber);
-					if (oriLineNumber > 0) {
-						StackTraceElement[] newStack = new StackTraceElement[stackTrace.length + 1];
-						newStack[0] = new StackTraceElement(className, "", applicationClass.getSrcFile().getPath(),
-								oriLineNumber);
-						System.arraycopy(stackTrace, 0, newStack, 1, stackTrace.length);
-						e.setStackTrace(newStack);
-
-						JapidPlayTemplate jpt = new JapidPlayTemplate();
-						jpt.name = applicationClass.getSrcFile().getPath();
-						jpt.source = applicationClass.getOriSourceCode();
-						throw new TemplateExecutionException(jpt, oriLineNumber, e.getMessage(), e);
-					}
-				}
-			}
-		}
-		throw new RuntimeException(e);
 	}
 
 	/**

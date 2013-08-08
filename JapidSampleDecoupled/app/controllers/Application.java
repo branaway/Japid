@@ -23,7 +23,7 @@ import cn.bran.play.JapidResult;
  * @author Bing Ran<bing_ran@hotmail.com>
  *
  */
-public class Application extends JapidController2 {
+public class Application extends JapidController {
 	public static void index() {
 		models.Category c = new Category();
 		c.name = "my catty!";

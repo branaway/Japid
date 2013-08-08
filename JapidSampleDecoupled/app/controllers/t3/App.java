@@ -23,13 +23,14 @@ public class App extends JapidController2 {
 	
 	// effectively -> GET|POST  /t3.App.bb/{a}/{b}.html
 	@GET
-	@POST
 	@EndWith // ".html" by default
 	public static void bb(int a, String b) {
 		renderJapid(a, b);
 	}
 
-	// effectively -> *  /t3.App.tee/{a}/{b}
+	// effectively -> *  /t3.App.tee
+	// POST method do not take args from path by convention
+	@POST
 	public static void tee(int a, String b) {
 		renderText("tee: " + a +"::" + b);
 	}

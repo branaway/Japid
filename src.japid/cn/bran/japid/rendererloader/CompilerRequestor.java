@@ -83,7 +83,7 @@ final class CompilerRequestor implements ICompilerRequestor {
 	            clazzName.append(compoundName[j]);
 	        }
 	        byte[] bytes = clazzFile.getBytes();
-	        if (JapidFlags.verbose) System.out.println("[RenderCompiler]Compiled " + clazzName);
+	        JapidFlags.debug("Compiled " + clazzName);
 	        // XXX address anonymous inner class issue!! ....$1...
 	        String cname = clazzName.toString();
 			RendererClass rc = this.rendererCompiler.japidClasses.get(cname);

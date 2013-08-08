@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="views/**" kind="src" path="app"/>
+	<classpathentry kind="src" path="japidroot"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/bran/projects/playversions/play1/framework/play-master-fe0f9b3.jar" sourcepath="/Users/bran/projects/playversions/play1/framework/src"/>

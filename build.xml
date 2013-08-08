@@ -7,7 +7,7 @@
 	<property name="classes.play" value="tmp/classes.play" />
 	<property name="src.japidplay" value="src.japidplay" />
 	<property name="src.japid" value="src.japid" />
-    <property name="version" value="0.9.26"/>
+    <property name="version" value="0.9.27"/>
 
 	<path id="project.classpath">
 		<pathelement path="${play.path}/framework/classes" />
@@ -42,10 +42,13 @@
 				<include name="**/play.static" />
 			</fileset>
 		</copy>
-
-		<delete>
-		  <fileset dir="lib" includes="japidplay-*.jar"/>
-		</delete>
+		<jar destfile="dist-lib/japidplay-${version}.jar" basedir="${classes.play}">
+			<manifest>
+				<section name="Japid-Play-module">
+					<attribute name="Specification-Title" value="japidplay" />
+				</section>
+			</manifest>
+		</jar>
 		<jar destfile="lib/japidplay-${version}.jar" basedir="${classes.play}">
 			<manifest>
 				<section name="Japid-Play-module">
@@ -64,10 +67,13 @@
 				<include name="**/*.xml" />
 			</fileset>
 		</copy>
-		<delete>
-		  <fileset dir="lib" includes="japid-*.jar"/>
-		</delete>
-
+		<jar destfile="dist-lib/japid-${version}.jar" basedir="${classes.standalone}">
+		  <manifest>
+				<section name="Japid Standalone">
+					<attribute name="Specification-Title" value="japid" />
+				</section>
+			</manifest>
+		</jar>
 		<jar destfile="lib/japid-${version}.jar" basedir="${classes.standalone}">
 		  <manifest>
 				<section name="Japid Standalone">

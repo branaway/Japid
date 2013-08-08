@@ -32,22 +32,24 @@ Use this dependencies.yml to reference the latest distribution, adjusting the ve
 
 <code>
 require:
-    - cn.bran -> japid 0.9.23
-    - cn.bran -> japidplay 0.9.23
-    - org.eclipse.tycho -> org.eclipse.jdt.core 3.8.2.v20120814-155456
+    - cn.bran -> japid 0.9.27
+    - cn.bran -> japidplay 0.9.27
     - com.google.code.javaparser -> javaparser 1.0.8
   
 # My custom repositories
 repositories:
     - bran:
         type:       http
-        artifact:   "https://raw.github.com/branaway/Japid/master/lib/[module]-[revision].[ext]"
+        artifact:   "https://raw.github.com/branaway/Japid/master/dist-lib/[module]-[revision].[ext]"
         contains:
             - cn.bran -> *
 </code>
 
 * Version History:
 
+2013/08/08: V0.9.27:
+	1. enhancement: action methods annotated with POST do not take arguments from HTTP path.
+	2. enhancement: the JapidController now takes over the japid renderer class searching from "japidroot", effectively this controller is compatible with both tight-integration and loose-integration mode. 
 2013/08/06: V0.9.26:
 	1. enhancement: added file name to the line marker of Java artifacts
 	2. enhancement: detected classloader state change and cached generated routes.  

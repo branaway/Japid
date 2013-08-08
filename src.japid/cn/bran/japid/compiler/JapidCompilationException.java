@@ -18,23 +18,32 @@ import cn.bran.japid.template.JapidTemplate;
 public class JapidCompilationException extends RuntimeException {
 	JapidTemplate template;
 	int startLine;
-	
+
 	public JapidCompilationException(JapidTemplate template, int startLine, String msg) {
-		super(template.name + " (line " + startLine + "): " + msg);
+		// super(template.name + " (line " + startLine + "): " + msg);
+		super(msg);
 		this.template = template;
 		this.startLine = startLine;
 	}
-	
-	public String getTemplateName(){
+
+	public String getTemplateName() {
 		return template.name;
 	}
-	
-	public int getLineNumber(){
+
+	public int getLineNumber() {
 		return startLine;
 	}
 
 	public String getTemplateSrc() {
 		return template.source;
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @return
+	 */
+	public String getLocation() {
+		return template.name + ": line " + startLine;
 	}
 
 }

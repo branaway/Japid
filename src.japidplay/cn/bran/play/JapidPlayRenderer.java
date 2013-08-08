@@ -315,7 +315,7 @@ public class JapidPlayRenderer {
 	}
 
 	static void howlong(String string, long t) {
-		if (JapidFlags.verbose) System.out.println(string + ":" + (System.currentTimeMillis() - t) + "ms");
+		JapidFlags.info(string + ":" + (System.currentTimeMillis() - t) + "ms");
 	}
 
 	/**

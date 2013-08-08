@@ -1,10 +1,10 @@
 package controllers;
 
-import cn.bran.play.JapidController2;
+import cn.bran.play.JapidController;
 import cn.bran.play.routing.AutoPath;
 
-
-public class DummyController extends JapidController2{
+@AutoPath
+public class DummyController extends JapidController{
 
 	/**
 	 * curl -H "Accept: text/javascript" localhost:9000/DummyController/content
@@ -12,7 +12,7 @@ public class DummyController extends JapidController2{
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 */
 	public static void content() {
-		System.out.println("format detected: " + request.format);	
+		System.out.println("format detected is: " + request.format);	
 		renderJapid();
 	}
 //	

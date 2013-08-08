@@ -62,8 +62,8 @@ public class JapidTemplateException extends JapidRuntimeException {
 	 */
 	public static JapidTemplateException from(JapidCompilationException jce) {
 		return new JapidTemplateException(
-				"Japid Script Compiling Error",
-				jce.getMessage(),
+				"Error: " + jce.getMessage(),
+				jce.getLocation(),
 				jce.getLineNumber(),
 				jce.getTemplateName(),
 				jce.getTemplateSrc());

@@ -397,7 +397,7 @@ public class JapidPlugin extends PlayPlugin {
 
 	@Override
 	public void onApplicationStart() {
-		System.out.println("JapidPlugin: clean japidCache");
+		JapidFlags.debug("JapidPlugin: clean japidCache");
 		japidCache.clear();
 		buildRoutesFromAnnotations();
 	}
@@ -442,10 +442,10 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	private void buildRoutesFromAnnotations() {
 		if (!Play.classloader.currentState.equals(lastApplicationClassloaderState)) {
-			System.out.println("reload auto route due to classloader state change");
+			JapidFlags.log("reload auto route due to classloader state change");
 			buildRoutes();
 		} else if (Router.lastLoading != routesLoadingTime) {
-			System.out.println("reload auto route due to router timestamp");
+			JapidFlags.log("reload auto route due to router timestamp");
 			buildRoutes();
 		}
 		this.ctxPath = Play.ctxPath;
@@ -471,7 +471,7 @@ public class JapidPlugin extends PlayPlugin {
 						RouterClass rc = new RouterClass(c, appPath);
 						List<Route> rs = rc.buildRoutes();
 						for (Route r : rs) {
-							JapidFlags.log("generated route: " + r);
+							JapidFlags.debug("generated route: " + r);
 							newRoutes.add(r);
 						}
 					}

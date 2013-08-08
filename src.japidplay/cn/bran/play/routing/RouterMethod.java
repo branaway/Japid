@@ -51,10 +51,10 @@ public class RouterMethod {
 			}
 		}
 		meth = m;
-//		Consumes consumes = m.getAnnotation(Consumes.class);
-//		if (consumes != null) {
-//			consumeTypes = consumes.value();
-//		}
+		// Consumes consumes = m.getAnnotation(Consumes.class);
+		// if (consumes != null) {
+		// consumeTypes = consumes.value();
+		// }
 
 		// now parse the path spec
 		AutoPath p = m.getAnnotation(AutoPath.class);
@@ -67,25 +67,38 @@ public class RouterMethod {
 			this.autoRouting = true;
 			pathSpec = pathPrefix + "." + m.getName();
 
-			try {
-				String[] paramNames = Java.parameterNames(m);
-				pathSpec += join(paramNames);
-			} catch (Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException(e);
+			// if GET and others, create a parameter list for the rest of the
+			// path
+			// if POST presents, no parameter placeholder is added to the path
+			boolean containPOST = false;
+			for (Annotation a : httpMethodAnnotations) {
+				if (a instanceof POST) {
+					containPOST = true;
+					break;
+				}
+			}
+
+			if (!containPOST) {
+				try {
+					String[] paramNames = Java.parameterNames(m);
+					pathSpec += join(paramNames);
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException(e);
+				}
 			}
 		}
 
 		if (pathEnding != null) {
 			pathSpec += pathEnding;
 		}
-		
+
 		if (httpMethodAnnotations.size() == 0) {
 			Route r = new Route();
 			r.method = "*";
 			r.path = pathSpec;
 			String act = m.getDeclaringClass().getName() + "." + m.getName();
-			if(act.startsWith("controllers."))
+			if (act.startsWith("controllers."))
 				act = act.substring("controllers.".length());
 			r.action = act;
 			r.routesFile = "_autopath";
@@ -98,7 +111,7 @@ public class RouterMethod {
 				r.method = an.annotationType().getSimpleName();
 				r.path = pathSpec;
 				String act = m.getDeclaringClass().getName() + "." + m.getName();
-				if(act.startsWith("controllers."))
+				if (act.startsWith("controllers."))
 					act = act.substring("controllers.".length());
 				r.action = act;
 				r.routesFile = "_autopath";
@@ -138,7 +151,6 @@ public class RouterMethod {
 	private static void error(String string) {
 		throw new RuntimeException(string);
 	}
-
 
 	/**
 	 * @author Bing Ran (bing.ran@gmail.com)
