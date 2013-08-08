@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/echo.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class echo extends SampleLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/echo.html";
@@ -63,25 +64,30 @@ public class echo extends SampleLayout
 	}
 ////// end of named args stuff
 
-	private String s; // line 4
-	private int i; // line 4
+	private String s; // line 4, japidviews/more/MyController/echo.html
+	private int i; // line 4, japidviews/more/MyController/echo.html
 	public cn.bran.japid.template.RenderResult render(String s,int i) {
 		this.s = s;
 		this.i = i;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 4
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 4, japidviews/more/MyController/echo.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String s,int i) {
+		return new echo().render(s, i);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n");// line 1
-p("hello ");// line 6
-		p(s);// line 8
-		p(", ");// line 8
-		p(i);// line 8
-		p(".\n");// line 8
+;// line 1, echo.html
+		p("\n");// line 1, echo.html
+p("hello ");// line 6, echo.html
+		p(s);// line 8, echo.html
+		p(", ");// line 8, echo.html
+		p(i);// line 8, echo.html
+		p(".\n");// line 8, echo.html
 		
 		endDoLayout(sourceTemplate);
 	}

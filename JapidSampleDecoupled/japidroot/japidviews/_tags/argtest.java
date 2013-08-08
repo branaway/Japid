@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_tags/argtest.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class argtest extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/argtest.html";
@@ -64,10 +65,10 @@ public class argtest extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
-	private String arg; // line 1
+	private String arg; // line 1, japidviews/_tags/argtest.html
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1, japidviews/_tags/argtest.html
 }
 
 	private DoBody body;
@@ -88,29 +89,34 @@ public static interface DoBody {
 	public cn.bran.japid.template.RenderResult render(String arg, DoBody body) {
 		this.body = body;
 		this.arg = arg;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/argtest.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(String arg) {
 		this.arg = arg;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/argtest.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String arg) {
+		return new argtest().render(arg);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n");// line 1
-		final argtest1 _argtest10 = new argtest1(getOut()); _argtest10.setActionRunners(getActionRunners()).setOut(getOut()); _argtest10.render(// line 2
-new argtest1.DoBody(){ // line 2
-public void render() { // line 2
-// line 2
-  if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 3
-		p("  '");// line 3
-		p(arg);// line 4
-		p("'\n");// line 4
+;// line 1, argtest.html
+		;// line 1, argtest.html
+		final argtest1 _argtest10 = new argtest1(getOut()); _argtest10.setActionRunners(getActionRunners()).setOut(getOut()); _argtest10.render(// line 2, argtest.html
+new argtest1.DoBody(){ // line 2, argtest.html
+public void render() { // line 2, argtest.html
+// line 2, argtest.html
+  if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 3, argtest.html
+		p("  '");// line 3, argtest.html
+		p(arg);// line 4, argtest.html
+		p("'\n");// line 4, argtest.html
 		
 }
 
@@ -127,8 +133,8 @@ public void resetBuffer() {
 }
 
 }
-);// line 2
-		;// line 5
+);// line 2, argtest.html
+		;// line 5, argtest.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/scriptline.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class scriptline extends scriptlineLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/scriptline.html";
@@ -64,23 +65,28 @@ public class scriptline extends scriptlineLayout
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/scriptline.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new scriptline().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, scriptline.html
 p("\n" + 
-"hello ");// line 2
-		final Tag2 _Tag21 = new Tag2(getOut()); _Tag21.setActionRunners(getActionRunners()).setOut(getOut()); _Tag21.render(named("msg", "123")); // line 4// line 4
-		p(" a  ");// line 4
-		final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", "456")); // line 4// line 4
+"hello ");// line 2, scriptline.html
+		final Tag2 _Tag21 = new Tag2(getOut()); _Tag21.setActionRunners(getActionRunners()).setOut(getOut()); _Tag21.render(named("msg", "123")); // line 4, scriptline.html// line 4, scriptline.html
+		p(" a  ");// line 4, scriptline.html
+		final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", "456")); // line 4, scriptline.html// line 4, scriptline.html
 		p("!\n" + 
-"this is how to print a single back quote: ");// line 4
-		p('`');// line 5
-		p(" or `");// line 5
+"this is how to print a single back quote: ");// line 4, scriptline.html
+		p('`');// line 5, scriptline.html
+		p(" or `");// line 5, scriptline.html
 		
 		endDoLayout(sourceTemplate);
 	}

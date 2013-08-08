@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/DummyController/content.xml
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class content_xml extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/DummyController/content.xml";
@@ -65,20 +66,25 @@ public class content_xml extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/DummyController/content.xml
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new content_xml().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, content.xml
 		p("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
-"<a>this is xml content: ");// line 1
-		p(foo("cool"));// line 3
+"<a>this is xml content: ");// line 1, content.xml
+		p(foo("cool"));// line 3, content.xml
 		p("</a>\n" + 
-"\n");// line 3
-		// line 5
+"\n");// line 3, content.xml
+		// line 5, content.xml
 		
 		endDoLayout(sourceTemplate);
 	}
@@ -89,10 +95,10 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
-// line 5
-		p("goo stuff, ");// line 5
-		p(a);// line 6
-		p("");// line 6
+// line 5, content.xml
+		p("goo stuff, ");// line 5, content.xml
+		p(a);// line 6, content.xml
+		p("");// line 6, content.xml
 		
 this.setOut(ori);
 if (actionRunners.size() > 0) {

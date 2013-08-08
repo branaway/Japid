@@ -12,14 +12,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/authorPanel2.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/authorPanel2.html";
@@ -64,26 +65,31 @@ public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private models.japidsample.Author a; // line 1
+	private models.japidsample.Author a; // line 1, japidviews/Application/authorPanel2.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
 		this.a = a;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/Application/authorPanel2.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Author a) {
+		return new authorPanel2().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, authorPanel2.html
 		p("\n" + 
-"<p>decorated name: ");// line 1
+"<p>decorated name: ");// line 1, authorPanel2.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "decorateName", a.name) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.decorateName(a.name); // line 3
+				Application.decorateName(a.name); // line 3, authorPanel2.html
 			}
-		}); p("\n");// line 3
-		p("</p>\n");// line 3
+		}); p("\n");// line 3, authorPanel2.html
+		p("</p>\n");// line 3, authorPanel2.html
 		
 		endDoLayout(sourceTemplate);
 	}

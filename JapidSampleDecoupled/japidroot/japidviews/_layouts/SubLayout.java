@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_layouts/SubLayout.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public abstract class SubLayout extends Layout
 {
 	public static final String sourceTemplate = "japidviews/_layouts/SubLayout.html";
@@ -48,11 +49,11 @@ public abstract class SubLayout extends Layout
 		super(out);
 	}
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		;// line 1
+		beginDoLayout(sourceTemplate);		;// line 1, SubLayout.html
 
 title2();p("\n" + 
 "\n" + 
-"\n");// line 3
+"\n");// line 3, SubLayout.html
 				endDoLayout(sourceTemplate);	}
 	 protected void title2() {};
 

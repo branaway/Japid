@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/SubController/bar.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class bar extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/SubController/bar.html";
@@ -64,15 +65,20 @@ public class bar extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/SubController/bar.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new bar().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 p("\n" + 
-"hi....");// line 1
+"hi....");// line 1, bar.html
 		
 		endDoLayout(sourceTemplate);
 	}

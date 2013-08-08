@@ -50,6 +50,7 @@ repositories:
 2013/08/08: V0.9.27:
 	1. enhancement: action methods annotated with POST do not take arguments from HTTP path.
 	2. enhancement: the JapidController now takes over the japid renderer class searching from "japidroot", effectively this controller is compatible with both tight-integration and loose-integration mode. 
+	3. enhancement: in DEV mode, one can re-generate all Japid classes by running http://xxx/_japidregen. As long as the URL ends with _japidregen, it'll run the regen command to recompile all Japid scripts. 
 2013/08/06: V0.9.26:
 	1. enhancement: added file name to the line marker of Java artifacts
 	2. enhancement: detected classloader state change and cached generated routes.  

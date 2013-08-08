@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/ifs2.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class ifs2 extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/ifs2.html";
@@ -63,22 +64,25 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private int i; // line 1
-	private String[] ss; // line 1
+	private int i; // line 1, japidviews/Application/ifs2.html
+	private String[] ss; // line 1, japidviews/Application/ifs2.html
 	public cn.bran.japid.template.RenderResult render(int i,String[] ss) {
 		this.i = i;
 		this.ss = ss;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/Application/ifs2.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(int i,String[] ss) {
+		return new ifs2().render(i, ss);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n" + 
-"\n" + 
-"<p>\n" + 
+;// line 1, ifs2.html
+		p("<p>\n" + 
 "OK, the minimalism if-else statement, no parenthesis, no braces, like command \n" + 
 "</p>\n" + 
 "\n" + 
@@ -106,17 +110,17 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 "    `}\n" + 
 "</pre>\n" + 
 "\n" + 
-"<p/>\n");// line 4
-		if(asBoolean(ss)) {// line 35
+"<p/>\n");// line 5, ifs2.html
+		if(asBoolean(ss)) {// line 35, ifs2.html
 		p("    well got ss\n" + 
-"    ");// line 35
-		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 37
-ss, new Each.DoBody<String>(){ // line 37
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 37
-// line 37
+"    ");// line 35, ifs2.html
+		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 37, ifs2.html
+ss, new Each.DoBody<String>(){ // line 37, ifs2.html
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 37, ifs2.html
+// line 37, ifs2.html
 		p("        call a tag\n" + 
-"        ");// line 37
-		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s); // line 39// line 39
+"        ");// line 37, ifs2.html
+		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s); // line 39, ifs2.html// line 39, ifs2.html
     
 }
 
@@ -133,19 +137,19 @@ public void resetBuffer() {
 }
 
 }
-);// line 37
-} else if(asBoolean(ss)) {// line 41
-		p("    finally got ");// line 41
-		p(ss);// line 42
+);// line 37, ifs2.html
+} else if(asBoolean(ss)) {// line 41, ifs2.html
+		p("    finally got ");// line 41, ifs2.html
+		p(ss);// line 42, ifs2.html
 		p("\n" + 
-"    ");// line 42
-		final Each _Each2 = new Each(getOut()); _Each2.setOut(getOut()); _Each2.render(// line 43
-ss, new Each.DoBody<String>(){ // line 43
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 43
-// line 43
+"    ");// line 42, ifs2.html
+		final Each _Each2 = new Each(getOut()); _Each2.setOut(getOut()); _Each2.render(// line 43, ifs2.html
+ss, new Each.DoBody<String>(){ // line 43, ifs2.html
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 43, ifs2.html
+// line 43, ifs2.html
 		p("        call a tag\n" + 
-"        ");// line 43
-		final SampleTag _SampleTag3 = new SampleTag(getOut()); _SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s); // line 45// line 45
+"        ");// line 43, ifs2.html
+		final SampleTag _SampleTag3 = new SampleTag(getOut()); _SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s); // line 45, ifs2.html// line 45, ifs2.html
     
 }
 
@@ -162,18 +166,18 @@ public void resetBuffer() {
 }
 
 }
-);// line 43
-} else {// line 47
-    if(asBoolean("assd")) {// line 48
+);// line 43, ifs2.html
+} else {// line 47, ifs2.html
+    if(asBoolean("assd")) {// line 48, ifs2.html
 		p("        a true\n" + 
-"    ");// line 48
-		} else {// line 50
+"    ");// line 48, ifs2.html
+		} else {// line 50, ifs2.html
 		p("        a false\n" + 
-"    ");// line 50
-		}// line 52
-		p("    ss is empty\n");// line 52
-		}// line 54
-		p("\n");// line 54
+"    ");// line 50, ifs2.html
+		}// line 52, ifs2.html
+		p("    ss is empty\n");// line 52, ifs2.html
+		}// line 54, ifs2.html
+		p("\n");// line 54, ifs2.html
 		
 		endDoLayout(sourceTemplate);
 	}

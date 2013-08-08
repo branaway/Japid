@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/js.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class js extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/js.html";
@@ -65,19 +66,24 @@ public class js extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/Application/js.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new js().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, js.html
 p("{\n" + 
 "    ok:\"ok2\",\n" + 
-"    content: ");// line 2
-		final jstag _jstag0 = new jstag(getOut()); _jstag0.setActionRunners(getActionRunners()).setOut(getOut()); _jstag0.render(); // line 5// line 5
-		p("}\n");// line 5
+"    content: ");// line 2, js.html
+		final jstag _jstag0 = new jstag(getOut()); _jstag0.setActionRunners(getActionRunners()).setOut(getOut()); _jstag0.render(); // line 5, js.html// line 5, js.html
+		p("}\n");// line 5, js.html
 		
 		endDoLayout(sourceTemplate);
 	}

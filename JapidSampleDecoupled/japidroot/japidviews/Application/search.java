@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/search.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class search extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/search.html";
@@ -63,28 +64,32 @@ public class search extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private SearchParams sp; // line 1
+	private SearchParams sp; // line 1, japidviews/Application/search.html
 	public cn.bran.japid.template.RenderResult render(SearchParams sp) {
 		this.sp = sp;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/Application/search.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(SearchParams sp) {
+		return new search().render(sp);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, search.html
+		;// line 1, search.html
+		String nomode = "no mode";// line 3, search.html
+		p("keys: ");// line 3, search.html
+		try { Object o = sp.keywords ; if (o.toString().length() ==0) { p("没有 keywords"); } else { p(o); } } catch (NullPointerException npe) { p("没有 keywords"); }// line 5, search.html
+		p(", mode: ");// line 5, search.html
+		try { Object o = sp.mode ; if (o.toString().length() ==0) { p(nomode); } else { p(o); } } catch (NullPointerException npe) { p(nomode); }// line 5, search.html
 		p("\n" + 
-"\n");// line 1
-		String nomode = "no mode";// line 3
-		p("keys: ");// line 3
-		try { Object o = sp.keywords ; if (o.toString().length() ==0) { p("没有 keywords"); } else { p(o); } } catch (NullPointerException npe) { p("没有 keywords"); }// line 5
-		p(", mode: ");// line 5
-		try { Object o = sp.mode ; if (o.toString().length() ==0) { p(nomode); } else { p(o); } } catch (NullPointerException npe) { p(nomode); }// line 5
-		p("\n" + 
-"true/false: ");// line 5
-		p(true?"class=\"someclass\"":"");// line 7
-		;// line 7
+"true/false: ");// line 5, search.html
+		p(true?"class=\"someclass\"":"");// line 7, search.html
+		;// line 7, search.html
 		
 		endDoLayout(sourceTemplate);
 	}

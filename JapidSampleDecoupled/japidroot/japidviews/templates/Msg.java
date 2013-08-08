@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/templates/Msg.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class Msg extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/Msg.html";
@@ -64,31 +65,36 @@ public class Msg extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/templates/Msg.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new Msg().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("login: ");// line 1
-		;p(getMessage("login.name"));// line 1
-		p(", ");// line 1
-		;p(getMessage("login.name"));// line 1
-		p("  or ");// line 1
-		p(i18n("login.name"));// line 1
+p("login: ");// line 1, Msg.html
+		;p(getMessage("login.name"));// line 1, Msg.html
+		p(", ");// line 1, Msg.html
+		;p(getMessage("login.name"));// line 1, Msg.html
+		p("  or ");// line 1, Msg.html
+		p(i18n("login.name"));// line 1, Msg.html
 		p("\n" + 
 "</p>\n" + 
-"\n");// line 1
-		 String sub = "bran";// line 4
-		p("customer name: ");// line 4
-		;p(getMessage("cus.name", sub));// line 5
-		p(", ");// line 5
-		;p(getMessage("cus.name", "冉兵冉兵"));// line 5
-		p("  or ");// line 5
-		p(i18n("cus.name", "Bing Ran"));// line 5
+"\n");// line 1, Msg.html
+		 String sub = "bran";// line 4, Msg.html
+		p("customer name: ");// line 4, Msg.html
+		;p(getMessage("cus.name", sub));// line 5, Msg.html
+		p(", ");// line 5, Msg.html
+		;p(getMessage("cus.name", "冉兵冉兵"));// line 5, Msg.html
+		p("  or ");// line 5, Msg.html
+		p(i18n("cus.name", "Bing Ran"));// line 5, Msg.html
 		p("\n" + 
-"\n");// line 5
+"\n");// line 5, Msg.html
 		
 		endDoLayout(sourceTemplate);
 	}

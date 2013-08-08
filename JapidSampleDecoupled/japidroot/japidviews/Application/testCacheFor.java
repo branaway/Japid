@@ -12,14 +12,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/testCacheFor.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class testCacheFor extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/testCacheFor.html";
@@ -64,39 +65,44 @@ public class testCacheFor extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/Application/testCacheFor.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/Application/testCacheFor.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String a) {
+		return new testCacheFor().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, testCacheFor.html
 		p("\n" + 
 "<p>Cool!</p>\n" + 
 "\n" + 
-"	<p>hello ");// line 1
-		p(a);// line 5
-		p(", ");// line 5
+"	<p>hello ");// line 1, testCacheFor.html
+		p(a);// line 5, testCacheFor.html
+		p(", ");// line 5, testCacheFor.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "every3", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.every3(); // line 5
+				Application.every3(); // line 5, testCacheFor.html
 			}
-		}); p("\n");// line 5
+		}); p("\n");// line 5, testCacheFor.html
 		p(",</p> \n" + 
-"	<p>directly, now seconds is ");// line 5
+"	<p>directly, now seconds is ");// line 5, testCacheFor.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "seconds", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.seconds(); // line 6
+				Application.seconds(); // line 6, testCacheFor.html
 			}
-		}); p("\n");// line 6
+		}); p("\n");// line 6, testCacheFor.html
 		p("</p>\n" + 
-"\n");// line 6
+"\n");// line 6, testCacheFor.html
 		
 		endDoLayout(sourceTemplate);
 	}

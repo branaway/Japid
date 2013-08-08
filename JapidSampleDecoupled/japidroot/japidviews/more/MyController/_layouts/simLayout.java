@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/_layouts/simLayout.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public abstract class simLayout extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/_layouts/simLayout.html";
@@ -49,9 +50,9 @@ public abstract class simLayout extends cn.bran.play.JapidTemplateBase
 	}
 	@Override public void layout() {
 		beginDoLayout(sourceTemplate);		p("The simplest layout\n" + 
-"\n");// line 1
-		doLayout();// line 3
-		;// line 3
+"\n");// line 1, simLayout.html
+		doLayout();// line 3, simLayout.html
+		;// line 3, simLayout.html
 				endDoLayout(sourceTemplate);	}
 
 	protected abstract void doLayout();

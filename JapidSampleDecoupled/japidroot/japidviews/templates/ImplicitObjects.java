@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/templates/ImplicitObjects.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class ImplicitObjects extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/ImplicitObjects.html";
@@ -64,42 +65,47 @@ public class ImplicitObjects extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/templates/ImplicitObjects.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new ImplicitObjects().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 p("\n" + 
 "\n" + 
-"<p>request: ");// line 1
-		p(request);// line 3
+"<p>request: ");// line 1, ImplicitObjects.html
+		p(request);// line 3, ImplicitObjects.html
 		p("</p>\n" + 
-"<p>response: ");// line 3
-		p(response);// line 4
+"<p>response: ");// line 3, ImplicitObjects.html
+		p(response);// line 4, ImplicitObjects.html
 		p("</p>\n" + 
-"<p>flash: ");// line 4
-		p(flash);// line 5
+"<p>flash: ");// line 4, ImplicitObjects.html
+		p(flash);// line 5, ImplicitObjects.html
 		p("</p>\n" + 
-"<p>errors: ");// line 5
-		p(errors);// line 6
+"<p>errors: ");// line 5, ImplicitObjects.html
+		p(errors);// line 6, ImplicitObjects.html
 		p("</p>\n" + 
-"<p>session: ");// line 6
-		p(session);// line 7
+"<p>session: ");// line 6, ImplicitObjects.html
+		p(session);// line 7, ImplicitObjects.html
 		p("</p>\n" + 
-"<p>renderArgs: ");// line 7
-		p(renderArgs);// line 8
+"<p>renderArgs: ");// line 7, ImplicitObjects.html
+		p(renderArgs);// line 8, ImplicitObjects.html
 		p("</p>\n" + 
-"<p>params: ");// line 8
-		p(params);// line 9
+"<p>params: ");// line 8, ImplicitObjects.html
+		p(params);// line 9, ImplicitObjects.html
 		p("</p>\n" + 
-"<p>validation: ");// line 9
-		p(validation);// line 10
+"<p>validation: ");// line 9, ImplicitObjects.html
+		p(validation);// line 10, ImplicitObjects.html
 		p("</p>\n" + 
-"<p>play: ");// line 10
-		p(_play);// line 11
-		p("</p>");// line 11
+"<p>play: ");// line 10, ImplicitObjects.html
+		p(_play);// line 11, ImplicitObjects.html
+		p("</p>");// line 11, ImplicitObjects.html
 		
 		endDoLayout(sourceTemplate);
 	}

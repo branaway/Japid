@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/templates/EachCall.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class EachCall extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/EachCall.html";
@@ -63,20 +64,23 @@ public class EachCall extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private List<String> posts; // line 1
+	private List<String> posts; // line 1, japidviews/templates/EachCall.html
 	public cn.bran.japid.template.RenderResult render(List<String> posts) {
 		this.posts = posts;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/templates/EachCall.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(List<String> posts) {
+		return new EachCall().render(posts);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n" + 
-"\n" + 
-"<p>\n" + 
+;// line 1, EachCall.html
+		p("<p>\n" + 
 "The \"each/Each\" command is a \"for\" loop on steroid, with lots of looping information. \n" + 
 "</p>\n" + 
 "\n" + 
@@ -84,26 +88,26 @@ public class EachCall extends cn.bran.play.JapidTemplateBase
 "The instance variable is defined after the | line, the same way as any tag render-back\n" + 
 "</p>\n" + 
 "\n" + 
-"<p>\n");// line 3
-		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 14
-posts, new Each.DoBody<String>(){ // line 14
-public void render(final String p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 14
-// line 14
-		p("    <p>index: ");// line 14
-		p(_index);// line 15
-		p(", parity: ");// line 15
-		p(_parity);// line 15
-		p(", is odd? ");// line 15
-		p(_isOdd);// line 15
-		p(", is first? ");// line 15
-		p(_isFirst);// line 15
-		p(", is last? ");// line 15
-		p(_isLast);// line 15
-		p(", total size: ");// line 15
-		p(_size);// line 15
+"<p>\n");// line 4, EachCall.html
+		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 14, EachCall.html
+posts, new Each.DoBody<String>(){ // line 14, EachCall.html
+public void render(final String p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 14, EachCall.html
+// line 14, EachCall.html
+		p("    <p>index: ");// line 14, EachCall.html
+		p(_index);// line 15, EachCall.html
+		p(", parity: ");// line 15, EachCall.html
+		p(_parity);// line 15, EachCall.html
+		p(", is odd? ");// line 15, EachCall.html
+		p(_isOdd);// line 15, EachCall.html
+		p(", is first? ");// line 15, EachCall.html
+		p(_isFirst);// line 15, EachCall.html
+		p(", is last? ");// line 15, EachCall.html
+		p(_isLast);// line 15, EachCall.html
+		p(", total size: ");// line 15, EachCall.html
+		p(_size);// line 15, EachCall.html
 		p(" </p>\n" + 
-"    call a tag:  ");// line 15
-		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(p); // line 16// line 16
+"    call a tag:  ");// line 15, EachCall.html
+		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(p); // line 16, EachCall.html// line 16, EachCall.html
 
 }
 
@@ -120,35 +124,35 @@ public void resetBuffer() {
 }
 
 }
-);// line 14
+);// line 14, EachCall.html
 		p("</p>\n" + 
 "\n" + 
-"<p>\n");// line 17
-		final SampleTag _SampleTag2 = new SampleTag(getOut()); _SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render("each call end"); // line 21// line 21
+"<p>\n");// line 17, EachCall.html
+		final SampleTag _SampleTag2 = new SampleTag(getOut()); _SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render("each call end"); // line 21, EachCall.html// line 21, EachCall.html
 		p("</p>\n" + 
 "\n" + 
 "<p> now we have an enhanced for loop (the \"open for loop\") that also makes all the loop properties available</p>\n" + 
-"\n");// line 21
-		int k = 1;// line 26
-final Each _Each3 = new Each(getOut()); _Each3.setOut(getOut()); _Each3.render(// line 27
-posts, new Each.DoBody<String>(){ // line 27
-public void render(final String p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 27
-// line 27
-		p("    <p>index: ");// line 27
-		p(_index);// line 28
-		p(", parity: ");// line 28
-		p(_parity);// line 28
-		p(", is odd? ");// line 28
-		p(_isOdd);// line 28
-		p(", is first? ");// line 28
-		p(_isFirst);// line 28
-		p(", is last? ");// line 28
-		p(_isLast);// line 28
-		p(", total size: ");// line 28
-		p(_size);// line 28
+"\n");// line 21, EachCall.html
+		int k = 1;// line 26, EachCall.html
+final Each _Each3 = new Each(getOut()); _Each3.setOut(getOut()); _Each3.render(// line 27, EachCall.html
+posts, new Each.DoBody<String>(){ // line 27, EachCall.html
+public void render(final String p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 27, EachCall.html
+// line 27, EachCall.html
+		p("    <p>index: ");// line 27, EachCall.html
+		p(_index);// line 28, EachCall.html
+		p(", parity: ");// line 28, EachCall.html
+		p(_parity);// line 28, EachCall.html
+		p(", is odd? ");// line 28, EachCall.html
+		p(_isOdd);// line 28, EachCall.html
+		p(", is first? ");// line 28, EachCall.html
+		p(_isFirst);// line 28, EachCall.html
+		p(", is last? ");// line 28, EachCall.html
+		p(_isLast);// line 28, EachCall.html
+		p(", total size: ");// line 28, EachCall.html
+		p(_size);// line 28, EachCall.html
 		p(" </p>\n" + 
-"    call a tag:  ");// line 28
-		final SampleTag _SampleTag4 = new SampleTag(getOut()); _SampleTag4.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag4.render(p); // line 29// line 29
+"    call a tag:  ");// line 28, EachCall.html
+		final SampleTag _SampleTag4 = new SampleTag(getOut()); _SampleTag4.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag4.render(p); // line 29, EachCall.html// line 29, EachCall.html
 
 }
 
@@ -165,24 +169,24 @@ public void resetBuffer() {
 }
 
 }
-);// line 27
+);// line 27, EachCall.html
 		p("\n" + 
-"\n");// line 30
-		int[] ints = {1, 2, 3, 4};// line 33
-final Each _Each5 = new Each(getOut()); _Each5.setOut(getOut()); _Each5.render(// line 34
-ints, new Each.DoBody<Integer>(){ // line 34
-public void render(final Integer i, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 34
-// line 34
-		p("    --> ");// line 34
-		p(escape(i));// line 35
+"\n");// line 30, EachCall.html
+		int[] ints = {1, 2, 3, 4};// line 33, EachCall.html
+final Each _Each5 = new Each(getOut()); _Each5.setOut(getOut()); _Each5.render(// line 34, EachCall.html
+ints, new Each.DoBody<Integer>(){ // line 34, EachCall.html
+public void render(final Integer i, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 34, EachCall.html
+// line 34, EachCall.html
+		p("    --> ");// line 34, EachCall.html
+		p(escape(i));// line 35, EachCall.html
 		p("\n" + 
-"    ");// line 35
-		if (i == 2) {// line 36
-        return; // this will work as continue// line 37
-    } else {// line 38
+"    ");// line 35, EachCall.html
+		if (i == 2) {// line 36, EachCall.html
+        return; // this will work as continue// line 37, EachCall.html
+    } else {// line 38, EachCall.html
 		p("         :---\n" + 
-"    ");// line 38
-		}// line 40
+"    ");// line 38, EachCall.html
+		}// line 40, EachCall.html
 
 }
 
@@ -199,8 +203,8 @@ public void resetBuffer() {
 }
 
 }
-);// line 34
-		;// line 41
+);// line 34, EachCall.html
+		;// line 41, EachCall.html
 		
 		endDoLayout(sourceTemplate);
 	}

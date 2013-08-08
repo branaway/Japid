@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_layouts/superheaders.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/superheaders.html";
@@ -49,16 +50,16 @@ public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 		super(out);
 	}
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		;// line 1
+		beginDoLayout(sourceTemplate);		;// line 1, superheaders.html
 		p("\n" + 
-"\n");// line 1
+"\n");// line 1, superheaders.html
 		p("\n" + 
-"<p> there is a special directive for the content-type header</p>\n");// line 4
+"<p> there is a special directive for the content-type header</p>\n");// line 4, superheaders.html
 		p("\n" + 
-"    `contentType    text/html; charset=utf-8\n");// line 7
-		p("\n");// line 9
-		doLayout();// line 11
-		;// line 11
+"    `contentType    text/html; charset=utf-8\n");// line 7, superheaders.html
+		p("\n");// line 9, superheaders.html
+		doLayout();// line 11, superheaders.html
+		;// line 11, superheaders.html
 				endDoLayout(sourceTemplate);	}
 
 	protected abstract void doLayout();

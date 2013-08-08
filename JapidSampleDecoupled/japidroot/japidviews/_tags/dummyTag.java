@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_tags/dummyTag.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class dummyTag extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/dummyTag.html";
@@ -63,31 +64,36 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/_tags/dummyTag.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
-		long t = -1;
-		 t = System.nanoTime();
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-     	String l = "" + (System.nanoTime() - t) / 100000;
-		int len = l.length();
-		l = l.substring(0, len - 1) + "." +  l.substring(len - 1);
+		long __t = -1;
+		 __t = System.nanoTime();
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/dummyTag.html
+     	String __l = "" + (System.nanoTime() - __t) / 100000;
+		int __len = __l.length();
+		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
 
-		System.out.println("[dummyTag] rendering time(ms): " + l);
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		System.out.println("[dummyTag] rendering time(ms): " + __l);
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String a) {
+		return new dummyTag().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n");// line 1
+;// line 1, dummyTag.html
+		p("\n");// line 1, dummyTag.html
 		p("\n" + 
-"\n");// line 3
+"\n");// line 3, dummyTag.html
 		p("\n" + 
-"Hi Hello from DummyTag: ");// line 5
-		p(a);// line 7
+"Hi Hello from DummyTag: ");// line 5, dummyTag.html
+		p(a);// line 7, dummyTag.html
 		p("!\n" + 
-"\n");// line 7
+"\n");// line 7, dummyTag.html
 		
 		endDoLayout(sourceTemplate);
 	}

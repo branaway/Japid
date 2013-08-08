@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/templates/suppressNull.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class suppressNull extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/suppressNull.html";
@@ -64,30 +65,35 @@ public class suppressNull extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/templates/suppressNull.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new suppressNull().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, suppressNull.html
 		p("\n" + 
-"\n");// line 1
+"\n");// line 1, suppressNull.html
 
-String a = "a";// line 5
+String a = "a";// line 5, suppressNull.html
 		p("<p>\n" + 
-"safe to do a.something: ");// line 5
-		try { p(a.length()); } catch (NullPointerException npe) {}// line 7
+"safe to do a.something: ");// line 5, suppressNull.html
+		try { p(a.length()); } catch (NullPointerException npe) {}// line 7, suppressNull.html
 		p("\n" + 
 "</p>\n" + 
-"\n");// line 7
-		 a = null;// line 10
+"\n");// line 7, suppressNull.html
+		 a = null;// line 10, suppressNull.html
 		p("<p>\n" + 
-"safe to do a.something too: ");// line 10
-		try { p(a.length()); } catch (NullPointerException npe) {}// line 12
+"safe to do a.something too: ");// line 10, suppressNull.html
+		try { p(a.length()); } catch (NullPointerException npe) {}// line 12, suppressNull.html
 		p("\n" + 
-"</p>\n");// line 12
+"</p>\n");// line 12, suppressNull.html
 		
 		endDoLayout(sourceTemplate);
 	}

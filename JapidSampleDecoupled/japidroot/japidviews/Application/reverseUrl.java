@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/reverseUrl.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class reverseUrl extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/reverseUrl.html";
@@ -64,37 +65,42 @@ public class reverseUrl extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/Application/reverseUrl.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new reverseUrl().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		String name = "bran";// line 1
-		p("<a href=\"");// line 1
-		p(lookup("validate", name));// line 2
+;// line 1, reverseUrl.html
+		String name = "bran";// line 1, reverseUrl.html
+		p("<a href=\"");// line 1, reverseUrl.html
+		p(lookup("validate", name));// line 2, reverseUrl.html
 		p("\">simple reverse lookup</a>\n" + 
 "<p/>\n" + 
-"<a href=\"");// line 2
-		p(lookupAbs("validate", name, 12));// line 4
+"<a href=\"");// line 2, reverseUrl.html
+		p(lookupAbs("validate", name, 12));// line 4, reverseUrl.html
 		p("\">simple reverse lookup with absolute url</a>\n" + 
 "<p/>\n" + 
-"<form action=\"");// line 4
-		p(lookup("validate", new Object[]{}));// line 6
+"<form action=\"");// line 4, reverseUrl.html
+		p(lookup("validate", new Object[]{}));// line 6, reverseUrl.html
 		p("\">\n" + 
 "    <input type=\"hidden\" name=\"name\" value=\"bran\"/>\n" + 
 "    <input type=\"hidden\" name=\"age\" value=\"12\"/>\n" + 
 "    <input type=\"submit\"/>\n" + 
 "</form>\n" + 
 "<p/>\n" + 
-"<a href=\"");// line 6
-		p(lookup("more.MyController.echo", name));// line 12
+"<a href=\"");// line 6, reverseUrl.html
+		p(lookup("more.MyController.echo", name));// line 12, reverseUrl.html
 		p("\">simple reverse lookup</a>\n" + 
 "<p/>\n" + 
 "\n" + 
-"\n");// line 12
+"\n");// line 12, reverseUrl.html
 		
 		endDoLayout(sourceTemplate);
 	}

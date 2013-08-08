@@ -12,14 +12,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_tags/invokeInTag.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class invokeInTag extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/invokeInTag.html";
@@ -65,24 +66,29 @@ public class invokeInTag extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/_tags/invokeInTag.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new invokeInTag().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, invokeInTag.html
 		p("\n" + 
 "\n" + 
-"<p>beginning: invocation in tag</p>\n");// line 1
+"<p>beginning: invocation in tag</p>\n");// line 1, invokeInTag.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.Application.foo(); // line 4
+				controllers.Application.foo(); // line 4, invokeInTag.html
 			}
-		}); p("\n");// line 4
-		p("<p>end of invoke in tag</p>\n");// line 4
+		}); p("\n");// line 4, invokeInTag.html
+		p("<p>end of invoke in tag</p>\n");// line 4, invokeInTag.html
 		
 		endDoLayout(sourceTemplate);
 	}

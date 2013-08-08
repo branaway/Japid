@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/escapedExpr.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class escapedExpr extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/escapedExpr.html";
@@ -64,26 +65,31 @@ public class escapedExpr extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/Application/escapedExpr.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new escapedExpr().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		String a = "a&b>";// line 1
-		p("hello: ");// line 1
-		p(a);// line 2
-		p(", ");// line 2
-		p(escape(a));// line 2
-		p(", ");// line 2
-		p(a);// line 2
-		p(" and ");// line 2
-		p(escape(a));// line 2
-		p(" and ");// line 2
-		p(escape(a));// line 2
-		;// line 2
+;// line 1, escapedExpr.html
+		String a = "a&b>";// line 1, escapedExpr.html
+		p("hello: ");// line 1, escapedExpr.html
+		p(a);// line 2, escapedExpr.html
+		p(", ");// line 2, escapedExpr.html
+		p(escape(a));// line 2, escapedExpr.html
+		p(", ");// line 2, escapedExpr.html
+		p(a);// line 2, escapedExpr.html
+		p(" and ");// line 2, escapedExpr.html
+		p(escape(a));// line 2, escapedExpr.html
+		p(" and ");// line 2, escapedExpr.html
+		p(escape(a));// line 2, escapedExpr.html
+		;// line 2, escapedExpr.html
 		
 		endDoLayout(sourceTemplate);
 	}

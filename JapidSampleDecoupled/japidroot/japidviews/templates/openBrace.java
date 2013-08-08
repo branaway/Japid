@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/templates/openBrace.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class openBrace extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/openBrace.html";
@@ -64,45 +65,50 @@ public class openBrace extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/templates/openBrace.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new openBrace().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("<p>hello</p>\n");// line 1
-		int i = 3;// line 2
-if(asBoolean(true)) {// line 3
-    while (i-- > 0) {// line 4
-		p("        <p>in while ");// line 4
-		p(i);// line 5
+p("<p>hello</p>\n");// line 1, openBrace.html
+		int i = 3;// line 2, openBrace.html
+if(asBoolean(true)) {// line 3, openBrace.html
+    while (i-- > 0) {// line 4, openBrace.html
+		p("        <p>in while ");// line 4, openBrace.html
+		p(i);// line 5, openBrace.html
 		p("</p>\n" + 
-"    ");// line 5
-		}// line 6
-		p("    <p>good</p>\n");// line 6
-		}// line 8
+"    ");// line 5, openBrace.html
+		}// line 6, openBrace.html
+		p("    <p>good</p>\n");// line 6, openBrace.html
+		}// line 8, openBrace.html
 		p("\n" + 
-"<p>\n");// line 8
-		for(i =0; i < 4; i++){// line 11
-		p("    ");// line 11
-		p(i);// line 12
-		p(", \n");// line 12
-		}// line 13
+"<p>\n");// line 8, openBrace.html
+		for(i =0; i < 4; i++){// line 11, openBrace.html
+		p("    ");// line 11, openBrace.html
+		p(i);// line 12, openBrace.html
+		p(", \n");// line 12, openBrace.html
+		}// line 13, openBrace.html
 		p("<p/>\n" + 
 "<p>good2</p>\n" + 
-"\n");// line 13
-		if (true) {// line 17
-		p("    <p>good 3</p>\n");// line 17
-		}// line 19
+"\n");// line 13, openBrace.html
+		if (true) {// line 17, openBrace.html
+		p("    <p>good 3</p>\n");// line 17, openBrace.html
+		}// line 19, openBrace.html
 		p("<p/>\n" + 
 "<p>\n" + 
-"the result is ");// line 19
-		if(asBoolean(true)) {// line 22
-		p("got you!");// line 22
-		}// line 22
+"the result is ");// line 19, openBrace.html
+		if(asBoolean(true)) {// line 22, openBrace.html
+		p("got you!");// line 22, openBrace.html
+		}// line 22, openBrace.html
 		p(".\n" + 
-"</p>\n");// line 22
+"</p>\n");// line 22, openBrace.html
 		
 		endDoLayout(sourceTemplate);
 	}

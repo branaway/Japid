@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/doBodyInDef.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class doBodyInDef extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/doBodyInDef.html";
@@ -64,23 +65,28 @@ public class doBodyInDef extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/doBodyInDef.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new doBodyInDef().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("\n");// line 1
-		final doBodyInDefTag _doBodyInDefTag0 = new doBodyInDefTag(getOut()); _doBodyInDefTag0.setActionRunners(getActionRunners()).setOut(getOut()); _doBodyInDefTag0.render(// line 2
-new doBodyInDefTag.DoBody<String, Integer>(){ // line 2
-public void render(final String c, final Integer i) { // line 2
-// line 2
-		p("  my body plus ");// line 2
-		p(c);// line 3
-		p(", ");// line 3
-		p(i);// line 3
-		;// line 3
+p("\n");// line 1, doBodyInDef.html
+		final doBodyInDefTag _doBodyInDefTag0 = new doBodyInDefTag(getOut()); _doBodyInDefTag0.setActionRunners(getActionRunners()).setOut(getOut()); _doBodyInDefTag0.render(// line 2, doBodyInDef.html
+new doBodyInDefTag.DoBody<String, Integer>(){ // line 2, doBodyInDef.html
+public void render(final String c, final Integer i) { // line 2, doBodyInDef.html
+// line 2, doBodyInDef.html
+		p("  my body plus ");// line 2, doBodyInDef.html
+		p(c);// line 3, doBodyInDef.html
+		p(", ");// line 3, doBodyInDef.html
+		p(i);// line 3, doBodyInDef.html
+		;// line 3, doBodyInDef.html
 		
 }
 
@@ -97,7 +103,7 @@ public void resetBuffer() {
 }
 
 }
-);// line 2
+);// line 2, doBodyInDef.html
 		
 		endDoLayout(sourceTemplate);
 	}

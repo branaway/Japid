@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_tags/dummier.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class dummier extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/dummier.html";
@@ -63,21 +64,25 @@ public class dummier extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/_tags/dummier.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/dummier.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String a) {
+		return new dummier().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n" + 
-"hu la laaa  ");// line 1
-		p(a);// line 2
-		p("\n");// line 2
+;// line 1, dummier.html
+		p("hu la laaa  ");// line 1, dummier.html
+		p(a);// line 2, dummier.html
+		p("\n");// line 2, dummier.html
 		
 		endDoLayout(sourceTemplate);
 	}

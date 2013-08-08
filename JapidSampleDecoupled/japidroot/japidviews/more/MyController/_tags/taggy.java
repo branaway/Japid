@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/_tags/taggy.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class taggy extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/_tags/taggy.html";
@@ -63,18 +64,23 @@ public class taggy extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String s; // line 1
+	private String s; // line 1, japidviews/more/MyController/_tags/taggy.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/more/MyController/_tags/taggy.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String s) {
+		return new taggy().render(s);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("I'm taggy!");// line 1
+;// line 1, taggy.html
+		p("I'm taggy!");// line 1, taggy.html
 		
 		endDoLayout(sourceTemplate);
 	}

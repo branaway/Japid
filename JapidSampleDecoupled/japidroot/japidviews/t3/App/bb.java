@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/t3/App/bb.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class bb extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/t3/App/bb.html";
@@ -63,13 +64,13 @@ public class bb extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private int a; // line 1
-	private String b; // line 1
+	private int a; // line 1, japidviews/t3/App/bb.html
+	private String b; // line 1, japidviews/t3/App/bb.html
 	public cn.bran.japid.template.RenderResult render(int a,String b) {
 		this.a = a;
 		this.b = b;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/t3/App/bb.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -80,21 +81,21 @@ public class bb extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("hi: ");// line 1
-		p(a);// line 2
-		p(" & b ... reversed:: \"");// line 2
-		p(lookup("t3.App.bb", a, b));// line 2
+;// line 1, bb.html
+		p("hi: ");// line 1, bb.html
+		p(a);// line 2, bb.html
+		p(" & b ... reversed:: \"");// line 2, bb.html
+		p(lookup("t3.App.bb", a, b));// line 2, bb.html
 		p("\" \n" + 
 "\n" + 
-"or the path manually: \"");// line 2
-		p(play.Play.ctxPath);// line 4
-		p("/t3.App.bb/");// line 4
-		p(a);// line 4
-		p("/");// line 4
-		p(b);// line 4
+"or the path manually: \"");// line 2, bb.html
+		p(play.Play.ctxPath);// line 4, bb.html
+		p("/t3.App.bb/");// line 4, bb.html
+		p(a);// line 4, bb.html
+		p("/");// line 4, bb.html
+		p(b);// line 4, bb.html
 		p(".html\"\n" + 
-"\n");// line 4
+"\n");// line 4, bb.html
 		
 		endDoLayout(sourceTemplate);
 	}

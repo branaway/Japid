@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_tags/anotherTag.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class anotherTag extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/anotherTag.html";
@@ -64,10 +65,10 @@ public class anotherTag extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
-	private String s; // line 1
+	private String s; // line 1, japidviews/_tags/anotherTag.html
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1, japidviews/_tags/anotherTag.html
 }
 
 	private DoBody body;
@@ -88,30 +89,35 @@ public static interface DoBody<A> {
 	public cn.bran.japid.template.RenderResult render(String s, DoBody body) {
 		this.body = body;
 		this.s = s;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/anotherTag.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/anotherTag.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String s) {
+		return new anotherTag().render(s);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, anotherTag.html
 		p("\n" + 
 "<p>\n" + 
 "ok\n" + 
 "</p>\n" + 
-"<p>\n");// line 1
-		if (body != null){ body.setBuffer(getOut()); body.render("more " + s); body.resetBuffer();}// line 7
+"<p>\n");// line 1, anotherTag.html
+		if (body != null){ body.setBuffer(getOut()); body.render("more " + s); body.resetBuffer();}// line 7, anotherTag.html
 		p("</p>\n" + 
 "<p>\n" + 
 "mmm\n" + 
-"</p>");// line 7
+"</p>");// line 7, anotherTag.html
 		
 		endDoLayout(sourceTemplate);
 	}

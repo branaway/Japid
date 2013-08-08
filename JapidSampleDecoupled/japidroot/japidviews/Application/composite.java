@@ -13,14 +13,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/composite.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class composite extends lcomposite2
 {
 	public static final String sourceTemplate = "japidviews/Application/composite.html";
@@ -65,70 +66,75 @@ public class composite extends lcomposite2
 	}
 ////// end of named args stuff
 
-	private models.japidsample.Post post; // line 2
+	private models.japidsample.Post post; // line 2, japidviews/Application/composite.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2, japidviews/Application/composite.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Post post) {
+		return new composite().render(post);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, composite.html
 p("\n" + 
 "\n" + 
 "\n" + 
 "<p>This action won't be cached, unless the action has CacheFor annotation.</p>\n" + 
-"<div>");// line 3
+"<div>");// line 3, composite.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.authorPanel(post.getAuthor()); // line 8
+				Application.authorPanel(post.getAuthor()); // line 8, composite.html
 			}
-		}); p("\n");// line 8
+		}); p("\n");// line 8, composite.html
 		p("</div>\n" + 
-"<div>Another one in sub package: ");// line 8
+"<div>Another one in sub package: ");// line 8, composite.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", SubController.class, "foo", post.getAuthor().name) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				SubController.foo(post.getAuthor().name); // line 9
+				SubController.foo(post.getAuthor().name); // line 9, composite.html
 			}
-		}); p("\n");// line 9
+		}); p("\n");// line 9, composite.html
 		p("</div>\n" + 
 "\n" + 
 "<div>this one has full cache control</div>\n" + 
-"<div>");// line 9
+"<div>");// line 9, composite.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", Application.class, "authorPanel", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.authorPanel(post.getAuthor()); // line 12
+				Application.authorPanel(post.getAuthor()); // line 12, composite.html
 			}
-		}); p("\n");// line 12
+		}); p("\n");// line 12, composite.html
 		p("</div>\n" + 
 "\n" + 
 "<div>This one invokes an action with two params. Note the twoPrams() result is cached since the action carries CacheFor annotation.</div>\n" + 
-"<div>");// line 12
+"<div>");// line 12, composite.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "twoParams", "hello", 10) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.twoParams("hello", 10); // line 15
+				Application.twoParams("hello", 10); // line 15, composite.html
 			}
-		}); p("\n");// line 15
+		}); p("\n");// line 15, composite.html
 		p("</div>\n" + 
 "\n" + 
 "<p>Let's invoke a tag which invokes an action</p>\n" + 
-"\n");// line 15
-		final invokeInTag _invokeInTag4 = new invokeInTag(getOut()); _invokeInTag4.setActionRunners(getActionRunners()).setOut(getOut()); _invokeInTag4.render(); // line 19// line 19
+"\n");// line 15, composite.html
+		final invokeInTag _invokeInTag4 = new invokeInTag(getOut()); _invokeInTag4.setActionRunners(getActionRunners()).setOut(getOut()); _invokeInTag4.render(); // line 19, composite.html// line 19, composite.html
 		p("\n" + 
-"<p>let's invoke an action that renders a template that contains another invoke: ");// line 19
+"<p>let's invoke an action that renders a template that contains another invoke: ");// line 19, composite.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel2", post.getAuthor()) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.authorPanel2(post.getAuthor()); // line 21
+				Application.authorPanel2(post.getAuthor()); // line 21, composite.html
 			}
-		}); p("\n");// line 21
-		p("</p>\n");// line 21
+		}); p("\n");// line 21, composite.html
+		p("</p>\n");// line 21, composite.html
 		
 		endDoLayout(sourceTemplate);
 	}

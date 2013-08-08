@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/dobodytest.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class dobodytest extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/dobodytest.html";
@@ -64,19 +65,24 @@ public class dobodytest extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/dobodytest.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new dobodytest().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		final argtest _argtest0 = new argtest(getOut()); _argtest0.setActionRunners(getActionRunners()).setOut(getOut()); _argtest0.render( // line 1
-new argtest.DoBody(){ // line 1
-public void render() { // line 1
-// line 1
-		p("  ok\n");// line 1
+;// line 1, dobodytest.html
+		final argtest _argtest0 = new argtest(getOut()); _argtest0.setActionRunners(getActionRunners()).setOut(getOut()); _argtest0.render( // line 1, dobodytest.html
+new argtest.DoBody(){ // line 1, dobodytest.html
+public void render() { // line 1, dobodytest.html
+// line 1, dobodytest.html
+		p("  ok\n");// line 1, dobodytest.html
 		
 }
 
@@ -93,8 +99,8 @@ public void resetBuffer() {
 }
 
 }
-, named("arg", "test1"));// line 1
-final dummier _dummier1 = new dummier(getOut()); _dummier1.setActionRunners(getActionRunners()).setOut(getOut()); _dummier1.render(named("a", "hxxmmm")); // line 4// line 4
+, named("arg", "test1"));// line 1, dobodytest.html
+final dummier _dummier1 = new dummier(getOut()); _dummier1.setActionRunners(getActionRunners()).setOut(getOut()); _dummier1.render(named("a", "hxxmmm")); // line 4, dobodytest.html// line 4, dobodytest.html
 		
 		endDoLayout(sourceTemplate);
 	}

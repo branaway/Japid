@@ -12,14 +12,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/templates/AllPost2.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class AllPost2 extends Layout
 {
 	public static final String sourceTemplate = "japidviews/templates/AllPost2.html";
@@ -64,34 +65,39 @@ public class AllPost2 extends Layout
 	}
 ////// end of named args stuff
 
-	private String blogTitle; // line 3
-	private List<Post> allPost; // line 3
+	private String blogTitle; // line 3, japidviews/templates/AllPost2.html
+	private List<Post> allPost; // line 3, japidviews/templates/AllPost2.html
 	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 3
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 3, japidviews/templates/AllPost2.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String blogTitle,List<Post> allPost) {
+		return new AllPost2().render(blogTitle, allPost);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, AllPost2.html
 
 p("\n" + 
-"\n");// line 5
-		if (allPost.size() > 0 ) {// line 8
+"\n");// line 5, AllPost2.html
+		if (allPost.size() > 0 ) {// line 8, AllPost2.html
 		p("	<p></p>\n" + 
-"	");// line 8
-		for (Post p: allPost) {// line 10
-	    final Display _Display1 = new Display(getOut()); _Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render( // line 11
-new Display.DoBody<String>(){ // line 11
-public void render(final String title) { // line 11
-// line 11
-		p("			<p>The real title is: ");// line 11
-		p(title);// line 12
+"	");// line 8, AllPost2.html
+		for (Post p: allPost) {// line 10, AllPost2.html
+	    final Display _Display1 = new Display(getOut()); _Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render( // line 11, AllPost2.html
+new Display.DoBody<String>(){ // line 11, AllPost2.html
+public void render(final String title) { // line 11, AllPost2.html
+// line 11, AllPost2.html
+		p("			<p>The real title is: ");// line 11, AllPost2.html
+		p(title);// line 12, AllPost2.html
 		p(";</p>\n" + 
-"	    ");// line 12
+"	    ");// line 12, AllPost2.html
 		
 }
 
@@ -108,15 +114,15 @@ public void resetBuffer() {
 }
 
 }
-, named("post", p), named("as", "home"));// line 11
-	}// line 14
-} else {// line 15
-		p("	<p>There is no post at this moment</p>\n");// line 15
-		}// line 17
+, named("post", p), named("as", "home"));// line 11, AllPost2.html
+	}// line 14, AllPost2.html
+} else {// line 15, AllPost2.html
+		p("	<p>There is no post at this moment</p>\n");// line 15, AllPost2.html
+		}// line 17, AllPost2.html
 
-final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000)); // line 19// line 19
+final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000)); // line 19, AllPost2.html// line 19, AllPost2.html
 		p("\n" + 
-"<p>end of it</p>");// line 19
+"<p>end of it</p>");// line 19, AllPost2.html
 		
 		endDoLayout(sourceTemplate);
 	}

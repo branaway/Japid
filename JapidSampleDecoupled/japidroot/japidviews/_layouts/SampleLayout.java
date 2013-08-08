@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_layouts/SampleLayout.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public abstract class SampleLayout extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/SampleLayout.html";
@@ -49,13 +50,13 @@ public abstract class SampleLayout extends cn.bran.play.JapidTemplateBase
 	}
 	@Override public void layout() {
 		beginDoLayout(sourceTemplate);		p("A sample layout.\n" + 
-"<p>\n");// line 1
-		title();// line 3
+"<p>\n");// line 1, SampleLayout.html
+		title();// line 3, SampleLayout.html
 		p(";\n" + 
 "</p>\n" + 
-"<div>\n");// line 3
-		doLayout();// line 6
-		p("</div>\n");// line 6
+"<div>\n");// line 3, SampleLayout.html
+		doLayout();// line 6, SampleLayout.html
+		p("</div>\n");// line 6, SampleLayout.html
 				endDoLayout(sourceTemplate);	}
 	 protected void title() {};
 

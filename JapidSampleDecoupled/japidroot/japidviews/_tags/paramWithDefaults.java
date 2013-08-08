@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_tags/paramWithDefaults.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class paramWithDefaults extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/paramWithDefaults.html";
@@ -63,32 +64,36 @@ public class paramWithDefaults extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String msg; // line 1
-	private String m2; // line 1
-	private Integer age; // line 1
+	private String msg; // line 1, japidviews/_tags/paramWithDefaults.html
+	private String m2; // line 1, japidviews/_tags/paramWithDefaults.html
+	private Integer age; // line 1, japidviews/_tags/paramWithDefaults.html
 	public cn.bran.japid.template.RenderResult render(String msg,String m2,Integer age) {
 		this.msg = msg;
 		this.m2 = m2;
 		this.age = age;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/paramWithDefaults.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String msg,String m2,Integer age) {
+		return new paramWithDefaults().render(msg, m2, age);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n" + 
-"<span>");// line 5
-		p(msg);// line 6
+;// line 1, paramWithDefaults.html
+		p("<span>");// line 5, paramWithDefaults.html
+		p(msg);// line 6, paramWithDefaults.html
 		p("</span>\n" + 
-"<span>");// line 6
-		p(m2);// line 7
+"<span>");// line 6, paramWithDefaults.html
+		p(m2);// line 7, paramWithDefaults.html
 		p("</span>\n" + 
-"<span>");// line 7
-		p(age);// line 8
+"<span>");// line 7, paramWithDefaults.html
+		p(age);// line 8, paramWithDefaults.html
 		p("</span>\n" + 
-"\n");// line 8
+"\n");// line 8, paramWithDefaults.html
 		
 		endDoLayout(sourceTemplate);
 	}

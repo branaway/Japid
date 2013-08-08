@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_layouts/TagLayout.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public abstract class TagLayout extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/TagLayout.html";
@@ -48,18 +49,18 @@ public abstract class TagLayout extends cn.bran.play.JapidTemplateBase
 		super(out);
 	}
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("标签布局\n");// line 1
-		p("\n");// line 2
-		final dummyTag _dummyTag0 = new dummyTag(getOut()); _dummyTag0.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag0.render("me"); // line 3// line 3
+		beginDoLayout(sourceTemplate);		p("标签布局\n");// line 1, TagLayout.html
+		p("\n");// line 2, TagLayout.html
+		final dummyTag _dummyTag0 = new dummyTag(getOut()); _dummyTag0.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag0.render("me"); // line 3, TagLayout.html// line 3, TagLayout.html
 		p("<div>\n" + 
-"\n");// line 3
+"\n");// line 3, TagLayout.html
 		p("\n" + 
-"    \n");// line 6
-		doLayout();// line 8
+"    \n");// line 6, TagLayout.html
+		doLayout();// line 8, TagLayout.html
 		p("\n" + 
 "</div>\n" + 
 "\n" + 
-"\n");// line 8
+"\n");// line 8, TagLayout.html
 				endDoLayout(sourceTemplate);	}
 
 	protected abstract void doLayout();

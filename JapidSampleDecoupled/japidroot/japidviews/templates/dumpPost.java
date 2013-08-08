@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/templates/dumpPost.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class dumpPost extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/dumpPost.html";
@@ -63,21 +64,26 @@ public class dumpPost extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String f1; // line 2
-	private String f2; // line 2
-	private String body; // line 2
+	private String f1; // line 2, japidviews/templates/dumpPost.html
+	private String f2; // line 2, japidviews/templates/dumpPost.html
+	private String body; // line 2, japidviews/templates/dumpPost.html
 	public cn.bran.japid.template.RenderResult render(String f1,String f2,String body) {
 		this.f1 = f1;
 		this.f2 = f2;
 		this.body = body;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2, japidviews/templates/dumpPost.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String f1,String f2,String body) {
+		return new dumpPost().render(f1, f2, body);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("\n");// line 1
+p("\n");// line 1, dumpPost.html
 p("\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
@@ -87,20 +93,20 @@ p("\n" +
 "</head>\n" + 
 "<body>\n" + 
 "<form method=\"POST\" action=\"/Application/dumpPost\">\n" + 
-"	<input type=\"text\" width=\"30\" name=\"f1\" value=\"");// line 3
-		try { p(f1); } catch (NullPointerException npe) {}// line 13
+"	<input type=\"text\" width=\"30\" name=\"f1\" value=\"");// line 3, dumpPost.html
+		try { p(f1); } catch (NullPointerException npe) {}// line 13, dumpPost.html
 		p("\"/>\n" + 
-"	<input type=\"text\" width=\"30\" name=\"f2\" value=\"");// line 13
-		try { p(f2); } catch (NullPointerException npe) {}// line 14
+"	<input type=\"text\" width=\"30\" name=\"f2\" value=\"");// line 13, dumpPost.html
+		try { p(f2); } catch (NullPointerException npe) {}// line 14, dumpPost.html
 		p("\"/>\n" + 
-"	<input type=\"text\" width=\"50\" name=\"body\" value=\"");// line 14
-		try { p(body); } catch (NullPointerException npe) {}// line 15
+"	<input type=\"text\" width=\"50\" name=\"body\" value=\"");// line 14, dumpPost.html
+		try { p(body); } catch (NullPointerException npe) {}// line 15, dumpPost.html
 		p("\"/>\n" + 
 "	<input type=\"submit\"/>\n" + 
 "</form>\n" + 
 "\n" + 
 "</body>\n" + 
-"</html>");// line 15
+"</html>");// line 15, dumpPost.html
 		
 		endDoLayout(sourceTemplate);
 	}

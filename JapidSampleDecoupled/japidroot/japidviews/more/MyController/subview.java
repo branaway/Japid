@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/subview.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class subview extends superview
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/subview.html";
@@ -63,28 +64,33 @@ public class subview extends superview
 	}
 ////// end of named args stuff
 
-	private String s; // line 2
+	private String s; // line 2, japidviews/more/MyController/subview.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2, japidviews/more/MyController/subview.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String s) {
+		return new subview().render(s);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-;// line 2
-		// line 4
-		;// line 4
-		// line 5
+;// line 1, subview.html
+;// line 2, subview.html
+		// line 4, subview.html
+		;// line 4, subview.html
+		// line 5, subview.html
 		p("\n" + 
 "\n" + 
-"hello ");// line 5
-		p(s);// line 8
-		p("\n");// line 8
-		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy2 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy2.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s); // line 10// line 10
-		p(" ");// line 10
+"hello ");// line 5, subview.html
+		p(s);// line 8, subview.html
+		p("\n");// line 8, subview.html
+		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy2 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy2.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s); // line 10, subview.html// line 10, subview.html
+		p(" ");// line 10, subview.html
 		
 		endDoLayout(sourceTemplate);
 	}

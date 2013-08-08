@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/japider.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class japider extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/japider.html";
@@ -63,34 +64,37 @@ public class japider extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private models.japidsample.Author a; // line 1
+	private models.japidsample.Author a; // line 1, japidviews/Application/japider.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
 		this.a = a;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/Application/japider.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Author a) {
+		return new japider().render(a);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n" + 
-"\n" + 
-"<p>author name-> ");// line 1
-		p(a.name);// line 3
+;// line 1, japider.html
+		p("<p>author name-> ");// line 2, japider.html
+		p(a.name);// line 3, japider.html
 		p("</p>\n" + 
-"<p>his birthdate-> ");// line 3
-		p(a.birthDate);// line 4
+"<p>his birthdate-> ");// line 3, japider.html
+		p(a.birthDate);// line 4, japider.html
 		p("</p>\n" + 
-"<p>and his is an '");// line 4
-		p(a.getGender());// line 5
+"<p>and his is an '");// line 4, japider.html
+		p(a.getGender());// line 5, japider.html
 		p("'</p>\n" + 
-"<p>His publisher is '");// line 5
-		p(a.publisher);// line 6
+"<p>His publisher is '");// line 5, japider.html
+		p(a.publisher);// line 6, japider.html
 		p("'</p>\n" + 
-"    ");// line 6
-		final SampleTag _SampleTag0 = new SampleTag(getOut()); _SampleTag0.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag0.render(a.name); // line 7// line 7
-		p("    ");// line 7
+"    ");// line 6, japider.html
+		final SampleTag _SampleTag0 = new SampleTag(getOut()); _SampleTag0.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag0.render(a.name); // line 7, japider.html// line 7, japider.html
+		p("    ");// line 7, japider.html
 		
 		endDoLayout(sourceTemplate);
 	}

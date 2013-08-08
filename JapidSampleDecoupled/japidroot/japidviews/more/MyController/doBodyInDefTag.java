@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/doBodyInDefTag.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class doBodyInDefTag extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/doBodyInDefTag.html";
@@ -66,7 +67,7 @@ public class doBodyInDefTag extends cn.bran.play.JapidTemplateBase
 	{ setHasDoBody(); }
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} 
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 0, japidviews/more/MyController/doBodyInDefTag.html
 }
 
 	DoBody body;
@@ -86,35 +87,40 @@ public static interface DoBody<A,B> {
 	}
 	public cn.bran.japid.template.RenderResult render(DoBody body) {
 		this.body = body;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/doBodyInDefTag.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/doBodyInDefTag.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new doBodyInDefTag().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("outside: ");// line 1
-		if (body != null){ body.setBuffer(getOut()); body.render("taggy", 1); body.resetBuffer();}// line 1
+p("outside: ");// line 1, doBodyInDefTag.html
+		if (body != null){ body.setBuffer(getOut()); body.render("taggy", 1); body.resetBuffer();}// line 1, doBodyInDefTag.html
 		p("ok, try to get the content as method call: \n" + 
-"   ");// line 1
-		p(renderBody("taddy", 3));// line 4
-		p("\n");// line 4
-		// line 6
+"   ");// line 1, doBodyInDefTag.html
+		p(renderBody("taddy", 3));// line 4, doBodyInDefTag.html
+		p("\n");// line 4, doBodyInDefTag.html
+		// line 6, doBodyInDefTag.html
 		p("call the def\n" + 
-"\n");// line 8
-		p(foo());// line 11
-		p("\n");// line 11
-		final fooTag _fooTag1 = new fooTag(getOut()); _fooTag1.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag1.render(// line 13
-new fooTag.DoBody(){ // line 13
-public void render() { // line 13
-// line 13
-		p("  -> called footag:  ");// line 13
-		if (body != null){ body.setBuffer(getOut()); body.render("kaddy", 13); body.resetBuffer();}// line 14
+"\n");// line 8, doBodyInDefTag.html
+		p(foo());// line 11, doBodyInDefTag.html
+		p("\n");// line 11, doBodyInDefTag.html
+		final fooTag _fooTag1 = new fooTag(getOut()); _fooTag1.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag1.render(// line 13, doBodyInDefTag.html
+new fooTag.DoBody(){ // line 13, doBodyInDefTag.html
+public void render() { // line 13, doBodyInDefTag.html
+// line 13, doBodyInDefTag.html
+		p("  -> called footag:  ");// line 13, doBodyInDefTag.html
+		if (body != null){ body.setBuffer(getOut()); body.render("kaddy", 13); body.resetBuffer();}// line 14, doBodyInDefTag.html
 
 }
 
@@ -131,8 +137,8 @@ public void resetBuffer() {
 }
 
 }
-);// line 13
-		;// line 15
+);// line 13, doBodyInDefTag.html
+		;// line 15, doBodyInDefTag.html
 		
 		endDoLayout(sourceTemplate);
 	}
@@ -143,9 +149,9 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
-// line 6
-		p("	hello ");// line 6
-		if (body != null){ body.setBuffer(getOut()); body.render("saddy", 2); body.resetBuffer();}// line 7
+// line 6, doBodyInDefTag.html
+		p("	hello ");// line 6, doBodyInDefTag.html
+		if (body != null){ body.setBuffer(getOut()); body.render("saddy", 2); body.resetBuffer();}// line 7, doBodyInDefTag.html
 
 this.setOut(ori);
 if (actionRunners.size() > 0) {

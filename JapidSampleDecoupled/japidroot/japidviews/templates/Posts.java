@@ -12,14 +12,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/templates/Posts.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class Posts extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/Posts.html";
@@ -64,35 +65,40 @@ public class Posts extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String blogTitle; // line 2
-	private List<Post> allPost; // line 2
+	private String blogTitle; // line 2, japidviews/templates/Posts.html
+	private List<Post> allPost; // line 2, japidviews/templates/Posts.html
 	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2, japidviews/templates/Posts.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String blogTitle,List<Post> allPost) {
+		return new Posts().render(blogTitle, allPost);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, Posts.html
 
-for (Post post: allPost) { // line 4
-		p("	- title: ");// line 4
-		p(post.title);// line 5
+for (Post post: allPost) { // line 4, Posts.html
+		p("	- title: ");// line 4, Posts.html
+		p(post.title);// line 5, Posts.html
 		p("\n" + 
-"	- date: ");// line 5
-		p(post.postedAt);// line 6
+"	- date: ");// line 5, Posts.html
+		p(post.postedAt);// line 6, Posts.html
 		p("\n" + 
-"	- author ");// line 6
-		p(post.author.name);// line 7
-		p(" ");// line 7
-		p(post.author.gender);// line 7
+"	- author ");// line 6, Posts.html
+		p(post.author.name);// line 7, Posts.html
+		p(" ");// line 7, Posts.html
+		p(post.author.gender);// line 7, Posts.html
 		p("\n" + 
-"	the real title: 你好\n");// line 7
-		}// line 9
-		p("\n");// line 9
+"	the real title: 你好\n");// line 7, Posts.html
+		}// line 9, Posts.html
+		p("\n");// line 9, Posts.html
 		
 		endDoLayout(sourceTemplate);
 	}

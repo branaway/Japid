@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/index.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class index extends SampleLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/index.html";
@@ -63,32 +64,37 @@ public class index extends SampleLayout
 	}
 ////// end of named args stuff
 
-	private String s; // line 3
-	private int i; // line 3
+	private String s; // line 3, japidviews/more/MyController/index.html
+	private int i; // line 3, japidviews/more/MyController/index.html
 	public cn.bran.japid.template.RenderResult render(String s,int i) {
 		this.s = s;
 		this.i = i;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 3
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 3, japidviews/more/MyController/index.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String s,int i) {
+		return new index().render(s, i);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		;// line 1
-;// line 3
-		// line 5
+;// line 1, index.html
+		;// line 1, index.html
+;// line 3, index.html
+		// line 5, index.html
 		p("\n" + 
-"hello ");// line 5
-		p(s);// line 7
-		p(", ");// line 7
-		p(i);// line 7
+"hello ");// line 5, index.html
+		p(s);// line 7, index.html
+		p(", ");// line 7, index.html
+		p(i);// line 7, index.html
 		p(".\n" + 
 "Here goes your Japid template content.\n" + 
-"call a tag: \n");// line 7
-		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render("world"); // line 10// line 10
-		;// line 10
+"call a tag: \n");// line 7, index.html
+		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render("world"); // line 10, index.html// line 10, index.html
+		;// line 10, index.html
 		
 		endDoLayout(sourceTemplate);
 	}

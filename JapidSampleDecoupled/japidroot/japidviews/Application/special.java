@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/special.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class special extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/special.html";
@@ -64,21 +65,26 @@ public class special extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/Application/special.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new special().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 p("<p>show some special characters</p>\n" + 
 "\n" + 
 "~, ~!, @, #, $, %, ~^, %, * ...\n" + 
-"\n");// line 1
-		 String a = "hello "; String b = "world";// line 5
-		p("hi: ");// line 7
-		p(a+b);// line 9
-		;// line 9
+"\n");// line 1, special.html
+		 String a = "hello "; String b = "world";// line 5, special.html
+		p("hi: ");// line 7, special.html
+		p(a+b);// line 9, special.html
+		;// line 9, special.html
 		
 		endDoLayout(sourceTemplate);
 	}

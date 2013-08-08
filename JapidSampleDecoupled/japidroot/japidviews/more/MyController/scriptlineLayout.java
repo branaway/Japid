@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/scriptlineLayout.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public abstract class scriptlineLayout extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/scriptlineLayout.html";
@@ -48,10 +49,10 @@ public abstract class scriptlineLayout extends cn.bran.play.JapidTemplateBase
 		super(out);
 	}
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("the meta is  \"");// line 1
+		beginDoLayout(sourceTemplate);		p("the meta is  \"");// line 1, scriptlineLayout.html
 		meta();p("\"\n" + 
-"\n");// line 1
-		doLayout();// line 3
+"\n");// line 1, scriptlineLayout.html
+		doLayout();// line 3, scriptlineLayout.html
 				endDoLayout(sourceTemplate);	}
 	 protected void meta() {};
 

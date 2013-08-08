@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/_tags/paramWithDefaults2.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class paramWithDefaults2 extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/paramWithDefaults2.html";
@@ -63,17 +64,17 @@ public class paramWithDefaults2 extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String name; // line 1
-	private String url; // line 1
-	private String type; // line 1
-	private String data; // line 1
-	private String reRender; // line 1
-	private String dataType; // line 1
-	private String beforeSend; // line 1
-	private String success; // line 1
-	private String jsData; // line 1
-	private Boolean cache; // line 1
-	private String event; // line 1
+	private String name; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private String url; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private String type; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private String data; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private String reRender; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private String dataType; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private String beforeSend; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private String success; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private String jsData; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private Boolean cache; // line 1, japidviews/_tags/paramWithDefaults2.html
+	private String event; // line 1, japidviews/_tags/paramWithDefaults2.html
 	public cn.bran.japid.template.RenderResult render(String name,String url,String type,String data,String reRender,String dataType,String beforeSend,String success,String jsData,Boolean cache,String event) {
 		this.name = name;
 		this.url = url;
@@ -86,23 +87,27 @@ public class paramWithDefaults2 extends cn.bran.play.JapidTemplateBase
 		this.jsData = jsData;
 		this.cache = cache;
 		this.event = event;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/paramWithDefaults2.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String name,String url,String type,String data,String reRender,String dataType,String beforeSend,String success,String jsData,Boolean cache,String event) {
+		return new paramWithDefaults2().render(name, url, type, data, reRender, dataType, beforeSend, success, jsData, cache, event);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n" + 
-"   \n" + 
+;// line 1, paramWithDefaults2.html
+		p("   \n" + 
 "oh well...\n" + 
-"\n");// line 4
-		 String fancyname = "fancy: $[name]";// line 8
+"\n");// line 4, paramWithDefaults2.html
+		 String fancyname = "fancy: $[name]";// line 8, paramWithDefaults2.html
 		p("\n" + 
-"The fancy name is ");// line 8
-		p(fancyname);// line 10
-		;// line 10
+"The fancy name is ");// line 8, paramWithDefaults2.html
+		p(fancyname);// line 10, paramWithDefaults2.html
+		;// line 10, paramWithDefaults2.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -12,14 +12,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/renderByPosition.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class renderByPosition extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/renderByPosition.html";
@@ -64,45 +65,48 @@ public class renderByPosition extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String ss; // line 2
-	private int ii; // line 2
-	private Author au1; // line 2
-	private Author au2; // line 2
-	private Author2 au22; // line 2
+	private String ss; // line 2, japidviews/Application/renderByPosition.html
+	private int ii; // line 2, japidviews/Application/renderByPosition.html
+	private Author au1; // line 2, japidviews/Application/renderByPosition.html
+	private Author au2; // line 2, japidviews/Application/renderByPosition.html
+	private Author2 au22; // line 2, japidviews/Application/renderByPosition.html
 	public cn.bran.japid.template.RenderResult render(String ss,int ii,Author au1,Author au2,Author2 au22) {
 		this.ss = ss;
 		this.ii = ii;
 		this.au1 = au1;
 		this.au2 = au2;
 		this.au22 = au22;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2, japidviews/Application/renderByPosition.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(String ss,int ii,Author au1,Author au2,Author2 au22) {
+		return new renderByPosition().render(ss, ii, au1, au2, au22);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		;// line 1
+;// line 1, renderByPosition.html
+		;// line 1, renderByPosition.html
+		p("got: ");// line 3, renderByPosition.html
+		p(ss);// line 4, renderByPosition.html
 		p("\n" + 
-"\n" + 
-"got: ");// line 2
-		p(ss);// line 4
+"got: ");// line 4, renderByPosition.html
+		p(ii);// line 5, renderByPosition.html
 		p("\n" + 
-"got: ");// line 4
-		p(ii);// line 5
-		p("\n" + 
-"got: ");// line 5
-		p(au1.name);// line 6
-		p(", ");// line 6
-		p(au2.name);// line 6
-		p(", ");// line 6
-		p(au22.who);// line 6
+"got: ");// line 5, renderByPosition.html
+		p(au1.name);// line 6, renderByPosition.html
+		p(", ");// line 6, renderByPosition.html
+		p(au2.name);// line 6, renderByPosition.html
+		p(", ");// line 6, renderByPosition.html
+		p(au22.who);// line 6, renderByPosition.html
 		p("\n" + 
 "\n" + 
 "<p>Let's call a tag by name:</p>\n" + 
-"\n");// line 6
-		final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut()); _tagPrimitives0.setActionRunners(getActionRunners()).setOut(getOut()); _tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6)); // line 10// line 10
+"\n");// line 6, renderByPosition.html
+		final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut()); _tagPrimitives0.setActionRunners(getActionRunners()).setOut(getOut()); _tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6)); // line 10, renderByPosition.html// line 10, renderByPosition.html
 		
 		endDoLayout(sourceTemplate);
 	}

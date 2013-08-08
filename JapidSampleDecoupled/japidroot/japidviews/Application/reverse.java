@@ -11,14 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
 import japidviews._tags.*;
+import play.i18n.Lang;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/reverse.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class reverse extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/reverse.html";
@@ -64,21 +65,26 @@ public class reverse extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		long __t = -1;
+		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/Application/reverse.html
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
+
+	public static cn.bran.japid.template.RenderResult apply() {
+		return new reverse().render();
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
 p("\n" + 
-"<a href=\"");// line 1
-		p(lookup("validate", "bran"));// line 2
+"<a href=\"");// line 1, reverse.html
+		p(lookup("validate", "bran"));// line 2, reverse.html
 		p("\">simple reverse lookup</a>\n" + 
-"<a href=\"");// line 2
-		p(lookupAbs("validate", "bran", 12));// line 3
+"<a href=\"");// line 2, reverse.html
+		p(lookupAbs("validate", "bran", 12));// line 3, reverse.html
 		p("\">simple reverse lookup with absolute url</a>\n" + 
-"\n");// line 3
+"\n");// line 3, reverse.html
 		
 		endDoLayout(sourceTemplate);
 	}
