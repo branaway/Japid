@@ -61,6 +61,8 @@ public class RenderInvokerUtils {
 	 */
 	public static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeRender(
 			Class<T> c, Object... args) {
+//		long start = System.nanoTime();
+		
 		int modifiers = c.getModifiers();
 		if (Modifier.isAbstract(modifiers)) {
 			throw new RuntimeException(
@@ -109,6 +111,11 @@ public class RenderInvokerUtils {
 						"Could not invoke the template object: ", e);
 			// throw new RuntimeException(e);
 		}
+		finally {
+//			String howlong = StringUtils.durationInMsFromNanos(start, System.nanoTime());
+//			System.out.println("how long it takes to invoke invokeRender: " + howlong);
+		}
+		
 	}
 
 	public static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeNamedArgsRender(

@@ -1,6 +1,6 @@
 h1. The Quick Manual of Japid Engine with Play Framework
 
-V0.9.21
+V0.9.27
 
 Bing Ran<bing.ran@gmail.com>
 

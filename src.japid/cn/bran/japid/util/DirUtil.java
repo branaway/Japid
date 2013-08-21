@@ -24,14 +24,8 @@ public class DirUtil {
 	public static final String OF = ", ";
 	public static final String LINE_MARKER = "// line ";
 
-	/**
-	 * 
-	 */
-	private static final String[] ALL_EXTS = new String[] { ".java", ".html", ".js", ".txt", ".css", ".json", ".xml" };
-	/**
-	 * 
-	 */
 	private static final String[] TEMPLATE_EXTS = new String[]{".html", ".js", ".txt", ".css", ".xml", ".json"};
+	private static final String[] ALL_EXTS = new String[] { ".java", ".html", ".js", ".txt", ".css", ".json", ".xml" };
 	
 	public static Set<File> findOrphanJava(File src, File target) {
 		if (target == null)
@@ -86,6 +80,13 @@ public class DirUtil {
 	public static List<String> getAllTemplateFiles(File dir) {
 		List<String> files = new ArrayList<String>();
 		getAllFileNames("", dir, files, TEMPLATE_EXTS);
+		keepJapidFiles(files);
+		return files;
+	}
+	
+	public static List<String> getAllTemplateFilesJavaFiles(File dir) {
+		List<String> files = new ArrayList<String>();
+		getAllFileNames("", dir, files, ALL_EXTS);
 		keepJapidFiles(files);
 		return files;
 	}

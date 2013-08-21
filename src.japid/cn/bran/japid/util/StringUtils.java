@@ -155,4 +155,11 @@ public class StringUtils {
         return (values == null) ? "" : join(Arrays.asList(values), separator);
     }
 
+	public static String durationInMsFromNanos(long start, long now) {
+		String t1 = "" + (now - start) / 100000;
+		int __len = t1.length();
+		t1 = t1.substring(0, __len - 1) + "." + t1.substring(__len - 1);
+		return t1;
+	}
+
 }

@@ -146,9 +146,8 @@ public class JapidPlayRenderer {
 		try {
 //			PlayDirUtil.mkdir(templateRoot);
 			// find out all removed classes
-			// XXX  just html? not xml, css, js?
-			// XXX need to add other files as well. The old code is for plain text rendering only
-			List<String> allTemps = DirUtil.getAllTemplateFiles(new File(defaultTemplateRoot));
+			List<String> allTemps = isDevMode() ? DirUtil.getAllTemplateFiles(new File(defaultTemplateRoot)) 
+					: DirUtil.getAllTemplateFilesJavaFiles(new File(defaultTemplateRoot));
 			Set<String> currentClassesOnDir = createNameSet(allTemps);
 			Set<String> allNames = new HashSet<String>(currentClassesOnDir);
 
@@ -503,7 +502,8 @@ public class JapidPlayRenderer {
 			if (JapidFlags.verbose) System.out.print(":");
 		} 
 
-		rmOrphanJava(packageRoot);
+		if (isDevMode())
+			rmOrphanJava(packageRoot);
 		return changedFiles;
 	}
 
@@ -624,7 +624,7 @@ public class JapidPlayRenderer {
 	}
 
 	static void log(String m) {
-		if (JapidFlags.verbose) System.out.println("[JapidPlayRenderer]: " + m);
+		JapidFlags.error("[JapidPlayRenderer]: " + m);
 	}
 
 	static void gen() {

@@ -11,16 +11,15 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/more/MyController/superview.html
 // Change to this file will be lost next time the template file is compiled.
 //
-@cn.bran.play.NoEnhance
-public abstract class superview extends myLayout
+public class superview extends myLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/superview.html";
 	{
@@ -78,9 +77,9 @@ public abstract class superview extends myLayout
 		beginDoLayout(sourceTemplate);
 //------
 ;// line 1, superview.html
-;// line 2, superview.html
-		// line 4, superview.html
-		;// line 4, superview.html
+		;// line 1, superview.html
+		// line 3, superview.html
+		;// line 3, superview.html
 		
 		endDoLayout(sourceTemplate);
 	}

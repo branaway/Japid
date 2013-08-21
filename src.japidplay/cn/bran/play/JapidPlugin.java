@@ -36,6 +36,7 @@ import play.vfs.VirtualFile;
 import cn.bran.japid.compiler.JapidCompilationException;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.util.JapidFlags;
+import cn.bran.japid.util.StringUtils;
 import cn.bran.play.routing.AutoPath;
 import cn.bran.play.routing.RouterClass;
 import cn.bran.play.routing.RouterMethod;
@@ -47,6 +48,10 @@ import cn.bran.play.routing.RouterMethod;
  * 
  */
 public class JapidPlugin extends PlayPlugin {
+	/**
+	 * 
+	 */
+	private static final String WHEN_REQ_IN = "_whenRaw";
 	public static final String ACTION_METHOD = "__actionMethod";
 	private static final String RENDER_JAPID_WITH = "/renderJapidWith";
 	private static final String NO_CACHE = "no-cache";
@@ -54,6 +59,7 @@ public class JapidPlugin extends PlayPlugin {
 	// can be used to cache a plugin scoped values
 	private static Map<String, Object> japidCache = new ConcurrentHashMap<String, Object>();
 	private String appPath;
+
 
 	/**
 	 * pre-compile the templates so PROD mode would work
@@ -116,6 +122,7 @@ public class JapidPlugin extends PlayPlugin {
 
 	@Override
 	public void beforeDetectingChanges() {
+//		logDuration("beforeDetectingChanges");
 		// have a delay in change detection.
 		if (System.currentTimeMillis() - lastTimeChecked.get() < 1000)
 			return;
@@ -201,6 +208,8 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void beforeActionInvocation(Method actionMethod) {
+//		logDuration("beforeActionInvocation");
+		
 		final String actionName = actionMethod.getDeclaringClass().getName() + "." + actionMethod.getName();
 		JapidController.threadData.get().put(ACTION_METHOD, actionName);
 
@@ -250,12 +259,28 @@ public class JapidPlugin extends PlayPlugin {
 		// }
 	}
 
+//	private void logDuration(String where) {
+//		Request current = Request.current();
+//		if (current == null)
+//			return;
+//		Map<String, Object> args = current.args;
+//		Object whenRaw = args.get(WHEN_REQ_IN);
+//		if (whenRaw != null && whenRaw instanceof Long) {
+//			long start = (Long)whenRaw;
+//			long now = System.nanoTime();
+//			String timeBeforeAction = StringUtils.durationInMsFromNanos(start, now);
+//			JapidFlags.debug("Time required for the request to reach " + where + ": " + timeBeforeAction + "ms.");
+//		}
+//	}
+
 	String dumpRequest = null;
 	private ArrayList<Route> recentAddedRoutes;
 	private String ctxPath;
 
 	@Override
 	public boolean rawInvocation(Request req, Response response) throws Exception {
+		req.args.put(WHEN_REQ_IN, System.nanoTime());
+
 		Mode mode = Play.mode;
 		if (mode == Mode.DEV) {
 			String path = req.path;
@@ -356,6 +381,7 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void onActionInvocationResult(Result result) {
+//		logDuration("onActionInvocationResult");
 		Flash fl = Flash.current();
 		if (RenderResultCache.shouldIgnoreCacheInCurrentAndNextReq()) {
 			fl.put(RenderResultCache.READ_THRU_FLASH, "yes");
@@ -376,11 +402,13 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void afterActionInvocation() {
+//		logDuration("afterActionInvocation");
 		JapidController.threadData.get().remove(ACTION_METHOD);
 	}
 
 	@Override
 	public void detectChange() {
+//		logDuration("detectChange");
 	}
 
 	/**
@@ -389,10 +417,12 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void beforeInvocation() {
+//		logDuration("beforeInvocation");
 	}
 
 	@Override
 	public void afterApplicationStart() {
+//		logDuration("afterApplicationStart");
 		getDumpRequest();
 		setupInjectTemplateBorder();
 	}
@@ -425,6 +455,7 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	@Override
 	public void routeRequest(Request request) {
+//		logDuration("routeRequest");
 		if (Play.mode == Mode.DEV) {
 			buildRoutesFromAnnotations();
 		}
@@ -466,7 +497,7 @@ public class JapidPlugin extends PlayPlugin {
 			newRoutes = new ArrayList<Route>(recentAddedRoutes);
 		} else {
 			// rebuild the dynamic route table
-			long __t = System.nanoTime();
+			long start = System.nanoTime();
 			boolean ctxChanged = this.ctxPath != Play.ctxPath;
 
 			for (ApplicationClass ac : Play.classes.all()) {
@@ -474,7 +505,7 @@ public class JapidPlugin extends PlayPlugin {
 				RouterClass r = routerCache.get(ac.name);
 				if (r != null && !ctxChanged && r.matchHash(ac.sigChecksum)) {
 					// no change
-//					JapidFlags.debug(ac.name + " has not changed. ");
+					// JapidFlags.debug(ac.name + " has not changed. ");
 				} else {
 					Class<?> javaClass = ac.javaClass;
 					if (javaClass.getName().startsWith("controllers.")
@@ -489,11 +520,7 @@ public class JapidPlugin extends PlayPlugin {
 				newRoutes.addAll(r.buildRoutes());
 			}
 			//
-			String t1 = "" + (System.nanoTime() - __t) / 100000;
-			int __len = t1.length();
-			t1 = t1.substring(0, __len - 1) + "." + t1.substring(__len - 1);
-
-			JapidFlags.debug("rebuilding auto paths took(/ms): " + t1);
+			JapidFlags.debug("rebuilding auto paths took(/ms): " + StringUtils.durationInMsFromNanos(start, System.nanoTime()));
 
 			this.recentAddedRoutes = new ArrayList<Route>(newRoutes);
 			this.lastApplicationClassloaderState = Play.classloader.currentState;

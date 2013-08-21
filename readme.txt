@@ -32,8 +32,8 @@ Use this dependencies.yml to reference the latest distribution, adjusting the ve
 
 <code>
 require:
-    - cn.bran -> japid 0.9.27
-    - cn.bran -> japidplay 0.9.27
+    - cn.bran -> japid 0.9.28
+    - cn.bran -> japidplay 0.9.28
     - com.google.code.javaparser -> javaparser 1.0.8
   
 # My custom repositories
@@ -46,6 +46,9 @@ repositories:
 </code>
 
 * Version History:
+
+2013/08/08: V0.9.28:
+	1. enhancement: the original Japid script do not need to present in PROD mode if all the Java artifacts have been generated in advance. Note: in DEV mode, any Java artifacts without corresponding Japid scripts will be removed. 
 
 2013/08/08: V0.9.27:
 	1. enhancement: action methods annotated with POST do not take arguments from HTTP path.

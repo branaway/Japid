@@ -27,6 +27,7 @@ import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.DirUtil;
 import cn.bran.japid.util.RenderInvokerUtils;
 import cn.bran.japid.util.StackTraceUtils;
+import cn.bran.japid.util.StringUtils;
 
 /**
  * a helper class. for hiding the template API from user eyes. not really needed

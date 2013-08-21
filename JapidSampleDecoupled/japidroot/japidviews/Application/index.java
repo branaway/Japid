@@ -11,15 +11,14 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/Application/index.html
 // Change to this file will be lost next time the template file is compiled.
 //
-@cn.bran.play.NoEnhance
 public class index extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/index.html";
@@ -200,13 +199,15 @@ int ag = 123;// line 82, index.html
 		p(_play.mode);// line 103, index.html
 		p("\"</p>\n" + 
 "\n" + 
+"<br/>\n" + 
+"\n" + 
 "-->\"");// line 103, index.html
-		p(c.name);// line 105, index.html
+		p(c.name);// line 107, index.html
 		p("\" , \n" + 
-"\"");// line 105, index.html
-		p(c.subname);// line 106, index.html
-		p("\"\n");// line 106, index.html
-		p("\n");// line 108, index.html
+"\"");// line 107, index.html
+		p(c.subname);// line 108, index.html
+		p("\"\n");// line 108, index.html
+		p("\n");// line 110, index.html
 		
 		endDoLayout(sourceTemplate);
 	}
