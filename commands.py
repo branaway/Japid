@@ -46,7 +46,12 @@ def run(app, cmd):
 
     java_cmd = app.java_cmd(['-Xmx64m'], className='cn.bran.play.JapidCommands', args=[cmd, application_path])
 #    print java_cmd                                                                                              
-    subprocess.call(java_cmd, env=os.environ)
+    result = subprocess.call(java_cmd, env=os.environ)
+    if not result == 0:
+        print "~"
+        print "~ Command has failed, stopping."
+        print "~"
+        sys.exit(result)
     print
 
 #def after(**kargs):                                                                                             
@@ -73,7 +78,12 @@ def run10(cmd):
     print "~ Ctrl+C to stop"
     java_cmd.append(cmd)
     java_cmd.append(application_path)
-    subprocess.call(java_cmd, env=os.environ)
+    result = subprocess.call(java_cmd, env=os.environ)
+    if not result == 0:
+        print "~"
+        print "~ Command has failed, stopping."
+        print "~"
+        sys.exit(result)
     print
     sys.exit(0)
 
