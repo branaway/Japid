@@ -27,25 +27,31 @@ public class JapidCommands {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		String arg0 = args[0];
+		try
+		{
+			String arg0 = args[0];
 
-//		String applicationPath = System.getProperty("user.dir");
-		String applicationPath = ".";
-		if (args.length > 1) {
-			applicationPath = args[1];
-		}
-		Play.applicationPath = new File(applicationPath);
-		String appPath = Play.applicationPath.getAbsolutePath() + File.separator;
-		if ("gen".equals(arg0)) {
-			gen(appPath + APP);
-		} else if ("regen".equals(arg0)) {
-			regen(appPath + APP);
-		} else if ("clean".equals(arg0)) {
-			delAllGeneratedJava(appPath + APP + File.separator + DirUtil.JAPIDVIEWS_ROOT);
-		} else if ("mkdir".equals(arg0)) {
-			PlayDirUtil.mkdir(appPath + APP);
-		} else {
-			JapidFlags.log("not known: " + arg0);
+	//		String applicationPath = System.getProperty("user.dir");
+			String applicationPath = ".";
+			if (args.length > 1) {
+				applicationPath = args[1];
+			}
+			Play.applicationPath = new File(applicationPath);
+			String appPath = Play.applicationPath.getAbsolutePath() + File.separator;
+			if ("gen".equals(arg0)) {
+				gen(appPath + APP);
+			} else if ("regen".equals(arg0)) {
+				regen(appPath + APP);
+			} else if ("clean".equals(arg0)) {
+				delAllGeneratedJava(appPath + APP + File.separator + DirUtil.JAPIDVIEWS_ROOT);
+			} else if ("mkdir".equals(arg0)) {
+				PlayDirUtil.mkdir(appPath + APP);
+			} else {
+				JapidFlags.log("not known: " + arg0);
+			}
+		} catch (Throwable e) {
+			JapidFlags.log(e.toString());
+			System.exit(1);
 		}
 	}
 
