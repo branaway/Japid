@@ -47,6 +47,10 @@ repositories:
 
 * Version History:
 
+2013/09/02: V0.9.30:
+	1. bug fix: did not check the null state of app class of ApplicationClass in buildRoutes();
+2013/08/30: V0.9.29:
+	1. bug fix: &{xxx} message syntax did not allow more than one argument to the arg list. 
 2013/08/08: V0.9.28:
 	1. enhancement: the original Japid script do not need to present in PROD mode if all the Java artifacts have been generated in advance. Note: in DEV mode, any Java artifacts without corresponding Japid scripts will be removed. 
 

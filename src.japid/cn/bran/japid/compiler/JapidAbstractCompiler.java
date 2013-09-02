@@ -872,13 +872,16 @@ public abstract class JapidAbstractCompiler {
 		String expr = "";
 		if (args.size() == 1) {
 			expr = decorQuote(args.get(0));
-		} else if (args.size() == 2) {
-			expr = decorQuote(args.get(0)) + ", " + args.get(1);
+		} else if (args.size() >= 2) {
+			expr = decorQuote(args.get(0));
+			for (int i = 1; i < args.size(); i++) {
+				expr += ", " +  args.get(i);
+			}
 		} else {
 			throw new JapidCompilationException(
 					template,
 					parser.getLineNumber(),
-					"Message lookup commmand can only take either one or two arguments. Bad number of args: "
+					"Message lookup commmand must take arguments. Bad number of args: "
 							+ token);
 		}
 

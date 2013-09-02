@@ -11,15 +11,14 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
 // NOTE: This file was generated from: japidviews/templates/Msg.html
 // Change to this file will be lost next time the template file is compiled.
 //
-@cn.bran.play.NoEnhance
 public class Msg extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/Msg.html";
@@ -84,7 +83,7 @@ p("login: ");// line 1, Msg.html
 		p("  or ");// line 1, Msg.html
 		p(i18n("login.name"));// line 1, Msg.html
 		p("\n" + 
-"</p>\n" + 
+"<p/>\n" + 
 "\n");// line 1, Msg.html
 		 String sub = "bran";// line 4, Msg.html
 		p("customer name: ");// line 4, Msg.html
@@ -94,7 +93,12 @@ p("login: ");// line 1, Msg.html
 		p("  or ");// line 5, Msg.html
 		p(i18n("cus.name", "Bing Ran"));// line 5, Msg.html
 		p("\n" + 
-"\n");// line 5, Msg.html
+"\n" + 
+"<p/>\n" + 
+"\n" + 
+"And the full name is ");// line 5, Msg.html
+		;p(getMessage("fullname", "Bing", "冉"));// line 9, Msg.html
+		;// line 9, Msg.html
 		
 		endDoLayout(sourceTemplate);
 	}

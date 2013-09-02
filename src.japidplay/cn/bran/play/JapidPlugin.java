@@ -508,7 +508,8 @@ public class JapidPlugin extends PlayPlugin {
 					// JapidFlags.debug(ac.name + " has not changed. ");
 				} else {
 					Class<?> javaClass = ac.javaClass;
-					if (javaClass.getName().startsWith("controllers.")
+					if (javaClass != null  
+							&& javaClass.getName().startsWith("controllers.")
 							&& javaClass.getAnnotation(AutoPath.class) != null) {
 						JapidFlags.debug("generate route for: " + ac.name);
 						r = new RouterClass(javaClass, appPath, ac.sigChecksum);
