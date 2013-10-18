@@ -66,7 +66,7 @@ public class verbatim extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/verbatim.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -81,7 +81,7 @@ p("\n" +
 "<p>\n" + 
 "you should be able to see all Japid command un-interpreted.    	\n" + 
 "</p>\n" + 
-"\n");// line 1
+"\n");// line 1, verbatim.html
 		p("\n" + 
 "\n" + 
 "	`args models.japidsample.Author a\n" + 
@@ -90,23 +90,23 @@ p("\n" +
 "	<p>his birthdate: $a.birthDate</p>\n" + 
 "	<p>and his is a '${a.getGender()}'</p>\n" + 
 "	    `tag SampleTag \"end\"\n" + 
-"    \n");// line 6
+"    \n");// line 6, verbatim.html
 		p("\n" + 
 "<p>got it?</p>\n" + 
-"\n");// line 15
-		String[] ss = new String[]{"a", "b"};// line 18
-final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 19
-ss, new Each.DoBody<String>(){ // line 19
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 19
-// line 19
-		p("    <p>loop: ");// line 19
-		p(s);// line 20
+"\n");// line 15, verbatim.html
+		String[] ss = new String[]{"a", "b"};// line 18, verbatim.html
+final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 19, verbatim.html
+ss, new Each.DoBody<String>(){ // line 19, verbatim.html
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 19, verbatim.html
+// line 19, verbatim.html
+		p("    <p>loop: ");// line 19, verbatim.html
+		p(s);// line 20, verbatim.html
 		p("</p>\n" + 
-"    ");// line 20
+"    ");// line 20, verbatim.html
 		p("\n" + 
 "    <p>please use ` to start command and $s to get the value</p>\n" + 
-"    ");// line 21
-		;// line 23
+"    ");// line 21, verbatim.html
+		;// line 23, verbatim.html
 		
 }
 
@@ -123,7 +123,7 @@ public void resetBuffer() {
 }
 
 }
-);// line 19
+);// line 19, verbatim.html
 		
 		endDoLayout(sourceTemplate);
 	}

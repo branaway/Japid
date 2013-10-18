@@ -50,12 +50,12 @@ public abstract class Layout extends cn.bran.play.JapidTemplateBase
 	}
 	@Override public void layout() {
 		beginDoLayout(sourceTemplate);		p(" I'm the layout.\n" + 
-"<p>The title is: ");// line 1
+"<p>The title is: ");// line 1, Layout.html
 		title();p("</p>\n" + 
 "<div >\n" + 
-"    ");// line 2
-		doLayout();// line 4
-		p("</div>\n");// line 4
+"    ");// line 2, Layout.html
+		doLayout();// line 4, Layout.html
+		p("</div>\n");// line 4, Layout.html
 				endDoLayout(sourceTemplate);	}
 	 protected void title() {};
 

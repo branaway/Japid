@@ -67,7 +67,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/index.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -78,22 +78,22 @@ public class index extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		//stopwatch on// line 1
+;// line 1, index.html
+		//stopwatch on// line 1, index.html
 p("<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
 "source code.</p>\n" + 
 "\n" + 
 "<ul>\n" + 
-"	<li><a href=\"");// line 2
-		p(lookup("hello", new Object[]{}));// line 9
+"	<li><a href=\"");// line 2, index.html
+		p(lookup("hello", new Object[]{}));// line 9, index.html
 		p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
 "	<li><a href=\"application/callTag\">using tags in a template</a></li>\n" + 
 "	<li><a href=\"go/templates/def.html\"><em>def</em>\n" + 
 "	tag: define a method that return a string that can be invoked from\n" + 
-"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 9
+"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 9, index.html
 		p("\n" + 
 "	<li><a href=\"more.Portlets/index\">demo how to composite a\n" + 
 "	page with independent segments with the <b>invoke</b> tag</a></li>\n" + 
@@ -137,10 +137,10 @@ p("<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" +
 "	dontRedirect() from JapidController</a></li>\n" + 
 "	<li><a href=\"go/templates/openBrace.html\"> use\n" + 
 "	`{ in if and while </a></li>\n" + 
-"	<li><a href=\"application/escapedExpr\"> ");// line 19
+"	<li><a href=\"application/escapedExpr\"> ");// line 19, index.html
 		p("\n" + 
 "	raw expression with ${} and html-safe expression with ~{}\n" + 
-"	");// line 62
+"	");// line 62, index.html
 		p("	</li>\n" + 
 "	<li><a href=\"more.ContentNegotiation/index\"> content\n" + 
 "	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
@@ -154,41 +154,41 @@ p("<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" +
 "	in layout spec and tags</a>: prefix the layout name or the tag name with a\n" + 
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
-"\n");// line 64
-		String na = "bran";// line 79
-int ag = 123;// line 80
-		p("	<li><a href=\"");// line 80
-		p(lookup("validate", na, ag));// line 81
+"\n");// line 64, index.html
+		String na = "bran";// line 79, index.html
+int ag = 123;// line 80, index.html
+		p("	<li><a href=\"");// line 80, index.html
+		p(lookup("validate", na, ag));// line 81, index.html
 		p("\">validation and errors</a></li>\n" + 
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"application/flashgood\">flash with success</a></li>\n" + 
-"			<li><a href=\"");// line 81
-		p(lookup("reverseUrl", new Object[]{}));// line 85
+"			<li><a href=\"");// line 81, index.html
+		p(lookup("reverseUrl", new Object[]{}));// line 85, index.html
 		p("\">flash with a message</a></li>\n" + 
 "			<li><a href=\"application/flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"application/flashmsg\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
-"	   ");// line 85
-		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 91
-		p("	   <a href=\"");// line 91
-		p(lookup("search", sp));// line 92
+"	   ");// line 85, index.html
+		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 91, index.html
+		p("	   <a href=\"");// line 91, index.html
+		p(lookup("search", sp));// line 92, index.html
 		p("\">reverse URL lookup with complex object</a>\n" + 
-"    ");// line 92
+"    ");// line 92, index.html
 		p("\n" + 
 "	</li>\n" + 
-"	<li><a href=\"");// line 94
-		p(lookupStatic("/public/images/favicon.png"));// line 96
+"	<li><a href=\"");// line 94, index.html
+		p(lookupStatic("/public/images/favicon.png"));// line 96, index.html
 		p("\">reverse to a static  png</a></li>\n" + 
 "</ul>\n" + 
 "\n" + 
 "<p>Reverse lookup is slow...</p>\n" + 
 "\n" + 
-"<p>app mode: \"");// line 96
-		p(_play.mode);// line 101
-		p("\"</p>");// line 101
+"<p>app mode: \"");// line 96, index.html
+		p(_play.mode);// line 101, index.html
+		p("\"</p>");// line 101, index.html
 		
 		endDoLayout(sourceTemplate);
 	}

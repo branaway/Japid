@@ -33,11 +33,11 @@ public class a1 extends main
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/cn/bran/japid/template/FooController/a1.html
 	public String render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout(a + "1");} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout(a + "1");} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/cn/bran/japid/template/FooController/a1.html
 		 if (__t != -1) System.out.println("[a1] rendering time: " + __t);
 		return getOut().toString();
 	}
@@ -49,13 +49,13 @@ public class a1 extends main
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-p("\n");// line 3
-		p(foo(a));// line 5
+;// line 1, a1.html
+p("\n");// line 3, a1.html
+		p(foo(a));// line 5, a1.html
 		p("\n" + 
-"\n");// line 5
-		// line 7
-		;// line 9
+"\n");// line 5, a1.html
+		// line 7, a1.html
+		;// line 9, a1.html
 		
 		endDoLayout(sourceTemplate);
 	}
@@ -67,9 +67,9 @@ public String foo(String ar) {
 StringBuilder sb = new StringBuilder();
 StringBuilder ori = getOut();
 this.setOut(sb);
-// line 7
-		p("  -> a1-: ");// line 7
-		final taggy _taggy2 = new taggy(getOut()); _taggy2.setOut(getOut()); _taggy2.render(ar); // line 8// line 8
+// line 7, a1.html
+		p("  -> a1-: ");// line 7, a1.html
+		final taggy _taggy2 = new taggy(getOut()); _taggy2.setOut(getOut()); _taggy2.render(ar); // line 8, a1.html// line 8, a1.html
 
 this.setOut(ori);
 	return sb.toString();

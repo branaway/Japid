@@ -64,11 +64,11 @@ public class cacheWithRenderJapid extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/Application/cacheWithRenderJapid.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/cacheWithRenderJapid.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,7 +79,7 @@ public class cacheWithRenderJapid extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, cacheWithRenderJapid.html
 		p("\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
@@ -88,11 +88,11 @@ public class cacheWithRenderJapid extends cn.bran.play.JapidTemplateBase
 "<title>Insert title here</title>\n" + 
 "</head>\n" + 
 "<body>\n" + 
-"hello ");// line 1
-		p(a);// line 10
+"hello ");// line 1, cacheWithRenderJapid.html
+		p(a);// line 10, cacheWithRenderJapid.html
 		p("\n" + 
 "</body>\n" + 
-"</html>");// line 10
+"</html>");// line 10, cacheWithRenderJapid.html
 		
 		endDoLayout(sourceTemplate);
 	}

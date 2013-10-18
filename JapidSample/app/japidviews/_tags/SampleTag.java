@@ -64,11 +64,11 @@ public class SampleTag extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/_tags/SampleTag.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/SampleTag.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,10 +79,10 @@ public class SampleTag extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("Hi ");// line 1
-		p(a);// line 2
-		p("!\n");// line 2
+;// line 1, SampleTag.html
+		p("Hi ");// line 1, SampleTag.html
+		p(a);// line 2, SampleTag.html
+		p("!\n");// line 2, SampleTag.html
 		
 		endDoLayout(sourceTemplate);
 	}

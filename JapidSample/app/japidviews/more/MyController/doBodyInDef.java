@@ -66,7 +66,7 @@ public class doBodyInDef extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/doBodyInDef.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,16 +77,16 @@ public class doBodyInDef extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("\n");// line 1
-		final doBodyInDefTag _doBodyInDefTag0 = new doBodyInDefTag(getOut()); _doBodyInDefTag0.setActionRunners(getActionRunners()).setOut(getOut()); _doBodyInDefTag0.render(// line 2
-new doBodyInDefTag.DoBody<String, Integer>(){ // line 2
-public void render(final String c, final Integer i) { // line 2
-// line 2
-		p("  my body plus ");// line 2
-		p(c);// line 3
-		p(", ");// line 3
-		p(i);// line 3
-		;// line 3
+p("\n");// line 1, doBodyInDef.html
+		final doBodyInDefTag _doBodyInDefTag0 = new doBodyInDefTag(getOut()); _doBodyInDefTag0.setActionRunners(getActionRunners()).setOut(getOut()); _doBodyInDefTag0.render(// line 2, doBodyInDef.html
+new doBodyInDefTag.DoBody<String, Integer>(){ // line 2, doBodyInDef.html
+public void render(final String c, final Integer i) { // line 2, doBodyInDef.html
+// line 2, doBodyInDef.html
+		p("  my body plus ");// line 2, doBodyInDef.html
+		p(c);// line 3, doBodyInDef.html
+		p(", ");// line 3, doBodyInDef.html
+		p(i);// line 3, doBodyInDef.html
+		;// line 3, doBodyInDef.html
 		
 }
 
@@ -103,7 +103,7 @@ public void resetBuffer() {
 }
 
 }
-);// line 2
+);// line 2, doBodyInDef.html
 		
 		endDoLayout(sourceTemplate);
 	}

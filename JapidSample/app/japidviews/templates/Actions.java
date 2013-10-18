@@ -64,11 +64,11 @@ public class Actions extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private models.japidsample.Post post; // line 1
+	private models.japidsample.Post post; // line 1, japidviews/templates/Actions.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/templates/Actions.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,24 +79,24 @@ public class Actions extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, Actions.html
 		p("\n" + 
 "\n" + 
-"<form url=\"");// line 1
-		p(lookup("showAll", new Object[]{}));// line 4
+"<form url=\"");// line 1, Actions.html
+		p(lookup("showAll", new Object[]{}));// line 4, Actions.html
 		p("\"></form>\n" + 
-"<form url=\"");// line 4
-		p(lookup("Clients.showAccounts", post.title, post.title));// line 5
+"<form url=\"");// line 4, Actions.html
+		p(lookup("Clients.showAccounts", post.title, post.title));// line 5, Actions.html
 		p("\"></form>\n" + 
-"<form url=\"");// line 5
-		p(lookupAbs("Clients.showAccounts", post.title.substring(1, 2)));// line 6
+"<form url=\"");// line 5, Actions.html
+		p(lookupAbs("Clients.showAccounts", post.title.substring(1, 2)));// line 6, Actions.html
 		p("\"></form>\n" + 
-"<form url='");// line 6
-		p(lookupAbs("Clients.showAccounts", new String[]{"aa", "bb"}));// line 7
+"<form url='");// line 6, Actions.html
+		p(lookupAbs("Clients.showAccounts", new String[]{"aa", "bb"}));// line 7, Actions.html
 		p("'></form>\n" + 
-"<form url=\"");// line 7
-		p(lookupStatic("/public/stylesheets/main.css"));// line 8
-		p("\"></form>\n");// line 8
+"<form url=\"");// line 7, Actions.html
+		p(lookupStatic("/public/stylesheets/main.css"));// line 8, Actions.html
+		p("\"></form>\n");// line 8, Actions.html
 		
 		endDoLayout(sourceTemplate);
 	}

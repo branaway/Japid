@@ -65,11 +65,11 @@ public class every3 extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/Application/every3.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/every3.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -80,18 +80,18 @@ public class every3 extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, every3.html
 		p("\n" + 
-"every3: now is ");// line 1
-		p(a);// line 3
-		p(", ");// line 3
+"every3: now is ");// line 1, every3.html
+		p(a);// line 3, every3.html
+		p(", ");// line 3, every3.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "seconds", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.seconds(); // line 3
+				Application.seconds(); // line 3, every3.html
 			}
-		}); p("\n");// line 3
-		p("\n");// line 3
+		}); p("\n");// line 3, every3.html
+		p("\n");// line 3, every3.html
 		
 		endDoLayout(sourceTemplate);
 	}

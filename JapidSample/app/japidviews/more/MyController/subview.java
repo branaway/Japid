@@ -64,11 +64,11 @@ public class subview extends superview
 	}
 ////// end of named args stuff
 
-	private String s; // line 2
+	private String s; // line 2, japidviews/more/MyController/subview.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/more/MyController/subview.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,18 +79,18 @@ public class subview extends superview
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-;// line 2
-		// line 4
-		;// line 4
-		// line 5
+;// line 1, subview.html
+;// line 2, subview.html
+		// line 4, subview.html
+		;// line 4, subview.html
+		// line 5, subview.html
 		p("\n" + 
 "\n" + 
-"hello ");// line 5
-		p(s);// line 8
-		p("\n");// line 8
-		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy2 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy2.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s); // line 10// line 10
-		p(" ");// line 10
+"hello ");// line 5, subview.html
+		p(s);// line 8, subview.html
+		p("\n");// line 8, subview.html
+		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy2 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy2.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s); // line 10, subview.html// line 10, subview.html
+		p(" ");// line 10, subview.html
 		
 		endDoLayout(sourceTemplate);
 	}

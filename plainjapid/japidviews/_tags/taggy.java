@@ -33,11 +33,11 @@ public class taggy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/_tags/taggy.html
 	public String render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/taggy.html
 		 if (__t != -1) System.out.println("[taggy] rendering time: " + __t);
 		return getOut().toString();
 	}
@@ -49,22 +49,22 @@ public class taggy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("[");// line 1
-		p(a);// line 2
-		p("]-->\n");// line 2
-		final taddy _taddy0 = new taddy(getOut()); _taddy0.setOut(getOut()); _taddy0.render(// line 3
-new taddy.DoBody<String[]>(){ // line 3
-public void render(final String[] ss) { // line 3
-// line 3
-    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 4
-ss, new Each.DoBody<String>(){ // line 4
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 4
-// line 4
-		p("    -> ");// line 4
-		p(s);// line 5
+;// line 1, taggy.html
+		p("[");// line 1, taggy.html
+		p(a);// line 2, taggy.html
+		p("]-->\n");// line 2, taggy.html
+		final taddy _taddy0 = new taddy(getOut()); _taddy0.setOut(getOut()); _taddy0.render(// line 3, taggy.html
+new taddy.DoBody<String[]>(){ // line 3, taggy.html
+public void render(final String[] ss) { // line 3, taggy.html
+// line 3, taggy.html
+    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 4, taggy.html
+ss, new Each.DoBody<String>(){ // line 4, taggy.html
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 4, taggy.html
+// line 4, taggy.html
+		p("    -> ");// line 4, taggy.html
+		p(s);// line 5, taggy.html
 		p("\n" + 
-"    ");// line 5
+"    ");// line 5, taggy.html
 		
 }
 
@@ -81,7 +81,7 @@ public void resetBuffer() {
 }
 
 }
-);// line 4
+);// line 4, taggy.html
 
 }
 
@@ -98,7 +98,7 @@ public void resetBuffer() {
 }
 
 }
-);// line 3
+);// line 3, taggy.html
 		
 		endDoLayout(sourceTemplate);
 	}

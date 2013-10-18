@@ -64,11 +64,11 @@ public class JavaScript extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String hello; // line 1
+	private String hello; // line 1, japidviews/templates/JavaScript.html
 	public cn.bran.japid.template.RenderResult render(String hello) {
 		this.hello = hello;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/templates/JavaScript.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,7 +79,7 @@ public class JavaScript extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, JavaScript.html
 		p("\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
@@ -101,11 +101,11 @@ public class JavaScript extends cn.bran.play.JapidTemplateBase
 "            $('form input').get(0).focus();\n" + 
 "        }\n" + 
 "    });\n" + 
-"</script>\n");// line 1
-		p(hello);// line 24
+"</script>\n");// line 1, JavaScript.html
+		p(hello);// line 24, JavaScript.html
 		p("\n" + 
 "</body>\n" + 
-"</html>");// line 24
+"</html>");// line 24, JavaScript.html
 		
 		endDoLayout(sourceTemplate);
 	}

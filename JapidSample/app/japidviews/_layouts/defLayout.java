@@ -50,14 +50,14 @@ public abstract class defLayout extends cn.bran.play.JapidTemplateBase
 	}
 	@Override public void layout() {
 		beginDoLayout(sourceTemplate);		p("<p>defLayout 1</p>\n" + 
-"----\n");// line 1
-		p(get("foo"));// line 3
+"----\n");// line 1, defLayout.html
+		p(get("foo"));// line 3, defLayout.html
 		p("\n" + 
 "----\n" + 
-"<p>defLayout 2</p>\n");// line 3
-		doLayout();// line 6
+"<p>defLayout 2</p>\n");// line 3, defLayout.html
+		doLayout();// line 6, defLayout.html
 		p("\n" + 
-"<p>defLayout 3</p>");// line 6
+"<p>defLayout 3</p>");// line 6, defLayout.html
 				endDoLayout(sourceTemplate);	}
 
 	protected abstract void doLayout();

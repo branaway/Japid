@@ -64,13 +64,13 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private int i; // line 1
-	private String[] ss; // line 1
+	private int i; // line 1, japidviews/Application/ifs2.html
+	private String[] ss; // line 1, japidviews/Application/ifs2.html
 	public cn.bran.japid.template.RenderResult render(int i,String[] ss) {
 		this.i = i;
 		this.ss = ss;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/ifs2.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -81,7 +81,7 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, ifs2.html
 		p("\n" + 
 "OK, the minimalism if-else statement, no parenthesis, no braces, like command \n" + 
 "<p>\n" + 
@@ -110,17 +110,17 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 "    `}\n" + 
 "</pre>\n" + 
 "\n" + 
-"<p/>\n");// line 1
-		if(asBoolean(ss)) {// line 31
+"<p/>\n");// line 1, ifs2.html
+		if(asBoolean(ss)) {// line 31, ifs2.html
 		p("    well got ss\n" + 
-"    ");// line 31
-		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 33
-ss, new Each.DoBody<String>(){ // line 33
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 33
-// line 33
+"    ");// line 31, ifs2.html
+		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 33, ifs2.html
+ss, new Each.DoBody<String>(){ // line 33, ifs2.html
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 33, ifs2.html
+// line 33, ifs2.html
 		p("        call a tag\n" + 
-"        ");// line 33
-		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s); // line 35// line 35
+"        ");// line 33, ifs2.html
+		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s); // line 35, ifs2.html// line 35, ifs2.html
     
 }
 
@@ -137,19 +137,19 @@ public void resetBuffer() {
 }
 
 }
-);// line 33
-} else if(asBoolean(ss)) {// line 37
-		p("    finally got ");// line 37
-		p(ss);// line 38
+);// line 33, ifs2.html
+} else if(asBoolean(ss)) {// line 37, ifs2.html
+		p("    finally got ");// line 37, ifs2.html
+		p(ss);// line 38, ifs2.html
 		p("\n" + 
-"    ");// line 38
-		final Each _Each2 = new Each(getOut()); _Each2.setOut(getOut()); _Each2.render(// line 39
-ss, new Each.DoBody<String>(){ // line 39
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 39
-// line 39
+"    ");// line 38, ifs2.html
+		final Each _Each2 = new Each(getOut()); _Each2.setOut(getOut()); _Each2.render(// line 39, ifs2.html
+ss, new Each.DoBody<String>(){ // line 39, ifs2.html
+public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 39, ifs2.html
+// line 39, ifs2.html
 		p("        call a tag\n" + 
-"        ");// line 39
-		final SampleTag _SampleTag3 = new SampleTag(getOut()); _SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s); // line 41// line 41
+"        ");// line 39, ifs2.html
+		final SampleTag _SampleTag3 = new SampleTag(getOut()); _SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s); // line 41, ifs2.html// line 41, ifs2.html
     
 }
 
@@ -166,18 +166,18 @@ public void resetBuffer() {
 }
 
 }
-);// line 39
-} else {// line 43
-    if(asBoolean("assd")) {// line 44
+);// line 39, ifs2.html
+} else {// line 43, ifs2.html
+    if(asBoolean("assd")) {// line 44, ifs2.html
 		p("        a true\n" + 
-"    ");// line 44
-		} else {// line 46
+"    ");// line 44, ifs2.html
+		} else {// line 46, ifs2.html
 		p("        a false\n" + 
-"    ");// line 46
-		}// line 48
-		p("    ss is empty\n");// line 48
-		}// line 50
-		p("\n");// line 50
+"    ");// line 46, ifs2.html
+		}// line 48, ifs2.html
+		p("    ss is empty\n");// line 48, ifs2.html
+		}// line 50, ifs2.html
+		p("\n");// line 50, ifs2.html
 		
 		endDoLayout(sourceTemplate);
 	}

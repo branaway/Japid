@@ -34,7 +34,7 @@ public class JapidFlags {
 	}
 
 	private static void out(String string) {
-		if (!string.startsWith("["))
+		if (!string.startsWith("[Japid"))
 			string = "[Japid]" + " " + string.trim();
 		System.out.println(string);
 	}
@@ -45,7 +45,13 @@ public class JapidFlags {
 	 */
 	public static void debug(String string) {
 		if (LogLevel.debug.noLowerThan(logLevel)) {
-			out(string);
+			out("[debug] " + string);
+		}
+	}
+
+	public static void warn(String string) {
+		if (LogLevel.warn.noLowerThan(logLevel)) {
+			out("[warn] " + string);
 		}
 	}
 
@@ -60,13 +66,13 @@ public class JapidFlags {
 	 */
 	public static void info(String string) {
 		if (LogLevel.info.noLowerThan(logLevel)) {
-			out(string);
+			out("[info] " + string);
 		}
 	}
 	
 	public static void error(String string) {
 		if (LogLevel.error.noLowerThan(logLevel)) {
-			out(string);
+			out("[error] " + string);
 		}
 	}
 

@@ -33,11 +33,11 @@ public class foo1 extends main
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/cn/bran/japid/template/FooController/foo1.html
 	public String render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/cn/bran/japid/template/FooController/foo1.html
 		 if (__t != -1) System.out.println("[foo1] rendering time: " + __t);
 		return getOut().toString();
 	}
@@ -49,10 +49,10 @@ public class foo1 extends main
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-p("foo12: ");// line 3
-		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1"); // line 4// line 4
-		;// line 4
+;// line 1, foo1.html
+p("foo12: ");// line 3, foo1.html
+		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1"); // line 4, foo1.html// line 4, foo1.html
+		;// line 4, foo1.html
 		
 		endDoLayout(sourceTemplate);
 	}

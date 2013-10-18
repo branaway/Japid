@@ -187,15 +187,15 @@ class JapidPlainController {
 
 		Class<? extends JapidTemplateBaseWithoutPlay> tClass = null;
 
-		if (JapidRenderer.isDevMode())
+//		if (JapidRenderer.isDevMode())
 			tClass = JapidRenderer.getClass(templateClassName);
-		else
-			try {
-				tClass = (Class<? extends JapidTemplateBaseWithoutPlay>)
-						JapidPlainController.class.getClassLoader().loadClass(templateClassName);
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException(e);
-			}
+//		else
+//			try {
+//				tClass = (Class<? extends JapidTemplateBaseWithoutPlay>)
+//						JapidPlainController.class.getClassLoader().loadClass(templateClassName);
+//			} catch (ClassNotFoundException e) {
+//				throw new RuntimeException(e);
+//			}
 
 		if (tClass == null) {
 			String templateFileName = templateClassName.replace(DOT, '/') + HTML;

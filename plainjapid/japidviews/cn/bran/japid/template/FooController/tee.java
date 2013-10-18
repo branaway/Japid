@@ -33,11 +33,11 @@ public class tee extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	}
 ////// end of named args stuff
 
-	private cn.bran.japid.template.FooController.ModelUser u; // line 1
+	private cn.bran.japid.template.FooController.ModelUser u; // line 1, japidviews/cn/bran/japid/template/FooController/tee.html
 	public String render(cn.bran.japid.template.FooController.ModelUser u) {
 		this.u = u;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/cn/bran/japid/template/FooController/tee.html
 		 if (__t != -1) System.out.println("[tee] rendering time: " + __t);
 		return getOut().toString();
 	}
@@ -49,11 +49,11 @@ public class tee extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, tee.html
 		p("\n" + 
-"Hi: ");// line 1
-		p(u.what());// line 3
-		p("\n");// line 3
+"Hi: ");// line 1, tee.html
+		p(u.what());// line 3, tee.html
+		p("\n");// line 3, tee.html
 		
 		endDoLayout(sourceTemplate);
 	}

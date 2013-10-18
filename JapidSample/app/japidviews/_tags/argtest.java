@@ -65,10 +65,10 @@ public class argtest extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
-	private String arg; // line 1
+	private String arg; // line 1, japidviews/_tags/argtest.html
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1, japidviews/_tags/argtest.html
 }
 
 	private DoBody body;
@@ -90,13 +90,13 @@ public static interface DoBody {
 		this.body = body;
 		this.arg = arg;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/argtest.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(String arg) {
 		this.arg = arg;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/argtest.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -107,16 +107,16 @@ public static interface DoBody {
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		;// line 1
-		final argtest1 _argtest10 = new argtest1(getOut()); _argtest10.setActionRunners(getActionRunners()).setOut(getOut()); _argtest10.render(// line 2
-new argtest1.DoBody(){ // line 2
-public void render() { // line 2
-// line 2
-  if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 3
-		p("  '");// line 3
-		p(arg);// line 4
-		p("'\n");// line 4
+;// line 1, argtest.html
+		;// line 1, argtest.html
+		final argtest1 _argtest10 = new argtest1(getOut()); _argtest10.setActionRunners(getActionRunners()).setOut(getOut()); _argtest10.render(// line 2, argtest.html
+new argtest1.DoBody(){ // line 2, argtest.html
+public void render() { // line 2, argtest.html
+// line 2, argtest.html
+  if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 3, argtest.html
+		p("  '");// line 3, argtest.html
+		p(arg);// line 4, argtest.html
+		p("'\n");// line 4, argtest.html
 		
 }
 
@@ -133,8 +133,8 @@ public void resetBuffer() {
 }
 
 }
-);// line 2
-		;// line 5
+);// line 2, argtest.html
+		;// line 5, argtest.html
 		
 		endDoLayout(sourceTemplate);
 	}

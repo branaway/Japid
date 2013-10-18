@@ -66,7 +66,7 @@ public class Msg extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/Msg.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,24 +77,24 @@ public class Msg extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("login: ");// line 1
-		;p(getMessage("login.name"));// line 1
-		p(", ");// line 1
-		;p(getMessage("login.name"));// line 1
-		p("  or ");// line 1
-		p(i18n("login.name"));// line 1
+p("login: ");// line 1, Msg.html
+		;p(getMessage("login.name"));// line 1, Msg.html
+		p(", ");// line 1, Msg.html
+		;p(getMessage("login.name"));// line 1, Msg.html
+		p("  or ");// line 1, Msg.html
+		p(i18n("login.name"));// line 1, Msg.html
 		p("\n" + 
 "</p>\n" + 
-"\n");// line 1
-		 String sub = "bran";// line 4
-		p("customer name: ");// line 4
-		;p(getMessage("cus.name", sub));// line 5
-		p(", ");// line 5
-		;p(getMessage("cus.name", "冉兵冉兵"));// line 5
-		p("  or ");// line 5
-		p(i18n("cus.name", "Bing Ran"));// line 5
+"\n");// line 1, Msg.html
+		 String sub = "bran";// line 4, Msg.html
+		p("customer name: ");// line 4, Msg.html
+		;p(getMessage("cus.name", sub));// line 5, Msg.html
+		p(", ");// line 5, Msg.html
+		;p(getMessage("cus.name", "冉兵冉兵"));// line 5, Msg.html
+		p("  or ");// line 5, Msg.html
+		p(i18n("cus.name", "Bing Ran"));// line 5, Msg.html
 		p("\n" + 
-"\n");// line 5
+"\n");// line 5, Msg.html
 		
 		endDoLayout(sourceTemplate);
 	}

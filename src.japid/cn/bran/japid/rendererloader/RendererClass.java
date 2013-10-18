@@ -1,6 +1,7 @@
 package cn.bran.japid.rendererloader;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.Date;
 
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
@@ -16,6 +17,8 @@ public class RendererClass {
 	Class<? extends JapidTemplateBaseWithoutPlay> clz;
 	ClassLoader cl;
 	private File srcFile; // the original template source file
+	// the apply method of the rendering class
+	private Method applyMethod;
 	
 	public ClassLoader getCl() {
 		return cl;
@@ -102,4 +105,17 @@ public class RendererClass {
 //			return -1;	
 		return DirUtil.mapJavaLineToSrcLine(jsrc, lineNumber);
 	}
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param m
+	 */
+	public void setApplyMethod(Method m) {
+		this.applyMethod = m;
+	}
+
+	public Method getApplyMethod() {
+		return applyMethod;
+	}
+	
+	
 }

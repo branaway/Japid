@@ -36,11 +36,11 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	}
 ////// end of named args stuff
 
-	private String s; // line 2
+	private String s; // line 2, japidviews/templates/noplay.html
 	public String render(String s) {
 		this.s = s;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/templates/noplay.html
 		 if (__t != -1) System.out.println("[noplay] rendering time: " + __t);
 		return getOut().toString();
 	}
@@ -52,12 +52,12 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, noplay.html
 p("\n" + 
-"hello ");// line 2
-		final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(getOut()); _japidviews__tags_Tag20.setOut(getOut()); _japidviews__tags_Tag20.render(named("msg", s)); // line 4// line 4
+"hello ");// line 2, noplay.html
+		final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(getOut()); _japidviews__tags_Tag20.setOut(getOut()); _japidviews__tags_Tag20.render(named("msg", s)); // line 4, noplay.html// line 4, noplay.html
 		p(" !!!!\n" + 
-"\n");// line 4
+"\n");// line 4, noplay.html
 		
 		endDoLayout(sourceTemplate);
 	}

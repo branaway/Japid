@@ -64,15 +64,15 @@ public class Tag2 extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String msg; // line 1
-	private String m2; // line 1
-	private Integer age; // line 1
+	private String msg; // line 1, japidviews/_tags/Tag2.html
+	private String m2; // line 1, japidviews/_tags/Tag2.html
+	private Integer age; // line 1, japidviews/_tags/Tag2.html
 	public cn.bran.japid.template.RenderResult render(String msg,String m2,Integer age) {
 		this.msg = msg;
 		this.m2 = m2;
 		this.age = age;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/Tag2.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -83,17 +83,17 @@ public class Tag2 extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("<span>");// line 1
-		p(msg);// line 2
+;// line 1, Tag2.html
+		p("<span>");// line 1, Tag2.html
+		p(msg);// line 2, Tag2.html
 		p("</span>\n" + 
-"<span>");// line 2
-		p(m2);// line 3
+"<span>");// line 2, Tag2.html
+		p(m2);// line 3, Tag2.html
 		p("</span>\n" + 
-"<span>");// line 3
-		p(age);// line 4
+"<span>");// line 3, Tag2.html
+		p(age);// line 4, Tag2.html
 		p("</span>\n" + 
-"\n");// line 4
+"\n");// line 4, Tag2.html
 		
 		endDoLayout(sourceTemplate);
 	}

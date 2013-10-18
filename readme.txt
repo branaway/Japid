@@ -2,6 +2,7 @@
 
                     Bing Ran<bing_ran@hotmail.com>
                     
+Latest version: 0.9.31
 
 * Links:
 
@@ -32,8 +33,8 @@ Use this dependencies.yml to reference the latest distribution, adjusting the ve
 
 <code>
 require:
-    - cn.bran -> japid 0.9.28
-    - cn.bran -> japidplay 0.9.28
+    - cn.bran -> japid {latest version}
+    - cn.bran -> japidplay {latest version}
     - com.google.code.javaparser -> javaparser 1.0.8
   
 # My custom repositories
@@ -46,6 +47,9 @@ repositories:
 </code>
 
 * Version History:
+
+2013/09/02: V0.9.31:
+	1. bug fix: japid classes were not loaded in prod mode when using JapidRenderer directly. This woule lead to class not found error in standalone prod mode. 
 
 2013/09/02: V0.9.30:
 	1. bug fix: did not check the null state of app class of ApplicationClass in buildRoutes();

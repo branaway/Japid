@@ -559,7 +559,7 @@ or,
 `}
 </pre>
 
-Starting from version 0.7.1, the @for@ has an "open" form that gives template authors access to a few implicit variables related to the loo</code></pre>The variables are explained in the following section, but here is the syntax, basically you leave out the "()" and the "{}"
+Starting from version 0.7.1, the @for@ has an "open" form that gives template authors access to a few implicit variables related to the loop</code></pre>The variables are explained in the following section, but here is the syntax, basically you leave out the "()" and the "{}"
 
 <pre>
 `String[] names = ...;
@@ -579,7 +579,7 @@ Starting from version 0.7.1, the @for@ has an "open" form that gives template au
 Notes:
 
 
-* Since this form involves multiple method dispatching, it's slower than the raw @for@ loop. But the difference is in micro-second scale and probably does not matter. 
+* Since this form involves multiple method dispatching, it's slower than the raw @for@ loop. But the difference is in microsecond scale and probably does not matter. 
 * you cannot use "{}" with the "open for loop". This is *invalid*:
 <pre>
 `for String name: names { 

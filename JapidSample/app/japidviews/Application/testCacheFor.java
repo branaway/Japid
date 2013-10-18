@@ -65,11 +65,11 @@ public class testCacheFor extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/Application/testCacheFor.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/testCacheFor.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -80,34 +80,34 @@ public class testCacheFor extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, testCacheFor.html
 		p("\n" + 
 "<html>\n" + 
 "\n" + 
 "<body>\n" + 
 "<p>heheh</p>\n" + 
 "\n" + 
-"	<p>hello ");// line 1
-		p(a);// line 8
-		p(", ");// line 8
+"	<p>hello ");// line 1, testCacheFor.html
+		p(a);// line 8, testCacheFor.html
+		p(", ");// line 8, testCacheFor.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "every3", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.every3(); // line 8
+				Application.every3(); // line 8, testCacheFor.html
 			}
-		}); p("\n");// line 8
+		}); p("\n");// line 8, testCacheFor.html
 		p(",</p> \n" + 
-"	<p>directly, now seconds is ");// line 8
+"	<p>directly, now seconds is ");// line 8, testCacheFor.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "seconds", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.seconds(); // line 9
+				Application.seconds(); // line 9, testCacheFor.html
 			}
-		}); p("\n");// line 9
+		}); p("\n");// line 9, testCacheFor.html
 		p("</p>\n" + 
 "\n" + 
 "</body>\n" + 
-"</html>");// line 9
+"</html>");// line 9, testCacheFor.html
 		
 		endDoLayout(sourceTemplate);
 	}

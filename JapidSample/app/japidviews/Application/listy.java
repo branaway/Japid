@@ -66,7 +66,7 @@ public class listy extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/listy.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,7 +77,7 @@ public class listy extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("will the name \"list\" a forbidden word?");// line 1
+p("will the name \"list\" a forbidden word?");// line 1, listy.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -64,15 +64,15 @@ public class tagPrimitives extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String s; // line 1
-	private int i; // line 1
-	private Integer ii; // line 1
-	private double d; // line 1
-	private Double dd; // line 1
-	private boolean b; // line 1
-	private Boolean bb; // line 1
-	private Map<Object, String> map; // line 1
-	private float f; // line 1
+	private String s; // line 1, japidviews/_tags/tagPrimitives.html
+	private int i; // line 1, japidviews/_tags/tagPrimitives.html
+	private Integer ii; // line 1, japidviews/_tags/tagPrimitives.html
+	private double d; // line 1, japidviews/_tags/tagPrimitives.html
+	private Double dd; // line 1, japidviews/_tags/tagPrimitives.html
+	private boolean b; // line 1, japidviews/_tags/tagPrimitives.html
+	private Boolean bb; // line 1, japidviews/_tags/tagPrimitives.html
+	private Map<Object, String> map; // line 1, japidviews/_tags/tagPrimitives.html
+	private float f; // line 1, japidviews/_tags/tagPrimitives.html
 	public cn.bran.japid.template.RenderResult render(String s,int i,Integer ii,double d,Double dd,boolean b,Boolean bb,Map<Object, String> map,float f) {
 		this.s = s;
 		this.i = i;
@@ -84,7 +84,7 @@ public class tagPrimitives extends cn.bran.play.JapidTemplateBase
 		this.map = map;
 		this.f = f;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/tagPrimitives.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -95,32 +95,32 @@ public class tagPrimitives extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("<div>");// line 13
-		p(s);// line 14
+;// line 1, tagPrimitives.html
+		p("<div>");// line 13, tagPrimitives.html
+		p(s);// line 14, tagPrimitives.html
 		p("</div>\n" + 
-"<div>");// line 14
-		p(i);// line 15
-		p(", ");// line 15
-		p(ii);// line 15
+"<div>");// line 14, tagPrimitives.html
+		p(i);// line 15, tagPrimitives.html
+		p(", ");// line 15, tagPrimitives.html
+		p(ii);// line 15, tagPrimitives.html
 		p("</div>\n" + 
-"<div>");// line 15
-		p(d);// line 16
-		p(", ");// line 16
-		p(dd);// line 16
+"<div>");// line 15, tagPrimitives.html
+		p(d);// line 16, tagPrimitives.html
+		p(", ");// line 16, tagPrimitives.html
+		p(dd);// line 16, tagPrimitives.html
 		p("</div>\n" + 
-"<div>");// line 16
-		p(b);// line 17
-		p(", ");// line 17
-		p(bb);// line 17
+"<div>");// line 16, tagPrimitives.html
+		p(b);// line 17, tagPrimitives.html
+		p(", ");// line 17, tagPrimitives.html
+		p(bb);// line 17, tagPrimitives.html
 		p("</div>\n" + 
-"<div>");// line 17
-		p(map);// line 18
+"<div>");// line 17, tagPrimitives.html
+		p(map);// line 18, tagPrimitives.html
 		p("</div>\n" + 
-"<div>");// line 18
-		p(f);// line 19
+"<div>");// line 18, tagPrimitives.html
+		p(f);// line 19, tagPrimitives.html
 		p("</div>\n" + 
-"\n");// line 19
+"\n");// line 19, tagPrimitives.html
 		
 		endDoLayout(sourceTemplate);
 	}

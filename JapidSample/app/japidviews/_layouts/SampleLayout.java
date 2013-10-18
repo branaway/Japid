@@ -50,13 +50,13 @@ public abstract class SampleLayout extends cn.bran.play.JapidTemplateBase
 	}
 	@Override public void layout() {
 		beginDoLayout(sourceTemplate);		p("A sample layout.\n" + 
-"<p>\n");// line 1
-		title();// line 3
+"<p>\n");// line 1, SampleLayout.html
+		title();// line 3, SampleLayout.html
 		p(";\n" + 
 "</p>\n" + 
-"<div>\n");// line 3
-		doLayout();// line 6
-		p("</div>\n");// line 6
+"<div>\n");// line 3, SampleLayout.html
+		doLayout();// line 6, SampleLayout.html
+		p("</div>\n");// line 6, SampleLayout.html
 				endDoLayout(sourceTemplate);	}
 	 protected void title() {};
 

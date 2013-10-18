@@ -64,13 +64,13 @@ public class validate extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String name; // line 1
-	private Integer age; // line 1
+	private String name; // line 1, japidviews/Application/validate.html
+	private Integer age; // line 1, japidviews/Application/validate.html
 	public cn.bran.japid.template.RenderResult render(String name,Integer age) {
 		this.name = name;
 		this.age = age;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/validate.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -81,27 +81,27 @@ public class validate extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		;// line 1
-		if(asBoolean(hasErrors())) {// line 3
+;// line 1, validate.html
+		;// line 1, validate.html
+		if(asBoolean(hasErrors())) {// line 3, validate.html
 		p("    <p>Got some errors:</p>\n" + 
-"    ");// line 3
-		for (Error e: errors()){// line 5
-		p("        <p>");// line 5
-		p(e.getKey());// line 6
-		p(" : ");// line 6
-		p(e);// line 6
+"    ");// line 3, validate.html
+		for (Error e: errors()){// line 5, validate.html
+		p("        <p>");// line 5, validate.html
+		p(e.getKey());// line 6, validate.html
+		p(" : ");// line 6, validate.html
+		p(e);// line 6, validate.html
 		p("</p>\n" + 
-"    ");// line 6
-		}// line 7
-} else {// line 8
-		p("	name is: ");// line 8
-		p(name);// line 9
-		p(", age is: ");// line 9
-		p(age);// line 9
-		;// line 9
-		}// line 10
-		;// line 10
+"    ");// line 6, validate.html
+		}// line 7, validate.html
+} else {// line 8, validate.html
+		p("	name is: ");// line 8, validate.html
+		p(name);// line 9, validate.html
+		p(", age is: ");// line 9, validate.html
+		p(age);// line 9, validate.html
+		;// line 9, validate.html
+		}// line 10, validate.html
+		;// line 10, validate.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -66,7 +66,7 @@ public class authenticityToken extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/_tags/authenticityToken.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,11 +77,11 @@ public class authenticityToken extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, authenticityToken.html
 		p("\n" + 
-"<input type=\"hidden\" name=\"authenticityToken\" value=\"");// line 3
-		p(session.getAuthenticityToken());// line 4
-		p("\"/ >");// line 4
+"<input type=\"hidden\" name=\"authenticityToken\" value=\"");// line 3, authenticityToken.html
+		p(session.getAuthenticityToken());// line 4, authenticityToken.html
+		p("\"/ >");// line 4, authenticityToken.html
 		
 		endDoLayout(sourceTemplate);
 	}

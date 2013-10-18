@@ -64,11 +64,11 @@ public class categories extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private List<Category> categories; // line 1
+	private List<Category> categories; // line 1, japidviews/Application/categories.html
 	public cn.bran.japid.template.RenderResult render(List<Category> categories) {
 		this.categories = categories;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/categories.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,25 +79,25 @@ public class categories extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p(" ");// line 1
- if(asBoolean(categories)) {// line 2
+p(" ");// line 1, categories.html
+ if(asBoolean(categories)) {// line 2, categories.html
 		p("     <ul>\n" + 
-"       ");// line 2
-		for(Category cat: categories) {// line 4
+"       ");// line 2, categories.html
+		for(Category cat: categories) {// line 4, categories.html
 		p("	       <li>\n" + 
-"	           <a href=\"\">");// line 4
-		p(cat.name);// line 6
+"	           <a href=\"\">");// line 4, categories.html
+		p(cat.name);// line 6, categories.html
 		p("</a>\n" + 
-"	           ");// line 6
-		final categories _this0 = new categories(getOut()); _this0.setActionRunners(getActionRunners()).setOut(getOut()); _this0.render(cat.subCategories); // line 7// line 7
+"	           ");// line 6, categories.html
+		final categories _this0 = new categories(getOut()); _this0.setActionRunners(getActionRunners()).setOut(getOut()); _this0.render(cat.subCategories); // line 7, categories.html// line 7, categories.html
 		p("	       </li>\n" + 
-"       ");// line 7
-		}// line 9
+"       ");// line 7, categories.html
+		}// line 9, categories.html
 		p("     </ul>\n" + 
-" ");// line 9
-		}// line 11
+" ");// line 9, categories.html
+		}// line 11, categories.html
 		p(" \n" + 
-" ");// line 11
+" ");// line 11, categories.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -83,6 +84,23 @@ public class TemplateClassLoader extends ClassLoader {
 		Class<? extends JapidTemplateBaseWithoutPlay> cl =
 					(Class<? extends JapidTemplateBaseWithoutPlay>) defineClass(name, bytecode, 0, bytecode.length);
 		rc.setClz(cl);
+		// extract the apply(...)
+		Method[] ms = cl.getDeclaredMethods();
+		boolean gotApply = false;
+		for (Method m : ms) {
+			if (m.getName().equals("apply")) {
+				int modifiers = m.getModifiers();
+				if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers)) {
+					rc.setApplyMethod(m);
+					gotApply = true;
+					break;
+				}
+			}
+		}
+		if (!gotApply) {
+			JapidFlags.error("could not find the apply() with japid class: " + cl.getCanonicalName()); 
+		}
+		
 		localClasses.put(name, cl);
 		rc.lastUpdated = 1;// System.currentTimeMillis();
 //		if (JapidFlags.verbose) 

@@ -66,7 +66,7 @@ public class hellohello extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/hellohello.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,11 +77,11 @@ public class hellohello extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		for (int i = 1; i < 3; i++) {// line 1
-	final hellohelloTag _hellohelloTag0 = new hellohelloTag(getOut()); _hellohelloTag0.setActionRunners(getActionRunners()).setOut(getOut()); _hellohelloTag0.render(i); // line 2// line 2
-}// line 3
-		;// line 3
+;// line 1, hellohello.html
+		for (int i = 1; i < 3; i++) {// line 1, hellohello.html
+	final hellohelloTag _hellohelloTag0 = new hellohelloTag(getOut()); _hellohelloTag0.setActionRunners(getActionRunners()).setOut(getOut()); _hellohelloTag0.render(i); // line 2, hellohello.html// line 2, hellohello.html
+}// line 3, hellohello.html
+		;// line 3, hellohello.html
 		
 		endDoLayout(sourceTemplate);
 	}

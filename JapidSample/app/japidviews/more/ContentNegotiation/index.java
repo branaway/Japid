@@ -66,7 +66,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/ContentNegotiation/index.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,9 +77,9 @@ public class index extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-p("The content format: ");// line 1
-		p(request.format);// line 1
-		;// line 1
+p("The content format: ");// line 1, index.html
+		p(request.format);// line 1, index.html
+		;// line 1, index.html
 		
 		endDoLayout(sourceTemplate);
 	}

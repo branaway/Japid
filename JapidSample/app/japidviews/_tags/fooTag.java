@@ -65,10 +65,10 @@ public class fooTag extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
-	private String well; // line 1
+	private String well; // line 1, japidviews/_tags/fooTag.html
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1, japidviews/_tags/fooTag.html
 }
 
 	private DoBody body;
@@ -90,13 +90,13 @@ public static interface DoBody {
 		this.body = body;
 		this.well = well;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/fooTag.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(String well) {
 		this.well = well;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/fooTag.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -107,12 +107,12 @@ public static interface DoBody {
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, fooTag.html
 		p("\n" + 
 "<span>something</span>\n" + 
-"\n");// line 1
-		if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 5
-		p(" ");// line 5
+"\n");// line 1, fooTag.html
+		if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 5, fooTag.html
+		p(" ");// line 5, fooTag.html
 		
 		endDoLayout(sourceTemplate);
 	}

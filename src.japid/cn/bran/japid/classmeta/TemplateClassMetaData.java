@@ -219,7 +219,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t\t __t = System.nanoTime();");
 
 //		pln("\t\tsuper.layout(" + superClassRenderArgs +  ");");
-		pln("\t\ttry {super.layout(" + superClassRenderArgs +  ");} catch (RuntimeException e) { super.handleException(e);} " + getLineMarker());
+		pln("\t\ttry {super.layout(" + superClassRenderArgs +  ");} catch (RuntimeException __e) { super.handleException(__e);} " + getLineMarker());
 		if (stopWatch) {
 			pln("     	String __l = \"\" + (System.nanoTime() - __t) / 100000;\n" + 
 					"		int __len = __l.length();\n" + 

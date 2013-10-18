@@ -64,15 +64,15 @@ public class paramWithDefaults extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String msg; // line 1
-	private String m2; // line 1
-	private Integer age; // line 1
+	private String msg; // line 1, japidviews/_tags/paramWithDefaults.html
+	private String m2; // line 1, japidviews/_tags/paramWithDefaults.html
+	private Integer age; // line 1, japidviews/_tags/paramWithDefaults.html
 	public cn.bran.japid.template.RenderResult render(String msg,String m2,Integer age) {
 		this.msg = msg;
 		this.m2 = m2;
 		this.age = age;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/paramWithDefaults.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -83,17 +83,17 @@ public class paramWithDefaults extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("<span>");// line 5
-		p(msg);// line 6
+;// line 1, paramWithDefaults.html
+		p("<span>");// line 5, paramWithDefaults.html
+		p(msg);// line 6, paramWithDefaults.html
 		p("</span>\n" + 
-"<span>");// line 6
-		p(m2);// line 7
+"<span>");// line 6, paramWithDefaults.html
+		p(m2);// line 7, paramWithDefaults.html
 		p("</span>\n" + 
-"<span>");// line 7
-		p(age);// line 8
+"<span>");// line 7, paramWithDefaults.html
+		p(age);// line 8, paramWithDefaults.html
 		p("</span>\n" + 
-"\n");// line 8
+"\n");// line 8, paramWithDefaults.html
 		
 		endDoLayout(sourceTemplate);
 	}

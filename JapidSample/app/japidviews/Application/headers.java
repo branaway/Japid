@@ -71,7 +71,7 @@ public class headers extends superheaders
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/headers.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -82,7 +82,7 @@ public class headers extends superheaders
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, headers.html
 p("\n" + 
 "<p>\n" + 
 "\"setHeader\" is for adding a http response header to the response. One cannot use \"\" to surround the value part\n" + 
@@ -96,7 +96,7 @@ p("\n" +
 "Notes: If a response includes both an Expires header and a max-age directive, the max-age directive overrides the Expires header, even if the Expires header is more restrictive.\n" + 
 "</p>\n" + 
 "\n" + 
-"\n");// line 6
+"\n");// line 6, headers.html
 		
 		endDoLayout(sourceTemplate);
 	}

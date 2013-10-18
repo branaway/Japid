@@ -49,10 +49,10 @@ public abstract class scriptlineLayout extends cn.bran.play.JapidTemplateBase
 		super(out);
 	}
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("the meta is  \"");// line 1
+		beginDoLayout(sourceTemplate);		p("the meta is  \"");// line 1, scriptlineLayout.html
 		meta();p("\"\n" + 
-"\n");// line 1
-		doLayout();// line 3
+"\n");// line 1, scriptlineLayout.html
+		doLayout();// line 3, scriptlineLayout.html
 				endDoLayout(sourceTemplate);	}
 	 protected void meta() {};
 

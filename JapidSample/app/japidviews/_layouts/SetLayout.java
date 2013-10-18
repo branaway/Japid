@@ -49,11 +49,11 @@ public abstract class SetLayout extends cn.bran.play.JapidTemplateBase
 		super(out);
 	}
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		;// line 1
-		title();// line 1
+		beginDoLayout(sourceTemplate);		;// line 1, SetLayout.html
+		title();// line 1, SetLayout.html
 		p("\n" + 
-"\n");// line 1
-		title();p("one more\n");// line 3
+"\n");// line 1, SetLayout.html
+		title();p("one more\n");// line 3, SetLayout.html
 		footer();		endDoLayout(sourceTemplate);	}
 	 protected void footer() {};
 	 protected void title() {};

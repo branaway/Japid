@@ -64,12 +64,12 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/_tags/dummyTag.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long __t = -1;
 		 __t = System.nanoTime();
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/dummyTag.html
      	String __l = "" + (System.nanoTime() - __t) / 100000;
 		int __len = __l.length();
 		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
@@ -85,15 +85,15 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n");// line 1
+;// line 1, dummyTag.html
+		p("\n");// line 1, dummyTag.html
 		p("\n" + 
-"\n");// line 3
+"\n");// line 3, dummyTag.html
 		p("\n" + 
-"Hello from DummyTag: ");// line 5
-		p(a);// line 7
+"Hello from DummyTag: ");// line 5, dummyTag.html
+		p(a);// line 7, dummyTag.html
 		p("!\n" + 
-"\n");// line 7
+"\n");// line 7, dummyTag.html
 		
 		endDoLayout(sourceTemplate);
 	}

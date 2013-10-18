@@ -64,11 +64,11 @@ public class search extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private SearchParams sp; // line 1
+	private SearchParams sp; // line 1, japidviews/Application/search.html
 	public cn.bran.japid.template.RenderResult render(SearchParams sp) {
 		this.sp = sp;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/search.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,17 +79,17 @@ public class search extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		;// line 1
-		String nomode = "no mode";// line 3
-		p("keys: ");// line 3
-		try { Object o = sp.keywords ; if (o.toString().length() ==0) { p("没有 keywords"); } else { p(o); } } catch (NullPointerException npe) { p("没有 keywords"); }// line 5
-		p(", mode: ");// line 5
-		try { Object o = sp.mode ; if (o.toString().length() ==0) { p(nomode); } else { p(o); } } catch (NullPointerException npe) { p(nomode); }// line 5
+;// line 1, search.html
+		;// line 1, search.html
+		String nomode = "no mode";// line 3, search.html
+		p("keys: ");// line 3, search.html
+		try { Object o = sp.keywords ; if (o.toString().length() ==0) { p("没有 keywords"); } else { p(o); } } catch (NullPointerException npe) { p("没有 keywords"); }// line 5, search.html
+		p(", mode: ");// line 5, search.html
+		try { Object o = sp.mode ; if (o.toString().length() ==0) { p(nomode); } else { p(o); } } catch (NullPointerException npe) { p(nomode); }// line 5, search.html
 		p("\n" + 
-"true/false: ");// line 5
-		p(true?"class=\"someclass\"":"");// line 7
-		;// line 7
+"true/false: ");// line 5, search.html
+		p(true?"class=\"someclass\"":"");// line 7, search.html
+		;// line 7, search.html
 		
 		endDoLayout(sourceTemplate);
 	}

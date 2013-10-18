@@ -64,15 +64,15 @@ public class perf extends perfmain
 	}
 ////// end of named args stuff
 
-	private String title; // line 1
-	private DataModel.User user; // line 1
-	private ArrayList<DataModel.Entry> entries; // line 1
+	private String title; // line 1, japidviews/more/Perf/perf.html
+	private DataModel.User user; // line 1, japidviews/more/Perf/perf.html
+	private ArrayList<DataModel.Entry> entries; // line 1, japidviews/more/Perf/perf.html
 	public cn.bran.japid.template.RenderResult render(String title,DataModel.User user,ArrayList<DataModel.Entry> entries) {
 		this.title = title;
 		this.user = user;
 		this.entries = entries;
 		long __t = -1;
-		try {super.layout(user);} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout(user);} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/Perf/perf.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -83,52 +83,52 @@ public class perf extends perfmain
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, perf.html
 
-if (entries.size() > 0 ) {// line 11
-	for (DataModel.Entry entry : entries) {// line 12
+if (entries.size() > 0 ) {// line 11, perf.html
+	for (DataModel.Entry entry : entries) {// line 12, perf.html
 		p("		<div id=\"entries\">\n" + 
-"		    Entry Id: ");// line 12
-		p(entry.getEntryId());// line 14
-		p(", Date: ");// line 14
-		p(entry.getEntryDate());// line 14
+"		    Entry Id: ");// line 12, perf.html
+		p(entry.getEntryId());// line 14, perf.html
+		p(", Date: ");// line 14, perf.html
+		p(entry.getEntryDate());// line 14, perf.html
 		p("\n" + 
-"		    <h2>");// line 14
-		p(entry.getTitle());// line 15
+"		    <h2>");// line 14, perf.html
+		p(entry.getTitle());// line 15, perf.html
 		p("</h2>\n" + 
-"		    <div>Submitted By: ");// line 15
-		p(entry.getOwner().getUserName());// line 16
-		p(" - ");// line 16
-		p(entry.getOwner().getEmail());// line 16
+"		    <div>Submitted By: ");// line 15, perf.html
+		p(entry.getOwner().getUserName());// line 16, perf.html
+		p(" - ");// line 16, perf.html
+		p(entry.getOwner().getEmail());// line 16, perf.html
 		p("</div>\n" + 
-"		    <div>");// line 16
-		p(entry.getBody());// line 17
+"		    <div>");// line 16, perf.html
+		p(entry.getBody());// line 17, perf.html
 		p("</div>\n" + 
-"		    ");// line 17
-		if(entry.getComments().size() > 0) {// line 18
-                for (DataModel.Comment comment: entry.getComments()) {// line 19
+"		    ");// line 17, perf.html
+		if(entry.getComments().size() > 0) {// line 18, perf.html
+                for (DataModel.Comment comment: entry.getComments()) {// line 19, perf.html
 		p("				    <div>\n" + 
-"				        <div>Comment by: ");// line 19
-		p(comment.getOwner().getUserName());// line 21
+"				        <div>Comment by: ");// line 19, perf.html
+		p(comment.getOwner().getUserName());// line 21, perf.html
 		p("</div>\n" + 
-"				        <div>");// line 21
-		p(comment.getCommentText());// line 22
+"				        <div>");// line 21, perf.html
+		p(comment.getCommentText());// line 22, perf.html
 		p("</div>\n" + 
 "				    </div>\n" + 
-"                ");// line 22
-		}// line 24
-            } else {// line 25
+"                ");// line 22, perf.html
+		}// line 24, perf.html
+            } else {// line 25, perf.html
 		p("		      <div>No comments yet</div>\n" + 
-"		    ");// line 25
-		}// line 27
+"		    ");// line 25, perf.html
+		}// line 27, perf.html
 		p("		</div>\n" + 
-"	");// line 27
-		}// line 29
-} else {// line 30
+"	");// line 27, perf.html
+		}// line 29, perf.html
+} else {// line 30, perf.html
 		p("	<div>\n" + 
 "	    <div>No Entries Found</div>\n" + 
-"	</div>\n");// line 30
-		}// line 34
+"	</div>\n");// line 30, perf.html
+		}// line 34, perf.html
 		
 		endDoLayout(sourceTemplate);
 	}

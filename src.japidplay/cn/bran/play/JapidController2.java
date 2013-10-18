@@ -249,7 +249,7 @@ public class JapidController2 extends Controller {
 	 */
 	public static RenderResult getRenderResultWith(String template, Object... args) {
 		try {
-			String templateClassName = JapidController2.getTemapletClassName(template);
+			String templateClassName = JapidController.getTemapletClassName(template);
 			Class<? extends JapidTemplateBaseWithoutPlay> tClass = getRenderClass(templateClassName);
 			return invokeRender(tClass, args);
 		} catch (Throwable e) {

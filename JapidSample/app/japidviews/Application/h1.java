@@ -65,11 +65,11 @@ public class h1 extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String s; // line 1
+	private String s; // line 1, japidviews/Application/h1.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/h1.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -80,27 +80,27 @@ public class h1 extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("h1: got ");// line 1
-		p(s);// line 3
+;// line 1, h1.html
+		p("h1: got ");// line 1, h1.html
+		p(s);// line 3, h1.html
 		p("\n" + 
 "\n" + 
-"	");// line 3
+"	");// line 3, h1.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", 1) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echo(1); // line 5
+				Application.echo(1); // line 5, h1.html
 			}
-		}); p("\n");// line 5
+		}); p("\n");// line 5, h1.html
 			actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", 2) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echo(2); // line 6
+				Application.echo(2); // line 6, h1.html
 			}
-		}); p("\n");// line 6
-		;// line 6
+		}); p("\n");// line 6, h1.html
+		;// line 6, h1.html
 		p(" \n" + 
-"\n");// line 8
+"\n");// line 8, h1.html
 		
 		endDoLayout(sourceTemplate);
 	}

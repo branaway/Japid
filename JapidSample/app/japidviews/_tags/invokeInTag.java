@@ -67,7 +67,7 @@ public class invokeInTag extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/_tags/invokeInTag.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -78,17 +78,17 @@ public class invokeInTag extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, invokeInTag.html
 		p("\n" + 
 "\n" + 
-"<p>beginning: invocation in tag</p>\n");// line 1
+"<p>beginning: invocation in tag</p>\n");// line 1, invokeInTag.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.Application.class, "foo", "") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.Application.foo(); // line 4
+				controllers.Application.foo(); // line 4, invokeInTag.html
 			}
-		}); p("\n");// line 4
-		p("<p>end of invoke in tag</p>\n");// line 4
+		}); p("\n");// line 4, invokeInTag.html
+		p("<p>end of invoke in tag</p>\n");// line 4, invokeInTag.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -50,9 +50,9 @@ public abstract class simLayout extends cn.bran.play.JapidTemplateBase
 	}
 	@Override public void layout() {
 		beginDoLayout(sourceTemplate);		p("The simplest layout\n" + 
-"\n");// line 1
-		doLayout();// line 3
-		;// line 3
+"\n");// line 1, simLayout.html
+		doLayout();// line 3, simLayout.html
+		;// line 3, simLayout.html
 				endDoLayout(sourceTemplate);	}
 
 	protected abstract void doLayout();

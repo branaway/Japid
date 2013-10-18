@@ -65,11 +65,11 @@ public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private models.japidsample.Author a; // line 1
+	private models.japidsample.Author a; // line 1, japidviews/Application/authorPanel2.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/authorPanel2.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -80,15 +80,15 @@ public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("<p>decorated name: ");// line 1
+;// line 1, authorPanel2.html
+		p("<p>decorated name: ");// line 1, authorPanel2.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "decorateName", a.name) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.decorateName(a.name); // line 2
+				Application.decorateName(a.name); // line 2, authorPanel2.html
 			}
-		}); p("\n");// line 2
-		p("</p>\n");// line 2
+		}); p("\n");// line 2, authorPanel2.html
+		p("</p>\n");// line 2, authorPanel2.html
 		
 		endDoLayout(sourceTemplate);
 	}

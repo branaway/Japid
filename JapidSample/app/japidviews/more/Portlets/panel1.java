@@ -64,11 +64,11 @@ public class panel1 extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String s; // line 1
+	private String s; // line 1, japidviews/more/Portlets/panel1.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/Portlets/panel1.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,12 +79,12 @@ public class panel1 extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("<p>panel-1 ");// line 1
-		p(s);// line 3
-		p(" : <em>");// line 3
-		p(new Date());// line 3
-		p("</em></p>\n");// line 3
+;// line 1, panel1.html
+		p("<p>panel-1 ");// line 1, panel1.html
+		p(s);// line 3, panel1.html
+		p(" : <em>");// line 3, panel1.html
+		p(new Date());// line 3, panel1.html
+		p("</em></p>\n");// line 3, panel1.html
 		
 		endDoLayout(sourceTemplate);
 	}

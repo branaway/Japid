@@ -13,35 +13,24 @@ import cn.bran.japid.template.RenderResult;
 public class RenderInvokerUtils {
 	// private static final String RENDER_METHOD = "render";
 
-	public static <T extends JapidTemplateBaseWithoutPlay> Object render(T t, Object... args) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	public static <T extends JapidTemplateBaseWithoutPlay> Object render(T t, Object... args)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		if (args == null) {
 			// treat it as a single null argument
 			args = new Object[] { null };
 		}
-	
+
 		Method m = t.renderMethodInstance;
 		if (m == null) {
-			throw new RuntimeException("The render method cache is not initialized for: " + t.getClass().getName() + ". Please run 'play japid:regen' to fresh the generated Java files.");
+			throw new RuntimeException("The render method cache is not initialized for: " + t.getClass().getName()
+					+ ". Please run 'play japid:regen' to fresh the generated Java files.");
 		}
-			Object invoke = m.invoke(t, args);
-			return invoke;
-//		} catch (IllegalArgumentException e) {
-//			throw new RuntimeException("Template argument type mismatch: ", e);
-//		} catch (InvocationTargetException e) {
-//			Throwable te = e.getTargetException();
-//			Throwable cause = te.getCause();
-//			if (cause != null)
-//				throw new RuntimeException("error in running the renderer: ", cause);
-//			else 
-//				throw new RuntimeException("error in running the renderer: ", te);
-//			// te.printStackTrace();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			throw new RuntimeException(e);
-//		}
+		Object invoke = m.invoke(t, args);
+		return invoke;
 	}
 
-	public static <T extends JapidTemplateBaseWithoutPlay> Object renderWithNamedArgs(T t, NamedArgRuntime... args) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	public static <T extends JapidTemplateBaseWithoutPlay> Object renderWithNamedArgs(T t, NamedArgRuntime... args)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		if (args == null) {
 			// treat it as a single null argument
 			args = new NamedArgRuntime[] { null };
@@ -59,15 +48,12 @@ public class RenderInvokerUtils {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	public static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeRender(
-			Class<T> c, Object... args) {
-//		long start = System.nanoTime();
-		
+	public static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeRender(Class<T> c, Object... args) {
+		// long start = System.nanoTime();
+
 		int modifiers = c.getModifiers();
 		if (Modifier.isAbstract(modifiers)) {
-			throw new RuntimeException(
-					"Cannot init the template class since it's an abstract class: "
-							+ c.getName());
+			throw new RuntimeException("Cannot init the template class since it's an abstract class: " + c.getName());
 		}
 		try {
 			// String methodName = "render";
@@ -79,52 +65,45 @@ public class RenderInvokerUtils {
 			// methodName, args);
 			return rr;
 		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(
-					"Could not match the arguments with the template args.");
+			throw new RuntimeException("Could not match the arguments with the template args.");
 		} catch (InstantiationException e) {
 			// e.printStackTrace();
-			throw new RuntimeException(
-					"Could not instantiate the template object. Abstract?");
+			throw new RuntimeException("Could not instantiate the template object. Abstract?");
 		} catch (InvocationTargetException e) {
 			// e.printStackTrace();
 			Throwable te = e.getTargetException();
-//			if (te instanceof TemplateExecutionException)
-//				throw (TemplateExecutionException) te;
+			// if (te instanceof TemplateExecutionException)
+			// throw (TemplateExecutionException) te;
 			Throwable cause = te.getCause();
 			if (cause != null)
 				if (cause instanceof RuntimeException)
 					throw (RuntimeException) cause;
 				else
-					throw new RuntimeException(
-							"error in running the renderer: "
-									+ cause.getMessage(), cause);
+					throw new RuntimeException("error in running the renderer: " + cause.getMessage(), cause);
 			else if (te instanceof RuntimeException)
 				throw (RuntimeException) te;
 			else
-				throw new RuntimeException("error in running the renderer: "
-						+ te.getMessage(), te);
+				throw new RuntimeException("error in running the renderer: " + te.getMessage(), te);
 		} catch (Exception e) {
 			if (e instanceof RuntimeException)
 				throw (RuntimeException) e;
 			else
-				throw new RuntimeException(
-						"Could not invoke the template object: ", e);
+				throw new RuntimeException("Could not invoke the template object: ", e);
 			// throw new RuntimeException(e);
+		} finally {
+			// String howlong = StringUtils.durationInMsFromNanos(start,
+			// System.nanoTime());
+			// System.out.println("how long it takes to invoke invokeRender: " +
+			// howlong);
 		}
-		finally {
-//			String howlong = StringUtils.durationInMsFromNanos(start, System.nanoTime());
-//			System.out.println("how long it takes to invoke invokeRender: " + howlong);
-		}
-		
+
 	}
 
-	public static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeNamedArgsRender(
-			Class<T> c, NamedArgRuntime[] args) {
+	public static <T extends JapidTemplateBaseWithoutPlay> RenderResult invokeNamedArgsRender(Class<T> c,
+			NamedArgRuntime[] args) {
 		int modifiers = c.getModifiers();
 		if (Modifier.isAbstract(modifiers)) {
-			throw new RuntimeException(
-					"Cannot init the template class since it's an abstract class: "
-							+ c.getName());
+			throw new RuntimeException("Cannot init the template class since it's an abstract class: " + c.getName());
 		}
 		try {
 			// String methodName = "render";
@@ -136,23 +115,19 @@ public class RenderInvokerUtils {
 			// methodName, args);
 			return rr;
 		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(
-					"Could not match the arguments with the template args.");
+			throw new RuntimeException("Could not match the arguments with the template args.");
 		} catch (InstantiationException e) {
 			// e.printStackTrace();
-			throw new RuntimeException(
-					"Could not instantiate the template object. Abstract?");
+			throw new RuntimeException("Could not instantiate the template object. Abstract?");
 		} catch (InvocationTargetException e) {
 			// e.printStackTrace();
 			Throwable e1 = e.getTargetException();
-			throw new RuntimeException(
-					"Could not invoke the template object:  ", e1);
+			throw new RuntimeException("Could not invoke the template object:  ", e1);
 		} catch (Exception e) {
 			if (e instanceof RuntimeException)
 				throw (RuntimeException) e;
 			else
-				throw new RuntimeException(
-						"Could not invoke the template object: ", e);
+				throw new RuntimeException("Could not invoke the template object: ", e);
 			// throw new RuntimeException(e);
 		}
 	}

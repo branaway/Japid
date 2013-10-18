@@ -65,10 +65,10 @@ public class moreTag extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
-	private String s; // line 1
+	private String s; // line 1, japidviews/_tags/moreTag.html
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1, japidviews/_tags/moreTag.html
 }
 
 	private DoBody body;
@@ -90,13 +90,13 @@ public static interface DoBody<A> {
 		this.body = body;
 		this.s = s;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/moreTag.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/moreTag.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -107,17 +107,17 @@ public static interface DoBody<A> {
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, moreTag.html
 		p("\n" + 
 "<p/>\n" + 
 "ok\n" + 
 "\n" + 
 "<p/>\n" + 
-"\n");// line 1
-		if (body != null){ body.setBuffer(getOut()); body.render(s); body.resetBuffer();}// line 8
+"\n");// line 1, moreTag.html
+		if (body != null){ body.setBuffer(getOut()); body.render(s); body.resetBuffer();}// line 8, moreTag.html
 		p("\n" + 
 "<p/>\n" + 
-"mmm\n");// line 8
+"mmm\n");// line 8, moreTag.html
 		
 		endDoLayout(sourceTemplate);
 	}

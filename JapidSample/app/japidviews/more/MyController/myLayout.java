@@ -49,15 +49,15 @@ public abstract class myLayout extends cn.bran.play.JapidTemplateBase
 		super(out);
 	}
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("<p>");// line 1
-		title();// line 1
+		beginDoLayout(sourceTemplate);		p("<p>");// line 1, myLayout.html
+		title();// line 1, myLayout.html
 		p("</p>\n" + 
-"<p>");// line 1
-		side();// line 2
+"<p>");// line 1, myLayout.html
+		side();// line 2, myLayout.html
 		p("</p>\n" + 
-"<p>\n");// line 2
-		doLayout();// line 4
-		p("</p>");// line 4
+"<p>\n");// line 2, myLayout.html
+		doLayout();// line 4, myLayout.html
+		p("</p>");// line 4, myLayout.html
 				endDoLayout(sourceTemplate);	}
 	 protected void title() {};
 	 protected void side() {};

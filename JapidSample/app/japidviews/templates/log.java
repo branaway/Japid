@@ -66,7 +66,7 @@ public class log extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/log.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -80,22 +80,22 @@ public class log extends cn.bran.play.JapidTemplateBase
 p("\n" + 
 "log directives are used to print a line of information to the console. \n" + 
 "It can take an argument of String\n" + 
-"</p>\n");// line 1
+"</p>\n");// line 1, log.html
 		System.out.println("japidviews/templates/log.html(line 5): " + "");
 		p("</p>\n" + 
 "\n" + 
 "hello world!\n" + 
 "</p>\n" + 
-"\n");// line 5
-		 String a = "a";// line 11
- int i = 10;// line 12
-		p("now with argument\n");// line 12
+"\n");// line 5, log.html
+		 String a = "a";// line 11, log.html
+ int i = 10;// line 12, log.html
+		p("now with argument\n");// line 12, log.html
 		System.out.println("japidviews/templates/log.html(line 14): " + a + i);
 		p("\n" + 
 "</p>\n" + 
-"now with a message literal\n");// line 14
+"now with a message literal\n");// line 14, log.html
 		System.out.println("japidviews/templates/log.html(line 18): " + "a message ");
-		p("</p>");// line 18
+		p("</p>");// line 18, log.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -66,7 +66,7 @@ public class superview extends myLayout
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/superview.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,10 +77,10 @@ public class superview extends myLayout
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		;// line 1
-		// line 3
-		;// line 3
+;// line 1, superview.html
+		;// line 1, superview.html
+		// line 3, superview.html
+		;// line 3, superview.html
 		
 		endDoLayout(sourceTemplate);
 	}

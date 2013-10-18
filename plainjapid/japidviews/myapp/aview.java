@@ -33,11 +33,11 @@ public class aview extends main
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/myapp/aview.html
 	public String render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/myapp/aview.html
 		 if (__t != -1) System.out.println("[aview] rendering time: " + __t);
 		return getOut().toString();
 	}
@@ -49,15 +49,15 @@ public class aview extends main
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		;// line 1
+;// line 1, aview.html
+		;// line 1, aview.html
 p("\n" + 
-"escaped: ");// line 3
-		p(escape(a));// line 5
+"escaped: ");// line 3, aview.html
+		p(escape(a));// line 5, aview.html
 		p("\n" + 
-"nice view: ");// line 5
-		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1"); // line 6// line 6
-		;// line 6
+"nice view: ");// line 5, aview.html
+		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1"); // line 6, aview.html// line 6, aview.html
+		;// line 6, aview.html
 		
 		endDoLayout(sourceTemplate);
 	}

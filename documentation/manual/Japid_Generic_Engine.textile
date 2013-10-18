@@ -135,7 +135,7 @@ package pack;
 
 public class Foo {
  public String bar() {
-     return JapidRender.render(arg1, arg2, etc);
+     return JapidRenderer.render(arg1, arg2, etc);
  }
 }
 </code></pre>

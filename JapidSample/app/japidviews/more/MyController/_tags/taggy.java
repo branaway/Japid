@@ -64,11 +64,11 @@ public class taggy extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String s; // line 1
+	private String s; // line 1, japidviews/more/MyController/_tags/taggy.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/MyController/_tags/taggy.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,8 +79,8 @@ public class taggy extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("I'm taggy!");// line 1
+;// line 1, taggy.html
+		p("I'm taggy!");// line 1, taggy.html
 		
 		endDoLayout(sourceTemplate);
 	}

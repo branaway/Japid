@@ -66,7 +66,7 @@ public class bar extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/SubController/bar.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -78,7 +78,7 @@ public class bar extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 //------
 p("\n" + 
-"hi....");// line 1
+"hi....");// line 1, bar.html
 		
 		endDoLayout(sourceTemplate);
 	}

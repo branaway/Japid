@@ -64,11 +64,11 @@ public class emailme extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private models.japidsample.Post post; // line 1
+	private models.japidsample.Post post; // line 1, japidviews/_notifiers/TestEmailer/emailme.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_notifiers/TestEmailer/emailme.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,11 +79,11 @@ public class emailme extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, emailme.html
 		p("\n" + 
-"Hello ");// line 1
-		p(post.title);// line 3
-		p("!");// line 3
+"Hello ");// line 1, emailme.html
+		p(post.title);// line 3, emailme.html
+		p("!");// line 3, emailme.html
 		
 		endDoLayout(sourceTemplate);
 	}

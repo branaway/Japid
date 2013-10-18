@@ -67,7 +67,7 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/quickview.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -78,18 +78,18 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, quickview.html
 p("<p>\n" + 
 "hello there\n" + 
 "</p>\n" + 
-"<p>\n");// line 2
-		String s = "quick" ;// line 8
-		;// line 8
-		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy0 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy0.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s); // line 9// line 9
+"<p>\n");// line 2, quickview.html
+		String s = "quick" ;// line 8, quickview.html
+		;// line 8, quickview.html
+		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy0 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy0.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s); // line 9, quickview.html// line 9, quickview.html
 		p("</p> \n" + 
-"<p>\n");// line 9
-		final taggy2 _taggy21 = new taggy2(getOut()); _taggy21.setActionRunners(getActionRunners()).setOut(getOut()); _taggy21.render(s); // line 12// line 12
-		p("</p>");// line 12
+"<p>\n");// line 9, quickview.html
+		final taggy2 _taggy21 = new taggy2(getOut()); _taggy21.setActionRunners(getActionRunners()).setOut(getOut()); _taggy21.render(s); // line 12, quickview.html// line 12, quickview.html
+		p("</p>");// line 12, quickview.html
 		
 		endDoLayout(sourceTemplate);
 	}

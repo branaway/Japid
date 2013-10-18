@@ -66,7 +66,7 @@ public class scriptline extends scriptlineLayout
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/scriptline.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,16 +77,16 @@ public class scriptline extends scriptlineLayout
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, scriptline.html
 p("\n" + 
-"hello ");// line 2
-		final Tag2 _Tag21 = new Tag2(getOut()); _Tag21.setActionRunners(getActionRunners()).setOut(getOut()); _Tag21.render(named("msg", "123")); // line 4// line 4
-		p(" a  ");// line 4
-		final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", "456")); // line 4// line 4
+"hello ");// line 2, scriptline.html
+		final Tag2 _Tag21 = new Tag2(getOut()); _Tag21.setActionRunners(getActionRunners()).setOut(getOut()); _Tag21.render(named("msg", "123")); // line 4, scriptline.html// line 4, scriptline.html
+		p(" a  ");// line 4, scriptline.html
+		final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", "456")); // line 4, scriptline.html// line 4, scriptline.html
 		p("!\n" + 
-"this is how to print a single back quote: ");// line 4
-		p('`');// line 5
-		p(" or `");// line 5
+"this is how to print a single back quote: ");// line 4, scriptline.html
+		p('`');// line 5, scriptline.html
+		p(" or `");// line 5, scriptline.html
 		
 		endDoLayout(sourceTemplate);
 	}

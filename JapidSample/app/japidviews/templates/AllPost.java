@@ -65,14 +65,14 @@ public class AllPost extends Layout
 	}
 ////// end of named args stuff
 
-	private String blogTitle; // line 3
-	private List<Post> allPost; // line 3
+	private String blogTitle; // line 3, japidviews/templates/AllPost.html
+	private List<Post> allPost; // line 3, japidviews/templates/AllPost.html
 	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long __t = -1;
 		 __t = System.nanoTime();
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 3
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 3, japidviews/templates/AllPost.html
      	String __l = "" + (System.nanoTime() - __t) / 100000;
 		int __len = __l.length();
 		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
@@ -88,26 +88,26 @@ public class AllPost extends Layout
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-;// line 2
-		;// line 7
+;// line 1, AllPost.html
+;// line 2, AllPost.html
+		;// line 7, AllPost.html
 
-final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 12
-allPost, new Each.DoBody<Post>(){ // line 12
-public void render(final Post p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 12
-// line 12
-		p("        ");// line 12
+final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 12, AllPost.html
+allPost, new Each.DoBody<Post>(){ // line 12, AllPost.html
+public void render(final Post p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 12, AllPost.html
+// line 12, AllPost.html
+		p("        ");// line 12, AllPost.html
 		p("\n" + 
 "\n" + 
-"	    ");// line 13
-		final Display _Display2 = new Display(getOut()); _Display2.setActionRunners(getActionRunners()).setOut(getOut()); _Display2.render( // line 15
-new Display.DoBody<String>(){ // line 15
-public void render(final String title) { // line 15
-// line 15
-		p("		   The real title iiiis: ");// line 15
-		p(title);// line 16
+"	    ");// line 13, AllPost.html
+		final Display _Display2 = new Display(getOut()); _Display2.setActionRunners(getActionRunners()).setOut(getOut()); _Display2.render( // line 15, AllPost.html
+new Display.DoBody<String>(){ // line 15, AllPost.html
+public void render(final String title) { // line 15, AllPost.html
+// line 15, AllPost.html
+		p("		   The real title iiiis: ");// line 15, AllPost.html
+		p(title);// line 16, AllPost.html
 		p("\n" + 
-"	    ");// line 16
+"	    ");// line 16, AllPost.html
 		
 }
 
@@ -124,7 +124,7 @@ public void resetBuffer() {
 }
 
 }
-, named("post", p), named("as", "home2"));// line 15
+, named("post", p), named("as", "home2"));// line 15, AllPost.html
 
 }
 
@@ -141,11 +141,11 @@ public void resetBuffer() {
 }
 
 }
-);// line 12
+);// line 12, AllPost.html
 
-final Tag2 _Tag23 = new Tag2(getOut()); _Tag23.setActionRunners(getActionRunners()).setOut(getOut()); _Tag23.render(named("msg", blogTitle), named("age", 100)); // line 20// line 20
+final Tag2 _Tag23 = new Tag2(getOut()); _Tag23.setActionRunners(getActionRunners()).setOut(getOut()); _Tag23.render(named("msg", blogTitle), named("age", 100)); // line 20, AllPost.html// line 20, AllPost.html
 		p("\n" + 
-"<p>cool</p>");// line 20
+"<p>cool</p>");// line 20, AllPost.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -70,7 +70,7 @@ public class tee extends cn.bran.play.JapidTemplateBase
 		this.a = a;
 		this.b = b;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/t3/App/tee.html
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/t3/App/tee.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 

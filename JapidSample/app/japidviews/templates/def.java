@@ -66,7 +66,7 @@ public class def extends defLayout
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/def.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,42 +77,42 @@ public class def extends defLayout
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, def.html
 		p("\n" + 
-"<p>check 1</p>\n");// line 1
+"<p>check 1</p>\n");// line 1, def.html
 		p("\n" + 
 "\n" + 
-"\n");// line 4
-		// line 7
+"\n");// line 4, def.html
+		// line 7, def.html
 		p("\n" + 
-"<p>check 2</p>\n");// line 12
-		// line 15
+"<p>check 2</p>\n");// line 12, def.html
+		// line 15, def.html
 		p("<p>check 3</p>\n" + 
-"\n");// line 18
+"\n");// line 18, def.html
 		p("\n" + 
-"\n");// line 21
-		// line 23
+"\n");// line 21, def.html
+		// line 23, def.html
 		p("\n" + 
 "\n" + 
-"<p>check 4</p>\n");// line 26
-		final dummyTag _dummyTag4 = new dummyTag(getOut()); _dummyTag4.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag4.render(get("bar")); // line 29// line 29
+"<p>check 4</p>\n");// line 26, def.html
+		final dummyTag _dummyTag4 = new dummyTag(getOut()); _dummyTag4.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag4.render(get("bar")); // line 29, def.html// line 29, def.html
 		p("\n" + 
-"\n");// line 29
+"\n");// line 29, def.html
 		p("<p>check 5</p>\n" + 
-"\n");// line 31
-		p(foo());// line 34
+"\n");// line 31, def.html
+		p(foo());// line 34, def.html
 		p("\n" + 
 "\n" + 
 "<p>check 6</p>\n" + 
-"\n");// line 34
-		//japid compiler: artificial line to avoid being treated as a terminating line// line 38
-		    String a = "";// line 39
-		    a += "bssdfsdf";// line 40
-		p("\n");// line 41
-		if (a.length() > 0) {// line 42
-      p(a);// line 43
-    }// line 44
-		p("\n");// line 44
+"\n");// line 34, def.html
+		//japid compiler: artificial line to avoid being treated as a terminating line// line 38, def.html
+		    String a = "";// line 39, def.html
+		    a += "bssdfsdf";// line 40, def.html
+		p("\n");// line 41, def.html
+		if (a.length() > 0) {// line 42, def.html
+      p(a);// line 43, def.html
+    }// line 44, def.html
+		p("\n");// line 44, def.html
 		
 		endDoLayout(sourceTemplate);
 	}
@@ -123,16 +123,16 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
-// line 7
-		p("	<p>hi ");// line 7
-		p(p);// line 8
+// line 7, def.html
+		p("	<p>hi ");// line 7, def.html
+		p(p);// line 8, def.html
 		p("!,</p> \n" + 
-"	<p>from ");// line 8
-		p(request.action);// line 9
+"	<p>from ");// line 8, def.html
+		p(request.action);// line 9, def.html
 		p("</p>\n" + 
 "	<p>OK you can call a tag:</p>\n" + 
-"	");// line 9
-		final dummyTag _dummyTag1 = new dummyTag(getOut()); _dummyTag1.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag1.render(p); // line 11// line 11
+"	");// line 9, def.html
+		final dummyTag _dummyTag1 = new dummyTag(getOut()); _dummyTag1.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag1.render(p); // line 11, def.html// line 11, def.html
 
 this.setOut(ori);
 if (actionRunners.size() > 0) {
@@ -159,11 +159,11 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
-// line 15
-	String s = "hi there";// line 16
-		p("	<p>foo hello ");// line 16
-		p(foo2(s));// line 17
-		p("</p>\n");// line 17
+// line 15, def.html
+	String s = "hi there";// line 16, def.html
+		p("	<p>foo hello ");// line 16, def.html
+		p(foo2(s));// line 17, def.html
+		p("</p>\n");// line 17, def.html
 		
 this.setOut(ori);
 if (actionRunners.size() > 0) {
@@ -190,13 +190,13 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
-// line 23
+// line 23, def.html
 		p("\n" + 
-"	");// line 23
-		String s = "hi2";// line 24
-		p("	<p>bar hi ");// line 24
-		p(s);// line 25
-		p("!</p>\n");// line 25
+"	");// line 23, def.html
+		String s = "hi2";// line 24, def.html
+		p("	<p>bar hi ");// line 24, def.html
+		p(s);// line 25, def.html
+		p("!</p>\n");// line 25, def.html
 		
 this.setOut(ori);
 if (actionRunners.size() > 0) {

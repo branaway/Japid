@@ -67,7 +67,7 @@ public class argtest1 extends cn.bran.play.JapidTemplateBase
 	{ setHasDoBody(); }
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} 
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 0, japidviews/_tags/argtest1.html
 }
 
 	DoBody body;
@@ -88,12 +88,12 @@ public static interface DoBody {
 	public cn.bran.japid.template.RenderResult render(DoBody body) {
 		this.body = body;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/_tags/argtest1.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/_tags/argtest1.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -104,9 +104,9 @@ public static interface DoBody {
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 1
-		;// line 1
+;// line 1, argtest1.html
+		if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 1, argtest1.html
+		;// line 1, argtest1.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -66,7 +66,7 @@ public class tagBody extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/tagBody.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -83,40 +83,40 @@ p("\n" +
 "<p/>\n" + 
 "before\n" + 
 "\n" + 
-"<p/>\n");// line 1
-		final fooTag _fooTag0 = new fooTag(getOut()); _fooTag0.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag0.render(// line 8
-"hi", new fooTag.DoBody(){ // line 8
-public void render() { // line 8
-// line 8
-    final String echo = "secret";// line 9
+"<p/>\n");// line 1, tagBody.html
+		final fooTag _fooTag0 = new fooTag(getOut()); _fooTag0.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag0.render(// line 8, tagBody.html
+"hi", new fooTag.DoBody(){ // line 8, tagBody.html
+public void render() { // line 8, tagBody.html
+// line 8, tagBody.html
+    final String echo = "secret";// line 9, tagBody.html
 		p("\n" + 
-"    well ");// line 9
-		p(echo);// line 11
+"    well ");// line 9, tagBody.html
+		p(echo);// line 11, tagBody.html
 		p("\n" + 
 "\n" + 
-"	");// line 11
-		final anotherTag _anotherTag1 = new anotherTag(getOut()); _anotherTag1.setActionRunners(getActionRunners()).setOut(getOut()); _anotherTag1.render(// line 13
-echo, new anotherTag.DoBody<String>(){ // line 13
-public void render(final String what) { // line 13
-// line 13
-		p("	    got ");// line 13
-		p(what);// line 14
-		p(" and ");// line 14
-		p(echo);// line 14
+"	");// line 11, tagBody.html
+		final anotherTag _anotherTag1 = new anotherTag(getOut()); _anotherTag1.setActionRunners(getActionRunners()).setOut(getOut()); _anotherTag1.render(// line 13, tagBody.html
+echo, new anotherTag.DoBody<String>(){ // line 13, tagBody.html
+public void render(final String what) { // line 13, tagBody.html
+// line 13, tagBody.html
+		p("	    got ");// line 13, tagBody.html
+		p(what);// line 14, tagBody.html
+		p(" and ");// line 14, tagBody.html
+		p(echo);// line 14, tagBody.html
 		p("\n" + 
-"		");// line 14
-		final moreTag _moreTag2 = new moreTag(getOut()); _moreTag2.setActionRunners(getActionRunners()).setOut(getOut()); _moreTag2.render(// line 15
-echo, new moreTag.DoBody<String>(){ // line 15
-public void render(final String more) { // line 15
-// line 15
-		p("		   got ");// line 15
-		p(what);// line 16
-		p(" and ");// line 16
-		p(echo);// line 16
-		p(" and ");// line 16
-		p(more);// line 16
+"		");// line 14, tagBody.html
+		final moreTag _moreTag2 = new moreTag(getOut()); _moreTag2.setActionRunners(getActionRunners()).setOut(getOut()); _moreTag2.render(// line 15, tagBody.html
+echo, new moreTag.DoBody<String>(){ // line 15, tagBody.html
+public void render(final String more) { // line 15, tagBody.html
+// line 15, tagBody.html
+		p("		   got ");// line 15, tagBody.html
+		p(what);// line 16, tagBody.html
+		p(" and ");// line 16, tagBody.html
+		p(echo);// line 16, tagBody.html
+		p(" and ");// line 16, tagBody.html
+		p(more);// line 16, tagBody.html
 		p("\n" + 
-"		");// line 16
+"		");// line 16, tagBody.html
 		
 }
 
@@ -133,7 +133,7 @@ public void resetBuffer() {
 }
 
 }
-);// line 15
+);// line 15, tagBody.html
 	
 }
 
@@ -150,7 +150,7 @@ public void resetBuffer() {
 }
 
 }
-);// line 13
+);// line 13, tagBody.html
 
 }
 
@@ -167,9 +167,9 @@ public void resetBuffer() {
 }
 
 }
-);// line 8
+);// line 8, tagBody.html
 		p("<p/>\n" + 
-"after");// line 19
+"after");// line 19, tagBody.html
 		
 		endDoLayout(sourceTemplate);
 	}

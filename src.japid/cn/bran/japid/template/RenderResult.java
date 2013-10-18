@@ -90,19 +90,23 @@ public class RenderResult implements Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
 		String contentString = content == null? _NULL : content.toString();
-        byte[] bytes = contentString.getBytes("utf-8");
-        out.write(bytes.length);
-        out.write(bytes);
+//        byte[] bytes = contentString.getBytes("utf-8");
+//        int length = bytes.length;
+//		out.write(length);
+//        out.write(bytes);
+		out.writeObject(contentString);
 		out.writeLong(renderTime);
 		out.writeObject(headers);
 	}
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        int contentLenght = in.readInt();
-        byte[] bytes = new byte[contentLenght];
-        in.read(bytes, 0, contentLenght);
-        String contentString = new String(bytes, "utf-8");
+//        int contentLenght = in.readInt();
+//        byte[] bytes = new byte[contentLenght];
+//        in.read(bytes, 0, contentLenght);
+//        String contentString = new String(bytes, "utf-8");
+
+		String contentString = (String) in.readObject();
 		if (_NULL.equals(contentString)) {
 			this.content = null;
 		}

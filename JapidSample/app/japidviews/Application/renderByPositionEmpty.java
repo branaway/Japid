@@ -66,7 +66,7 @@ public class renderByPositionEmpty extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/renderByPositionEmpty.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -78,7 +78,7 @@ public class renderByPositionEmpty extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 //------
 p("got it 2!\n" + 
-"\n");// line 1
+"\n");// line 1, renderByPositionEmpty.html
 		
 		endDoLayout(sourceTemplate);
 	}

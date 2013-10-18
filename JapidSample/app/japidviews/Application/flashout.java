@@ -66,7 +66,7 @@ public class flashout extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/flashout.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,27 +77,27 @@ public class flashout extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, flashout.html
 
-if(asBoolean(flash.hasError())) {// line 3
-		p("    ");// line 3
-		p(flash.error());// line 4
-		p("\n");// line 4
-		} else if(asBoolean(flash.hasSuccess())) {// line 5
-		p("    ");// line 5
-		p(flash.success());// line 6
-		p("\n");// line 6
-		} else {// line 7
-    if(asBoolean(flash.contains("msg"))) {// line 8
-		p("        the message: ");// line 8
-		p(flash("msg"));// line 9
+if(asBoolean(flash.hasError())) {// line 3, flashout.html
+		p("    ");// line 3, flashout.html
+		p(flash.error());// line 4, flashout.html
+		p("\n");// line 4, flashout.html
+		} else if(asBoolean(flash.hasSuccess())) {// line 5, flashout.html
+		p("    ");// line 5, flashout.html
+		p(flash.success());// line 6, flashout.html
+		p("\n");// line 6, flashout.html
+		} else {// line 7, flashout.html
+    if(asBoolean(flash.contains("msg"))) {// line 8, flashout.html
+		p("        the message: ");// line 8, flashout.html
+		p(flash("msg"));// line 9, flashout.html
 		p("\n" + 
-"    ");// line 9
-		} else {// line 10
+"    ");// line 9, flashout.html
+		} else {// line 10, flashout.html
 		p("        oh well\n" + 
-"    ");// line 10
-		}// line 12
-}// line 13
+"    ");// line 10, flashout.html
+		}// line 12, flashout.html
+}// line 13, flashout.html
 		
 		endDoLayout(sourceTemplate);
 	}

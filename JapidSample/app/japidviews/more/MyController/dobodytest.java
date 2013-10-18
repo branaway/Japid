@@ -66,7 +66,7 @@ public class dobodytest extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/dobodytest.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,12 +77,12 @@ public class dobodytest extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		final argtest _argtest0 = new argtest(getOut()); _argtest0.setActionRunners(getActionRunners()).setOut(getOut()); _argtest0.render( // line 1
-new argtest.DoBody(){ // line 1
-public void render() { // line 1
-// line 1
-		p("  ok\n");// line 1
+;// line 1, dobodytest.html
+		final argtest _argtest0 = new argtest(getOut()); _argtest0.setActionRunners(getActionRunners()).setOut(getOut()); _argtest0.render( // line 1, dobodytest.html
+new argtest.DoBody(){ // line 1, dobodytest.html
+public void render() { // line 1, dobodytest.html
+// line 1, dobodytest.html
+		p("  ok\n");// line 1, dobodytest.html
 		
 }
 
@@ -99,8 +99,8 @@ public void resetBuffer() {
 }
 
 }
-, named("arg", "test1"));// line 1
-final dummier _dummier1 = new dummier(getOut()); _dummier1.setActionRunners(getActionRunners()).setOut(getOut()); _dummier1.render(named("a", "hxxmmm")); // line 4// line 4
+, named("arg", "test1"));// line 1, dobodytest.html
+final dummier _dummier1 = new dummier(getOut()); _dummier1.setActionRunners(getActionRunners()).setOut(getOut()); _dummier1.render(named("a", "hxxmmm")); // line 4, dobodytest.html// line 4, dobodytest.html
 		
 		endDoLayout(sourceTemplate);
 	}

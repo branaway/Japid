@@ -65,11 +65,11 @@ public class hellohelloTag extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private int i; // line 1
+	private int i; // line 1, japidviews/Application/hellohelloTag.html
 	public cn.bran.japid.template.RenderResult render(int i) {
 		this.i = i;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/hellohelloTag.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -80,15 +80,15 @@ public class hellohelloTag extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		;// line 1
+;// line 1, hellohelloTag.html
+		;// line 1, hellohelloTag.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", i) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echo(i); // line 2
+				Application.echo(i); // line 2, hellohelloTag.html
 			}
-		}); p("\n");// line 2
-		;// line 2
+		}); p("\n");// line 2, hellohelloTag.html
+		;// line 2, hellohelloTag.html
 		
 		endDoLayout(sourceTemplate);
 	}

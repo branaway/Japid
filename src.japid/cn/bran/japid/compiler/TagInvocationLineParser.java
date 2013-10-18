@@ -38,9 +38,7 @@ public class TagInvocationLineParser {
 					line = line.substring(i).trim();
 					break;
 				} else {
-					throw new RuntimeException(
-							"invalid character in the tag invocation line "
-									+ line + ": [" + c + "]");
+					throw new RuntimeException("invalid character in the tag invocation line " + line + ": [" + c + "]");
 				}
 			}
 		}
@@ -68,58 +66,28 @@ public class TagInvocationLineParser {
 		}
 
 		// let's parse the closure params
-		try {
+		int vertline = line.lastIndexOf('|');
+		if (vertline < 0) {
 			List<String> args = JavaSyntaxTool.parseArgs(line);
 			tag.args = StringUtils.join(args, ",");
-			// XXX
-			// // might miss a wrong calling syntax: a, b|c, where the user
-			// might intend a, b | String c
-			// // let's check that
-			// int vertline = line.lastIndexOf('|');
-			// if (vertline < 0) {
-			// tag.args = line;
-			// }
-			// else {
-			// String closureArgs = line.substring(vertline + 1).trim();
-			// List<Parameter> params = JavaSyntaxTool.parseParams(closureArgs);
-			// }
-
-			// valid already, there is no callback body
 			parseNamedArgs(tag);
-		} catch (RuntimeException e) {
-			// ok let's check for callback
+		} else {
+			// need to find out the real meaning of the vertical bar
+			String left = line.substring(0, vertline);
+			String right = line.substring(vertline);
+			if (right.length() > 1)
+				right = right.substring(1);
+			else
+				right = "";
 
-			int vertline = line.lastIndexOf('|');
-			if (vertline >= 0) {
-				String closureArgs = line.substring(vertline + 1).trim();
-				// test syntax
-				JavaSyntaxTool.parseParams(closureArgs);
-				tag.callbackArgs = closureArgs;
-				tag.hasBody = true;
-				line = line.substring(0, vertline).trim();
-
-				if (line.length() == 0)
-					return tag;
-				else {
-					// parse args.
-					char firstC = line.charAt(0);
-					char lastC = line.charAt(line.length() - 1);
-					if ('(' == firstC) {
-						if (')' != lastC) {
-							throw new RuntimeException(
-									"The tag argument part is not valid: parenthesis is not paired.");
-						} else {
-							tag.args = line.substring(1, line.length() - 1);
-						}
-					} else {
-						tag.args = line;
-					}
-
-					parseNamedArgs(tag);
-				}
-			} else
-				throw new RuntimeException("tag args not valid: " + line);
-
+			if (JavaSyntaxTool.isValidParamList(right))
+				parseTagCallWithCallback(line, tag);
+			else // the bar may be part of a argument
+			{
+				List<String> args = JavaSyntaxTool.parseArgs(line);
+				tag.args = StringUtils.join(args, ",");
+				parseNamedArgs(tag);
+			}
 		}
 
 		if ("Each".equals(tag.tagName) || "each".equals(tag.tagName)) {
@@ -128,6 +96,38 @@ public class TagInvocationLineParser {
 			}
 		}
 		return tag;
+	}
+
+	private void parseTagCallWithCallback(String line, Tag tag) {
+		int vertline = line.lastIndexOf('|');
+		if (vertline >= 0) {
+			String closureArgs = line.substring(vertline + 1).trim();
+			// test syntax
+			JavaSyntaxTool.parseParams(closureArgs);
+			tag.callbackArgs = closureArgs;
+			tag.hasBody = true;
+			line = line.substring(0, vertline).trim();
+
+			if (line.length() == 0)
+				return;
+			else {
+				// parse args.
+				char firstC = line.charAt(0);
+				char lastC = line.charAt(line.length() - 1);
+				if ('(' == firstC) {
+					if (')' != lastC) {
+						throw new RuntimeException("The tag argument part is not valid: parenthesis is not paired.");
+					} else {
+						tag.args = line.substring(1, line.length() - 1);
+					}
+				} else {
+					tag.args = line;
+				}
+
+				parseNamedArgs(tag);
+			}
+		} else
+			throw new RuntimeException("tag args not valid: " + line);
 	}
 
 	private void parseNamedArgs(Tag tag) {

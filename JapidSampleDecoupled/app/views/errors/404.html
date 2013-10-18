@@ -9,10 +9,13 @@
 			#{404 result /}
 		#{/if}
         #{else}
-        	<h1>Not found</h1>
+			${cn.bran.play.JapidPlayRenderer.renderWith("japidviews.error404").raw()}
+*{
+        	<h1>URL Not found</h1>
 			<p>
 				${result.message}
 			</p>
+}*
         #{/else}
     </body>
 </html>

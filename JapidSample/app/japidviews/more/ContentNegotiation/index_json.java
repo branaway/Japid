@@ -66,7 +66,7 @@ public class index_json extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/ContentNegotiation/index.json
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -78,10 +78,10 @@ public class index_json extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 //------
 p("{\n" + 
-"    \"format\":\"");// line 1
-		p(request.format);// line 2
+"    \"format\":\"");// line 1, index.json
+		p(request.format);// line 2, index.json
 		p("\"   \n" + 
-"}");// line 2
+"}");// line 2, index.json
 		
 		endDoLayout(sourceTemplate);
 	}

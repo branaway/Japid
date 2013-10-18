@@ -65,13 +65,13 @@ public class Posts extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String blogTitle; // line 2
-	private List<Post> allPost; // line 2
+	private String blogTitle; // line 2, japidviews/templates/Posts.html
+	private List<Post> allPost; // line 2, japidviews/templates/Posts.html
 	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/templates/Posts.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -82,23 +82,23 @@ public class Posts extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, Posts.html
 
-for (Post post: allPost) { // line 4
-		p("	- title: ");// line 4
-		p(post.title);// line 5
+for (Post post: allPost) { // line 4, Posts.html
+		p("	- title: ");// line 4, Posts.html
+		p(post.title);// line 5, Posts.html
 		p("\n" + 
-"	- date: ");// line 5
-		p(post.postedAt);// line 6
+"	- date: ");// line 5, Posts.html
+		p(post.postedAt);// line 6, Posts.html
 		p("\n" + 
-"	- author ");// line 6
-		p(post.author.name);// line 7
-		p(" ");// line 7
-		p(post.author.gender);// line 7
+"	- author ");// line 6, Posts.html
+		p(post.author.name);// line 7, Posts.html
+		p(" ");// line 7, Posts.html
+		p(post.author.gender);// line 7, Posts.html
 		p("\n" + 
-"	the real title: 你好\n");// line 7
-		}// line 9
-		p("\n");// line 9
+"	the real title: 你好\n");// line 7, Posts.html
+		}// line 9, Posts.html
+		p("\n");// line 9, Posts.html
 		
 		endDoLayout(sourceTemplate);
 	}

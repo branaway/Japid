@@ -30,6 +30,7 @@ public class Application extends JapidController {
 		c.name = "my catty!";
 		c.subname = "ago";
 		renderJapid(c); // use the default index.html in the japidviews/SampleController directory
+		
 //		renderJapidWith("@index.html"); // use the default index.html in the japidviews/SampleController directory
 	}
 	public static void indexAt() {

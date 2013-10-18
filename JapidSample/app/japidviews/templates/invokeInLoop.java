@@ -66,11 +66,11 @@ public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private List<Post> posts; // line 2
+	private List<Post> posts; // line 2, japidviews/templates/invokeInLoop.html
 	public cn.bran.japid.template.RenderResult render(List<Post> posts) {
 		this.posts = posts;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/templates/invokeInLoop.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -81,35 +81,35 @@ public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-p("\n");// line 2
+;// line 1, invokeInLoop.html
+p("\n");// line 2, invokeInLoop.html
 		p("\n" + 
-"\n");// line 7
-		for (int i = 0; i < 3;i++) {// line 9
-	final int j = i;// line 10
-		p("	");// line 10
+"\n");// line 7, invokeInLoop.html
+		for (int i = 0; i < 3;i++) {// line 9, invokeInLoop.html
+	final int j = i;// line 10, invokeInLoop.html
+		p("	");// line 10, invokeInLoop.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", j) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echo(j); // line 11
+				Application.echo(j); // line 11, invokeInLoop.html
 			}
-		}); p("\n");// line 11
-		p("\n");// line 11
-		}// line 12
-		p("<p/>\n");// line 12
+		}); p("\n");// line 11, invokeInLoop.html
+		p("\n");// line 11, invokeInLoop.html
+		}// line 12, invokeInLoop.html
+		p("<p/>\n");// line 12, invokeInLoop.html
 		p("\n" + 
-"\n");// line 14
-		for (final Post p : posts) {// line 16
+"\n");// line 14, invokeInLoop.html
+		for (final Post p : posts) {// line 16, invokeInLoop.html
 		p("    another notation for invoking actions:  \n" + 
-"    ");// line 16
+"    ");// line 16, invokeInLoop.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echoPost", p) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echoPost(p); // line 18
+				Application.echoPost(p); // line 18, invokeInLoop.html
 			}
-		}); p("\n");// line 18
-}// line 19
-		;// line 19
+		}); p("\n");// line 18, invokeInLoop.html
+}// line 19, invokeInLoop.html
+		;// line 19, invokeInLoop.html
 		
 		endDoLayout(sourceTemplate);
 	}

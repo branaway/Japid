@@ -43,7 +43,7 @@ public class JapidRenderer {
 	 */
 	public static Class<? extends JapidTemplateBaseWithoutPlay> getClass(String name) {
 
-		refreshClasses(name);
+		refreshClasses();
 
 		RendererClass rc = classes.get(name);
 		if (rc == null)
@@ -80,6 +80,11 @@ public class JapidRenderer {
 	}
 
 	static boolean timeToRefresh() {
+		if (inited) {
+			if (!isDevMode())
+				return false;
+		}
+		
 		long now = System.currentTimeMillis();
 		if (now - lastRefreshed > refreshInterval) {
 			lastRefreshed = now;
@@ -89,7 +94,7 @@ public class JapidRenderer {
 
 	}
 
-	static synchronized void refreshClasses(String targetClass) {
+	static synchronized void refreshClasses() {
 		if (!timeToRefresh())
 			return;
 
@@ -547,7 +552,7 @@ public class JapidRenderer {
 	}
 
 	static void log(String m) {
-		if (JapidFlags.verbose) System.out.println("[JapidRender]: " + m);
+		JapidFlags.info("[JapidRender]: " + m);
 	}
 
 	static void gen() {
@@ -664,7 +669,6 @@ public class JapidRenderer {
 	 *            if true, Play's implicit objects are available in the japid script.  
 	 */
 	public static void init(OpMode opMode, String templateRoot, int refreshInterval, ClassLoader parentClassLoader, boolean usePlay) {
-		inited = true;
 		JapidRenderer.opMode = opMode;
 		setTemplateRoot(templateRoot);
 		setRefreshInterval(refreshInterval);
@@ -675,6 +679,8 @@ public class JapidRenderer {
 		crlr = new TemplateClassLoader(parentClassLoader);
 		compiler = new RendererCompiler(classes, crlr);
 		JapidRenderer.usePlay = usePlay;
+		refreshClasses();
+		inited = true;
 	}
 
 	/**

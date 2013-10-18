@@ -66,7 +66,7 @@ public class reverseLookup0 extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/reverseLookup0.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -85,12 +85,12 @@ p("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www
 "</head>\n" + 
 "<body>\n" + 
 "<h1>actions</h1>\n" + 
-"<p><a href='");// line 1
-		p(lookup("japid.SampleController.reverseLookup0", new Object[]{}));// line 9
+"<p><a href='");// line 1, reverseLookup0.html
+		p(lookup("japid.SampleController.reverseLookup0", new Object[]{}));// line 9, reverseLookup0.html
 		p("'>Action notation </a></p>\n" + 
 "<p><a href='/japid.SampleController/reverseLookup1?agrs=order0&args=order2'>action reverse lookup cannot handle arrays or collections...</a></p>\n" + 
 "</body>\n" + 
-"</html>");// line 9
+"</html>");// line 9, reverseLookup0.html
 		
 		endDoLayout(sourceTemplate);
 	}

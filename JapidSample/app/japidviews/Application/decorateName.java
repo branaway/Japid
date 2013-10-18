@@ -64,11 +64,11 @@ public class decorateName extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String s; // line 1
+	private String s; // line 1, japidviews/Application/decorateName.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/decorateName.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,11 +79,11 @@ public class decorateName extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, decorateName.html
 		p("\n" + 
-"^^^_ ");// line 1
-		p(s);// line 3
-		p(" _^^^\n");// line 3
+"^^^_ ");// line 1, decorateName.html
+		p(s);// line 3, decorateName.html
+		p(" _^^^\n");// line 3, decorateName.html
 		
 		endDoLayout(sourceTemplate);
 	}

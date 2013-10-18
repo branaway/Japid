@@ -50,16 +50,16 @@ public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 		super(out);
 	}
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		;// line 1
+		beginDoLayout(sourceTemplate);		;// line 1, superheaders.html
 		p("\n" + 
-"\n");// line 1
+"\n");// line 1, superheaders.html
 		p("\n" + 
-"<p> there is a special directive for the content-type header</p>\n");// line 4
+"<p> there is a special directive for the content-type header</p>\n");// line 4, superheaders.html
 		p("\n" + 
-"    `contentType    text/html; charset=utf-8\n");// line 7
-		p("\n");// line 9
-		doLayout();// line 11
-		;// line 11
+"    `contentType    text/html; charset=utf-8\n");// line 7, superheaders.html
+		p("\n");// line 9, superheaders.html
+		doLayout();// line 11, superheaders.html
+		;// line 11, superheaders.html
 				endDoLayout(sourceTemplate);	}
 
 	protected abstract void doLayout();

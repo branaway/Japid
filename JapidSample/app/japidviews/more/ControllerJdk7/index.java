@@ -64,11 +64,11 @@ public class index extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String m; // line 1
+	private String m; // line 1, japidviews/more/ControllerJdk7/index.html
 	public cn.bran.japid.template.RenderResult render(String m) {
 		this.m = m;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/ControllerJdk7/index.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,14 +79,14 @@ public class index extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("m: ");// line 1
-		try { Object o = m ; if (o.toString().length() ==0) { p("nothing"); } else { p(o); } } catch (NullPointerException npe) { p("nothing"); }// line 3
+;// line 1, index.html
+		p("m: ");// line 1, index.html
+		try { Object o = m ; if (o.toString().length() ==0) { p("nothing"); } else { p(o); } } catch (NullPointerException npe) { p("nothing"); }// line 3, index.html
 		p("\n" + 
-"\n");// line 3
-		p("\n");// line 15
-		//reverse: @@{Pages.edit()}// line 17
-		p("ok\n");// line 17
+"\n");// line 3, index.html
+		p("\n");// line 15, index.html
+		//reverse: @@{Pages.edit()}// line 17, index.html
+		p("ok\n");// line 17, index.html
 		
 		endDoLayout(sourceTemplate);
 	}

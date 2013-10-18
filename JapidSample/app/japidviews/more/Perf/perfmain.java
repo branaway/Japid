@@ -48,35 +48,35 @@ public abstract class perfmain extends cn.bran.play.JapidTemplateBase
 	public perfmain(StringBuilder out) {
 		super(out);
 	}
-	private DataModel.User loggedInUser; // line 1
+	private DataModel.User loggedInUser; // line 1, japidviews/more/Perf/perfmain.html
 	 public void layout(DataModel.User loggedInUser) {
 		this.loggedInUser = loggedInUser;
-		beginDoLayout(sourceTemplate);		;// line 1
+		beginDoLayout(sourceTemplate);		;// line 1, perfmain.html
 		p("\n" + 
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n" + 
 "        \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
 "<html>\n" + 
 "<head>\n" + 
-"    <title>");// line 1
+"    <title>");// line 1, perfmain.html
 		title();p("</title>\n" + 
 "</head>\n" + 
 "<body>\n" + 
-"\n");// line 7
-		if (loggedInUser != null) {// line 11
+"\n");// line 7, perfmain.html
+		if (loggedInUser != null) {// line 11, perfmain.html
 		p("	<div>\n" + 
-"	    Hello ");// line 11
-		p(loggedInUser.getUserName());// line 13
-		p(", You have ");// line 13
-		p(loggedInUser.getFriends().size());// line 13
+"	    Hello ");// line 11, perfmain.html
+		p(loggedInUser.getUserName());// line 13, perfmain.html
+		p(", You have ");// line 13, perfmain.html
+		p(loggedInUser.getFriends().size());// line 13, perfmain.html
 		p(" friends\n" + 
-"	</div>\n");// line 13
-		}// line 15
+"	</div>\n");// line 13, perfmain.html
+		}// line 15, perfmain.html
 		p("\n" + 
 "<h1>Entries</h1>\n" + 
-"    ");// line 15
-		doLayout();// line 18
+"    ");// line 15, perfmain.html
+		doLayout();// line 18, perfmain.html
 		p("</body>\n" + 
-"</html>\n");// line 18
+"</html>\n");// line 18, perfmain.html
 				endDoLayout(sourceTemplate);	}
 	 protected void title() {};
 

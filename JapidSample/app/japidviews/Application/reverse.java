@@ -66,7 +66,7 @@ public class reverse extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/reverse.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -78,13 +78,13 @@ public class reverse extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 //------
 p("\n" + 
-"<a href=\"");// line 1
-		p(lookup("validate", "bran"));// line 2
+"<a href=\"");// line 1, reverse.html
+		p(lookup("validate", "bran"));// line 2, reverse.html
 		p("\">simple reverse lookup</a>\n" + 
-"<a href=\"");// line 2
-		p(lookupAbs("validate", "bran", 12));// line 3
+"<a href=\"");// line 2, reverse.html
+		p(lookupAbs("validate", "bran", 12));// line 3, reverse.html
 		p("\">simple reverse lookup with absolute url</a>\n" + 
-"\n");// line 3
+"\n");// line 3, reverse.html
 		
 		endDoLayout(sourceTemplate);
 	}

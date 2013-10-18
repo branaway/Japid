@@ -64,11 +64,11 @@ public class Set extends japidviews._layouts.SetLayout
 	}
 ////// end of named args stuff
 
-	private String a; // line 2
+	private String a; // line 2, japidviews/templates/Set.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/templates/Set.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,22 +79,22 @@ public class Set extends japidviews._layouts.SetLayout
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-p("\n");// line 2
+;// line 1, Set.html
+p("\n");// line 2, Set.html
 		p("\n" + 
-"\n");// line 11
+"\n");// line 11, Set.html
 		p("\n" + 
-"\n");// line 13
+"\n");// line 13, Set.html
 
-// line 17
+// line 17, Set.html
 		
 		endDoLayout(sourceTemplate);
 	}
 
 	@Override protected void footer() {
-		// line 17
-		p("    great footer. Call a tag: ");// line 17
-		final dummyTag _dummyTag2 = new dummyTag(getOut()); _dummyTag2.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag2.render("me"); // line 18// line 18
+		// line 17, Set.html
+		p("    great footer. Call a tag: ");// line 17, Set.html
+		final dummyTag _dummyTag2 = new dummyTag(getOut()); _dummyTag2.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag2.render("me"); // line 18, Set.html// line 18, Set.html
 ;
 	}
 	@Override protected void title() {

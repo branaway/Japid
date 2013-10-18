@@ -65,11 +65,11 @@ public class picka extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
-	private String a; // line 1
-	private String b; // line 1
+	private String a; // line 1, japidviews/_tags/picka.html
+	private String b; // line 1, japidviews/_tags/picka.html
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 1, japidviews/_tags/picka.html
 }
 
 	private DoBody body;
@@ -92,14 +92,14 @@ public static interface DoBody<A> {
 		this.a = a;
 		this.b = b;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/picka.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(String a,String b) {
 		this.a = a;
 		this.b = b;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/picka.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -110,25 +110,25 @@ public static interface DoBody<A> {
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, picka.html
 		p("<p>\n" + 
-"some text: ");// line 1
-		p(a);// line 3
+"some text: ");// line 1, picka.html
+		p(a);// line 3, picka.html
 		p(" \n" + 
 "</p>\n" + 
-"<p>\n");// line 3
-		if (body != null){ body.setBuffer(getOut()); body.render(a + b); body.resetBuffer();}// line 6
-		p("</p>\n");// line 6
-		String x = renderBody("xxx" );// line 8
-		p("[");// line 8
-		p(x);// line 9
+"<p>\n");// line 3, picka.html
+		if (body != null){ body.setBuffer(getOut()); body.render(a + b); body.resetBuffer();}// line 6, picka.html
+		p("</p>\n");// line 6, picka.html
+		String x = renderBody("xxx" );// line 8, picka.html
+		p("[");// line 8, picka.html
+		p(x);// line 9, picka.html
 		p("]\n" + 
 "<p>\n" + 
-"more text: ");// line 9
-		p(b);// line 11
+"more text: ");// line 9, picka.html
+		p(b);// line 11, picka.html
 		p("\n" + 
 "</p>\n" + 
-" ");// line 11
+" ");// line 11, picka.html
 		
 		endDoLayout(sourceTemplate);
 	}

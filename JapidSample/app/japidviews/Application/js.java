@@ -67,7 +67,7 @@ public class js extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/js.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -78,12 +78,12 @@ public class js extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, js.html
 p("{\n" + 
 "    ok:\"ok2\",\n" + 
-"    content: ");// line 2
-		final jstag _jstag0 = new jstag(getOut()); _jstag0.setActionRunners(getActionRunners()).setOut(getOut()); _jstag0.render(); // line 5// line 5
-		p("}\n");// line 5
+"    content: ");// line 2, js.html
+		final jstag _jstag0 = new jstag(getOut()); _jstag0.setActionRunners(getActionRunners()).setOut(getOut()); _jstag0.render(); // line 5, js.html// line 5, js.html
+		p("}\n");// line 5, js.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -64,11 +64,11 @@ public class authorPanel extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private models.japidsample.Author a; // line 1
+	private models.japidsample.Author a; // line 1, japidviews/Application/authorPanel.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/authorPanel.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,20 +79,20 @@ public class authorPanel extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("<p>author name: ");// line 1
-		p(a.name);// line 2
+;// line 1, authorPanel.html
+		p("<p>author name: ");// line 1, authorPanel.html
+		p(a.name);// line 2, authorPanel.html
 		p("</p>\n" + 
-"<p>his birth date: ");// line 2
-		p(a.birthDate);// line 3
+"<p>his birth date: ");// line 2, authorPanel.html
+		p(a.birthDate);// line 3, authorPanel.html
 		p("</p>\n" + 
-"<p>and his is a '");// line 3
-		p(a.getGender());// line 4
+"<p>and his is a '");// line 3, authorPanel.html
+		p(a.getGender());// line 4, authorPanel.html
 		p("'</p>\n" + 
-"<div>\n");// line 4
-		final SampleTag _SampleTag0 = new SampleTag(getOut()); _SampleTag0.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag0.render("end"); // line 6// line 6
+"<div>\n");// line 4, authorPanel.html
+		final SampleTag _SampleTag0 = new SampleTag(getOut()); _SampleTag0.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag0.render("end"); // line 6, authorPanel.html// line 6, authorPanel.html
 		p("</div>\n" + 
-"    ");// line 6
+"    ");// line 6, authorPanel.html
 		
 		endDoLayout(sourceTemplate);
 	}

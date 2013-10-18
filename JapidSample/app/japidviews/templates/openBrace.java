@@ -66,7 +66,7 @@ public class openBrace extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/openBrace.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -84,38 +84,38 @@ p("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www
 "<title>Insert title here</title>\n" + 
 "</head>\n" + 
 "<body>\n" + 
-"<p>hello</p>\n");// line 1
-		int i = 3;// line 9
-if(asBoolean(true)) {// line 10
-    while (i-- > 0) {// line 11
-		p("        <p>in while ");// line 11
-		p(i);// line 12
+"<p>hello</p>\n");// line 1, openBrace.html
+		int i = 3;// line 9, openBrace.html
+if(asBoolean(true)) {// line 10, openBrace.html
+    while (i-- > 0) {// line 11, openBrace.html
+		p("        <p>in while ");// line 11, openBrace.html
+		p(i);// line 12, openBrace.html
 		p("</p>\n" + 
-"    ");// line 12
-		}// line 13
-		p("    <p>good2</p>\n");// line 13
-		}// line 15
+"    ");// line 12, openBrace.html
+		}// line 13, openBrace.html
+		p("    <p>good2</p>\n");// line 13, openBrace.html
+		}// line 15, openBrace.html
 		p("\n" + 
-"<p>\n");// line 15
-		for(i =0; i < 4; i++){// line 18
-		p("    ");// line 18
-		p(i);// line 19
-		p(", \n");// line 19
-		}// line 20
+"<p>\n");// line 15, openBrace.html
+		for(i =0; i < 4; i++){// line 18, openBrace.html
+		p("    ");// line 18, openBrace.html
+		p(i);// line 19, openBrace.html
+		p(", \n");// line 19, openBrace.html
+		}// line 20, openBrace.html
 		p("<p/>\n" + 
 "<p>good22</p>\n" + 
-"\n");// line 20
-		if (true) {// line 24
-		p("    <p>good 3</p>\n");// line 24
-		}// line 26
+"\n");// line 20, openBrace.html
+		if (true) {// line 24, openBrace.html
+		p("    <p>good 3</p>\n");// line 24, openBrace.html
+		}// line 26, openBrace.html
 		p("<p/>\n" + 
-"the result is ");// line 26
-		if(asBoolean(true)) {// line 28
-		p("got you!");// line 28
-		}// line 28
+"the result is ");// line 26, openBrace.html
+		if(asBoolean(true)) {// line 28, openBrace.html
+		p("got you!");// line 28, openBrace.html
+		}// line 28, openBrace.html
 		p(".\n" + 
 "</body>\n" + 
-"</html>");// line 28
+"</html>");// line 28, openBrace.html
 		
 		endDoLayout(sourceTemplate);
 	}

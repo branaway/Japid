@@ -64,11 +64,11 @@ public class foo extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String s; // line 1
+	private String s; // line 1, japidviews/more/SubController/foo.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/SubController/foo.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,16 +79,16 @@ public class foo extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, foo.html
 		p("\n" + 
-"what is foo ");// line 1
-		p(s);// line 3
+"what is foo ");// line 1, foo.html
+		p(s);// line 3, foo.html
 		p("? \n" + 
-"\n");// line 3
+"\n");// line 3, foo.html
 		p("\n" + 
-"\n");// line 5
-		final bar _bar0 = new bar(getOut()); _bar0.setActionRunners(getActionRunners()).setOut(getOut()); _bar0.render(); // line 7// line 7
-		;// line 7
+"\n");// line 5, foo.html
+		final bar _bar0 = new bar(getOut()); _bar0.setActionRunners(getActionRunners()).setOut(getOut()); _bar0.render(); // line 7, foo.html// line 7, foo.html
+		;// line 7, foo.html
 		
 		endDoLayout(sourceTemplate);
 	}

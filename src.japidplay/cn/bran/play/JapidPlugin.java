@@ -32,6 +32,7 @@ import play.mvc.Router;
 import play.mvc.Router.Route;
 import play.mvc.Scope.Flash;
 import play.mvc.results.Result;
+import play.templates.Template;
 import play.vfs.VirtualFile;
 import cn.bran.japid.compiler.JapidCompilationException;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
@@ -567,4 +568,18 @@ public class JapidPlugin extends PlayPlugin {
 	public void onInvocationException(Throwable e) {
 
 	}
+
+//	/* (non-Javadoc)
+//	 * @see play.PlayPlugin#loadTemplate(play.vfs.VirtualFile)
+//	 */
+//	@Override
+//	public Template loadTemplate(VirtualFile file) {
+//		Template t = new JapidPlayTemplate() {
+//			@Override
+//			protected String internalRender(Map<String, Object> args) {
+//				// TODO Auto-generated method stub
+//				return super.internalRender(args);
+//			}
+//		};
+//	}
 }

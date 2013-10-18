@@ -64,11 +64,11 @@ public class SimpleTemp_xml extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String blogTitle; // line 1
+	private String blogTitle; // line 1, japidviews/templates/SimpleTemp.xml
 	public cn.bran.japid.template.RenderResult render(String blogTitle) {
 		this.blogTitle = blogTitle;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/templates/SimpleTemp.xml
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -79,12 +79,12 @@ public class SimpleTemp_xml extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, SimpleTemp.xml
 		p("<xml>\n" + 
-"   <p>");// line 1
-		p(blogTitle);// line 3
+"   <p>");// line 1, SimpleTemp.xml
+		p(blogTitle);// line 3, SimpleTemp.xml
 		p("</p>\n" + 
-"</xml>");// line 3
+"</xml>");// line 3, SimpleTemp.xml
 		
 		endDoLayout(sourceTemplate);
 	}

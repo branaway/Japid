@@ -66,7 +66,7 @@ public class suppressNull extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/suppressNull.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,18 +77,18 @@ public class suppressNull extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p("\n");// line 1
+;// line 1, suppressNull.html
+		p("\n");// line 1, suppressNull.html
 
- String a = "a";// line 4
-		p("safe to do a.something: ");// line 4
-		try { p(a.length()); } catch (NullPointerException npe) {}// line 5
+ String a = "a";// line 4, suppressNull.html
+		p("safe to do a.something: ");// line 4, suppressNull.html
+		try { p(a.length()); } catch (NullPointerException npe) {}// line 5, suppressNull.html
 		p("\n" + 
-"\n");// line 5
-		 a = null;// line 7
-		p("safe to do a.something too: ");// line 7
-		try { p(a.length()); } catch (NullPointerException npe) {}// line 8
-		p("\n");// line 8
+"\n");// line 5, suppressNull.html
+		 a = null;// line 7, suppressNull.html
+		p("safe to do a.something too: ");// line 7, suppressNull.html
+		try { p(a.length()); } catch (NullPointerException npe) {}// line 8, suppressNull.html
+		p("\n");// line 8, suppressNull.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -33,11 +33,11 @@ public class a1 extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	}
 ////// end of named args stuff
 
-	private String a; // line 1
+	private String a; // line 1, japidviews/cn/bran/japid/template/FooControllerBare/a1.html
 	public String render(String a) {
 		this.a = a;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/cn/bran/japid/template/FooControllerBare/a1.html
 		 if (__t != -1) System.out.println("[a1] rendering time: " + __t);
 		return getOut().toString();
 	}
@@ -49,10 +49,10 @@ public class a1 extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		p(">");// line 1
-		p(a);// line 2
-		;// line 2
+;// line 1, a1.html
+		p(">");// line 1, a1.html
+		p(a);// line 2, a1.html
+		;// line 2, a1.html
 		
 		endDoLayout(sourceTemplate);
 	}

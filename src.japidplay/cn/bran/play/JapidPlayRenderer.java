@@ -791,7 +791,7 @@ public class JapidPlayRenderer {
 	 */
 	public static String render(Object... args) {
 		String templateName = findTemplate();
-		RenderResult r = JapidController2.getRenderResultWith(templateName, args);
+		RenderResult r = JapidController.getRenderResultWith(templateName, args);
 		return r.getText();
 	}
 
@@ -806,7 +806,7 @@ public class JapidPlayRenderer {
 	 * @return the result string
 	 */
 	public static String renderWith(String templateName, Object... args) {
-		RenderResult r = JapidController2.getRenderResultWith(templateName, args);
+		RenderResult r = JapidController.getRenderResultWith(templateName, args);
 		return r.getText();
 	}
 

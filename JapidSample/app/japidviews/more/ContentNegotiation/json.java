@@ -66,7 +66,7 @@ public class json extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/ContentNegotiation/json.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,9 +77,9 @@ public class json extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
+;// line 1, json.html
 		p("\n" + 
-"{\"a\":\"aaaa\"}");// line 1
+"{\"a\":\"aaaa\"}");// line 1, json.html
 		
 		endDoLayout(sourceTemplate);
 	}

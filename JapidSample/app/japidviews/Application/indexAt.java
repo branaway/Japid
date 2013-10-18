@@ -66,7 +66,7 @@ public class indexAt extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/indexAt.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -83,14 +83,14 @@ p("<h2>Some Samples that demonstrate Japid features.</h2>\n" +
 "source code.</p>\n" + 
 "\n" + 
 "<ul>\n" + 
-"	<li><a href=\"");// line 1
-		p(lookup("hello", new Object[]{}));// line 7
+"	<li><a href=\"");// line 1, indexAt.html
+		p(lookup("hello", new Object[]{}));// line 7, indexAt.html
 		p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
 "	<li><a href=\"/application/callTag\">using tags in a template</a></li>\n" + 
 "	<li><a href=\"/renderJapidWith/templates/def.html\"><em>def</em>\n" + 
 "	tag: define a method that return a string that can be invoked from\n" + 
-"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 7
+"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 7, indexAt.html
 		p("\n" + 
 "	<li><a href=\"/more.Portlets/index\">demo how to composite a\n" + 
 "	page with independent segments with the <b>invoke</b> tag</a>\n" + 
@@ -132,10 +132,10 @@ p("<h2>Some Samples that demonstrate Japid features.</h2>\n" +
 "	<li><a href=\"/application/in\">action forwarding with\n" + 
 "	dontRedirect() from JapidController</a></li>\n" + 
 "	<li><a href=\"/renderJapidWith/templates/openBrace.html\"> use { in if and while </a></li>\n" + 
-"	<li><a href=\"/application/escapedExpr\"> ");// line 16
+"	<li><a href=\"/application/escapedExpr\"> ");// line 16, indexAt.html
 		p("\n" + 
 "	raw expression with ${} and html-safe expression with ~{}\n" + 
-"	");// line 57
+"	");// line 57, indexAt.html
 		p("	</li>\n" + 
 "	<li><a href=\"/more.ContentNegotiation/index\"> content\n" + 
 "	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
@@ -150,34 +150,34 @@ p("<h2>Some Samples that demonstrate Japid features.</h2>\n" +
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
 "\n" + 
-"    ");// line 59
-		String na = "bran";// line 74
-    int ag = 123;// line 75
+"    ");// line 59, indexAt.html
+		String na = "bran";// line 74, indexAt.html
+    int ag = 123;// line 75, indexAt.html
 		p("	\n" + 
-"	<li><a href=\"");// line 75
-		p(lookup("validate", na, ag));// line 77
+"	<li><a href=\"");// line 75, indexAt.html
+		p(lookup("validate", na, ag));// line 77, indexAt.html
 		p("\">validation and errors</a></li>\n" + 
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"/application/flashgood\">flash with success</a></li>\n" + 
 "			<li><a href=\"/application/flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"/application/flashmsg\">flash with a message</a></li>\n" + 
-"			<li><a href=\"");// line 77
-		p(lookup("reverseUrl", new Object[]{}));// line 83
+"			<li><a href=\"");// line 77, indexAt.html
+		p(lookup("reverseUrl", new Object[]{}));// line 83, indexAt.html
 		p("\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
-"	   ");// line 83
-		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 87
-		p("	   <a href=\"");// line 87
-		p(lookup("search", sp));// line 88
+"	   ");// line 83, indexAt.html
+		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 87, indexAt.html
+		p("	   <a href=\"");// line 87, indexAt.html
+		p(lookup("search", sp));// line 88, indexAt.html
 		p("\">reverse URL lookup with complex object</a>\n" + 
 "	</li>\n" + 
-"    ");// line 88
+"    ");// line 88, indexAt.html
 		p("\n" + 
 "</ul>\n" + 
-"\n");// line 91
+"\n");// line 91, indexAt.html
 		
 		endDoLayout(sourceTemplate);
 	}

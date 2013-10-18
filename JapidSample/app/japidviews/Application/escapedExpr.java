@@ -66,7 +66,7 @@ public class escapedExpr extends cn.bran.play.JapidTemplateBase
 
 	public cn.bran.japid.template.RenderResult render() {
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} 
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/escapedExpr.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -77,19 +77,19 @@ public class escapedExpr extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		 String a = "a&b>";// line 1
-		p("hello ");// line 1
-		p(a);// line 2
-		p(", ");// line 2
-		p(escape(a));// line 2
-		p(", ");// line 2
-		p(a);// line 2
-		p(" and ");// line 2
-		p(escape(a));// line 2
-		p(" and ");// line 2
-		p(escape(a));// line 2
-		;// line 2
+;// line 1, escapedExpr.html
+		 String a = "a&b>";// line 1, escapedExpr.html
+		p("hello ");// line 1, escapedExpr.html
+		p(a);// line 2, escapedExpr.html
+		p(", ");// line 2, escapedExpr.html
+		p(escape(a));// line 2, escapedExpr.html
+		p(", ");// line 2, escapedExpr.html
+		p(a);// line 2, escapedExpr.html
+		p(" and ");// line 2, escapedExpr.html
+		p(escape(a));// line 2, escapedExpr.html
+		p(" and ");// line 2, escapedExpr.html
+		p(escape(a));// line 2, escapedExpr.html
+		;// line 2, escapedExpr.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -17,17 +17,17 @@ public abstract class main extends cn.bran.japid.template.JapidTemplateBaseWitho
 	public main(StringBuilder out) {
 		super(out);
 	}
-	private String x; // line 1
+	private String x; // line 1, japidviews/_layouts/main.html
 	 public void layout(String x) {
 		this.x = x;
-		beginDoLayout(sourceTemplate);		;// line 1
-		p("<head>");// line 1
-		title();p(" - ");// line 2
-		p(x);// line 2
+		beginDoLayout(sourceTemplate);		;// line 1, main.html
+		p("<head>");// line 1, main.html
+		title();p(" - ");// line 2, main.html
+		p(x);// line 2, main.html
 		p("</head>\n" + 
-"<body>");// line 2
-		doLayout();// line 3
-		p("</body>\n");// line 3
+"<body>");// line 2, main.html
+		doLayout();// line 3, main.html
+		p("</body>\n");// line 3, main.html
 				endDoLayout(sourceTemplate);	}
 	 protected void title() {};
 

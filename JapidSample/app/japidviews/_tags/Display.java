@@ -65,11 +65,11 @@ public class Display extends TagLayout
 ////// end of named args stuff
 
 	{ setHasDoBody(); }
-	private models.japidsample.Post post; // line 2
-	private String as; // line 2
+	private models.japidsample.Post post; // line 2, japidviews/_tags/Display.html
+	private String as; // line 2, japidviews/_tags/Display.html
 public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {
     Object[] args = buildArgs(named, body);
-    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 2
+    try {return runRenderer(args);} catch(RuntimeException e) {handleException(e); throw e;} // line 2, japidviews/_tags/Display.html
 }
 
 	private DoBody body;
@@ -92,14 +92,14 @@ public static interface DoBody<A> {
 		this.post = post;
 		this.as = as;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/_tags/Display.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as) {
 		this.post = post;
 		this.as = as;
 		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/_tags/Display.html
 		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
 	}
 
@@ -110,29 +110,29 @@ public static interface DoBody<A> {
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 //------
-;// line 1
-		;// line 1
+;// line 1, Display.html
+		;// line 1, Display.html
 		p("<div class=\"divvy\">\n" + 
-"	<p>title: ");// line 4
-		p(post.getTitle());// line 6
+"	<p>title: ");// line 4, Display.html
+		p(post.getTitle());// line 6, Display.html
 		p("</p>\n" + 
-"	<p>at: ");// line 6
-		p(format(post.getPostedAt(), ("yy-MMM-dd")));// line 7
+"	<p>at: ");// line 6, Display.html
+		p(format(post.getPostedAt(), ("yy-MMM-dd")));// line 7, Display.html
 		p("</p>\n" + 
-"	<p>by: ");// line 7
-		p(post.getAuthor().name);// line 8
-		p(", ");// line 8
-		p(post.getAuthor().gender);// line 8
+"	<p>by: ");// line 7, Display.html
+		p(post.getAuthor().name);// line 8, Display.html
+		p(", ");// line 8, Display.html
+		p(post.getAuthor().gender);// line 8, Display.html
 		p("</p>\n" + 
 "	<p class=\"try again using a simple syntax\">\n" + 
-"        ");// line 8
+"        ");// line 8, Display.html
 		p("\n" + 
-"        ");// line 10
+"        ");// line 10, Display.html
 		p("\n" + 
-"	   ");// line 11
-		if (body != null){ body.setBuffer(getOut()); body.render(post.getTitle() + "!"); body.resetBuffer();}// line 12
+"	   ");// line 11, Display.html
+		if (body != null){ body.setBuffer(getOut()); body.render(post.getTitle() + "!"); body.resetBuffer();}// line 12, Display.html
 		p("	</p>\n" + 
-"</div>");// line 12
+"</div>");// line 12, Display.html
 		
 		endDoLayout(sourceTemplate);
 	}
