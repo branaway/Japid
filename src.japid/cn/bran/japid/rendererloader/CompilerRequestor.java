@@ -66,7 +66,7 @@ final class CompilerRequestor implements ICompilerRequestor {
 	            throw new JapidCompilationException(
 	            		tmpl, 
 	            		DirUtil.mapJavaLineToSrcLine(rc.getSourceCode(), problem.getSourceLineNumber()), 
-	            		message
+	            		message + " while compiling " + className
 	            		);
 	        }
 	    }
@@ -91,7 +91,7 @@ final class CompilerRequestor implements ICompilerRequestor {
 	        	if (cname.contains("$")) {
 	        		// inner class
 	        		rc = new RendererClass();
-	        		rc.className = cname;
+	        		rc.setClassName(cname);
 	        		this.rendererCompiler.japidClasses.put(cname, rc);
 	        	}
 	        	else {

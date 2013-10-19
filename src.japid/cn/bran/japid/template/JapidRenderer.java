@@ -41,6 +41,22 @@ public class JapidRenderer {
 	 * @param name
 	 * @return
 	 */
+	public static RendererClass getFunctionalRendererClass(String name) {
+
+		refreshClasses();
+
+		RendererClass rc = classes.get(name);
+		if (rc == null)
+			throw new RuntimeException("renderer class not found: " + name);
+		else {
+			Class<? extends JapidTemplateBaseWithoutPlay> cls = rc.getClz();
+			if (cls == null) {
+				loadRendererClass(rc);
+			}
+		}
+		return rc;
+	}
+
 	public static Class<? extends JapidTemplateBaseWithoutPlay> getClass(String name) {
 
 		refreshClasses();
@@ -49,34 +65,34 @@ public class JapidRenderer {
 		if (rc == null)
 			throw new RuntimeException("renderer class not found: " + name);
 		else {
-			try {
-				Class<? extends JapidTemplateBaseWithoutPlay> cls = rc.getClz();
-				if (cls != null) {
-					return cls;
-				}
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+			Class<? extends JapidTemplateBaseWithoutPlay> cls = rc.getClz();
+			return cls != null ? cls :loadRendererClass(rc);
 		}
 
-		// always clear the mark to reload all
-		for (String c : classes.keySet()) {
-			RendererClass rendererClass = classes.get(c);
-			rendererClass.setLastUpdated(0);
-		}
-		
-		// the template may refer to model classes etc available only from the parent class loader
+		// not useful
+		// // always clear the mark to reload all
+		// for (String c : classes.keySet()) {
+		// RendererClass rendererClass = classes.get(c);
+		// rendererClass.setLastUpdated(0);
+		// }
+
+	}
+
+	private static Class<? extends JapidTemplateBaseWithoutPlay> loadRendererClass(RendererClass rc) {
+		// the template may refer to model classes etc available only from the
+		// parent class loader
 		ClassLoader cl = _parentClassLoader == null ? JapidRenderer.class.getClassLoader() : _parentClassLoader;
-		// do I need to new instance of TemplateClassLoader for each invocation? likely...
+		// do I need to new instance of TemplateClassLoader for each invocation?
+		// likely...
 		TemplateClassLoader classReloader = new TemplateClassLoader(cl);
 		try {
-			Class<JapidTemplateBaseWithoutPlay> loadClass = (Class<JapidTemplateBaseWithoutPlay>) classReloader.loadClass(name);
+			Class<JapidTemplateBaseWithoutPlay> loadClass = (Class<JapidTemplateBaseWithoutPlay>) classReloader
+					.loadClass(rc.getClassName());
 			rc.setClz(loadClass);
 			return loadClass;
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		}
-
 	}
 
 	static boolean timeToRefresh() {
@@ -84,7 +100,7 @@ public class JapidRenderer {
 			if (!isDevMode())
 				return false;
 		}
-		
+
 		long now = System.currentTimeMillis();
 		if (now - lastRefreshed > refreshInterval) {
 			lastRefreshed = now;
@@ -128,11 +144,12 @@ public class JapidRenderer {
 					RendererClass rendererClass = classes.get(className);
 					if (rendererClass == null) {
 						// this should not happen, since
-						throw new RuntimeException("any new key should have been in the classes container: " + className);
+						throw new RuntimeException("any new key should have been in the classes container: "
+								+ className);
 						// rendererClass = newRendererClass(className);
 						// classes.put(className, rendererClass);
 					}
-					rendererClass.setSourceCode(readSource(f));
+					setSources(rendererClass, f);
 					removeInnerClasses(className);
 					cleanClassHolder(rendererClass);
 				}
@@ -144,7 +161,7 @@ public class JapidRenderer {
 				RendererClass rc = classes.get(k);
 				if (rc.getSourceCode() == null) {
 					if (!rc.getClassName().contains("$")) {
-						rc.setSourceCode(getSourceCode(k));
+						setSources(rc, getJavaSrcFile(k));
 						cleanClassHolder(rc);
 						updatedClasses.add(k);
 					} else {
@@ -271,10 +288,15 @@ public class JapidRenderer {
 	}
 
 	static String getSourceCode(String k) {
+		File f = getJavaSrcFile(k);
+		return readSource(f);
+	}
+
+	private static File getJavaSrcFile(String k) {
 		String pathname = templateRoot + sep + k;
 		pathname = pathname.replace(".", sep);
 		File f = new File(pathname + ".java");
-		return readSource(f);
+		return f;
 	}
 
 	/**
@@ -447,9 +469,9 @@ public class JapidRenderer {
 		// moved to reloadChanged
 		List<File> changedFiles = reloadChanged(packageRoot);
 		if (changedFiles.size() > 0) {
-//			for (File f : changedFiles) {
-//				// log("updated: " + f.getName().replace("html", "java"));
-//			}
+			// for (File f : changedFiles) {
+			// // log("updated: " + f.getName().replace("html", "java"));
+			// }
 		} else {
 			log("All java files are up to date.");
 		}
@@ -648,6 +670,13 @@ public class JapidRenderer {
 		return JapidPlainController.renderWith(cls, args);
 	}
 
+	public static void setSources(RendererClass rc, File f) {
+		rc.setSourceCode(readSource(f));
+		File srcFile = DirUtil.mapJavatoSrc(f);
+		rc.setOriSourceCode(readSource(srcFile));
+		rc.setSrcFile(srcFile);
+	}
+
 	/**
 	 * The <em>required</em> initialization step in using the JapidRender.
 	 * 
@@ -665,10 +694,12 @@ public class JapidRenderer {
 	 *            the minimal time, in second, that must elapse before trying to
 	 *            detect any changes in the file system.
 	 * @param usePlay
-	 * 	           to indicate if the generated template classes are to be used with play.
-	 *            if true, Play's implicit objects are available in the japid script.  
+	 *            to indicate if the generated template classes are to be used
+	 *            with play. if true, Play's implicit objects are available in
+	 *            the japid script.
 	 */
-	public static void init(OpMode opMode, String templateRoot, int refreshInterval, ClassLoader parentClassLoader, boolean usePlay) {
+	public static void init(OpMode opMode, String templateRoot, int refreshInterval, ClassLoader parentClassLoader,
+			boolean usePlay) {
 		JapidRenderer.opMode = opMode;
 		setTemplateRoot(templateRoot);
 		setRefreshInterval(refreshInterval);
@@ -685,6 +716,7 @@ public class JapidRenderer {
 
 	/**
 	 * see the other init method
+	 * 
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 * @param opMode
 	 * @param templateRoot
@@ -694,8 +726,9 @@ public class JapidRenderer {
 	public static void init(OpMode opMode, String templateRoot, int refreshInterval, ClassLoader parentClassLoader) {
 		init(opMode, templateRoot, refreshInterval, parentClassLoader, false);
 	}
-	
+
 	private static ClassLoader _parentClassLoader = null;
+
 	/**
 	 * a facet method to wrap implicit template binding. The default template is
 	 * named as the class and method that immediately invoke this method. e.g.
@@ -727,7 +760,8 @@ public class JapidRenderer {
 	 * @param templateName
 	 *            The template must be rooted in the {templateRoot/}/japidviews
 	 *            tree. The template name starts with or without "japidviews".
-	 *            The naming pattern is the same as in ClassLoader.getResource(). 
+	 *            The naming pattern is the same as in
+	 *            ClassLoader.getResource().
 	 * @param args
 	 * @return the result string
 	 */

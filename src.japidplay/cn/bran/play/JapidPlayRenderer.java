@@ -27,6 +27,7 @@ import cn.bran.japid.compiler.TranslateTemplateTask;
 import cn.bran.japid.exceptions.JapidTemplateException;
 import cn.bran.japid.rendererloader.RendererClass;
 import cn.bran.japid.rendererloader.RendererCompiler;
+import cn.bran.japid.template.JapidRenderer;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.japid.util.DirUtil;
@@ -179,7 +180,7 @@ public class JapidPlayRenderer {
 						// classes.put(className, rendererClass);
 					}
 					
-					setSources(rendererClass, f);
+					JapidRenderer.setSources(rendererClass, f);
 					removeInnerClasses(className);
 					cleanClassHolder(rendererClass);
 				}
@@ -193,7 +194,7 @@ public class JapidPlayRenderer {
 					if (!rc.getClassName().contains("$")) {
 						String pathname = defaultTemplateRoot + sep + k.replace(".", sep);
 						File f = new File(pathname + ".java");
-						setSources(rc, f);
+						JapidRenderer.setSources(rc, f);
 						cleanClassHolder(rc);
 						updatedClasses.add(k);
 					} else {
@@ -243,13 +244,6 @@ public class JapidPlayRenderer {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	private static void setSources(RendererClass rc, File f) {
-		rc.setSourceCode(readSource(f));
-		File srcFile = DirUtil.mapJavatoSrc(f);
-		rc.setOriSourceCode(readSource(srcFile));
-		rc.setSrcFile(srcFile);
 	}
 
 	public static void removeInnerClasses(String className) {
@@ -354,7 +348,7 @@ public class JapidPlayRenderer {
 		return rc;
 	}
 
-	static String readSource(File f) {
+	public static String readSource(File f) {
 		try {
 			FileInputStream fis = new FileInputStream(f);
 			BufferedInputStream bis = new BufferedInputStream(fis);

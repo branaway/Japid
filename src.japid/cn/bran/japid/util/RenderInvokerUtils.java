@@ -15,10 +15,7 @@ public class RenderInvokerUtils {
 
 	public static <T extends JapidTemplateBaseWithoutPlay> Object render(T t, Object... args)
 			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		if (args == null) {
-			// treat it as a single null argument
-			args = new Object[] { null };
-		}
+		args = cleanArgs(args);
 
 		Method m = t.renderMethodInstance;
 		if (m == null) {
@@ -27,6 +24,14 @@ public class RenderInvokerUtils {
 		}
 		Object invoke = m.invoke(t, args);
 		return invoke;
+	}
+
+	private static Object[] cleanArgs(Object... args) {
+		if (args == null) {
+			// treat it as a single null argument
+			args = new Object[] { null };
+		}
+		return args;
 	}
 
 	public static <T extends JapidTemplateBaseWithoutPlay> Object renderWithNamedArgs(T t, NamedArgRuntime... args)
@@ -130,5 +135,20 @@ public class RenderInvokerUtils {
 				throw new RuntimeException("Could not invoke the template object: ", e);
 			// throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param apply
+	 * @param args
+	 * @return
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 */
+	public static Object renderWithApply(Method apply, Object[] args) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		args = cleanArgs(args);
+		return apply.invoke(null, args);
+		
 	}
 }

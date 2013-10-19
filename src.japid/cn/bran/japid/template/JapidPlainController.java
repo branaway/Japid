@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import cn.bran.japid.rendererloader.RendererClass;
 import cn.bran.japid.util.RenderInvokerUtils;
 
 /**
@@ -179,31 +180,52 @@ class JapidPlainController {
 			template = template.substring(0, template.length() - HTML.length());
 		}
 
-		String templateClassName = template.startsWith(JAPIDVIEWS_ROOT) ?
-					template :
-					JAPIDVIEWS_ROOT + File.separator + template;
+		String templateClassName = template.startsWith(JAPIDVIEWS_ROOT) ? template : JAPIDVIEWS_ROOT + File.separator
+				+ template;
 
 		templateClassName = templateClassName.replace('/', DOT).replace('\\', DOT);
 
 		Class<? extends JapidTemplateBaseWithoutPlay> tClass = null;
 
-//		if (JapidRenderer.isDevMode())
-			tClass = JapidRenderer.getClass(templateClassName);
-//		else
-//			try {
-//				tClass = (Class<? extends JapidTemplateBaseWithoutPlay>)
-//						JapidPlainController.class.getClassLoader().loadClass(templateClassName);
-//			} catch (ClassNotFoundException e) {
-//				throw new RuntimeException(e);
-//			}
-
-		if (tClass == null) {
+		// tClass = JapidRenderer.getClass(templateClassName);
+		//
+		// if (tClass == null) {
+		// String templateFileName = templateClassName.replace(DOT, '/') + HTML;
+		// throw new
+		// RuntimeException("Could not find a Japid template with the name of: "
+		// + templateFileName);
+		// } else {
+		// // render(tClass, args);
+		// String rr = invokeRender(tClass, args);
+		// return rr;
+		// }
+		RendererClass rc = JapidRenderer.getFunctionalRendererClass(templateClassName);
+		if (rc == null) {
 			String templateFileName = templateClassName.replace(DOT, '/') + HTML;
 			throw new RuntimeException("Could not find a Japid template with the name of: " + templateFileName);
 		} else {
-			// render(tClass, args);
-			String rr = invokeRender(tClass, args);
+			String rr = invokeRender(rc, args);
 			return rr;
+		}
+
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param rc
+	 * @param args
+	 * @return
+	 */
+	private static String invokeRender(RendererClass rc, Object[] args) {
+		try {
+			Method apply = rc.getApplyMethod();
+			String rr = (String) RenderInvokerUtils.renderWithApply(apply, args);
+			return rr;
+		} catch (Exception e) {
+			if (e instanceof RuntimeException)
+				throw (RuntimeException) e;
+			else
+				throw new RuntimeException("Could not invoke the template object: " + e);
 		}
 	}
 

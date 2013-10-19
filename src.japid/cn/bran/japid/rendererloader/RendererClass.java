@@ -8,12 +8,12 @@ import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.util.DirUtil;
 
 public class RendererClass {
-	String className;
-	String sourceCode; // the java file
-	String oriSourceCode; // japid source
+	private String className;
+	private String sourceCode; // the java file
+	private String oriSourceCode; // japid source
 	
-	long lastUpdated;
-	byte[] bytecode;
+	private long lastUpdated;
+	private byte[] bytecode;
 	Class<? extends JapidTemplateBaseWithoutPlay> clz;
 	ClassLoader cl;
 	private File srcFile; // the original template source file
@@ -44,9 +44,7 @@ public class RendererClass {
 	public void setSourceCode(String sourceCode) {
 		this.sourceCode = sourceCode;
 	}
-	public long getLastUpdates() {
-		return lastUpdated;
-	}
+
 	public void setLastUpdated(long lastUpdates) {
 		this.lastUpdated = lastUpdates;
 	}

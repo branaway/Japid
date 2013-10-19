@@ -73,7 +73,7 @@ public class TemplateClassLoader extends ClassLoader {
 		// System.out.println("[TemplateClassLoader] loading: " + name);
 		RendererClass rc = getJapidRendererClassWrapper(name);
 
-		byte[] bytecode = rc.bytecode;
+		byte[] bytecode = rc.getBytecode();
 
 		if (bytecode == null) {
 			throw new RuntimeException(oid + " could not find the bytecode for: " + name);
@@ -97,12 +97,12 @@ public class TemplateClassLoader extends ClassLoader {
 				}
 			}
 		}
-		if (!gotApply) {
-			JapidFlags.error("could not find the apply() with japid class: " + cl.getCanonicalName()); 
+		if (!gotApply && !name.contains("$")) {
+			JapidFlags.warn("could not find the apply() with japid class: " + name); 
 		}
 		
 		localClasses.put(name, cl);
-		rc.lastUpdated = 1;// System.currentTimeMillis();
+		rc.setLastUpdated(1);// System.currentTimeMillis();
 //		if (JapidFlags.verbose) 
 //			System.out.println(oid + "class redefined from bytecode: " + name);
 		return cl;

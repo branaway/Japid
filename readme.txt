@@ -2,7 +2,7 @@
 
                     Bing Ran<bing_ran@hotmail.com>
                     
-Latest version: 0.9.31
+Latest version: 0.9.32
 
 * Links:
 
@@ -45,6 +45,8 @@ repositories:
         contains:
             - cn.bran -> *
 </code>
+
+*Note 4: "play bm" to build the module. The module version is in the build.xml. "git push" to publish the module in the github.
 
 * Version History:
 
