@@ -16,10 +16,13 @@ package cn.bran.japid.template;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -569,5 +572,27 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	 */
 	protected void continueLoop() {
 		throw new ContinueLoop();
+	}
+	
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param strings
+	 * @return
+	 */
+	protected static int getCollectionSize(Object col) {
+		
+		if (col instanceof Collection) {
+			return ((Collection)col).size();
+		}
+		
+		if (col.getClass().isArray()) {
+			return Array.getLength(col);
+		}
+		
+		if (col instanceof Iterable || col instanceof Iterator) {
+			return -1;
+		}
+
+		return -1;
 	}
 }

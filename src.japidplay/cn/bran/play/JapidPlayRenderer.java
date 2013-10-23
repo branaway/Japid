@@ -1,5 +1,7 @@
 package cn.bran.play;
 
+import japidviews.error500ForPlay;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -884,5 +886,11 @@ public class JapidPlayRenderer {
 	public static Class<? extends JapidTemplateBaseWithoutPlay> getErrorRendererClass() {
 //		return devErrorClass;
 		return japidviews.devError.class;
+	}
+	
+	public static String renderPlayException(Exception e) {
+		Exception exp = cn.bran.play.util.PlayExceptionUtils.mapJapidJavaCodeError(e);
+		RenderResult rr = error500ForPlay.apply(exp);
+		return rr.toString();
 	}
 }

@@ -1,3 +1,4 @@
+//version: 0.9.35
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -94,10 +95,11 @@ p("\n" +
 		p("\n" + 
 "<p>got it?</p>\n" + 
 "\n");// line 15, verbatim.html
-		String[] ss = new String[]{"a", "b"};// line 18, verbatim.html
-final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 19, verbatim.html
-ss, new Each.DoBody<String>(){ // line 19, verbatim.html
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 19, verbatim.html
+		final String[] ss = new String[]{"a", "b"};// line 18, verbatim.html
+new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (String s : ss) {
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ss); _isLast = (_size < 0 ? null : _index == _size);
 // line 19, verbatim.html
 		p("    <p>loop: ");// line 19, verbatim.html
 		p(s);// line 20, verbatim.html
@@ -109,21 +111,8 @@ public void render(final String s, final int _size, final int _index, final bool
 		;// line 23, verbatim.html
 		
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 19, verbatim.html
+}}.run();
+// line 19, verbatim.html
 		
 		endDoLayout(sourceTemplate);
 	}

@@ -380,4 +380,8 @@ public class Application extends JapidController {
 	public static void js() {
 		renderJapid();
 	}
+
+	public static void ps1() {
+		renderJapid();
+	}
 }

@@ -33,8 +33,8 @@ public class CompilerTests {
 
 	@Test
 	public void testOpenFor() throws IOException {
-		String src = readFile("JapidSample/app/japidviews/_layouts/Layout.html");
-		JapidTemplate bt = new JapidTemplate("tag/Layout.html", src);
+		String src = readFile("tests/openFor.html");
+		JapidTemplate bt = new JapidTemplate("tests/openFor.html", src);
 		JapidAbstractCompiler cp = new JapidLayoutCompiler();
 		cp.compile(bt);
 		System.out.println(bt.javaSource);

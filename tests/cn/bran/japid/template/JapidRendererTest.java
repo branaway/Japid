@@ -88,4 +88,12 @@ public class JapidRendererTest {
 		System.out.println(r);;
 		assertEquals("echo: " + UNI, r);
 	}
+
+	@Test
+	public void testOpenFor() {
+		JapidFlags.setLogLevelDebug();
+		JapidRenderer.init(OpMode.prod, "plainjapid", 1, null);
+		String r = JapidRenderer.renderWith("open_for");
+		System.out.println(r);;
+	}
 }

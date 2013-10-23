@@ -31,6 +31,7 @@ import cn.bran.japid.compiler.JapidAbstractCompiler;
 import cn.bran.japid.compiler.Tag;
 import cn.bran.japid.compiler.Tag.TagDef;
 import cn.bran.japid.template.ActionRunner;
+import cn.bran.japid.template.JapidRenderer;
 import cn.bran.japid.template.JapidTemplateBaseStreaming;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
@@ -44,6 +45,10 @@ import cn.bran.japid.util.DirUtil;
  * 
  */
 public abstract class AbstractTemplateClassMetaData {
+	/**
+	 * 
+	 */
+	public static final String VERSION_HEADER = "//version: ";
 	private static final String PUBLIC = "public ";
 	private static final String COMMA = ";";
 	private static final String SPACE = " ";
@@ -147,6 +152,7 @@ public abstract class AbstractTemplateClassMetaData {
 	 * 
 	 */
 	public void printHeaders() {
+		printVersion();
 		if (packageName != null) {
 			pln("package " + packageName + SEMI);
 		}
@@ -225,6 +231,13 @@ public abstract class AbstractTemplateClassMetaData {
 		pln("// Change to this file will be lost next time the template file is compiled.");
 		pln("//");
 
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 */
+	private void printVersion() {
+		pln (VERSION_HEADER + JapidRenderer.VERSION);
 	}
 
 	private boolean considerPlayDependency(String l) {

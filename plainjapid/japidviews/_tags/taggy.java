@@ -1,3 +1,4 @@
+//version: 0.9.35
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -57,9 +58,10 @@ public class taggy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 new taddy.DoBody<String[]>(){ // line 3, taggy.html
 public void render(final String[] ss) { // line 3, taggy.html
 // line 3, taggy.html
-    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 4, taggy.html
-ss, new Each.DoBody<String>(){ // line 4, taggy.html
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 4, taggy.html
+    new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (String s : ss) {
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ss); _isLast = (_size < 0 ? null : _index == _size);
 // line 4, taggy.html
 		p("    -> ");// line 4, taggy.html
 		p(s);// line 5, taggy.html
@@ -67,21 +69,8 @@ public void render(final String s, final int _size, final int _index, final bool
 "    ");// line 5, taggy.html
 		
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 4, taggy.html
+}}.run();
+// line 4, taggy.html
 
 }
 

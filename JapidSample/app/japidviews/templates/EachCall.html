@@ -1,7 +1,9 @@
-`args List<String> posts
+`stopwatch on
+`(List<String> posts)
 
 <p>
 The "each/Each" command is a for loop on steroid, with lots of loop information. 
+Now deprecated. 
 </p>
 
 <p> 
@@ -9,7 +11,7 @@ The instance variable is defined after the | line, the same way as any tag rende
 </p>
 
 `each posts | String p
-    <p>index: $_index, parity: $_parity, is odd? $_isOdd, is first? $_isFirst, is last? $_isLast, total size: $_size </p>
+    <p>index: $_index, is odd? $_isOdd, is first? $_isFirst, is last? $_isLast, total size: $_size </p>
     call a tag:  `tag SampleTag p
 `
 
@@ -17,19 +19,21 @@ The instance variable is defined after the | line, the same way as any tag rende
 
 <p> now we have an enhanced for loop (the "open for loop") that also makes all the loop properties available</p>
 
-` int k = 1;
+`int k = 1;
 `for String p : posts
     <p>index: $_index, parity: $_parity, is odd? $_isOdd, is first? $_isFirst, is last? $_isLast, total size: $_size </p>
-    call a tag:  `tag SampleTag p
+    call a tag:  `t SampleTag p
 `
 
+<p>the collection variable must be final</p>
 
-`int[] ints = {1, 2, 3, 4};
+`final int[] ints = {1, 2, 3, 4, 5};
 `for int i : ints
-    --> ~i
     `if (i == 2) {
-        `return; // this will work as continue
-    `} else {
-         :--
+        `continue;
+    `} else if (i == 5 ) {
+    	`break;
+    `}else {
+         ${i}>
     `}
 `

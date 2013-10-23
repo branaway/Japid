@@ -35,6 +35,7 @@ import play.mvc.results.Result;
 import play.templates.Template;
 import play.vfs.VirtualFile;
 import cn.bran.japid.compiler.JapidCompilationException;
+import cn.bran.japid.template.JapidRenderer;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.StringUtils;
@@ -69,15 +70,15 @@ public class JapidPlugin extends PlayPlugin {
 	public void onLoad() {
 		Logger.info("JapidPlugin.onload().");
 		if (Play.mode == Mode.DEV) {
-			Logger.info("[Japid] play in DEV mode. Detecting changes...");
+			Logger.info("[Japid] version " + JapidRenderer.VERSION + " in DEV mode. Detecting changes...");
 			beforeDetectingChanges();
 		} else {
 			String isPrecompiling = System.getProperty("precompile");
 			if (isPrecompiling != null && (isPrecompiling.equals("yes") || isPrecompiling.equals("true"))) {
-				Logger.info("[Japid] Running in PROD mode with precompiling: detect japid template changes.");
+				Logger.info("[Japid] version \" + JapidRenderer.VERSION + \" in PROD mode with precompiling: detect japid template changes.");
 				beforeDetectingChanges();
 			} else { // PROD mode and not pre-compile
-				Logger.info("[Japid] Running in PROD mode without pre-compiling. If the Japid templates have not been compiled to Java code, please run 'play japid:gen' before starting the application.");
+				Logger.info("[Japid] version \" + JapidRenderer.VERSION + \" in PROD mode without pre-compiling. If the Japid templates have not been compiled to Java code, please run 'play japid:gen' before starting the application.");
 			}
 		}
 		getDumpRequest();

@@ -47,7 +47,7 @@ public class DirUtilTest {
 		File src = new File("tests/testdir");
 		Set<File> fs = new HashSet<File>();
 		fs = DirUtil.getAllFiles(src, exts, fs);
-		assertEquals(9, fs.size());
+		assertEquals(10, fs.size());
 		for (File f : fs) {
 			String name = f.getPath();
 			assertTrue(name.endsWith(".java") || name.endsWith(".html"));

@@ -1,3 +1,4 @@
+//version: 0.9.35
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -90,9 +91,10 @@ this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 // line 2, openForInDef.html
-    final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 3, openForInDef.html
-new String[]{"aaa","bbb","ccc"}, new Each.DoBody<String>(){ // line 3, openForInDef.html
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 3, openForInDef.html
+    new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (String s : new String[]{"aaa","bbb","ccc"}) {
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(new String[]{"aaa","bbb","ccc"}); _isLast = (_size < 0 ? null : _index == _size);
 // line 3, openForInDef.html
 		p("      alert('");// line 3, openForInDef.html
 		p(s);// line 4, openForInDef.html
@@ -100,21 +102,8 @@ public void render(final String s, final int _size, final int _index, final bool
 "    ");// line 4, openForInDef.html
 		
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 3, openForInDef.html
+}}.run();
+// line 3, openForInDef.html
 
 this.setOut(ori);
 if (actionRunners.size() > 0) {

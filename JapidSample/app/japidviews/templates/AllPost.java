@@ -1,3 +1,4 @@
+//version: 0.9.35
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -92,9 +93,10 @@ public class AllPost extends Layout
 ;// line 2, AllPost.html
 		;// line 7, AllPost.html
 
-final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 12, AllPost.html
-allPost, new Each.DoBody<Post>(){ // line 12, AllPost.html
-public void render(final Post p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 12, AllPost.html
+new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (Post p : allPost) {
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(allPost); _isLast = (_size < 0 ? null : _index == _size);
 // line 12, AllPost.html
 		p("        ");// line 12, AllPost.html
 		p("\n" + 
@@ -127,21 +129,8 @@ public void resetBuffer() {
 , named("post", p), named("as", "home2"));// line 15, AllPost.html
 
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 12, AllPost.html
+}}.run();
+// line 12, AllPost.html
 
 final Tag2 _Tag23 = new Tag2(getOut()); _Tag23.setActionRunners(getActionRunners()).setOut(getOut()); _Tag23.render(named("msg", blogTitle), named("age", 100)); // line 20, AllPost.html// line 20, AllPost.html
 		p("\n" + 

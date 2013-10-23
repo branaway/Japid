@@ -1,6 +1,6 @@
 h1. The Quick Manual of Japid Engine with Play Framework
 
-V0.9.27
+V0.9.35
 
 Bing Ran<bing.ran@gmail.com>
 
@@ -68,13 +68,9 @@ Another great advantage in using this model is that errors in compiling or runni
   
 h2. Japid Module
 
-First you need to get yourself familiar with the "Play! module concept":
+github has become the official home of Japid at: *https://github.com/branaway/Japid*. The source code and distributions are  all there. 
 
-- http://www.playframework.org/documentation/1.2.2/modules 
-- http://www.playframework.org/documentation/1.2.2/dependency
-
-Since Play2.0, github has become the official home of Japid at: *https://github.com/branaway/Japid*. The source code and distributions are  all there. 
-
+The usage is described in the following section. 
 
 h3. Using dependencies.yml to manage Japid references. 
 
@@ -82,8 +78,8 @@ The *dependencies.yml* file in the conf directory is the place to reference the 
 
 <pre><code>
 require:
-    - cn.bran -> japid 0.9.27
-    - cn.bran -> japidplay 0.9.27
+    - cn.bran -> japid {the latest version}
+    - cn.bran -> japidplay {the latest version}
     - com.google.code.javaparser -> javaparser 1.0.8
   
 # My custom repositories
@@ -118,7 +114,7 @@ Now you're ready to code your models, controllers and Japid views! Every time yo
 
 h3. Runtime Directory Structure of Japid in Play! applications
 
-h4. Pre-Controller Intagration
+h4. Pre-Controller Integration
 
 All template files are located in @app/japidviews@ directory tree, as illustrated here:
 
@@ -559,11 +555,10 @@ or,
 `}
 </pre>
 
-Starting from version 0.7.1, the @for@ has an "open" form that gives template authors access to a few implicit variables related to the loop</code></pre>The variables are explained in the following section, but here is the syntax, basically you leave out the "()" and the "{}"
+The @for@ has an "open" form that gives template authors access to a few implicit variables related to the loop</code></pre>The variables are explained in the following section, but here is the syntax, basically you leave out the "()" and the "{}"
 
 <pre>
-`String[] names = ...;
-
+`final String[] names = ...;
 `for String name: names 
 
     Your name is: $name,
@@ -578,40 +573,18 @@ Starting from version 0.7.1, the @for@ has an "open" form that gives template au
  
 Notes:
 
-
-* Since this form involves multiple method dispatching, it's slower than the raw @for@ loop. But the difference is in microsecond scale and probably does not matter. 
+* The iteration target variable must be "final", unlike that in Java. Japid script arguments are already "final" thus you don't need to specify finals to them. 
+* Since this form involves multiple method dispatching, it's slightly slower than the raw @for@ loop. But the difference is in sub-microsecond scale and probably does not matter. 
 * you cannot use "{}" with the "open for loop". This is *invalid*:
 <pre>
 `for String name: names { 
     xxx
 `}
 </pre>
+
 * there is @_isOdd@ but there is no @_isEven@
 * @continue@ does not in open for loops, neither does @break@
 
-
-h3. Enhanced looping: @`each@
-
-Note: it's been deprecated in favor of the the "open for" format. 
-
-The @each@ command creates a loop construct that makes available additional looping attributes for the template authors to fine-tune the data rendering. For an example:
-
-<pre>
-`each names | String name
-    $name, $_size, $_index, $_parity $_isOdd $_isFirst $_isLast 
-`
-</pre>
-
-Note:
-
-# The @each@ block ends with a single ` sign on a whole new line.
-# In fact the above syntax is a standard way to invoke a @tag@ with a @callback body@. See later in @tag@ invocation. 
-# The variable @names@ is the collection to iterate on. It can be of any of the following Java type:
-## Collection
-## Iterator, in which case the _size property cannot be determined before hand and is given a value of -1.
-## Iterable, in which case the _size property cannot be determined before hand and is given a value of -1.
-## array of anything
-# The construct after the vertical line is the declaration of the instance variable for each round of iteration. The data type must present before the variable name. In the body of each we see a bunch of additional variables related to the current iteration:
 
 table{border: 1px dashed gray; cellspacing: 2px}.
 |_. Variable|_. Meaning|
@@ -681,7 +654,9 @@ Imagine what you have to do if without using this handy operator? Perhaps someth
 <pre>
 `args String name
 
-The name is: `if name` $name `else` empty! ` 
+The name is: `if name` $name `else` empty! `, or
+The name is: ${name != null? name :"empty!"}  
+
 </pre>
  
 This is a lot eye-stressing if you ask me. 
@@ -1818,6 +1793,37 @@ The current Play html editor is unfortunately not HTML-aware(something to improv
 
 
 
+
+h3. Displaying Template Errors
+
+It has been a pain to present the errors in Japid script compilation when one uses the "tight integration mode", i.e., storing the scripts in "app/japidviews/" and let Play's classloader to manage the Japid classes. The errors would only appear in the output console. The browser would only display a generic exceptin message.
+
+Since version 0.9.35, you can modify the default error displaying page to render japid compilation related errors nicely in the browser. Here is the sample code for your "app/views/errors/500.html"
+
+<pre><code>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>Application error</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+    </head>
+    <body>
+		#{if play.mode.name() == 'DEV'}
+			${cn.bran.play.JapidPlayRenderer.renderPlayException(exception).raw()}
+		#{/if}
+        #{else}
+        	<h1>Oops, an error occurred</h1>
+			<p>
+				This exception has been logged with id <strong>${exception.id}</strong>.
+			</p>
+        #{/else}
+    </body>
+</html>
+
+</code></pre>
+
+Note: you don't need to do this if you're using the standalone Japid mode. 
 
 h2. Debugging the Templates
 

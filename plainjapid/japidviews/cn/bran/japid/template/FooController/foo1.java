@@ -1,3 +1,4 @@
+//version: 0.9.35
 package japidviews.cn.bran.japid.template.FooController;
 import java.util.*;
 import java.io.*;

@@ -50,4 +50,6 @@ public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
 		this.actionRunners = actionRunners;
 		return this;
 	}
+
+
 }
