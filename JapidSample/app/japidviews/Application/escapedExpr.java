@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class escapedExpr extends cn.bran.play.JapidTemplateBase
 
 
 	public escapedExpr() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public escapedExpr(StringBuilder out) {
 		super(out);
 	}
+	public escapedExpr(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -66,9 +70,8 @@ public class escapedExpr extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/escapedExpr.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -77,19 +80,18 @@ public class escapedExpr extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, escapedExpr.html
 		 String a = "a&b>";// line 1, escapedExpr.html
 		p("hello ");// line 1, escapedExpr.html
 		p(a);// line 2, escapedExpr.html
 		p(", ");// line 2, escapedExpr.html
-		p(escape(a));// line 2, escapedExpr.html
+		try { Object o = escape(a); if (o.toString().length() ==0) { p(escape(null)); } else { p(o); } } catch (NullPointerException npe) { p(escape(null)); }// line 2, escapedExpr.html
 		p(", ");// line 2, escapedExpr.html
 		p(a);// line 2, escapedExpr.html
 		p(" and ");// line 2, escapedExpr.html
 		p(escape(a));// line 2, escapedExpr.html
 		p(" and ");// line 2, escapedExpr.html
-		p(escape(a));// line 2, escapedExpr.html
+		try { Object o = escape(a); if (o.toString().length() ==0) { p(escape(null)); } else { p(o); } } catch (NullPointerException npe) { p(escape(null)); }// line 2, escapedExpr.html
 		;// line 2, escapedExpr.html
 		
 		endDoLayout(sourceTemplate);

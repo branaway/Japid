@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36.1
 package japidviews.cn.bran.japid.template.FooController;
 import java.util.*;
 import java.io.*;
@@ -13,11 +13,15 @@ public class a1 extends main
 {
 	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/a1.html";
 	public a1() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public a1(StringBuilder out) {
 		super(out);
 	}
+	public a1(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
@@ -37,10 +41,8 @@ public class a1 extends main
 	private String a; // line 1, japidviews/cn/bran/japid/template/FooController/a1.html
 	public String render(String a) {
 		this.a = a;
-		long __t = -1;
 		try {super.layout(a + "1");} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/cn/bran/japid/template/FooController/a1.html
-		 if (__t != -1) System.out.println("[a1] rendering time: " + __t);
-		return getOut().toString();
+		return getRenderResult().toString();
 	}
 
 	public static String apply(String a) {
@@ -49,7 +51,6 @@ public class a1 extends main
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, a1.html
 p("\n");// line 3, a1.html
 		p(foo(a));// line 5, a1.html
@@ -70,7 +71,7 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 // line 7, a1.html
 		p("  -> a1-: ");// line 7, a1.html
-		final taggy _taggy2 = new taggy(getOut()); _taggy2.setOut(getOut()); _taggy2.render(ar); // line 8, a1.html// line 8, a1.html
+		new taggy(a1.this).render(ar); // line 8, a1.html// line 8, a1.html
 
 this.setOut(ori);
 	return sb.toString();

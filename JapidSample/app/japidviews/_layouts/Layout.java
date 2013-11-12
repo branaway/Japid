@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -44,20 +44,28 @@ public abstract class Layout extends cn.bran.play.JapidTemplateBase
 
 
 	public Layout() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public Layout(StringBuilder out) {
 		super(out);
 	}
+	public Layout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p(" I'm the layout.\n" + 
+		beginDoLayout(sourceTemplate);
+p(" I'm the layout.\n" + 
 "<p>The title is: ");// line 1, Layout.html
 		title();p("</p>\n" + 
 "<div >\n" + 
 "    ");// line 2, Layout.html
 		doLayout();// line 4, Layout.html
 		p("</div>\n");// line 4, Layout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void title() {};
 
 	protected abstract void doLayout();

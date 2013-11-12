@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 
 
 	public ifs2() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public ifs2(StringBuilder out) {
 		super(out);
 	}
+	public ifs2(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"i", "ss",  };
@@ -70,9 +74,8 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render(int i,String[] ss) {
 		this.i = i;
 		this.ss = ss;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/ifs2.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(int i,String[] ss) {
@@ -81,7 +84,6 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, ifs2.html
 		p("\n" + 
 "OK, the minimalism if-else statement, no parenthesis, no braces, like command \n" + 
@@ -117,12 +119,12 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 "    ");// line 31, ifs2.html
 		new Runnable() {public void run() {
 int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
-for (String s : ss) {
+for (String s : ss) { // line 33, ifs2.html
 	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ss); _isLast = (_size < 0 ? null : _index == _size);
 // line 33, ifs2.html
 		p("        call a tag\n" + 
 "        ");// line 33, ifs2.html
-		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s); // line 35, ifs2.html// line 35, ifs2.html
+		new SampleTag(ifs2.this).render(s); // line 35, ifs2.html// line 35, ifs2.html
     
 }
 }}.run();
@@ -134,12 +136,12 @@ for (String s : ss) {
 "    ");// line 38, ifs2.html
 		new Runnable() {public void run() {
 int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
-for (String s : ss) {
+for (String s : ss) { // line 39, ifs2.html
 	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ss); _isLast = (_size < 0 ? null : _index == _size);
 // line 39, ifs2.html
 		p("        call a tag\n" + 
 "        ");// line 39, ifs2.html
-		final SampleTag _SampleTag3 = new SampleTag(getOut()); _SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s); // line 41, ifs2.html// line 41, ifs2.html
+		new SampleTag(ifs2.this).render(s); // line 41, ifs2.html// line 41, ifs2.html
     
 }
 }}.run();

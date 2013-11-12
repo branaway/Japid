@@ -25,7 +25,7 @@ public class devError extends cn.bran.play.JapidTemplateBase
 
 
 	public devError() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public devError(StringBuilder out) {
 		super(out);

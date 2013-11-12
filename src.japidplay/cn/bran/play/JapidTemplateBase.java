@@ -31,10 +31,17 @@ import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
  * 
  * @author bran
  * 
- */ 
+ */
 public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
 	public JapidTemplateBase(StringBuilder out) {
 		super(out);
+	}
+
+	public JapidTemplateBase(JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+		if (caller instanceof JapidTemplateBase){
+			setActionRunners(((JapidTemplateBase)caller).getActionRunners());
+		}
 	}
 
 	/**
@@ -46,10 +53,14 @@ public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
 		return actionRunners;
 	}
 
-	public JapidTemplateBaseWithoutPlay setActionRunners(TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners) {
+	public JapidTemplateBaseWithoutPlay setActionRunners(
+			TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners) {
 		this.actionRunners = actionRunners;
 		return this;
 	}
 
+	protected cn.bran.japid.template.RenderResult getRenderResult() {
+		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), renderingTime, actionRunners, sourceTemplate);
+	}
 
 }

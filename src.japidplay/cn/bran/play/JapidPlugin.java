@@ -75,10 +75,10 @@ public class JapidPlugin extends PlayPlugin {
 		} else {
 			String isPrecompiling = System.getProperty("precompile");
 			if (isPrecompiling != null && (isPrecompiling.equals("yes") || isPrecompiling.equals("true"))) {
-				Logger.info("[Japid] version \" + JapidRenderer.VERSION + \" in PROD mode with precompiling: detect japid template changes.");
+				Logger.info("[Japid] version " + JapidRenderer.VERSION + " in PROD mode with precompiling: detect japid template changes.");
 				beforeDetectingChanges();
 			} else { // PROD mode and not pre-compile
-				Logger.info("[Japid] version \" + JapidRenderer.VERSION + \" in PROD mode without pre-compiling. If the Japid templates have not been compiled to Java code, please run 'play japid:gen' before starting the application.");
+				Logger.info("[Japid] version " + JapidRenderer.VERSION + " in PROD mode without pre-compiling. If the Japid templates have not been compiled to Java code, please run 'play japid:gen' before starting the application.");
 			}
 		}
 		getDumpRequest();

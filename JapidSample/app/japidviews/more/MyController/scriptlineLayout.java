@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -44,17 +44,25 @@ public abstract class scriptlineLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public scriptlineLayout() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public scriptlineLayout(StringBuilder out) {
 		super(out);
 	}
+	public scriptlineLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("the meta is  \"");// line 1, scriptlineLayout.html
+		beginDoLayout(sourceTemplate);
+p("the meta is  \"");// line 1, scriptlineLayout.html
 		meta();p("\"\n" + 
 "\n");// line 1, scriptlineLayout.html
 		doLayout();// line 3, scriptlineLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void meta() {};
 
 	protected abstract void doLayout();

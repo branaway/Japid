@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews;
 import java.util.*;
 import java.io.*;
@@ -45,17 +45,21 @@ public class myerror500 extends cn.bran.play.JapidTemplateBase
 
 
 	public myerror500() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public myerror500(StringBuilder out) {
 		super(out);
 	}
+	public myerror500(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"exp",  };
 	public static final String[] argTypes = new String[] {/* arg types of the template*/"Exception",  };
 	public static final Object[] argDefaults= new Object[] {null, };
-	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.error500ForPlay.class);
+	public static java.lang.reflect.Method renderMethod = getRenderMethod(japidviews.myerror500.class);
 
 	{
 		setRenderMethod(renderMethod);
@@ -69,18 +73,16 @@ public class myerror500 extends cn.bran.play.JapidTemplateBase
 	private Exception exp; // line 2, japidviews/myerror500.html
 	public cn.bran.japid.template.RenderResult render(Exception exp) {
 		this.exp = exp;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/myerror500.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(Exception exp) {
-		return new error500ForPlay().render(exp);
+		return new myerror500().render(exp);
 	}
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, myerror500.html
 		;// line 1, myerror500.html
 		p("<style type=\"text/css\">\n" + 
@@ -174,14 +176,14 @@ if(asBoolean(exp instanceof PlayException)) {// line 87, myerror500.html
 		p("    <div id=\"header\" class=\"block\">\n" + 
 "        <h1>\n" + 
 "            ");// line 92, myerror500.html
-		p(escape(exception.getErrorTitle()));// line 95, myerror500.html
+		try { Object o = escape(exception.getErrorTitle()); if (o.toString().length() ==0) { p(escape(null)); } else { p(o); } } catch (NullPointerException npe) { p(escape(null)); }// line 95, myerror500.html
 		p(" \n" + 
 "        </h1>\n" + 
 "        ");// line 95, myerror500.html
 		if(asBoolean(mode.equals("DEV"))) {// line 97, myerror500.html
 		p("	        <p>\n" + 
 "	            ");// line 97, myerror500.html
-		p(escape(exception.getErrorDescription()));// line 99, myerror500.html
+		try { Object o = escape(exception.getErrorDescription()); if (o.toString().length() ==0) { p(escape(null)); } else { p(o); } } catch (NullPointerException npe) { p(escape(null)); }// line 99, myerror500.html
 		p("	        </p>\n" + 
 "        ");// line 99, myerror500.html
 		}// line 101, myerror500.html
@@ -214,7 +216,7 @@ if(asBoolean(exp instanceof PlayException)) {// line 87, myerror500.html
 		p(i + from);// line 118, myerror500.html
 		p(":</span>\n" + 
 "                    <pre>&nbsp;");// line 118, myerror500.html
-		p(escape(line));// line 119, myerror500.html
+		try { Object o = escape(line); if (o.toString().length() ==0) { p(escape(null)); } else { p(o); } } catch (NullPointerException npe) { p(escape(null)); }// line 119, myerror500.html
 		p("</pre>\n" + 
 "                </div>\n" + 
 "	        ");// line 119, myerror500.html

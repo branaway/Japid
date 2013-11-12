@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class dobodytest extends cn.bran.play.JapidTemplateBase
 
 
 	public dobodytest() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public dobodytest(StringBuilder out) {
 		super(out);
 	}
+	public dobodytest(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -66,9 +70,8 @@ public class dobodytest extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/dobodytest.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -77,9 +80,8 @@ public class dobodytest extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, dobodytest.html
-		final argtest _argtest0 = new argtest(getOut()); _argtest0.setActionRunners(getActionRunners()).setOut(getOut()); _argtest0.render( // line 1, dobodytest.html
+		new argtest(dobodytest.this).render( // line 1, dobodytest.html
 new argtest.DoBody(){ // line 1, dobodytest.html
 public void render() { // line 1, dobodytest.html
 // line 1, dobodytest.html
@@ -101,7 +103,7 @@ public void resetBuffer() {
 
 }
 , named("arg", "test1"));// line 1, dobodytest.html
-final dummier _dummier1 = new dummier(getOut()); _dummier1.setActionRunners(getActionRunners()).setOut(getOut()); _dummier1.render(named("a", "hxxmmm")); // line 4, dobodytest.html// line 4, dobodytest.html
+new dummier(dobodytest.this).render(named("a", "hxxmmm")); // line 4, dobodytest.html// line 4, dobodytest.html
 		
 		endDoLayout(sourceTemplate);
 	}

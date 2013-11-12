@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 
 
 	public dummyTag() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public dummyTag(StringBuilder out) {
 		super(out);
 	}
+	public dummyTag(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
@@ -68,15 +72,9 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 	private String a; // line 1, japidviews/_tags/dummyTag.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
-		long __t = -1;
-		 __t = System.nanoTime();
+		setStopwatchOn();
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/dummyTag.html
-     	String __l = "" + (System.nanoTime() - __t) / 100000;
-		int __len = __l.length();
-		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
-
-		System.out.println("[dummyTag] rendering time(ms): " + __l);
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String a) {
@@ -85,7 +83,6 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, dummyTag.html
 		p("\n");// line 1, dummyTag.html
 		p("\n" + 

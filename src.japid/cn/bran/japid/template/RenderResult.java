@@ -34,7 +34,7 @@ import java.util.Map;
 public class RenderResult implements Externalizable {
 	private static final String _NULL = "_null_";
 	private StringBuilder content; // bran can this
-	long renderTime; // in ms, for recording the time to render.
+	long renderTime; // in us, (micro-second) for recording the time to render.
 	private Map<String, String> headers = new HashMap<String, String>();
 	
 	public RenderResult(Map<String, String> headers , StringBuilder content, long renderTime) {

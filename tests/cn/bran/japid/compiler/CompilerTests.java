@@ -296,9 +296,9 @@ public class CompilerTests {
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 		System.out.println(code);
 //		assertTrue(code.contains("((tag)(new tag(getOut()).setActionRunners(getActionRunners()))).render(a)"));
-		assertTrue(code.contains("final tag _tag0 = new tag(getOut()); _tag0.setActionRunners"));
+		assertTrue(code.contains("new tag(tagCalls.this).render"));
 //		assertTrue(code.contains("((my.tag)(new my.tag(getOut())).setActionRunners(getActionRunners())).render(a, new my.tag.DoBody<String>(){"));
-		assertTrue(code.contains("final my.tag _my_tag1 = new my.tag(getOut()); _my_tag1.setActionRunners"));
+		assertTrue(code.contains("new my.tag(tagCalls.this).render"));
 		
 	}
 	@Test
@@ -312,7 +312,7 @@ public class CompilerTests {
 		String code = bt.javaSource;
 		System.out.println(code);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
-		assertTrue(code.contains("final recursiveTagging _this2 = new recursiveTagging(getOut());"));
+		assertTrue(code.contains("new recursiveTagging(recursiveTagging.this).render"));
 	}
 	
 	@Test
@@ -379,7 +379,18 @@ public class CompilerTests {
 		System.out.println(bt.javaSource);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 //		assertTrue(bt.javaSource.contains("((anotherTag)(new anotherTag(getOut())).setActionRunners(getActionRunners())).render(echo, new anotherTag.DoBody<String>(){"));
-		assertTrue(bt.javaSource.contains("final moreTag _moreTag2 = new moreTag(getOut());"));
+		assertTrue(bt.javaSource.contains("new moreTag(tagBody.this)"));
+	}
+
+	@Test
+	public void testElvisEscape() throws IOException {
+		String src = "~{ a ?: b}";
+		
+		JapidTemplate bt = new JapidTemplate("baba.html", src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler ();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 	}
 
 	@Test
@@ -453,8 +464,20 @@ public class CompilerTests {
 		System.out.println(bt.javaSource);
 		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 		
-		assertTrue(bt.javaSource.contains("_person0.render(named(\"name\", \"Bing\"), named(\"age\", foo(18)))"));
+		assertTrue(bt.javaSource.contains("new person(namedParam.this).render(named(\"name\", \"Bing\"), named(\"age\", foo(18)))"));
 //		assertTrue(bt.javaSource.contains("@Override protected void title() {"));
+	}
+
+	@Test
+	public void testInclude() throws IOException, ParseException {
+		String srcFile = "tests/include.html";
+		String src = readFile(srcFile);
+		
+		JapidTemplate bt = new JapidTemplate(srcFile, src);
+		JapidAbstractCompiler cp = new JapidTemplateCompiler();
+		cp.compile(bt);
+		System.out.println(bt.javaSource);
+		assertTrue("invalid java code", JavaSyntaxTool.isValid(bt.javaSource));
 	}
 	
 	@Test

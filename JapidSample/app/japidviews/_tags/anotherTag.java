@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class anotherTag extends cn.bran.play.JapidTemplateBase
 
 
 	public anotherTag() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public anotherTag(StringBuilder out) {
 		super(out);
 	}
+	public anotherTag(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"s",  };
@@ -90,15 +94,13 @@ public static interface DoBody<A> {
 	public cn.bran.japid.template.RenderResult render(String s, DoBody body) {
 		this.body = body;
 		this.s = s;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/anotherTag.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/anotherTag.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String s) {
@@ -107,7 +109,6 @@ public static interface DoBody<A> {
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, anotherTag.html
 		p("\n" + 
 "<p>\n" + 

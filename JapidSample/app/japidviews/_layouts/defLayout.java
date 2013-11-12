@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -44,13 +44,18 @@ public abstract class defLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public defLayout() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public defLayout(StringBuilder out) {
 		super(out);
 	}
+	public defLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("<p>defLayout 1</p>\n" + 
+		beginDoLayout(sourceTemplate);
+p("<p>defLayout 1</p>\n" + 
 "----\n");// line 1, defLayout.html
 		p(get("foo"));// line 3, defLayout.html
 		p("\n" + 
@@ -59,7 +64,10 @@ public abstract class defLayout extends cn.bran.play.JapidTemplateBase
 		doLayout();// line 6, defLayout.html
 		p("\n" + 
 "<p>defLayout 3</p>");// line 6, defLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 
 	protected abstract void doLayout();
 }

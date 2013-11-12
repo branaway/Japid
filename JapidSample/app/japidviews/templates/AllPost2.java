@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class AllPost2 extends Layout
 
 
 	public AllPost2() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public AllPost2(StringBuilder out) {
 		super(out);
 	}
+	public AllPost2(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"blogTitle", "allPost",  };
@@ -71,9 +75,8 @@ public class AllPost2 extends Layout
 	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 3, japidviews/templates/AllPost2.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String blogTitle,List<Post> allPost) {
@@ -82,7 +85,6 @@ public class AllPost2 extends Layout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, AllPost2.html
 
 p("\n" + 
@@ -91,7 +93,7 @@ p("\n" +
 		p("	<p></p>\n" + 
 "	");// line 8, AllPost2.html
 		for (Post p: allPost) {// line 10, AllPost2.html
-	    final Display _Display1 = new Display(getOut()); _Display1.setActionRunners(getActionRunners()).setOut(getOut()); _Display1.render( // line 11, AllPost2.html
+	    new Display(AllPost2.this).render( // line 11, AllPost2.html
 new Display.DoBody<String>(){ // line 11, AllPost2.html
 public void render(final String title) { // line 11, AllPost2.html
 // line 11, AllPost2.html
@@ -121,7 +123,7 @@ public void resetBuffer() {
 		p("	<p>There is no post at this moment</p>\n");// line 15, AllPost2.html
 		}// line 17, AllPost2.html
 
-final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", blogTitle), named("age", 1000)); // line 19, AllPost2.html// line 19, AllPost2.html
+new Tag2(AllPost2.this).render(named("msg", blogTitle), named("age", 1000)); // line 19, AllPost2.html// line 19, AllPost2.html
 		p("\n" + 
 "<p>end of it</p>");// line 19, AllPost2.html
 		

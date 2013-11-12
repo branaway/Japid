@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class hellohelloTag extends cn.bran.play.JapidTemplateBase
 
 
 	public hellohelloTag() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public hellohelloTag(StringBuilder out) {
 		super(out);
 	}
+	public hellohelloTag(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"i",  };
@@ -69,9 +73,8 @@ public class hellohelloTag extends cn.bran.play.JapidTemplateBase
 	private int i; // line 1, japidviews/Application/hellohelloTag.html
 	public cn.bran.japid.template.RenderResult render(int i) {
 		this.i = i;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/hellohelloTag.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(int i) {
@@ -80,7 +83,6 @@ public class hellohelloTag extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, hellohelloTag.html
 		;// line 1, hellohelloTag.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", i) {

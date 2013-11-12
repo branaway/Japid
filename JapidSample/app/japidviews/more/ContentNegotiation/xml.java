@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.ContentNegotiation;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class xml extends cn.bran.play.JapidTemplateBase
 
 
 	public xml() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public xml(StringBuilder out) {
 		super(out);
 	}
+	public xml(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -66,9 +70,8 @@ public class xml extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/ContentNegotiation/xml.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -77,7 +80,6 @@ public class xml extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, xml.html
 		p("\n" + 
 "<a>\n" + 

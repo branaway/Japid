@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class invokeInTag extends cn.bran.play.JapidTemplateBase
 
 
 	public invokeInTag() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public invokeInTag(StringBuilder out) {
 		super(out);
 	}
+	public invokeInTag(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -67,9 +71,8 @@ public class invokeInTag extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/_tags/invokeInTag.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -78,7 +81,6 @@ public class invokeInTag extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, invokeInTag.html
 		p("\n" + 
 "\n" + 

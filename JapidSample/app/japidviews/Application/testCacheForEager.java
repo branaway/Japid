@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class testCacheForEager extends cn.bran.play.JapidTemplateBase
 
 
 	public testCacheForEager() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public testCacheForEager(StringBuilder out) {
 		super(out);
 	}
+	public testCacheForEager(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
@@ -69,9 +73,8 @@ public class testCacheForEager extends cn.bran.play.JapidTemplateBase
 	private String a; // line 1, japidviews/Application/testCacheForEager.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/testCacheForEager.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String a) {
@@ -80,7 +83,6 @@ public class testCacheForEager extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, testCacheForEager.html
 		p("\n" + 
 "<html>\n" + 

@@ -98,7 +98,8 @@ public class TemplateClassLoader extends ClassLoader {
 			}
 		}
 		if (!gotApply && !name.contains("$")) {
-			JapidFlags.warn("could not find the apply() with japid class: " + name); 
+			if (!Modifier.isAbstract(cl.getModifiers()))
+				JapidFlags.warn("could not find the apply() with japid class: " + name); 
 		}
 		
 		localClasses.put(name, cl);

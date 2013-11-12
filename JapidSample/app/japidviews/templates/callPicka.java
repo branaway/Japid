@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class callPicka extends cn.bran.play.JapidTemplateBase
 
 
 	public callPicka() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public callPicka(StringBuilder out) {
 		super(out);
 	}
+	public callPicka(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -67,9 +71,8 @@ public class callPicka extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/callPicka.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -78,7 +81,6 @@ public class callPicka extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, callPicka.html
 		p("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");// line 1, callPicka.html
 		traceFile(); // must use traceFile() method to control where to insert the template file name// line 3, callPicka.html
@@ -94,11 +96,11 @@ public class callPicka extends cn.bran.play.JapidTemplateBase
 "\n");// line 14, callPicka.html
 		 List<String> strings = new ArrayList<String>(){{add("you");add("me");add("everyone");}};// line 16, callPicka.html
 
-final aTag _aTag0 = new aTag(getOut()); _aTag0.setActionRunners(getActionRunners()).setOut(getOut()); _aTag0.render(strings); // line 18, callPicka.html// line 18, callPicka.html
+new aTag(callPicka.this).render(strings); // line 18, callPicka.html// line 18, callPicka.html
 		p("\n" + 
 "note: the picka tag is defined in the japidviews/_tags directory\n" + 
 "\n");// line 18, callPicka.html
-		final picka _picka1 = new picka(getOut()); _picka1.setActionRunners(getActionRunners()).setOut(getOut()); _picka1.render(// line 22, callPicka.html
+		new picka(callPicka.this).render(// line 22, callPicka.html
 "a", "b" + "c", new picka.DoBody<String>(){ // line 22, callPicka.html
 public void render(final String rr) { // line 22, callPicka.html
 // line 22, callPicka.html
@@ -107,7 +109,7 @@ public void render(final String rr) { // line 22, callPicka.html
 		p("\n" + 
 "    <p>and we can can call a tag recursively?</p>\n" + 
 "    ");// line 23, callPicka.html
-		final SampleTag _SampleTag2 = new SampleTag(getOut()); _SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render(rr); // line 25, callPicka.html// line 25, callPicka.html
+		new SampleTag(callPicka.this).render(rr); // line 25, callPicka.html// line 25, callPicka.html
 
 }
 
@@ -130,21 +132,21 @@ public void resetBuffer() {
 "<p>\n" + 
 "we can call without the body part:\n" + 
 "\n");// line 26, callPicka.html
-		final picka _picka3 = new picka(getOut()); _picka3.setActionRunners(getActionRunners()).setOut(getOut()); _picka3.render(named("a", "aa"), named("b", "bb")); // line 32, callPicka.html// line 32, callPicka.html
+		new picka(callPicka.this).render(named("a", "aa"), named("b", "bb")); // line 32, callPicka.html// line 32, callPicka.html
 		p("\n" + 
 "or \n");// line 32, callPicka.html
-		final picka _picka4 = new picka(getOut()); _picka4.setActionRunners(getActionRunners()).setOut(getOut()); _picka4.render("cc","dd"); // line 35, callPicka.html// line 35, callPicka.html
+		new picka(callPicka.this).render("cc","dd"); // line 35, callPicka.html// line 35, callPicka.html
 		p("\n" + 
 "</p>\n" + 
 "<p>\n" + 
 "Or using the full path of the tag\n" + 
 "</p>\n" + 
 "\n");// line 35, callPicka.html
-		final japidviews.templates.aTag _japidviews_templates_aTag5 = new japidviews.templates.aTag(getOut()); _japidviews_templates_aTag5.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_templates_aTag5.render(strings); // line 42, callPicka.html// line 42, callPicka.html
+		new japidviews.templates.aTag(callPicka.this).render(strings); // line 42, callPicka.html// line 42, callPicka.html
 		p("\n" + 
 "<p>You can use \".\" instead of \"/\" on the path:</p>\n" + 
 "\n");// line 42, callPicka.html
-		final japidviews.templates.aTag _japidviews_templates_aTag6 = new japidviews.templates.aTag(getOut()); _japidviews_templates_aTag6.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_templates_aTag6.render(strings); // line 46, callPicka.html// line 46, callPicka.html
+		new japidviews.templates.aTag(callPicka.this).render(strings); // line 46, callPicka.html// line 46, callPicka.html
 		;// line 46, callPicka.html
 		
 		endDoLayout(sourceTemplate);

@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class Display extends TagLayout
 
 
 	public Display() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public Display(StringBuilder out) {
 		super(out);
 	}
+	public Display(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"post", "as",  };
@@ -92,16 +96,14 @@ public static interface DoBody<A> {
 		this.body = body;
 		this.post = post;
 		this.as = as;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/_tags/Display.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as) {
 		this.post = post;
 		this.as = as;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/_tags/Display.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Post post,String as) {
@@ -110,7 +112,6 @@ public static interface DoBody<A> {
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, Display.html
 		;// line 1, Display.html
 		p("<div class=\"divvy\">\n" + 

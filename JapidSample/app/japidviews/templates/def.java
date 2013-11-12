@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class def extends defLayout
 
 
 	public def() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public def(StringBuilder out) {
 		super(out);
 	}
+	public def(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -66,9 +70,8 @@ public class def extends defLayout
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/def.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -77,7 +80,6 @@ public class def extends defLayout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, def.html
 		p("\n" + 
 "<p>check 1</p>\n");// line 1, def.html
@@ -96,7 +98,7 @@ public class def extends defLayout
 		p("\n" + 
 "\n" + 
 "<p>check 4</p>\n");// line 26, def.html
-		final dummyTag _dummyTag4 = new dummyTag(getOut()); _dummyTag4.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag4.render(get("bar")); // line 29, def.html// line 29, def.html
+		new dummyTag(def.this).render(get("bar")); // line 29, def.html// line 29, def.html
 		p("\n" + 
 "\n");// line 29, def.html
 		p("<p>check 5</p>\n" + 
@@ -133,7 +135,7 @@ actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 		p("</p>\n" + 
 "	<p>OK you can call a tag:</p>\n" + 
 "	");// line 9, def.html
-		final dummyTag _dummyTag1 = new dummyTag(getOut()); _dummyTag1.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag1.render(p); // line 11, def.html// line 11, def.html
+		new dummyTag(def.this).render(p); // line 11, def.html// line 11, def.html
 
 this.setOut(ori);
 if (actionRunners.size() > 0) {

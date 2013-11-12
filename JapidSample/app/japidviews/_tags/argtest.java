@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class argtest extends cn.bran.play.JapidTemplateBase
 
 
 	public argtest() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public argtest(StringBuilder out) {
 		super(out);
 	}
+	public argtest(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"arg",  };
@@ -90,15 +94,13 @@ public static interface DoBody {
 	public cn.bran.japid.template.RenderResult render(String arg, DoBody body) {
 		this.body = body;
 		this.arg = arg;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/argtest.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 	public cn.bran.japid.template.RenderResult render(String arg) {
 		this.arg = arg;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/argtest.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String arg) {
@@ -107,10 +109,9 @@ public static interface DoBody {
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, argtest.html
 		;// line 1, argtest.html
-		final argtest1 _argtest10 = new argtest1(getOut()); _argtest10.setActionRunners(getActionRunners()).setOut(getOut()); _argtest10.render(// line 2, argtest.html
+		new argtest1(argtest.this).render(// line 2, argtest.html
 new argtest1.DoBody(){ // line 2, argtest.html
 public void render() { // line 2, argtest.html
 // line 2, argtest.html

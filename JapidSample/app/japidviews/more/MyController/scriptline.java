@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class scriptline extends scriptlineLayout
 
 
 	public scriptline() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public scriptline(StringBuilder out) {
 		super(out);
 	}
+	public scriptline(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -66,9 +70,8 @@ public class scriptline extends scriptlineLayout
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/scriptline.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -77,13 +80,12 @@ public class scriptline extends scriptlineLayout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, scriptline.html
 p("\n" + 
 "hello ");// line 2, scriptline.html
-		final Tag2 _Tag21 = new Tag2(getOut()); _Tag21.setActionRunners(getActionRunners()).setOut(getOut()); _Tag21.render(named("msg", "123")); // line 4, scriptline.html// line 4, scriptline.html
+		new Tag2(scriptline.this).render(named("msg", "123")); // line 4, scriptline.html// line 4, scriptline.html
 		p(" a  ");// line 4, scriptline.html
-		final Tag2 _Tag22 = new Tag2(getOut()); _Tag22.setActionRunners(getActionRunners()).setOut(getOut()); _Tag22.render(named("msg", "456")); // line 4, scriptline.html// line 4, scriptline.html
+		new Tag2(scriptline.this).render(named("msg", "456")); // line 4, scriptline.html// line 4, scriptline.html
 		p("!\n" + 
 "this is how to print a single back quote: ");// line 4, scriptline.html
 		p('`');// line 5, scriptline.html

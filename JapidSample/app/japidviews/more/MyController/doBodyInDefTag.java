@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class doBodyInDefTag extends cn.bran.play.JapidTemplateBase
 
 
 	public doBodyInDefTag() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public doBodyInDefTag(StringBuilder out) {
 		super(out);
 	}
+	public doBodyInDefTag(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -88,14 +92,12 @@ public static interface DoBody<A,B> {
 	}
 	public cn.bran.japid.template.RenderResult render(DoBody body) {
 		this.body = body;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/doBodyInDefTag.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/doBodyInDefTag.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -104,7 +106,6 @@ public static interface DoBody<A,B> {
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p("outside: ");// line 1, doBodyInDefTag.html
 		if (body != null){ body.setBuffer(getOut()); body.render("taggy", 1); body.resetBuffer();}// line 1, doBodyInDefTag.html
 		p("ok, try to get the content as method call: \n" + 
@@ -116,7 +117,7 @@ p("outside: ");// line 1, doBodyInDefTag.html
 "\n");// line 8, doBodyInDefTag.html
 		p(foo());// line 11, doBodyInDefTag.html
 		p("\n");// line 11, doBodyInDefTag.html
-		final fooTag _fooTag1 = new fooTag(getOut()); _fooTag1.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag1.render(// line 13, doBodyInDefTag.html
+		new fooTag(doBodyInDefTag.this).render(// line 13, doBodyInDefTag.html
 new fooTag.DoBody(){ // line 13, doBodyInDefTag.html
 public void render() { // line 13, doBodyInDefTag.html
 // line 13, doBodyInDefTag.html

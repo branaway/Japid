@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 
 
 	public quickview() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public quickview(StringBuilder out) {
 		super(out);
 	}
+	public quickview(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -67,9 +71,8 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/quickview.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -78,7 +81,6 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, quickview.html
 p("<p>\n" + 
 "hello there\n" + 
@@ -86,10 +88,10 @@ p("<p>\n" +
 "<p>\n");// line 2, quickview.html
 		String s = "quick" ;// line 8, quickview.html
 		;// line 8, quickview.html
-		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy0 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy0.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s); // line 9, quickview.html// line 9, quickview.html
+		new japidviews.more.MyController._tags.taggy(quickview.this).render(s); // line 9, quickview.html// line 9, quickview.html
 		p("</p> \n" + 
 "<p>\n");// line 9, quickview.html
-		final taggy2 _taggy21 = new taggy2(getOut()); _taggy21.setActionRunners(getActionRunners()).setOut(getOut()); _taggy21.render(s); // line 12, quickview.html// line 12, quickview.html
+		new taggy2(quickview.this).render(s); // line 12, quickview.html// line 12, quickview.html
 		p("</p>");// line 12, quickview.html
 		
 		endDoLayout(sourceTemplate);

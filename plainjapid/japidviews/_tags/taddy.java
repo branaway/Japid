@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36.1
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -13,11 +13,15 @@ public class taddy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/_tags/taddy.html";
 	public taddy() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public taddy(StringBuilder out) {
 		super(out);
 	}
+	public taddy(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -57,16 +61,12 @@ public static interface DoBody<A> {
 	}
 	public String render(DoBody body) {
 		this.body = body;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/_tags/taddy.html
-		 if (__t != -1) System.out.println("[taddy] rendering time: " + __t);
-		return getOut().toString();
+		return getRenderResult().toString();
 	}
 	public String render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/_tags/taddy.html
-		 if (__t != -1) System.out.println("[taddy] rendering time: " + __t);
-		return getOut().toString();
+		return getRenderResult().toString();
 	}
 
 	public static String apply() {
@@ -75,7 +75,6 @@ public static interface DoBody<A> {
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p("teddy bear\n" + 
 "\n");// line 1, taddy.html
 		String[] ss = new String[]{"a", "add", "cd"};// line 3, taddy.html

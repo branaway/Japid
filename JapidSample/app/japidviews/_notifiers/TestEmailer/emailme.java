@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._notifiers.TestEmailer;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class emailme extends cn.bran.play.JapidTemplateBase
 
 
 	public emailme() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public emailme(StringBuilder out) {
 		super(out);
 	}
+	public emailme(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"post",  };
@@ -68,9 +72,8 @@ public class emailme extends cn.bran.play.JapidTemplateBase
 	private models.japidsample.Post post; // line 1, japidviews/_notifiers/TestEmailer/emailme.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_notifiers/TestEmailer/emailme.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Post post) {
@@ -79,7 +82,6 @@ public class emailme extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, emailme.html
 		p("\n" + 
 "Hello ");// line 1, emailme.html

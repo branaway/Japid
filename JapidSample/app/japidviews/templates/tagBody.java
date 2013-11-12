@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class tagBody extends cn.bran.play.JapidTemplateBase
 
 
 	public tagBody() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public tagBody(StringBuilder out) {
 		super(out);
 	}
+	public tagBody(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -66,9 +70,8 @@ public class tagBody extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/tagBody.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -77,7 +80,6 @@ public class tagBody extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p("\n" + 
 "Note: the last | is the separator for the tag arguments and the call back parameters. \n" + 
 "It must present even if the parameters are empty.\n" + 
@@ -85,7 +87,7 @@ p("\n" +
 "before\n" + 
 "\n" + 
 "<p/>\n");// line 1, tagBody.html
-		final fooTag _fooTag0 = new fooTag(getOut()); _fooTag0.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag0.render(// line 8, tagBody.html
+		new fooTag(tagBody.this).render(// line 8, tagBody.html
 "hi", new fooTag.DoBody(){ // line 8, tagBody.html
 public void render() { // line 8, tagBody.html
 // line 8, tagBody.html
@@ -96,7 +98,7 @@ public void render() { // line 8, tagBody.html
 		p("\n" + 
 "\n" + 
 "	");// line 11, tagBody.html
-		final anotherTag _anotherTag1 = new anotherTag(getOut()); _anotherTag1.setActionRunners(getActionRunners()).setOut(getOut()); _anotherTag1.render(// line 13, tagBody.html
+		new anotherTag(tagBody.this).render(// line 13, tagBody.html
 echo, new anotherTag.DoBody<String>(){ // line 13, tagBody.html
 public void render(final String what) { // line 13, tagBody.html
 // line 13, tagBody.html
@@ -106,7 +108,7 @@ public void render(final String what) { // line 13, tagBody.html
 		p(echo);// line 14, tagBody.html
 		p("\n" + 
 "		");// line 14, tagBody.html
-		final moreTag _moreTag2 = new moreTag(getOut()); _moreTag2.setActionRunners(getActionRunners()).setOut(getOut()); _moreTag2.render(// line 15, tagBody.html
+		new moreTag(tagBody.this).render(// line 15, tagBody.html
 echo, new moreTag.DoBody<String>(){ // line 15, tagBody.html
 public void render(final String more) { // line 15, tagBody.html
 // line 15, tagBody.html

@@ -90,13 +90,7 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 			pln("\t@Override public void layout() {");
 		}
 
-		super.setupTagObjectsAsFields();
-
-		// the code to render things.
-		p("\t\tbeginDoLayout(sourceTemplate);");
-		p("\t\t" + body);
-		p("\t\tendDoLayout(sourceTemplate);");
-		p("\t}");
+		restOfBody();
 	}
 
 	@Override
@@ -104,4 +98,15 @@ public class LayoutClassMetaData extends AbstractTemplateClassMetaData {
 		// no such method in layout
 	}
 
+	@Override
+	public void merge(AbstractTemplateClassMetaData a) {
+		super.merge(a);
+		if (a instanceof LayoutClassMetaData) {
+			LayoutClassMetaData b = (LayoutClassMetaData) a;
+			this.getterMethods.addAll(b.getterMethods);
+		}
+		else {
+			throw new RuntimeException("cannot merge metadata from another type to LayoutClassMetaData: " + a.className);
+		}
+	}
 }

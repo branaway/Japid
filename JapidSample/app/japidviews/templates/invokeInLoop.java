@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -46,11 +46,15 @@ public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 
 
 	public invokeInLoop() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public invokeInLoop(StringBuilder out) {
 		super(out);
 	}
+	public invokeInLoop(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"posts",  };
@@ -70,9 +74,8 @@ public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 	private List<Post> posts; // line 2, japidviews/templates/invokeInLoop.html
 	public cn.bran.japid.template.RenderResult render(List<Post> posts) {
 		this.posts = posts;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/templates/invokeInLoop.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(List<Post> posts) {
@@ -81,7 +84,6 @@ public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, invokeInLoop.html
 p("\n");// line 2, invokeInLoop.html
 		p("\n" + 

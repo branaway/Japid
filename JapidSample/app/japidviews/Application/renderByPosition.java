@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class renderByPosition extends cn.bran.play.JapidTemplateBase
 
 
 	public renderByPosition() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public renderByPosition(StringBuilder out) {
 		super(out);
 	}
+	public renderByPosition(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"ss", "ii", "au1", "au2", "au22",  };
@@ -77,9 +81,8 @@ public class renderByPosition extends cn.bran.play.JapidTemplateBase
 		this.au1 = au1;
 		this.au2 = au2;
 		this.au22 = au22;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/Application/renderByPosition.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String ss,int ii,Author au1,Author au2,Author2 au22) {
@@ -88,7 +91,6 @@ public class renderByPosition extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, renderByPosition.html
 		;// line 1, renderByPosition.html
 		p("got: ");// line 3, renderByPosition.html
@@ -107,7 +109,7 @@ public class renderByPosition extends cn.bran.play.JapidTemplateBase
 "\n" + 
 "<p>Lets call a tag by name:</p>\n" + 
 "\n");// line 6, renderByPosition.html
-		final tagPrimitives _tagPrimitives0 = new tagPrimitives(getOut()); _tagPrimitives0.setActionRunners(getActionRunners()).setOut(getOut()); _tagPrimitives0.render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6)); // line 10, renderByPosition.html// line 10, renderByPosition.html
+		new tagPrimitives(renderByPosition.this).render(named("s", "hello"), named("b", true), named("f", 1.2f), named("d", 3.6)); // line 10, renderByPosition.html// line 10, renderByPosition.html
 		
 		endDoLayout(sourceTemplate);
 	}

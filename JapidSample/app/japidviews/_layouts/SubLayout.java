@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -44,18 +44,26 @@ public abstract class SubLayout extends Layout
 
 
 	public SubLayout() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public SubLayout(StringBuilder out) {
 		super(out);
 	}
+	public SubLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		;// line 1, SubLayout.html
+		beginDoLayout(sourceTemplate);
+;// line 1, SubLayout.html
 
 title2();p("\n" + 
 "\n" + 
 "\n");// line 3, SubLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void title2() {};
 
 	protected abstract void doLayout();

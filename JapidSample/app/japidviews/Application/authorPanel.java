@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class authorPanel extends cn.bran.play.JapidTemplateBase
 
 
 	public authorPanel() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public authorPanel(StringBuilder out) {
 		super(out);
 	}
+	public authorPanel(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
@@ -68,9 +72,8 @@ public class authorPanel extends cn.bran.play.JapidTemplateBase
 	private models.japidsample.Author a; // line 1, japidviews/Application/authorPanel.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
 		this.a = a;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/authorPanel.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Author a) {
@@ -79,7 +82,6 @@ public class authorPanel extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, authorPanel.html
 		p("<p>author name: ");// line 1, authorPanel.html
 		p(a.name);// line 2, authorPanel.html
@@ -91,7 +93,7 @@ public class authorPanel extends cn.bran.play.JapidTemplateBase
 		p(a.getGender());// line 4, authorPanel.html
 		p("'</p>\n" + 
 "<div>\n");// line 4, authorPanel.html
-		final SampleTag _SampleTag0 = new SampleTag(getOut()); _SampleTag0.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag0.render("end"); // line 6, authorPanel.html// line 6, authorPanel.html
+		new SampleTag(authorPanel.this).render("end"); // line 6, authorPanel.html// line 6, authorPanel.html
 		p("</div>\n" + 
 "    ");// line 6, authorPanel.html
 		

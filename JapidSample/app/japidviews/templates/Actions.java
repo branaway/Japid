@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class Actions extends cn.bran.play.JapidTemplateBase
 
 
 	public Actions() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public Actions(StringBuilder out) {
 		super(out);
 	}
+	public Actions(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"post",  };
@@ -68,9 +72,8 @@ public class Actions extends cn.bran.play.JapidTemplateBase
 	private models.japidsample.Post post; // line 1, japidviews/templates/Actions.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/templates/Actions.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Post post) {
@@ -79,7 +82,6 @@ public class Actions extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, Actions.html
 		p("\n" + 
 "\n" + 

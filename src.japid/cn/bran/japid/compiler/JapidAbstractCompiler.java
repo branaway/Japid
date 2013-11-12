@@ -46,6 +46,10 @@ import cn.bran.japid.util.WebUtils;
  * 
  */
 public abstract class JapidAbstractCompiler {
+	/**
+	 * 
+	 */
+	private static final String INCLUDE = "include";
 	public static final String DO_LAYOUT = "doLayout";
 	private static final String ELVIS = "?:";
 	// pattern: } else if xxx {
@@ -422,18 +426,7 @@ public abstract class JapidAbstractCompiler {
 				String value = headerkv.substring(name.length()).trim();
 				getTemplateClassMetaData().setHeader(name, value);
 			} else if (startsWithIgnoreSpace(line, ARGS)) {
-				String args = line.trim().substring(ARGS.length()).trim()/*
-																		 * .replace
-																		 * (";",
-																		 * ""
-																		 * ).replace
-																		 * ("'",
-																		 * ""
-																		 * ).replace
-																		 * (
-																		 * "\"",
-																		 * "")
-																		 */;
+				String args = line.trim().substring(ARGS.length()).trim();
 				templateArgs(args);
 			} else if (startsWithIgnoreSpace(line, "trim")) {
 				String sw = line.trim().substring("trim".length()).trim().replace(";", "").replace("'", "")
@@ -513,6 +506,27 @@ public abstract class JapidAbstractCompiler {
 				Tag get = buildTagDirective(line);
 				get.hasBody = true;
 				startTag(get);
+			} else if (startsWithIgnoreSpace(line, INCLUDE)) {
+				// the include directive
+				// compile the target and include the layout part in the current output flow
+				String target = parseInclude(line);
+				String src;
+				try {
+					src = DirUtil.readFileAsString(target);
+					JapidTemplate template = new JapidTemplate(target, src);
+					JapidAbstractCompiler c = JapidTemplateTransformer.selectCompiler(src);
+					c.setUseWithPlay(getTemplateClassMetaData().useWithPlay);
+					c.compile(template);
+					String jsrc = template.javaSource;
+					getTemplateClassMetaData().merge(c.getTemplateClassMetaData());
+					println("/* include %s */", target);
+					String code = extractRenderingCode(jsrc);
+					println(code);
+					println("/* end of %s */", target);
+				} catch (Exception e) {
+					throw new JapidCompilationException(template, parser.getLineNumber() + i,
+							"The target of include does not exist: " + target + ". " + e);
+				}
 			} else if (line.trim().startsWith("noplay")) {
 				// template is play independent
 				getTemplateClassMetaData().useWithPlay = this.useWithPlay = false;
@@ -711,6 +725,62 @@ public abstract class JapidAbstractCompiler {
 		skipLineBreak = true;
 	}
 
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param jsrc
+	 * @return
+	 */
+	private String extractRenderingCode(String jsrc) {
+		String ret = "";
+		String[] lines = jsrc.split("\\n");
+		boolean shouldUse = false;
+		for (String l : lines) {
+			String line = l.trim();
+			if (line.startsWith(AbstractTemplateClassMetaData.BEGIN_DO_LAYOUT)) {
+				shouldUse = true;
+				continue;
+			}
+			
+			if (line.startsWith(AbstractTemplateClassMetaData.END_DO_LAYOUT)) {
+				break;
+			}
+			
+			if (shouldUse) {
+				ret += l + "\n";
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param line
+	 * @return
+	 */
+	private String parseInclude(String line) {
+		line = line.trim();
+		if (line.startsWith(INCLUDE + " ") || line.startsWith(INCLUDE + "\t")) {
+			line = line.substring(INCLUDE.length()).trim();
+		}
+		if (line.endsWith("." + INCLUDE)) {
+			return line;
+		}
+		else {
+			throw new JapidCompilationException(template, parser.getLineNumber(),
+					"the include target must end with .include");
+
+		}
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param string
+	 * @param target
+	 */
+	private void println(String format, String target) {
+		println(String.format(format, target));
+	}
+
 	private void handleOpenElseIf(int i, String expr, boolean negative) {
 		// expr = expr.substring(1).trim();
 		// end previous if shadow and star a new one
@@ -840,6 +910,7 @@ public abstract class JapidAbstractCompiler {
 
 		if (escape) {
 			expr = "escape(" + expr + ")";
+			substitute = "escape(" + substitute + ")";
 		}
 
 		if (substitute != null) {
@@ -1014,11 +1085,6 @@ public abstract class JapidAbstractCompiler {
 		}
 
 		parse();
-		// for (String n : BranTemplateCompiler.extensionsClassnames) {
-		// println(" } ");
-		// }
-		// println("} }");
-		// println("}");
 
 		Tag tag = popStack();
 		if (!tagsStack.empty())
@@ -1185,16 +1251,18 @@ public abstract class JapidAbstractCompiler {
 				tagClassName = this.getTemplateClassMetaData().getClassName();
 			}
 
-			String tagVar = tag.getTagVarName();
-			String tagline = "final " + tagClassName + " " + tagVar + " = new " + tagClassName + "(getOut()); ";
-			tagline += tagVar;
+//			String tagVar = tag.getTagVarName();
+//			String tagline = "final " + tagClassName + " " + tagVar + " = new " + tagClassName + "(getOut()); ";
+//			tagline += tagVar;
+			String tagline = "new " + tagClassName + "(" + getTemplateClassMetaData().getClassName() + ".this)" ;
 
 			if (!tag.hasBody) {
-				if (useWithPlay && !tag.tagName.equals(Each.class.getSimpleName())) {
-					tagline += ".setActionRunners(getActionRunners())";
-				}
-				tagline += ".setOut(getOut()); " + tagVar + ".render(" + tag.args + "); "
-						+ makeLineMarker(tag.startLine);
+//				if (useWithPlay && !tag.tagName.equals(Each.class.getSimpleName())) {
+//					tagline += ".setActionRunners(getActionRunners())";
+//				}
+//				tagline += ".setOut(getOut()); " + tagVar + ".render(" + tag.args + "); "
+//						+ makeLineMarker(tag.startLine);
+				tagline += ".render(" + tag.args + "); " + makeLineMarker(tag.startLine);
 
 				// String tagClassName = tag.tagName;
 				// if (tagClassName.equals("this")) {
@@ -1250,14 +1318,15 @@ public abstract class JapidAbstractCompiler {
 				tagClassName = this.getTemplateClassMetaData().getClassName();
 			}
 
-			String tagline = "final " + tagClassName + " " + tagVar + " = new " + tagClassName + "(getOut()); "
-					+ tagVar;
+//			String tagline = "final " + tagClassName + " " + tagVar + " = new " + tagClassName + "(getOut()); "
+//					+ tagVar;
+			String tagline = "new " + tagClassName + "(" + getTemplateClassMetaData().getClassName() + ".this)";
 
 			// make sure the tag always use the current output buffer;
-			if (useWithPlay && !tag.tagName.equals(Each.class.getSimpleName())) {
-				tagline += ".setActionRunners(getActionRunners())";
-			}
-			tagline += ".setOut(getOut()); " + tagVar;
+//			if (useWithPlay && !tag.tagName.equals(Each.class.getSimpleName())) {
+//				tagline += ".setActionRunners(getActionRunners())";
+//			}
+//			tagline += ".setOut(getOut()); " + tagVar;
 			if (tag.argsNamed()) {
 				tagline += ".render( " + makeLineMarker(tag.startLine) + "\n"
 						+ bodyInner.getAnonymous(makeLineMarker(tag.startLine)) + ", "

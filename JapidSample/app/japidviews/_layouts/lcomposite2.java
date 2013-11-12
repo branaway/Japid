@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -45,13 +45,18 @@ public abstract class lcomposite2 extends cn.bran.play.JapidTemplateBase
 
 
 	public lcomposite2() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public lcomposite2(StringBuilder out) {
 		super(out);
 	}
+	public lcomposite2(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("<p>beginning: lcomposite</p>\n" + 
+		beginDoLayout(sourceTemplate);
+p("<p>beginning: lcomposite</p>\n" + 
 "\n");// line 1, lcomposite2.html
 		p("\n" + 
 "\n");// line 3, lcomposite2.html
@@ -77,7 +82,10 @@ doLayout();// line 7, lcomposite2.html
 "<p>back to layout again</p>\n" + 
 "\n" + 
 "<p>end of lcomposite</p>\n");// line 12, lcomposite2.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 
 	protected abstract void doLayout();
 }

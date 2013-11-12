@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -44,13 +44,18 @@ public abstract class myLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public myLayout() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public myLayout(StringBuilder out) {
 		super(out);
 	}
+	public myLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("<p>");// line 1, myLayout.html
+		beginDoLayout(sourceTemplate);
+p("<p>");// line 1, myLayout.html
 		title();// line 1, myLayout.html
 		p("</p>\n" + 
 "<p>");// line 1, myLayout.html
@@ -59,7 +64,10 @@ public abstract class myLayout extends cn.bran.play.JapidTemplateBase
 "<p>\n");// line 2, myLayout.html
 		doLayout();// line 4, myLayout.html
 		p("</p>");// line 4, myLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void title() {};
 	 protected void side() {};
 

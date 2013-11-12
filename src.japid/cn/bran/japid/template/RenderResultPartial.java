@@ -9,7 +9,6 @@ import java.util.TreeMap;
 
 import cn.bran.japid.util.StringUtils;
 
-
 /**
  * Represented a partially rendered result at the top level. Pre-rendered
  * content is in the content in the super class, which is to be interpolated
@@ -18,8 +17,8 @@ import cn.bran.japid.util.StringUtils;
  * 
  * Objects of this class can be cached and reevalued.
  * 
- * TODO: make partial render result take arguments to fine control action runners's
- * behavior, such as use different argument to the nested action.
+ * TODO: make partial render result take arguments to fine control action
+ * runners's behavior, such as use different argument to the nested action.
  * 
  * @author Bing Ran<bing_ran@hotmail.com>
  * 
@@ -32,28 +31,31 @@ public class RenderResultPartial extends RenderResult {
 		return actionRunners;
 	}
 
-	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime, Map<Integer, ActionRunner> actions) {
+	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime,
+			Map<Integer, ActionRunner> actions) {
 		super(headers, content, renderTime);
 		this.actionRunners = actions;
 	}
-	
-	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime, Map<Integer, ActionRunner> actions, String viewName) {
+
+	public RenderResultPartial(Map<String, String> headers, StringBuilder content, long renderTime,
+			Map<Integer, ActionRunner> actions, String viewName) {
 		super(headers, content, renderTime);
 		this.actionRunners = actions;
 		this.viewName = viewName;
 	}
-	
+
 	public RenderResultPartial() {
 	}
 
 	@Override
 	public StringBuilder getContent() {
 		// let's interpolate the static content with the result from the actions
-		
-		// wrap the output in a pair of content type safe markers for better displaying output 
+
+		// wrap the output in a pair of content type safe markers for better
+		// displaying output
 		// view composition in the output for debugging
 		StringBuilder superContent = super.getContent();
-			
+
 		StringBuilder sb = new StringBuilder();
 		if (actionRunners != null && actionRunners.size() > 0) {
 			int segStart = 0;
@@ -65,22 +67,21 @@ public class RenderResultPartial extends RenderResult {
 				sb.append(a.run().getContent().toString());
 			}
 			sb.append(superContent.substring(segStart));
-//			if (injectTemplateBorder ) {
-//				sb.insert(0,  makeBeginBorder());
-//				sb.append(makeEndBorder());
-//			}
+			// if (injectTemplateBorder ) {
+			// sb.insert(0, makeBeginBorder());
+			// sb.append(makeEndBorder());
+			// }
 
 			return sb;
 		} else {
 			sb.append(superContent.toString());
-//			if (injectTemplateBorder ) {
-//				sb.insert(0,  makeBeginBorder());
-//				sb.append(makeEndBorder());
-//			}
+			// if (injectTemplateBorder ) {
+			// sb.insert(0, makeBeginBorder());
+			// sb.append(makeEndBorder());
+			// }
 			return sb;
 		}
 	}
-	
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
@@ -94,5 +95,9 @@ public class RenderResultPartial extends RenderResult {
 		actionRunners = (Map<Integer, ActionRunner>) in.readObject();
 	}
 
-	
+	@Override
+	public String toString() {
+		return getContent().toString();
+	}
+
 }

@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.Perf;
 import java.util.*;
 import java.io.*;
@@ -44,15 +44,20 @@ public abstract class perfmain extends cn.bran.play.JapidTemplateBase
 
 
 	public perfmain() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public perfmain(StringBuilder out) {
 		super(out);
 	}
+	public perfmain(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	private DataModel.User loggedInUser; // line 1, japidviews/more/Perf/perfmain.html
 	 public void layout(DataModel.User loggedInUser) {
 		this.loggedInUser = loggedInUser;
-		beginDoLayout(sourceTemplate);		;// line 1, perfmain.html
+		beginDoLayout(sourceTemplate);
+;// line 1, perfmain.html
 		p("\n" + 
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n" + 
 "        \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 
@@ -78,7 +83,10 @@ public abstract class perfmain extends cn.bran.play.JapidTemplateBase
 		doLayout();// line 18, perfmain.html
 		p("</body>\n" + 
 "</html>\n");// line 18, perfmain.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void title() {};
 
 	protected abstract void doLayout();

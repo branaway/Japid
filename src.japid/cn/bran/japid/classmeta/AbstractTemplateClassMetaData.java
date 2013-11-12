@@ -84,6 +84,14 @@ public abstract class AbstractTemplateClassMetaData {
 	public static final String ACTION_RUNNERS = "actionRunners";
 	private static final String IMPORT_SPACE = IMPORT + SPACE;
 	private static final String CONTENT_TYPE = "Content-Type";
+	/**
+	 * 
+	 */
+	public static final String END_DO_LAYOUT = "endDoLayout";
+	/**
+	 * 
+	 */
+	public static final String BEGIN_DO_LAYOUT = "beginDoLayout";
 	public String packageName;
 	protected String className;
 
@@ -349,33 +357,6 @@ public abstract class AbstractTemplateClassMetaData {
 		// don't declare in the front. always declare where it is used for safety
 		// see JapidAbstractCompiler#regularTagInvoke
 	 */
-	protected void setupTagObjectsAsFields() {
-//		boolean hasTags = this.innersforTagCalls.size() > 0;
-//		if (hasTags)
-//			pln("\n// -- set up the tag objects");
-//		for (InnerClassMeta inner : this.innersforTagCalls) {
-//			// create a reusable instance _tagName_indexand a instance
-//			// initializer
-//			String tagClassName = inner.tagName;
-//			String var = "_" + inner.getVarRoot() + inner.counter;
-//			
-//			if (tagClassName.equals("this")) {
-//				tagClassName = this.className;
-//			}
-//
-//			String decl = "final " + tagClassName + " " + var + " = new " + tagClassName + "(getOut());";
-//			pln(decl);
-//
-//			// changed to wait until tag invocation to set the runners
-////			if (useWithPlay && !tagClassName.equals("Each")) {
-////				String addRunner = "{ " +  var + ".setActionRunners(getActionRunners()); }";
-////				pln(addRunner);
-////			}
-//			pln();
-//		}
-//		if (hasTags)
-//			pln("// -- end of the tag objects\n");
-	}
 
 	protected void printAnnotations() {
 		for (Class<? extends Annotation> anno : typeAnnotations) {
@@ -410,7 +391,7 @@ public abstract class AbstractTemplateClassMetaData {
 	protected void addConstructors() {
 		if (!streaming) {
 			// for StringBuilder data collection, create a default constructor
-			pln(TAB + PUBLIC + className + "() {\n" + "		super(null);\n" + "	}");
+			pln(TAB + PUBLIC + className + "() {\n" + "		super((StringBuilder)null);\n" + "	}");
 
 		}
 
@@ -421,6 +402,11 @@ public abstract class AbstractTemplateClassMetaData {
 
 		pln(TAB + TAB + "super(out);");
 		pln(TAB + "}");
+		
+		pln(TAB + PUBLIC + className + "(" + JapidTemplateBaseWithoutPlay.class.getName() + " caller) {\n" + 
+				"		super(caller);\n" + 
+				"	}\n" + 
+				"");
 	}
 
 	/**
@@ -803,6 +789,23 @@ public abstract class AbstractTemplateClassMetaData {
 	 */
 	public void turnOffTraceFile() {
 		this.traceFile = false;
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param templateClassMetaData
+	 */
+	public void merge(AbstractTemplateClassMetaData a) {
+		this.imports.addAll(a.imports);
+		this.innersforTagCalls.addAll(a.innersforTagCalls);
+		this.innersInvokeCalls.addAll(a.innersInvokeCalls);
+	}
+
+	protected void restOfBody() {
+		pln(TAB + TAB + BEGIN_DO_LAYOUT + "(sourceTemplate);");
+		pln(body);
+		pln(TAB + TAB + END_DO_LAYOUT + "(sourceTemplate);");
+		pln("\t}");
 	}
 
 }

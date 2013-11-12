@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class JavaScript extends cn.bran.play.JapidTemplateBase
 
 
 	public JavaScript() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public JavaScript(StringBuilder out) {
 		super(out);
 	}
+	public JavaScript(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"hello",  };
@@ -68,9 +72,8 @@ public class JavaScript extends cn.bran.play.JapidTemplateBase
 	private String hello; // line 1, japidviews/templates/JavaScript.html
 	public cn.bran.japid.template.RenderResult render(String hello) {
 		this.hello = hello;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/templates/JavaScript.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String hello) {
@@ -79,7 +82,6 @@ public class JavaScript extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, JavaScript.html
 		p("\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 

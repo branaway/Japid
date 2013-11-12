@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class h1 extends cn.bran.play.JapidTemplateBase
 
 
 	public h1() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public h1(StringBuilder out) {
 		super(out);
 	}
+	public h1(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"s",  };
@@ -69,9 +73,8 @@ public class h1 extends cn.bran.play.JapidTemplateBase
 	private String s; // line 1, japidviews/Application/h1.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/h1.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String s) {
@@ -80,7 +83,6 @@ public class h1 extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, h1.html
 		p("h1: got ");// line 1, h1.html
 		p(s);// line 3, h1.html

@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -45,13 +45,18 @@ public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 
 
 	public superheaders() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public superheaders(StringBuilder out) {
 		super(out);
 	}
+	public superheaders(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		;// line 1, superheaders.html
+		beginDoLayout(sourceTemplate);
+;// line 1, superheaders.html
 		p("\n" + 
 "\n");// line 1, superheaders.html
 		p("\n" + 
@@ -61,7 +66,10 @@ public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 		p("\n");// line 9, superheaders.html
 		doLayout();// line 11, superheaders.html
 		;// line 11, superheaders.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 
 	protected abstract void doLayout();
 }

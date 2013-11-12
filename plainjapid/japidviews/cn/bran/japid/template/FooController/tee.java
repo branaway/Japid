@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36.1
 package japidviews.cn.bran.japid.template.FooController;
 import java.util.*;
 import java.io.*;
@@ -13,11 +13,15 @@ public class tee extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/tee.html";
 	public tee() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public tee(StringBuilder out) {
 		super(out);
 	}
+	public tee(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"u",  };
@@ -37,10 +41,8 @@ public class tee extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	private cn.bran.japid.template.FooController.ModelUser u; // line 1, japidviews/cn/bran/japid/template/FooController/tee.html
 	public String render(cn.bran.japid.template.FooController.ModelUser u) {
 		this.u = u;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/cn/bran/japid/template/FooController/tee.html
-		 if (__t != -1) System.out.println("[tee] rendering time: " + __t);
-		return getOut().toString();
+		return getRenderResult().toString();
 	}
 
 	public static String apply(cn.bran.japid.template.FooController.ModelUser u) {
@@ -49,7 +51,6 @@ public class tee extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, tee.html
 		p("\n" + 
 "Hi: ");// line 1, tee.html

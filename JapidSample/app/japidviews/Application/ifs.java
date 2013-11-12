@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class ifs extends cn.bran.play.JapidTemplateBase
 
 
 	public ifs() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public ifs(StringBuilder out) {
 		super(out);
 	}
+	public ifs(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"str", "col", "b", "a1", "a2", "i", "s2",  };
@@ -80,9 +84,8 @@ public class ifs extends cn.bran.play.JapidTemplateBase
 		this.a2 = a2;
 		this.i = i;
 		this.s2 = s2;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/ifs.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String str,Collection col,boolean b,Object[] a1,int[] a2,int i,String s2) {
@@ -91,7 +94,6 @@ public class ifs extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, ifs.html
 		p("\n" + 
 "<p>\n" + 

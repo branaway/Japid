@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36.1
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -13,15 +13,20 @@ public abstract class main extends cn.bran.japid.template.JapidTemplateBaseWitho
 {
 	public static final String sourceTemplate = "japidviews/_layouts/main.html";
 	public main() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public main(StringBuilder out) {
 		super(out);
 	}
+	public main(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	private String x; // line 1, japidviews/_layouts/main.html
 	 public void layout(String x) {
 		this.x = x;
-		beginDoLayout(sourceTemplate);		;// line 1, main.html
+		beginDoLayout(sourceTemplate);
+;// line 1, main.html
 		p("<head>");// line 1, main.html
 		title();p(" - ");// line 2, main.html
 		p(x);// line 2, main.html
@@ -29,7 +34,10 @@ public abstract class main extends cn.bran.japid.template.JapidTemplateBaseWitho
 "<body>");// line 2, main.html
 		doLayout();// line 3, main.html
 		p("</body>\n");// line 3, main.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void title() {};
 
 	protected abstract void doLayout();

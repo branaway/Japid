@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.Perf;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class perf extends perfmain
 
 
 	public perf() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public perf(StringBuilder out) {
 		super(out);
 	}
+	public perf(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"title", "user", "entries",  };
@@ -72,9 +76,8 @@ public class perf extends perfmain
 		this.title = title;
 		this.user = user;
 		this.entries = entries;
-		long __t = -1;
 		try {super.layout(user);} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/Perf/perf.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String title,DataModel.User user,ArrayList<DataModel.Entry> entries) {
@@ -83,7 +86,6 @@ public class perf extends perfmain
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, perf.html
 
 if (entries.size() > 0 ) {// line 11, perf.html

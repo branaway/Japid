@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class echo extends SampleLayout
 
 
 	public echo() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public echo(StringBuilder out) {
 		super(out);
 	}
+	public echo(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"s", "i",  };
@@ -70,9 +74,8 @@ public class echo extends SampleLayout
 	public cn.bran.japid.template.RenderResult render(String s,int i) {
 		this.s = s;
 		this.i = i;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 4, japidviews/more/MyController/echo.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String s,int i) {
@@ -81,7 +84,6 @@ public class echo extends SampleLayout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, echo.html
 		p("\n");// line 1, echo.html
 p("hello ");// line 6, echo.html

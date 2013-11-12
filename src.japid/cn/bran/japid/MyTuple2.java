@@ -1,9 +1,11 @@
 /**
  * 
  */
-package cn.bran.play.routing;
+package cn.bran.japid;
 
-public  class  MyTuple2 <A, B>{
+import java.io.Serializable;
+
+public  class  MyTuple2 <A, B>implements Serializable{
     private  A a;
     private B b;
 

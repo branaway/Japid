@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.Portlets;
 import java.util.*;
 import java.io.*;
@@ -46,11 +46,15 @@ public class index extends cn.bran.play.JapidTemplateBase
 
 
 	public index() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public index(StringBuilder out) {
 		super(out);
 	}
+	public index(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a", "b",  };
@@ -72,9 +76,8 @@ public class index extends cn.bran.play.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render(String a,String b) {
 		this.a = a;
 		this.b = b;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/Portlets/index.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String a,String b) {
@@ -83,7 +86,6 @@ public class index extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, index.html
 p("<p>The outer most content is cached for 20 seconds, using the CacheFor annotation. <em>");// line 2, index.html
 		p(new Date());// line 4, index.html

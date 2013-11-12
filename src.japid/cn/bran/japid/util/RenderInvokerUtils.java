@@ -66,6 +66,7 @@ public class RenderInvokerUtils {
 			StringBuilder sb = new StringBuilder(8000);
 			T t = ctor.newInstance(sb);
 			RenderResult rr = (RenderResult) render(t, args);
+			JapidFlags.logTimeLogs(t);
 			// RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t,
 			// methodName, args);
 			return rr;
@@ -116,6 +117,7 @@ public class RenderInvokerUtils {
 			StringBuilder sb = new StringBuilder(8000);
 			JapidTemplateBaseWithoutPlay t = ctor.newInstance(sb);
 			RenderResult rr = (RenderResult) renderWithNamedArgs(t, args);
+			JapidFlags.logTimeLogs(t);
 			// RenderResult rr = (RenderResult) MethodUtils.invokeMethod(t,
 			// methodName, args);
 			return rr;

@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class subview extends superview
 
 
 	public subview() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public subview(StringBuilder out) {
 		super(out);
 	}
+	public subview(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"s",  };
@@ -68,9 +72,8 @@ public class subview extends superview
 	private String s; // line 2, japidviews/more/MyController/subview.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/more/MyController/subview.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String s) {
@@ -79,7 +82,6 @@ public class subview extends superview
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, subview.html
 ;// line 2, subview.html
 		// line 4, subview.html
@@ -90,7 +92,7 @@ public class subview extends superview
 "hello ");// line 5, subview.html
 		p(s);// line 8, subview.html
 		p("\n");// line 8, subview.html
-		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy2 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy2.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy2.render(s); // line 10, subview.html// line 10, subview.html
+		new japidviews.more.MyController._tags.taggy(subview.this).render(s); // line 10, subview.html// line 10, subview.html
 		p(" ");// line 10, subview.html
 		
 		endDoLayout(sourceTemplate);

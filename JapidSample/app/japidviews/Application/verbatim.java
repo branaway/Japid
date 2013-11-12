@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class verbatim extends cn.bran.play.JapidTemplateBase
 
 
 	public verbatim() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public verbatim(StringBuilder out) {
 		super(out);
 	}
+	public verbatim(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -66,9 +70,8 @@ public class verbatim extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/verbatim.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -77,7 +80,6 @@ public class verbatim extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p("\n" + 
 "<p>\n" + 
 "you should be able to see all Japid command un-interpreted.    	\n" + 
@@ -98,7 +100,7 @@ p("\n" +
 		final String[] ss = new String[]{"a", "b"};// line 18, verbatim.html
 new Runnable() {public void run() {
 int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
-for (String s : ss) {
+for (String s : ss) { // line 19, verbatim.html
 	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ss); _isLast = (_size < 0 ? null : _index == _size);
 // line 19, verbatim.html
 		p("    <p>loop: ");// line 19, verbatim.html

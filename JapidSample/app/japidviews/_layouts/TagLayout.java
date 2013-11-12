@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -44,15 +44,20 @@ public abstract class TagLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public TagLayout() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public TagLayout(StringBuilder out) {
 		super(out);
 	}
+	public TagLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("标签布局\n");// line 1, TagLayout.html
+		beginDoLayout(sourceTemplate);
+p("标签布局\n");// line 1, TagLayout.html
 		p("\n");// line 2, TagLayout.html
-		final dummyTag _dummyTag0 = new dummyTag(getOut()); _dummyTag0.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag0.render("me"); // line 3, TagLayout.html// line 3, TagLayout.html
+		new dummyTag(TagLayout.this).render("me"); // line 3, TagLayout.html// line 3, TagLayout.html
 		p("<div>\n" + 
 "\n");// line 3, TagLayout.html
 		p("\n" + 
@@ -62,7 +67,10 @@ public abstract class TagLayout extends cn.bran.play.JapidTemplateBase
 "</div>\n" + 
 "\n" + 
 "\n");// line 8, TagLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 
 	protected abstract void doLayout();
 }

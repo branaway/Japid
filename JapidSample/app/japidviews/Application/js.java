@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class js extends cn.bran.play.JapidTemplateBase
 
 
 	public js() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public js(StringBuilder out) {
 		super(out);
 	}
+	public js(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -67,9 +71,8 @@ public class js extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/js.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -78,12 +81,11 @@ public class js extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, js.html
 p("{\n" + 
 "    ok:\"ok2\",\n" + 
 "    content: ");// line 2, js.html
-		final jstag _jstag0 = new jstag(getOut()); _jstag0.setActionRunners(getActionRunners()).setOut(getOut()); _jstag0.render(); // line 5, js.html// line 5, js.html
+		new jstag(js.this).render(); // line 5, js.html// line 5, js.html
 		p("}\n");// line 5, js.html
 		
 		endDoLayout(sourceTemplate);

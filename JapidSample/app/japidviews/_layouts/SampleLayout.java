@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -44,13 +44,18 @@ public abstract class SampleLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public SampleLayout() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public SampleLayout(StringBuilder out) {
 		super(out);
 	}
+	public SampleLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("A sample layout.\n" + 
+		beginDoLayout(sourceTemplate);
+p("A sample layout.\n" + 
 "<p>\n");// line 1, SampleLayout.html
 		title();// line 3, SampleLayout.html
 		p(";\n" + 
@@ -58,7 +63,10 @@ public abstract class SampleLayout extends cn.bran.play.JapidTemplateBase
 "<div>\n");// line 3, SampleLayout.html
 		doLayout();// line 6, SampleLayout.html
 		p("</div>\n");// line 6, SampleLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void title() {};
 
 	protected abstract void doLayout();

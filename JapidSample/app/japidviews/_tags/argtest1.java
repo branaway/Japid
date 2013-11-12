@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class argtest1 extends cn.bran.play.JapidTemplateBase
 
 
 	public argtest1() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public argtest1(StringBuilder out) {
 		super(out);
 	}
+	public argtest1(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -88,14 +92,12 @@ public static interface DoBody {
 	}
 	public cn.bran.japid.template.RenderResult render(DoBody body) {
 		this.body = body;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/_tags/argtest1.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/_tags/argtest1.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -104,7 +106,6 @@ public static interface DoBody {
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, argtest1.html
 		if (body != null){ body.setBuffer(getOut()); body.render(); body.resetBuffer();}// line 1, argtest1.html
 		;// line 1, argtest1.html

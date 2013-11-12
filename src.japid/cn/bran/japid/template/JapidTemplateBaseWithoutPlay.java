@@ -20,13 +20,20 @@ import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import cn.bran.japid.MyTuple2;
 import cn.bran.japid.tags.Each;
 import cn.bran.japid.tags.Each.BreakLoop;
 import cn.bran.japid.tags.Each.ContinueLoop;
@@ -36,6 +43,7 @@ import cn.bran.japid.classmeta.MimeTypeEnum;
 import cn.bran.japid.compiler.NamedArg;
 import cn.bran.japid.compiler.NamedArgRuntime;
 import cn.bran.japid.util.HTMLUtils;
+import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.WebUtils;
 
 /**
@@ -46,7 +54,7 @@ import cn.bran.japid.util.WebUtils;
  * 
  */
 public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
-	protected String sourceTemplate = "";
+	public String sourceTemplate = "";
 	private StringBuilder out;
 	private Map<String, String> headers = new TreeMap<String, String>();
 	{
@@ -55,9 +63,19 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 
 	// directive for tracing templates navigation
 	private Boolean traceFile = null;
-	
+
 	private String contentType = "";
-	
+
+	private Boolean stopwatch = null;
+	long startTime = 0; // nano-second when starting rendering
+	protected long renderingTime = -1; // in microsecond
+
+	// the template that calls this as a tag
+	protected JapidTemplateBaseWithoutPlay caller;
+
+	// <marker, time consumption>
+	public List<MyTuple2<String, Long>> timeLogs = new LinkedList<MyTuple2<String, Long>>();
+
 	public void setOut(StringBuilder out) {
 		this.out = out;
 	}
@@ -73,13 +91,19 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	protected void putHeader(String k, String v) {
 		headers.put(k, v);
 	}
-	
-	protected Map<String, String> getHeaders(){
+
+	protected Map<String, String> getHeaders() {
 		return this.headers;
 	}
 
 	public JapidTemplateBaseWithoutPlay(StringBuilder out2) {
 		this.out = out2 == null ? new StringBuilder(4000) : out2;
+	}
+
+	public JapidTemplateBaseWithoutPlay(JapidTemplateBaseWithoutPlay caller) {
+		this(caller != null ? caller.getOut() : null);
+		this.caller = caller;
+		this.timeLogs = caller.timeLogs;
 	}
 
 	// don't use it since it will lead to new instance of stringencoder
@@ -236,9 +260,9 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 					}
 					if (!hasNamedArg) {
 						// a candidate. choose the one with longer param list
-						if ( r == null)
+						if (r == null)
 							r = m;
-						else if (paramLength > r.getParameterTypes().length) 
+						else if (paramLength > r.getParameterTypes().length)
 							r = m;
 					}
 				}
@@ -247,7 +271,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		if (r != null)
 			return r;
 		else
-		      throw new RuntimeException("no render method found for the template: " + currentClass.getCanonicalName());
+			throw new RuntimeException("no render method found for the template: " + currentClass.getCanonicalName());
 	}
 
 	/*
@@ -263,7 +287,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	protected void setHasDoBody() {
 		hasDoBody = true;
 	}
-	
+
 	protected void setRenderMethod(Method renderMethod) {
 		// System.out.println("-> setrender name: " + renderMethod);
 		renderMethodInstance = renderMethod;
@@ -383,7 +407,8 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 			String sep = ", ";
 			String ks = "[" + StringUtils.join(keys, sep) + "]";
 			String vs = "[" + StringUtils.join(argNamesInstance, sep) + "]";
-			throw new RuntimeException("One or more argument names are not valid: " + ks + ". Valid argument names are: " + vs);
+			throw new RuntimeException("One or more argument names are not valid: " + ks
+					+ ". Valid argument names are: " + vs);
 		}
 		return ret;
 	}
@@ -397,7 +422,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		return ret;
 	}
 
-	private Object getDefaultValForType(String type) {
+	private static Object getDefaultValForType(String type) {
 		if (type.equals("String"))
 			return "";
 		else if (/* type.equals("Boolean") || */type.equals("boolean"))
@@ -423,16 +448,17 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	protected void handleException(RuntimeException e) {
 		throw e;
 	}
-	
-	protected void setSourceTemplate(String st){
+
+	protected void setSourceTemplate(String st) {
 		this.sourceTemplate = st;
 	}
-	
+
 	/**
-	 * templates call this method to insert the current template name in a mine-type sensitive comment.
-	 * It does not respect the `tracefile directive. 
-	 * It's useful to mark template files that generate xml/xhtml that requires doctype tag in the first line
-	 * of the output. It's a convenient substitute of the `tracefile directive in such cases. 
+	 * templates call this method to insert the current template name in a
+	 * mine-type sensitive comment. It does not respect the `tracefile
+	 * directive. It's useful to mark template files that generate xml/xhtml
+	 * that requires doctype tag in the first line of the output. It's a
+	 * convenient substitute of the `tracefile directive in such cases.
 	 * 
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 */
@@ -448,13 +474,13 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	protected String makeBeginBorder(String viewSource) {
 		if (StringUtils.isEmpty(contentType))
 			return null;
-		
+
 		String formatter = getContentCommentFormatter(contentType);
 		if (formatter == null)
 			return "";
-	
+
 		return String.format(formatter, "enter: \"" + viewSource + "\"");
-		
+
 	}
 
 	/**
@@ -464,18 +490,24 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	protected String makeEndBorder(String viewSource) {
 		if (StringUtils.isEmpty(contentType))
 			return null;
-		
+
 		String formatter = getContentCommentFormatter(contentType);
 		if (formatter == null)
 			return "";
-		
-		return String.format(formatter, "exit: \"" + viewSource + "\"");
-		
+
+		String content = "exit: \"" + viewSource + "\"";
+		if (shouldRecordTime()) {
+			// add time consumption to the endline for debugging purpose
+			content += ". Duration/μs: " + renderingTime;
+		}
+
+		return String.format(formatter, content);
+
 	}
 
-
 	/**
-	 * determine if the current template should mark the entrance and the exit in the output
+	 * determine if the current template should mark the entrance and the exit
+	 * in the output
 	 * 
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 * @return
@@ -483,39 +515,66 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	private boolean shouldTraceFile() {
 		if (traceFile != null)
 			return traceFile;
-		else
-			if (this.mimeType == MimeTypeEnum.xml || this.mimeType == MimeTypeEnum.html) 
-				if (globalTraceFileHtml != null) 
-					return globalTraceFileHtml; 
-				else
-					return globalTraceFile;
-			else if (this.mimeType == MimeTypeEnum.js || this.mimeType == MimeTypeEnum.json)
-				if (globalTraceFileJson != null) 
-					return globalTraceFileJson; 
-				else 
-					return globalTraceFile; 
-				
+		else if (this.mimeType == MimeTypeEnum.xml || this.mimeType == MimeTypeEnum.html)
+			if (globalTraceFileHtml != null)
+				return globalTraceFileHtml;
+			else
+				return globalTraceFile;
+		else if (this.mimeType == MimeTypeEnum.js || this.mimeType == MimeTypeEnum.json)
+			if (globalTraceFileJson != null)
+				return globalTraceFileJson;
+			else
+				return globalTraceFile;
+
 		return false;
-				
+
 	}
 
 	protected void beginDoLayout(String viewSource) {
 		if (shouldTraceFile())
 			p(makeBeginBorder(viewSource));
+		if (isStopwatch()) {
+			startTime = System.nanoTime();
+		} else if (shouldRecordTime()) {
+			startTime = System.nanoTime();
+		}
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @return
+	 */
+	private boolean shouldRecordTime() {
+		if (caller != null && caller.shouldRecordTime())
+			return true;
+		else
+			return isStopwatch();
 	}
 
 	protected void endDoLayout(String viewSource) {
+		if (shouldRecordTime()) {
+			calcDuration();
+			logTime(sourceTemplate, renderingTime);
+		}
+
 		if (shouldTraceFile())
 			p(makeEndBorder(viewSource));
 		else if (traceFileExit != null && traceFileExit)
 			p(makeEndBorder(viewSource));
-			
+
+	}
+
+	private void calcDuration() {
+		long duration = System.nanoTime() - startTime;
+		renderingTime = duration / 1000;
+
+//		JapidFlags._log("Time consumed to render \"" + sourceTemplate + "\": " + renderingTime + " μs");
 	}
 
 	public static String getContentCommentFormatter(String contentTypeString) {
 		if (contentTypeString.contains("xml") || contentTypeString.contains("html"))
 			return "<!-- %s -->";
-		
+
 		if (contentTypeString.contains("json") || contentTypeString.contains("javascript")
 				|| contentTypeString.contains("css"))
 			return "/* %s */";
@@ -530,11 +589,12 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	}
 
 	/**
-	 * @param contentType the contentType to set
+	 * @param contentType
+	 *            the contentType to set
 	 */
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
-		if(contentType.contains("xml"))
+		if (contentType.contains("xml"))
 			this.mimeType = MimeTypeEnum.xml;
 		else if (contentType.contains("html"))
 			this.mimeType = MimeTypeEnum.html;
@@ -554,45 +614,96 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	}
 
 	/**
-	 * @param traceFile the traceFile to set
+	 * @param traceFile
+	 *            the traceFile to set
 	 */
 	public void setTraceFile(Boolean traceFile) {
 		this.traceFile = traceFile;
 	}
-	
+
 	/**
-	 * 
+	 * @deprecated the Each tag is deprecated in favor of using native loop
 	 */
 	protected void breakLoop() {
 		throw new BreakLoop();
 	}
 
 	/**
-	 * 
+	 * @deprecated the Each tag is deprecated in favor of using native loop
 	 */
 	protected void continueLoop() {
 		throw new ContinueLoop();
 	}
-	
+
 	/**
 	 * @author Bing Ran (bing.ran@gmail.com)
 	 * @param strings
 	 * @return
 	 */
 	protected static int getCollectionSize(Object col) {
-		
+
 		if (col instanceof Collection) {
-			return ((Collection)col).size();
+			return ((Collection) col).size();
 		}
-		
+
 		if (col.getClass().isArray()) {
 			return Array.getLength(col);
 		}
-		
+
 		if (col instanceof Iterable || col instanceof Iterator) {
 			return -1;
 		}
 
 		return -1;
+	}
+
+	public boolean isStopwatch() {
+		return stopwatch != null ? stopwatch : false;
+	}
+
+	public void setStopwatchOn() {
+		this.stopwatch = true;
+	}
+// XXX reconsider this later. consider layout with param case carefully.
+//	protected void startRendering() {
+//		try {
+//			layout();
+//		} catch (RuntimeException __e) {
+//			handleException(__e);
+//		}
+//	}
+
+	protected cn.bran.japid.template.RenderResult getRenderResult() {
+		return new cn.bran.japid.template.RenderResult(getHeaders(), getOut(), renderingTime);
+	}
+
+	/**
+	 * For debugging purpose. Can be called by `
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param marker
+	 */
+	protected void logDuration(String marker) {
+		if (shouldRecordTime()) {
+			long endtime = System.nanoTime();
+			long duration = endtime - startTime;
+			long t = duration / 1000;
+
+			logTime(marker, t);
+			// JapidFlags._log("Time consumed up to \"" + marker + "\" in \"" +
+			// sourceTemplate + "\": " + t + " μs");
+		}
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param marker
+	 * @param t
+	 */
+	private void logTime(String marker, long t) {
+//		if (caller != null) {
+//			caller.logTime(marker, t);
+//		} else {
+			timeLogs.add(new MyTuple2(marker, t));
+//		}
 	}
 }

@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController._layouts;
 import java.util.*;
 import java.io.*;
@@ -44,17 +44,25 @@ public abstract class simLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public simLayout() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public simLayout(StringBuilder out) {
 		super(out);
 	}
+	public simLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("The simplest layout\n" + 
+		beginDoLayout(sourceTemplate);
+p("The simplest layout\n" + 
 "\n");// line 1, simLayout.html
 		doLayout();// line 3, simLayout.html
 		;// line 3, simLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 
 	protected abstract void doLayout();
 }

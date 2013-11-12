@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class categories extends cn.bran.play.JapidTemplateBase
 
 
 	public categories() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public categories(StringBuilder out) {
 		super(out);
 	}
+	public categories(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"categories",  };
@@ -68,9 +72,8 @@ public class categories extends cn.bran.play.JapidTemplateBase
 	private List<Category> categories; // line 1, japidviews/Application/categories.html
 	public cn.bran.japid.template.RenderResult render(List<Category> categories) {
 		this.categories = categories;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/categories.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(List<Category> categories) {
@@ -79,7 +82,6 @@ public class categories extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p(" ");// line 1, categories.html
  if(asBoolean(categories)) {// line 2, categories.html
 		p("     <ul>\n" + 
@@ -90,7 +92,7 @@ p(" ");// line 1, categories.html
 		p(cat.name);// line 6, categories.html
 		p("</a>\n" + 
 "	           ");// line 6, categories.html
-		final categories _this0 = new categories(getOut()); _this0.setActionRunners(getActionRunners()).setOut(getOut()); _this0.render(cat.subCategories); // line 7, categories.html// line 7, categories.html
+		new categories(categories.this).render(cat.subCategories); // line 7, categories.html// line 7, categories.html
 		p("	       </li>\n" + 
 "       ");// line 7, categories.html
 		}// line 9, categories.html

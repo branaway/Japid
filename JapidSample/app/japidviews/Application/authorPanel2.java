@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 
 
 	public authorPanel2() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public authorPanel2(StringBuilder out) {
 		super(out);
 	}
+	public authorPanel2(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
@@ -69,9 +73,8 @@ public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 	private models.japidsample.Author a; // line 1, japidviews/Application/authorPanel2.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Author a) {
 		this.a = a;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/authorPanel2.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Author a) {
@@ -80,7 +83,6 @@ public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, authorPanel2.html
 		p("<p>decorated name: ");// line 1, authorPanel2.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "decorateName", a.name) {

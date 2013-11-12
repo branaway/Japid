@@ -136,7 +136,7 @@ public class PerfTests {
 		}
 
 		long t = System.currentTimeMillis();
-		RenderResult r = new AllPost(null).render("抬头", posts);
+		RenderResult r = new AllPost().render("抬头", posts);
 		System.out.println(System.currentTimeMillis() - t);
 		System.out.println(r.getContent().toString());
 	}

@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.t3.App;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class tee extends cn.bran.play.JapidTemplateBase
 
 
 	public tee() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public tee(StringBuilder out) {
 		super(out);
 	}
+	public tee(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a", "b",  };
@@ -70,9 +74,8 @@ public class tee extends cn.bran.play.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render(int a,String b) {
 		this.a = a;
 		this.b = b;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/t3/App/tee.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(int a,String b) {
@@ -81,7 +84,6 @@ public class tee extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, tee.html
 		p("hello: ");// line 1, tee.html
 		p(a);// line 3, tee.html

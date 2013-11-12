@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class Set extends japidviews._layouts.SetLayout
 
 
 	public Set() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public Set(StringBuilder out) {
 		super(out);
 	}
+	public Set(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
@@ -68,9 +72,8 @@ public class Set extends japidviews._layouts.SetLayout
 	private String a; // line 2, japidviews/templates/Set.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/templates/Set.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String a) {
@@ -79,7 +82,6 @@ public class Set extends japidviews._layouts.SetLayout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, Set.html
 p("\n");// line 2, Set.html
 		p("\n" + 
@@ -95,7 +97,7 @@ p("\n");// line 2, Set.html
 	@Override protected void footer() {
 		// line 17, Set.html
 		p("    great footer. Call a tag: ");// line 17, Set.html
-		final dummyTag _dummyTag2 = new dummyTag(getOut()); _dummyTag2.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag2.render("me"); // line 18, Set.html// line 18, Set.html
+		new dummyTag(Set.this).render("me"); // line 18, Set.html// line 18, Set.html
 ;
 	}
 	@Override protected void title() {

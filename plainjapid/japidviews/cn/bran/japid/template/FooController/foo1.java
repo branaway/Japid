@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36.1
 package japidviews.cn.bran.japid.template.FooController;
 import java.util.*;
 import java.io.*;
@@ -13,11 +13,15 @@ public class foo1 extends main
 {
 	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/foo1.html";
 	public foo1() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public foo1(StringBuilder out) {
 		super(out);
 	}
+	public foo1(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
@@ -37,10 +41,8 @@ public class foo1 extends main
 	private String a; // line 1, japidviews/cn/bran/japid/template/FooController/foo1.html
 	public String render(String a) {
 		this.a = a;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/cn/bran/japid/template/FooController/foo1.html
-		 if (__t != -1) System.out.println("[foo1] rendering time: " + __t);
-		return getOut().toString();
+		return getRenderResult().toString();
 	}
 
 	public static String apply(String a) {
@@ -49,10 +51,9 @@ public class foo1 extends main
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, foo1.html
 p("foo12: ");// line 3, foo1.html
-		final taggy _taggy1 = new taggy(getOut()); _taggy1.setOut(getOut()); _taggy1.render(a + "1"); // line 4, foo1.html// line 4, foo1.html
+		new taggy(foo1.this).render(a + "1"); // line 4, foo1.html// line 4, foo1.html
 		;// line 4, foo1.html
 		
 		endDoLayout(sourceTemplate);

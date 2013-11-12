@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.ControllerJdk7;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class index extends cn.bran.play.JapidTemplateBase
 
 
 	public index() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public index(StringBuilder out) {
 		super(out);
 	}
+	public index(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"m",  };
@@ -68,9 +72,8 @@ public class index extends cn.bran.play.JapidTemplateBase
 	private String m; // line 1, japidviews/more/ControllerJdk7/index.html
 	public cn.bran.japid.template.RenderResult render(String m) {
 		this.m = m;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/ControllerJdk7/index.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String m) {
@@ -79,7 +82,6 @@ public class index extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, index.html
 		p("m: ");// line 1, index.html
 		try { Object o = m ; if (o.toString().length() ==0) { p("nothing"); } else { p(o); } } catch (NullPointerException npe) { p("nothing"); }// line 3, index.html

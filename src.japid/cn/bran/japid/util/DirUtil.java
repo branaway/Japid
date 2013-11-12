@@ -1,12 +1,17 @@
 package cn.bran.japid.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
@@ -601,6 +606,30 @@ public class DirUtil {
 			allFiles[i] = allFiles[i].replace(".java", "");
 		}
 		return allFiles;
+	}
+
+
+	// this method is entirely safe ???
+	static public String readFileAsString(String filePath) throws Exception {
+		byte[] buffer = new byte[(int) new File(filePath).length()];
+		BufferedInputStream f = new BufferedInputStream(new FileInputStream(filePath));
+		f.read(buffer);
+		f.close();
+		return new String(buffer, "UTF-8");
+	}
+
+
+	public static File writeToFile(String jsrc, String realTargetFile) throws FileNotFoundException, IOException,
+			UnsupportedEncodingException {
+		File f = new File(realTargetFile);
+		if (!f.exists()) {
+			String parent = f.getParent();
+			new File(parent).mkdirs();
+		}
+		BufferedOutputStream bf = new BufferedOutputStream(new FileOutputStream(f));
+		bf.write(jsrc.getBytes("UTF-8"));
+		bf.close();
+		return f;
 	}
 
 }

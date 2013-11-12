@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36.1
 package japidviews;
 import java.util.*;
 import java.io.*;
@@ -13,11 +13,15 @@ public class open_for extends cn.bran.japid.template.JapidTemplateBaseWithoutPla
 {
 	public static final String sourceTemplate = "japidviews/open_for.html";
 	public open_for() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public open_for(StringBuilder out) {
 		super(out);
 	}
+	public open_for(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -35,10 +39,8 @@ public class open_for extends cn.bran.japid.template.JapidTemplateBaseWithoutPla
 ////// end of named args stuff
 
 	public String render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/open_for.html
-		 if (__t != -1) System.out.println("[open_for] rendering time: " + __t);
-		return getOut().toString();
+		return getRenderResult().toString();
 	}
 
 	public static String apply() {
@@ -47,12 +49,11 @@ public class open_for extends cn.bran.japid.template.JapidTemplateBaseWithoutPla
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, open_for.html
 		final String[] ss = {"a", "b", "c"};// line 1, open_for.html
 new Runnable() {public void run() {
 int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
-for (String s : ss) {
+for (String s : ss) { // line 2, open_for.html
 	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ss); _isLast = (_size < 0 ? null : _index == _size);
 // line 2, open_for.html
 		p("	value:");// line 2, open_for.html
@@ -77,7 +78,7 @@ for (String s : ss) {
 	
 	new Runnable() {public void run() {
 int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
-for (String ls : lss) {
+for (String ls : lss) { // line 7, open_for.html
 	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(lss); _isLast = (_size < 0 ? null : _index == _size);
 // line 7, open_for.html
 		p("		value:");// line 7, open_for.html

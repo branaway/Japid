@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -45,11 +45,15 @@ public class AllPost extends Layout
 
 
 	public AllPost() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public AllPost(StringBuilder out) {
 		super(out);
 	}
+	public AllPost(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"blogTitle", "allPost",  };
@@ -71,15 +75,9 @@ public class AllPost extends Layout
 	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
-		long __t = -1;
-		 __t = System.nanoTime();
+		setStopwatchOn();
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 3, japidviews/templates/AllPost.html
-     	String __l = "" + (System.nanoTime() - __t) / 100000;
-		int __len = __l.length();
-		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
-
-		System.out.println("[AllPost] rendering time(ms): " + __l);
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String blogTitle,List<Post> allPost) {
@@ -88,21 +86,20 @@ public class AllPost extends Layout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, AllPost.html
 ;// line 2, AllPost.html
 		;// line 7, AllPost.html
 
 new Runnable() {public void run() {
 int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
-for (Post p : allPost) {
+for (Post p : allPost) { // line 12, AllPost.html
 	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(allPost); _isLast = (_size < 0 ? null : _index == _size);
 // line 12, AllPost.html
 		p("        ");// line 12, AllPost.html
 		p("\n" + 
 "\n" + 
 "	    ");// line 13, AllPost.html
-		final Display _Display2 = new Display(getOut()); _Display2.setActionRunners(getActionRunners()).setOut(getOut()); _Display2.render( // line 15, AllPost.html
+		new Display(AllPost.this).render( // line 15, AllPost.html
 new Display.DoBody<String>(){ // line 15, AllPost.html
 public void render(final String title) { // line 15, AllPost.html
 // line 15, AllPost.html
@@ -132,7 +129,7 @@ public void resetBuffer() {
 }}.run();
 // line 12, AllPost.html
 
-final Tag2 _Tag23 = new Tag2(getOut()); _Tag23.setActionRunners(getActionRunners()).setOut(getOut()); _Tag23.render(named("msg", blogTitle), named("age", 100)); // line 20, AllPost.html// line 20, AllPost.html
+new Tag2(AllPost.this).render(named("msg", blogTitle), named("age", 100)); // line 20, AllPost.html// line 20, AllPost.html
 		p("\n" + 
 "<p>cool</p>");// line 20, AllPost.html
 		

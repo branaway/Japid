@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.Portlets;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class panel2 extends cn.bran.play.JapidTemplateBase
 
 
 	public panel2() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public panel2(StringBuilder out) {
 		super(out);
 	}
+	public panel2(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
@@ -68,9 +72,8 @@ public class panel2 extends cn.bran.play.JapidTemplateBase
 	private String a; // line 1, japidviews/more/Portlets/panel2.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/Portlets/panel2.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String a) {
@@ -79,7 +82,6 @@ public class panel2 extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, panel2.html
 		p("<p>panel-2 ");// line 1, panel2.html
 		p(a);// line 2, panel2.html

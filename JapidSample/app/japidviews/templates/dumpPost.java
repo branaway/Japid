@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class dumpPost extends cn.bran.play.JapidTemplateBase
 
 
 	public dumpPost() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public dumpPost(StringBuilder out) {
 		super(out);
 	}
+	public dumpPost(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"f1", "f2", "body",  };
@@ -72,9 +76,8 @@ public class dumpPost extends cn.bran.play.JapidTemplateBase
 		this.f1 = f1;
 		this.f2 = f2;
 		this.body = body;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/templates/dumpPost.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String f1,String f2,String body) {
@@ -83,7 +86,6 @@ public class dumpPost extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p("\n");// line 1, dumpPost.html
 p("\n" + 
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" + 

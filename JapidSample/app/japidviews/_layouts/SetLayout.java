@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -44,18 +44,26 @@ public abstract class SetLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public SetLayout() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public SetLayout(StringBuilder out) {
 		super(out);
 	}
+	public SetLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		;// line 1, SetLayout.html
+		beginDoLayout(sourceTemplate);
+;// line 1, SetLayout.html
 		title();// line 1, SetLayout.html
 		p("\n" + 
 "\n");// line 1, SetLayout.html
 		title();p("one more\n");// line 3, SetLayout.html
-		footer();		endDoLayout(sourceTemplate);	}
+		footer();
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void footer() {};
 	 protected void title() {};
 

@@ -32,7 +32,7 @@ public class error500ForPlay extends cn.bran.play.JapidTemplateBase {
 	// - end of implicit fields with Play
 
 	public error500ForPlay() {
-		super(null);
+		super((StringBuilder)null);
 	}
 
 	public error500ForPlay(StringBuilder out) {

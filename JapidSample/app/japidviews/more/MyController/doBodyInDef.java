@@ -1,4 +1,4 @@
-//version: 0.9.35
+//version: 0.9.36
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -44,11 +44,15 @@ public class doBodyInDef extends cn.bran.play.JapidTemplateBase
 
 
 	public doBodyInDef() {
-		super(null);
+		super((StringBuilder)null);
 	}
 	public doBodyInDef(StringBuilder out) {
 		super(out);
 	}
+	public doBodyInDef(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -66,9 +70,8 @@ public class doBodyInDef extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/doBodyInDef.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -77,9 +80,8 @@ public class doBodyInDef extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p("\n");// line 1, doBodyInDef.html
-		final doBodyInDefTag _doBodyInDefTag0 = new doBodyInDefTag(getOut()); _doBodyInDefTag0.setActionRunners(getActionRunners()).setOut(getOut()); _doBodyInDefTag0.render(// line 2, doBodyInDef.html
+		new doBodyInDefTag(doBodyInDef.this).render(// line 2, doBodyInDef.html
 new doBodyInDefTag.DoBody<String, Integer>(){ // line 2, doBodyInDef.html
 public void render(final String c, final Integer i) { // line 2, doBodyInDef.html
 // line 2, doBodyInDef.html
