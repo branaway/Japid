@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.more.ContentNegotiation;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class index_json extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/ContentNegotiation/index.json";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "application/json; charset=utf-8");
 		setContentType("application/json; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class index_json extends cn.bran.play.JapidTemplateBase
 
 
 	public index_json() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public index_json(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public index_json(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

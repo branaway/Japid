@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class verbatim extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/verbatim.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class verbatim extends cn.bran.play.JapidTemplateBase
 
 
 	public verbatim() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public verbatim(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public verbatim(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -65,9 +74,8 @@ public class verbatim extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/Application/verbatim.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/verbatim.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -76,7 +84,6 @@ public class verbatim extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p("\n" + 
 "<p>\n" + 
 "you should be able to see all Japid command un-interpreted.    	\n" + 
@@ -94,10 +101,11 @@ p("\n" +
 		p("\n" + 
 "<p>got it?</p>\n" + 
 "\n");// line 15, verbatim.html
-		String[] ss = new String[]{"a", "b"};// line 18, verbatim.html
-final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 19, verbatim.html
-ss, new Each.DoBody<String>(){ // line 19, verbatim.html
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 19, verbatim.html
+		final String[] ss = new String[]{"a", "b"};// line 18, verbatim.html
+new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (String s : ss) { // line 19, verbatim.html
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ss); _isLast = (_size < 0 ? null : _index == _size);
 // line 19, verbatim.html
 		p("    <p>loop: ");// line 19, verbatim.html
 		p(s);// line 20, verbatim.html
@@ -109,21 +117,8 @@ public void render(final String s, final int _size, final int _index, final bool
 		;// line 23, verbatim.html
 		
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 19, verbatim.html
+}}.run();
+// line 19, verbatim.html
 		
 		endDoLayout(sourceTemplate);
 	}

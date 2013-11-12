@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.more.MyController._tags;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class taggy extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/_tags/taggy.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class taggy extends cn.bran.play.JapidTemplateBase
 
 
 	public taggy() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public taggy(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public taggy(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"s",  };
@@ -67,9 +76,8 @@ public class taggy extends cn.bran.play.JapidTemplateBase
 	private String s; // line 1, japidviews/more/MyController/_tags/taggy.html
 	public cn.bran.japid.template.RenderResult render(String s) {
 		this.s = s;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/more/MyController/_tags/taggy.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/MyController/_tags/taggy.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String s) {
@@ -78,7 +86,6 @@ public class taggy extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, taggy.html
 		p("I'm taggy!");// line 1, taggy.html
 		

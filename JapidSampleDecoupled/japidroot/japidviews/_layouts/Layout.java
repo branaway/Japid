@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public abstract class Layout extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/Layout.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,20 +46,30 @@ public abstract class Layout extends cn.bran.play.JapidTemplateBase
 
 
 	public Layout() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public Layout(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public Layout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p(" I'm the layout.\n" + 
+		beginDoLayout(sourceTemplate);
+p(" I'm the layout.\n" + 
 "<p>The title is: ");// line 1, Layout.html
 		title();p("</p>\n" + 
 "<div >\n" + 
 "    ");// line 2, Layout.html
 		doLayout();// line 4, Layout.html
 		p("</div>\n");// line 4, Layout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void title() {};
 
 	protected abstract void doLayout();

@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class EachCall extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/EachCall.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 		setTraceFile(true);
 	}
 
@@ -45,10 +47,12 @@ public class EachCall extends cn.bran.play.JapidTemplateBase
 
 
 	public EachCall() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public EachCall(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public EachCall(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);
@@ -117,72 +121,79 @@ for (String p : posts) { // line 16, EachCall.html
 }
 }}.run();
 // line 16, EachCall.html
-logDuration("1.1");// line 22, EachCall.html
 
+logDuration("1.1");// line 23, EachCall.html
 new SampleTag(EachCall.this).render("end"); // line 24, EachCall.html// line 24, EachCall.html
-logDuration("2");// line 25, EachCall.html
 
-for(String p : posts){// line 27, EachCall.html
-		p("    <p> post: ");// line 27, EachCall.html
-		p(p);// line 28, EachCall.html
+logDuration("2");// line 26, EachCall.html
+
+new SampleTag(EachCall.this).render("end"); // line 28, EachCall.html// line 28, EachCall.html
+logDuration("2.1");// line 29, EachCall.html
+
+for(String p : posts){// line 31, EachCall.html
+		p("    <p> post: ");// line 31, EachCall.html
+		p(p);// line 32, EachCall.html
 		p(" </p>\n" + 
-"   ");// line 28, EachCall.html
-		p("\n");// line 31, EachCall.html
-		}// line 32, EachCall.html
-logDuration("3");// line 33, EachCall.html
+"   ");// line 32, EachCall.html
+		p("\n");// line 35, EachCall.html
+		}// line 36, EachCall.html
+
+logDuration("3");// line 38, EachCall.html
 		p("\n" + 
 "<p> now we have an enhanced for loop (the \"open for loop\") that also makes all the loop properties available</p>\n" + 
-"\n");// line 33, EachCall.html
-		int k = 1;// line 37, EachCall.html
+"\n");// line 38, EachCall.html
+		int k = 1;// line 42, EachCall.html
 new Runnable() {public void run() {
 int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
-for (String p : posts) { // line 38, EachCall.html
+for (String p : posts) { // line 43, EachCall.html
 	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(posts); _isLast = (_size < 0 ? null : _index == _size);
-// line 38, EachCall.html
-		p("    <p>index: ");// line 38, EachCall.html
-		p(_index);// line 39, EachCall.html
-		p(", parity: ");// line 39, EachCall.html
-		p(_parity);// line 39, EachCall.html
-		p(", is odd? ");// line 39, EachCall.html
-		p(_isOdd);// line 39, EachCall.html
-		p(", is first? ");// line 39, EachCall.html
-		p(_isFirst);// line 39, EachCall.html
-		p(", is last? ");// line 39, EachCall.html
-		p(_isLast);// line 39, EachCall.html
-		p(", total size: ");// line 39, EachCall.html
-		p(_size);// line 39, EachCall.html
+// line 43, EachCall.html
+		p("    <p>index: ");// line 43, EachCall.html
+		p(_index);// line 44, EachCall.html
+		p(", parity: ");// line 44, EachCall.html
+		p(_parity);// line 44, EachCall.html
+		p(", is odd? ");// line 44, EachCall.html
+		p(_isOdd);// line 44, EachCall.html
+		p(", is first? ");// line 44, EachCall.html
+		p(_isFirst);// line 44, EachCall.html
+		p(", is last? ");// line 44, EachCall.html
+		p(_isLast);// line 44, EachCall.html
+		p(", total size: ");// line 44, EachCall.html
+		p(_size);// line 44, EachCall.html
 		p(" </p>\n" + 
-"    call a tag:  ");// line 39, EachCall.html
-		new SampleTag(EachCall.this).render(p); // line 40, EachCall.html// line 40, EachCall.html
+"    call a tag:  ");// line 44, EachCall.html
+		new SampleTag(EachCall.this).render(p); // line 45, EachCall.html// line 45, EachCall.html
 
 }
 }}.run();
-// line 38, EachCall.html
+// line 43, EachCall.html
 		p("\n" + 
-"<p>the collection variable must be final</p>\n" + 
-"\n");// line 41, EachCall.html
-		final int[] ints = {1, 2, 3, 4, 5};// line 45, EachCall.html
+"<p>the collection variable must be final</p>\n");// line 46, EachCall.html
+		logDuration("4");// line 49, EachCall.html
+
+final int[] ints = {1, 2, 3, 4, 5};// line 51, EachCall.html
 new Runnable() {public void run() {
 int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
-for (Integer i : ints) { // line 46, EachCall.html
+for (Integer i : ints) { // line 52, EachCall.html
 	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ints); _isLast = (_size < 0 ? null : _index == _size);
-// line 46, EachCall.html
-    if (i == 2) {// line 47, EachCall.html
-        continue;// line 48, EachCall.html
-    } else if (i == 5 ) {// line 49, EachCall.html
-    	break;// line 50, EachCall.html
-    }else {// line 51, EachCall.html
-		p("         ");// line 51, EachCall.html
-		p(i);// line 52, EachCall.html
+// line 52, EachCall.html
+    if (i == 2) {// line 53, EachCall.html
+        continue;// line 54, EachCall.html
+    } else if (i == 5 ) {// line 55, EachCall.html
+    	break;// line 56, EachCall.html
+    }else {// line 57, EachCall.html
+		p("         ");// line 57, EachCall.html
+		p(i);// line 58, EachCall.html
 		p(">\n" + 
-"    ");// line 52, EachCall.html
-		}// line 53, EachCall.html
+"    ");// line 58, EachCall.html
+		}// line 59, EachCall.html
 
 }
 }}.run();
-// line 46, EachCall.html
-logDuration("ddd");// line 55, EachCall.html
-		;// line 55, EachCall.html
+// line 52, EachCall.html
+
+logDuration("ddd");// line 62, EachCall.html
+		;// line 62, EachCall.html
 		
 		endDoLayout(sourceTemplate);
 	}

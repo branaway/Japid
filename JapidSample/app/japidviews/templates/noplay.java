@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -15,8 +15,10 @@ import controllers.*;
 public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/templates/noplay.html";
+	{
+	}
 	public noplay() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
 	}
 	public noplay(StringBuilder out) {
 		super(out);

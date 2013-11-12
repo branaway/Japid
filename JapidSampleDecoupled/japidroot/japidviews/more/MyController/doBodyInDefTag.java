@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class doBodyInDefTag extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/doBodyInDefTag.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class doBodyInDefTag extends cn.bran.play.JapidTemplateBase
 
 
 	public doBodyInDefTag() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public doBodyInDefTag(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public doBodyInDefTag(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -87,14 +96,12 @@ public static interface DoBody<A,B> {
 	}
 	public cn.bran.japid.template.RenderResult render(DoBody body) {
 		this.body = body;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/doBodyInDefTag.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/doBodyInDefTag.html
+		return getRenderResult();
 	}
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/doBodyInDefTag.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/doBodyInDefTag.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -103,7 +110,6 @@ public static interface DoBody<A,B> {
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p("outside: ");// line 1, doBodyInDefTag.html
 		if (body != null){ body.setBuffer(getOut()); body.render("taggy", 1); body.resetBuffer();}// line 1, doBodyInDefTag.html
 		p("ok, try to get the content as method call: \n" + 
@@ -115,7 +121,7 @@ p("outside: ");// line 1, doBodyInDefTag.html
 "\n");// line 8, doBodyInDefTag.html
 		p(foo());// line 11, doBodyInDefTag.html
 		p("\n");// line 11, doBodyInDefTag.html
-		final fooTag _fooTag1 = new fooTag(getOut()); _fooTag1.setActionRunners(getActionRunners()).setOut(getOut()); _fooTag1.render(// line 13, doBodyInDefTag.html
+		new fooTag(doBodyInDefTag.this).render(// line 13, doBodyInDefTag.html
 new fooTag.DoBody(){ // line 13, doBodyInDefTag.html
 public void render() { // line 13, doBodyInDefTag.html
 // line 13, doBodyInDefTag.html

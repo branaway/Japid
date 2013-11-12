@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.more.MyController._layouts;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public abstract class simLayout extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/_layouts/simLayout.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,17 +46,27 @@ public abstract class simLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public simLayout() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public simLayout(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public simLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("The simplest layout\n" + 
+		beginDoLayout(sourceTemplate);
+p("The simplest layout\n" + 
 "\n");// line 1, simLayout.html
 		doLayout();// line 3, simLayout.html
 		;// line 3, simLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 
 	protected abstract void doLayout();
 }

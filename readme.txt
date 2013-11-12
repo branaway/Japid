@@ -2,7 +2,7 @@
 
                     Bing Ran<bing_ran@hotmail.com>
                     
-Latest version: 0.9.35
+Latest version: 0.9.37
 
 * Links:
 
@@ -50,6 +50,8 @@ repositories:
 
 * Version History:
 
+2013/11/12: V0.9.37:
+	1. performance enhancement: tag initializing took from 0.050 ms down to 0.015 ms. Stand-alone Japid benefits from the enhancement too. Less StringBuffer junk shall be created too. 
 2013/11/12: V0.9.36:
 	1. bug fix: the substitute expression in an Elvis expression in an escaped expression was not escaped.
 	2. bug fix: japid version display message was displayed literally instead of showing the version number.

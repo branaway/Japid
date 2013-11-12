@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class indexAt extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/indexAt.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class indexAt extends cn.bran.play.JapidTemplateBase
 
 
 	public indexAt() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public indexAt(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public indexAt(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

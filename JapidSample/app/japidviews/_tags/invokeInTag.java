@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -25,9 +25,11 @@ import controllers.*;
 public class invokeInTag extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/invokeInTag.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -45,10 +47,12 @@ public class invokeInTag extends cn.bran.play.JapidTemplateBase
 
 
 	public invokeInTag() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public invokeInTag(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public invokeInTag(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

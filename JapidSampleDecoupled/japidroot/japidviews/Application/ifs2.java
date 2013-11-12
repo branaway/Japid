@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class ifs2 extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/ifs2.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 
 
 	public ifs2() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public ifs2(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public ifs2(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"i", "ss",  };
@@ -69,9 +78,8 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render(int i,String[] ss) {
 		this.i = i;
 		this.ss = ss;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/Application/ifs2.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/ifs2.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(int i,String[] ss) {
@@ -80,7 +88,6 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, ifs2.html
 		p("<p>\n" + 
 "OK, the minimalism if-else statement, no parenthesis, no braces, like command \n" + 
@@ -114,59 +121,35 @@ public class ifs2 extends cn.bran.play.JapidTemplateBase
 		if(asBoolean(ss)) {// line 35, ifs2.html
 		p("    well got ss\n" + 
 "    ");// line 35, ifs2.html
-		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 37, ifs2.html
-ss, new Each.DoBody<String>(){ // line 37, ifs2.html
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 37, ifs2.html
+		new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (String s : ss) { // line 37, ifs2.html
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ss); _isLast = (_size < 0 ? null : _index == _size);
 // line 37, ifs2.html
 		p("        call a tag\n" + 
 "        ");// line 37, ifs2.html
-		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(s); // line 39, ifs2.html// line 39, ifs2.html
+		new SampleTag(ifs2.this).render(s); // line 39, ifs2.html// line 39, ifs2.html
     
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 37, ifs2.html
+}}.run();
+// line 37, ifs2.html
 } else if(asBoolean(ss)) {// line 41, ifs2.html
 		p("    finally got ");// line 41, ifs2.html
 		p(ss);// line 42, ifs2.html
 		p("\n" + 
 "    ");// line 42, ifs2.html
-		final Each _Each2 = new Each(getOut()); _Each2.setOut(getOut()); _Each2.render(// line 43, ifs2.html
-ss, new Each.DoBody<String>(){ // line 43, ifs2.html
-public void render(final String s, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 43, ifs2.html
+		new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (String s : ss) { // line 43, ifs2.html
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ss); _isLast = (_size < 0 ? null : _index == _size);
 // line 43, ifs2.html
 		p("        call a tag\n" + 
 "        ");// line 43, ifs2.html
-		final SampleTag _SampleTag3 = new SampleTag(getOut()); _SampleTag3.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag3.render(s); // line 45, ifs2.html// line 45, ifs2.html
+		new SampleTag(ifs2.this).render(s); // line 45, ifs2.html// line 45, ifs2.html
     
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 43, ifs2.html
+}}.run();
+// line 43, ifs2.html
 } else {// line 47, ifs2.html
     if(asBoolean("assd")) {// line 48, ifs2.html
 		p("        a true\n" + 

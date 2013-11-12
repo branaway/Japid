@@ -37,6 +37,10 @@ public class Application extends JapidController {
 		renderJapid(); // 
 	}
 
+	public static void indexAt2() {
+		renderJapid(); // 
+	}
+	
 	public static void authorPanel(final Author a) {
 		boolean calledFromView = isInvokedfromJapidView();
 		System.out.println("calledFromView: " + calledFromView);

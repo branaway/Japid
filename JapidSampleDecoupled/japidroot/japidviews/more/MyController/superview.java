@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -19,12 +20,15 @@ import controllers.*;
 // NOTE: This file was generated from: japidviews/more/MyController/superview.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class superview extends myLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/superview.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -42,11 +46,17 @@ public class superview extends myLayout
 
 
 	public superview() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public superview(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public superview(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -64,9 +74,8 @@ public class superview extends myLayout
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/superview.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/superview.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -75,7 +84,6 @@ public class superview extends myLayout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, superview.html
 		;// line 1, superview.html
 		// line 3, superview.html

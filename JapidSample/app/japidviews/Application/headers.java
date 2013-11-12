@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -24,7 +24,7 @@ import controllers.*;
 public class headers extends superheaders
 {
 	public static final String sourceTemplate = "japidviews/Application/headers.html";
-	{
+	 private void initHeaders() {
 		putHeader("Date", "Tue, 23 Feb 2010 13:42:34 GMT");
 		putHeader("Expires", "Tue, 23 Feb 2010 13:47:34 GMT");
 		putHeader("Last-Modified", "Tue, 23 Feb 2010 13:40:01 GMT");
@@ -32,6 +32,8 @@ public class headers extends superheaders
 		putHeader("Server", "nginx/0.8.26");
 		putHeader("Cache-Control", "max-age=600");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -49,10 +51,12 @@ public class headers extends superheaders
 
 
 	public headers() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public headers(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public headers(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

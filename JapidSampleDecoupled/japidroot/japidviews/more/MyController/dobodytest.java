@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class dobodytest extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/dobodytest.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class dobodytest extends cn.bran.play.JapidTemplateBase
 
 
 	public dobodytest() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public dobodytest(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public dobodytest(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -65,9 +74,8 @@ public class dobodytest extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/dobodytest.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/dobodytest.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -76,9 +84,8 @@ public class dobodytest extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, dobodytest.html
-		final argtest _argtest0 = new argtest(getOut()); _argtest0.setActionRunners(getActionRunners()).setOut(getOut()); _argtest0.render( // line 1, dobodytest.html
+		new argtest(dobodytest.this).render( // line 1, dobodytest.html
 new argtest.DoBody(){ // line 1, dobodytest.html
 public void render() { // line 1, dobodytest.html
 // line 1, dobodytest.html
@@ -100,7 +107,7 @@ public void resetBuffer() {
 
 }
 , named("arg", "test1"));// line 1, dobodytest.html
-final dummier _dummier1 = new dummier(getOut()); _dummier1.setActionRunners(getActionRunners()).setOut(getOut()); _dummier1.render(named("a", "hxxmmm")); // line 4, dobodytest.html// line 4, dobodytest.html
+new dummier(dobodytest.this).render(named("a", "hxxmmm")); // line 4, dobodytest.html// line 4, dobodytest.html
 		
 		endDoLayout(sourceTemplate);
 	}

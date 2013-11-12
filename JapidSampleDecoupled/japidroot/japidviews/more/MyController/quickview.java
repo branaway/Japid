@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -12,8 +13,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -24,9 +25,11 @@ import controllers.*;
 public class quickview extends japidviews.more.MyController._layouts.simLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/quickview.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,11 +47,17 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 
 
 	public quickview() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public quickview(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public quickview(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -66,9 +75,8 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/more/MyController/quickview.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/more/MyController/quickview.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -77,7 +85,6 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, quickview.html
 p("<p>\n" + 
 "hello there\n" + 
@@ -85,10 +92,10 @@ p("<p>\n" +
 "<p>\n");// line 2, quickview.html
 		String s = "quick" ;// line 8, quickview.html
 		;// line 8, quickview.html
-		final japidviews.more.MyController._tags.taggy _japidviews_more_MyController__tags_taggy0 = new japidviews.more.MyController._tags.taggy(getOut()); _japidviews_more_MyController__tags_taggy0.setActionRunners(getActionRunners()).setOut(getOut()); _japidviews_more_MyController__tags_taggy0.render(s); // line 9, quickview.html// line 9, quickview.html
+		new japidviews.more.MyController._tags.taggy(quickview.this).render(s); // line 9, quickview.html// line 9, quickview.html
 		p("</p> \n" + 
 "<p>\n");// line 9, quickview.html
-		final taggy2 _taggy21 = new taggy2(getOut()); _taggy21.setActionRunners(getActionRunners()).setOut(getOut()); _taggy21.render(s); // line 12, quickview.html// line 12, quickview.html
+		new taggy2(quickview.this).render(s); // line 12, quickview.html// line 12, quickview.html
 		p("</p>");// line 12, quickview.html
 		
 		endDoLayout(sourceTemplate);

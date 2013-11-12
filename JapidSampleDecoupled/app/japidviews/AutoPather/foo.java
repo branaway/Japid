@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.AutoPather;
 import java.util.*;
 import java.io.*;
@@ -21,9 +22,11 @@ import controllers.*;
 public class foo extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/AutoPather/foo.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -41,11 +44,17 @@ public class foo extends cn.bran.play.JapidTemplateBase
 
 
 	public foo() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public foo(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public foo(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a", "b",  };
@@ -67,9 +76,8 @@ public class foo extends cn.bran.play.JapidTemplateBase
 	public cn.bran.japid.template.RenderResult render(String a,int b) {
 		this.a = a;
 		this.b = b;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/AutoPather/foo.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/AutoPather/foo.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String a,int b) {
@@ -78,7 +86,6 @@ public class foo extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, foo.html
 		p("great content here again: ");// line 1, foo.html
 		p(a);// line 2, foo.html

@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class Display extends TagLayout
 {
 	public static final String sourceTemplate = "japidviews/_tags/Display.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class Display extends TagLayout
 
 
 	public Display() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public Display(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public Display(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"post", "as",  };
@@ -91,16 +100,14 @@ public static interface DoBody<A> {
 		this.body = body;
 		this.post = post;
 		this.as = as;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2, japidviews/_tags/Display.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/_tags/Display.html
+		return getRenderResult();
 	}
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post,String as) {
 		this.post = post;
 		this.as = as;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2, japidviews/_tags/Display.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/_tags/Display.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Post post,String as) {
@@ -109,7 +116,6 @@ public static interface DoBody<A> {
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, Display.html
 		;// line 1, Display.html
 		p("<div class=\"divvy\">\n" + 

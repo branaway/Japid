@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.more.Portlets;
 import java.util.*;
 import java.io.*;
@@ -25,9 +25,11 @@ import controllers.*;
 public class index extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/Portlets/index.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 		setTraceFile(true);
 	}
 
@@ -46,10 +48,12 @@ public class index extends cn.bran.play.JapidTemplateBase
 
 
 	public index() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public index(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public index(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

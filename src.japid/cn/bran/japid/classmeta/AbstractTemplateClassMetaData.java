@@ -391,8 +391,11 @@ public abstract class AbstractTemplateClassMetaData {
 	protected void addConstructors() {
 		if (!streaming) {
 			// for StringBuilder data collection, create a default constructor
-			pln(TAB + PUBLIC + className + "() {\n" + "		super((StringBuilder)null);\n" + "	}");
-
+			pln(TAB + PUBLIC + className + "() {");
+			pln(TAB + "super((StringBuilder)null);");
+			if (useWithPlay)
+				pln(TAB + "initHeaders();");
+			pln(TAB +  "}");
 		}
 
 		if (streaming)
@@ -401,6 +404,8 @@ public abstract class AbstractTemplateClassMetaData {
 			pln(TAB + PUBLIC + className + "(StringBuilder out) {");
 
 		pln(TAB + TAB + "super(out);");
+		if (useWithPlay)
+			pln(TAB + TAB + "initHeaders();");
 		pln(TAB + "}");
 		
 		pln(TAB + PUBLIC + className + "(" + JapidTemplateBaseWithoutPlay.class.getName() + " caller) {\n" + 
@@ -568,20 +573,22 @@ public abstract class AbstractTemplateClassMetaData {
 		// pln("	private static final Map<String, String> headers = new HashMap<String, String>();");
 		if (useWithPlay && headers.size() > 0) {
 			// pln("	static {");
-			pln("\t{");
+			pln("\t private void initHeaders() {");
 			for (String k : headers.keySet()) {
 				String v = headers.get(k);
 				pln("\t\tputHeader(\"" + k + "\", \"" + v + "\");");
 			}
 			pln("\t\tsetContentType(\"" + contentType + "\");");
-			if (traceFile != null)
-				if (traceFile)
-					pln("\t\tsetTraceFile(true);");
-				else
-					pln("\t\tsetTraceFile(false);");
-					
 			pln("\t}");
 		}
+		pln("\t{");
+		if (traceFile != null)
+			if (traceFile)
+				pln("\t\tsetTraceFile(true);");
+			else
+				pln("\t\tsetTraceFile(false);");
+				
+		pln("\t}");
 	}
 
 	public void addDefTag(TagDef tag) {

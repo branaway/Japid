@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class EachCall extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/EachCall.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class EachCall extends cn.bran.play.JapidTemplateBase
 
 
 	public EachCall() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public EachCall(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public EachCall(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"posts",  };
@@ -67,9 +76,8 @@ public class EachCall extends cn.bran.play.JapidTemplateBase
 	private List<String> posts; // line 1, japidviews/templates/EachCall.html
 	public cn.bran.japid.template.RenderResult render(List<String> posts) {
 		this.posts = posts;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/templates/EachCall.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/templates/EachCall.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(List<String> posts) {
@@ -78,7 +86,6 @@ public class EachCall extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, EachCall.html
 		p("<p>\n" + 
 "The \"each/Each\" command is a \"for\" loop on steroid, with lots of looping information. \n" + 
@@ -89,9 +96,10 @@ public class EachCall extends cn.bran.play.JapidTemplateBase
 "</p>\n" + 
 "\n" + 
 "<p>\n");// line 4, EachCall.html
-		final Each _Each0 = new Each(getOut()); _Each0.setOut(getOut()); _Each0.render(// line 14, EachCall.html
-posts, new Each.DoBody<String>(){ // line 14, EachCall.html
-public void render(final String p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 14, EachCall.html
+		new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (String p : posts) { // line 14, EachCall.html
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(posts); _isLast = (_size < 0 ? null : _index == _size);
 // line 14, EachCall.html
 		p("    <p>index: ");// line 14, EachCall.html
 		p(_index);// line 15, EachCall.html
@@ -107,36 +115,24 @@ public void render(final String p, final int _size, final int _index, final bool
 		p(_size);// line 15, EachCall.html
 		p(" </p>\n" + 
 "    call a tag:  ");// line 15, EachCall.html
-		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render(p); // line 16, EachCall.html// line 16, EachCall.html
+		new SampleTag(EachCall.this).render(p); // line 16, EachCall.html// line 16, EachCall.html
 
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 14, EachCall.html
+}}.run();
+// line 14, EachCall.html
 		p("</p>\n" + 
 "\n" + 
 "<p>\n");// line 17, EachCall.html
-		final SampleTag _SampleTag2 = new SampleTag(getOut()); _SampleTag2.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag2.render("each call end"); // line 21, EachCall.html// line 21, EachCall.html
+		new SampleTag(EachCall.this).render("each call end"); // line 21, EachCall.html// line 21, EachCall.html
 		p("</p>\n" + 
 "\n" + 
 "<p> now we have an enhanced for loop (the \"open for loop\") that also makes all the loop properties available</p>\n" + 
 "\n");// line 21, EachCall.html
 		int k = 1;// line 26, EachCall.html
-final Each _Each3 = new Each(getOut()); _Each3.setOut(getOut()); _Each3.render(// line 27, EachCall.html
-posts, new Each.DoBody<String>(){ // line 27, EachCall.html
-public void render(final String p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 27, EachCall.html
+new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (String p : posts) { // line 27, EachCall.html
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(posts); _isLast = (_size < 0 ? null : _index == _size);
 // line 27, EachCall.html
 		p("    <p>index: ");// line 27, EachCall.html
 		p(_index);// line 28, EachCall.html
@@ -152,33 +148,21 @@ public void render(final String p, final int _size, final int _index, final bool
 		p(_size);// line 28, EachCall.html
 		p(" </p>\n" + 
 "    call a tag:  ");// line 28, EachCall.html
-		final SampleTag _SampleTag4 = new SampleTag(getOut()); _SampleTag4.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag4.render(p); // line 29, EachCall.html// line 29, EachCall.html
+		new SampleTag(EachCall.this).render(p); // line 29, EachCall.html// line 29, EachCall.html
 
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 27, EachCall.html
+}}.run();
+// line 27, EachCall.html
 		p("\n" + 
 "\n");// line 30, EachCall.html
-		int[] ints = {1, 2, 3, 4};// line 33, EachCall.html
-final Each _Each5 = new Each(getOut()); _Each5.setOut(getOut()); _Each5.render(// line 34, EachCall.html
-ints, new Each.DoBody<Integer>(){ // line 34, EachCall.html
-public void render(final Integer i, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 34, EachCall.html
+		final int[] ints = {1, 2, 3, 4};// line 33, EachCall.html
+new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (Integer i : ints) { // line 34, EachCall.html
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(ints); _isLast = (_size < 0 ? null : _index == _size);
 // line 34, EachCall.html
 		p("    --> ");// line 34, EachCall.html
-		p(escape(i));// line 35, EachCall.html
+		try { Object o = escape(i); if (o.toString().length() ==0) { p(escape(null)); } else { p(o); } } catch (NullPointerException npe) { p(escape(null)); }// line 35, EachCall.html
 		p("\n" + 
 "    ");// line 35, EachCall.html
 		if (i == 2) {// line 36, EachCall.html
@@ -189,21 +173,8 @@ public void render(final Integer i, final int _size, final int _index, final boo
 		}// line 40, EachCall.html
 
 }
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 34, EachCall.html
+}}.run();
+// line 34, EachCall.html
 		;// line 41, EachCall.html
 		
 		endDoLayout(sourceTemplate);

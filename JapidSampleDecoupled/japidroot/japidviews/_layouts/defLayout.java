@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public abstract class defLayout extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/defLayout.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,13 +46,20 @@ public abstract class defLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public defLayout() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public defLayout(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public defLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("<p>defLayout 1</p>\n" + 
+		beginDoLayout(sourceTemplate);
+p("<p>defLayout 1</p>\n" + 
 "----\n");// line 1, defLayout.html
 		p(get("foo"));// line 3, defLayout.html
 		p("\n" + 
@@ -60,7 +70,10 @@ public abstract class defLayout extends cn.bran.play.JapidTemplateBase
 		p("\n" + 
 "+++\n" + 
 "<p>defLayout 3</p>");// line 7, defLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 
 	protected abstract void doLayout();
 }

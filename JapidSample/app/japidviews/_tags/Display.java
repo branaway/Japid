@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class Display extends TagLayout
 {
 	public static final String sourceTemplate = "japidviews/_tags/Display.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class Display extends TagLayout
 
 
 	public Display() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public Display(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public Display(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

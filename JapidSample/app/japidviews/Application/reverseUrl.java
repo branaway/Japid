@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class reverseUrl extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/reverseUrl.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class reverseUrl extends cn.bran.play.JapidTemplateBase
 
 
 	public reverseUrl() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public reverseUrl(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public reverseUrl(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

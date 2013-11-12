@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class def extends defLayout
 {
 	public static final String sourceTemplate = "japidviews/templates/def.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class def extends defLayout
 
 
 	public def() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public def(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public def(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -65,9 +74,8 @@ public class def extends defLayout
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/templates/def.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/def.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -76,7 +84,6 @@ public class def extends defLayout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, def.html
 		p("\n" + 
 "<p>check 1</p>\n" + 
@@ -94,7 +101,7 @@ public class def extends defLayout
 		p("\n" + 
 "\n" + 
 "<p>check 4</p>\n");// line 25, def.html
-		final dummyTag _dummyTag4 = new dummyTag(getOut()); _dummyTag4.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag4.render(get("bar")); // line 28, def.html// line 28, def.html
+		new dummyTag(def.this).render(get("bar")); // line 28, def.html// line 28, def.html
 
 p("<p>check 5</p>\n" + 
 "\n");// line 30, def.html
@@ -130,7 +137,7 @@ actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 		p("</p>\n" + 
 "	<p>OK you can call a tag:</p>\n" + 
 "	");// line 8, def.html
-		final dummyTag _dummyTag1 = new dummyTag(getOut()); _dummyTag1.setActionRunners(getActionRunners()).setOut(getOut()); _dummyTag1.render(p); // line 10, def.html// line 10, def.html
+		new dummyTag(def.this).render(p); // line 10, def.html// line 10, def.html
 
 this.setOut(ori);
 if (actionRunners.size() > 0) {

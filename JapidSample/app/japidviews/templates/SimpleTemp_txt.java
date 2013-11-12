@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class SimpleTemp_txt extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/SimpleTemp.txt";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/plain; charset=utf-8");
 		setContentType("text/plain; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class SimpleTemp_txt extends cn.bran.play.JapidTemplateBase
 
 
 	public SimpleTemp_txt() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public SimpleTemp_txt(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public SimpleTemp_txt(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

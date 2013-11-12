@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -25,9 +25,11 @@ import controllers.*;
 public class quickview extends japidviews.more.MyController._layouts.simLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/quickview.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -45,10 +47,12 @@ public class quickview extends japidviews.more.MyController._layouts.simLayout
 
 
 	public quickview() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public quickview(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public quickview(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

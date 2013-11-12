@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class paramWithDefaults2 extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/paramWithDefaults2.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class paramWithDefaults2 extends cn.bran.play.JapidTemplateBase
 
 
 	public paramWithDefaults2() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public paramWithDefaults2(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public paramWithDefaults2(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"name", "url", "type", "data", "reRender", "dataType", "beforeSend", "success", "jsData", "cache", "event",  };
@@ -87,9 +96,8 @@ public class paramWithDefaults2 extends cn.bran.play.JapidTemplateBase
 		this.jsData = jsData;
 		this.cache = cache;
 		this.event = event;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/paramWithDefaults2.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/paramWithDefaults2.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String name,String url,String type,String data,String reRender,String dataType,String beforeSend,String success,String jsData,Boolean cache,String event) {
@@ -98,7 +106,6 @@ public class paramWithDefaults2 extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, paramWithDefaults2.html
 		p("   \n" + 
 "oh well...\n" + 

@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public abstract class SetLayout extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/SetLayout.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,18 +46,28 @@ public abstract class SetLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public SetLayout() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public SetLayout(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public SetLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		;// line 1, SetLayout.html
+		beginDoLayout(sourceTemplate);
+;// line 1, SetLayout.html
 		title();// line 1, SetLayout.html
 		p("\n" + 
 "\n");// line 1, SetLayout.html
 		title();p("one more\n");// line 3, SetLayout.html
-		footer();		endDoLayout(sourceTemplate);	}
+		footer();
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void footer() {};
 	 protected void title() {};
 

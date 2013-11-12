@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class subview extends superview
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/subview.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class subview extends superview
 
 
 	public subview() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public subview(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public subview(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

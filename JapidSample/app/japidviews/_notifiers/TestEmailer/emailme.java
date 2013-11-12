@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews._notifiers.TestEmailer;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class emailme extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_notifiers/TestEmailer/emailme.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class emailme extends cn.bran.play.JapidTemplateBase
 
 
 	public emailme() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public emailme(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public emailme(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

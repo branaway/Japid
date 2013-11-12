@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -25,9 +25,11 @@ import controllers.*;
 public class testCacheFor extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/testCacheFor.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -45,10 +47,12 @@ public class testCacheFor extends cn.bran.play.JapidTemplateBase
 
 
 	public testCacheFor() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public testCacheFor(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public testCacheFor(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

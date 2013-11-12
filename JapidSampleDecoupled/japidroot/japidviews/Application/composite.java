@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -13,8 +14,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -25,9 +26,11 @@ import controllers.*;
 public class composite extends lcomposite2
 {
 	public static final String sourceTemplate = "japidviews/Application/composite.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -45,11 +48,17 @@ public class composite extends lcomposite2
 
 
 	public composite() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public composite(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public composite(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"post",  };
@@ -69,9 +78,8 @@ public class composite extends lcomposite2
 	private models.japidsample.Post post; // line 2, japidviews/Application/composite.html
 	public cn.bran.japid.template.RenderResult render(models.japidsample.Post post) {
 		this.post = post;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2, japidviews/Application/composite.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/Application/composite.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(models.japidsample.Post post) {
@@ -80,7 +88,6 @@ public class composite extends lcomposite2
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, composite.html
 p("\n" + 
 "\n" + 
@@ -125,7 +132,7 @@ p("\n" +
 "\n" + 
 "<p>Let's invoke a tag which invokes an action</p>\n" + 
 "\n");// line 15, composite.html
-		final invokeInTag _invokeInTag4 = new invokeInTag(getOut()); _invokeInTag4.setActionRunners(getActionRunners()).setOut(getOut()); _invokeInTag4.render(); // line 19, composite.html// line 19, composite.html
+		new invokeInTag(composite.this).render(); // line 19, composite.html// line 19, composite.html
 		p("\n" + 
 "<p>let's invoke an action that renders a template that contains another invoke: ");// line 19, composite.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "authorPanel2", post.getAuthor()) {

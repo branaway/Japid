@@ -35,6 +35,16 @@ import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
 	public JapidTemplateBase(StringBuilder out) {
 		super(out);
+		initme();
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 */
+	private void initme() {
+		if (actionRunners == null) {
+			actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
+		}
 	}
 
 	public JapidTemplateBase(JapidTemplateBaseWithoutPlay caller) {
@@ -42,12 +52,13 @@ public abstract class JapidTemplateBase extends JapidTemplateBaseWithoutPlay {
 		if (caller instanceof JapidTemplateBase){
 			setActionRunners(((JapidTemplateBase)caller).getActionRunners());
 		}
+		initme();
 	}
 
 	/**
 	 * to keep track of all the action invocations by #{invoke} tag
 	 */
-	protected TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
+	protected TreeMap<Integer, cn.bran.japid.template.ActionRunner> actionRunners;// = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
 
 	public TreeMap<Integer, cn.bran.japid.template.ActionRunner> getActionRunners() {
 		return actionRunners;

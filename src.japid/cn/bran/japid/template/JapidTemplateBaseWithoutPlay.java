@@ -56,10 +56,8 @@ import cn.bran.japid.util.WebUtils;
 public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	public String sourceTemplate = "";
 	private StringBuilder out;
-	private Map<String, String> headers = new TreeMap<String, String>();
-	{
-		headers.put("Content-Type", "text/html; charset=utf-8");
-	}
+	private Map<String, String> headers;// = new TreeMap<String, String>();
+
 
 	// directive for tracing templates navigation
 	private Boolean traceFile = null;
@@ -74,7 +72,20 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	protected JapidTemplateBaseWithoutPlay caller;
 
 	// <marker, time consumption>
-	public List<MyTuple2<String, Long>> timeLogs = new LinkedList<MyTuple2<String, Long>>();
+	public List<MyTuple2<String, Long>> timeLogs;
+	
+	private void init() {
+		if (headers == null) {
+			 headers = new TreeMap<String, String>();
+//			 headers = new HashMap<String, String>();
+			 headers.put("Content-Type", "text/html; charset=utf-8");
+		}
+		if (timeLogs == null) {
+			timeLogs = new LinkedList<MyTuple2<String, Long>>();
+		}
+		if (out == null)
+			out = new StringBuilder(4000);
+	}
 
 	public void setOut(StringBuilder out) {
 		this.out = out;
@@ -97,13 +108,18 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	}
 
 	public JapidTemplateBaseWithoutPlay(StringBuilder out2) {
-		this.out = out2 == null ? new StringBuilder(4000) : out2;
+		this.out = out2;
+		init();
 	}
 
 	public JapidTemplateBaseWithoutPlay(JapidTemplateBaseWithoutPlay caller) {
-		this(caller != null ? caller.getOut() : null);
+		if (caller != null) {
+			out = caller.getOut();
+		}
 		this.caller = caller;
 		this.timeLogs = caller.timeLogs;
+		this.headers = caller.getHeaders();
+		init();
 	}
 
 	// don't use it since it will lead to new instance of stringencoder

@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public abstract class SampleLayout extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/SampleLayout.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,13 +46,20 @@ public abstract class SampleLayout extends cn.bran.play.JapidTemplateBase
 
 
 	public SampleLayout() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public SampleLayout(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public SampleLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("A sample layout.\n" + 
+		beginDoLayout(sourceTemplate);
+p("A sample layout.\n" + 
 "<p>\n");// line 1, SampleLayout.html
 		title();// line 3, SampleLayout.html
 		p(";\n" + 
@@ -57,7 +67,10 @@ public abstract class SampleLayout extends cn.bran.play.JapidTemplateBase
 "<div>\n");// line 3, SampleLayout.html
 		doLayout();// line 6, SampleLayout.html
 		p("</div>\n");// line 6, SampleLayout.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void title() {};
 
 	protected abstract void doLayout();

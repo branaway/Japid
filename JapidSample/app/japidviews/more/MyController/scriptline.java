@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class scriptline extends scriptlineLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/scriptline.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class scriptline extends scriptlineLayout
 
 
 	public scriptline() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public scriptline(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public scriptline(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

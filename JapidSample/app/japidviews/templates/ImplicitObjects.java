@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class ImplicitObjects extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/ImplicitObjects.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class ImplicitObjects extends cn.bran.play.JapidTemplateBase
 
 
 	public ImplicitObjects() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public ImplicitObjects(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public ImplicitObjects(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

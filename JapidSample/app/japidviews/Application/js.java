@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class js extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/js.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "application/json; charset=utf-8");
 		setContentType("application/json; charset=utf-8");
+	}
+	{
 		setTraceFile(false);
 	}
 
@@ -45,10 +47,12 @@ public class js extends cn.bran.play.JapidTemplateBase
 
 
 	public js() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public js(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public js(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

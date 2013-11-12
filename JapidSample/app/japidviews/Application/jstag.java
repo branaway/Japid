@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class jstag extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/jstag.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "application/json; charset=utf-8");
 		setContentType("application/json; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class jstag extends cn.bran.play.JapidTemplateBase
 
 
 	public jstag() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public jstag(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public jstag(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

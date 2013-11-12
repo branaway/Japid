@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -19,12 +20,15 @@ import controllers.*;
 // NOTE: This file was generated from: japidviews/templates/Msg.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class Msg extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/Msg.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -42,11 +46,17 @@ public class Msg extends cn.bran.play.JapidTemplateBase
 
 
 	public Msg() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public Msg(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public Msg(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/ };
@@ -64,9 +74,8 @@ public class Msg extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 0, japidviews/templates/Msg.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/templates/Msg.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply() {
@@ -75,7 +84,6 @@ public class Msg extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 p("login: ");// line 1, Msg.html
 		;p(getMessage("login.name"));// line 1, Msg.html
 		p(", ");// line 1, Msg.html

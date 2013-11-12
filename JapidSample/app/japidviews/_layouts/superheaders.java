@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -24,10 +24,12 @@ import controllers.*;
 public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/superheaders.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		putHeader("Cache-Control", "max-age=300");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -45,10 +47,12 @@ public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 
 
 	public superheaders() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public superheaders(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public superheaders(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

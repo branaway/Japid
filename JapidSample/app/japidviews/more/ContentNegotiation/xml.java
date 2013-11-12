@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.more.ContentNegotiation;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class xml extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/more/ContentNegotiation/xml.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/xml; charset=utf-8");
 		setContentType("text/xml; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class xml extends cn.bran.play.JapidTemplateBase
 
 
 	public xml() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public xml(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public xml(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

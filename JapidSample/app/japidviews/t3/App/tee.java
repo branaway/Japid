@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.t3.App;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class tee extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/t3/App/tee.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class tee extends cn.bran.play.JapidTemplateBase
 
 
 	public tee() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public tee(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public tee(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

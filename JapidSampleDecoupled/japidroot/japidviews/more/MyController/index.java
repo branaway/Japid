@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.more.MyController;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class index extends SampleLayout
 {
 	public static final String sourceTemplate = "japidviews/more/MyController/index.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class index extends SampleLayout
 
 
 	public index() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public index(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public index(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"s", "i",  };
@@ -69,9 +78,8 @@ public class index extends SampleLayout
 	public cn.bran.japid.template.RenderResult render(String s,int i) {
 		this.s = s;
 		this.i = i;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 3, japidviews/more/MyController/index.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 3, japidviews/more/MyController/index.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String s,int i) {
@@ -80,7 +88,6 @@ public class index extends SampleLayout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, index.html
 		;// line 1, index.html
 ;// line 3, index.html
@@ -93,7 +100,7 @@ public class index extends SampleLayout
 		p(".\n" + 
 "Here goes your Japid template content.\n" + 
 "call a tag: \n");// line 7, index.html
-		final SampleTag _SampleTag1 = new SampleTag(getOut()); _SampleTag1.setActionRunners(getActionRunners()).setOut(getOut()); _SampleTag1.render("world"); // line 10, index.html// line 10, index.html
+		new SampleTag(index.this).render("world"); // line 10, index.html// line 10, index.html
 		;// line 10, index.html
 		
 		endDoLayout(sourceTemplate);

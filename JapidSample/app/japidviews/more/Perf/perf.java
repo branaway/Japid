@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.more.Perf;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class perf extends perfmain
 {
 	public static final String sourceTemplate = "japidviews/more/Perf/perf.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public class perf extends perfmain
 
 
 	public perf() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public perf(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public perf(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

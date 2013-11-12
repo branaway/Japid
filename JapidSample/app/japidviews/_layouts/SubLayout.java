@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public abstract class SubLayout extends Layout
 {
 	public static final String sourceTemplate = "japidviews/_layouts/SubLayout.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,10 +46,12 @@ public abstract class SubLayout extends Layout
 
 
 	public SubLayout() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public SubLayout(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public SubLayout(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -26,9 +26,11 @@ import controllers.*;
 public class composite extends lcomposite2
 {
 	public static final String sourceTemplate = "japidviews/Application/composite.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -46,10 +48,12 @@ public class composite extends lcomposite2
 
 
 	public composite() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public composite(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public composite(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

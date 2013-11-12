@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -14,12 +15,18 @@ import controllers.*;
 public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/templates/noplay.html";
+	{
+	}
 	public noplay() {
-		super(null);
+	super((StringBuilder)null);
 	}
 	public noplay(StringBuilder out) {
 		super(out);
 	}
+	public noplay(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"s",  };
@@ -39,10 +46,8 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	private String s; // line 2, japidviews/templates/noplay.html
 	public String render(String s) {
 		this.s = s;
-		long __t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 2, japidviews/templates/noplay.html
-		 if (__t != -1) System.out.println("[noplay] rendering time: " + __t);
-		return getOut().toString();
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/templates/noplay.html
+		return getRenderResult().toString();
 	}
 
 	public static String apply(String s) {
@@ -51,11 +56,10 @@ public class noplay extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, noplay.html
 p("\n" + 
 "hello ");// line 2, noplay.html
-		final japidviews._tags.Tag2 _japidviews__tags_Tag20 = new japidviews._tags.Tag2(getOut()); _japidviews__tags_Tag20.setOut(getOut()); _japidviews__tags_Tag20.render(named("msg", s)); // line 4, noplay.html// line 4, noplay.html
+		new japidviews._tags.Tag2(noplay.this).render(named("msg", s)); // line 4, noplay.html// line 4, noplay.html
 		p(" !!!!\n" + 
 "\n");// line 4, noplay.html
 		

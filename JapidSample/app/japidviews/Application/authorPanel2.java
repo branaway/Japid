@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -25,9 +25,11 @@ import controllers.*;
 public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/authorPanel2.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -45,10 +47,12 @@ public class authorPanel2 extends cn.bran.play.JapidTemplateBase
 
 
 	public authorPanel2() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public authorPanel2(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public authorPanel2(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);

@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews;
 import java.util.*;
 import java.io.*;
@@ -19,12 +20,15 @@ import controllers.*;
 // NOTE: This file was generated from: japidviews/error500.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class error500 extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/error500.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -42,11 +46,17 @@ public class error500 extends cn.bran.play.JapidTemplateBase
 
 
 	public error500() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public error500(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public error500(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"ex",  };
@@ -66,9 +76,8 @@ public class error500 extends cn.bran.play.JapidTemplateBase
 	private Exception ex; // line 1, japidviews/error500.html
 	public cn.bran.japid.template.RenderResult render(Exception ex) {
 		this.ex = ex;
-		long __t = -1;
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/error500.html
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(Exception ex) {
@@ -77,7 +86,6 @@ public class error500 extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, error500.html
 		p("<html>\n" + 
 "<head>\n" + 

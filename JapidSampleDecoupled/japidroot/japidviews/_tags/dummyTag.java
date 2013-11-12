@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,9 +24,11 @@ import controllers.*;
 public class dummyTag extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/dummyTag.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,11 +46,17 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 
 
 	public dummyTag() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public dummyTag(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public dummyTag(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"a",  };
@@ -67,15 +76,9 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 	private String a; // line 1, japidviews/_tags/dummyTag.html
 	public cn.bran.japid.template.RenderResult render(String a) {
 		this.a = a;
-		long __t = -1;
-		 __t = System.nanoTime();
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1, japidviews/_tags/dummyTag.html
-     	String __l = "" + (System.nanoTime() - __t) / 100000;
-		int __len = __l.length();
-		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
-
-		System.out.println("[dummyTag] rendering time(ms): " + __l);
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		setStopwatchOn();
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/_tags/dummyTag.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String a) {
@@ -84,7 +87,6 @@ public class dummyTag extends cn.bran.play.JapidTemplateBase
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, dummyTag.html
 		p("\n");// line 1, dummyTag.html
 		p("\n" + 

@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -12,8 +13,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -24,9 +25,11 @@ import controllers.*;
 public class AllPost extends Layout
 {
 	public static final String sourceTemplate = "japidviews/templates/AllPost.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,11 +47,17 @@ public class AllPost extends Layout
 
 
 	public AllPost() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public AllPost(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public AllPost(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"blogTitle", "allPost",  };
@@ -70,15 +79,9 @@ public class AllPost extends Layout
 	public cn.bran.japid.template.RenderResult render(String blogTitle,List<Post> allPost) {
 		this.blogTitle = blogTitle;
 		this.allPost = allPost;
-		long __t = -1;
-		 __t = System.nanoTime();
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 3, japidviews/templates/AllPost.html
-     	String __l = "" + (System.nanoTime() - __t) / 100000;
-		int __len = __l.length();
-		__l = __l.substring(0, __len - 1) + "." +  __l.substring(__len - 1);
-
-		System.out.println("[AllPost] rendering time(ms): " + __l);
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), __t, actionRunners, sourceTemplate);
+		setStopwatchOn();
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 3, japidviews/templates/AllPost.html
+		return getRenderResult();
 	}
 
 	public static cn.bran.japid.template.RenderResult apply(String blogTitle,List<Post> allPost) {
@@ -87,21 +90,21 @@ public class AllPost extends Layout
 
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
 ;// line 1, AllPost.html
 ;// line 2, AllPost.html
 		;// line 7, AllPost.html
 
-final Each _Each1 = new Each(getOut()); _Each1.setOut(getOut()); _Each1.render(// line 12, AllPost.html
-allPost, new Each.DoBody<Post>(){ // line 12, AllPost.html
-public void render(final Post p, final int _size, final int _index, final boolean _isOdd, final String _parity, final boolean _isFirst, final boolean _isLast) { // line 12, AllPost.html
+new Runnable() {public void run() {
+int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
+for (Post p : allPost) { // line 12, AllPost.html
+	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(allPost); _isLast = (_size < 0 ? null : _index == _size);
 // line 12, AllPost.html
 		p("\n" + 
 "        ");// line 12, AllPost.html
 		p("\n" + 
 "\n" + 
 "	    ");// line 16, AllPost.html
-		final Display _Display2 = new Display(getOut()); _Display2.setActionRunners(getActionRunners()).setOut(getOut()); _Display2.render( // line 18, AllPost.html
+		new Display(AllPost.this).render( // line 18, AllPost.html
 new Display.DoBody<String>(){ // line 18, AllPost.html
 public void render(final String title) { // line 18, AllPost.html
 // line 18, AllPost.html
@@ -128,23 +131,10 @@ public void resetBuffer() {
 , named("post", p), named("as", "home222"));// line 18, AllPost.html
 
 }
+}}.run();
+// line 12, AllPost.html
 
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-);// line 12, AllPost.html
-
-final Tag2 _Tag23 = new Tag2(getOut()); _Tag23.setActionRunners(getActionRunners()).setOut(getOut()); _Tag23.render(named("msg", blogTitle), named("age", 100)); // line 23, AllPost.html// line 23, AllPost.html
+new Tag2(AllPost.this).render(named("msg", blogTitle), named("age", 100)); // line 23, AllPost.html// line 23, AllPost.html
 		p("\n" + 
 "<p>cool cool!</p>");// line 23, AllPost.html
 		

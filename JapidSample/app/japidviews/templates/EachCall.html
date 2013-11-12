@@ -19,10 +19,14 @@ The instance variable is defined after the | line, the same way as any tag rende
     call a tag:  `tag SampleTag p
 }*
 `
+
 `logDuration("1.1");
+`tag SampleTag "end"
+
+`logDuration("2");
 
 `tag SampleTag "end"
-`logDuration("2");
+`logDuration("2.1");
 
 `for(String p : posts){
     <p> post: $p </p>
@@ -30,6 +34,7 @@ The instance variable is defined after the | line, the same way as any tag rende
     call a tag:  `tag SampleTag p
    }*
 `}
+
 `logDuration("3");
 
 <p> now we have an enhanced for loop (the "open for loop") that also makes all the loop properties available</p>
@@ -41,9 +46,10 @@ The instance variable is defined after the | line, the same way as any tag rende
 `
 
 <p>the collection variable must be final</p>
+`logDuration("4");
 
 `final int[] ints = {1, 2, 3, 4, 5};
-`for int i : ints
+`for  int i : ints
     `if (i == 2) {
         `continue;
     `} else if (i == 5 ) {
@@ -52,4 +58,5 @@ The instance variable is defined after the | line, the same way as any tag rende
          ${i}>
     `}
 `
+
 `logDuration("ddd");

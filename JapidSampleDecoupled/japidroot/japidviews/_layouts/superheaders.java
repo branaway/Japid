@@ -1,3 +1,4 @@
+//version: 0.9.36.x
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -11,8 +12,8 @@ import play.data.validation.Validation;
 import play.mvc.Scope.*;
 import models.*;
 import play.data.validation.Error;
-import japidviews._tags.*;
 import play.i18n.Lang;
+import japidviews._tags.*;
 import play.mvc.Http.*;
 import controllers.*;
 //
@@ -23,10 +24,12 @@ import controllers.*;
 public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/superheaders.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		putHeader("Cache-Control", "max-age=300");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -44,13 +47,20 @@ public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 
 
 	public superheaders() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public superheaders(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public superheaders(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		;// line 1, superheaders.html
+		beginDoLayout(sourceTemplate);
+;// line 1, superheaders.html
 		p("\n" + 
 "\n");// line 1, superheaders.html
 		p("\n" + 
@@ -60,7 +70,10 @@ public abstract class superheaders extends cn.bran.play.JapidTemplateBase
 		p("\n");// line 9, superheaders.html
 		doLayout();// line 11, superheaders.html
 		;// line 11, superheaders.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 
 	protected abstract void doLayout();
 }

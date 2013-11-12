@@ -1,4 +1,4 @@
-//version: 0.9.36
+//version: 0.9.36.x
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -24,9 +24,11 @@ import controllers.*;
 public class callPicka extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/callPicka.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 		setTraceFile(false);
 	}
 
@@ -45,10 +47,12 @@ public class callPicka extends cn.bran.play.JapidTemplateBase
 
 
 	public callPicka() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public callPicka(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
 	public callPicka(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
 		super(caller);
