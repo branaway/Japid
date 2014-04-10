@@ -1,4 +1,4 @@
-//version: 0.9.36.x
+//version: 0.9.37
 package japidviews.templates;
 import java.util.*;
 import java.io.*;

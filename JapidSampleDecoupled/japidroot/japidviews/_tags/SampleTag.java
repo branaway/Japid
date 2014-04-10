@@ -1,4 +1,4 @@
-//version: 0.9.36.x
+//version: 0.9.37
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -20,7 +20,6 @@ import controllers.*;
 // NOTE: This file was generated from: japidviews/_tags/SampleTag.html
 // Change to this file will be lost next time the template file is compiled.
 //
-@cn.bran.play.NoEnhance
 public class SampleTag extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_tags/SampleTag.html";
@@ -87,7 +86,7 @@ public class SampleTag extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 ;// line 1, SampleTag.html
-		p("Hello: ");// line 1, SampleTag.html
+		p("Hi: ");// line 1, SampleTag.html
 		p(a);// line 2, SampleTag.html
 		p("!\n");// line 2, SampleTag.html
 		

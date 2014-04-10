@@ -119,6 +119,7 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 		this.caller = caller;
 		this.timeLogs = caller.timeLogs;
 		this.headers = caller.getHeaders();
+		this.stopwatch = caller.stopwatch;
 		init();
 	}
 
@@ -126,11 +127,17 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	// Charset UTF8 = Charset.forName("UTF-8");
 
 	final protected void p(String s) {
-		writeString(s);
+		if (s != null && !s.isEmpty())
+			out.append(s);
+
+//		writeString(s);
 	}
 
 	final protected void pln(String s) {
-		writeString(s);
+		if (s != null && !s.isEmpty())
+			out.append(s);
+
+//		writeString(s);
 		out.append('\n');
 	}
 
@@ -561,9 +568,9 @@ public abstract class JapidTemplateBaseWithoutPlay implements Serializable {
 	 * @return
 	 */
 	private boolean shouldRecordTime() {
-		if (caller != null && caller.shouldRecordTime())
-			return true;
-		else
+//		if (caller != null && caller.shouldRecordTime())
+//			return true;
+//		else
 			return isStopwatch();
 	}
 

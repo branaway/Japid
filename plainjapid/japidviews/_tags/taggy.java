@@ -1,4 +1,4 @@
-//version: 0.9.36.1
+//version: 0.9.37
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -12,8 +12,10 @@ import japidviews._tags.*;
 public class taggy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/_tags/taggy.html";
+	{
+	}
 	public taggy() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
 	}
 	public taggy(StringBuilder out) {
 		super(out);

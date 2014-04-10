@@ -1,4 +1,4 @@
-//version: 0.9.36.x
+//version: 0.9.37
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -20,7 +20,6 @@ import controllers.*;
 // NOTE: This file was generated from: japidviews/Application/index.html
 // Change to this file will be lost next time the template file is compiled.
 //
-@cn.bran.play.NoEnhance
 public class index extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/index.html";
@@ -95,17 +94,20 @@ public class index extends cn.bran.play.JapidTemplateBase
 "<p>Please follow the controller actions and render paths for the\n" + 
 "source code.</p>\n" + 
 "\n" + 
-"<ul>\n" + 
-"	<li><a href=\"");// line 4, index.html
-		p(lookup("hello", new Object[]{}));// line 11, index.html
+"<ul>\n");// line 4, index.html
+		logDuration("xx");// line 11, index.html
+		p("	<li><a href=\"");// line 11, index.html
+		p(lookup("hello", new Object[]{}));// line 12, index.html
 		p("\">Hello Japid, using an overridden\n" + 
-"	version of renderText()</a></li>\n" + 
-"	<li><a href=\"");// line 11, index.html
-		p(lookup("callTag", new Object[]{}));// line 13, index.html
-		p("\">using tags in a template</a></li>\n" + 
-"	<li><a href=\"go/templates/def.html\"><em>def</em>\n" + 
+"	version of renderText()</a></li>\n");// line 12, index.html
+		logDuration("xx-1");// line 14, index.html
+		p("	<li><a href=\"");// line 14, index.html
+		p(lookup("callTag", new Object[]{}));// line 15, index.html
+		p("\">using tags in a template</a></li>\n");// line 15, index.html
+		logDuration("yy");// line 16, index.html
+		p("	<li><a href=\"go/templates/def.html\"><em>def</em>\n" + 
 "	tag: define a method that return a string that can be invoked from\n" + 
-"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 13, index.html
+"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 16, index.html
 		p("\n" + 
 "	<li><a href=\"more.Portlets.index\">demo how to composite a\n" + 
 "	page with independent segments with the <b>invoke</b> tag</a></li>\n" + 
@@ -114,9 +116,9 @@ public class index extends cn.bran.play.JapidTemplateBase
 "	binding with <b>JapidController.renderJapid()</b> </a></li>\n" + 
 "	\n" + 
 "	<li><a href=\"Application.postList\">a template with template\n" + 
-"	and tags etc...</a></li>\n" + 
-"	\n" + 
-"	<li><a href=\"go/templates/log.html\">use the log\n" + 
+"	and tags etc...</a></li>\n");// line 24, index.html
+		logDuration("aa");// line 33, index.html
+		p("	<li><a href=\"go/templates/log.html\">use the log\n" + 
 "	macro in a template. watch the output in the console</a></li>\n" + 
 "	<li><a href=\"go/templates/Msg.html\">i18n, use\n" + 
 "	predefined messages</a></li>\n" + 
@@ -134,7 +136,9 @@ public class index extends cn.bran.play.JapidTemplateBase
 "		    `\n" + 
 "	   </pre>\n" + 
 "	</li>\n" + 
-"	<li><a href=\"Application.invokeInLoop\">using invoke tag with\n" + 
+"	\n");// line 33, index.html
+		logDuration("bb");// line 53, index.html
+		p("	<li><a href=\"Application.invokeInLoop\">using invoke tag with\n" + 
 "	local variables requires final attribute</a></li>\n" + 
 "	<li><a href=\"go/templates.suppressNull.html\">suppressNull,\n" + 
 "	a directive to allow safe navigation in expression, default off</a></li>\n" + 
@@ -149,10 +153,10 @@ public class index extends cn.bran.play.JapidTemplateBase
 "	dontRedirect() from JapidController</a></li>\n" + 
 "	<li><a href=\"go/templates/openBrace.html\"> use\n" + 
 "	`{ in if and while </a></li>\n" + 
-"	<li><a href=\"Application.escapedExpr\"> ");// line 21, index.html
+"	<li><a href=\"Application.escapedExpr\"> ");// line 53, index.html
 		p("\n" + 
 "	raw expression with ${} and html-safe expression with ~{}\n" + 
-"	");// line 64, index.html
+"	");// line 69, index.html
 		p("	</li>\n" + 
 "	<li><a href=\"more.ContentNegotiation.index\"> content\n" + 
 "	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: Application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
@@ -161,56 +165,58 @@ public class index extends cn.bran.play.JapidTemplateBase
 "	<p>For more doc: see <a\n" + 
 "		href=\"http://www.playframework.org/documentation/1.1/routes#content-negotiation\">Play\n" + 
 "	Content Negotiation</a></p>\n" + 
-"	</li>\n" + 
-"	<li><a href=\"more.MyController.quickview\"> Use relative path\n" + 
+"	</li>\n");// line 71, index.html
+		logDuration("cc");// line 81, index.html
+		p("	<li><a href=\"more.MyController.quickview\"> Use relative path\n" + 
 "	in layout spec and tags</a>: prefix the layout name or the tag name with a\n" + 
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
-"\n");// line 66, index.html
-		String na = "bran";// line 81, index.html
-int ag = 123;// line 82, index.html
-		p("	<li><a href=\"");// line 82, index.html
-		p(lookup("validate", na, ag));// line 83, index.html
+"\n");// line 81, index.html
+		String na = "bran";// line 87, index.html
+int ag = 123;// line 88, index.html
+		p("	<li><a href=\"");// line 88, index.html
+		p(lookup("validate", na, ag));// line 89, index.html
 		p("\">validation and errors</a></li>\n" + 
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"Application.flashgood\">flash with success</a></li>\n" + 
-"			<li><a href=\"");// line 83, index.html
-		p(lookup("reverseUrl", new Object[]{}));// line 87, index.html
+"			<li><a href=\"");// line 89, index.html
+		p(lookup("reverseUrl", new Object[]{}));// line 93, index.html
 		p("\">flash with a message</a></li>\n" + 
 "			<li><a href=\"Application.flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"Application.flashmsg\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
-"	   ");// line 87, index.html
-		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 93, index.html
-		p("	   <a href=\"");// line 93, index.html
-		p(lookup("search", sp));// line 94, index.html
+"	   ");// line 93, index.html
+		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 99, index.html
+		p("	   <a href=\"");// line 99, index.html
+		p(lookup("search", sp));// line 100, index.html
 		p("\">reverse URL lookup with complex object</a>\n" + 
-"    ");// line 94, index.html
+"    ");// line 100, index.html
 		p("\n" + 
 "	</li>\n" + 
-"	<li><a href=\"");// line 96, index.html
-		p(lookupStatic("/public/images/favicon.png"));// line 98, index.html
+"	<li><a href=\"");// line 102, index.html
+		p(lookupStatic("/public/images/favicon.png"));// line 104, index.html
 		p("\">reverse to a static  png</a></li>\n" + 
 "</ul>\n" + 
+"\n");// line 104, index.html
+		logDuration("dd");// line 107, index.html
+		p("<p>Reverse lookup is really slow...</p>\n" + 
 "\n" + 
-"<p>Reverse lookup is slow...</p>\n" + 
-"\n" + 
-"<p>app mode: \"");// line 98, index.html
-		p(_play.mode);// line 103, index.html
+"<p>app mode: \"");// line 107, index.html
+		p(_play.mode);// line 110, index.html
 		p("\"</p>\n" + 
 "\n" + 
 "<br/>\n" + 
 "\n" + 
-"-->\"");// line 103, index.html
-		p(c.name);// line 107, index.html
+"-->\"");// line 110, index.html
+		p(c.name);// line 114, index.html
 		p("\" , \n" + 
-"\"");// line 107, index.html
-		p(c.subname);// line 108, index.html
-		p("\"\n");// line 108, index.html
-		p("\n");// line 110, index.html
+"\"");// line 114, index.html
+		p(c.subname);// line 115, index.html
+		p("\"\n");// line 115, index.html
+		p("\n");// line 117, index.html
 		
 		endDoLayout(sourceTemplate);
 	}

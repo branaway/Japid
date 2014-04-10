@@ -1,4 +1,4 @@
-//version: 0.9.36.1
+//version: 0.9.37
 package japidviews.cn.bran.japid.template.FooController;
 import java.util.*;
 import java.io.*;
@@ -12,8 +12,10 @@ import japidviews._tags.*;
 public class foo1 extends main
 {
 	public static final String sourceTemplate = "japidviews/cn/bran/japid/template/FooController/foo1.html";
+	{
+	}
 	public foo1() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
 	}
 	public foo1(StringBuilder out) {
 		super(out);

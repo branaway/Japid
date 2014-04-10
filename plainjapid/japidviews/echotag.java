@@ -1,4 +1,4 @@
-//version: 0.9.36.1
+//version: 0.9.37
 package japidviews;
 import java.util.*;
 import java.io.*;
@@ -12,8 +12,10 @@ import japidviews._tags.*;
 public class echotag extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/echotag.html";
+	{
+	}
 	public echotag() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
 	}
 	public echotag(StringBuilder out) {
 		super(out);
@@ -52,7 +54,8 @@ public class echotag extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 ;// line 1, echotag.html
-		p("echotag: ");// line 1, echotag.html
+		p("\n" + 
+"echotag: ");// line 1, echotag.html
 		p(s);// line 2, echotag.html
 		;// line 2, echotag.html
 		

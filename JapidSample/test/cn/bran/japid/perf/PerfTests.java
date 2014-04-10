@@ -1,6 +1,7 @@
 package cn.bran.japid.perf;
 
 import japidviews.templates.AllPost;
+import japidviews.templates.EachCall;
 import japidviews.templates.Posts;
 
 import java.io.ByteArrayOutputStream;
@@ -9,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -53,9 +55,9 @@ public class PerfTests {
 			// a simple loop without templating
 			baos.reset();
 			long t = System.currentTimeMillis();
-//			StringBuffer sb = new StringBuffer(1000);
+			// StringBuffer sb = new StringBuffer(1000);
 			StringBuilder sb = new StringBuilder(1000);
-//			StringBundler sb = new StringBundler();
+			// StringBundler sb = new StringBundler();
 			for (Post pp : posts) {
 				sb.append("你");
 				sb.append("Title: " + pp.getTitle());
@@ -141,6 +143,22 @@ public class PerfTests {
 		System.out.println(r.getContent().toString());
 	}
 
+	public static void main(String[] args) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(1000000);
+		List<String> ps = Arrays.asList(new String[] {"a", "b", "c"});
+		int in = 0;
+		int c = 0;
+		while ('q' != in) {
+			for (c = 0; c < 50000; c++) {
+				EachCall call = new EachCall();
+				String string = call.render(ps).getContent().toString();
+				baos.write(c + string.length());
+			}
+			System.out.println("ready:");
+			in = System.in.read();
+			System.out.println("got: " + (char)in);
+		}
+	}
 
 	@Test
 	public void testSinglePageJapid() throws Exception {
@@ -159,7 +177,7 @@ public class PerfTests {
 		te.render("抬头", posts);
 		baos.write(te.toString().getBytes("UTF-8"));
 		baos.write(te.toString().getBytes("UTF-8"));
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 			baos.reset();
 			long t = System.currentTimeMillis();
 			// System.out.println("run templating: " + i);
@@ -172,7 +190,7 @@ public class PerfTests {
 			baos.write(te.toString().getBytes("UTF-8"));
 			// System.out.println(out.toString());
 			// out.flush();
-			System.out.println(System.currentTimeMillis() - t);
+			// System.out.println(System.currentTimeMillis() - t);
 			// System.out.println(out.toString());
 			// Thread.sleep(5);
 		}
@@ -316,7 +334,7 @@ public class PerfTests {
 	// @Test public void testMessage() {
 	// // BranTemplateBase.urlMapper = new DummyUrlMapper();
 	// BranTemplateBase.messageProvider = new SimpleMessageProvider();
-	//		
+	//
 	// ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	// Msg ac = new Msg(baos);
 	// ac.render();
@@ -327,8 +345,8 @@ public class PerfTests {
 	 * System.nanoTime is about 40 X slower than currentTimeMillies(), which
 	 * takes about 40ns per call on my machine Windows
 	 * 
-	 * On Ubuntu, both are abot the same: 700 ns. The currentTimeMillies() is very slow
-	 * compared with windows. 
+	 * On Ubuntu, both are abot the same: 700 ns. The currentTimeMillies() is
+	 * very slow compared with windows.
 	 */
 	@Test
 	public void testSysMilliNano() {

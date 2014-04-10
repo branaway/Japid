@@ -20,7 +20,7 @@ import play.mvc.Router.ActionDefinition;
 import play.utils.Java;
 
 /**
- * this file is copied from the the the following code is copied from the
+ * this file is copied from 
  * play.templates
  * .GroovyTemplate.ExecutableTemplate.ActionBridge.invokeMethod(...); version 1.2 trunk. 
  * 

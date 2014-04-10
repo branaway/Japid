@@ -1,4 +1,4 @@
-//version: 0.9.36.1
+//version: 0.9.37
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -12,8 +12,10 @@ import japidviews._tags.*;
 public abstract class main extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/_layouts/main.html";
+	{
+	}
 	public main() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
 	}
 	public main(StringBuilder out) {
 		super(out);

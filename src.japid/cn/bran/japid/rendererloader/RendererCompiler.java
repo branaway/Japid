@@ -16,6 +16,9 @@ import org.eclipse.jdt.internal.compiler.env.INameEnvironment;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 
+import cn.bran.japid.util.JapidFlags;
+import play.Play;
+
 
 
 /**
@@ -43,7 +46,30 @@ public class RendererCompiler {
         this.settings.put(CompilerOptions.OPTION_ReportUnusedImport, CompilerOptions.IGNORE);
         this.settings.put(CompilerOptions.OPTION_Encoding, "UTF-8");
         this.settings.put(CompilerOptions.OPTION_LocalVariableAttribute, CompilerOptions.GENERATE);
+        
         String javaVersion = CompilerOptions.VERSION_1_6;
+        String javaVersionProperty = System.getProperty("java.version");
+		if(javaVersionProperty.startsWith("1.6")) {
+            javaVersion = CompilerOptions.VERSION_1_6;
+        } else if (javaVersionProperty.startsWith("1.7")) {
+            javaVersion = CompilerOptions.VERSION_1_7;
+	    } else if (javaVersionProperty.startsWith("1.8")) {
+	    	javaVersion = CompilerOptions.VERSION_1_8;
+	    }
+     
+		Object javaSourceConfig = Play.configuration.get("java.source");
+		if("1.5".equals(javaSourceConfig)) {
+            javaVersion = CompilerOptions.VERSION_1_5;
+        } else if("1.6".equals(javaSourceConfig)) {
+            javaVersion = CompilerOptions.VERSION_1_6;
+        } else if("1.7".equals(javaSourceConfig)) {
+            javaVersion = CompilerOptions.VERSION_1_7;
+	    } else if("1.8".equals(javaSourceConfig)) {
+	    	javaVersion = CompilerOptions.VERSION_1_8;
+	    }
+		
+        JapidFlags.info("JDT compiler compiles to java version: " + javaVersion);
+        
         this.settings.put(CompilerOptions.OPTION_Source, javaVersion);
         this.settings.put(CompilerOptions.OPTION_TargetPlatform, javaVersion);
         this.settings.put(CompilerOptions.OPTION_PreserveUnusedLocal, CompilerOptions.PRESERVE);

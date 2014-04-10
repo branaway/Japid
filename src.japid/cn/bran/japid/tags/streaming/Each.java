@@ -40,7 +40,7 @@ public class Each extends cn.bran.japid.template.JapidTemplateBaseStreaming {
 	}
 	
 	public static interface DoBody<E> {
-		void render(E _, int _index, boolean _isOdd, boolean _first, boolean _last);
+		void render(E __, int _index, boolean _isOdd, boolean _first, boolean _last);
 		void setBuffer(StringBuilder sb);
 		void resetBuffer();
 

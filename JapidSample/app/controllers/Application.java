@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import models.Category;
 import models.SearchParams;
@@ -190,6 +192,12 @@ public class Application extends JapidController {
 		renderJapidWith("templates/callPicka");
 	}
 	
+	public static void yahoo() {
+		Stream<String> stream = Stream.of("a", "bb", "ccc");
+		String out = stream.sorted((a, b) -> a.length() - b.length()).collect(Collectors.joining("::"));
+		renderText(out);
+	}
+	
 	public static void postList() {
 		String title = "my Blog";
 		List<Post> posts = createPosts();
@@ -338,6 +346,7 @@ public class Application extends JapidController {
 		render(a);
 	}
 	
+
 	public static void list() {
 		renderJapid();
 	}

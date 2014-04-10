@@ -615,4 +615,12 @@ public class JapidController extends Controller {
 	 * for formated error reporting
 	 */
 
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param a
+	 */
+	public static void render(Object... args) {
+		 renderJapid(args);
+	}
+	
 }

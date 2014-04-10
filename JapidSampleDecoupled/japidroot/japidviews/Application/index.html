@@ -8,9 +8,12 @@
 source code.</p>
 
 <ul>
+`logDuration("xx");
 	<li><a href="@{hello()}">Hello Japid, using an overridden
 	version of renderText()</a></li>
+`logDuration("xx-1");
 	<li><a href="@{callTag()}">using tags in a template</a></li>
+`logDuration("yy");
 	<li><a href="go/templates/def.html"><em>def</em>
 	tag: define a method that return a string that can be invoked from
 	super template. Compare this to the <b>set</b> tag</a></li>
@@ -27,7 +30,7 @@ source code.</p>
 	
 	<li><a href="Application.postList">a template with template
 	and tags etc...</a></li>
-	
+`logDuration("aa");
 	<li><a href="go/templates/log.html">use the log
 	macro in a template. watch the output in the console</a></li>
 	<li><a href="go/templates/Msg.html">i18n, use
@@ -46,6 +49,8 @@ source code.</p>
 		    ``
 	   </pre>
 	</li>
+	
+`logDuration("bb");
 	<li><a href="Application.invokeInLoop">using invoke tag with
 	local variables requires final attribute</a></li>
 	<li><a href="go/templates.suppressNull.html">suppressNull,
@@ -73,6 +78,7 @@ source code.</p>
 		href="http://www.playframework.org/documentation/1.1/routes#content-negotiation">Play
 	Content Negotiation</a></p>
 	</li>
+`logDuration("cc");
 	<li><a href="more.MyController.quickview"> Use relative path
 	in layout spec and tags</a>: prefix the layout name or the tag name with a
 	dot "." to let the compiler prefix the path with the current package.
@@ -98,7 +104,8 @@ source code.</p>
 	<li><a href="@{/public/images/favicon.png}">reverse to a static  png</a></li>
 </ul>
 
-<p>Reverse lookup is slow...</p>
+`logDuration("dd");
+<p>Reverse lookup is really slow...</p>
 
 <p>app mode: "${_play.mode}"</p>
 

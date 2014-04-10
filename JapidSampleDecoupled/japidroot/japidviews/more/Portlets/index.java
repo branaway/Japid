@@ -1,4 +1,4 @@
-//version: 0.9.36.x
+//version: 0.9.37
 package japidviews.more.Portlets;
 import java.util.*;
 import java.io.*;
@@ -75,12 +75,13 @@ public class index extends cn.bran.play.JapidTemplateBase
 	}
 ////// end of named args stuff
 
-	private String a; // line 1, japidviews/more/Portlets/index.html
-	private String b; // line 1, japidviews/more/Portlets/index.html
+	private String a; // line 2, japidviews/more/Portlets/index.html
+	private String b; // line 2, japidviews/more/Portlets/index.html
 	public cn.bran.japid.template.RenderResult render(String a,String b) {
 		this.a = a;
 		this.b = b;
-		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/more/Portlets/index.html
+		setStopwatchOn();
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 2, japidviews/more/Portlets/index.html
 		return getRenderResult();
 	}
 
@@ -92,30 +93,31 @@ public class index extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 ;// line 1, index.html
 		;// line 1, index.html
+		;// line 2, index.html
 		p("<h1>To demonstrate various ways to composing complex pages with cached <b>invoke</b></h1>\n" + 
 "<h3>Each parts render themselves with own cache control</h3>\n" + 
 "\n" + 
-"<p>The outer most content is cached for 20 seconds, using the CacheFor annotation. <em>");// line 2, index.html
-		p(new Date());// line 6, index.html
+"<p>The outer most content is cached for 20 seconds, using the CacheFor annotation. <em>");// line 3, index.html
+		p(new Date());// line 7, index.html
 		p("</em></p>\n" + 
 "\n" + 
-"<p>this part is never cached: \n");// line 6, index.html
+"<p>this part is never cached: \n");// line 7, index.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.more.Portlets.class, "panel1", "\"never cached\"") {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.more.Portlets.panel1("\"never cached\""); // line 9, index.html
+				controllers.more.Portlets.panel1("\"never cached\""); // line 10, index.html
 			}
-		}); p("\n");// line 9, index.html
+		}); p("\n");// line 10, index.html
 		p(" \n" + 
 "</p>\n" + 
 "\n" + 
-"<p>this part is cached for 10 seconds. Note the timeout spec with invoke overrides CacheFor annotation. \n");// line 9, index.html
+"<p>this part is cached for 10 seconds. Note the timeout spec with invoke overrides CacheFor annotation. \n");// line 10, index.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("10s", controllers.more.Portlets.class, "panel2", b) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.more.Portlets.panel2(b); // line 13, index.html
+				controllers.more.Portlets.panel2(b); // line 14, index.html
 			}
-		}); p("\n");// line 13, index.html
+		}); p("\n");// line 14, index.html
 		p("</p>\n" + 
 "\n" + 
 "<div>\n" + 
@@ -125,19 +127,19 @@ public class index extends cn.bran.play.JapidTemplateBase
 "<div>\n" + 
 "    <p>this part is cached for 4 seconds, \n" + 
 "    specified with CacheFor annotation in the controller. \n" + 
-"    ");// line 13, index.html
+"    ");// line 14, index.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", controllers.more.Portlets.class, "panel3", a + b) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				controllers.more.Portlets.panel3(a + b); // line 23, index.html
+				controllers.more.Portlets.panel3(a + b); // line 24, index.html
 			}
-		}); p("\n");// line 23, index.html
+		}); p("\n");// line 24, index.html
 		p("    </p>\n" + 
 "</div>\n" + 
 "<div>\n" + 
 " <a href=\"evict3\">Let's evict the panel3 cache!</a>\n" + 
-"</div>\n");// line 23, index.html
-		System.out.println("japidviews/more/Portlets/index.html(line 29): " + "-- is this cool?");
+"</div>\n");// line 24, index.html
+		System.out.println("japidviews/more/Portlets/index.html(line 30): " + "-- is this cool?");
 		
 		endDoLayout(sourceTemplate);
 	}

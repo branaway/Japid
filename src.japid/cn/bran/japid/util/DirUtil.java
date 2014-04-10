@@ -33,9 +33,10 @@ import cn.bran.japid.template.JapidRenderer;
 public class DirUtil {
 	public static final String OF = ", ";
 	public static final String LINE_MARKER = "// line ";
+	static final String DOT_SUB = "_d_";
 
-	private static final String[] TEMPLATE_EXTS = new String[]{".html", ".js", ".txt", ".css", ".xml", ".json"};
 	private static final String[] ALL_EXTS = new String[] { ".java", ".html", ".js", ".txt", ".css", ".json", ".xml" };
+	private static final String[] TEMPLATE_EXTS = new String[]{".html", ".js", ".txt", ".css", ".xml", ".json"};
 	
 	public static Set<File> findOrphanJava(File src, File target) {
 		if (target == null)
@@ -174,20 +175,38 @@ public class DirUtil {
 		Map<String, Long> javaFiles = new HashMap<String, Long>();
 		Map<String, Long> scriptFiles = new HashMap<String, Long>();
 		
-
+		long now = System.currentTimeMillis();
+		boolean hasFutureTimestamp = false;
 		for (File f : allSrc) {
 			String path = f.getPath();
 			long modi = f.lastModified();
 //			System.out.println("file: " + path + ":" + modi);
 			if (path.endsWith(".java")) {
+				if (modi > now) {
+					// for some reason(e.g., copies from other file system), the last modified time is in the future
+					// let's reset it.
+					hasFutureTimestamp = true;
+					f.setLastModified(now - 1);
+				}
 				javaFiles.put(path, modi);
 			} else  {
 				// validate file name to filter out dubious files such as temporary files
-				if (fileNameIsValidClassName(f))
+				if (fileNameIsValidClassName(f)) {
+					if (modi > now) {
+						// for some reason(e.g., copies from other file system), the last modified time is in the future
+						// let's reset it.
+						hasFutureTimestamp = true;
+						f.setLastModified(now);
+					}
 					scriptFiles.put(path, modi);
+				}
 			}
 		}
 
+		if (hasFutureTimestamp) {
+			JapidFlags.warn("Some of the Japid files have a timestamp in the future. It could have been caused by out-of-synch system time.");
+		}
+		
 		List<File> changedScripts = new ArrayList<File>();
 		
 		boolean japidVersionChecked = versionCheckedDirs.contains(srcDir);
@@ -237,52 +256,6 @@ public class DirUtil {
 		return changedScripts;
 	}
 
-//	/**
-//	 * version format:  x.y.z
-//	 * @author Bing Ran (bing.ran@gmail.com)
-//	 * @param version
-//	 * @param firstLine
-//	 * @return
-//	 */
-//	private static int compareVersions(String version, String firstLine) {
-//		Matcher versionMatcher = versionFormatPattern.matcher(version);
-//		if (versionMatcher.matches()) {
-//			String major1 = versionMatcher.group(1);
-//			String minor1 = versionMatcher.group(2);
-//			String update1 = versionMatcher.group(3);
-//
-//			Matcher verionsInFileMatcher = versionFormatPattern.matcher(firstLine);
-//			if (verionsInFileMatcher.matches()) {
-//				String major2 = verionsInFileMatcher.group(1);
-//				String minor2 = verionsInFileMatcher.group(2);
-//				String update2 = verionsInFileMatcher.group(3);
-//				
-//				if (Integer.parseInt(major1) != Integer.parseInt(major2))
-//					return 3;
-//
-//				if (Integer.parseInt(minor1) != Integer.parseInt(minor2))
-//					return 2;
-//
-//				if (Integer.parseInt(update1) != Integer.parseInt(update2))
-//					return 1;
-//				
-//			}
-//			else {
-//				JapidFlags.warn("the version format in Java file was not recognized: " + firstLine + ". It's suppposed to be x.y.z");
-//				return 1; // make the current version newer anyway.
-//			}
-//		}
-//		else {
-//			JapidFlags.warn("the version format was not recognized: " + version + ". It's suppposed to be x.y.z");
-//			return 1; // make the current version newer anyway.
-//		}
-//		return 0;
-//	}
-//
-//	private static final String versionFormat = "([0-9]+\\).([0-9]+\\).([0-9]+)";
-//	private static final Pattern versionFormatPattern = Pattern.compile(versionFormat);
-	
-
 	/**
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 * @param f
@@ -302,6 +275,8 @@ public class DirUtil {
 	 * @return
 	 */
 	public static String mapSrcToJava(String k) {
+		if (k.endsWith(".java"))
+				return k;
 		if (k.endsWith(".txt")) {
 			return getRoot(k) + "_txt" + ".java";
 		}
@@ -329,6 +304,10 @@ public class DirUtil {
 	 * @return
 	 */
 	public static String mapJavaToSrc(String k) {
+		return rawConvert(k);//.replaceAll(DOT_SUB, ".");
+	}
+
+	private static String rawConvert(String k) {
 		if (k.endsWith(".java"))
 			k = k.substring(0, k.lastIndexOf(".java"));
 		
@@ -353,9 +332,17 @@ public class DirUtil {
 	}
  
 	private static String getRoot(String k) {
-		int indexOf = k.lastIndexOf(".");
-		if (indexOf > 0) {
-			return k.substring(0, indexOf);
+		for (String ext : TEMPLATE_EXTS) {
+			if (k.endsWith(ext)) {
+				String sub = k.substring(0, k.lastIndexOf(ext));
+//				String first = "";
+//				if (sub.startsWith(".")) { // keep the first dot, which means current dir
+//					first = ".";
+//					sub = sub.substring(1);
+//				}
+//				return first + sub.replaceAll("\\.", DOT_SUB);
+				return sub;
+			}
 		}
 		return k;
 	}
@@ -614,7 +601,25 @@ public class DirUtil {
 		return allFiles;
 	}
 
+	/**
+	 * a utility method.
+	 * 
+	 * @param srcDir
+	 * @param cf
+	 * @throws IOException
+	 */
+	public static String getRelativePath(File child, File parent) throws IOException {
+		String curPath = parent.getCanonicalPath();
+		String childPath = child.getCanonicalPath();
+		assert (childPath.startsWith(curPath));
+		String srcRelative = childPath.substring(curPath.length());
+		if (srcRelative.startsWith(File.separator)) {
+			srcRelative = srcRelative.substring(File.separator.length());
+		}
+		return srcRelative;
+	}
 
+	
 	// this method is entirely safe ???
 	static public String readFileAsString(String filePath) throws Exception {
 		byte[] buffer = new byte[(int) new File(filePath).length()];

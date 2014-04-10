@@ -101,7 +101,7 @@ public class TranslateTemplateTask {
 			destDir = packageRoot;
 		}
 
-		if (!packageRoot.exists() && !packageRoot.isDirectory()) {
+		if (!packageRoot.exists() || !packageRoot.isDirectory()) {
 			throw new RuntimeException("source directory \"" + packageRoot + "\" does not exist or is not a directory");
 		}
 
@@ -110,14 +110,11 @@ public class TranslateTemplateTask {
 			throw new RuntimeException("destination directory \"" + destDir + "\" does not exist or is not a directory");
 		}
 
-		if (!packageRoot.exists()) {
-			throw new RuntimeException("srcdir \"" + packageRoot + "\" does not exist!");
-		}
-
-		changedFiles = DirUtil.findChangedSrcFiles(include);
+		if(changedFiles == null) 
+			changedFiles = DirUtil.findChangedSrcFiles(include);
 
 		if (changedFiles.size() > 0) {
-			if (JapidFlags.verbose) System.out.println("[Japid] Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " in directory tree: " + destDir);
+//			JapidFlags.log("[Japid] Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " in directory tree: " + destDir);
 
 			JapidTemplateTransformer tran = new JapidTemplateTransformer(packageRoot.getPath(), null);
 			tran.usePlay(this.usePlay);
@@ -133,13 +130,69 @@ public class TranslateTemplateTask {
 
 			for (int i = 0; i < changedFiles.size(); i++) {
 				File templateFile = changedFiles.get(i);
+				JapidFlags.log("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
+				if (listFiles) {
+					JapidFlags.log(templateFile.getAbsolutePath());
+				}
+
 				try {
-					String relativePath = JapidTemplateTransformer.getRelativePath(templateFile, packageRoot);
-					if (JapidFlags.verbose) System.out.println("[Japid] Transforming template: " + packageRoot + "/" + relativePath + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
-					if (JapidFlags.verbose && listFiles) {
-						System.out.println(templateFile.getAbsolutePath());
+					String relativePath = DirUtil.getRelativePath(templateFile, packageRoot);
+					File generate = tran.generate(relativePath);
+					changedTargetFiles.add(generate);
+				} catch (JapidCompilationException e) {
+					// syntax error
+					throw e;
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException(e.getClass().getName() + ":" + e.getMessage());
+				}
+			}
+		}
+	}
+	
+	/**
+	 * derived artifacts are kept in memory instead of file system
+	 * 
+	 * @author Bing Ran (bing.ran@hotmail.com)
+	 */
+	public void executeInMemory(){
+		// first off, make sure that we've got a srcdir
+
+		if (packageRoot == null) {
+			throw new RuntimeException("srcdir attribute must be set!");
+		}
+		
+		if (!packageRoot.exists() && !packageRoot.isDirectory()) {
+			throw new RuntimeException("source directory \"" + packageRoot + "\" does not exist or is not a directory");
+		}
+
+		if(changedFiles == null) 
+		changedFiles = DirUtil.findChangedSrcFiles(include);
+
+		if (changedFiles.size() > 0) {
+//			JapidFlags.log("[Japid] Processing " + changedFiles.size() + " template" + (changedFiles.size() == 1 ? "" : "s") + " in directory tree: " + destDir);
+
+			JapidTemplateTransformer tran = new JapidTemplateTransformer(packageRoot.getPath(), null);
+			tran.usePlay(this.usePlay);
+			for (Class<?> c : this.staticImports) {
+				tran.addImportStatic(c);
+			}
+			for (String c : this.imports) {
+				tran.addImportLine(c);
+			}
+			for (Class<? extends Annotation> a : this.typeAnnotations) {
+				tran.addAnnotation(a);
+			}
+
+			for (int i = 0; i < changedFiles.size(); i++) {
+				File templateFile = changedFiles.get(i);
+				JapidFlags.log("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
+				if (listFiles) {
+					JapidFlags.log(templateFile.getAbsolutePath());
 					}
 
+				try {
+					String relativePath = DirUtil.getRelativePath(templateFile, packageRoot);
 					File generate = tran.generate(relativePath);
 					changedTargetFiles.add(generate);
 				} catch (JapidCompilationException e) {
@@ -173,7 +226,7 @@ public class TranslateTemplateTask {
 	}
 
 	public void addImport(Class<?> clz) {
-		this.imports.add(clz.getName());
+		this.imports.add(clz.getName().replace('$', '.'));
 	}
 
 //	private static class JapidFileNameMapper {
@@ -220,5 +273,12 @@ public class TranslateTemplateTask {
 		imports.clear();
 		
 		AbstractTemplateClassMetaData.clearImports();
+	}
+
+	/**
+	 * @param changedFiles the changedFiles to set. Each file starts with the package root. 
+	 */
+	public void setChangedFiles(List<File> changedFiles) {
+		this.changedFiles = changedFiles;
 	}
 }

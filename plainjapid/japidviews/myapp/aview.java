@@ -1,4 +1,4 @@
-//version: 0.9.36.1
+//version: 0.9.37
 package japidviews.myapp;
 import java.util.*;
 import java.io.*;
@@ -12,8 +12,10 @@ import japidviews._tags.*;
 public class aview extends main
 {
 	public static final String sourceTemplate = "japidviews/myapp/aview.html";
+	{
+	}
 	public aview() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
 	}
 	public aview(StringBuilder out) {
 		super(out);
@@ -52,7 +54,7 @@ public class aview extends main
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 ;// line 1, aview.html
-		;// line 1, aview.html
+		p("\n");// line 1, aview.html
 p("\n" + 
 "escaped: ");// line 3, aview.html
 		try { Object o = escape(a); if (o.toString().length() ==0) { p(escape(null)); } else { p(o); } } catch (NullPointerException npe) { p(escape(null)); }// line 5, aview.html

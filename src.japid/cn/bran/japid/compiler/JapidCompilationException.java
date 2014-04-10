@@ -16,12 +16,12 @@ package cn.bran.japid.compiler;
 import cn.bran.japid.template.JapidTemplate;
 
 public class JapidCompilationException extends RuntimeException {
+	private static final long serialVersionUID = -872264757349264853L;
 	JapidTemplate template;
 	int startLine;
 
-	public JapidCompilationException(JapidTemplate template, int startLine, String msg) {
-		// super(template.name + " (line " + startLine + "): " + msg);
-		super(msg);
+	public JapidCompilationException(JapidTemplate template, int startLine, String string) {
+		super(template.name + " (line " + startLine + "): " + string);
 		this.template = template;
 		this.startLine = startLine;
 	}

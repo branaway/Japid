@@ -1,4 +1,4 @@
-//version: 0.9.36.1
+//version: 0.9.37
 package japidviews._tags;
 import java.util.*;
 import java.io.*;
@@ -12,8 +12,10 @@ import japidviews._tags.*;
 public class taddy extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/_tags/taddy.html";
+	{
+	}
 	public taddy() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
 	}
 	public taddy(StringBuilder out) {
 		super(out);

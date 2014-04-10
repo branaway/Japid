@@ -260,6 +260,7 @@ public class JapidParser {
 	public JapidParser.Token nextToken() {
 		for (;;) {
 
+			// how many more chars to be processed 
 			int left = len - end;
 			if (left == 0) {
 				end++;
@@ -461,12 +462,16 @@ public class JapidParser {
 				}
 				break;
 			case TEMPLATE_ARGS:
-				// XXX  need more accurate parsing of template arg list. 
 				if (c == ')'){
-					String lineRest = getRestLine();
-					if (lineRest.trim().length() == 0) {
-						String lineRestIncludingLineBreaks = getRestLineIncludingLineBreaks();
-						return found(Token.PLAIN, 1 + lineRestIncludingLineBreaks.length()); 
+					String seg = getCurrentPartialToken();
+					if (JavaSyntaxTool.isValidParamList(seg)) {
+						// eat the rest of the line including the return if it's all white space
+						String lineRest = getRestLine();
+						if (lineRest.trim().length() == 0) {
+							String lineRestIncludingLineBreaks = getRestLineIncludingLineBreaks();
+							return found(Token.PLAIN, 1 + lineRestIncludingLineBreaks.length());
+						}
+						return found(Token.PLAIN, 1);
 					}
 				}
 				break;
@@ -585,6 +590,14 @@ public class JapidParser {
 				break;
 			}
 		}
+	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @return
+	 */
+	private String getCurrentPartialToken() {
+		return pageSource.substring(begin, end - 1);
 	}
 
 	private String getCurrentLine() {

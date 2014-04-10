@@ -1,22 +1,22 @@
-//version: 0.9.36.x
+//version: 0.9.4
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import	 	models.japidsample.Post;
-import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import japidviews._layouts.*;
-import play.i18n.Messages;
-import play.data.validation.Validation;
-import play.mvc.Scope.*;
-import models.*;
+import static play.templates.JavaExtensions.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
+import play.i18n.Messages;
+import play.mvc.Scope.*;
 import japidviews._tags.*;
-import play.mvc.Http.*;
+import play.data.validation.Validation;
+import play.i18n.Lang;
 import controllers.*;
+import japidviews._layouts.*;
+import models.*;
+import play.mvc.Http.*;
 //
 // NOTE: This file was generated from: japidviews/templates/AllPost.html
 // Change to this file will be lost next time the template file is compiled.
@@ -94,48 +94,16 @@ public class AllPost extends Layout
 ;// line 2, AllPost.html
 		;// line 7, AllPost.html
 
-new Runnable() {public void run() {
-int _size = -100; int _index = 0; boolean _isOdd = false; String _parity = ""; boolean _isFirst = true; Boolean _isLast = _index == _size;
-for (Post p : allPost) { // line 12, AllPost.html
-	_index++; _isOdd = !_isOdd; _parity = _isOdd? "odd" : "even"; _isFirst = _index == 1; if (_size == -100) _size = getCollectionSize(allPost); _isLast = (_size < 0 ? null : _index == _size);
-// line 12, AllPost.html
-		p("        ");// line 12, AllPost.html
+p("\n");// line 10, AllPost.html
+		p("\n");// line 14, AllPost.html
+		allPost.forEach( (Post p) -> {// line 15, AllPost.html
+});// line 21, AllPost.html
+		p("\n");// line 21, AllPost.html
 		p("\n" + 
-"\n" + 
-"	    ");// line 13, AllPost.html
-		new Display(AllPost.this).render( // line 15, AllPost.html
-new Display.DoBody<String>(){ // line 15, AllPost.html
-public void render(final String title) { // line 15, AllPost.html
-// line 15, AllPost.html
-		p("		   The real title iiiis: ");// line 15, AllPost.html
-		p(title);// line 16, AllPost.html
+"\n");// line 25, AllPost.html
+		new Tag2(AllPost.this).render(named("msg", blogTitle), named("age", 100)); // line 27, AllPost.html// line 27, AllPost.html
 		p("\n" + 
-"	    ");// line 16, AllPost.html
-		
-}
-
-StringBuilder oriBuffer;
-@Override
-public void setBuffer(StringBuilder sb) {
-	oriBuffer = getOut();
-	setOut(sb);
-}
-
-@Override
-public void resetBuffer() {
-	setOut(oriBuffer);
-}
-
-}
-, named("post", p), named("as", "home2"));// line 15, AllPost.html
-
-}
-}}.run();
-// line 12, AllPost.html
-
-new Tag2(AllPost.this).render(named("msg", blogTitle), named("age", 100)); // line 20, AllPost.html// line 20, AllPost.html
-		p("\n" + 
-"<p>cool</p>");// line 20, AllPost.html
+"<p>cool</p>");// line 27, AllPost.html
 		
 		endDoLayout(sourceTemplate);
 	}

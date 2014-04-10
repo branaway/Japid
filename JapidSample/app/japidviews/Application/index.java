@@ -1,21 +1,21 @@
-//version: 0.9.36.x
+//version: 0.9.4
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import japidviews._layouts.*;
-import play.i18n.Messages;
-import play.data.validation.Validation;
-import play.mvc.Scope.*;
-import models.*;
+import static play.templates.JavaExtensions.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
+import play.i18n.Messages;
+import play.mvc.Scope.*;
 import japidviews._tags.*;
-import play.mvc.Http.*;
+import play.data.validation.Validation;
+import play.i18n.Lang;
 import controllers.*;
+import japidviews._layouts.*;
+import models.*;
+import play.mvc.Http.*;
 //
 // NOTE: This file was generated from: japidviews/Application/index.html
 // Change to this file will be lost next time the template file is compiled.
@@ -75,6 +75,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 ////// end of named args stuff
 
 	public cn.bran.japid.template.RenderResult render() {
+		setStopwatchOn();
 		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 0, japidviews/Application/index.html
 		return getRenderResult();
 	}
@@ -86,21 +87,21 @@ public class index extends cn.bran.play.JapidTemplateBase
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 ;// line 1, index.html
-		//stopwatch on// line 1, index.html
-p("<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
+p("\n" + 
+"<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
 "source code.</p>\n" + 
 "\n" + 
 "<ul>\n" + 
 "	<li><a href=\"");// line 2, index.html
-		p(lookup("hello", new Object[]{}));// line 9, index.html
+		p(lookup("hello", new Object[]{}));// line 10, index.html
 		p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
 "	<li><a href=\"application/callTag\">using tags in a template</a></li>\n" + 
 "	<li><a href=\"go/templates/def.html\"><em>def</em>\n" + 
 "	tag: define a method that return a string that can be invoked from\n" + 
-"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 9, index.html
+"	super template. Compare this to the <b>set</b> tag</a></li>\n");// line 10, index.html
 		p("\n" + 
 "	<li><a href=\"more.Portlets/index\">demo how to composite a\n" + 
 "	page with independent segments with the <b>invoke</b> tag</a></li>\n" + 
@@ -144,10 +145,10 @@ p("<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" +
 "	dontRedirect() from JapidController</a></li>\n" + 
 "	<li><a href=\"go/templates/openBrace.html\"> use\n" + 
 "	`{ in if and while </a></li>\n" + 
-"	<li><a href=\"application/escapedExpr\"> ");// line 19, index.html
+"	<li><a href=\"application/escapedExpr\"> ");// line 20, index.html
 		p("\n" + 
 "	raw expression with ${} and html-safe expression with ~{}\n" + 
-"	");// line 62, index.html
+"	");// line 63, index.html
 		p("	</li>\n" + 
 "	<li><a href=\"more.ContentNegotiation/index\"> content\n" + 
 "	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
@@ -161,41 +162,41 @@ p("<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" +
 "	in layout spec and tags</a>: prefix the layout name or the tag name with a\n" + 
 "	dot \".\" to let the compiler prefix the path with the current package.\n" + 
 "	This saves using the full and long class qualifications.</li>\n" + 
-"\n");// line 64, index.html
-		String na = "bran";// line 79, index.html
-int ag = 123;// line 80, index.html
-		p("	<li><a href=\"");// line 80, index.html
-		p(lookup("validate", na, ag));// line 81, index.html
+"\n");// line 65, index.html
+		String na = "bran";// line 80, index.html
+int ag = 123;// line 81, index.html
+		p("	<li><a href=\"");// line 81, index.html
+		p(lookup("validate", na, ag));// line 82, index.html
 		p("\">validation and errors</a></li>\n" + 
 "    <li> using the <em>flash</em> object\n" + 
 "		<ul>\n" + 
 "			<li><a href=\"application/flashgood\">flash with success</a></li>\n" + 
-"			<li><a href=\"");// line 81, index.html
-		p(lookup("reverseUrl", new Object[]{}));// line 85, index.html
+"			<li><a href=\"");// line 82, index.html
+		p(lookup("reverseUrl", new Object[]{}));// line 86, index.html
 		p("\">flash with a message</a></li>\n" + 
 "			<li><a href=\"application/flashbad\">flash with errors</a></li>\n" + 
 "			<li><a href=\"application/flashmsg\">flash with a message</a></li>\n" + 
 "		</ul>\n" + 
 "    </li>\n" + 
 "    <li>\n" + 
-"	   ");// line 85, index.html
-		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 91, index.html
-		p("	   <a href=\"");// line 91, index.html
-		p(lookup("search", sp));// line 92, index.html
+"	   ");// line 86, index.html
+		 SearchParams sp = new  SearchParams("key1, key2", "AND");// line 92, index.html
+		p("	   <a href=\"");// line 92, index.html
+		p(lookup("search", sp));// line 93, index.html
 		p("\">reverse URL lookup with complex object</a>\n" + 
-"    ");// line 92, index.html
+"    ");// line 93, index.html
 		p("\n" + 
 "	</li>\n" + 
-"	<li><a href=\"");// line 94, index.html
-		p(lookupStatic("/public/images/favicon.png"));// line 96, index.html
+"	<li><a href=\"");// line 95, index.html
+		p(lookupStatic("/public/images/favicon.png"));// line 97, index.html
 		p("\">reverse to a static  png</a></li>\n" + 
 "</ul>\n" + 
 "\n" + 
 "<p>Reverse lookup is slow...</p>\n" + 
 "\n" + 
-"<p>app mode: \"");// line 96, index.html
-		p(_play.mode);// line 101, index.html
-		p("\"</p>");// line 101, index.html
+"<p>app mode: \"");// line 97, index.html
+		p(_play.mode);// line 102, index.html
+		p("\"</p>");// line 102, index.html
 		
 		endDoLayout(sourceTemplate);
 	}

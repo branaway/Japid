@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.lang.String;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -76,11 +77,29 @@ public class RenderResult implements Externalizable {
 
 	@Override
 	public String toString() {
-		StringBuilder c = getContent();
-		if (c == null)
-			return "";
-		else
-			return c.toString();
+		return getContent().toString();
+	}
+
+	/**
+	 * print headers and body, seprated by a blank line
+	 * 
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @return
+	 */
+	public String toStringWithHeaders() {
+		// print the headers:
+		StringBuffer sb = new StringBuffer();
+		if (headers != null) {
+			for (String it : headers.keySet()) {
+				sb.append(it).append(": ").append(headers.get(it)).append("\n");
+			}
+		}
+		if (sb.toString().endsWith("\n")) {
+			sb.append("\n"); 
+		}
+		
+		sb.append(toString());
+		return sb.toString();
 	}
 
 	public Map<String, String> getHeaders() {
@@ -90,23 +109,14 @@ public class RenderResult implements Externalizable {
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
 		String contentString = content == null? _NULL : content.toString();
-//        byte[] bytes = contentString.getBytes("utf-8");
-//        int length = bytes.length;
-//		out.write(length);
-//        out.write(bytes);
-		out.writeObject(contentString);
+		out.writeUTF(contentString);
 		out.writeLong(renderTime);
 		out.writeObject(headers);
 	}
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-//        int contentLenght = in.readInt();
-//        byte[] bytes = new byte[contentLenght];
-//        in.read(bytes, 0, contentLenght);
-//        String contentString = new String(bytes, "utf-8");
-
-		String contentString = (String) in.readObject();
+		String contentString = in.readUTF();
 		if (_NULL.equals(contentString)) {
 			this.content = null;
 		}
@@ -115,5 +125,9 @@ public class RenderResult implements Externalizable {
 		}
 		renderTime = in.readLong();
 		headers = (Map<String, String>) in.readObject();
+	}
+
+	public String getContentType() {
+		return getHeaders().get("Content-Type");
 	}
 }

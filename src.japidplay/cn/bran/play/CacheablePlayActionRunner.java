@@ -5,7 +5,6 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 
 import play.cache.CacheFor;
-import play.mvc.ActionInvoker;
 import play.mvc.After;
 import play.mvc.Before;
 import play.mvc.Controller;

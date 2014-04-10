@@ -26,4 +26,30 @@ public enum MimeTypeEnum {
 			return null;
 		}
 	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param name
+	 * @return
+	 */
+	public static MimeTypeEnum inferFromName(String k) {
+		if (k.endsWith(".txt")) {
+			return txt;
+		}
+		else if (k.endsWith(".xml")) {
+			return xml;
+		}
+		else if (k.endsWith(".json")) {
+			return json;
+		}
+		else if (k.endsWith(".css")) {
+			return css;
+		}
+		else if (k.endsWith(".js")) {
+			return js;
+		}
+		else { // including html
+			return html;
+		}
+	}
 }

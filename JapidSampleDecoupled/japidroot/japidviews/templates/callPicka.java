@@ -1,4 +1,4 @@
-//version: 0.9.36.x
+//version: 0.9.37
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -20,6 +20,7 @@ import controllers.*;
 // NOTE: This file was generated from: japidviews/templates/callPicka.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class callPicka extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/callPicka.html";

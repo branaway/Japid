@@ -47,6 +47,10 @@ import cn.bran.japid.compiler.Tag.TagSet;
  */
 public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 
+	/**
+	 * 
+	 */
+	private static final String COMMA = ", ";
 	// there are the "#{set var:val /}
 	// <methName, methodBody
 	Map<String, String> setMethods = new HashMap<String, String>();
@@ -135,8 +139,7 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			renderArgsWithoutAnnos = renderArgsWithoutAnnos.substring(0, renderArgsWithoutAnnos.length() - 1);
 		}
 
-		String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, paramDefaultsArray,
-				currentClassFQN);
+		String nameParamCode = String.format(NAMED_PARAM_CODE, paramNameArray, paramTypeArray, paramDefaultsArray, currentClassFQN);
 		pln(nameParamCode);
 
 		if (doBodyArgsString != null)
@@ -197,13 +200,23 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		if (args.endsWith(COMMA)) {
 			args = args.substring(0, args.lastIndexOf(COMMA));
 		}
-		String applyMethod = String.format(APPLY_METHOD, resultType, renderArgsWithoutAnnos, this.className, args);
+		String applyMethod = isAbstract? 
+				String.format(APPLY_METHOD_ABSTRACT, resultType, renderArgsWithoutAnnos, this.className, args) : 
+					String.format(APPLY_METHOD, resultType, renderArgsWithoutAnnos, this.className, args);
 		pln("\n" + applyMethod);
 
 	}
 
-	private static final String COMMA = ", ";
-	static final String APPLY_METHOD = "	public static %s apply(%s) {\n" + "		return new %s().render(%s);\n" + "	}\n";
+	static final String APPLY_METHOD = 
+			"	public static %s apply(%s) {\n" + 
+			"		return new %s().render(%s);\n" + 
+			"	}\n" ;
+	
+	static final String APPLY_METHOD_ABSTRACT = 
+			"	public static %s apply(%s) {\n" + 
+					"		throw new RuntimeException(\"Cannot run an Japid template annotated as abstract.\");\n" + 
+					"	}\n" ;
+	
 
 	private void restOfRenderBody(String resultType) {
 		if (stopWatch)
@@ -243,13 +256,18 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 			pln("		void render(" + renderArgList + ");");
 			pln("		void setBuffer(StringBuilder sb);\n" + "		void resetBuffer();\n" + "}");
 
-			// add a convenient method to get the render result from the doBody
-			// object
+			// add a convenient method to get the render result from the doBody object
 			String renderArgs = renderArgList.replaceAll("[A-Z]", "");
-			pln(genericTypeList, " String renderBody(" + renderArgList + ") {\n"
-					+ "		StringBuilder sb = new StringBuilder();\n" + "		if (body != null){\n"
-					+ "			body.setBuffer(sb);\n" + "			body.render(" + renderArgs + ");\n" + "			body.resetBuffer();\n"
-					+ "		}\n" + "		return sb.toString();\n" + "	}");
+			pln(genericTypeList, " String renderBody(" + renderArgList + ") {\n" + 
+					"		StringBuilder sb = new StringBuilder();\n" + 
+					"		if (body != null){\n" + 
+					"			body.setBuffer(sb);\n" + 
+					"			body.render(" + renderArgs + ");\n" + 
+					"			body.resetBuffer();\n" + 
+					"		}\n" + 
+					"		return sb.toString();\n" + 
+					"	}");
+			
 
 		}
 	}
@@ -259,14 +277,22 @@ public class TemplateClassMetaData extends AbstractTemplateClassMetaData {
 		// concrete views do not have this
 	}
 
-	protected static final String NAMED_PARAM_CODE = "" + "/* based on https://github.com/branaway/Japid/issues/12\n"
-			+ " */\n" + "\tpublic static final String[] argNames = new String[] {/* args of the template*/%s };\n"
-			+ "\tpublic static final String[] argTypes = new String[] {/* arg types of the template*/%s };\n"
-			+ "\tpublic static final Object[] argDefaults= new Object[] {%s };\n"
-			+ "\tpublic static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\n\n" + "\t{\n"
-			+ "\t\tsetRenderMethod(renderMethod);\n" + "\t\tsetArgNames(argNames);\n" + "\t\tsetArgTypes(argTypes);\n"
-			+ "\t\tsetArgDefaults(argDefaults);\n" + "\t\tsetSourceTemplate(sourceTemplate);\n" + "\t}\n" + ""
-			+ "////// end of named args stuff\n";
+	protected static final String NAMED_PARAM_CODE = "" +
+			"/* based on https://github.com/branaway/Japid/issues/12\n" + 
+			" */\n" +
+			"\tpublic static final String[] argNames = new String[] {/* args of the template*/%s };\n" + 
+			"\tpublic static final String[] argTypes = new String[] {/* arg types of the template*/%s };\n" + 
+			"\tpublic static final Object[] argDefaults= new Object[] {%s };\n"  + 
+			"\tpublic static java.lang.reflect.Method renderMethod = getRenderMethod(%s.class);\n\n" + 
+			"\t{\n" + 
+			"\t\tsetRenderMethod(renderMethod);\n" + 
+			"\t\tsetArgNames(argNames);\n" + 
+			"\t\tsetArgTypes(argTypes);\n" + 
+			"\t\tsetArgDefaults(argDefaults);\n" +
+			"\t\tsetSourceTemplate(sourceTemplate);\n" + 
+			"\t}\n" +
+			"" + 
+			"////// end of named args stuff\n";
 
 	protected static final String NAMED_PARAM_WITH_BODY = "public cn.bran.japid.template.RenderResult render(DoBody body, cn.bran.japid.compiler.NamedArgRuntime... named) {\n"
 			+ "    Object[] args = buildArgs(named, body);\n"

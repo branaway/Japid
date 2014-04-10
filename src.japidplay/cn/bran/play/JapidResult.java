@@ -89,7 +89,9 @@ public class JapidResult extends Result implements Externalizable {
 
 		if (content != null)
 			try {
-				Response.current().out.write(content.getBytes("UTF-8"));
+				// XXX should it just be response?
+//				Response.current().out.write(content.getBytes("UTF-8"));
+				response.out.write(content.getBytes("UTF-8"));
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}

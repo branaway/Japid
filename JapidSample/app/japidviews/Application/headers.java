@@ -1,21 +1,21 @@
-//version: 0.9.36.x
+//version: 0.9.4
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import japidviews._layouts.*;
-import play.i18n.Messages;
-import play.data.validation.Validation;
-import play.mvc.Scope.*;
-import models.*;
+import static play.templates.JavaExtensions.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
+import play.i18n.Messages;
+import play.mvc.Scope.*;
 import japidviews._tags.*;
-import play.mvc.Http.*;
+import play.data.validation.Validation;
+import play.i18n.Lang;
 import controllers.*;
+import japidviews._layouts.*;
+import models.*;
+import play.mvc.Http.*;
 //
 // NOTE: This file was generated from: japidviews/Application/headers.html
 // Change to this file will be lost next time the template file is compiled.
@@ -25,12 +25,12 @@ public class headers extends superheaders
 {
 	public static final String sourceTemplate = "japidviews/Application/headers.html";
 	 private void initHeaders() {
-		putHeader("Date", "Tue, 23 Feb 2010 13:42:34 GMT");
-		putHeader("Expires", "Tue, 23 Feb 2010 13:47:34 GMT");
-		putHeader("Last-Modified", "Tue, 23 Feb 2010 13:40:01 GMT");
-		putHeader("Content-Type", "text/html; charset=utf-8");
 		putHeader("Server", "nginx/0.8.26");
 		putHeader("Cache-Control", "max-age=600");
+		putHeader("Expires", "Tue, 23 Feb 2010 13:47:34 GMT");
+		putHeader("Last-Modified", "Tue, 23 Feb 2010 13:40:01 GMT");
+		putHeader("Date", "Tue, 23 Feb 2010 13:42:34 GMT");
+		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
 	}
 	{

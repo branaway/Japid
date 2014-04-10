@@ -60,4 +60,12 @@ final class CompilationUnit implements ICompilationUnit {
 	public char[][] getPackageName() {
         return packageName;
     }
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jdt.internal.compiler.env.ICompilationUnit#ignoreOptionalProblems()
+	 */
+	@Override
+	public boolean ignoreOptionalProblems() {
+		return false;
+	}
 }

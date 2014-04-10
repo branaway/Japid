@@ -1,4 +1,4 @@
-//version: 0.9.36.1
+//version: 0.9.37
 package japidviews;
 import java.util.*;
 import java.io.*;
@@ -12,8 +12,10 @@ import japidviews._tags.*;
 public class open_for extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 {
 	public static final String sourceTemplate = "japidviews/open_for.html";
+	{
+	}
 	public open_for() {
-		super((StringBuilder)null);
+	super((StringBuilder)null);
 	}
 	public open_for(StringBuilder out) {
 		super(out);

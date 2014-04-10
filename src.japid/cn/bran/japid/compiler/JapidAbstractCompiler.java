@@ -55,8 +55,7 @@ public abstract class JapidAbstractCompiler {
 	// pattern: } else if xxx {
 	static final String ELSE_IF_PATTERN_STRING = "\\s*\\}\\s*else\\s*if\\s+([^\\(].*)\\s*";
 	static final Pattern ELSE_IF_PATTERN = Pattern.compile(ELSE_IF_PATTERN_STRING);
-	// static final String OPEN_ELSE_IF_PATTERN_STRING =
-	// "\\s*else\\s*if\\s+([^\\(].*)\\s*";
+//	static final String OPEN_ELSE_IF_PATTERN_STRING = "\\s*else\\s*if\\s+([^\\(].*)\\s*";
 	// relax the excluding of the ()
 	static final String OPEN_ELSE_IF_PATTERN_STRING = "\\s*else\\s*if\\s+(.*)\\s*";
 	static final Pattern OPEN_ELSE_IF_PATTERN = Pattern.compile(OPEN_ELSE_IF_PATTERN_STRING);
@@ -184,8 +183,7 @@ public abstract class JapidAbstractCompiler {
 			case END_TAG:
 				String tagName = token.trim();
 				if (tagsStack.isEmpty()) {
-					throw new JapidCompilationException(template, parser.getLineNumber(), "#{/" + tagName
-							+ "} is not opened.");
+					throw new JapidCompilationException(template, parser.getLineNumber(), "#{/" + tagName + "} is not opened.");
 				}
 				Tag tag = popStack();
 				endTag(tag);
@@ -410,8 +408,7 @@ public abstract class JapidAbstractCompiler {
 				}
 			} else if (startsWithIgnoreSpace(line, "contentType")) {
 				// TODO: should also take standard tag name: Content-Type
-				String contentType = line.trim().substring("contentType".length()).trim().replace("'", "")
-						.replace("\"", "");
+				String contentType = line.trim().substring("contentType".length()).trim().replace("'", "").replace("\"", "");
 				if (contentType.endsWith(";"))
 					contentType = contentType.substring(0, contentType.length());
 				getTemplateClassMetaData().setContentType(contentType);
@@ -419,8 +416,7 @@ public abstract class JapidAbstractCompiler {
 				String headerkv = line.trim().substring("setHeader".length()).trim();
 				String[] split = headerkv.split("[ |\t]");
 				if (split.length < 2) {
-					throw new JapidCompilationException(template, parser.getLineNumber(),
-							"setHeaader must take a key and a value string");
+					throw new JapidCompilationException(template, parser.getLineNumber(), "setHeaader must take a key and a value string");
 				}
 				String name = split[0];
 				String value = headerkv.substring(name.length()).trim();
@@ -429,19 +425,16 @@ public abstract class JapidAbstractCompiler {
 				String args = line.trim().substring(ARGS.length()).trim();
 				templateArgs(args);
 			} else if (startsWithIgnoreSpace(line, "trim")) {
-				String sw = line.trim().substring("trim".length()).trim().replace(";", "").replace("'", "")
-						.replace("\"", "");
+				String sw = line.trim().substring("trim".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(sw) || "true".equals(sw)) {
 					getTemplateClassMetaData().trimStaticContent();
 				}
 			} else if (startsWithIgnoreSpace(line, "stopwatch")) {
-				String sw = line.trim().substring("stopwatch".length()).trim().replace(";", "").replace("'", "")
-						.replace("\"", "");
+				String sw = line.trim().substring("stopwatch".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(sw) || "yes".equals(sw) || "true".equals(sw))
 					getTemplateClassMetaData().turnOnStopwatch();
 			} else if (startsWithIgnoreSpace(line, "tracefile")) {
-				String sw = line.trim().substring("tracefile".length()).trim().replace(";", "").replace("'", "")
-						.replace("\"", "");
+				String sw = line.trim().substring("tracefile".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(sw) || "yes".equals(sw) || "true".equals(sw))
 					getTemplateClassMetaData().turnOnTraceFile();
 				else
@@ -466,8 +459,7 @@ public abstract class JapidAbstractCompiler {
 				markLine(parser.getLineNumber() + i);
 				println();
 			} else if (startsWithIgnoreSpace(line, "suppressNull") || line.trim().equals("suppressNull")) {
-				String npe = line.trim().substring("suppressNull".length()).trim().replace(";", "").replace("'", "")
-						.replace("\"", "");
+				String npe = line.trim().substring("suppressNull".length()).trim().replace(";", "").replace("'", "").replace("\"", "");
 				if ("on".equals(npe) || "yes".equals(npe) || "".equals(npe))
 					getTemplateClassMetaData().suppressNull();
 			} else if (line.trim().equals("abstract")) {
@@ -605,8 +597,6 @@ public abstract class JapidAbstractCompiler {
 				Matcher matcher = OPEN_ELSE_IF_PATTERN.matcher(line);
 				if (matcher.matches()) {
 					expr = matcher.group(1).trim();
-					// boolean negative = expr.startsWith("! ") ||
-					// expr.startsWith("!\t");
 					boolean negative = expr.startsWith("!");
 					if (negative) {
 						handleOpenElseIf(i, expr.substring(1), negative);
@@ -615,8 +605,7 @@ public abstract class JapidAbstractCompiler {
 							// test if the part is classic if
 							String ex = expr.substring(1, expr.length() - 1);
 							if (JavaSyntaxTool.isValidExpr(ex)) {
-								// OK, the insider is a valid expression (better
-								// be boolean!)
+								//OK, the insider is a valid expression (better be boolean!)
 								// end previous if shadow and star a new one
 								Tag tagShadow = tagsStackShadow.peek();
 								if (tagShadow instanceof TagIf) {
@@ -655,8 +644,7 @@ public abstract class JapidAbstractCompiler {
 					Tag.TagIf iftag = new Tag.TagIf("", parser.getLineNumber());
 					pushToStack(iftag);
 				} else {
-					throw new JapidCompilationException(template, parser.getLineNumber() + i,
-							"the open \"else\" statement is not properly matched to a previous if");
+					throw new JapidCompilationException(template, parser.getLineNumber() + i, "the open \"else\" statement is not properly matched to a previous if");
 				}
 			} else if (line.trim().matches(OPEN_FOR_PATTERN_STRING)) {
 				// simply replace it with a "each" tag call
@@ -665,14 +653,12 @@ public abstract class JapidAbstractCompiler {
 				if (matcher.matches()) {
 					String instanceDecl = matcher.group(1);
 					if (!JavaSyntaxTool.isValidSingleVarDecl(instanceDecl))
-						throw new JapidCompilationException(template, parser.getLineNumber() + i,
-								"loop variable declaration error: " + instanceDecl);
+						throw new JapidCompilationException(template, parser.getLineNumber() + i, "loop variable declaration error: " + instanceDecl);
 					instanceDecl = JavaSyntaxTool.cleanDeclPrimitive(instanceDecl);
 
 					String collection = matcher.group(2);
 					if (!JavaSyntaxTool.isValidExpr(collection))
-						throw new JapidCompilationException(template, parser.getLineNumber() + i, "syntax error: "
-								+ collection);
+						throw new JapidCompilationException(template, parser.getLineNumber() + i, "syntax error: " + collection);
 
 					expr = "each " + collection + " | " + instanceDecl;
 					Tag tag = buildTagDirective(expr);
@@ -797,24 +783,18 @@ public abstract class JapidAbstractCompiler {
 			markLine(parser.getLineNumber() + i);
 			println();
 		} else {
-			throw new JapidCompilationException(template, parser.getLineNumber(),
-					"the open \"else if\" statement is not properly matched to a previous if");
+			throw new JapidCompilationException(template, parser.getLineNumber(), "the open \"else if\" statement is not properly matched to a previous if");
 		}
 	}
 
 	/**
-	 * if ! cond == if (!asBoolean(cond)) if !cond == if (asBoolean(!cond)) well
-	 * the above changed was rolled back since I want backward compatibility Use
-	 * regular "if" if one wants to fine tune the negative position.
 	 * 
 	 * @param i
-	 * @param expr
-	 *            the open if statement: if my_condition...
+	 * @param expr the open if statement: if my_condition...
 	 */
 	private void handleOpenIf(int i, String expr) {
 		// get the expression
 		String ex = expr.substring(2).trim();
-		// boolean negative = ex.startsWith("! ") || ex.startsWith("!\t");
 		boolean negative = ex.startsWith("!");
 		if (negative)
 			ex = ex.substring(1).trim();
@@ -868,8 +848,7 @@ public abstract class JapidAbstractCompiler {
 	 */
 	private void doActionInvokeDirective(String args) {
 		if (!getTemplateClassMetaData().useWithPlay) {
-			throw new JapidCompilationException(template, parser.getLineNumber(),
-					"action invocation is only supported in Play environment. ");
+			throw new JapidCompilationException(template, parser.getLineNumber(), "action invocation is only supported in Play environment. ");
 		} else {
 			this.getTemplateClassMetaData().setHasActionInvocation();
 			if (args.trim().length() == 0)
@@ -915,9 +894,13 @@ public abstract class JapidAbstractCompiler {
 
 		if (substitute != null) {
 			// trap any null or empty string and use the substitute
-			printLine("try {" + " Object o = " + expr + "; " + "if (o.toString().length() ==0) { " + "p(" + substitute
-					+ "); } " + "else { p(o); } } " + "catch (NullPointerException npe) { " + "p(" + substitute
-					+ "); }");
+			printLine("try {" +
+					" Object o = " + expr + "; " +
+					"if (o.toString().length() ==0) { " +
+					"p(" + substitute + "); } " +
+					"else { p(o); } } " +
+					"catch (NullPointerException npe) { " +
+					"p(" + substitute + "); }");
 			// printLine("try { Object o = expr; p(" + expr + "); } " +
 			// "catch (NullPointerException npe) { " +
 			// "p(\"" + substitute + "\"); }");
@@ -967,8 +950,11 @@ public abstract class JapidAbstractCompiler {
 				expr += ", " + args.get(i);
 			}
 		} else {
-			throw new JapidCompilationException(template, parser.getLineNumber(),
-					"Message lookup commmand must take arguments. Bad number of args: " + token);
+			throw new JapidCompilationException(
+					template,
+					parser.getLineNumber(),
+					"Message lookup commmand must take arguments. Bad number of args: "
+							+ token);
 		}
 
 		print(";p(getMessage(" + expr + "));");
@@ -1006,26 +992,22 @@ public abstract class JapidAbstractCompiler {
 			}
 		} else {
 			if (!action.endsWith(")")) {
-				throw new JapidCompilationException(template, parser.getLineNumber(),
-						"action argument must be a method call. It was: " + action);
+				throw new JapidCompilationException(template, parser.getLineNumber(), "action argument must be a method call. It was: " + action);
 			}
 
 			try {
 				List<String> parseArgs = JavaSyntaxTool.parseArgs(action);
 				if (parseArgs.size() != 1) {
-					throw new JapidCompilationException(template, parser.getLineNumber(),
-							"action argument must be a method call. It was: " + action);
+					throw new JapidCompilationException(template, parser.getLineNumber(), "action argument must be a method call. It was: " + action);
 				}
 			} catch (RuntimeException e) {
-				throw new JapidCompilationException(template, parser.getLineNumber(),
-						"action argument must be a method call. It was: " + action);
+				throw new JapidCompilationException(template, parser.getLineNumber(), "action argument must be a method call. It was: " + action);
 			}
 
 			// extract params if any
 			int indexOfParam = action.indexOf("(");
 			if (indexOfParam < 1) {
-				throw new JapidCompilationException(template, parser.getLineNumber(),
-						"action arguments must be enclosed in parenthesis.");
+				throw new JapidCompilationException(template, parser.getLineNumber(), "action arguments must be enclosed in parenthesis.");
 			}
 
 			String actionPart = action.substring(0, indexOfParam).trim();
@@ -1062,34 +1044,15 @@ public abstract class JapidAbstractCompiler {
 
 		this.parser = new JapidParser(source);
 
-		String tempName = template.name.replace("-", "_");// .replace('.', '_');
-		String contentTypeHeader = MimeTypeEnum.getHeader(tempName.substring(tempName.lastIndexOf('.')));
-		getTemplateClassMetaData().setContentType(contentTypeHeader);
-		tempName = DirUtil.mapSrcToJava(tempName);
-		tempName = tempName.substring(0, tempName.lastIndexOf(".java"));
-		tempName = tempName.replace('\\', '/');
-		// if (tempName.endsWith(HTML)) {
-		// tempName = tempName.substring(0, tempName.indexOf(HTML));
-		// }
-
-		// extract path
-		int lastSep = tempName.lastIndexOf('/');
-		if (lastSep > 0) {
-			String path = tempName.substring(0, lastSep);
-			path = path.replace('/', '.');
-			path = path.replace('\\', '.');
-			getTemplateClassMetaData().packageName = path;
-			getTemplateClassMetaData().setClassName(tempName.substring(lastSep + 1));
-		} else {
-			getTemplateClassMetaData().setClassName(tempName);
-		}
+		getTemplateClassMetaData().setContentType(template.contentTypeHeader);
+		getTemplateClassMetaData().packageName = template.packageName;
+		getTemplateClassMetaData().setClassName(template.className);
 
 		parse();
 
 		Tag tag = popStack();
 		if (!tagsStack.empty())
-			throw new JapidCompilationException(template, parser.getLineNumber(), "There is(are) " + tagsStack.size()
-					+ " unclosed tag(s) in the template: " + this.template.name);
+			throw new JapidCompilationException(template, parser.getLineNumber(), "There is(are) " + tagsStack.size() + " unclosed tag(s) in the template: " + this.template.name);
 		// remove print nothing statement to save a few CPU cycles
 		this.getTemplateClassMetaData().body = tag.getBodyText().replace("p(\"\")", "").replace("pln(\"\")", "pln()");
 		postParsing(tag);
@@ -1135,8 +1098,7 @@ public abstract class JapidAbstractCompiler {
 				throw new JapidCompilationException(template, lineNumber, "tag name was empty: " + tagText);
 
 			if (tag.tagName.startsWith(".")) {
-				// partial path, use current package as the root and append the
-				// path
+				// partial path, use current package as the root and append the path
 				// to it
 				tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
 			}
@@ -1167,8 +1129,7 @@ public abstract class JapidAbstractCompiler {
 				throw new JapidCompilationException(template, tag.startLine, "tag name was empty: " + tagText);
 
 			if (tag.tagName.startsWith(".")) {
-				// partial path, use current package as the root and append the
-				// path
+				// partial path, use current package as the root and append the path
 				// to it
 				tag.tagName = getTemplateClassMetaData().packageName + tag.tagName;
 			}
@@ -1192,8 +1153,7 @@ public abstract class JapidAbstractCompiler {
 		// remove the argument part to extract action string as key base
 		int left = action.indexOf('(');
 		if (left < 1) {
-			throw new JapidCompilationException(template, parser.getLineNumber(),
-					"invoke: action arguments must be enclosed in parenthesis.");
+			throw new JapidCompilationException(template, parser.getLineNumber(), "invoke: action arguments must be enclosed in parenthesis.");
 		}
 		int right = action.lastIndexOf(')');
 		String actionPath = "\"" + action.substring(0, left) + "\"";
@@ -1221,8 +1181,7 @@ public abstract class JapidAbstractCompiler {
 		try {
 			print(createActionRunner(action));
 		} catch (RuntimeException e) {
-			throw new JapidCompilationException(template, parser.getLineNumber(),
-					"invalid argument syntax to invoke an action: " + action);
+			throw new JapidCompilationException(template, parser.getLineNumber(), "invalid argument syntax to invoke an action: " + action);
 		}
 	}
 
@@ -1292,8 +1251,7 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void invokeAction(Tag tag) {
 		if (tag.hasBody) {
-			throw new JapidCompilationException(template, parser.getLineNumber(),
-					"invoke tag cannot have a body. Must be ended with /}");
+			throw new JapidCompilationException(template, parser.getLineNumber(), "invoke tag cannot have a body. Must be ended with /}");
 		}
 
 		this.getTemplateClassMetaData().setHasActionInvocation();
@@ -1306,8 +1264,9 @@ public abstract class JapidAbstractCompiler {
 	 */
 	protected void endRegularTag(Tag tag) {
 		if (tag.hasBody) {
-			InnerClassMeta bodyInner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName,
-					tag.tagIndex, tag.callbackArgs, tag.getBodyText());
+			InnerClassMeta bodyInner = this.getTemplateClassMetaData().addCallTagBodyInnerClass(tag.tagName, tag.tagIndex,
+					tag.callbackArgs,
+					tag.getBodyText());
 
 			if (bodyInner == null)
 				throw new RuntimeException("compiler bug? " + tag.tagName + " not allowed to have instance of this tag");
@@ -1447,39 +1406,47 @@ public abstract class JapidAbstractCompiler {
 		String actionName = controllerActionPart.substring(lastDot + 1);
 
 		if (ttl == null) {
-			String template = "		%s.put(getOut().length(), new %s() {\n"
-					+ "			@Override\n"
-					+ "			public %s run() {\n"
-					+ "				try {\n"
-					+ "					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();\n"
-					+ "					%s;\n" + "				} catch (%s jr) {\n" + "					return jr.getRenderResult();\n" + "				}\n"
-					+ "				throw new RuntimeException(\"No render result from running: %s\");\n" + "			}\n" + "		});";
-			return String.format(template, AbstractTemplateClassMetaData.ACTION_RUNNERS, ActionRunner.class.getName(),
-					RenderResult.class.getName(), action, JAPID_RESULT, actionEscaped);
+			// should be deprecated
+			String template =
+					"		%s.put(getOut().length(), new %s() {\n" +
+							"			@Override\n" +
+							"			public %s run() {\n" +
+							"				try {\n" +
+							"					play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.initActionCall();\n" +
+							"					%s;\n" +
+							"				} catch (%s jr) {\n" +
+							"					return jr.getRenderResult();\n" +
+							"				}\n" +
+							"				throw new RuntimeException(\"No render result from running: %s\");\n" +
+							"			}\n" +
+							"		});";
+			return String.format(template,
+					AbstractTemplateClassMetaData.ACTION_RUNNERS,
+					ActionRunner.class.getName(),
+					RenderResult.class.getName(),
+					action,
+					JAPID_RESULT,
+					actionEscaped);
 		} else {
-			String template = "		%s.put(getOut().length(), new %s(%s, %s, %s, %s) {\n" + "			@Override\r\n"
-					+ "			public void runPlayAction() throws %s {\n" +
-					// "				super.checkActionCacheFor(%s.class, \"%s\");\n"
-					// +
-					"				%s; " + makeLineMarker(parser.getLineNumber()) + "\n" + "			}\n" + "		}); p(\"\\n\");"; // hack:
-			// a
-			// new
-			// line
-			// char
-			// to
-			// stand
-			// for
-			// the
-			// action
-			// position.
-			// Should really change the action runner collection to <int,
-			// List<ActionRunner>>
+			String template = "		%s.put(getOut().length(), new %s(%s, %s, %s, %s) {\n"
+					+ "			@Override\r\n"
+					+ "			public void runPlayAction() throws %s {\n"
+					+ "				%s; " + makeLineMarker(parser.getLineNumber()) + "\n" 
+					+ "			}\n" 
+					+ "		}); p(\"\\n\");"; // hack
+			// Should really change the action runner collection to <int, List<ActionRunner>> 
 
 			// hard-code the cache action runner name to avoid dependency on the
 			// Play jar
-			return String.format(template, AbstractTemplateClassMetaData.ACTION_RUNNERS,
-					"cn.bran.play.CacheablePlayActionRunner", ttl, controllerName + ".class", "\"" + actionName + "\"",
-					"".equals(keys) ? "\"\"" : keys, JAPID_RESULT, action);
+			return String.format(template, 
+					AbstractTemplateClassMetaData.ACTION_RUNNERS,
+					"cn.bran.play.CacheablePlayActionRunner", 
+					ttl, 
+					controllerName + ".class", 
+					"\"" + actionName + "\"",
+					"".equals(keys) ? "\"\"" : keys, 
+					JAPID_RESULT, 
+					action);
 			// return String.format(template,
 			// AbstractTemplateClassMetaData.ACTION_RUNNERS,
 			// "cn.bran.play.CacheablePlayActionRunner",
@@ -1518,8 +1485,7 @@ public abstract class JapidAbstractCompiler {
 		TagInTag tagtagf = getTagInTag();
 		if (tagtagf != null) {
 			if (tag instanceof TagInTag) {
-				throw new JapidCompilationException(template, tag.startLine,
-						"Syntax error: def/set tag cannot be nested in another def/set tag.");
+				throw new JapidCompilationException(template, tag.startLine, "Syntax error: def/set tag cannot be nested in another def/set tag.");
 			}
 
 			if (!(tag instanceof TagIf))
