@@ -30,7 +30,7 @@ import cn.bran.play.JapidResult;
 public class Application extends JapidController {
 	public static void index() {
 		renderJapid(); // use the default index.html in the japidviews/SampleController directory
-//		renderJapidWith("@index.html"); // use the default index.html in the japidviews/SampleController directory
+//		renderJapidWith("@index.html"); // use the default index.html in the japidviews/SampleController directorypost
 	}
 	public static void indexAt() {
 		renderJapid(); // 
@@ -118,8 +118,8 @@ public class Application extends JapidController {
 //		}, "10s", a);
 	}
 	
-	public static void hello() {
-		String m = "hi there and..";
+	public static void hello(String me, String you) {
+		String m = "hi there and.." + me + you;
 		String am = m + "!";
 //		renderText("hello，Japid Play!");
 		renderText(am);
@@ -192,15 +192,21 @@ public class Application extends JapidController {
 		renderJapidWith("templates/callPicka");
 	}
 	
+	public static void ct() {
+		dontRedirect();
+		renderJapidWith("templates/callPicka");
+	}
+	
 	public static void yahoo() {
-		Stream<String> stream = Stream.of("a", "bb", "ccc");
-		String out = stream.sorted((a, b) -> a.length() - b.length()).collect(Collectors.joining("::"));
+		Stream<String> stream = Stream.of("a", "bb", "zzzzz", "cccccc");
+		String out = stream.sorted((a, b) -> a.length() - b.length()).map(a -> a + "---").collect(Collectors.joining(":::"));
 		renderText(out);
 	}
 	
 	public static void postList() {
 		String title = "my Blog";
 		List<Post> posts = createPosts();
+		System.out.println(posts.stream().collect(Collectors.counting()));
 		renderJapidWith("templates/AllPost", title, posts);
 	}
 	/**

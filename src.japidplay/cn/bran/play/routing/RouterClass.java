@@ -8,6 +8,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import play.libs.F.Tuple;
 import play.mvc.Http.Header;
@@ -97,11 +98,13 @@ public class RouterClass {
 	 * @return
 	 */
 	public List<Route> buildRoutes() {
-		List<Route> list = new ArrayList<Route>(routerMethods.size());
-		for (RouterMethod rm : routerMethods) {
-			list.addAll(rm.buildRoutes());
-		}
-		return list;
+		return routerMethods.stream().flatMap(rm -> rm.buildRoutes().stream()).collect(Collectors.toList());
+////		List<Route> list = new ArrayList<Route>();
+//		routerMethods.forEach(rm -> list.addAll(rm.buildRoutes()));
+//		for (RouterMethod rm : routerMethods) {
+//			list.addAll(rm.buildRoutes());
+//		}
+//		return list;
 	}
 
 

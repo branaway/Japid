@@ -1,19 +1,20 @@
+//version: 0.9.4
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import japidviews._layouts.*;
-import play.i18n.Messages;
-import play.data.validation.Validation;
-import play.mvc.Scope.*;
-import models.*;
+import static play.templates.JavaExtensions.*;
 import play.data.validation.Error;
+import play.i18n.Messages;
+import play.mvc.Scope.*;
+import play.data.validation.Validation;
 import play.i18n.Lang;
-import play.mvc.Http.*;
 import controllers.*;
+import japidviews._layouts.*;
+import models.*;
+import play.mvc.Http.*;
 //
 // NOTE: This file was generated from: japidviews/Application/listAll.html
 // Change to this file will be lost next time the template file is compiled.
@@ -21,9 +22,11 @@ import controllers.*;
 public class listAll extends main
 {
 	public static final String sourceTemplate = "japidviews/Application/listAll.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -41,11 +44,17 @@ public class listAll extends main
 
 
 	public listAll() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public listAll(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public listAll(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"contacts",  };
@@ -62,18 +71,21 @@ public class listAll extends main
 	}
 ////// end of named args stuff
 
-	private List<Contact> contacts; // line 1
+	private List<Contact> contacts; // line 1, japidviews/Application/listAll.html
 	public cn.bran.japid.template.RenderResult render(List<Contact> contacts) {
 		this.contacts = contacts;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/listAll.html
+		return getRenderResult();
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(List<Contact> contacts) {
+		return new listAll().render(contacts);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
-;// line 1
-		p("\n");// line 1
+;// line 1, listAll.html
+		;// line 1, listAll.html
 p("\n" + 
 "<table>\n" + 
 "    <thead>\n" + 
@@ -85,45 +97,45 @@ p("\n" +
 "            <th class=\"edit\"></th>\n" + 
 "        </tr>\n" + 
 "    </thead>\n" + 
-"    <tbody>\n");// line 3
+"    <tbody>\n");// line 3, listAll.html
 		p("\n" + 
-"        ");// line 17
-		for (Contact contact : contacts) {// line 18
-		p("	        <tr class=\"contact\" contactId=\"");// line 18
-		p(contact.id);// line 19
+"        ");// line 17, listAll.html
+		for (Contact contact : contacts) {// line 18, listAll.html
+		p("	        <tr class=\"contact\" contactId=\"");// line 18, listAll.html
+		p(contact.id);// line 19, listAll.html
 		p("\" draggable=\"true\">\n" + 
-"	            <td id=\"name-");// line 19
-		p(contact.id);// line 20
-		p("\">");// line 20
-		p(contact.name);// line 20
+"	            <td id=\"name-");// line 19, listAll.html
+		p(contact.id);// line 20, listAll.html
+		p("\">");// line 20, listAll.html
+		p(contact.name);// line 20, listAll.html
 		p("</td>\n" + 
-"	            <td id=\"firstname-");// line 20
-		p(contact.id);// line 21
-		p("\">");// line 21
-		p(contact.firstname);// line 21
+"	            <td id=\"firstname-");// line 20, listAll.html
+		p(contact.id);// line 21, listAll.html
+		p("\">");// line 21, listAll.html
+		p(contact.firstname);// line 21, listAll.html
 		p("</td>\n" + 
-"	            <td id=\"birthdate-");// line 21
-		p(contact.id);// line 22
-		p("\">");// line 22
-		try { Object o = format(contact.birthdate, "yyyy-MM-dd") ; if (o.toString().length() ==0) { ; } else { p(o); } } catch (NullPointerException npe) { ; }// line 22
+"	            <td id=\"birthdate-");// line 21, listAll.html
+		p(contact.id);// line 22, listAll.html
+		p("\">");// line 22, listAll.html
+		try { Object o = format(contact.birthdate, "yyyy-MM-dd") ; if (o.toString().length() ==0) { ; } else { p(o); } } catch (NullPointerException npe) { ; }// line 22, listAll.html
 		p("</td>\n" + 
-"	            <td id=\"email-");// line 22
-		p(contact.id);// line 23
-		p("\">");// line 23
-		p(contact.email);// line 23
+"	            <td id=\"email-");// line 22, listAll.html
+		p(contact.id);// line 23, listAll.html
+		p("\">");// line 23, listAll.html
+		p(contact.email);// line 23, listAll.html
 		p("</td>\n" + 
-"	            <td><a href=\"");// line 23
-		p(lookup("form", contact.id));// line 24
+"	            <td><a href=\"");// line 23, listAll.html
+		p(lookup("form", contact.id));// line 24, listAll.html
 		p("\">&gt;</a></td>\n" + 
 "	        </tr>\n" + 
-"        ");// line 24
-		}// line 26
+"        ");// line 24, listAll.html
+		}// line 26, listAll.html
 		p("        <tr>\n" + 
-"            <form action=\"");// line 26
-		p(lookup("save", new Object[]{}));// line 28
+"            <form action=\"");// line 26, listAll.html
+		p(lookup("save", new Object[]{}));// line 28, listAll.html
 		p("\" method=\"POST\">\n" + 
-"            	");// line 28
-		p(authenticityToken());// line 29
+"            	");// line 28, listAll.html
+		p(authenticityToken());// line 29, listAll.html
 		p("\n" + 
 "	            <td><input type=\"text\" name=\"contact.name\"></td>\n" + 
 "	            <td><input type=\"text\" name=\"contact.firstname\"></td>\n" + 
@@ -146,8 +158,8 @@ p("\n" +
 "            \n" + 
 "            // Save result\n" + 
 "            $.ajax({\n" + 
-"                url: '");// line 29
-		p(lookup("save", new Object[]{}));// line 51
+"                url: '");// line 29, listAll.html
+		p(lookup("save", new Object[]{}));// line 51, listAll.html
 		p("',\n" + 
 "                type: 'POST',\n" + 
 "                data: data,\n" + 
@@ -160,15 +172,15 @@ p("\n" +
 "    })\n" + 
 "\n" + 
 "    	\n" + 
-"    ");// line 51
+"    ");// line 51, listAll.html
 		p("\n" + 
 "    // Drag & Drop\n" + 
 "    var dragIcon = document.createElement('img')\n" + 
-"    dragIcon.src = '");// line 64
-		p(lookupStatic("public/images/avatar.png"));// line 67
+"    dragIcon.src = '");// line 64, listAll.html
+		p(lookupStatic("public/images/avatar.png"));// line 67, listAll.html
 		p("'  \n" + 
-"    var action = ");// line 67
-		p(jsAction("form", ":id"));// line 68
+"    var action = ");// line 67, listAll.html
+		p(jsAction("form", ":id"));// line 68, listAll.html
 		p("\n" + 
 "    var cancel = function cancel(e) {e.preventDefault()}\n" + 
 "    \n" + 
@@ -184,7 +196,7 @@ p("\n" +
 "        e.originalEvent.dataTransfer.setDragImage(dragIcon, 0, -10);\n" + 
 "    })\n" + 
 "    \n" + 
-"</script>\n");// line 68
+"</script>\n");// line 68, listAll.html
 		
 		endDoLayout(sourceTemplate);
 	}

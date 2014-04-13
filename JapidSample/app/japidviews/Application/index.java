@@ -88,7 +88,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);
 ;// line 1, index.html
 p("\n" + 
-"<h2>Some Sample Templates that demonstrate Japid features.</h2>\n" + 
+"<h2>Some Sample Templates that demonstrate Japid features with java 8</h2>\n" + 
 "\n" + 
 "<p>Please follow the controller actions and render paths for the\n" + 
 "source code.</p>\n" + 

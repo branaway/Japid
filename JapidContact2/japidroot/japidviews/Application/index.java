@@ -1,19 +1,20 @@
+//version: 0.9.4
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import japidviews._layouts.*;
-import play.i18n.Messages;
-import play.data.validation.Validation;
-import play.mvc.Scope.*;
-import models.*;
+import static play.templates.JavaExtensions.*;
 import play.data.validation.Error;
+import play.i18n.Messages;
+import play.mvc.Scope.*;
+import play.data.validation.Validation;
 import play.i18n.Lang;
-import play.mvc.Http.*;
 import controllers.*;
+import japidviews._layouts.*;
+import models.*;
+import play.mvc.Http.*;
 //
 // NOTE: This file was generated from: japidviews/Application/index.html
 // Change to this file will be lost next time the template file is compiled.
@@ -21,9 +22,11 @@ import controllers.*;
 public class index extends main
 {
 	public static final String sourceTemplate = "japidviews/Application/index.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -41,11 +44,17 @@ public class index extends main
 
 
 	public index() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public index(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public index(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 /* based on https://github.com/branaway/Japid/issues/12
  */
 	public static final String[] argNames = new String[] {/* args of the template*/"now",  };
@@ -62,35 +71,38 @@ public class index extends main
 	}
 ////// end of named args stuff
 
-	private Date now; // line 1
+	private Date now; // line 1, japidviews/Application/index.html
 	public cn.bran.japid.template.RenderResult render(Date now) {
 		this.now = now;
-		long t = -1;
-		try {super.layout();} catch (RuntimeException e) { super.handleException(e);} // line 1
-		return new cn.bran.japid.template.RenderResultPartial(getHeaders(), getOut(), t, actionRunners, sourceTemplate);
+		try {super.layout();} catch (RuntimeException __e) { super.handleException(__e);} // line 1, japidviews/Application/index.html
+		return getRenderResult();
 	}
+
+	public static cn.bran.japid.template.RenderResult apply(Date now) {
+		return new index().render(now);
+	}
+
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
-//------
-;// line 1
+;// line 1, index.html
 p("\n" + 
 "\n" + 
 "<p id=\"time\">\n" + 
-"    <span>");// line 3
-		p(format(now, "EEEE',' MMMM dd',' yyyy"));// line 7
+"    <span>");// line 3, index.html
+		p(format(now, "EEEE',' MMMM dd',' yyyy"));// line 7, index.html
 		p("</span>\n" + 
-"    ");// line 7
-		p(format(now, "hh'h' MM'mn' ss's'"));// line 8
+"    ");// line 7, index.html
+		p(format(now, "hh'h' MM'mn' ss's'"));// line 8, index.html
 		p("\n" + 
 "</p>\n" + 
 "\n" + 
 "<script type=\"text/javascript\" charset=\"utf-8\">\n" + 
 "    setInterval(function() {\n" + 
-"        $('section').load('");// line 8
-		p(lookup("index", new Object[]{}));// line 13
+"        $('section').load('");// line 8, index.html
+		p(lookup("index", new Object[]{}));// line 13, index.html
 		p(" #time')\n" + 
 "    }, 1000)\n" + 
-"</script>");// line 13
+"</script>");// line 13, index.html
 		
 		endDoLayout(sourceTemplate);
 	}

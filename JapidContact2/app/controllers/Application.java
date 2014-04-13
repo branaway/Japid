@@ -2,12 +2,14 @@ package controllers;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import models.Contact;
 import play.data.validation.Valid;
-import cn.bran.play.JapidController2;
+import play.db.jpa.JPA;
+import cn.bran.play.JapidController;
 
-public class Application extends JapidController2 {
+public class Application extends JapidController {
 
     public static void index() {
         Date now = new Date();
@@ -15,7 +17,9 @@ public class Application extends JapidController2 {
     }
     
     public static void list() {
-        List<Contact> contacts = Contact.find("order by name, firstname").fetch();
+        List<Contact> contacts = JPA.find(Contact.class).fetch();
+        contacts = contacts.stream().sorted((a, b) -> a.name.compareTo(b.name)).collect(Collectors.toList());
+//        List<Contact> contacts = JPA.find(Contact.class, "order by name, firstname").fetch();
         // for some unknown reason I cannot use "list" as the default template name
 //        renderJapid(contacts);
 //        render(contacts);
@@ -26,6 +30,14 @@ public class Application extends JapidController2 {
 //        dontRedirect();
 //        listAll(contacts);
         renderJapidWith("@listAll", contacts);
+    }
+    
+    public static void yaaa() {
+    	renderText("yahoo");
+    }
+    
+    public static void yahoo2(String hi) {
+    	System.out.println("what!");
     }
 //    
 //    /**
@@ -41,7 +53,7 @@ public class Application extends JapidController2 {
 //            render();
         	renderJapid((Object)null);
         }
-        Contact contact = Contact.findById(id);
+        Contact contact = JPA.findById(Contact.class, id);
 //        render(contact);
         renderJapid(contact);
     }
