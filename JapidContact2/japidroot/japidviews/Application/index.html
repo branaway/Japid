@@ -1,6 +1,6 @@
-`args Date now
+`(Date now)
 `extends main
-`set title:"Home"
+`set title:"Home Page"
 
 
 <p id="time">
@@ -11,5 +11,5 @@
 <script type="text/javascript" charset="utf-8">
     setInterval(function() {
         $('section').load('@{index()} #time')
-    }, 1000)
+    }, 2000)
 </script>

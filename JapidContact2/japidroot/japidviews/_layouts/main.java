@@ -111,7 +111,7 @@ p("<!DOCTYPE html>\n" +
 "    		<footer>\n" + 
 "    			<a href=\"http://www.w3.org/TR/html5/\">html5</a> - \n" + 
 "    			<a href=\"http://www.w3.org/TR/css3-roadmap/\">css3</a> - \n" + 
-"    			<a href=\"http://www.playframework.org/\">playframework with Japid</a> \n" + 
+"    			<a href=\"http://www.playframework.org/\">playframework with Japid8</a> \n" + 
 "    		</footer>\n" + 
 "		</div>\n" + 
 "	</body>\n" + 

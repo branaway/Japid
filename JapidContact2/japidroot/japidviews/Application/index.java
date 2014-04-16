@@ -85,6 +85,7 @@ public class index extends main
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 ;// line 1, index.html
+		;// line 1, index.html
 p("\n" + 
 "\n" + 
 "<p id=\"time\">\n" + 
@@ -101,13 +102,13 @@ p("\n" +
 "        $('section').load('");// line 8, index.html
 		p(lookup("index", new Object[]{}));// line 13, index.html
 		p(" #time')\n" + 
-"    }, 1000)\n" + 
+"    }, 2000)\n" + 
 "</script>");// line 13, index.html
 		
 		endDoLayout(sourceTemplate);
 	}
 
 	@Override protected void title() {
-		p("Home");;
+		p("Home Page");;
 	}
 }

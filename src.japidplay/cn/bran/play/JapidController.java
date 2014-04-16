@@ -622,5 +622,12 @@ public class JapidController extends Controller {
 	public static void render(Object... args) {
 		 renderJapid(args);
 	}
+
+	/**
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 */
+	protected static void requestRedirect() {
+		play.classloading.enhancers.ControllersEnhancer.ControllerInstrumentation.stopActionCall();
+	}
 	
 }

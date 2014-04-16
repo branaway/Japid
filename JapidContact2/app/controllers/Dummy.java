@@ -9,7 +9,7 @@ import play.data.validation.Valid;
 import play.db.jpa.JPA;
 import cn.bran.play.JapidController;
 
-public class Application extends JapidController {
+public class Dummy extends JapidController {
 
     public static void index() {
         Date now = new Date();
@@ -19,25 +19,13 @@ public class Application extends JapidController {
     public static void list() {
         List<Contact> contacts = JPA.find(Contact.class).fetch();
         contacts = contacts.stream().sorted((a, b) -> a.name.compareTo(b.name)).collect(Collectors.toList());
-//        List<Contact> contacts = JPA.find(Contact.class, "order by name, firstname").fetch();
-        // for some unknown reason I cannot use "list" as the default template name
-//        renderJapid(contacts);
-//        render(contacts);
-        // the default template would be named list.html and the derived class name seems to be conflict to the List class
-        // So I chain it to another action.
-        // for some unknown reason I cannot use "list" as the default template name
-        // so I chain it to another one
 //        dontRedirect();
 //        listAll(contacts);
         renderJapidWith("@listAll", contacts);
     }
-    
-    public static void yahooo(String hi) {
-    	System.out.println("wdt!");
-    }
-//    
+        
     public static void yahoo(String hi) {
-    	System.out.println("wdt!");
+    	System.out.println("what!");
     }
 //    
 //    /**
@@ -61,7 +49,7 @@ public class Application extends JapidController {
     public static void save(@Valid Contact contact) {
         if(validation.hasErrors()) {
             if(request.isAjax()) 
-            	error("Invalid value....");
+            	error("Invalid value received.");
 //            render("@form", contact);
             renderJapidWith("@form", contact);
         }
@@ -69,10 +57,8 @@ public class Application extends JapidController {
         contact.save();
 
         // cannot use direct all yet...
-//        redirect("Application.list");
-//        requestRedirect(); // just in case
-        list(); // should redirect
-//        form(contact.id);
+        redirect("Application.list");
+        
     }
 
 }

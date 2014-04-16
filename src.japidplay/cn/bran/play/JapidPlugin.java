@@ -477,10 +477,10 @@ public class JapidPlugin extends PlayPlugin {
 	 */
 	private void buildRoutesFromAnnotations() {
 		if (!Play.classloader.currentState.equals(lastApplicationClassloaderState)) {
-			JapidFlags.log("reload auto route due to classloader state change");
+			JapidFlags.debug("reload auto route due to classloader state change");
 			buildRoutes();
 		} else if (Router.lastLoading != routesLoadingTime) {
-			JapidFlags.log("reload auto route due to router timestamp");
+			JapidFlags.debug("reload auto route due to router timestamp");
 			buildRoutes();
 		}
 		this.ctxPath = Play.ctxPath;
