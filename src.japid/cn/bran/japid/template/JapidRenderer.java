@@ -25,7 +25,7 @@ import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.StackTraceUtils;
 
 public class JapidRenderer {
-	public static final String VERSION = "0.9.4"; // need to match that in the build.xml
+	public static final String VERSION = "0.9.5"; // need to match that in the build.xml
 	
 	public static JapidTemplateBaseWithoutPlay getRenderer(String name) {
 		Class<? extends JapidTemplateBaseWithoutPlay> c = getClass(name);

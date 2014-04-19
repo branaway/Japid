@@ -2,7 +2,7 @@
 
                     Bing Ran<bing_ran@hotmail.com>
                     
-Latest version: 0.9.37.3
+Latest version: 0.9.5
 
 * Links:
 
@@ -27,7 +27,7 @@ Whenever you upgrade the Japid module,
 * Note 2:
 
 I have made a patched version of the original Play 1.2.x stream which is hosted here: https://github.com/branaway/play. It works very well with Japid to give developers a very short turn-around time in DEV mode. Please check it out.
-
+That version's jdk8 branch is compatible with jdk 8.
 * Note 3:
 Use this dependencies.yml to reference the latest distribution, adjusting the version number accordingly:
 
@@ -50,6 +50,8 @@ repositories:
 
 * Version History:
 
+2013/12/21: V0.9.5:
+	1. new feature: updated JDT compiler to support jdk 8.   
 2013/12/21: V0.9.37.3:
 	1. enhancement: to detect scripts with a future time stamp and reset them to current time so that newly generated java files would be always newer.  
 2013/11/12: V0.9.37:
