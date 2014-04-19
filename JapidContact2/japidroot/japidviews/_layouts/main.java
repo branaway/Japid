@@ -1,4 +1,4 @@
-//version: 0.9.4
+//version: 0.9.5
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -60,8 +60,8 @@ public abstract class main extends cn.bran.play.JapidTemplateBase
 p("<!DOCTYPE html>\n" + 
 "<html>\n" + 
 "    <head>\n" + 
-"    	<title>JapidContact, by zenexity/Bing Ran  ★ ");// line 1, main.html
-		title();p(" </title>\n" + 
+"    	<title>Contact2/Japid - ");// line 1, main.html
+		title();p(", by Zenexity/Bing Ran</title>\n" + 
 "    	<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n" + 
 "        <link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"");// line 4, main.html
 		p(lookupStatic("public/stylesheets/style.css"));// line 6, main.html

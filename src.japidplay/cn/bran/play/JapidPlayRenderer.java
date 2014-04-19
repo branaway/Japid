@@ -20,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import play.Play;
 import play.Play.Mode;
 import play.classloading.ApplicationClassloader;
+import play.classloading.ApplicationClassloaderState;
 import play.data.validation.Validation;
 import play.exceptions.CompilationException;
 import play.templates.JavaExtensions;
@@ -57,6 +58,8 @@ public class JapidPlayRenderer {
 
 	private static ApplicationClassloader playClassloader;
 	private static boolean classesInited = false;
+	private static ApplicationClassloaderState lastPlayClassLoaderState;
+
 	/**
 	 * Get a newly loaded class for the template renderer
 	 * 
@@ -64,39 +67,42 @@ public class JapidPlayRenderer {
 	 * @return
 	 */
 	public static Class<? extends JapidTemplateBaseWithoutPlay> getTemplateClass(String name) {
-		refreshClasses(/*name*/);
+		refreshClasses(/* name */);
 
 		RendererClass rc = japidClasses.get(name);
 		if (rc == null)
 			throw new RuntimeException("Japid template class not found: " + name);
 		else {
 			if (playClassloaderChanged()) {
-				// fall thru to reload all
-			}
-			else {
-				try {
-					Class<? extends JapidTemplateBaseWithoutPlay> cls = rc.getClz();
-					if (cls != null) {
-						return cls;
+				// always clear the mark to redefine all
+				japidClasses.forEach((k, v )-> v.setLastUpdated(0));
+				initJapidClassLoader();
+			} else {
+				if (rc.getLastUpdated() > 0) {
+					try {
+						Class<? extends JapidTemplateBaseWithoutPlay> cls = rc.getClz();
+						if (cls != null) {
+							return cls;
+						} else {
+							// not defined yet
+						}
+					} catch (Exception e) {
+						throw new RuntimeException(e);
 					}
-					else { 
-						// not defined yet
-					}
-				} catch (Exception e) {
-					throw new RuntimeException(e);
+				}
+				else {
+					//
 				}
 			}
 		}
 
-		resetAllRenderClassUpdatedTime();
-		// do I need to new instance of TemplateClassLoader for each invocation? likely...
+		// do I need to new instance of TemplateClassLoader for each invocation?
+		// likely...
 		// XXX why new instance each time?
-		TemplateClassLoaderWithPlay classReloader = new TemplateClassLoaderWithPlay();
-		
+//		TemplateClassLoaderWithPlay classReloader = new TemplateClassLoaderWithPlay(Play.classloader);
+
 		try {
-			Class<JapidTemplateBaseWithoutPlay> loadClass = (Class<JapidTemplateBaseWithoutPlay>) classReloader.loadClass(name);
-			rc.setClz(loadClass);
-			return loadClass;
+			return (Class<? extends JapidTemplateBaseWithoutPlay>) crlr.loadClass(name);
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		}
@@ -105,10 +111,11 @@ public class JapidPlayRenderer {
 
 	private static void resetAllRenderClassUpdatedTime() {
 		// always clear the mark to reload all
-		for (String c : japidClasses.keySet()) {
-			RendererClass rendererClass = japidClasses.get(c);
-			rendererClass.setLastUpdated(0);
-		}
+		japidClasses.forEach((k, v )-> v.setLastUpdated(0));
+//		for (String c : japidClasses.keySet()) {
+//			RendererClass rendererClass = japidClasses.get(c);
+//			rendererClass.setLastUpdated(0);
+//		}
 	}
 
 	/**
@@ -116,18 +123,19 @@ public class JapidPlayRenderer {
 	 * @return
 	 */
 	private static boolean playClassloaderChanged() {
-		if (play.Play.classloader != playClassloader) {
+		if (play.Play.classloader != playClassloader || lastPlayClassLoaderState == null
+				|| lastPlayClassLoaderState != play.Play.classloader.currentState) {
 			playClassloader = play.Play.classloader;
+			lastPlayClassLoaderState = play.Play.classloader.currentState;
 			return true;
-		}
-		else
+		} else
 			return false;
 	}
 
 	static boolean timeToRefresh() {
 		if (!isDevMode())
 			return false;
-		
+
 		long now = System.currentTimeMillis();
 		if (now - lastRefreshed > refreshInterval) {
 			lastRefreshed = now;
@@ -141,16 +149,15 @@ public class JapidPlayRenderer {
 		if (classesInited) {
 			if (!timeToRefresh())
 				return;
-		}
-		else {
+		} else {
 			JapidFlags.info("Japid scripts not loaded yet. Initializing them...");
 		}
-		
+
 		try {
-//			PlayDirUtil.mkdir(templateRoot);
+			// PlayDirUtil.mkdir(templateRoot);
 			// find out all removed classes
-			List<String> allTemps = isDevMode() ? DirUtil.getAllTemplateFiles(new File(defaultTemplateRoot)) 
-					: DirUtil.getAllTemplateFilesJavaFiles(new File(defaultTemplateRoot));
+			List<String> allTemps = isDevMode() ? DirUtil.getAllTemplateFiles(new File(defaultTemplateRoot)) : DirUtil
+					.getAllTemplateFilesJavaFiles(new File(defaultTemplateRoot));
 			Set<String> currentClassesOnDir = createNameSet(allTemps);
 			Set<String> allNames = new HashSet<String>(currentClassesOnDir);
 
@@ -177,11 +184,12 @@ public class JapidPlayRenderer {
 					RendererClass rendererClass = japidClasses.get(className);
 					if (rendererClass == null) {
 						// this should not happen, since
-						throw new RuntimeException("any new class names should have been in the classes container: " + className);
+						throw new RuntimeException("any new class names should have been in the classes container: "
+								+ className);
 						// rendererClass = newRendererClass(className);
 						// classes.put(className, rendererClass);
 					}
-					
+
 					JapidRenderer.setSources(rendererClass, f);
 					removeInnerClasses(className);
 					cleanClassHolder(rendererClass);
@@ -218,34 +226,36 @@ public class JapidPlayRenderer {
 					names[i++] = s;
 				}
 				long t = System.currentTimeMillis();
-				// newly compiled class bytecode bodies are set in the global classes set ready for defining
+				// newly compiled class bytecode bodies are set in the global
+				// classes set ready for defining
 				compiler.compile(names);
-				howlong("compile time for " + names.length + " classes", t);
+				howlong("compile time for " + names.length + " classe(s)", t);
 
 				// clear the global defined class cache
-				for (String k : japidClasses.keySet()) {
-					RendererClass rc = japidClasses.get(k);
-					rc.setClz(null);
-				}
+				japidClasses.forEach((k, v) -> v.setClz(null));
+				initJapidClassLoader();
 				classesInited = true;
 			}
-		} 
-		catch (JapidCompilationException e) {
+		} catch (JapidCompilationException e) {
 			if (presentErrorInHtml)
 				throw e;
-			
+
 			String tempName = e.getTemplateName();
 			if (tempName.startsWith(defaultTemplateRoot)) {
-			}else {
+			} else {
 				tempName = defaultTemplateRoot + File.separator + tempName;
 			}
 			VirtualFile vf = VirtualFile.fromRelativePath(tempName);
-			CompilationException ce = new CompilationException(vf, "\"" + e.getMessage() + "\"", e.getLineNumber(), 0, 0);
+			CompilationException ce = new CompilationException(vf, "\"" + e.getMessage() + "\"", e.getLineNumber(), 0,
+					0);
 			throw ce;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private static void initJapidClassLoader() {
+		crlr = new TemplateClassLoaderWithPlay(Play.classloader);
 	}
 
 	public static void removeInnerClasses(String className) {
@@ -294,14 +304,14 @@ public class JapidPlayRenderer {
 	public static List<String> importlines = new ArrayList<String>();
 	public static int refreshInterval;
 	public static long lastRefreshed = 0;
-//	private static boolean inited;
+	// private static boolean inited;
 
 	private static boolean usePlay = true;
-	
+
 	// to override Play's mode when set
 	private static Mode mode;
 	private static boolean presentErrorInHtml = true;
-	
+
 	public static Mode getMode() {
 		if (mode == null)
 			return play.Play.mode;
@@ -310,7 +320,7 @@ public class JapidPlayRenderer {
 	}
 
 	static void howlong(String string, long t) {
-		JapidFlags.info(string + ":" + (System.currentTimeMillis() - t) + "ms");
+		JapidFlags.debug(string + ":" + (System.currentTimeMillis() - t) + "ms");
 	}
 
 	/**
@@ -490,13 +500,14 @@ public class JapidPlayRenderer {
 	static List<File> gen(String packageRoot) throws IOException {
 		List<File> changedFiles = reloadChanged(packageRoot);
 		if (changedFiles.size() > 0) {
-//			for (File f : changedFiles) {
-//				// log("updated: " + f.getName().replace("html", "java"));
-//			}
+			// for (File f : changedFiles) {
+			// // log("updated: " + f.getName().replace("html", "java"));
+			// }
 		} else {
-//			log("All Japid template files are synchronized.");
-			if (JapidFlags.verbose) System.out.print(":");
-		} 
+			// log("All Japid template files are synchronized.");
+			if (JapidFlags.verbose)
+				System.out.print(":");
+		}
 
 		if (isDevMode())
 			rmOrphanJava(packageRoot);
@@ -547,7 +558,7 @@ public class JapidPlayRenderer {
 		for (String f : javatags) {
 			t.addImport("static " + f + ".*");
 		}
-		
+
 		t.execute();
 		// List<File> changedFiles = t.getChangedFiles();
 		return t.getChangedTargetFiles();
@@ -594,8 +605,9 @@ public class JapidPlayRenderer {
 				String path = j.getPath();
 				// JapidFlags.log("found: " + path);
 				if (path.contains(DirUtil.JAVATAGS)) {
-					JapidFlags.warn("using util classes in _javatags folder is deprecated and will not take effect in post-controller Japid mode. " +
-							"Please use Play app's standard app/utils folder and import the classes accordingly");
+					JapidFlags
+							.warn("using util classes in _javatags folder is deprecated and will not take effect in post-controller Japid mode. "
+									+ "Please use Play app's standard app/utils folder and import the classes accordingly");
 					// java tags, don't touch
 				} else {
 					hasRealOrphan = true;
@@ -721,8 +733,8 @@ public class JapidPlayRenderer {
 	 * The <em>optional</em> initialization step in using the JapidRender.
 	 * 
 	 * Users do not need to call this method to initialize this class. It takes
-	 * "japidroot" as the default template root, which is relative to the application
-	 * root. 
+	 * "japidroot" as the default template root, which is relative to the
+	 * application root.
 	 * 
 	 * @param opMode
 	 *            the operational mode of Japid. When set to OpMode.prod, it's
@@ -733,9 +745,9 @@ public class JapidPlayRenderer {
 	 *            interval is respected. New Java files are generated and
 	 *            compiled and new classes are loaded to serve the request.
 	 * @param templateRoot
-	 *            the root directory to contain the "japidviews" directory tree. It must
-	 *            be out of the "app" directory, or it will interfere with Play's class
-	 *            loading. 
+	 *            the root directory to contain the "japidviews" directory tree.
+	 *            It must be out of the "app" directory, or it will interfere
+	 *            with Play's class loading.
 	 * @param refreshInterval
 	 *            the minimal time, in second, that must elapse before trying to
 	 *            detect any changes in the file system.
@@ -745,7 +757,7 @@ public class JapidPlayRenderer {
 		mode = opMode;
 		setTemplateRoot(templateRoot);
 		setRefreshInterval(refreshInterval);
-		crlr = new TemplateClassLoaderWithPlay();
+		initJapidClassLoader();
 		compiler = new RendererCompiler(japidClasses, crlr);
 		try {
 			refreshClasses();
@@ -760,11 +772,11 @@ public class JapidPlayRenderer {
 	public static void init() {
 		init(null, defaultTemplateRoot, 2);
 	}
-	
+
 	static {
 		init();
 	}
-	
+
 	/**
 	 * a facet method to wrap implicit template binding. The default template is
 	 * named as the class and method that immediately invoke this method. e.g.
@@ -797,7 +809,8 @@ public class JapidPlayRenderer {
 	 * @param templateName
 	 *            The template must be rooted in the {templateRoot/}/japidviews
 	 *            tree. The template name starts with or without "japidviews".
-	 *            The naming pattern is the same as in ClassLoader.getResource(). 
+	 *            The naming pattern is the same as in
+	 *            ClassLoader.getResource().
 	 * @param args
 	 * @return the result string
 	 */
@@ -812,7 +825,7 @@ public class JapidPlayRenderer {
 	}
 
 	public static RenderResult handleException(Throwable e) throws RuntimeException {
-		if (!presentErrorInHtml )
+		if (!presentErrorInHtml)
 			if (e instanceof RuntimeException)
 				throw (RuntimeException) e;
 			else
@@ -878,16 +891,16 @@ public class JapidPlayRenderer {
 		// else
 		// throw new RuntimeException(e);
 	}
-	
+
 	/**
 	 * @author Bing Ran (bing.ran@gmail.com)
 	 * @return
 	 */
 	public static Class<? extends JapidTemplateBaseWithoutPlay> getErrorRendererClass() {
-//		return devErrorClass;
+		// return devErrorClass;
 		return japidviews.devError.class;
 	}
-	
+
 	public static String renderPlayException(Exception e) {
 		Exception exp = cn.bran.play.util.PlayExceptionUtils.mapJapidJavaCodeError(e);
 		RenderResult rr = error500ForPlay.apply(exp);

@@ -70,7 +70,7 @@ public class JapidPlugin extends PlayPlugin {
 	public void onLoad() {
 		Logger.info("JapidPlugin.onload().");
 		if (Play.mode == Mode.DEV) {
-			Logger.info("[Japid] version " + JapidRenderer.VERSION + " in DEV mode. Detecting changes...");
+			Logger.info("[Japid] version " + JapidRenderer.VERSION + " in DEV mode. Detecting japid scripts on classpath...");
 			beforeDetectingChanges();
 		} else {
 			String isPrecompiling = System.getProperty("precompile");

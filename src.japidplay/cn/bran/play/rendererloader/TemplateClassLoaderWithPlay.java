@@ -47,14 +47,18 @@ import cn.bran.play.JapidPlayRenderer;
  */
 public class TemplateClassLoaderWithPlay extends TemplateClassLoader {
 
-	public TemplateClassLoaderWithPlay() {
-		super(TemplateClassLoaderWithPlay.class.getClassLoader());
+//	public TemplateClassLoaderWithPlay() {
+//		super(TemplateClassLoaderWithPlay.class.getClassLoader());
+//	}
+
+	public TemplateClassLoaderWithPlay(ClassLoader cl) {
+		super(cl);
 	}
 
-	@Override
-	protected ClassLoader getParentClassLoader() {
-		return play.Play.classloader;
-	}
+//	@Override
+//	protected ClassLoader getParentClassLoader() {
+//		return play.Play.classloader;
+//	}
 
 	@Override
 	protected RendererClass getJapidRendererClassWrapper(String name) {
