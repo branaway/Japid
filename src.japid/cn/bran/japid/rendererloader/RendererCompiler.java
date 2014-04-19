@@ -17,7 +17,7 @@ import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 
 import cn.bran.japid.util.JapidFlags;
-import play.Play;
+//import play.Play;
 
 
 
@@ -57,16 +57,16 @@ public class RendererCompiler {
 	    	javaVersion = CompilerOptions.VERSION_1_8;
 	    }
      
-		Object javaSourceConfig = Play.configuration.get("java.source");
-		if("1.5".equals(javaSourceConfig)) {
-            javaVersion = CompilerOptions.VERSION_1_5;
-        } else if("1.6".equals(javaSourceConfig)) {
-            javaVersion = CompilerOptions.VERSION_1_6;
-        } else if("1.7".equals(javaSourceConfig)) {
-            javaVersion = CompilerOptions.VERSION_1_7;
-	    } else if("1.8".equals(javaSourceConfig)) {
-	    	javaVersion = CompilerOptions.VERSION_1_8;
-	    }
+//		Object javaSourceConfig = Play.configuration.get("java.source");
+//		if("1.5".equals(javaSourceConfig)) {
+//            javaVersion = CompilerOptions.VERSION_1_5;
+//        } else if("1.6".equals(javaSourceConfig)) {
+//            javaVersion = CompilerOptions.VERSION_1_6;
+//        } else if("1.7".equals(javaSourceConfig)) {
+//            javaVersion = CompilerOptions.VERSION_1_7;
+//	    } else if("1.8".equals(javaSourceConfig)) {
+//	    	javaVersion = CompilerOptions.VERSION_1_8;
+//	    }
 		
         JapidFlags.info("JDT compiler compiles to java version: " + javaVersion);
         
