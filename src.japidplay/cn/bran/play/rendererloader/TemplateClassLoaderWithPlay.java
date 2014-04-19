@@ -85,9 +85,9 @@ public class TemplateClassLoaderWithPlay extends TemplateClassLoader {
 							return code;
 						}
 					} catch (Exception e) {
-						JapidFlags.log("exception raised while trying to recover the bytecode: " + e);
+						JapidFlags.error("exception raised while trying to recover the bytecode: " + e);
 					}
-					JapidFlags.log("Warning: could not recover it. It might be a bug.");
+					JapidFlags.warn("could not recover it. It might be a bug.");
 				}
 				
 				return null;

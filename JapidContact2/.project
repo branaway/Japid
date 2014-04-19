@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>JapidContact</name>
+	<name>JapidContact2</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -15,5 +15,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	
 </projectDescription>

@@ -93,57 +93,62 @@ p("<form action=\"");// line 4, form.html
 		p("    <input type=\"hidden\" name=\"contact.id\" value=\"");// line 7, form.html
 		try { p(contact.id); } catch (NullPointerException npe) {}// line 8, form.html
 		p("\">\n" + 
+"	<p>\n" + 
+"        <span class=\"error\">");// line 8, form.html
+		try { p(errors); } catch (NullPointerException npe) {}// line 10, form.html
+		p("</span>\n" + 
+"    </p>\n" + 
 "    \n" + 
 "    <p class=\"field\">\n" + 
 "        <label for=\"name\">Name:</label>\n" + 
-"        <input type=\"text\" id=\"name\" name=\"contact.name\" value=\"");// line 8, form.html
-		try { p(contact.name); } catch (NullPointerException npe) {}// line 12, form.html
+"        <input type=\"text\" id=\"name\" name=\"contact.name\" value=\"");// line 10, form.html
+		try { p(contact.name); } catch (NullPointerException npe) {}// line 15, form.html
 		p("\">\n" + 
-"        <span class=\"error\">");// line 12, form.html
-		try { p(error("contact.name")); } catch (NullPointerException npe) {}// line 13, form.html
+"        <span class=\"error\">");// line 15, form.html
+		try { p(error("contact.name")); } catch (NullPointerException npe) {}// line 16, form.html
 		p("</span>\n" + 
 "    </p>\n" + 
 "\n" + 
 "    <p class=\"field\">\n" + 
 "        <label for=\"firstname\">First name:</label>\n" + 
-"        <input type=\"text\" id=\"firstname\" name=\"contact.firstname\" value=\"");// line 13, form.html
-		try { p(contact.firstname); } catch (NullPointerException npe) {}// line 18, form.html
+"        <input type=\"text\" id=\"firstname\" name=\"contact.firstname\" value=\"");// line 16, form.html
+		try { p(contact.firstname); } catch (NullPointerException npe) {}// line 21, form.html
 		p("\">\n" + 
-"        <span class=\"error\">");// line 18, form.html
-		try { p(error("contact.firstname")); } catch (NullPointerException npe) {}// line 19, form.html
+"        <span class=\"error\">");// line 21, form.html
+		try { p(error("contact.firstname")); } catch (NullPointerException npe) {}// line 22, form.html
 		p("</span>\n" + 
 "    </p>\n" + 
 "\n" + 
 "    <p class=\"field\">\n" + 
 "        <label for=\"birthdate\">Birth date:</label>\n" + 
-"        <input type=\"text\" id=\"birthdate\" name=\"contact.birthdate\" value=\"");// line 19, form.html
-		try { p(format(contact.birthdate, "yyyy-MM-dd")); } catch (NullPointerException npe) {}// line 24, form.html
+"        <input type=\"text\" id=\"birthdate\" name=\"contact.birthdate\" value=\"");// line 22, form.html
+		try { p(format(contact.birthdate, "yyyy-MM-dd")); } catch (NullPointerException npe) {}// line 27, form.html
 		p("\">\n" + 
-"        <span class=\"error\">");// line 24, form.html
-		try { p(error("contact.birthdate")); } catch (NullPointerException npe) {}// line 25, form.html
+"        <span class=\"error\">");// line 27, form.html
+		try { p(error("contact.birthdate")); } catch (NullPointerException npe) {}// line 28, form.html
 		p("</span>\n" + 
 "    </p>\n" + 
 "\n" + 
 "    <p class=\"field\">\n" + 
 "        <label for=\"email\">Email:</label>\n" + 
-"        <input type=\"text\" id=\"email\" name=\"contact.email\" value=\"");// line 25, form.html
-		try { p(contact.email); } catch (NullPointerException npe) {}// line 30, form.html
+"        <input type=\"text\" id=\"email\" name=\"contact.email\" value=\"");// line 28, form.html
+		try { p(contact.email); } catch (NullPointerException npe) {}// line 33, form.html
 		p("\">\n" + 
-"        <span class=\"error\">");// line 30, form.html
-		try { p(error("contact.email")); } catch (NullPointerException npe) {}// line 31, form.html
+"        <span class=\"error\">");// line 33, form.html
+		try { p(error("contact.email")); } catch (NullPointerException npe) {}// line 34, form.html
 		p("</span>\n" + 
 "    </p>\n" + 
 "\n" + 
 "    <p class=\"buttons\">\n" + 
-"        <a href=\"");// line 31, form.html
-		p(lookup("list", new Object[]{}));// line 35, form.html
+"        <a href=\"");// line 34, form.html
+		p(lookup("list", new Object[]{}));// line 38, form.html
 		p("\">Cancel</a> or <input type=\"submit\" value=\"Save this contact\" id=\"saveContact\">\n" + 
 "    </p>\n" + 
 "    \n" + 
 "    <script type=\"text/javascript\" charset=\"utf-8\">\n" + 
 "        $(\"#birthdate\").datepicker({dateFormat:'yy-mm-dd', showAnim:'fadeIn'})\n" + 
 "    </script>\n" + 
-"</form>\n");// line 35, form.html
+"</form>\n");// line 38, form.html
 		
 		endDoLayout(sourceTemplate);
 	}

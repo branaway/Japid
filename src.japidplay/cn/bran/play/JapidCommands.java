@@ -47,10 +47,10 @@ public class JapidCommands {
 			} else if ("mkdir".equals(arg0)) {
 				PlayDirUtil.mkdir(appPath + APP);
 			} else {
-				JapidFlags.log("not known: " + arg0);
+				JapidFlags.error("not known: " + arg0);
 			}
 		} catch (Throwable e) {
-			JapidFlags.log(e.toString());
+			JapidFlags.error(e.toString());
 			System.exit(1);
 		}
 	}
@@ -72,7 +72,7 @@ public class JapidCommands {
 		for (String j : javas) {
 			if (!j.contains(DirUtil.JAVATAGS)) {
 				String filePath = pathname + File.separatorChar + j;
-				JapidFlags.log("removed: " + filePath);
+				JapidFlags.debug("removed: " + filePath);
 				boolean delete = new File(filePath).delete();
 				if (!delete)
 					throw new RuntimeException("file was not deleted: " + j);
@@ -92,10 +92,10 @@ public class JapidCommands {
 		if (changedFiles.size() > 0) {
 			for (File f : changedFiles) {
 				String relativePath = JapidTemplateTransformer.getRelativePath(f, Play.applicationPath);
-				JapidFlags.log("updated: " + relativePath.replace("html", "java"));
+				JapidFlags.info("updated: " + relativePath.replace("html", "java"));
 			}
 		} else {
-			JapidFlags.log("No java files need to be updated.");
+			JapidFlags.info("No java files need to be updated.");
 		}
 
 		rmOrphanJava();
@@ -198,8 +198,8 @@ public class JapidCommands {
 			String pathname = root + File.separator + DirUtil.JAPIDVIEWS_ROOT;
 			File src = new File(pathname);
 			if (!src.exists()) {
-				JapidFlags.log("Could not find required Japid package structure: " + pathname);
-				JapidFlags.log("Please use \"play japid:mkdir\" command to create the Japid view structure.");
+				JapidFlags.info("Could not find required Japid package structure: " + pathname);
+				JapidFlags.info("Please use \"play japid:mkdir\" command to create the Japid view structure.");
 				return hasRealOrphan;
 			}
 
@@ -216,9 +216,9 @@ public class JapidCommands {
 					File file = new File(realfile);
 					boolean r = file.delete();
 					if (r)
-						JapidFlags.log("deleted orphan " + realfile);
+						JapidFlags.debug("deleted orphan " + realfile);
 					else
-						JapidFlags.log("failed to delete: " + realfile);
+						JapidFlags.error("failed to delete: " + realfile);
 				}
 			}
 

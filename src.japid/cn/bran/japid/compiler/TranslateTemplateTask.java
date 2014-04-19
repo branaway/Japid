@@ -130,9 +130,9 @@ public class TranslateTemplateTask {
 
 			for (int i = 0; i < changedFiles.size(); i++) {
 				File templateFile = changedFiles.get(i);
-				JapidFlags.log("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
+				JapidFlags.info("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
 				if (listFiles) {
-					JapidFlags.log(templateFile.getAbsolutePath());
+					JapidFlags.info(templateFile.getAbsolutePath());
 				}
 
 				try {
@@ -186,9 +186,9 @@ public class TranslateTemplateTask {
 
 			for (int i = 0; i < changedFiles.size(); i++) {
 				File templateFile = changedFiles.get(i);
-				JapidFlags.log("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
+				JapidFlags.info("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
 				if (listFiles) {
-					JapidFlags.log(templateFile.getAbsolutePath());
+					JapidFlags.info(templateFile.getAbsolutePath());
 					}
 
 				try {

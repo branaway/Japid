@@ -23,11 +23,14 @@ public class Contact extends Model {
     @Required
     @Email
     public String email;
- 
+
+//    @Required
+//    public String gender;
+
     public String toString() {
-    	String r = "name:" + name;
-    	r += ", email:" + email;
-    	r += ", birth date:" + birthdate;
+    	String r = "Contact name:" + name;
+    	r += ". Email: " + email;
+    	r += ". Birth date: " + birthdate;
 		return r;
     	
     }

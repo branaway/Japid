@@ -465,7 +465,7 @@ public class JapidPlugin extends PlayPlugin {
 		if (request.path.endsWith("_listroutes")) {
 			List<Route> routes = Router.routes;
 			for (Route r : routes) {
-				JapidFlags.log(r.toString());
+				JapidFlags.info(r.toString());
 			}
 		}
 	}
@@ -495,7 +495,7 @@ public class JapidPlugin extends PlayPlugin {
 
 		if (this.lastApplicationClassloaderState == Play.classloader.currentState && recentAddedRoutes != null
 				&& this.ctxPath == Play.ctxPath) {
-			JapidFlags.log("classloader state not changed. Use cached auto-routes.");
+			JapidFlags.debug("classloader state not changed. Use cached auto-routes.");
 			newRoutes = new ArrayList<Route>(recentAddedRoutes);
 		} else {
 			// rebuild the dynamic route table

@@ -6,6 +6,9 @@
 <form action="@{save()}" method="POST">
     $authenticityToken()
     <input type="hidden" name="contact.id" value="${contact.id}">
+	<p>
+        <span class="error">${errors}</span>
+    </p>
     
     <p class="field">
         <label for="name">Name:</label>

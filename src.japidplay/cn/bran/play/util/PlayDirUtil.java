@@ -42,21 +42,21 @@ public class PlayDirUtil {
 			if (!javatags.exists()) {
 				boolean mkdirs = javatags.mkdirs();
 				assert mkdirs;
-				JapidFlags.log("created: " + japidViews + DirUtil.JAVATAGS);
+				JapidFlags.info("created: " + japidViews + DirUtil.JAVATAGS);
 			}
 	
 			File layouts = new File(japidViews + DirUtil.LAYOUTDIR);
 			if (!layouts.exists()) {
 				boolean mkdirs = layouts.mkdirs();
 				assert mkdirs;
-				JapidFlags.log("created: " + japidViews + DirUtil.LAYOUTDIR);
+				JapidFlags.info("created: " + japidViews + DirUtil.LAYOUTDIR);
 			}
 	
 			File tags = new File(japidViews + DirUtil.TAGSDIR);
 			if (!tags.exists()) {
 				boolean mkdirs = tags.mkdirs();
 				assert mkdirs;
-				JapidFlags.log("created: " + japidViews + DirUtil.TAGSDIR);
+				JapidFlags.info("created: " + japidViews + DirUtil.TAGSDIR);
 			}
 			
 			// email notifiers
@@ -64,7 +64,7 @@ public class PlayDirUtil {
 			if (!notifiers.exists()) {
 				boolean mkdirs = notifiers.mkdirs();
 				assert mkdirs;
-				JapidFlags.log("created: " + japidViews + "_notifiers");
+				JapidFlags.info("created: " + japidViews + "_notifiers");
 			}
 			
 			
@@ -74,11 +74,11 @@ public class PlayDirUtil {
 	
 			// create dirs for controllers
 	
-	//		JapidFlags.log("JapidCommands: check default template packages for controllers.");
+	//		JapidFlags.info("JapidCommands: check default template packages for controllers.");
 			try {
 				String controllerPath = Play.applicationPath  + sep + "app" + sep + "controllers";
 				File controllerPathFile = new File(controllerPath);
-//				JapidFlags.log("PlayDirUtil: controller path: " + controllerPathFile.getAbsolutePath());
+//				JapidFlags.info("PlayDirUtil: controller path: " + controllerPathFile.getAbsolutePath());
 				if (controllerPathFile.exists()) {
 					String[] controllers = DirUtil.getAllJavaFilesInDir(controllerPathFile);
 					for (String f : controllers) {
@@ -88,24 +88,24 @@ public class PlayDirUtil {
 							boolean mkdirs = ff.mkdirs();
 							assert mkdirs == true;
 							res.add(ff);
-							JapidFlags.log("created: " + cp);
+							JapidFlags.info("created: " + cp);
 						}
 					}
 				}
 			} catch (Exception e) {
-				JapidFlags.log(e.toString());
+				JapidFlags.error(e.toString());
 			}
 	
-	//		JapidFlags.log("JapidCommands:  check default template packages for email notifiers.");
+	//		JapidFlags.info("JapidCommands:  check default template packages for email notifiers.");
 			try {
 				String notifiersDir = Play.applicationPath  + sep + "app" + sep + "notifiers";
 				File notifiersDirFile = new File(notifiersDir);
 				if (!notifiersDirFile.exists()) {
 					if (notifiersDirFile.mkdir()) {
-						JapidFlags.log("created the email notifiers directory. ");
+						JapidFlags.info("created the email notifiers directory. ");
 					}
 					else {
-						JapidFlags.log("email notifiers directory did not exist and could not be created for unknow reason. ");
+						JapidFlags.info("email notifiers directory did not exist and could not be created for unknow reason. ");
 					}
 				}
 				
@@ -120,11 +120,11 @@ public class PlayDirUtil {
 						boolean mkdirs = ff.mkdirs();
 						assert mkdirs == true;
 						res.add(ff);
-						JapidFlags.log("created: " + cp);
+						JapidFlags.info("created: " + cp);
 					}
 				}
 			} catch (Exception e) {
-				JapidFlags.log(e.toString());
+				JapidFlags.error(e.toString());
 			}
 			return res;
 		}

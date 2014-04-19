@@ -202,6 +202,6 @@ p("\n" +
 	}
 
 	@Override protected void title() {
-		p("List of all");;
+		p("List of All contacts");;
 	}
 }

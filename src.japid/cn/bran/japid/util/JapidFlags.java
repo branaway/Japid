@@ -35,7 +35,7 @@ public class JapidFlags {
 	 * @author Bing Ran (bing.ran@hotmail.com)
 	 * @param string
 	 */
-	public static void log(String string) {
+	private static void log(String string) {
 		if (verbose)
 			out(string);
 	}

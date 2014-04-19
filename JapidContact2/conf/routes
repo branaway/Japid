@@ -7,7 +7,7 @@ GET     /                                       Application.index
 GET     /contacts                               Application.list
 POST    /contacts                               Application.save
 GET     /contacts/{id}                          Application.form
-GET     /contacts/new                           Application.form
+GET     /contacts/new                           Application.newform
 
 *       /{controller}/{action}                  {controller}.{action}
 

@@ -422,7 +422,7 @@ public class DirUtil {
 		if (!javatags.exists()) {
 			boolean mkdirs = javatags.mkdirs();
 			assert mkdirs == true;
-			JapidFlags.log("created: " + japidViews + JAVATAGS);
+			JapidFlags.info("created: " + japidViews + JAVATAGS);
 		}
 	
 		File[] javafiles = javatags.listFiles(new FilenameFilter() {
@@ -493,7 +493,7 @@ public class DirUtil {
 			if (!javatags.exists()) {
 				boolean mkdirs = javatags.mkdirs();
 				assert mkdirs;
-				JapidFlags.log("created: " + japidViews + JAVATAGS);
+				JapidFlags.info("created: " + japidViews + JAVATAGS);
 			}
 	
 	//		File webutil = new File(javatags, "JapidWebUtil.java");
@@ -507,14 +507,14 @@ public class DirUtil {
 			if (!layouts.exists()) {
 				boolean mkdirs = layouts.mkdirs();
 				assert mkdirs;
-				JapidFlags.log("created: " + japidViews + LAYOUTDIR);
+				JapidFlags.info("created: " + japidViews + LAYOUTDIR);
 			}
 	
 			File tags = new File(japidViews + TAGSDIR);
 			if (!tags.exists()) {
 				boolean mkdirs = tags.mkdirs();
 				assert mkdirs;
-				JapidFlags.log("created: " + japidViews + TAGSDIR);
+				JapidFlags.info("created: " + japidViews + TAGSDIR);
 			}
 			
 			// email notifiers
@@ -522,7 +522,7 @@ public class DirUtil {
 			if (!notifiers.exists()) {
 				boolean mkdirs = notifiers.mkdirs();
 				assert mkdirs;
-				JapidFlags.log("created: " + japidViews + "_notifiers");
+				JapidFlags.info("created: " + japidViews + "_notifiers");
 			}
 			
 			
@@ -545,12 +545,12 @@ public class DirUtil {
 							boolean mkdirs = ff.mkdirs();
 							assert mkdirs == true;
 							res.add(ff);
-							JapidFlags.log("created: " + cp);
+							JapidFlags.info("created: " + cp);
 						}
 					}
 				}
 			} catch (Exception e) {
-				JapidFlags.log(e.toString());
+				JapidFlags.error(e.toString());
 			}
 	
 	//		JapidFlags.log("JapidCommands:  check default template packages for email notifiers.");
@@ -559,10 +559,10 @@ public class DirUtil {
 				File notifiersDirFile = new File(notifiersDir);
 				if (!notifiersDirFile.exists()) {
 					if (notifiersDirFile.mkdir()) {
-						JapidFlags.log("created the email notifiers directory. ");
+						JapidFlags.info("created the email notifiers directory. ");
 					}
 					else {
-						JapidFlags.log("email notifiers directory did not exist and could not be created for unknow reason. ");
+						JapidFlags.info("email notifiers directory did not exist and could not be created for unknow reason. ");
 					}
 				}
 				
@@ -577,11 +577,11 @@ public class DirUtil {
 						boolean mkdirs = ff.mkdirs();
 						assert mkdirs == true;
 						res.add(ff);
-						JapidFlags.log("created: " + cp);
+						JapidFlags.info("created: " + cp);
 					}
 				}
 			} catch (Exception e) {
-				JapidFlags.log(e.toString());
+				JapidFlags.error(e.toString());
 			}
 			return res;
 		}

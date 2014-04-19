@@ -143,7 +143,7 @@ public class JapidPlayRenderer {
 				return;
 		}
 		else {
-			JapidFlags.log("Japid classes not inited. Initializing  them...");
+			JapidFlags.info("Japid scripts not loaded yet. Initializing them...");
 		}
 		
 		try {
@@ -397,7 +397,7 @@ public class JapidPlayRenderer {
 		else
 			defaultTemplateRoot = Play.applicationPath + sep + root;
 		japidviews = defaultTemplateRoot + sep + JAPIDVIEWS + sep;
-		JapidFlags.log("japid root is set to: " + defaultTemplateRoot);
+		JapidFlags.info("japid root is set to: " + defaultTemplateRoot);
 	}
 
 	/**
@@ -594,7 +594,7 @@ public class JapidPlayRenderer {
 				String path = j.getPath();
 				// JapidFlags.log("found: " + path);
 				if (path.contains(DirUtil.JAVATAGS)) {
-					JapidFlags.log("using util classes in _javatags folder is deprecated and will not take effect in post-controller Japid mode. " +
+					JapidFlags.warn("using util classes in _javatags folder is deprecated and will not take effect in post-controller Japid mode. " +
 							"Please use Play app's standard app/utils folder and import the classes accordingly");
 					// java tags, don't touch
 				} else {
@@ -603,9 +603,9 @@ public class JapidPlayRenderer {
 					File file = new File(realfile);
 					boolean r = file.delete();
 					if (r)
-						JapidFlags.log("deleted orphan " + realfile);
+						JapidFlags.debug("deleted orphan " + realfile);
 					else
-						JapidFlags.log("failed to delete: " + realfile);
+						JapidFlags.error("failed to delete: " + realfile);
 				}
 			}
 
@@ -741,7 +741,7 @@ public class JapidPlayRenderer {
 	 *            detect any changes in the file system.
 	 */
 	public static void init(Mode opMode, String templateRoot, int refreshInterval) {
-		JapidFlags.log("JapidPlayRenderer initializing");
+		JapidFlags.info("JapidPlayRenderer initializing");
 		mode = opMode;
 		setTemplateRoot(templateRoot);
 		setRefreshInterval(refreshInterval);
@@ -751,10 +751,10 @@ public class JapidPlayRenderer {
 			refreshClasses();
 		} catch (Exception e) {
 			JapidFlags
-					.log("There was an error in refreshing the japid classes. Will show the error in detail in processing a request: "
+					.warn("There was an error in refreshing the japid classes. Will show the error in detail in processing a request: "
 							+ e);
 		}
-		JapidFlags.log("JapidPlayRenderer inited");
+		JapidFlags.info("JapidPlayRenderer inited");
 	}
 
 	public static void init() {
