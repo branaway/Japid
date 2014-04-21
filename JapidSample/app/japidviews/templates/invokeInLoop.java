@@ -1,4 +1,4 @@
-//version: 0.9.4
+//version: 0.9.5
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -91,32 +91,34 @@ public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 ;// line 1, invokeInLoop.html
 p("\n");// line 2, invokeInLoop.html
 		p("\n" + 
+" \n" + 
+" <p>not anymore with JDK8's practical final</p>\n" + 
 "\n");// line 7, invokeInLoop.html
-		for (int i = 0; i < 3;i++) {// line 9, invokeInLoop.html
-	final int j = i;// line 10, invokeInLoop.html
-		p("	");// line 10, invokeInLoop.html
+		for (int i = 0; i < 3;i++) {// line 11, invokeInLoop.html
+	int j = i;// line 12, invokeInLoop.html
+		p("	");// line 12, invokeInLoop.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", j) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echo(j); // line 11, invokeInLoop.html
+				Application.echo(j); // line 13, invokeInLoop.html
 			}
-		}); p("\n");// line 11, invokeInLoop.html
-		p("\n");// line 11, invokeInLoop.html
-		}// line 12, invokeInLoop.html
-		p("<p/>\n");// line 12, invokeInLoop.html
+		}); p("\n");// line 13, invokeInLoop.html
+		p("\n");// line 13, invokeInLoop.html
+		}// line 14, invokeInLoop.html
+		p("<p/>\n");// line 14, invokeInLoop.html
 		p("\n" + 
-"\n");// line 14, invokeInLoop.html
-		for (final Post p : posts) {// line 16, invokeInLoop.html
+"\n");// line 16, invokeInLoop.html
+		for (Post p : posts) {// line 18, invokeInLoop.html
 		p("    another notation for invoking actions:  \n" + 
-"    ");// line 16, invokeInLoop.html
+"    ");// line 18, invokeInLoop.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echoPost", p) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echoPost(p); // line 18, invokeInLoop.html
+				Application.echoPost(p); // line 20, invokeInLoop.html
 			}
-		}); p("\n");// line 18, invokeInLoop.html
-}// line 19, invokeInLoop.html
-		;// line 19, invokeInLoop.html
+		}); p("\n");// line 20, invokeInLoop.html
+}// line 21, invokeInLoop.html
+		;// line 21, invokeInLoop.html
 		
 		endDoLayout(sourceTemplate);
 	}

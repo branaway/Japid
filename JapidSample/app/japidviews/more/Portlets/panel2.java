@@ -1,4 +1,4 @@
-//version: 0.9.4
+//version: 0.9.5
 package japidviews.more.Portlets;
 import java.util.*;
 import java.io.*;

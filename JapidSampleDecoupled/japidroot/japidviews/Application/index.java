@@ -1,25 +1,26 @@
-//version: 0.9.37
+//version: 0.9.5
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import japidviews._layouts.*;
-import play.i18n.Messages;
-import play.data.validation.Validation;
-import play.mvc.Scope.*;
-import models.*;
+import static play.templates.JavaExtensions.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
+import play.i18n.Messages;
+import play.mvc.Scope.*;
 import japidviews._tags.*;
-import play.mvc.Http.*;
+import play.data.validation.Validation;
+import play.i18n.Lang;
 import controllers.*;
+import japidviews._layouts.*;
+import models.*;
+import play.mvc.Http.*;
 //
 // NOTE: This file was generated from: japidviews/Application/index.html
 // Change to this file will be lost next time the template file is compiled.
 //
+@cn.bran.play.NoEnhance
 public class index extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/index.html";
@@ -122,7 +123,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 "	macro in a template. watch the output in the console</a></li>\n" + 
 "	<li><a href=\"go/templates/Msg.html\">i18n, use\n" + 
 "	predefined messages</a></li>\n" + 
-"	<li><a href=\"Application.postlist\">looping and tag calling</a></li>\n" + 
+"	<li><a href=\"Application.postList\">looping and tag calling</a></li>\n" + 
 "	<li><a href=\"Application.each\">the \"open for\" loop and the now deprecated \"*Each* tag</a></li>\n" + 
 "	<li><a href=\"Application.ifs2\">open if statement: minimalistic if-else statement can can take any expression rather than boolean values as the condition.</a>\n" + 
 "	   <p>example: </p>\n" + 

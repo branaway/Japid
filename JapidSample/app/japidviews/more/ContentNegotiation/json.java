@@ -1,4 +1,4 @@
-//version: 0.9.4
+//version: 0.9.5
 package japidviews.more.ContentNegotiation;
 import java.util.*;
 import java.io.*;

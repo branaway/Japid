@@ -26,7 +26,7 @@ public class App extends JapidController {
 	@POST
 	@EndWith // ".html" by default
 	public static void bb(int a, String b) {
-		renderText("hi: " + a +":" + b + "... reverse: " + JapidPlayAdapter.lookup("t3.App.bb", new Object[] {a, b}));
+		renderText("hi: " + a +":" + b + ". reverse: " + JapidPlayAdapter.lookup("t3.App.bb", new Object[] {a, b}));
 	}
 
 	// effectively -> *  /t3.App.tee/{a}/{b}

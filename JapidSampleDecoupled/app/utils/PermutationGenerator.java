@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.junit.Test;
 
@@ -196,6 +197,15 @@ public class PermutationGenerator<E> implements Iterator<List<E>> {
 			fact = fact.multiply(new BigInteger(Integer.toString(i)));
 		}
 		return fact;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#forEachRemaining(java.util.function.Consumer)
+	 */
+	@Override
+	public void forEachRemaining(Consumer<? super List<E>> action) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

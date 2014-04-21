@@ -24,8 +24,8 @@ public class Dummy extends JapidController {
         renderJapidWith("@listAll", contacts);
     }
         
-    public static void yahoo(String hi) {
-    	System.out.println("what!");
+    public static void yahoo(String hi, String a, int b) {
+    	renderText("what!" + a + b + hi);
     }
 //    
 //    /**

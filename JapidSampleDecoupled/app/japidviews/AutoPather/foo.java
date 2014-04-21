@@ -1,19 +1,19 @@
-//version: 0.9.37
+//version: 0.9.5
 package japidviews.AutoPather;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import play.i18n.Messages;
-import play.data.validation.Validation;
-import play.mvc.Scope.*;
-import models.*;
+import static play.templates.JavaExtensions.*;
 import play.data.validation.Error;
+import play.i18n.Messages;
+import play.mvc.Scope.*;
+import play.data.validation.Validation;
 import play.i18n.Lang;
-import play.mvc.Http.*;
 import controllers.*;
+import models.*;
+import play.mvc.Http.*;
 //
 // NOTE: This file was generated from: japidviews/AutoPather/foo.html
 // Change to this file will be lost next time the template file is compiled.

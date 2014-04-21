@@ -340,13 +340,13 @@ public class Application extends JapidController {
 	public static void search(SearchParams sp) {
 		renderJapid(sp);
 	}
-	
-	public static void groovy() {
-		String a = "Groovy";
-		// render with Groovy
-		render(a);
-	}
-	
+//	
+//	public static void groovy() {
+//		String a = "Groovy";
+//		// render with Groovy
+//		render(a);
+//	}
+//	
 	public static void list() {
 		renderJapid();
 	}
@@ -395,8 +395,13 @@ public class Application extends JapidController {
 		a.name = "me, myself and I, 我就我自己";
 		a.birthDate = new Date();
 		a.gender = 'M';
-		a.publisher = "People's Daily";
+		a.publisher = "People's  Daily";
 		renderJapid(a);
 	}
+	
+	public static void re() {
+		hellohello();  
+	}
+	
 	
 }

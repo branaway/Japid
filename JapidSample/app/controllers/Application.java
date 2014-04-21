@@ -105,7 +105,7 @@ public class Application extends JapidController {
 	
 	public static void foo() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("--------------foo() action invoked:Hello foo!");
+		sb.append("------foo() action invoked:Hello foo!");
 		RenderResult rr = new RenderResult(null, sb, 0);
 		
 		throw new JapidResult(rr);
@@ -119,7 +119,7 @@ public class Application extends JapidController {
 	}
 	
 	public static void hello(String me, String you) {
-		String m = "hi there and.." + me + you;
+		String m = "hi there and..." + me + you;
 		String am = m + "!";
 //		renderText("hello，Japid Play!");
 		renderText(am);
@@ -220,7 +220,7 @@ public class Application extends JapidController {
 		a.gender = 'M';
 		Post p = new Post();
 		p.author = a;
-		p.content = "long time ago...";
+		p.content = "long time ago......";
 		p.postedAt = new Date();
 		p.title = "post 1";
 		posts.add(p);
@@ -279,11 +279,16 @@ public class Application extends JapidController {
 	
 	public static void in() {
 		dontRedirect();
-		out();
+		out(1L, 2, "33");
 	}
 	
-	public static void out() {
-		renderText("Hi out!");
+	public static void in2() {
+		// magic redirect
+		out(1L, 2, "3003");
+	}
+	
+	public static void out(long a, int b, String c) {
+		renderText("Hi out!" + a  + b + c);
 	}
 
 	public static void go(String template) {

@@ -4,8 +4,8 @@ import play.mvc.*;
 
 public class ClassicController extends Controller {
 
-    public static void index() {
-        render();
-    }
+//    public static void index() {
+//        render();
+//    }
 
 }

@@ -1,4 +1,4 @@
-//version: 0.9.4
+//version: 0.9.5
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -97,6 +97,35 @@ public class AllPost extends Layout
 p("\n");// line 10, AllPost.html
 		p("\n");// line 14, AllPost.html
 		allPost.forEach( (Post p) -> {// line 15, AllPost.html
+		p("        ");// line 15, AllPost.html
+		p("\n" + 
+"\n" + 
+"	    ");// line 16, AllPost.html
+		new Display(AllPost.this).render( // line 18, AllPost.html
+new Display.DoBody<String>(){ // line 18, AllPost.html
+public void render(final String title) { // line 18, AllPost.html
+// line 18, AllPost.html
+		p("		   The real title iiiis: ");// line 18, AllPost.html
+		p(title);// line 19, AllPost.html
+		p("\n" + 
+"	    ");// line 19, AllPost.html
+		
+}
+
+StringBuilder oriBuffer;
+@Override
+public void setBuffer(StringBuilder sb) {
+	oriBuffer = getOut();
+	setOut(sb);
+}
+
+@Override
+public void resetBuffer() {
+	setOut(oriBuffer);
+}
+
+}
+, named("post", p), named("as", "home2"));// line 18, AllPost.html
 });// line 21, AllPost.html
 		p("\n");// line 21, AllPost.html
 		p("\n" + 

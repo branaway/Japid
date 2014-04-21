@@ -1,23 +1,23 @@
-//version: 0.9.37
+//version: 0.9.5
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
 import cn.bran.japid.template.ActionRunner;
 import models.japidsample.*;
-import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import japidviews._layouts.*;
-import play.i18n.Messages;
-import play.data.validation.Validation;
-import play.mvc.Scope.*;
-import models.*;
+import static play.templates.JavaExtensions.*;
 import play.data.validation.Error;
-import play.i18n.Lang;
+import play.i18n.Messages;
+import play.mvc.Scope.*;
 import japidviews._tags.*;
-import play.mvc.Http.*;
+import play.data.validation.Validation;
+import play.i18n.Lang;
 import controllers.*;
+import japidviews._layouts.*;
+import models.*;
+import play.mvc.Http.*;
 //
 // NOTE: This file was generated from: japidviews/templates/invokeInLoop.html
 // Change to this file will be lost next time the template file is compiled.
@@ -92,37 +92,38 @@ public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 		;// line 1, invokeInLoop.html
 		;// line 3, invokeInLoop.html
 		p("\n" + 
-"\n");// line 7, invokeInLoop.html
-		for (int i = 0; i < 3;i++) {// line 9, invokeInLoop.html
-	final int j = i * 2;// line 10, invokeInLoop.html
+"<p>	Since JDK 8 this is not necessary!!\n" + 
+"</p>\n");// line 8, invokeInLoop.html
+		for (int i = 0; i < 3;i++) {// line 11, invokeInLoop.html
+	int j = i * 2;// line 12, invokeInLoop.html
 		p("	<p>\n" + 
-"	");// line 10, invokeInLoop.html
+"	");// line 12, invokeInLoop.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echo", j) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echo(j); // line 12, invokeInLoop.html
+				Application.echo(j); // line 14, invokeInLoop.html
 			}
-		}); p("\n");// line 12, invokeInLoop.html
+		}); p("\n");// line 14, invokeInLoop.html
 		p("\n" + 
-"	</p>\n");// line 12, invokeInLoop.html
-		}// line 14, invokeInLoop.html
+"	</p>\n");// line 14, invokeInLoop.html
+		}// line 16, invokeInLoop.html
 		p("<br/>\n" + 
-"\n");// line 14, invokeInLoop.html
+"\n");// line 16, invokeInLoop.html
 		p("\n" + 
-"\n");// line 17, invokeInLoop.html
-		for (final Post p : posts) {// line 19, invokeInLoop.html
+"\n");// line 19, invokeInLoop.html
+		for (final Post p : posts) {// line 21, invokeInLoop.html
 		p("    another notation for invoking actions:  \n" + 
 "    <p>\n" + 
-"    ");// line 19, invokeInLoop.html
+"    ");// line 21, invokeInLoop.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echoPost", p) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echoPost(p); // line 22, invokeInLoop.html
+				Application.echoPost(p); // line 24, invokeInLoop.html
 			}
-		}); p("\n");// line 22, invokeInLoop.html
-		p("    </p>\n");// line 22, invokeInLoop.html
-		}// line 24, invokeInLoop.html
-		;// line 24, invokeInLoop.html
+		}); p("\n");// line 24, invokeInLoop.html
+		p("    </p>\n");// line 24, invokeInLoop.html
+		}// line 26, invokeInLoop.html
+		;// line 26, invokeInLoop.html
 		
 		endDoLayout(sourceTemplate);
 	}
