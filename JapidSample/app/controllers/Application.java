@@ -404,4 +404,8 @@ public class Application extends JapidController {
 	public static void ps1() {
 		renderJapid();
 	}
+
+	public static void ps2(boolean boo) {
+		renderJapid();
+	}
 }

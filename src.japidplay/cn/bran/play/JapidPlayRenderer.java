@@ -30,6 +30,7 @@ import cn.bran.japid.compiler.TranslateTemplateTask;
 import cn.bran.japid.exceptions.JapidTemplateException;
 import cn.bran.japid.rendererloader.RendererClass;
 import cn.bran.japid.rendererloader.RendererCompiler;
+import cn.bran.japid.rendererloader.TemplateClassLoader;
 import cn.bran.japid.template.JapidRenderer;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.template.RenderResult;
@@ -73,25 +74,13 @@ public class JapidPlayRenderer {
 		if (rc == null)
 			throw new RuntimeException("Japid template class not found: " + name);
 		else {
-			if (playClassloaderChanged()) {
+			if (isDevMode() && playClassloaderChanged()) {
 				// always clear the mark to redefine all
 				japidClasses.forEach((k, v )-> v.setLastUpdated(0));
 				initJapidClassLoader();
 			} else {
-				if (rc.getLastUpdated() > 0) {
-					try {
-						Class<? extends JapidTemplateBaseWithoutPlay> cls = rc.getClz();
-						if (cls != null) {
-							return cls;
-						} else {
-							// not defined yet
-						}
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-				else {
-					//
+				if (rc.getLastUpdated() > 0 && rc.getClz() != null) {
+					return rc.getClz();
 				}
 			}
 		}
@@ -102,7 +91,7 @@ public class JapidPlayRenderer {
 //		TemplateClassLoaderWithPlay classReloader = new TemplateClassLoaderWithPlay(Play.classloader);
 
 		try {
-			return (Class<? extends JapidTemplateBaseWithoutPlay>) crlr.loadClass(name);
+			return (Class<? extends JapidTemplateBaseWithoutPlay>) japidClassLoader.loadClass(name);
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		}
@@ -229,11 +218,21 @@ public class JapidPlayRenderer {
 				// newly compiled class bytecode bodies are set in the global
 				// classes set ready for defining
 				compiler.compile(names);
-				howlong("compile time for " + names.length + " classe(s)", t);
-
-				// clear the global defined class cache
-				japidClasses.forEach((k, v) -> v.setClz(null));
+				
 				initJapidClassLoader();
+				japidClasses.values().forEach(rc -> {
+					try {
+						if (isDevMode())
+							rc.setClz(null); // to enable JIT loading in dev mode
+						else
+							rc.setClz((Class<JapidTemplateBaseWithoutPlay>) japidClassLoader.loadClass(rc.getClassName()));
+					} catch (ClassNotFoundException e) {
+						throw new RuntimeException(e);
+					}
+				});
+				
+				howlong("compile/load time for " + names.length + " classe(s)", t);
+
 				classesInited = true;
 			}
 		} catch (JapidCompilationException e) {
@@ -255,7 +254,7 @@ public class JapidPlayRenderer {
 	}
 
 	private static void initJapidClassLoader() {
-		crlr = new TemplateClassLoaderWithPlay(Play.classloader);
+		japidClassLoader = new TemplateClassLoaderWithPlay(Play.classloader);
 	}
 
 	public static void removeInnerClasses(String className) {
@@ -289,10 +288,10 @@ public class JapidPlayRenderer {
 
 	// <classname RendererClass>
 	public final static Map<String, RendererClass> japidClasses = new ConcurrentHashMap<String, RendererClass>();
-	public static TemplateClassLoaderWithPlay crlr;
+	public static TemplateClassLoaderWithPlay japidClassLoader;
 
 	public static TemplateClassLoaderWithPlay getCrlr() {
-		return crlr;
+		return japidClassLoader;
 	}
 
 	public static RendererCompiler compiler;
@@ -758,7 +757,7 @@ public class JapidPlayRenderer {
 		setTemplateRoot(templateRoot);
 		setRefreshInterval(refreshInterval);
 		initJapidClassLoader();
-		compiler = new RendererCompiler(japidClasses, crlr);
+		compiler = new RendererCompiler(japidClasses, japidClassLoader);
 		try {
 			refreshClasses();
 		} catch (Exception e) {

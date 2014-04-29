@@ -90,7 +90,7 @@ p("\n" +
 "<table>\n" + 
 "    <thead>\n" + 
 "        <tr>\n" + 
-"            <th class=\"name\">The Name</th>\n" + 
+"            <th class=\"name\">Last Name</th>\n" + 
 "            <th class=\"firstname\">First name</th>\n" + 
 "            <th class=\"birthdate\">Birth date</th>\n" + 
 "            <th class=\"email\">Email</th>\n" + 

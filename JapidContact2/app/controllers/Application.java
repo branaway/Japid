@@ -40,8 +40,9 @@ public class Application extends JapidController {
 		renderJapid(contacts);
 	}
 
+	
 	public static void yahoo(String hi) {
-		System.out.println("!");
+		System.out.println("!!");
 	}
 
 	//
@@ -82,6 +83,10 @@ public class Application extends JapidController {
 		// redirect("Application.list");
 		// requestRedirect(); // just in case
 		list(); // should redirect
+	}
+	
+	public static void hello(String s, boolean b, int c) {
+		
 	}
 
 }

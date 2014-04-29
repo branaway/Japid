@@ -1,11 +1,14 @@
 package cn.bran.japid.template;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,8 +28,12 @@ import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.StackTraceUtils;
 
 public class JapidRenderer {
-	public static final String VERSION = "0.9.5"; // need to match that in the build.xml
-	
+	public static final String VERSION = "0.9.5.1"; // need to match that in the build.xml
+
+	static AmmendableScheduledExecutor saveJapidClassesService = new AmmendableScheduledExecutor();
+
+	static boolean enableJITCachePersistence = true;
+
 	public static JapidTemplateBaseWithoutPlay getRenderer(String name) {
 		Class<? extends JapidTemplateBaseWithoutPlay> c = getClass(name);
 		try {
@@ -40,7 +47,7 @@ public class JapidRenderer {
 	 * Get a newly loaded class for the template renderer
 	 * 
 	 * @param name
-	 * @return
+	 * @return the renderer class wrapper
 	 */
 	public static RendererClass getFunctionalRendererClass(String name) {
 
@@ -58,25 +65,14 @@ public class JapidRenderer {
 		return rc;
 	}
 
+	/**
+	 * 
+	 * @author Bing Ran (bing.ran@gmail.com)
+	 * @param name
+	 * @return the renderer class
+	 */
 	public static Class<? extends JapidTemplateBaseWithoutPlay> getClass(String name) {
-
-		refreshClasses();
-
-		RendererClass rc = classes.get(name);
-		if (rc == null)
-			throw new RuntimeException("renderer class not found: " + name);
-		else {
-			Class<? extends JapidTemplateBaseWithoutPlay> cls = rc.getClz();
-			return cls != null ? cls :loadRendererClass(rc);
-		}
-
-		// not useful
-		// // always clear the mark to reload all
-		// for (String c : classes.keySet()) {
-		// RendererClass rendererClass = classes.get(c);
-		// rendererClass.setLastUpdated(0);
-		// }
-
+		return getFunctionalRendererClass(name).getClz();
 	}
 
 	private static Class<? extends JapidTemplateBaseWithoutPlay> loadRendererClass(RendererClass rc) {
@@ -185,13 +181,23 @@ public class JapidRenderer {
 				}
 				long t = System.currentTimeMillis();
 				compiler.compile(names);
-				howlong("compile time for " + names.length + " classes", t);
 
-				// clear the global class cache
-				for (String k : classes.keySet()) {
-					RendererClass rc = classes.get(k);
-					rc.setClz(null);
-				}
+				
+				// shall I load them right away?
+				// let's try
+				ClassLoader cl = _parentClassLoader == null ? JapidRenderer.class.getClassLoader() : _parentClassLoader;
+				TemplateClassLoader classReloader = new TemplateClassLoader(cl);
+				classes.values().forEach(rc -> {
+					try {
+						if (isDevMode())
+							rc.setClz(null); // to enable JIT loading in dev mode
+						else
+							rc.setClz((Class<JapidTemplateBaseWithoutPlay>) classReloader.loadClass(rc.getClassName()));
+					} catch (ClassNotFoundException e) {
+						throw new RuntimeException(e);
+					}
+				});
+				howlong("compile/load time for " + names.length + " classes", t);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -228,7 +234,7 @@ public class JapidRenderer {
 	}
 
 	// <classname RendererClass>
-	public final static Map<String, RendererClass> classes = new ConcurrentHashMap<String, RendererClass>();
+	public final static Map<String, RendererClass> classes = new ConcurrentHashMap<>();
 	public static TemplateClassLoader crlr;
 
 	public static TemplateClassLoader getCrlr() {

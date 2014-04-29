@@ -27,7 +27,7 @@ import cn.bran.play.routing.AutoPath;
 public class Application extends JapidController {
 	public static void index() {
 		models.Category c = new Category();
-		c.name = "my catty!";
+		c.name = "my catty!!";
 		c.subname = "ago";
 		renderJapid(c); // use the default index.html in the japidviews/SampleController directory
 		

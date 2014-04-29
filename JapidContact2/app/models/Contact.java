@@ -1,14 +1,18 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Contact extends Model {
     
     @Required
@@ -23,15 +27,24 @@ public class Contact extends Model {
     @Required
     @Email
     public String email;
+    
+    @OneToMany
+    public List<Dept> depts;
+
+    @ManyToOne
+    public Dept de22;
 
 //    @Required
 //    public String gender2;
+//    public String gender33;
 
     public String toString() {
-    	String r = "Contact name:" + name;
+    	String r = "Contact name: " + name;
     	r += "; Email: " + email;
     	r += "; Birth date: " + birthdate;
-		return r;
+    	String s = r + "1";
+    	String s2 = s;
+		return s2;
     	
     }
 }

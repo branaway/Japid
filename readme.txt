@@ -2,7 +2,7 @@
 
                     Bing Ran<bing_ran@hotmail.com>
                     
-Latest version: 0.9.5
+Latest version: 0.9.5.1
 
 * Links:
 
@@ -50,6 +50,8 @@ repositories:
 
 * Version History:
 
+2013/12/21: V0.9.5.1:
+	1. enhancement: to define class immediately after compiling them, in prod mode   
 2013/12/21: V0.9.5:
 	1. new feature: updated JDT compiler to support jdk 8.   
 2013/12/21: V0.9.37.3:
