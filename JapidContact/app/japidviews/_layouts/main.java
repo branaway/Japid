@@ -2,19 +2,19 @@ package japidviews._layouts;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import static play.templates.JavaExtensions.*;
 import static cn.bran.play.JapidPlayAdapter.*;
 import static play.data.validation.Validation.*;
-import japidviews._layouts.*;
-import play.i18n.Messages;
-import play.data.validation.Validation;
-import play.mvc.Scope.*;
-import models.*;
-import static japidviews._javatags.JapidWebUtil.*;
+import static play.templates.JavaExtensions.*;
 import play.data.validation.Error;
+import play.i18n.Messages;
+import play.mvc.Scope.*;
+import play.data.validation.Validation;
 import play.i18n.Lang;
-import play.mvc.Http.*;
 import controllers.*;
+import static japidviews._javatags.JapidWebUtil.*;
+import japidviews._layouts.*;
+import models.*;
+import play.mvc.Http.*;
 //
 // NOTE: This file was generated from: japidviews/_layouts/main.html
 // Change to this file will be lost next time the template file is compiled.
@@ -52,53 +52,53 @@ public abstract class main extends cn.bran.play.JapidTemplateBase
 		beginDoLayout(sourceTemplate);		p("<!DOCTYPE html>\n" + 
 "<html>\n" + 
 "    <head>\n" + 
-"    	<title>JapidContact, by zenexity/Bing Ran  ★ ");// line 1
+"    	<title>JapidContact, Coupled Model, by Bing Ran  ★ ");// line 1, main.html
 		title();p(" </title>\n" + 
 "    	<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n" + 
-"        <link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"");// line 4
-		p(lookupStatic("public/stylesheets/style.css"));// line 6
+"        <link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"");// line 4, main.html
+		p(lookupStatic("public/stylesheets/style.css"));// line 6, main.html
 		p("\" />\n" + 
-"        <link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"");// line 6
-		p(lookupStatic("public/stylesheets/south-street/jquery-ui-1.7.2.custom.css"));// line 7
+"        <link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"");// line 6, main.html
+		p(lookupStatic("public/stylesheets/south-street/jquery-ui-1.7.2.custom.css"));// line 7, main.html
 		p("\" />\n" + 
-"    	<script src=\"");// line 7
-		p(lookupStatic("public/javascripts/jquery-1.4.min.js"));// line 8
+"    	<script src=\"");// line 7, main.html
+		p(lookupStatic("public/javascripts/jquery-1.4.min.js"));// line 8, main.html
 		p("\" type=\"text/javascript\" charset=\"utf-8\"></script>\n" + 
-"    	<script src=\"");// line 8
-		p(lookupStatic("public/javascripts/jquery-ui-1.7.2.custom.min.js"));// line 9
+"    	<script src=\"");// line 8, main.html
+		p(lookupStatic("public/javascripts/jquery-ui-1.7.2.custom.min.js"));// line 9, main.html
 		p("\" type=\"text/javascript\" charset=\"utf-8\"></script>\n" + 
-"    	<script src=\"");// line 9
-		p(lookupStatic("public/javascripts/jquery.editinplace.packed.js"));// line 10
+"    	<script src=\"");// line 9, main.html
+		p(lookupStatic("public/javascripts/jquery.editinplace.packed.js"));// line 10, main.html
 		p("\" type=\"text/javascript\" charset=\"utf-8\"></script>\n" + 
 "    </head>\n" + 
 "	<body>\n" + 
 "	    <div id=\"zencontact\">\n" + 
 "    		<header>\n" + 
-"    			<img src=\"");// line 10
-		p(lookupStatic("public/images/logo.png"));// line 15
+"    			<img src=\"");// line 10, main.html
+		p(lookupStatic("public/images/logo.png"));// line 15, main.html
 		p("\" alt=\"logo\" id=\"logo\" />\n" + 
 "    			<h1>Japid Contact <span>by zenexity & Bing Ran</span></h1>\n" + 
 "    		</header>\n" + 
 "    		<nav>\n" + 
-"    			<a id=\"home\" href=\"");// line 15
-		p(lookup("index", new Object[]{}));// line 19
-		p("\" class=\"");// line 19
-		p(selected(".*index"));// line 19
+"    			<a id=\"home\" href=\"");// line 15, main.html
+		p(lookup("index", new Object[]{}));// line 19, main.html
+		p("\" class=\"");// line 19, main.html
+		p(selected(".*index"));// line 19, main.html
 		p("\">Home</a>\n" + 
-"    			<a id=\"list\" href=\"");// line 19
-		p(lookup("list", new Object[]{}));// line 20
-		p("\" class=\"");// line 20
-		p(selected(".*list"));// line 20
+"    			<a id=\"list\" href=\"");// line 19, main.html
+		p(lookup("list", new Object[]{}));// line 20, main.html
+		p("\" class=\"");// line 20, main.html
+		p(selected(".*list"));// line 20, main.html
 		p("\">List</a>\n" + 
-"    			<a id=\"new\" href=\"");// line 20
-		p(lookup("form", new Object[]{}));// line 21
-		p("\" class=\"");// line 21
-		p(selected(".*form|.*save"));// line 21
+"    			<a id=\"new\" href=\"");// line 20, main.html
+		p(lookup("form", new Object[]{}));// line 21, main.html
+		p("\" class=\"");// line 21, main.html
+		p(selected(".*form|.*save"));// line 21, main.html
 		p("\">New</a>\n" + 
 "    		</nav>\n" + 
 "    		<section>\n" + 
-"    		    ");// line 21
-		doLayout();// line 24
+"    		    ");// line 21, main.html
+		doLayout();// line 24, main.html
 		p("    		</section>\n" + 
 "    		<footer>\n" + 
 "    			<a href=\"http://www.w3.org/TR/html5/\">html5</a> - \n" + 
@@ -108,10 +108,10 @@ public abstract class main extends cn.bran.play.JapidTemplateBase
 "		</div>\n" + 
 "	</body>\n" + 
 "</html>\n" + 
-"\n");// line 24
-		p("\n");// line 35
-		// line 37
-		;// line 39
+"\n");// line 24, main.html
+		p("\n");// line 35, main.html
+		// line 37, main.html
+		;// line 39, main.html
 				endDoLayout(sourceTemplate);	}
 	 protected void title() {};
 
@@ -122,10 +122,10 @@ StringBuilder ori = getOut();
 this.setOut(sb);
 TreeMap<Integer, cn.bran.japid.template.ActionRunner> parentActionRunners = actionRunners;
 actionRunners = new TreeMap<Integer, cn.bran.japid.template.ActionRunner>();
-// line 37
-		p("");// line 37
-		p(request.action.matches(pattern) ? "selected" : "");// line 38
-		p("");// line 38
+// line 37, main.html
+		p("");// line 37, main.html
+		p(request.action.matches(pattern) ? "selected" : "");// line 38, main.html
+		p("");// line 38, main.html
 		
 this.setOut(ori);
 if (actionRunners.size() > 0) {

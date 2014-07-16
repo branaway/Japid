@@ -14,9 +14,5 @@ public class MyController extends JapidController {
     public static void list() {
         renderJapid("Hello world!", 123);
     }
-    
-    public static void groovyTagDobody() {
-    	render();
-    }
 
 }

@@ -130,7 +130,7 @@ public class TranslateTemplateTask {
 
 			for (int i = 0; i < changedFiles.size(); i++) {
 				File templateFile = changedFiles.get(i);
-				JapidFlags.info("[Japid] Transforming template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
+				JapidFlags.info("compiling template: " + templateFile.getPath() + " to: " + DirUtil.mapSrcToJava(templateFile.getName()));
 				if (listFiles) {
 					JapidFlags.info(templateFile.getAbsolutePath());
 				}
