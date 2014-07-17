@@ -1,3 +1,4 @@
+//version: 0.9.5.2
 package japidviews._layouts;
 import java.util.*;
 import java.io.*;
@@ -23,9 +24,11 @@ import play.mvc.Http.*;
 public abstract class main extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/_layouts/main.html";
-	{
+	 private void initHeaders() {
 		putHeader("Content-Type", "text/html; charset=utf-8");
 		setContentType("text/html; charset=utf-8");
+	}
+	{
 	}
 
 // - add implicit fields with Play
@@ -43,13 +46,20 @@ public abstract class main extends cn.bran.play.JapidTemplateBase
 
 
 	public main() {
-		super(null);
+	super((StringBuilder)null);
+	initHeaders();
 	}
 	public main(StringBuilder out) {
 		super(out);
+		initHeaders();
 	}
+	public main(cn.bran.japid.template.JapidTemplateBaseWithoutPlay caller) {
+		super(caller);
+	}
+
 	@Override public void layout() {
-		beginDoLayout(sourceTemplate);		p("<!DOCTYPE html>\n" + 
+		beginDoLayout(sourceTemplate);
+p("<!DOCTYPE html>\n" + 
 "<html>\n" + 
 "    <head>\n" + 
 "    	<title>JapidContact, Coupled Model, by Bing Ran  ★ ");// line 1, main.html
@@ -112,7 +122,10 @@ public abstract class main extends cn.bran.play.JapidTemplateBase
 		p("\n");// line 35, main.html
 		// line 37, main.html
 		;// line 39, main.html
-				endDoLayout(sourceTemplate);	}
+		
+		endDoLayout(sourceTemplate);
+	}
+
 	 protected void title() {};
 
 	protected abstract void doLayout();

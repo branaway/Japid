@@ -1,6 +1,6 @@
-`args List<Contact> contacts
+`(List<Contact> contacts)
 `extends main
-`set title:"List of all"
+`set title:"All Contacts"
 
 <table>
     <thead>
@@ -13,15 +13,15 @@
         </tr>
     </thead>
     <tbody>
-        `for (Contact contact : contacts) {
-	        <tr class="contact" contactId="${contact.id}" draggable="true">
+        `for Contact contact : contacts
+  	        <tr class="contact" contactId="${contact.id}" draggable="true">
 	            <td id="name-${contact.id}">${contact.name}</td>
 	            <td id="firstname-${contact.id}">${contact.firstname}</td>
 	            <td id="birthdate-${contact.id}">${format(contact.birthdate, "yyyy-MM-dd") ?: ""}</td>
 	            <td id="email-${contact.id}">${contact.email}</td>
 	            <td><a href="@{form(contact.id)}">&gt;</a></td>
 	        </tr>
-        `}
+        `
         <tr>
             <form action="@{save()}" method="POST">
             	${authenticityToken()}

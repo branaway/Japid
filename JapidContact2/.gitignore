@@ -2,3 +2,5 @@ tmp/
 modules/
 /precompiled
 /lib
+/.apt_generated
+/apt_generated

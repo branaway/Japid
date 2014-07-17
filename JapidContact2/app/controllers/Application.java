@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import models.Contact;
 import play.data.validation.Valid;
+import play.db.jpa.GenericModel;
 import play.db.jpa.JPA;
 import play.mvc.results.Error;
 import cn.bran.play.JapidController;
@@ -41,7 +42,7 @@ public class Application extends JapidController {
 	}
 
 	
-	public static void yahoo(String hi) {
+	public static void yahoo3(String hi) {
 		System.out.println("!!");
 	}
 

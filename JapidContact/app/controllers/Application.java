@@ -59,4 +59,8 @@ public class Application extends JapidController {
         list();
     }
 
+    public static void yahoo() {
+    		String a = "yahooooo!";
+    		renderJapid(a);
+    }
 }

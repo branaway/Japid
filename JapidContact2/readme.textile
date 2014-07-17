@@ -2,7 +2,7 @@ h1. Porting ZenContact, Play! Version, to Japid
 
 Bing Ran, bing.ran@gmail.com
 
-2012-10-17
+2013-08-06
 
 update:
 

@@ -8,8 +8,9 @@ GET     /contacts                               Application.list
 POST    /contacts                               Application.save
 GET     /contacts/{id}                          Application.form
 GET     /contacts/new                           Application.form
+GET     /y                           			Application.yahoo
 
-*       /{controller}/{action}                  {controller}.{action}
+# *       /{controller}/{action}                  {controller}.{action}
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                 staticDir:public

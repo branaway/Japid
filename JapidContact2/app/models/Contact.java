@@ -32,7 +32,7 @@ public class Contact extends Model {
     public List<Dept> depts;
 
     @ManyToOne
-    public Dept de22;
+    public Dept de2;
 
 //    @Required
 //    public String gender2;

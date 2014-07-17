@@ -2,11 +2,11 @@ h1. Porting ZenContact, Play! Version, to Japid
 
 Bing Ran, bing_ran@hotmail.com
 
-2011-2-27
+2014-7-16
 
 The *ZenContact* application is one of the samples in Play!'s distribution. It's a very simple application involving only one model class and one controller with a few views. I feel it would make a good example of a simple Japid/Play application and how to port a Play application using the default rendering engine to using Japid. 
 
-I'm using the code in the 1.1.x from the Github. Since I'm using Eclipse as my primary/only IDE, I'll reference some Eclipse specific steps occasionally. I'm using Eclipse Helios version 3.6.1. 
+I'm using the code in the 1.2.x from the Github. Since I'm using Eclipse as my primary/only IDE, I'll reference some Eclipse specific steps occasionally. I'm using Eclipse Luna. 
 
 Please keep "The Japid User Guide":https://github.com/branaway/Japid/wiki/Japid-User-Guide handy in case you don't understand some of the Japid usage.
 
@@ -25,14 +25,29 @@ Japid can get along with the default template engine well. One action can using 
 
 h3. Install the Japid module. 
 
-* From the commandline:
+create a file named "dependencies.yml" in the conf directory, with content as in the following block:
 
-@play install Japid@
+<code>
+# Application dependencies
 
-* Once the installation completes, go to the @{play_root}/modules@ directory and please find a Japid module directory. It should be @japid-0.7.1@ or newer. Let's assume you get exactly this version. 
-* Add a line in the application's @application.conf@ file:
+require:
+    - cn.bran -> japid 0.9.27
+    - cn.bran -> japidplay 0.9.27
+    - com.google.code.javaparser -> javaparser 1.0.8
+    - org.hibernate -> hibernate-validator 5.0.1.Final
 
-@module.japid=${play.path}/modules/japid-0.7.1@
+
+# My custom repositories
+repositories:
+    - bran:
+        type:       http
+        artifact:   "https://raw.github.com/branaway/Japid/master/dist-lib/[module]-[revision].[ext]"
+        contains:
+            - cn.bran -> *
+
+</code>
+
+Tha above code define a repository mapped to japid github directory.
 
 * Create the necessary Japid template tree root:
 

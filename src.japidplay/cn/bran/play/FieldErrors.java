@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.StringUtils;
+
 import play.data.validation.Error;
 import play.data.validation.Validation;
 
@@ -30,6 +32,11 @@ public class FieldErrors extends ArrayList<Error> {
     
     @Override
     public String toString() {
-    	return this.size() == 0 ? "" : "Field validation errors: " + this.stream().map(Error::toString2).collect(Collectors.joining(", "));
+    	Error[] errs = this.toArray(new Error[] {});
+    	String[] es = new String[errs.length];
+    	for (int i = 0; i < es.length; i++) {
+    		es[i] = errs[i].toString2();
+    	}
+    	return this.size() == 0 ? "" : "Field validation errors: " + StringUtils.join(es, ",");
     }
 }

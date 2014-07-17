@@ -63,8 +63,14 @@ public class RouterClass {
 			absPath = appPath + (path.startsWith("/") ? path : "/" + path);
 
 		Method[] dms = cl.getDeclaredMethods();
-		Stream.of(dms).filter(_1 -> Modifier.isStatic(_1.getModifiers()) && Modifier.isPublic(_1.getModifiers()))
-				.forEach(_1 -> routerMethods.add(new RouterMethod(_1, absPath)));
+		
+		Method[] allMethods = cl.getDeclaredMethods();
+		for (Method m : allMethods) {
+			int modifiers = m.getModifiers();
+			if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers) ) {
+				routerMethods.add(new RouterMethod(m, absPath));
+			}
+		}
 	}
 
 	// public Tuple<Method,Object[]>
@@ -95,13 +101,11 @@ public class RouterClass {
 	 * @return
 	 */
 	public List<Route> buildRoutes() {
-		return routerMethods.stream().flatMap(rm -> rm.buildRoutes().stream()).collect(Collectors.toList());
-		// // List<Route> list = new ArrayList<Route>();
-		// routerMethods.forEach(rm -> list.addAll(rm.buildRoutes()));
-		// for (RouterMethod rm : routerMethods) {
-		// list.addAll(rm.buildRoutes());
-		// }
-		// return list;
+		 List<Route> list = new ArrayList<Route>();
+		 for (RouterMethod rm : routerMethods) {
+			 list.addAll(rm.buildRoutes());
+		 }
+		 return list;
 	}
 
 	/**

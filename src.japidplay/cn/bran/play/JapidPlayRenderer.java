@@ -76,7 +76,9 @@ public class JapidPlayRenderer {
 		else {
 			if (isDevMode() && playClassloaderChanged()) {
 				// always clear the mark to redefine all
-				japidClasses.forEach((k, v )-> v.setLastUpdated(0));
+				for (String c : japidClasses.keySet()) {
+					japidClasses.get(c).setLastUpdated(0);
+				}
 				initJapidClassLoader();
 			} else {
 				if (rc.getLastUpdated() > 0 && rc.getClz() != null) {
@@ -100,11 +102,10 @@ public class JapidPlayRenderer {
 
 	private static void resetAllRenderClassUpdatedTime() {
 		// always clear the mark to reload all
-		japidClasses.forEach((k, v )-> v.setLastUpdated(0));
-//		for (String c : japidClasses.keySet()) {
-//			RendererClass rendererClass = japidClasses.get(c);
-//			rendererClass.setLastUpdated(0);
-//		}
+//		japidClasses.forEach((k, v )-> v.setLastUpdated(0));
+		for (String c : japidClasses.keySet()) {
+			japidClasses.get(c).setLastUpdated(0);
+		}
 	}
 
 	/**
@@ -220,16 +221,16 @@ public class JapidPlayRenderer {
 				compiler.compile(names);
 				
 				initJapidClassLoader();
-				japidClasses.values().forEach(rc -> {
+				for (RendererClass rc :  japidClasses.values()) {
 					try {
 						if (isDevMode())
-							rc.setClz(null); // to enable JIT loading in dev mode
+							rc.setClz(null); // to enable JIT loading in DEV mode
 						else
 							rc.setClz((Class<JapidTemplateBaseWithoutPlay>) japidClassLoader.loadClass(rc.getClassName()));
 					} catch (ClassNotFoundException e) {
 						throw new RuntimeException(e);
 					}
-				});
+				}
 				
 				howlong("compile/load time for " + names.length + " classe(s)", t);
 

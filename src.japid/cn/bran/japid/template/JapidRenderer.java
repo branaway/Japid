@@ -28,7 +28,7 @@ import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.StackTraceUtils;
 
 public class JapidRenderer {
-	public static final String VERSION = "0.9.5.1"; // need to match that in the build.xml
+	public static final String VERSION = "0.9.5.2"; // XXX need to match that in the build.xml
 
 	static AmmendableScheduledExecutor saveJapidClassesService = new AmmendableScheduledExecutor();
 
@@ -187,7 +187,7 @@ public class JapidRenderer {
 				// let's try
 				ClassLoader cl = _parentClassLoader == null ? JapidRenderer.class.getClassLoader() : _parentClassLoader;
 				TemplateClassLoader classReloader = new TemplateClassLoader(cl);
-				classes.values().forEach(rc -> {
+				for (RendererClass rc: classes.values()) {
 					try {
 						if (isDevMode())
 							rc.setClz(null); // to enable JIT loading in dev mode
@@ -196,7 +196,7 @@ public class JapidRenderer {
 					} catch (ClassNotFoundException e) {
 						throw new RuntimeException(e);
 					}
-				});
+				}
 				howlong("compile/load time for " + names.length + " classes", t);
 			}
 		} catch (Exception e) {
@@ -234,7 +234,7 @@ public class JapidRenderer {
 	}
 
 	// <classname RendererClass>
-	public final static Map<String, RendererClass> classes = new ConcurrentHashMap<>();
+	public final static Map<String, RendererClass> classes = new ConcurrentHashMap<String, RendererClass>();
 	public static TemplateClassLoader crlr;
 
 	public static TemplateClassLoader getCrlr() {

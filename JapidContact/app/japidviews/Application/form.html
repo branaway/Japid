@@ -1,10 +1,10 @@
-`args Contact contact
+`(Contact contact)
 `extends main
 `set title:"Form" 
 `suppressNull on
 
 <form action="@{save()}" method="POST">
-    $authenticityToken()
+    ${authenticityToken()}
     <input type="hidden" name="contact.id" value="${contact.id}">
     
     <p class="field">

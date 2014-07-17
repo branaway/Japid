@@ -2,7 +2,7 @@
 
                     Bing Ran<bing_ran@hotmail.com>
                     
-Latest version: 0.9.5.1
+Latest version: 0.9.5.2
 
 * Links:
 
@@ -50,6 +50,8 @@ repositories:
 
 * Version History:
 
+2014/7/17: V0.9.5.2:
+	1. enhancement: removed all jdk8 construct to make the source code compile-able in previous JDKs.   
 2013/12/21: V0.9.5.1:
 	1. enhancement: to define class immediately after compiling them, in prod mode   
 2013/12/21: V0.9.5:

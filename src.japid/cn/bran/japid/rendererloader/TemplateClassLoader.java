@@ -88,14 +88,14 @@ public class TemplateClassLoader extends ClassLoader {
 		rc.setClz(cl);
 		JapidFlags.debug("redefined: " + rc.getClassName());
 		// extract the apply(...)
-		long count = Stream.of(cl.getDeclaredMethods()).filter(m -> {
-					if (m.getName().equals("apply") 
-							&& Modifier.isPublic(m.getModifiers()) && Modifier.isStatic(m.getModifiers())) {
-						rc.setApplyMethod(m);
-						return true;
-					}
-					return false;
-				}).count();
+		long count = 0; 
+				
+		for (Method m : cl.getDeclaredMethods()) {
+			if (m.getName().equals("apply") && Modifier.isPublic(m.getModifiers()) && Modifier.isStatic(m.getModifiers())) {
+				rc.setApplyMethod(m);
+				count++;
+			}
+		}
 
 		if (count == 0 && !name.contains("$")) {
 			if (!Modifier.isAbstract(cl.getModifiers()))

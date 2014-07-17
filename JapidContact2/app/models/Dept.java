@@ -3,6 +3,7 @@
  */
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import play.db.jpa.Model;
@@ -13,5 +14,7 @@ import play.db.jpa.Model;
  */
 @Entity
 public class Dept extends Model {
-	public String name;
+	@Column(name="dept_name")
+	public String name1;
+	
 }
