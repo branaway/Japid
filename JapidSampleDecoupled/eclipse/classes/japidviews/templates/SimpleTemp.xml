@@ -1,4 +1,0 @@
-`args String blogTitle
-<xml>
-   <p>$blogTitle</p>
-</xml>

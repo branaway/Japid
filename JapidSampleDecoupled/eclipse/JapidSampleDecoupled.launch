@@ -16,5 +16,5 @@
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="play.server.Server"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JapidSampleDecoupled"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dplay.debug=yes -Dplay.id=bran -Dapplication.path=&quot;${project_loc:JapidSampleDecoupled}&quot; -Djava.endorsed.dirs=&quot;/Users/bran/projects/play-git/framework/endorsed&quot; -javaagent:&quot;/Users/bran/projects/play-git/framework/lib/PlayAgent.jar&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dplay.debug=yes -Dplay.id=bran -Dapplication.path=&quot;${project_loc:JapidSampleDecoupled}&quot; -Djava.endorsed.dirs=&quot;/Users/bran/projects/play-git/framework/endorsed&quot; -javaagent:&quot;/Users/bran/projects/play-git/framework/play-1.4.x-original-1.4.x-merged.jar&quot;"/>
 </launchConfiguration>

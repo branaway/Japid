@@ -1,4 +1,4 @@
-//version: 0.9.5.2
+//version: 0.9.6
 package japidviews._notifiers.TestEmailer;
 import java.util.*;
 import java.io.*;
