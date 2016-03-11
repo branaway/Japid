@@ -41,7 +41,7 @@ require:
 repositories:
     - bran:
         type:       http
-        artifact:   "https://raw.github.com/branaway/Japid/master/dist-lib/[module]-[revision].[ext]"
+        artifact:   "https://raw.githubusercontent.com/branaway/Japid/master/dist-lib/[module]-[revision].[ext]"
         contains:
             - cn.bran -> *
 </code>
