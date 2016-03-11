@@ -19,6 +19,6 @@ The main difference:
 
 h2. How to run:
 
-1. "play deps" to get the required libraries. 
+1. "play deps --sync" to get the required libraries. 
 2. "play run"
 

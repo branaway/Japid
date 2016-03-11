@@ -1,4 +1,4 @@
-//version: 0.9.5
+//version: 0.9.5.2
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -20,7 +20,6 @@ import play.mvc.Http.*;
 // NOTE: This file was generated from: japidviews/Application/index.html
 // Change to this file will be lost next time the template file is compiled.
 //
-@cn.bran.play.NoEnhance
 public class index extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/Application/index.html";
@@ -98,7 +97,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 "<ul>\n");// line 4, index.html
 		logDuration("xx");// line 11, index.html
 		p("	<li><a href=\"");// line 11, index.html
-		p(lookup("hello", new Object[]{}));// line 12, index.html
+		p(lookup("Application.hello", "Bing", "Ran"));// line 12, index.html
 		p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n");// line 12, index.html
 		logDuration("xx-1");// line 14, index.html

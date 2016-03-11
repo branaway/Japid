@@ -5,7 +5,9 @@ import japidviews.Application.authorPanel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,6 +18,8 @@ import models.japidsample.Author2;
 import models.japidsample.Post;
 import notifiers.TestEmailer;
 import play.cache.CacheFor;
+import play.templates.Template;
+import play.templates.TemplateLoader;
 import cn.bran.japid.template.RenderResult;
 import cn.bran.play.CacheableRunner;
 import cn.bran.play.JapidController;
@@ -119,7 +123,7 @@ public class Application extends JapidController {
 	}
 	
 	public static void hello(String me, String you) {
-		String m = "hi there and..." + me + you;
+		String m = "hi " + me  + " and " + you;
 		String am = m + "!";
 //		renderText("hello，Japid Play!");
 		renderText(am);
@@ -352,9 +356,10 @@ public class Application extends JapidController {
 	}
 	
 	public static void groovy() {
-		String a = "Groovy";
-		// render with Groovy
-		render(a);
+		Template resultTemplate = TemplateLoader.load("ClassicController/index.html");
+		Map<String, Object> options = new HashMap<String, Object>();
+		String result = resultTemplate.render(options);
+		renderHtml(result);
 	}
 	
 
@@ -408,4 +413,5 @@ public class Application extends JapidController {
 	public static void ps2(boolean boo) {
 		renderJapid();
 	}
+	
 }

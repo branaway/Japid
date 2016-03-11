@@ -28,7 +28,7 @@ import cn.bran.japid.util.JapidFlags;
 import cn.bran.japid.util.StackTraceUtils;
 
 public class JapidRenderer {
-	public static final String VERSION = "0.9.5.2"; // XXX need to match that in the build.xml
+	public static final String VERSION = "0.9.6"; // XXX need to match that in the build.xml
 
 	static AmmendableScheduledExecutor saveJapidClassesService = new AmmendableScheduledExecutor();
 

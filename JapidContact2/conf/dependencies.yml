@@ -1,8 +1,8 @@
 # Application dependencies
 
 require:
-    - cn.bran -> japid 0.9.27
-    - cn.bran -> japidplay 0.9.27
+    - cn.bran -> japid 0.9.5.2
+    - cn.bran -> japidplay 0.9.5.2
     - com.google.code.javaparser -> javaparser 1.0.8
     - org.hibernate -> hibernate-validator 5.0.1.Final
     - org.apache.poi -> poi-scratchpad 3.10-FINAL

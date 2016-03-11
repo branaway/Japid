@@ -541,7 +541,7 @@ public class JapidPlugin extends PlayPlugin {
 
 	private ApplicationClassloaderState lastApplicationClassloaderState = null;
 	private long routesLoadingTime = 0;
-	private Map<String, RouterClass> routerCache = new HashMap<String, RouterClass>();
+	private static Map<String, RouterClass> routerCache = new HashMap<String, RouterClass>();
 
 	private static Pattern renderJapidWithPattern = Pattern.compile(".*" + RENDER_JAPID_WITH + "/(.+)");
 
@@ -568,6 +568,13 @@ public class JapidPlugin extends PlayPlugin {
 	@Override
 	public void onInvocationException(Throwable e) {
 
+	}
+
+	/**
+	 * @return the routerCache
+	 */
+	public static Map<String, RouterClass> getRouterCache() {
+		return routerCache;
 	}
 
 //	/* (non-Javadoc)

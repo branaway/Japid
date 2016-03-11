@@ -10,6 +10,7 @@ public class BasicTest extends UnitTest {
     public void aVeryImportantThingToTest() {
         assertEquals(2, 1 + 1);
     }
+    
 
     @Test
     public void testMethodMemoryUsage() {

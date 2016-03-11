@@ -1,4 +1,4 @@
-//version: 0.9.5
+//version: 0.9.5.2
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -95,7 +95,7 @@ p("\n" +
 "\n" + 
 "<ul>\n" + 
 "	<li><a href=\"");// line 2, index.html
-		p(lookup("hello", new Object[]{}));// line 10, index.html
+		p(lookup("hello", "King", "Queen"));// line 10, index.html
 		p("\">Hello Japid, using an overridden\n" + 
 "	version of renderText()</a></li>\n" + 
 "	<li><a href=\"application/callTag\">using tags in a template</a></li>\n" + 

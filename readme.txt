@@ -50,6 +50,9 @@ repositories:
 
 * Version History:
 
+2016/3/11: V0.9.6:
+	1. bug: get methods reverse lookup not working for AutoPath generated routes. 
+	2. change: some JDK8 usage in AutoPath. Compiled with JDK8
 2014/7/17: V0.9.5.2:
 	1. enhancement: removed all jdk8 construct to make the source code compile-able in previous JDKs.   
 2013/12/21: V0.9.5.1:

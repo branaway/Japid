@@ -1,7 +1,8 @@
 require:
-    - cn.bran -> japid 0.9.5
-    - cn.bran -> japidplay 0.9.5
-    - com.google.code.javaparser -> javaparser 1.0.8
+    - cn.bran -> japid 0.9.5.2
+    - cn.bran -> japidplay 0.9.5.2
+#    - com.github.javaparser -> javaparser-core 2.2.2
+    - com.google.code.javaparser -> javaparser 1.0.8   
     - com.fasterxml.jackson.core -> jackson-databind 2.3.0
   
 # My custom repositories

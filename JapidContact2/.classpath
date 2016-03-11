@@ -1,13 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="views/**" kind="src" path="app"/>
+	<classpathentry excluding="japidviews/**|rythm/**|views/**" kind="src" path="app"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="docviewer"/>
+	
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="src" path="apt_generated">
-		<attributes>
-			<attribute name="optional" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/play-1.4.x-original-1.4.x-merged.jar" sourcepath="/Users/bran/projects/play-git/framework/src" />
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/classmate-0.8.0.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/commons-codec-1.5.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/hibernate-jpa-2.1-api-1.0.0.Draft-16.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/hibernate-validator-5.0.1.Final.jar" sourcepath="/Users/bran/.ivy2/cache/org.hibernate/hibernate-validator/sources/hibernate-validator-5.0.1.Final-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/japid-0.9.5.2.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/japidplay-0.9.5.2.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/javaparser-1.0.8.jar" sourcepath="/Users/bran/.ivy2/cache/com.google.code.javaparser/javaparser/sources/javaparser-1.0.8-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/jboss-logging-3.1.1.GA.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/joda-time-2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/jsoup-1.7.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/poi-3.10-FINAL.jar" sourcepath="/Users/bran/.ivy2/cache/org.apache.poi/poi/sources/poi-3.10-FINAL-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/poi-scratchpad-3.10-FINAL.jar" sourcepath="/Users/bran/.ivy2/cache/org.apache.poi/poi-scratchpad/sources/poi-scratchpad-3.10-FINAL-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/japid/JapidContact2/lib/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/asm-all-5.0.4.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/async-http-client-1.9.31.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/bcprov-jdk15-1.45.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/bytecodeparser-0.3.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/c3p0-0.9.5.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/c3p0-oracle-thin-extras-0.9.5.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/cglib-3.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/cglib-nodep-3.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/classmate-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-email-1.3.3.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-fileupload-1.3.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-httpclient.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-javaflow-1590792.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/ehcache-core-2.6.11.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/geronimo-servlet_2.5_spec-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/groovy-all-2.4.6.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/gson-2.3.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/h2-1.4.185.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-c3p0-4.2.19.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-commons-annotations-4.0.2.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-core-4.2.19.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-ehcache-4.2.19.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-entitymanager-4.2.19.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-jpamodelgen-1.3.0.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-spatial-1.1-trunk.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-spatial-postgis-1.1-trunk.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-validator-4.3.1.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/hibernate-validator-annotation-processor-4.3.1.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/ivy-2.4.0.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jackson-all-1.7.5.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jamon-2.81.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jandex-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/javassist-2016-3-1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/javax.el-2.2.4.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/javax.el-api-2.2.4.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/javax.inject-1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jaxen-1.1.6.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jboss-logging-3.1.3.GA.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jboss-logging-annotations-1.2.0.Beta1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jboss-transaction-api_1.2_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jj-imaging.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jj-simplecaptcha.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jj-textile.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jj-wikitext.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/joda-time-2.8.2.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jregex-1.2_01.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/jsr107cache-1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/mail-1.4.7.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/mchange-commons-java-0.2.9.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/mysql-connector-java-5.1.35.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/netty-3.10.4.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/org.eclipse.jdt.core-3.10.0.v20140604-1726.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/oval-1.84.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/PlayAgent.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/postgresql-9.0.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/signpost-core-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/slf4j-api-1.7.10.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/slf4j-log4j12-1.7.10.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/snakeyaml-1.15.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/spring-beans.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/spring-context.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/spring-core.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/spymemcached-2.11.7.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/xmlpull-1.1.3.1.jar"/>
+	<classpathentry kind="lib" path="/Users/bran/projects/play-git/framework/lib/xstream-1.4.7.jar"/>
+	
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

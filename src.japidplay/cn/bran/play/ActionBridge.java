@@ -7,7 +7,6 @@ import java.util.Map;
 
 import cn.bran.japid.exceptions.JapidRuntimeException;
 import cn.bran.play.exceptions.ReverseRouteException;
-
 import play.data.binding.Unbinder;
 import play.exceptions.ActionNotFoundException;
 import play.exceptions.NoRouteFoundException;
@@ -77,21 +76,23 @@ public class ActionBridge {
 //						.getDeclaredField("$" + actionMethod.getName() + computeMethodHash(actionMethod.getParameterTypes())).get(null);
 				String[] names = Java.parameterNames(actionMethod);
 				if (param instanceof Object[]) {
+					Object[] arrayParam = (Object[]) param;
 					// too many parameters versus action, possibly a developer
 					// error. we must warn him.
-					if (names.length < ((Object[]) param).length) {
+					if (names.length < arrayParam.length) {
 						throw new NoRouteFoundException(action, null);
 					}
 					Annotation[] annos = actionMethod.getAnnotations();
-					for (int i = 0; i < ((Object[]) param).length; i++) {
-						if (((Object[]) param)[i] instanceof Router.ActionDefinition && ((Object[]) param)[i] != null) {
-							Unbinder.unBind(args, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "", annos);
+					for (int i = 0; i < arrayParam.length; i++) {
+						Object arrayParamElem = arrayParam[i]; 
+						if (arrayParamElem instanceof Router.ActionDefinition && arrayParamElem != null) {
+							Unbinder.unBind(args, arrayParamElem.toString(), i < names.length ? names[i] : "", annos);
 						} else if (isSimpleParam(actionMethod.getParameterTypes()[i])) {
-							if (((Object[]) param)[i] != null) {
-								Unbinder.unBind(args, ((Object[]) param)[i].toString(), i < names.length ? names[i] : "", annos);
+							if (arrayParamElem != null) {
+								Unbinder.unBind(args, arrayParamElem.toString(), i < names.length ? names[i] : "", annos);
 							}
 						} else {
-							Unbinder.unBind(args, ((Object[]) param)[i], i < names.length ? names[i] : "", annos);
+							Unbinder.unBind(args, arrayParamElem, i < names.length ? names[i] : "", annos);
 						}
 					}
 				}

@@ -125,8 +125,8 @@ public class Application extends JapidController {
 //		}, "10s", a);
 	}
 	
-	public static void hello() {
-		String m = "hi there and..";
+	public static void hello(String me, String you) {
+		String m = "hi " + me + " and " + you;
 		String am = m + "!";
 //		renderText("hello，Japid Play!");
 		renderText(am);

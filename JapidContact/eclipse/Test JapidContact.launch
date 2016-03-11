@@ -16,6 +16,6 @@
     <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="play.server.Server"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JapidContact"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value=" -noverify -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Dplay.debug=yes -Dplay.id=test -Dapplication.path=&quot;${project_loc:JapidContact}&quot; -Djava.endorsed.dirs=&quot;/Users/bran/projects/play-git/framework/endorsed&quot; -javaagent:&quot;/Users/bran/projects/play-git/framework/play-1.2.6-jdk8-1.4.1-2-ga81da9d.jar&quot;"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value=" -XX:-UseSplitVerifier -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Dplay.debug=yes -Dplay.id=test -Dapplication.path=&quot;${project_loc:JapidContact}&quot; -Djava.endorsed.dirs=&quot;/Users/bran/projects/play-git/framework/endorsed&quot; -javaagent:&quot;/Users/bran/projects/play-git/framework/play-1.4.x-original-1.4.x-merged.jar&quot;"/>
 </launchConfiguration>
 

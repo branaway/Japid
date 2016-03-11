@@ -6,6 +6,8 @@ import java.util.Map;
 // available only with newer commons-lang
 // import org.apache.commons.lang.text.StrSubstitutor;
 
+
+
 import play.Play;
 //import play.classloading.enhancers.LocalvariablesNamesEnhancer.LocalVariablesNamesTracer;
 import play.exceptions.ActionNotFoundException;
@@ -20,6 +22,8 @@ import play.mvc.Router.Route;
 import play.templates.GroovyTemplate;
 import cn.bran.japid.util.StringUtils;
 import cn.bran.japid.util.UrlMapper;
+import cn.bran.play.routing.RouterClass;
+import cn.bran.play.routing.RouterMethod;
 
 /**
  * 
@@ -56,6 +60,15 @@ public class RouteAdapter implements UrlMapper {
 	 */
 	@Override
 	public String lookup(String actionString, Object[] params) {
+
+		String actionStringForLocalLookup = actionString;
+		if (actionString.indexOf(".") > 0) {
+		} else {
+			Request req = Request.current();
+			if (req != null) {
+				actionStringForLocalLookup = req.controller + "." + actionString;
+			}
+		}
 		ActionDefinition ad = lookupActionDefinition(actionString, params);
 		return ad.toString();
 	}

@@ -1,4 +1,4 @@
-//version: 0.9.5.1
+//version: 0.9.5.2
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -102,7 +102,7 @@ p("\n" +
 "        $('section').load('");// line 8, index.html
 		p(lookup("index", new Object[]{}));// line 13, index.html
 		p(" #time')\n" + 
-"    }, 2000)\n" + 
+"    }, 1000)\n" + 
 "</script>");// line 13, index.html
 		
 		endDoLayout(sourceTemplate);

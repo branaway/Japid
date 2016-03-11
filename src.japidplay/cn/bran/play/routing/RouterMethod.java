@@ -5,9 +5,13 @@ package cn.bran.play.routing;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import play.mvc.Router.Route;
 import play.utils.Java;
@@ -75,7 +79,7 @@ public class RouterMethod {
 		// if POST presents, no parameter placeholder is added to the path
 		// boolean containPOST = false;
 
-		String paramNames = join(getMethodParamNames(m));
+		String paramNames = getMethodParamNames(m);
 
 		String act = m.getDeclaringClass().getName() + "." + m.getName();
 		if (act.startsWith("controllers."))
@@ -83,20 +87,30 @@ public class RouterMethod {
 
 		if (httpMethodAnnotations.size() == 0) {
 			if (autoRouting) {
-				// automatically added a special post for POST
-				// no params on path
-				if (paramNames.length() > 0) {
-					Route r = new Route();
-					r.method = "POST";
-					r.path = pathSpec; // no params, no post-fix.
-					r.action = act;
-					r.routesFile = "_autopath";
-					r.routesFileLine = AUTO_ROUTE_LINE;
-					r.compute();
-					routes.add(r);
-				}
-				// the catch other
+				// do a GET first
 				Route r = new Route();
+				r.method = "GET";
+				r.path = pathSpec + paramNames + pathEnding;
+				r.action = act;
+				r.routesFile = "_autopath";
+				r.routesFileLine = AUTO_ROUTE_LINE;
+				r.compute();
+				routes.add(r);
+
+				// automatically added a special post for POST
+				// no parameters on path
+				if (paramNames.length() > 0) {
+					Route r2 = new Route();
+					r2.method = "POST";
+					r2.path = pathSpec; 
+					r2.action = act;
+					r2.routesFile = "_autopath";
+					r2.routesFileLine = AUTO_ROUTE_LINE;
+					r2.compute();
+					routes.add(r2);
+				}
+				// the catch all route
+				r = new Route();
 				r.method = "*";
 				r.path = pathSpec + paramNames + pathEnding;
 				r.action = act;
@@ -136,31 +150,27 @@ public class RouterMethod {
 		this.routes = routes;
 	}
 
-	private String[] getMethodParamNames(Method m) {
-		try {
-			return Java.parameterNames(m);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+	static String getMethodParamNames(Method m) {
+		return Arrays.stream(m.getParameters()).map(p -> p.getName()).reduce("", (p1, p2) -> p1 + "/{" + p2 + "}");
 	}
 
-	/**
-	 * @author Bing Ran (bing.ran@gmail.com)
-	 * @param paramNames
-	 * @param string
-	 * @return
-	 */
-	private String join(String[] paramNames) {
-		if (paramNames.length == 0)
-			return "";
-		else {
-			String ret = "";
-			for (String p : paramNames) {
-				ret += "/{" + p + "}";
-			}
-			return ret;
-		}
-	}
+	// /**
+	// * @author Bing Ran (bing.ran@gmail.com)
+	// * @param paramNames
+	// * @param string
+	// * @return
+	// */
+	// private String join(String[] paramNames) {
+	// if (paramNames.length == 0)
+	// return "";
+	// else {
+	// String ret = "";
+	// for (String p : paramNames) {
+	// ret += "/{" + p + "}";
+	// }
+	// return ret;
+	// }
+	// }
 
 	/**
 	 * @author Bing Ran (bing.ran@gmail.com)
@@ -372,4 +382,20 @@ public class RouterMethod {
 		// }
 		return this.routes;
 	}
+	//
+	// /**
+	// * @author Bing Ran (bing.ran@gmail.com)
+	// * @param methodName
+	// * @param params
+	// * @return
+	// */
+	// public String lookupUrl(String methodName, Object[] params) {
+	// if (methodName.equals(this.meth.getName())) {
+	// Parameter[] thisParams = this.meth.getParameters();
+	// if (params.length == thisParams.length) {
+	//
+	// }
+	// }
+	// return null;
+	// }
 }

@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import play.libs.F.Tuple;
 import play.mvc.Http.Header;
+import play.mvc.Http.Request;
 import play.mvc.Router.Route;
 
 /**
@@ -116,4 +117,26 @@ public class RouterClass {
 	public boolean matchHash(int sigChecksum) {
 		return sigChecksum == applicationClassHash;
 	}
+
+//	/**
+//	 * @author Bing Ran (bing.ran@gmail.com)
+//	 * @param actionString
+//	 * @param params
+//	 * @return
+//	 */
+//	public String lookupUrl(String actionString, Object[] params) {
+//		if (actionString.contains(".")) {
+//			int lastDot = actionString.lastIndexOf(".");
+//			String className = actionString.substring(0, lastDot);
+//			if (className.equals(this.clz.getName())){
+//				for (RouterMethod m : this.routerMethods) {
+//					String methodName = actionString.substring(lastDot,+ 1);
+//					String url = m.lookupUrl(methodName, params);
+//					if (url != null)
+//						return url;
+//				}
+//			}
+//		}
+//		return null;
+//	}
 }
