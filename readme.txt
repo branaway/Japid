@@ -2,7 +2,7 @@
 
                     Bing Ran<bing_ran@hotmail.com>
                     
-Latest version: 0.9.5.2
+Latest version: 0.9.6
 
 * Links:
 
@@ -50,6 +50,8 @@ repositories:
 
 * Version History:
 
+2016/3/11: V0.9.6:
+	1. bug: absolute reverse lookup for websocket (WS) protocol failed. 
 2016/3/11: V0.9.6:
 	1. bug: get methods reverse lookup not working for AutoPath generated routes. 
 	2. change: some JDK8 usage in AutoPath. Compiled with JDK8

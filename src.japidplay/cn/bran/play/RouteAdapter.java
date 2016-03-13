@@ -60,28 +60,17 @@ public class RouteAdapter implements UrlMapper {
 	 */
 	@Override
 	public String lookup(String actionString, Object[] params) {
-
-		String actionStringForLocalLookup = actionString;
-		if (actionString.indexOf(".") > 0) {
-		} else {
-			Request req = Request.current();
-			if (req != null) {
-				actionStringForLocalLookup = req.controller + "." + actionString;
-			}
-		}
-		ActionDefinition ad = lookupActionDefinition(actionString, params);
-		return ad.toString();
+		return new ActionBridge(false).invokeMethod(actionString, params).toString();
 	}
 
 	public ActionDefinition lookupActionDefinition(String actionString,
 			Object[] params) {
-		ActionDefinition ad = new ActionBridge(false).invokeMethod(actionString, params);
-		return ad;
+		return new ActionBridge(false).invokeMethod(actionString, params);
 	}
 
 	@Override
 	public String lookupAbs(String action, Object[] args) {
-		return getBaseUrl() + this.lookup(action, args);
+		return new ActionBridge(true).invokeMethod(action, args).toString();
 	}
 
 	  // Gets baseUrl from current request or application.baseUrl in application.conf
