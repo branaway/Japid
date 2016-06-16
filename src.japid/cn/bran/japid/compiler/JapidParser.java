@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
  */
 public class JapidParser {
 
+	private static boolean simpleDollarExprEnabled = true; // disable the $expr by default
 	private char MARKER_CHAR = '`';
 	private String MARKER_STRING = "`";
 	private static final String VERBATIM2 = "verbatim";
@@ -330,15 +331,15 @@ public class JapidParser {
 					return found(Token.TEMPLATE_ARGS, 2);
 				}
 				// bran: shell like expression: ~_, ~user.name (this one is
-				// diff
-				// from sh, which requires ${user.name}
+				// diff from sh, which requires ${user.name}
 				//
 				if (c == '~' && c1 != '~' && (Character.isJavaIdentifierStart(c1) || '\'' == c1 || '\"' == c1)) {
 					return found(Token.EXPR_NATURAL_ESCAPED, 1);
 					// return found(Token.EXPR_NATURAL, 1);
 				}
 				if (c == '$' && c1 != '$' && (Character.isJavaIdentifierStart(c1) || '\'' == c1 || '\"' == c1)) {
-					return found(Token.EXPR_NATURAL, 1);
+					if (simpleDollarExprEnabled)
+						return found(Token.EXPR_NATURAL, 1);
 				}
 				if (c == '#' && c1 == '{' && c2 == '/') {
 					return found(Token.END_TAG, 3);
@@ -783,5 +784,10 @@ public class JapidParser {
 			}
 		}
 		return result;
+	}
+
+	public static void setSimpleDollarExprEnabled(boolean b) {
+		simpleDollarExprEnabled = b;
+		
 	}
 }

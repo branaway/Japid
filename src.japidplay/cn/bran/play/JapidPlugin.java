@@ -35,6 +35,7 @@ import play.mvc.results.Result;
 import play.templates.Template;
 import play.vfs.VirtualFile;
 import cn.bran.japid.compiler.JapidCompilationException;
+import cn.bran.japid.compiler.JapidParser;
 import cn.bran.japid.template.JapidRenderer;
 import cn.bran.japid.template.JapidTemplateBaseWithoutPlay;
 import cn.bran.japid.util.JapidFlags;
@@ -83,6 +84,19 @@ public class JapidPlugin extends PlayPlugin {
 		}
 		getDumpRequest();
 		setupInjectTemplateBorder();
+		confgureParser();
+	}
+
+	private void confgureParser() {
+		// check the support for $xxx as a server side variable. 
+		// used to support it by default, but some client side frameworks use the denotation, therefore it's off by default now.
+		// one can keep using ~xxx for the same effect.
+		String property = Play.configuration.getProperty("japid.simple.expr.enabled", "true");
+		if ("true".equalsIgnoreCase(property) || "yes".equalsIgnoreCase(property))
+			JapidParser.setSimpleDollarExprEnabled(true);
+		else
+			JapidParser.setSimpleDollarExprEnabled(false);
+			
 	}
 
 	/**

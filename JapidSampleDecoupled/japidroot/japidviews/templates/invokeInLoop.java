@@ -1,4 +1,4 @@
-//version: 0.9.6.1
+//version: 0.9.6.2
 package japidviews.templates;
 import java.util.*;
 import java.io.*;
@@ -22,7 +22,6 @@ import play.mvc.Http.*;
 // NOTE: This file was generated from: japidviews/templates/invokeInLoop.html
 // Change to this file will be lost next time the template file is compiled.
 //
-@cn.bran.play.NoEnhance
 public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 {
 	public static final String sourceTemplate = "japidviews/templates/invokeInLoop.html";
@@ -108,22 +107,24 @@ public class invokeInLoop extends cn.bran.play.JapidTemplateBase
 "	</p>\n");// line 14, invokeInLoop.html
 		}// line 16, invokeInLoop.html
 		p("<br/>\n" + 
+"\n" + 
+"$clientss\n" + 
 "\n");// line 16, invokeInLoop.html
 		p("\n" + 
-"\n");// line 19, invokeInLoop.html
-		for (final Post p : posts) {// line 21, invokeInLoop.html
+"\n");// line 21, invokeInLoop.html
+		for (final Post p : posts) {// line 23, invokeInLoop.html
 		p("    another notation for invoking actions:  \n" + 
 "    <p>\n" + 
-"    ");// line 21, invokeInLoop.html
+"    ");// line 23, invokeInLoop.html
 				actionRunners.put(getOut().length(), new cn.bran.play.CacheablePlayActionRunner("", Application.class, "echoPost", p) {
 			@Override
 			public void runPlayAction() throws cn.bran.play.JapidResult {
-				Application.echoPost(p); // line 24, invokeInLoop.html
+				Application.echoPost(p); // line 26, invokeInLoop.html
 			}
-		}); p("\n");// line 24, invokeInLoop.html
-		p("    </p>\n");// line 24, invokeInLoop.html
-		}// line 26, invokeInLoop.html
-		;// line 26, invokeInLoop.html
+		}); p("\n");// line 26, invokeInLoop.html
+		p("    </p>\n");// line 26, invokeInLoop.html
+		}// line 28, invokeInLoop.html
+		;// line 28, invokeInLoop.html
 		
 		endDoLayout(sourceTemplate);
 	}

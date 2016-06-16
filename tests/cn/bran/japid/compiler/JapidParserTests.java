@@ -140,7 +140,7 @@ public class JapidParserTests {
 	}
 
 	@Test
-	public void testDollarExpression() {
+	public void testDollarExpressionSupportSimpleDollar() {
 
 		final String D = "$";
 		final String L = "{";
@@ -179,6 +179,7 @@ public class JapidParserTests {
 		assertEquals(source, src);
 		List<String> tokens = new ArrayList<String>();
 		JapidParser p = new JapidParser(src);
+		p.setSimpleDollarExprEnabled(true);
 		loop: for (;;) {
 			JapidParser.Token state = p.nextToken();
 			switch (state) {
@@ -195,6 +196,31 @@ public class JapidParserTests {
 		for (i = 0; i < se.length; i++) {
 			assertEquals(se[i], tokens.get(i));
 		}
+	}
+	@Test
+
+	// disable the simple expr form of using $ sign
+	public void testDollarExpressionStrict() {
+		JapidParser.setSimpleDollarExprEnabled(false); 
+
+		String source = "$ $$ $ur	$u $_ $_index3\r\n $\"hello\".length.hi(foo(var+ 's')) etc... $a=='a'";
+		// String source = "hello $user.name.toUpperCase()! $user";
+		
+		List<String> tokens = new ArrayList<String>();
+		JapidParser p = new JapidParser(source);
+		loop: for (;;) {
+			JapidParser.Token state = p.nextToken();
+			switch (state) {
+			case EOF:
+				break loop;
+			default:
+				String tokenstring = p.getToken();
+				tokens.add(tokenstring);
+				System.out.println(state.name() + ": [" + tokenstring + "]");
+			}
+		}
+		assertEquals(1, tokens.size());
+		
 	}
 
 	/**

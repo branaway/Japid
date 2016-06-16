@@ -1,4 +1,4 @@
-//version: 0.9.6.1
+//version: 0.9.6.2
 package japidviews.Application;
 import java.util.*;
 import java.io.*;

@@ -1,6 +1,6 @@
                 Japid-Play, a template engine at raw Java speed
 
-                    Bing Ran<bing_ran@hotmail.com>
+                    Bing Ran<bing.ran@iclass.com>
                     
 Latest version: 0.9.6.2
 
@@ -53,7 +53,8 @@ repositories:
 * Version History:
 
 2016/6/14: version: 0.9.6.2:
-	1. adjust the JapidSampleDecoupled to use the latest Japid and corrected a few path errors in the sample. 
+	1. adjust the JapidSampleDecoupled to use the latest Japid and corrected a few path errors in the sample.
+	2. added a configuration entry in application.conf that enables/disables simple expression notation, $xxx, syntax. Turn it off so one can use $xxx as in some client-side expr: japid.simple.expr.enabled=true|false. The default is true so that old applications won't break.  
 2016/3/11: version: 0.9.6.1:
 	1. bug: absolute reverse lookup for websocket (WS) protocol failed. 
 2016/3/11: V0.9.6:
