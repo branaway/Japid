@@ -1,5 +1,6 @@
 package controllers.more;
 
+import cn.bran.play.routing.AutoPath;
 import models.DataModel;
 
 // make sure you have 
@@ -7,6 +8,7 @@ import models.DataModel;
 // in your application.conf file, and "play eclipsify"
 // if you notice the JapidController is not found.
 
+@AutoPath
 public class MyController extends BaseController {
 
 	public static void index() {

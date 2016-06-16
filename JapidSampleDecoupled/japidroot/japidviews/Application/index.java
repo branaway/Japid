@@ -1,4 +1,4 @@
-//version: 0.9.6
+//version: 0.9.6.1
 package japidviews.Application;
 import java.util.*;
 import java.io.*;
@@ -146,9 +146,9 @@ public class index extends cn.bran.play.JapidTemplateBase
 "	<li><a href=\"Application.dumpPost\">show how to dump a post\n" + 
 "	detail with japid.dump.request spec in the Application.conf. see\n" + 
 "	console for output.</a></li>\n" + 
-"	<li><a href=\"Application.cacheWithRenderJapid?a=hi\">cache with\n" + 
+"	<li><a href=\"Application.cacheWithRenderJapid/hi\">cache with\n" + 
 "	renderJapid</a></li>\n" + 
-"	<li><a href=\"Application.testCacheFor\">using the CacheFor\n" + 
+"	<li><a href=\"Application.testCacheFor/pp\">using the CacheFor\n" + 
 "	annotation</a></li>\n" + 
 "	<li><a href=\"Application.in\">action forwarding with\n" + 
 "	dontRedirect() from JapidController</a></li>\n" + 
@@ -160,7 +160,7 @@ public class index extends cn.bran.play.JapidTemplateBase
 "	");// line 69, index.html
 		p("	</li>\n" + 
 "	<li><a href=\"more.ContentNegotiation.index\"> content\n" + 
-"	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: Application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
+"	negotiation.</a> Use tools like CURL to test it: <pre>curl -i -H \"Accept: application/json\" http://127.0.0.1:9000/more.ContentNegotiation/index</pre>\n" + 
 "	<p>Content negotiation works with renderJapid(), which does\n" + 
 "	implicit parameter binding and template picking.</p>\n" + 
 "	<p>For more doc: see <a\n" + 
@@ -209,15 +209,7 @@ int ag = 123;// line 88, index.html
 		p(_play.mode);// line 110, index.html
 		p("\"</p>\n" + 
 "\n" + 
-"<br/>\n" + 
-"\n" + 
-"-->\"");// line 110, index.html
-		p(c.name);// line 114, index.html
-		p("\" , \n" + 
-"\"");// line 114, index.html
-		p(c.subname);// line 115, index.html
-		p("\"\n");// line 115, index.html
-		p("\n");// line 117, index.html
+"<br/>\n");// line 110, index.html
 		
 		endDoLayout(sourceTemplate);
 	}

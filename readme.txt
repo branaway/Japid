@@ -2,7 +2,7 @@
 
                     Bing Ran<bing_ran@hotmail.com>
                     
-Latest version: 0.9.6.1
+Latest version: 0.9.6.2
 
 * Links:
 
@@ -23,6 +23,8 @@ Whenever you upgrade the Japid module,
 
 1. do a "play japid:regen" to regenerate all the derived Java files.
 2. Or if you're using the Japid Plugin for Eclipse, re-enable the "Play nature", or do a "Project -> clean"
+
+
 
 * Note 2:
 
@@ -50,6 +52,8 @@ repositories:
 
 * Version History:
 
+2016/6/14: version: 0.9.6.2:
+	1. adjust the JapidSampleDecoupled to use the latest Japid and corrected a few path errors in the sample. 
 2016/3/11: version: 0.9.6.1:
 	1. bug: absolute reverse lookup for websocket (WS) protocol failed. 
 2016/3/11: V0.9.6:

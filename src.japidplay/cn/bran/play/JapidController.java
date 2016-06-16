@@ -172,7 +172,7 @@ public class JapidController extends Controller {
 						String expr = controller + "." + action;
 						// content negotiation
 						String format = Request.current().format;
-						if ("html".equals(format)) {
+						if (format == null || "html".equals(format)) {
 							return expr;
 						} else {
 							String expr_format = expr + "_" + format;

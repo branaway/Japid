@@ -4,8 +4,10 @@ import play.mvc.*;
 
 import cn.bran.play.JapidController;
 import cn.bran.play.JapidController2;
+import cn.bran.play.routing.AutoPath;
 
-public class ContentNegotiation extends JapidController2 {
+@AutoPath
+public class ContentNegotiation extends JapidController {
 
     public static void index() {
         renderJapid();

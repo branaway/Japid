@@ -11,4 +11,8 @@ public class Category {
 		return "name-: " + name; 
 //				+ ". sub name: " + subname;
 	}
+	
+	public String getName(){
+		return name;
+	}
 }

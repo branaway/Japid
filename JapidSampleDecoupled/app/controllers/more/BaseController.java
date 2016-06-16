@@ -4,7 +4,7 @@ import cn.bran.play.JapidController;
 import cn.bran.play.JapidController2;
 import play.mvc.Before;
 
-public class BaseController extends JapidController2 {
+public class BaseController extends JapidController {
     @Before
     static void beforeHandler() {
     	System.out.println("in before handler");
