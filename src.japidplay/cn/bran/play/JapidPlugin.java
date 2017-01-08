@@ -321,52 +321,57 @@ public class JapidPlugin extends PlayPlugin {
 
 		if (dumpRequest != null && dumpRequest.length() > 0) {
 			if ("yes".equals(dumpRequest) || "true".equals(dumpRequest)) {
-				System.out.println("---->>" + req.method + " : " + req.url + " [" + req.action + "]");
+//				System.out.println("---->>" + req.method + " : " + req.url + " [" + req.action + "]");
 				// System.out.println("request.controller:" +
 				// current.controller);
+				dumpRequest(req);
 			} else if ("false".equals(dumpRequest) || "no".equals(dumpRequest)) {
 				// do nothing
 			} else if (req.url.matches(dumpRequest)) {
-				String querystring = req.querystring;
-				if (querystring != null && querystring.length() > 0)
-					querystring = "?" + querystring;
-				else
-					querystring = "";
-				System.out.println("---->>" + req.method + " : " + req.url + querystring);
-				String contentType = req.contentType;
-				if (contentType == null || contentType.length() == 0) {
-					contentType = "";
-				}
-
-				for (String k : req.headers.keySet()) {
-					Header h = req.headers.get(k);
-					System.out.println("... " + h.name + ":" + URLDecoder.decode(h.value(), "utf-8"));
-				}
-				// cookie is already in the headers
-				// for (String ck : req.cookies.keySet()) {
-				// Cookie c = req.cookies.get(ck);
-				// System.out.println("... cookie --> " + c.name + ":" +
-				// c.value);
-				// }
-				if ("POST".equals(req.method)) {
-					if (contentType.contains("application/x-www-form-urlencoded")) {
-						dumpReqBody(req, true);
-					} else if (contentType.startsWith("text")) {
-						dumpReqBody(req, false);
-					} else if (contentType.contains("multipart/form-data")) {
-						// cannot dump it, since it may contain binary
-					} else if (contentType.contains("xml")) {
-						dumpReqBody(req, false);
-					} else if (contentType.contains("javascript")) {
-						dumpReqBody(req, false);
-					}
-				}
+				dumpRequest(req);
 			}
 
 		}
 
 		return false;
 
+	}
+
+	private void dumpRequest(Request req) throws UnsupportedEncodingException, IOException {
+		String querystring = req.querystring;
+		if (querystring != null && querystring.length() > 0)
+			querystring = "?" + querystring;
+		else
+			querystring = "";
+		System.out.println("---->>" + req.method + " : " + req.url + querystring);
+		String contentType = req.contentType;
+		if (contentType == null || contentType.length() == 0) {
+			contentType = "";
+		}
+
+		for (String k : req.headers.keySet()) {
+			Header h = req.headers.get(k);
+			System.out.println("... " + h.name + ":" + URLDecoder.decode(h.value(), "utf-8"));
+		}
+		// cookie is already in the headers
+		// for (String ck : req.cookies.keySet()) {
+		// Cookie c = req.cookies.get(ck);
+		// System.out.println("... cookie --> " + c.name + ":" +
+		// c.value);
+		// }
+		if ("POST".equals(req.method) || "PUT".equals(req.method)) {
+			if (contentType.contains("application/x-www-form-urlencoded")) {
+				dumpReqBody(req, true);
+			} else if (contentType.startsWith("text")) {
+				dumpReqBody(req, false);
+			} else if (contentType.contains("multipart/form-data")) {
+				// cannot dump it, since it may contain binary
+			} else if (contentType.contains("xml")) {
+				dumpReqBody(req, false);
+			} else if (contentType.contains("javascript")) {
+				dumpReqBody(req, false);
+			}
+		}
 	}
 
 	/**

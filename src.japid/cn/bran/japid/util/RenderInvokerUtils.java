@@ -70,6 +70,9 @@ public class RenderInvokerUtils {
 			return rr;
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException("Could not match the arguments with the template args.");
+		} catch (IllegalArgumentException e) {
+			throw new RuntimeException(
+					"Could not match the arguments with the template: " + c.getName() + ". Reason: " + e.getMessage());
 		} catch (InstantiationException e) {
 			// e.printStackTrace();
 			throw new RuntimeException("Could not instantiate the template object. Abstract?");
@@ -140,13 +143,14 @@ public class RenderInvokerUtils {
 	 * @param apply
 	 * @param args
 	 * @return
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
-	 * @throws IllegalArgumentException 
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 */
-	public static Object renderWithApply(Method apply, Object[] args) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	public static Object renderWithApply(Method apply, Object[] args)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		args = cleanArgs(args);
 		return apply.invoke(null, args);
-		
+
 	}
 }

@@ -87,6 +87,10 @@ public class JapidRendererTest {
 		r = JapidRenderer.renderWith("echo", UNI);
 		System.out.println(r);;
 		assertEquals("echo: " + UNI, r);
+
+		r = JapidRenderer.renderWith("echo", "another universe");
+		System.out.println(r);;
+		assertEquals("echo: another universe", r);
 	}
 
 	@Test

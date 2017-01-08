@@ -217,6 +217,14 @@ public class JavaSyntaxToolTest {
 	}
 
 	@Test
+	public void testParsingArgsWithAlias() {
+		String src = "a.b|b, count=c, foo(a, b)=f";
+		List<String> args = JavaSyntaxTool.parseArgs(src);
+		assertEquals(3, args.size());
+		args.forEach(System.out::println);
+	}
+	
+	@Test
 	public void testParsingArgsWithAssignment() {
 		String src = "a, b = foo(), 123";
 		List<String> args = JavaSyntaxTool.parseArgs(src);
