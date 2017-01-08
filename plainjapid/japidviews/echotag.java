@@ -1,10 +1,10 @@
-//version: 0.9.37
+//version: 0.9.6.2
 package japidviews;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import japidviews._layouts.*;
 import japidviews._tags.*;
+import japidviews._layouts.*;
 //
 // NOTE: This file was generated from: japidviews/echotag.html
 // Change to this file will be lost next time the template file is compiled.
@@ -54,8 +54,7 @@ public class echotag extends cn.bran.japid.template.JapidTemplateBaseWithoutPlay
 	@Override protected void doLayout() {
 		beginDoLayout(sourceTemplate);
 ;// line 1, echotag.html
-		p("\n" + 
-"echotag: ");// line 1, echotag.html
+		p("echotag: ");// line 1, echotag.html
 		p(s);// line 2, echotag.html
 		;// line 2, echotag.html
 		

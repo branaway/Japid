@@ -1,10 +1,10 @@
-//version: 0.9.37
+//version: 0.9.6.2
 package japidviews.cn.bran.japid.template.FooControllerBare;
 import java.util.*;
 import java.io.*;
 import cn.bran.japid.tags.Each;
-import japidviews._layouts.*;
 import japidviews._tags.*;
+import japidviews._layouts.*;
 //
 // NOTE: This file was generated from: japidviews/cn/bran/japid/template/FooControllerBare/a1.html
 // Change to this file will be lost next time the template file is compiled.

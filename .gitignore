@@ -9,3 +9,4 @@ JapidSample/tmp/*
 .pydevproject
 JapidSample/test-result/
 commands.pyc
+/plainjapid/
